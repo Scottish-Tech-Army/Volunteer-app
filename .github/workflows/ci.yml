@@ -1,5 +1,8 @@
-name: Continuous Integration
+# Test the PR branch on PR creation or update
 
+name: Pull Request CI
+
+# On every pull request on the develop branch, execute all tests [CI]
 on:
   pull_request:
     branches:
@@ -11,6 +14,7 @@ jobs:
     name: Tests
     runs-on: ubuntu-latest
     steps:
+      
     - name: Checkout
       uses: actions/checkout@v2
     - uses: actions/setup-node@master
@@ -19,6 +23,7 @@ jobs:
     - name: Install node modules
       run: |
         npm install
+
     - name: Run test
       run: |
         npm test
