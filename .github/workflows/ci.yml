@@ -2,9 +2,10 @@ name: Continuous Integration
 
 # On every pull request on the develop branch, execute all tests [CI]
 on:
-  branches:
-    - develop
-    - main
+  pull_request:
+    branches:
+      - develop
+      - main
 
 jobs:
   test:
