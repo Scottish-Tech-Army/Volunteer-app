@@ -2,28 +2,27 @@
 
 name: Pull Request CI
 
-# On every pull request on the develop branch, execute all tests [CI]
 on:
+  # On every pull request on the develop branch, execute all tests [CI]
   pull_request:
-    branches:
-      - develop
-      - main
+    types: [opened, synchronize, reopened, edited]
+    paths:
+      - "/**"
 
 jobs:
   test:
     name: Tests
     runs-on: ubuntu-latest
     steps:
-      
-    - name: Checkout
-      uses: actions/checkout@v2
-    - uses: actions/setup-node@master
-    - uses: c-hive/gha-npm-cache@v1
+      - name: Checkout
+        uses: actions/checkout@v2
+      - uses: actions/setup-node@master
+      - uses: c-hive/gha-npm-cache@v1
 
-    - name: Install node modules
-      run: |
-        npm install
+      - name: Install node modules
+        run: |
+          npm install
 
-    - name: Run test
-      run: |
-        npm test
+      - name: Run test
+        run: |
+          npm test
