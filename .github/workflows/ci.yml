@@ -2,7 +2,7 @@
 
 name: Pull Request CI
 
-# On every pull request on the develop branch, execute all tests [CI]
+# On every pull request on the develop branch, execute all tests
 on:
   pull_request:
     branches:
