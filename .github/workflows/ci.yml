@@ -2,27 +2,28 @@
 
 name: Pull Request CI
 
-on:
-  # On every pull request on the develop branch, execute all tests [CI]
-  pull_request:
-    types: [opened, synchronize, reopened, edited]
+# On every pull request on the develop branch, execute all tests [CI]
+pull_request:
+    types: [ opened, synchronize, reopened, edited ]
     paths:
-      - "/**"
+      - 'reactDashboard/**'
+      - 'functionalTest/**'
 
 jobs:
   test:
     name: Tests
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - uses: actions/setup-node@master
-      - uses: c-hive/gha-npm-cache@v1
 
-      - name: Install node modules
-        run: |
-          npm install
+    - name: Checkout
+      uses: actions/checkout@v2
+    - uses: actions/setup-node@master
+    - uses: c-hive/gha-npm-cache@v1
 
-      - name: Run test
-        run: |
-          npm test
+    - name: Install node modules
+      run: |
+        npm install
+
+    - name: Run test
+      run: |
+        npm test
