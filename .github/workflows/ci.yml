@@ -1,8 +1,5 @@
-# Test the PR branch on PR creation or update
+name: Continuous Integration
 
-name: Pull Request CI
-
-# On every pull request on the develop branch, execute all tests
 on:
   pull_request:
     branches:
@@ -23,7 +20,6 @@ jobs:
     - name: Install node modules
       run: |
         npm install
-
     - name: Run test
       run: |
         npm test
