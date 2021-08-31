@@ -1,0 +1,26 @@
+name: Continuous Integration
+
+# On every pull request on the develop branch, execute all tests [CI]
+on:
+  pull_request:
+    branches:
+      - develop
+      - main
+
+jobs:
+  test:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - uses: actions/setup-node@master
+      - uses: c-hive/gha-npm-cache@v1
+
+      - name: Install node modules
+        run: |
+          npm install
+
+      - name: Run test
+        run: |
+          npm test
