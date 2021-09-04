@@ -1,12 +1,7 @@
 name: Continuous Integration
 
-# On every pull request on the develop branch, execute all tests [CI]
-on:
-  pull_request:
-    types: [ opened, synchronize, reopened, edited ]
-    paths:
-      - '**'
-
+# Triggers execute all tests workflow on push or pull request events
+on: [push, pull_request]
 jobs:
   test:
     name: Tests
