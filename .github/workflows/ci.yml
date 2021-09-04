@@ -1,11 +1,7 @@
 name: Continuous Integration
 
-# Triggers execute all tests workflow on push or pull request events
+# Triggers execute all tests workflow on pull request events
 on:
-  push:
-    types: [ opened, synchronize, reopened, edited ]
-        paths:
-          - '**'
   pull_request:
     types: [ opened, synchronize, reopened, edited ]
         paths:
