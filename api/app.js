@@ -2,8 +2,10 @@ import express from "express";
 
 const app = express();
 
+import data from './data.js';
+
 app.get("/", function (req, res) {
-  res.json({ message: "Hello World" });
+  res.json(data);
 });
 
 app.listen(5000, function (req, res) {
