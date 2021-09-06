@@ -1,10 +1,13 @@
 import React from 'react'
 import styled from 'styled-components/native';
-import StaLogo from '../images/RoundAvatar.png'
+import TopOfApp from '../components/TopOfApp';
+import ProjectOptions from '../components/ProjectOptions'
+import ProjectSearch from '../components/ProjectSearch'
 
 
 const SafeArea = styled.SafeAreaView`
-background: ${props => props.theme.colors.appBackground};
+    background: ${props => props.theme.colors.appBackground};
+    color: ${props => props.theme.colors.staBlack};
 `
 
 const Text = styled.Text`
@@ -12,18 +15,14 @@ const Text = styled.Text`
     
 `
 
-const StaLogoImage = styled.Image`
- width: 81px;
- height: 81px;
- margin-left: 16px;
- margin-top: 10px;
-`
 
 const ProjectList = () => {
     return (
         <SafeArea>
-            <StaLogoImage source={StaLogo}  />
-
+            <TopOfApp />
+            <ProjectSearch />
+            <ProjectOptions />
+            
             <Text>Testing Screen</Text>
         </SafeArea>
     )
