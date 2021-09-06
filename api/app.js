@@ -4,8 +4,8 @@ const app = express();
 
 import data from './data.js';
 
-app.get("/", function (req, res) {
-  res.json(data);
+app.get("/projects", function (req, res) {
+  res.json(data.projects);
 });
 
 app.listen(5000, function (req, res) {
