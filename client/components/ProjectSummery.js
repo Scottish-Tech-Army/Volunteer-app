@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components/native';
-import { AntDesign } from '@expo/vector-icons';
+import ProjectHeading from './ProjectHeading';
 import ProjectSkills from './ProjectSkills';
 import ProjectTimeRequired from './ProjectTimeRequired';
 import ProjectUserRequirements from './ProjectUserRequirements';
@@ -14,17 +14,6 @@ const ProjectSummery = () => {
     padding: 17px 27px 11px 27px
     `
 
-
-    const ProjectHeading = styled.View`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    `
-
-    const ProjectTitle = styled.Text`
-    font-weight: 700;
-    font-size: 18px;
-    `
     const ProjectSubTitle = styled.Text`
     font-weight: 400;
     font-size: 16px;
@@ -45,10 +34,7 @@ const ProjectSummery = () => {
 
     return (
         <ProjectDetails>
-            <ProjectHeading>
-                <ProjectTitle>Project Title</ProjectTitle>
-                <AntDesign name="hearto" size={20} /> 
-            </ProjectHeading>
+            <ProjectHeading />
             <ProjectSubTitle>STA internal</ProjectSubTitle>
             <ProjectRole>Lead Test Analyst</ProjectRole>
             <ProjectDescription>Lead Test Analyst The Lead Tester is a co-ordination and management role, so an understanding of and experience in a number of testing disciples is advantageous, rather than a specific depth in any one</ProjectDescription>
