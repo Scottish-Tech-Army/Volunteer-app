@@ -1,6 +1,10 @@
 import React from 'react'
 import styled from 'styled-components/native';
-import { FontAwesome } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
+import ProjectSkills from './ProjectSkills';
+import ProjectTimeRequired from './ProjectTimeRequired';
+import ProjectUserRequirements from './ProjectUserRequirements';
+import ProjectSuitableBuddy from './ProjectSuitableBuddy';
 
 const ProjectSummery = () => {
 
@@ -43,11 +47,15 @@ const ProjectSummery = () => {
         <ProjectDetails>
             <ProjectHeading>
                 <ProjectTitle>Project Title</ProjectTitle>
-                <FontAwesome name="heart" size={20}/>  
+                <AntDesign name="hearto" size={20} /> 
             </ProjectHeading>
             <ProjectSubTitle>STA internal</ProjectSubTitle>
             <ProjectRole>Lead Test Analyst</ProjectRole>
             <ProjectDescription>Lead Test Analyst The Lead Tester is a co-ordination and management role, so an understanding of and experience in a number of testing disciples is advantageous, rather than a specific depth in any one</ProjectDescription>
+            <ProjectSkills />
+            <ProjectTimeRequired />
+            <ProjectUserRequirements />
+            <ProjectSuitableBuddy />
         </ProjectDetails>
 
     )
