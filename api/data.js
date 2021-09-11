@@ -8,9 +8,10 @@ const data =
         client: "PKAVS",
         role: "QA Tester",
         description: "Blah blah",
-        lead: "Magda Widera",
         skills: ["Acceptance Testing"],
-        hours: "5-10 hours per week",
+        minHours: 5,
+        maxHours: 10,
+        timePeriod: "per week",
         required: "One person",
         buddying: false
     },
@@ -21,9 +22,10 @@ const data =
         client: "STA - internal",
         role: "Lead developer",
         description: "Blah blah",
-        lead: "Joanna Hastie",
         skills: ["React Native", "Node.js"],
-        hours: "5-10 hours per week",
+        minHours: 5,
+        maxHours: 10,
+        timePeriod: "per week",
         required: "One person",
         buddying: true
     },
@@ -35,9 +37,10 @@ const data =
         client: "STA - internal",
         role: "Lead test analyst",
         description: "The lead tester is a coordination and management role, so an understanding of and experience in a number of testing disciplines, rather than depth in any specific one.",
-        lead: "Mark Kielmann",
         skills: ["Acceptance Testing", "Unit Testing"],
-        hours: "5-10 hours per week",
+        minHours: 5,
+        maxHours: 10,
+        timePeriod: "per week",
         required: "Multiple people",
         buddying: true
     }
