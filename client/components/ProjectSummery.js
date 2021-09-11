@@ -8,7 +8,7 @@ import ProjectSuitableBuddy from './ProjectSuitableBuddy';
 
 const ProjectSummery = () => {
 
-    const ProjectDetails = styled.View`
+    const ProjectDetails = styled.TouchableOpacity`
     margin: 21px 41px 0px 21px;
     border: ${props => `2px solid ${props.theme.colors.staBlack}`}
     padding: 17px 27px 11px 27px
