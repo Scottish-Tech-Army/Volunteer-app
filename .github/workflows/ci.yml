@@ -33,7 +33,10 @@ on:
     types: [ opened, synchronize, reopened, edited ]
     paths:
       - '**'
-
+  push:
+    types: [ opened, synchronize, reopened, edited ]
+    paths:
+      - '**'
 jobs:
   test:
     name: Tests
