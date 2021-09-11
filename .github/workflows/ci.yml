@@ -1,37 +1,15 @@
 name: Continuous Integration
 
 # Triggers execute all tests workflow on push and pull request events
-# on:
-#   # push:
-#   #   types: [ opened, synchronize, reopened, edited ]
-#   #       paths:
-#   #         - '**'
-#   pull_request:
-#     types: [ opened, synchronize, reopened, edited ]
-#         paths:
-#           - '**'
-# jobs:
-#   test:
-#     name: Tests
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Checkout
-#         uses: actions/checkout@v2
-#       - uses: actions/setup-node@master
-#       - uses: c-hive/gha-npm-cache@v1
-#
-#       - name: Install node modules
-#         run: |
-#           npm install
-#
-#       - name: Run test
-#         run: |
-#           npm test
-# On every pull request on the develop branch, execute all tests [CI]
-on: [push, pull_request]
-  types: [ opened, synchronize, reopened, edited ]
-  paths:
-    - '**'
+on:
+  pull_request:
+    types: [ opened, synchronize, reopened, edited ]
+    paths:
+      - '**'
+  push:
+    types: [ opened, synchronize, reopened, edited ]
+    paths:
+      - '**'
 jobs:
   test:
     name: Tests
