@@ -28,15 +28,10 @@ name: Continuous Integration
 #         run: |
 #           npm test
 # On every pull request on the develop branch, execute all tests [CI]
-on:
-  pull_request:
-    types: [ opened, synchronize, reopened, edited ]
-    paths:
-      - '**'
-  push:
-    types: [ opened, synchronize, reopened, edited ]
-    paths:
-      - '**'
+on: [push, pull_request]
+  types: [ opened, synchronize, reopened, edited ]
+  paths:
+    - '**'
 jobs:
   test:
     name: Tests
