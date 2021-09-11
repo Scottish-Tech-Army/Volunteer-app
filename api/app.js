@@ -5,14 +5,12 @@ const app = express();
 
 app.get("/", function (req, res, next) {
   
-  // const fetch = require('node-fetch');
-
-  fetch('https://sta2020.atlassian.net/rest/api/3/project/search', {
+  fetch('https://sta2020.atlassian.net/rest/api/2/search?jql=project=RES&maxResults=1000', {
     method: 'GET',
     headers: {
       'Authorization': `Basic ${Buffer.from(
         // below use email address you used for jira and generate token from jira
-        'example@hotmail.com:<your token>'
+        'hamidq88@gmail.com:rcakTK4J8yNz6JPx1SwLC9A4'
       ).toString('base64')}`,
       'Accept': 'application/json'
     }
