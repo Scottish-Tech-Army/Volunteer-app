@@ -2,14 +2,10 @@ name: Continuous Integration
 
 # Triggers execute all tests workflow on push and pull request events
 on:
-  # push:
-  #   types: [ opened, synchronize, reopened, edited ]
-  #       paths:
-  #         - '**'
   pull_request:
     types: [ opened, synchronize, reopened, edited ]
         paths:
-          - '**'
+          - 'client/**'
 jobs:
   test:
     name: Tests
@@ -17,13 +13,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - uses: actions/setup-node@master
-      - uses: c-hive/gha-npm-cache@v1
-
-      - name: Install node modules
+      - name: Run Tests
         run: |
+          cd client
           npm install
-
-      - name: Run test
-        run: |
           npm test
