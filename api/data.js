@@ -9,9 +9,7 @@ const data =
         role: "QA Tester",
         description: "Blah blah",
         skills: ["Acceptance Testing"],
-        minHours: 5,
-        maxHours: 10,
-        timePeriod: "per week",
+        hours: "5-10 hours per week",
         required: "One person",
         buddying: false
     },
@@ -23,9 +21,7 @@ const data =
         role: "Lead developer",
         description: "Blah blah",
         skills: ["React Native", "Node.js"],
-        minHours: 5,
-        maxHours: 10,
-        timePeriod: "per week",
+        hours: "5-10 hours per week",
         required: "One person",
         buddying: true
     },
@@ -38,9 +34,7 @@ const data =
         role: "Lead test analyst",
         description: "The lead tester is a coordination and management role, so an understanding of and experience in a number of testing disciplines, rather than depth in any specific one.",
         skills: ["Acceptance Testing", "Unit Testing"],
-        minHours: 5,
-        maxHours: 10,
-        timePeriod: "per week",
+        hours: "5-10 hours per week",
         required: "Multiple people",
         buddying: true
     }
