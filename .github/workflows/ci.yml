@@ -3,14 +3,12 @@ name: Continuous Integration
 # Triggers execute all tests workflow on push and pull request events
 on:
   push:
-    paths:
-      - 'client/**'
-      - 'api/**'
+    paths-ignore:
+    - 'api/**'
   pull_request:
     types: [ opened, synchronize, reopened, edited ]
-    paths:
-      - 'client/**'
-      - 'api/**'
+    paths-ignore:
+    - 'api/**'
 jobs:
   test:
     name: Tests
