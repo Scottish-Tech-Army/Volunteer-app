@@ -1,0 +1,45 @@
+{ 
+    "info": {
+        "title": "STA Projects API",
+        "version": "1.0"
+    },
+    "type": "object",
+    "/projects": {
+        "type": "array",
+        "items": {
+            "type": "object",
+            "properties": {
+                "key": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "client": {
+                    "type": "string"
+                },
+                "role": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "skills": {
+                    "type": "string"
+                },
+                "hours": {
+                    "type": "string"
+                },
+                "required": {
+                    "type": "string"
+                },
+                "buddying": {
+                    "type": "boolean"
+                }
+            }
+        }
+    }
+}
