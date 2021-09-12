@@ -4,11 +4,11 @@ name: Continuous Integration
 on:
   push:
     paths:
-      - '**'
+      - 'client/**'
   pull_request:
     types: [ opened, synchronize, reopened, edited ]
     paths:
-      - '**'
+      - 'client/**'
 jobs:
   test:
     name: Tests
