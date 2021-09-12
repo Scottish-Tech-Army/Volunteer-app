@@ -5,10 +5,12 @@ on:
   push:
     paths:
       - 'client/**'
+      - 'api/**'
   pull_request:
     types: [ opened, synchronize, reopened, edited ]
     paths:
       - 'client/**'
+      - 'api/**'
 jobs:
   test:
     name: Tests
