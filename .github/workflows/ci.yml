@@ -6,6 +6,7 @@ on:
     types: [ opened, synchronize, reopened, edited ]
     paths:
       - 'client/**'
+      - '!api/**'
 jobs:
   test:
     name: Tests
