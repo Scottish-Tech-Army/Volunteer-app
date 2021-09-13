@@ -1,13 +1,12 @@
 - [Description](#description)
   - [Type of change](#type-of-change)
-- [How Has This Been Tested?](#how-has-this-been-tested)
 - [Checklist](#checklist)
 
 
 # Description
 
-Please include a summary of the change and which issue is fixed. Please also include relevant motivation and context.
-List an dependencies that are required for this change.
+- Please include a summary of the change and which issue is fixed.
+- List any dependencies that are required for this change.
 
 Fixes # (issue number)
 
@@ -18,10 +17,6 @@ Please delete options that are not relevant
 - [] New Feature (non-breaking change which adds functionlity)
 - [] Breaking change(fix or feature that would cause existing functionlity to not work as expected)
 - [] This change requires a documentation update
-
-# How Has This Been Tested?
-
-Please describe the tests that you ran to verify your changes. Provide instructions so we can reproduce. Please also list any relevant details for your tests configuration
 
 # Checklist
 
