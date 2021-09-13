@@ -1,7 +1,10 @@
 import express from "express";
 import fetch from "node-fetch";
+import dotenv from 'dotenv';
+dotenv.config();
 
 const app = express();
+const api_key = process.env.API_KEY;
 
 app.get("/", function (req, res, next) {
   
@@ -10,7 +13,7 @@ app.get("/", function (req, res, next) {
     headers: {
       'Authorization': `Basic ${Buffer.from(
         // below use email address you used for jira and generate token from jira
-        'hamidq88@gmail.com:<token>'
+        `hamidq88@gmail.com:${api_key}`
       ).toString('base64')}`,
       'Accept': 'application/json'
     }
