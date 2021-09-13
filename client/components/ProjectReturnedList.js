@@ -12,9 +12,6 @@ const Text = styled.Text`
     
 `
 
-            
-
-
 const ProjectReturnedList = () => {
     return (
         <ScrollableListWrapper>
