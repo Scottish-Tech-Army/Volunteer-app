@@ -10,7 +10,7 @@ app.get("/", function (req, res, next) {
     headers: {
       'Authorization': `Basic ${Buffer.from(
         // below use email address you used for jira and generate token from jira
-        'hamidq88@gmail.com:rcakTK4J8yNz6JPx1SwLC9A4'
+        'hamidq88@gmail.com:<token>'
       ).toString('base64')}`,
       'Accept': 'application/json'
     }
