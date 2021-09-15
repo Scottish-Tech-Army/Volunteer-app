@@ -30,7 +30,7 @@ Welcome to the the Volunteering App Github repo
 5. type in command terminal: npm install     
     >**Note:** Inside client folder there is package-lock.json. Everytime this is modified, it is advised to do step 4      before       running the project.      
 ​
-6. type in command terminal: expo start     
+6. type in command terminal: npm start or expo start     
 ​
 7. On your iPhone or iPad, open the default Apple "Camera" app and scan the QR code you see in the terminal or in Expo Dev Tools.    
 OR          
