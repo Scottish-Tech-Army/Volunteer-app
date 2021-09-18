@@ -1,21 +1,37 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {Text, SafeAreaView} from 'react-native';
+import Theme from './styles/Theme'
+import ProjectList from './screens/ProjectList';
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  const [data, setData] = useState(null);
+
+  // To fecth from Firebase API:
+  // const url = 'https://sva-api-default-rtdb.europe-west1.firebasedatabase.app/.json'
+  // setData(info.projects)
+  //
+  // To fetch from Node server:
+  const url = 'http://localhost:5000/projects'
+  // 'setData(info)'
+
+  useEffect( () => {
+  fetch(url)
+  .then(results => results.json())
+  .then(info => setData(info))}, []);
+
+  if (data) {
+  return (
+    <Theme>
+      <ProjectList data = {data}/>
+    </Theme>
+  )
+  }
+  else {
+  return (
+    <SafeAreaView>
+      <Text>Loading...</Text>
+    </SafeAreaView>
+  )
+  }
+}
