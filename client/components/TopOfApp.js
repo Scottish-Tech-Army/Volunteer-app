@@ -4,14 +4,14 @@ import { FontAwesome } from '@expo/vector-icons';
 import styled from 'styled-components/native';
 
 const TopView = styled.View`
-color: ${props => props.theme.colors.staBlack};
+color: #3c3c3b;
 display: flex;
 flex-direction: row;
 justify-content: space-between;
 `
 
 const BurgerView = styled.View`
-    background: ${props => props.theme.colors.appBackground};
+    
     margin-right: 16px;
     margin-top: 10px;
     

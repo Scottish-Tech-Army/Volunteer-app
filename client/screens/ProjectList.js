@@ -7,14 +7,14 @@ import ProjectReturnedList from '../components/ProjectReturnedList';
 
 
 const SafeArea = styled.SafeAreaView`
-    background: ${props => props.theme.colors.appBackground};
-    color: ${props => props.theme.colors.staBlack};
+    background: #E5E5E5
+    color: #3c3c3b;
 `
 
 
 
 const HorizontalLine = styled.View`
-    border: ${props => `1px solid ${props.theme.colors.staBlack}`}
+    border: 1px solid #3c3c3b;
     margin: 0px 75px 10px 75px
 `
 

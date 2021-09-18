@@ -7,11 +7,12 @@ const SkillsView = styled.View`
 display: flex;
 flex-direction: row;
 margin-top: 17px;
+color: #3c3c3b
 
 `
 
 const SkillText = styled.Text`
-border: ${props => `2px solid ${props.theme.colors.staBlack}`};
+border: 2px solid #3c3c3b;
 border-radius: 4px;
 margin-left: 8.5px;
 padding: 0px 1px 0px 1px;
