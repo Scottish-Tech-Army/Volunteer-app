@@ -9,8 +9,8 @@ import { Feather } from '@expo/vector-icons';
 
 const ProjectDetails = styled.TouchableOpacity`
 margin: 21px 41px 0px 21px;
-border: 2px solid #3c3c3b
-padding: 17px 27px 11px 27px
+border: ${props => `2px solid ${props.theme.colors.staBlack}`};
+padding: 17px 27px 11px 27px;
 `
 
 const ProjectSubTitle = styled.Text`
