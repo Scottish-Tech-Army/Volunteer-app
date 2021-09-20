@@ -1,5 +1,5 @@
 import React from 'react'
-import { FontAwesome } from '@expo/vector-icons';
+//import { FontAwesome } from '@expo/vector-icons';
 import styled from 'styled-components/native';
 
 const SearchView = styled.View`
@@ -14,7 +14,7 @@ const ProjectSearch = () => {
 
     return (
         <SearchView>
-            <FontAwesome name="search" size={38}/>
+            
         </SearchView>
          
 
@@ -22,3 +22,4 @@ const ProjectSearch = () => {
 }
 
 export default ProjectSearch
+// <FontAwesome name="search" size={38}/>

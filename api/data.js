@@ -1,4 +1,4 @@
-const data = 
+const info = 
 {projects: [
     {
         key: "SVA",
@@ -41,4 +41,4 @@ const data =
 ]
 }
 
-export default data;
+export default info;

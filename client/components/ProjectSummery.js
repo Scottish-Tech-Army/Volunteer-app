@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 import ProjectHeading from './ProjectHeading';
 import ProjectSkills from './ProjectSkills';
 import ProjectRequirements from './ProjectRequirements';
-import { FontAwesome5 } from '@expo/vector-icons';
+//import { FontAwesome5 } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 
@@ -67,9 +67,7 @@ const ProjectSummery = ({data}) => {
                 <ProjectRole>{project.role}</ProjectRole>
                 <ProjectDescription>{project.description}</ProjectDescription>
                 <ProjectSkills skills = {project.skills}/>
-                <ProjectRequirements icon={<FontAwesome5 name="clock" size={16}/>} details={project.hours} />
-                <ProjectRequirements icon={<AntDesign name="user" size={16} />} details={`${project.required} required`} />
-                <ProjectRequirements icon={<Feather name="users" size={16} />} details={ project.buddying ? 'Suitable for buddying' : 'Not suitable for buddying'} />
+                
             </ProjectDetails>
 
         );
@@ -83,3 +81,7 @@ const ProjectSummery = ({data}) => {
 }
 
 export default ProjectSummery
+
+{/* <ProjectRequirements icon={<FontAwesome5 name="clock" size={16}/>} details={project.hours} />
+                <ProjectRequirements icon={<AntDesign name="user" size={16} />} details={`${project.required} required`} />
+                <ProjectRequirements icon={<Feather name="users" size={16} />} details={ project.buddying ? 'Suitable for buddying' : 'Not suitable for buddying'} /> */}
