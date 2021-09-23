@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components/native';
-//import { AntDesign } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 
 
 const ProjectHeadingView = styled.View`
@@ -20,7 +20,7 @@ const ProjectHeading = ({title}) => {
     return (
         <ProjectHeadingView>
             <ProjectTitle>{title}</ProjectTitle>
-            
+            <AntDesign name="hearto" size={20} />
         </ProjectHeadingView>
 
     )
@@ -28,4 +28,4 @@ const ProjectHeading = ({title}) => {
 
 export default ProjectHeading
 
-{/* <AntDesign name="hearto" size={20} />  */}
+  

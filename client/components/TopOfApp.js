@@ -1,6 +1,6 @@
 import React from 'react'
 import Logo from './StaLogo'
-//import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 import styled from 'styled-components/native';
 
 const TopView = styled.View`
@@ -23,7 +23,7 @@ const TopOfApp = () => {
         <TopView>
             <Logo />
             <BurgerView>
-
+               <FontAwesome name="bars" size={32}/>
             </BurgerView>
             
         </TopView>
@@ -31,5 +31,3 @@ const TopOfApp = () => {
 }
 
 export default TopOfApp;
-
-{/* <FontAwesome name="bars" size={32}/>   */}
