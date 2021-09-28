@@ -22,8 +22,6 @@ export default function App() {
   .then(results => results.json())
   .then(info => setData(info))}, []);
 
-  
-
   if (data) {
   return (
     <Theme>

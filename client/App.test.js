@@ -1,6 +1,8 @@
 import React from 'react';
-//import renderer from 'react-test-renderer';
-import { render } from '@testing-library/react-native';
+import { render, waitFor } from '@testing-library/react-native';
+import fetchMock from 'jest-fetch-mock';
+//import { findByText } from '@testing-library/dom';
+import '@testing-library/jest-dom';
 
 import App from './App';
 
@@ -13,18 +15,36 @@ import App from './App';
 
 describe('App component', () => {
   beforeEach(() => {
-    fetch.resetMocks()
+    fetchMock.resetMocks();
   })
-  it('shout render default opportunity list', () => {
-    const { getByText, toJSON } = render(<App />);
-    expect(getByText('All projects')).toBeDefined();
-    expect(getByText('Saved Projects')).toBeDefined();
-    expect(getByText('My Projects')).toBeDefined();
-    expect(getByText('Project Title')).toBeDefined();
-    expect(getByText('STA internal')).toBeDefined();
-    expect(getByText('Lead Test Analyst')).toBeDefined();
-    expect(getByText(/The Lead Tester is a/)).toBeDefined();
-    // TODO test interaction
-    expect(toJSON()).toMatchSnapshot();
-  });
+  it('should render default opportunity list', async () => {
+    fetchMock.mockResponse(JSON.stringify([
+      {
+          key: "SVA",
+          name: "STA-volunteer App",
+          type: "Team-managed software",
+          client: "STA - internal",
+          role: "Lead developer",
+          description: "The lead tester is a coordination and management role, so an understanding of and experience in a number of testing disciplines, rather than depth in any specific one.",
+          skills: ["React Native", "Node.js"],
+          hours: "5-10 hours per week",
+          required: "One person",
+          buddying: true
+      }])
+      );
+
+      
+        const { getByText, toJSON } = render(<App />);
+        await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(1));
+        expect(fetchMock).toHaveBeenCalledWith("http://localhost:5000/projects");
+      
+        expect(getByText('STA-volunteer App')).toBeDefined();
+        expect(getByText('STA - internal')).toBeDefined();
+        expect(getByText('Lead developer')).toBeDefined();
+        expect(getByText('5-10 hours per week')).toBeDefined();
+        expect(getByText('One person required')).toBeDefined();
+        expect(getByText('Suitable for buddying')).toBeDefined();
+        // TODO test interaction
+        expect(toJSON()).toMatchSnapshot();
+      });
 });
