@@ -1,5 +1,6 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
+//import renderer from 'react-test-renderer';
+import { render } from '@testing-library/react-native';
 
 import App from './App';
 
@@ -11,6 +12,9 @@ import App from './App';
 // });
 
 describe('App component', () => {
+  beforeEach(() => {
+    fetch.resetMocks()
+  })
   it('shout render default opportunity list', () => {
     const { getByText, toJSON } = render(<App />);
     expect(getByText('All projects')).toBeDefined();
