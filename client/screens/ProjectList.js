@@ -6,18 +6,22 @@ import ProjectSearch from '../components/ProjectSearch'
 import ProjectReturnedList from '../components/ProjectReturnedList';
 
 
+const SafeArea = styled.SafeAreaView`
+    background: ${props => props.theme.colors.appBackground};
+    color: ${props => props.theme.colors.staBlack};
+`
+
+
+
+const HorizontalLine = styled.View`
+    border: ${props => `1px solid ${props.theme.colors.staBlack}`};
+    margin: 0px 75px 10px 75px
+    `
+
 
 const ProjectList = ({data}) => {
-    const SafeArea = styled.SafeAreaView`
-    background: #E5E5E5;
-    color: #3c3c3b;
-`
+    
 
-    const HorizontalLine = styled.View`
-    border: 1px solid;
-    border-color: #3c3c3b;
-    margin: 0px 75px 10px 75px;
-`
     return (
         <SafeArea>
             <TopOfApp />
