@@ -11,7 +11,6 @@ justify-content: space-between;
 `
 
 const BurgerView = styled.View`
-
     margin-right: 16px;
     margin-top: 10px;
     

@@ -32,32 +32,6 @@ margin-top: 4px;
 
 const ProjectSummery = ({data}) => {
 
-    // const data = [{
-    //     key: "SVA",
-    //     name: "STA-volunteer App",
-    //     type: "Team-managed software",
-    //     client: "STA - internal",
-    //     role: "Lead developer",
-    //     description: "Blah blah",
-    //     skills: ["React Native", "Node.js"],
-    //     hours: "5-10 hours per week",
-    //     required: "One person",
-    //     buddying: true
-    // },
-
-    // {
-    //     key: "PKAVS",
-    //     name: "project-website-pkavs",
-    //     type: "Team-managed software",
-    //     client: "PKAVS",
-    //     role: "QA Tester",
-    //     description: "Blah blah",
-    //     skills: ["Acceptance Testing"],
-    //     hours: "5-10 hours per week",
-    //     required: "One person",
-    //     buddying: false
-    // }];
-
     const projectList = data.map((project, index) => {
         return (
             <ProjectDetails key = {index}>

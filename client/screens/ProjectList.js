@@ -33,4 +33,4 @@ const ProjectList = ({data}) => {
     )
 }
 
-export default ProjectList
+export default ProjectList;

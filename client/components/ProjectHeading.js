@@ -26,6 +26,6 @@ const ProjectHeading = ({title}) => {
     )
 }
 
-export default ProjectHeading
+export default ProjectHeading;
 
   

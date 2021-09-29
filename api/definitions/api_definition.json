@@ -1,0 +1,111 @@
+{ 
+	"openapi" : "3.0.3",
+    "info": {
+        "title": "STA Projects API",
+		"description" : "API to list and query available STA volunteer projects",
+        "version": "1.0"
+    },
+	"paths": {
+		"/projects": {			
+				"get" : {
+					"description" : "Returns a list of available projects",
+					"operationId" : "get_projects",
+					"responses" : {
+						"200" : {
+							"description" : "OK",
+							"content":{
+								"application/json": {
+									"example" : [
+										{
+											"key": "PKAVS",
+											"name": "project-website-pkavs",
+											"type": "Team-managed software",
+											"client": "PKAVS",
+											"role": "QA Tester",
+											"description": "Blah blah",
+											"skills": ["Acceptance Testing"],
+											"hours": "5-10 hours per week",
+											"required": "One person",
+											"buddying": false
+										},
+										{
+											"key": "SVA",
+											"name": "STA-volunteer Apps",
+											"type": "Team-managed software",
+											"client": "STA - internal",
+											"role": "Lead developer",
+											"description": "Blah blah",
+											"skills": ["React Native", "Node.js"],
+											"hours": "5-10 hours per week",
+											"required": "One person",
+											"buddying": true
+										}
+									],
+									"schema" : {
+										"$ref": "#/components/schemas/project" 
+									}
+								}
+							}
+						}
+					}
+				}
+			
+		}       
+    },
+	"components" : {
+		"schemas" : {
+			"project" : {
+				"type": "array",
+				"description" : "Describes a project available for volunteering",
+				"items": {
+					"type": "object",
+					"properties": {
+						"key": {
+							"type": "string",
+							"description": "Unique identifier for the project"
+						},
+						"name": {
+							"type": "string",
+							"description": "Descriptive name for the project"
+						},
+						"type": {
+							"type": "string",
+							"description": "The type of project"
+						},
+						"client": {
+							"type": "string",
+							"description" : "The name of the client"
+						},
+						"role": {
+							"type": "string",
+							"description" : "The role the volunteer is expexcted to play on the project"
+						},
+						"description": {
+							"type": "string",
+							"description" : "Description of what the project work involves"
+						},
+						"skills": {
+							"type": "array", 
+							"description" : "List of skills required for the project",
+							"items" : {
+								"type" : "string"
+							}
+						},
+						"hours": {
+							"type": "string",
+							"description" : "Hourly commitment required for the project"
+						},
+						"required": {
+							"type": "string",
+							"description" : "Number of people required"
+						},
+						"buddying": {
+							"type": "boolean",
+							 "description" : "Wether the project supports buddying"
+						}
+					}
+				}
+			}			
+		}
+	}
+}

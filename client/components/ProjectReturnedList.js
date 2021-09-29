@@ -23,4 +23,4 @@ const ProjectReturnedList = ({data}) => {
     )
 }
 
-export default ProjectReturnedList
+export default ProjectReturnedList;
