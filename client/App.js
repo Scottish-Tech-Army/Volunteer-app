@@ -18,22 +18,22 @@ export default function App() {
 
 
   useEffect( () => {
-  fetch(url)
-  .then(results => results.json())
-  .then(info => setData(info))}, []);
+    fetch(url)
+    .then(results => results.json())
+    .then(info => setData(info))}, []);
 
   if (data) {
-  return (
-    <Theme>
-      <ProjectList data = {data}/>
-    </Theme>
-  )
+    return (
+      <Theme>
+        <ProjectList data = {data}/>
+      </Theme>
+    )
   }
   else {
-  return (
-    <SafeAreaView>
-      <Text>Loading...</Text>
-    </SafeAreaView>
-  )
+    return (
+      <SafeAreaView>
+        <Text>Loading...</Text>
+      </SafeAreaView>
+    )
   }
 }
