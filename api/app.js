@@ -1,13 +1,21 @@
-import express from "express";
-
+const express = require('express');
 const app = express();
+const routes = require('./routes');
 
-import data from './data.js';
+app.use('/', routes);
 
-app.get("/projects", function (req, res) {
-  res.json(data.projects);
+app.use((req, res, next) => {
+  const err = new Error("Something went wrong. Please try again.");
+  err.status = 500;
+  next(err);
+});
+
+app.use((err, req, res, next) => {
+  const notFound = new Error('Resource Not Found');
+  notFound.status = 404;
+  next(notFound);
 });
 
 app.listen(5000, function (req, res) {
-  console.log("App running on port 5000");
+  console.log("App running on on locatlhost:5000");
 });

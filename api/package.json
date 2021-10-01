@@ -1,9 +1,8 @@
 {
-  "name": "api",
+  "name": "volunteer-app-api",
   "version": "1.0.0",
-  "description": "",
-  "type": "module",
-  "main": "index.js",
+  "description": "RESTful API to surface the data required for the Volunteer App.",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js"
