@@ -1,7 +1,7 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const projectsApi = require('./projects')
+import projectsApi from './projects.js'
 
 router.use('/projects', projectsApi);
 
-module.exports = router;
+export default router;

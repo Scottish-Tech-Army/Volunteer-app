@@ -1,4 +1,4 @@
-{"projects": [
+export default {"projects": [
 
     {
         "key": "PKAVS",
