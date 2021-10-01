@@ -16,6 +16,4 @@ app.use((err, req, res, next) => {
   next(notFound);
 });
 
-app.listen(5000, () => {
-  console.log("Volunteer App API is listening on port 5000");
-});
+export default app;
