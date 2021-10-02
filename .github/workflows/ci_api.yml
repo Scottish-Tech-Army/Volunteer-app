@@ -17,3 +17,4 @@ jobs:
         run: |
           cd api
           npm install
+          npm test
