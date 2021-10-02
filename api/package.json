@@ -4,7 +4,7 @@
   "description": "RESTful API to surface the data required for the Volunteer App.",
   "main": "app.js",
   "scripts": {
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test": "jest",
     "start": "nodemon server.js"
   },
   "keywords": [],
