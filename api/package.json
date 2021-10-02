@@ -2,11 +2,10 @@
   "name": "volunteer-app-api",
   "version": "1.0.0",
   "description": "RESTful API to surface the data required for the Volunteer App.",
-  "type": "module",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "start": "nodemon server.js"
   },
   "keywords": [],
   "author": "",
@@ -16,5 +15,12 @@
     "express": "^4.17.1",
     "node-fetch": "^3.0.0",
     "nodemon": "^2.0.12"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "jest": "^27.2.4",
+    "superagent": "^6.1.0",
+    "supertest": "^6.1.6"
   }
 }

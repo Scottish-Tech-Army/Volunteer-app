@@ -1,6 +1,6 @@
-import express from 'express';
+const express = require('express');
 const app = express();
-import routes from './routes/index.js';
+const routes = require('./routes/index');
 
 app.use('/', routes);
 
@@ -16,4 +16,4 @@ app.use((err, req, res, next) => {
   next(notFound);
 });
 
-export default app;
+module.exports = app;

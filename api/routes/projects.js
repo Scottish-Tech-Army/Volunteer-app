@@ -1,9 +1,9 @@
-import express from 'express';
+const express = require('express');
 const router = express.Router();
-import data from '../data.js';
+const data = require('../data.json');
 
 router.get('/', (req, res) => {
     res.json(data);
 });
 
-export default router;
+module.exports = router;
