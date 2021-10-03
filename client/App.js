@@ -6,17 +6,6 @@ import ProjectList from './screens/ProjectList';
 
 export default function App() {
   
-  const [data, setData] = useState(null);
-
-  // To fecth from Firebase API:
-  // const url = 'https://sva-api-default-rtdb.europe-west1.firebasedatabase.app/.json'
-  // setData(info.projects)
-  //
-  // To fetch from Node server:
-  const url = 'http://localhost:5000/projects'
-  // 'setData(info)'
-
-
   useEffect( () => {
     fetch(url)
     .then(results => results.json())
