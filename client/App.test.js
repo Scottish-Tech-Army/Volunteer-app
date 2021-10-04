@@ -29,8 +29,9 @@ describe('App component', () => {
       
         const { getByText, toJSON } = render(<App />);
         await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(1));
-        expect(fetchMock).toHaveBeenCalledWith("http://localhost:5000/projects");
-      
+        //expect(fetchMock).toHaveBeenCalledWith("http://localhost:5000/projects");
+        expect(fetchMock).toHaveBeenCalledWith(expect.stringContaining('/projects'));
+
         expect(getByText('STA-volunteer App')).toBeDefined();
         expect(getByText('STA - internal')).toBeDefined();
         expect(getByText('Lead developer')).toBeDefined();

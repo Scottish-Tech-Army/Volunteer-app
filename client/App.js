@@ -10,6 +10,7 @@ export default function App() {
   const url = process.env.BASE_URL + '/projects';
 
   useEffect( () => {
+    console.log(process.env.BASE_URL);
     fetch(url)
     .then(results => results.json())
     .then(info => setData(info))}, []);
