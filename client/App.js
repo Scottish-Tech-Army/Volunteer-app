@@ -2,15 +2,14 @@ import React, {useState, useEffect} from 'react';
 import {Text, SafeAreaView} from 'react-native';
 import Theme from './styles/Theme';
 import ProjectList from './screens/ProjectList';
-import 'dotenv/config';
+import Constants from 'expo-constants';
 
 export default function App() {
   
   const [data, setData] = useState(null);
-  const url = process.env.BASE_URL + '/projects';
+  const url = Constants.manifest.extra.base_url + '/projects';
 
   useEffect( () => {
-    console.log(process.env.BASE_URL);
     fetch(url)
     .then(results => results.json())
     .then(info => setData(info))}, []);
