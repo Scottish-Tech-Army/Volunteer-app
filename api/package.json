@@ -21,6 +21,7 @@
     "babel-preset-env": "^1.7.0",
     "jest": "^27.2.4",
     "superagent": "^6.1.0",
-    "supertest": "^6.1.6"
+    "supertest": "^6.1.6",
+    "cors": "^2.8.5"
   }
 }

@@ -30,24 +30,29 @@ font-size: 10px;
 margin-top: 4px;
 `
 
-const ProjectSummery = () => {
+const ProjectSummery = ({data}) => {
 
+    const projectList = data.map((project, index) => {
+        return (
+            <ProjectDetails key = {index}>
+                <ProjectHeading title = {project.name} />
+                <ProjectSubTitle>{project.client}</ProjectSubTitle>
+                <ProjectRole>{project.role}</ProjectRole>
+                <ProjectDescription>{project.description}</ProjectDescription>
+                <ProjectSkills skills = {project.skills}/>           
+                <ProjectRequirements icon={<FontAwesome5 name="clock" size={16}/>} details={project.hours} />
+                <ProjectRequirements icon={<AntDesign name="user" size={16} />} details={`${project.required} required`} />
+                <ProjectRequirements icon={<Feather name="users" size={16} />} details={ project.buddying ? 'Suitable for buddying' : 'Not suitable for buddying'} />
+            </ProjectDetails>
 
-
+        );
+    })
 
     return (
-        <ProjectDetails>
-            <ProjectHeading />
-            <ProjectSubTitle>STA internal</ProjectSubTitle>
-            <ProjectRole>Lead Test Analyst</ProjectRole>
-            <ProjectDescription>Lead Test Analyst The Lead Tester is a co-ordination and management role, so an understanding of and experience in a number of testing disciples is advantageous, rather than a specific depth in any one</ProjectDescription>
-            <ProjectSkills />
-            <ProjectRequirements  icon={<FontAwesome5 name="clock" size={16}/>} details={'6 Hours'} />
-            <ProjectRequirements  icon={<AntDesign name="user" size={16} />} details={'1 Person Required'} />
-            <ProjectRequirements  icon={<Feather name="users" size={16} />} details={'Suitable for buddying'} />
-        </ProjectDetails>
-
+        <>
+        {projectList}
+        </>
     )
 }
 
-export default ProjectSummery
+export default ProjectSummery;

@@ -14,16 +14,18 @@ font-weight: 700;
 font-size: 18px;
 `
 
-const ProjectHeading = () => {
+const ProjectHeading = ({title}) => {
 
 
     return (
         <ProjectHeadingView>
-            <ProjectTitle>Project Title</ProjectTitle>
-            <AntDesign name="hearto" size={20} /> 
+            <ProjectTitle>{title}</ProjectTitle>
+            <AntDesign name="hearto" size={20} />
         </ProjectHeadingView>
 
     )
 }
 
-export default ProjectHeading
+export default ProjectHeading;
+
+  
