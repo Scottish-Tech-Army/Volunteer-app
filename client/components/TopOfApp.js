@@ -11,7 +11,6 @@ justify-content: space-between;
 `
 
 const BurgerView = styled.View`
-    
     margin-right: 16px;
     margin-top: 10px;
     
@@ -23,11 +22,11 @@ const TopOfApp = () => {
         <TopView>
             <Logo />
             <BurgerView>
-                <FontAwesome name="bars" size={32}/>  
+               <FontAwesome name="bars" size={32}/>
             </BurgerView>
             
         </TopView>
     )
 }
 
-export default TopOfApp
+export default TopOfApp;

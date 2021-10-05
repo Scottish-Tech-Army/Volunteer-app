@@ -16,19 +16,21 @@ const SafeArea = styled.SafeAreaView`
 const HorizontalLine = styled.View`
     border: ${props => `1px solid ${props.theme.colors.staBlack}`};
     margin: 0px 75px 10px 75px
-`
+    `
 
 
-const ProjectList = () => {
+const ProjectList = ({data}) => {
+    
+
     return (
         <SafeArea>
             <TopOfApp />
             <ProjectSearch />
             <ProjectOptions />
             <HorizontalLine />
-            <ProjectReturnedList />
+            <ProjectReturnedList data = {data}/>
         </SafeArea>
     )
 }
 
-export default ProjectList
+export default ProjectList;

@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 import ProjectSummery from './ProjectSummery';
 
 const ScrollableListWrapper = styled.ScrollView`
-    height: 100%
+    height: 60%
     `
 
 const Text = styled.Text`
@@ -12,15 +12,15 @@ const Text = styled.Text`
     
 `
 
-const ProjectReturnedList = () => {
+const ProjectReturnedList = ({data}) => {
     return (
         <ScrollableListWrapper>
 
-            <ProjectSummery />
+            <ProjectSummery data = {data}/>
           
         </ScrollableListWrapper>
 
     )
 }
 
-export default ProjectReturnedList
+export default ProjectReturnedList;
