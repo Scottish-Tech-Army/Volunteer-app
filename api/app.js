@@ -1,16 +1,21 @@
-import express from "express";
-import cors from "cors";
-
+const express = require('express');
 const app = express();
+const routes = require('./routes/index');
+const cors = require('cors');
+
 app.use(cors());
+app.use('/', routes);
 
-import data from './data.js';
-
-app.get("/projects", function (req, res) {
-  res.json(data.projects);
+app.use((req, res, next) => {
+  const err = new Error("Something went wrong. Please try again.");
+  err.status = 500;
+  next(err);
 });
 
-app.listen(5000, function (req, res) {
-  console.log("App running on port 5000");
+app.use((err, req, res, next) => {
+  const notFound = new Error('Resource Not Found');
+  notFound.status = 404;
+  next(notFound);
 });
 
+module.exports = app;
