@@ -2,6 +2,7 @@
   "name": "volunteer-app-api",
   "version": "1.0.0",
   "description": "RESTful API to surface the data required for the Volunteer App.",
+  "type": "module",
   "main": "app.js",
   "scripts": {
     "test": "jest",

@@ -1,6 +1,7 @@
 import express from "express";
 import fetch from "node-fetch";
 import dotenv from 'dotenv';
+import { writeToJsonFile } from '../js/writeToJsonFile.js';
 dotenv.config();
 
 const app = express();
@@ -27,7 +28,13 @@ app.get("/", function (req, res, next) {
     }
     return Promise.reject(new Error(response.statusText));
   })
-  .then(json => res.json(json))
+  .then(json => {
+    
+    const projectName = json.issues.map(x => ({ name: x['fields'].summary }));
+    writeToJsonFile( projectName );
+    console.log(projectName);
+    res.json(json)
+  })
   .catch(err => next(err));
 });
 
