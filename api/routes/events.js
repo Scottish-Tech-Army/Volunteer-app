@@ -25,8 +25,7 @@ router.get("/", function (req, res, next) {
           }
           return Promise.reject(new Error(response.statusText));
         })
-        // console.log(response.data.records);
-        // return response.data.records
+
     })
   
 
