@@ -7,11 +7,12 @@ const router = express.Router();
 
 const apiKey = process.env.AIRTABLE_API_KEY;
 const id = process.env.AIRTABLE_ID;
-let eventsUrl = `https://api.airtable.com/v0/${id}/STA%20Events`;
+axios.defaults.baseURL = `https://api.airtable.com/v0/${id}/`
 
 
-router.get("/", function (req, res, next) {
-    axios(eventsUrl, {
+
+router.get("/events", function (req, res, next) {
+    axios('STA%20Events', {
       method: 'get',
       headers: {
         'Authorization': `Bearer ${apiKey}`
