@@ -16,5 +16,4 @@ jobs:
       - name: Run Tests
         run: |
           cd boilerplateApi
-          yarn install
           yarn test
