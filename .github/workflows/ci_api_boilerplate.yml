@@ -1,0 +1,20 @@
+name: Continuous Integration
+
+# Triggers execute all tests workflow on pull request events
+on:
+  pull_request:
+    types: [ opened, synchronize, reopened, edited ]
+    paths:
+      - 'boilerplateApi/**'
+jobs:
+  test:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Run Tests
+        run: |
+          cd boilerplateApi
+          yarn install
+          yarn test
