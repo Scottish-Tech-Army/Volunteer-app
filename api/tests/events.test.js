@@ -7,8 +7,8 @@ describe("Test the projects api", () => {
     expect(response.statusCode).toBe(200);
   });
   
-  test("GET single project by ID method should return Not Found", async () => {
-    const response = await request(app).get("/airtable/events/1");
-    expect(response.statusCode).toBe(404);
-  });
+  // test("GET single project by ID method should return Not Found", async () => {
+  //   const response = await request(app).get("/airtable/events/1");
+  //   expect(response.statusCode).toBe(404);
+  // });
 });
