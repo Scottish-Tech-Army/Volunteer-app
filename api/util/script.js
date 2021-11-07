@@ -6,6 +6,7 @@ dotenv.config();
 
 const app = express();
 const api_key = process.env.API_KEY;
+const email = process.env.EMAIL;
 
 app.get("/", function (req, res, next) {
   
@@ -14,7 +15,7 @@ app.get("/", function (req, res, next) {
     headers: {
       'Authorization': `Basic ${Buffer.from(
         // below use email address you used for jira and generate token from jira
-        `hamidq88@gmail.com:${api_key}`
+        `${email}:${api_key}`
       ).toString('base64')}`,
       'Accept': 'application/json'
     }
