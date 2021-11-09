@@ -30,8 +30,8 @@ app.get("/", function (req, res, next) {
     return Promise.reject(new Error(response.statusText));
   })
   .then(json => {
-    
-    const projectName = json.issues.map(x => ({ name: x['fields'].summary }));
+    console.log(json.issues);
+    const projectName = json.issues.map(x => ({ name: x['fields'].summary, description: x['fields'].description }));
     writeToJsonFile( projectName );
     console.log(projectName);
     res.json(json)

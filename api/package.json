@@ -14,15 +14,16 @@
   "dependencies": {
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "i": "^0.3.7",
     "node-fetch": "^3.0.0",
     "nodemon": "^2.0.12"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
+    "cors": "^2.8.5",
     "jest": "^27.2.4",
     "superagent": "^6.1.0",
-    "supertest": "^6.1.6",
-    "cors": "^2.8.5"
+    "supertest": "^6.1.6"
   }
 }
