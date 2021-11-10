@@ -4,7 +4,7 @@ const axios = require('axios').default;
 const express = require('express');
 const router = express.Router();
 
-// importhidden variables, ID is the company ID
+// import hidden variables, ID is the company ID
 const apiKey = process.env.AIRTABLE_API_KEY;
 const id = process.env.AIRTABLE_ID;
 
