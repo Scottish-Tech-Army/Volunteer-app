@@ -30,8 +30,14 @@ app.get("/", function (req, res, next) {
     return Promise.reject(new Error(response.statusText));
   })
   .then(json => {
-    console.log(json.issues);
-    const projectName = json.issues.map(x => ({ name: x['fields'].summary, description: x['fields'].description }));
+    // console.log(json.issues);
+    const projectName = json.issues.map(x => (
+      { 
+        name: x['fields'].summary, 
+        description: x['fields'].description, 
+        JobRole: x['fields'].customfield_10113,
+        projectType: x['fields'].customfield_10112      
+      }));
     writeToJsonFile( projectName );
     console.log(projectName);
     res.json(json)
