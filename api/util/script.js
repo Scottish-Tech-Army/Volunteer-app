@@ -31,15 +31,17 @@ app.get("/", function (req, res, next) {
   })
   .then(json => {
     // console.log(json.issues);
-    const projectName = json.issues.map(x => (
+    const ResData = json.issues.map(x => (
       { 
-        name: x['fields'].summary, 
+        projectName: x['fields'].summary, 
         description: x['fields'].description, 
-        JobRole: x['fields'].customfield_10113,
-        projectType: x['fields'].customfield_10112      
+        jobRole: x['fields'].customfield_10113,
+        projectType: x['fields'].customfield_10112,
+        candidateTimeNeeded: x['fields'].customfield_10062,
+        suitableForBuddy: x['fields'].customfield_10108 ? x['fields'].customfield_10108.value : 'none'     
       }));
-    writeToJsonFile( projectName );
-    console.log(projectName);
+    writeToJsonFile( ResData  );
+    console.log(ResData);
     res.json(json)
   })
   .catch(err => next(err));

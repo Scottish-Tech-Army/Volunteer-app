@@ -9,13 +9,15 @@ function writeToJsonFile( projectName ) {
         if(err) {
             throw err;
         }
-        const projectName = JSON.parse(data);
+        const project = JSON.parse(data);
         
-        insertFileTest.forEach(element => {
-            projectName.paths['/projects'].get.responses['200'].content['application/json'].issues.push(element);
-        });
+        // insertFileTest.forEach(element => {
+        //     projectName.paths['/projects'].get.responses['200'].content['application/json'].issues.push(element);
+        // });
 
-        fs.writeFile('../definitions/api_data.json', JSON.stringify(projectName), (err) => {
+        project.paths['/projects'].get.responses['200'].content['application/json'].issues[0] = insertFileTest;
+
+        fs.writeFile('../definitions/api_data.json', JSON.stringify(project), (err) => {
             if(err) {
                 throw err;
             }
