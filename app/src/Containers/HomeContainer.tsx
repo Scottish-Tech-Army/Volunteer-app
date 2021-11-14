@@ -16,6 +16,7 @@ interface ProjectProps {
 const SafeArea = styled.SafeAreaView`
   background: ${props => props.theme.colors.appBackground};
   color: ${props => props.theme.colors.staBlack};
+  flex: 1;
 `
 
 const HorizontalLine = styled.View`
