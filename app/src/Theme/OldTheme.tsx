@@ -1,10 +1,5 @@
 import React, { FC } from 'react'
 import { ThemeProvider } from 'styled-components/native'
-// import {
-//   useFonts,
-//   Poppins_400Regular,
-//   Poppins_600Semi_Bold
-// } from "@expo-google-fonts/poppins"
 
 const theme = {
   colors: {
@@ -13,13 +8,6 @@ const theme = {
     staOrange: '#ec6730',
     staBlue: '#3192d0',
   },
-  // fonts: Poppins_400Regular,
-  // fontHeader: "Bebas Neue"
-  //   fontSizes: {
-  //     small: "1em",
-  //     medium: "2em",
-  //     large: "3em"
-  //   }
 }
 
 const Theme: FC = ({ children }) => (
