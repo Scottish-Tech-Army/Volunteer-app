@@ -30,7 +30,7 @@ const ProjectDescription = styled.Text`
   margin-top: 4px;
 `
 
-const ProjectSummery = ({ data }) => {
+const ProjectSummary = ({ data }) => {
   const projectList = data.map((project, index) => {
     return (
       <ProjectDetails key={index}>
@@ -62,4 +62,4 @@ const ProjectSummery = ({ data }) => {
   return <>{projectList}</>
 }
 
-export default ProjectSummery
+export default ProjectSummary

@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components/native'
-import ProjectSummery from './ProjectSummery'
+import ProjectSummary from './ProjectSummary'
 
 const ScrollableListWrapper = styled.ScrollView`
   height: 60%;
@@ -14,7 +14,7 @@ const Text = styled.Text`
 const ProjectReturnedList = ({ data }) => {
   return (
     <ScrollableListWrapper>
-      <ProjectSummery data={data} />
+      <ProjectSummary data={data} />
     </ScrollableListWrapper>
   )
 }
