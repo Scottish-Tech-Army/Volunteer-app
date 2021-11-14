@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { FC, useState, useEffect } from 'react'
 import styled from 'styled-components/native'
 import TopOfApp from '@/Components/TopOfApp'
 import ProjectOptions from '@/Components/Project/ProjectOptions'
@@ -7,6 +7,11 @@ import ProjectReturnedList from '@/Components/Project/ProjectReturnedList'
 import { Text, SafeAreaView } from 'react-native'
 import Theme from '@/Theme/OldTheme'
 import { Config } from '@/Config'
+
+type ProjectData = unknown
+interface ProjectProps {
+  data: ProjectData
+}
 
 const SafeArea = styled.SafeAreaView`
   background: ${props => props.theme.colors.appBackground};
@@ -18,7 +23,7 @@ const HorizontalLine = styled.View`
   margin: 0px 75px 10px 75px;
 `
 
-const ProjectList = ({ data }) => {
+const ProjectList: FC<ProjectProps> = ({ data }) => {
   return (
     <SafeArea>
       <TopOfApp />
