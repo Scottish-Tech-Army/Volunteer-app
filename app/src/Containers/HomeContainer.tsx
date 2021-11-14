@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from 'react'
+import React, { FC, useEffect } from 'react'
 import styled from 'styled-components/native'
 import TopOfApp from '@/Components/TopOfApp'
 import ProjectOptions from '@/Components/Project/ProjectOptions'
@@ -6,8 +6,7 @@ import ProjectSearch from '@/Components/Project/ProjectSearch'
 import ProjectReturnedList from '@/Components/Project/ProjectReturnedList'
 import { Text, SafeAreaView } from 'react-native'
 import Theme from '@/Theme/OldTheme'
-import { Config } from '@/Config'
-import { Projects } from '@/Components/Project/types'
+import { Projects, useLazyFetchAllQuery } from '@/Services/modules/projects'
 
 interface ProjectProps {
   data: Projects
@@ -37,19 +36,16 @@ const ProjectList: FC<ProjectProps> = ({ data }) => {
 }
 
 const HomeContainer = () => {
-  const [data, setData] = useState(null)
-  const url = `${Config.BASE_URL}/projects`
+  const [fetchAll, { data: projects }] = useLazyFetchAllQuery()
 
   useEffect(() => {
-    fetch(url)
-      .then(results => results.json())
-      .then(info => setData(info.projects))
-  }, [url])
+    fetchAll('')
+  }, [fetchAll])
 
-  if (data) {
+  if (projects) {
     return (
       <Theme>
-        <ProjectList data={data} />
+        <ProjectList data={projects} />
       </Theme>
     )
   } else {

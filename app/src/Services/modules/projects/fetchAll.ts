@@ -1,8 +1,9 @@
 import { Config } from '@/Config'
 import { EndpointBuilder } from '@reduxjs/toolkit/dist/query/endpointDefinitions'
-import { User } from '.'
+import { Projects } from '.'
 
 export default (build: EndpointBuilder<any, any, any>) =>
-  build.query<User, string>({
-    query: id => `${Config.EXAMPLE_USER_URL}/users/${id}`,
+  build.query<Projects, string>({
+    query: () => `${Config.STA_BASE_URL}/projects`,
+    transformResponse: data => data?.projects,
   })
