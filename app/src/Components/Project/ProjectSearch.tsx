@@ -1,5 +1,5 @@
 import React from 'react'
-import { FontAwesome } from '@expo/vector-icons'
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import styled from 'styled-components/native'
 
 const SearchView = styled.View`

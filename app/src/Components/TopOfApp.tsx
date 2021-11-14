@@ -1,6 +1,6 @@
 import React from 'react'
 import Logo from './StaLogo'
-import { FontAwesome } from '@expo/vector-icons'
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import styled from 'styled-components/native'
 
 const TopView = styled.View`

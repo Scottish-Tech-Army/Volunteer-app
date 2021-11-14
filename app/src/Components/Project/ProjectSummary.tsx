@@ -3,9 +3,8 @@ import styled from 'styled-components/native'
 import ProjectHeading from './ProjectHeading'
 import ProjectSkills from './ProjectSkills'
 import ProjectRequirements from './ProjectRequirements'
-import { FontAwesome5 } from '@expo/vector-icons'
-import { AntDesign } from '@expo/vector-icons'
-import { Feather } from '@expo/vector-icons'
+import Feather from 'react-native-vector-icons/Feather'
+import AntDesign from 'react-native-vector-icons/AntDesign'
 import { Projects } from './types'
 
 interface ProjectSummaryProps {
@@ -45,7 +44,7 @@ const ProjectSummary: FC<ProjectSummaryProps> = ({ data }) => {
         <ProjectDescription>{project.description}</ProjectDescription>
         <ProjectSkills skills={project.skills} />
         <ProjectRequirements
-          icon={<FontAwesome5 name="clock" size={16} />}
+          icon={<Feather name="clock" size={16} />}
           details={project.hours}
         />
         <ProjectRequirements

@@ -6,6 +6,7 @@ import { store, persistor } from '@/Store'
 import ApplicationNavigator from '@/Navigators/Application'
 import ThemeProvider from '@/Theme/OldTheme'
 import './Translations'
+import '@/Components/Icons/init'
 
 const App = () => (
   <Provider store={store}>

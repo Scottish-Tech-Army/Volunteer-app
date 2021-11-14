@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import styled from 'styled-components/native'
-import { Entypo } from '@expo/vector-icons'
+import Entypo from 'react-native-vector-icons/Entypo'
 
 interface ProjectSkillsProps {
   skills: string[]

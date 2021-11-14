@@ -7,10 +7,10 @@ import ProjectReturnedList from '@/Components/Project/ProjectReturnedList'
 import { Text, SafeAreaView } from 'react-native'
 import Theme from '@/Theme/OldTheme'
 import { Config } from '@/Config'
+import { Projects } from '@/Components/Project/types'
 
-type ProjectData = unknown
 interface ProjectProps {
-  data: ProjectData
+  data: Projects
 }
 
 const SafeArea = styled.SafeAreaView`
