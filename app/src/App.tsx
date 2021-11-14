@@ -4,6 +4,7 @@ import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/lib/integration/react'
 import { store, persistor } from '@/Store'
 import ApplicationNavigator from '@/Navigators/Application'
+import ThemeProvider from '@/Theme/OldTheme'
 import './Translations'
 
 const App = () => (
@@ -16,7 +17,9 @@ const App = () => (
      * @see https://github.com/rt2zz/redux-persist/blob/master/docs/PersistGate.md
      */}
     <PersistGate loading={null} persistor={persistor}>
-      <ApplicationNavigator />
+      <ThemeProvider>
+        <ApplicationNavigator />
+      </ThemeProvider>
     </PersistGate>
   </Provider>
 )

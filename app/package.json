@@ -11,6 +11,8 @@
     "type-check": "tsc"
   },
   "dependencies": {
+    "@expo-google-fonts/poppins": "^0.2.0",
+    "@expo/vector-icons": "^12.0.5",
     "@react-native-async-storage/async-storage": "^1.15.7",
     "@react-native-masked-view/masked-view": "^0.2.6",
     "@react-navigation/bottom-tabs": "^6.0.5",
@@ -19,6 +21,8 @@
     "@reduxjs/toolkit": "^1.6.1",
     "@thecodingmachine/redux-toolkit-wrapper": "2.0.1",
     "axios": "^0.21.4",
+    "expo": "^43.0.3",
+    "expo-font": "^10.0.3",
     "i18next": "^20.6.1",
     "prop-types": "^15.7.2",
     "react": "17.0.2",
@@ -32,7 +36,8 @@
     "react-redux": "^7.2.5",
     "redux": "^4.1.1",
     "redux-flipper": "^2.0.1",
-    "redux-persist": "^6.0.0"
+    "redux-persist": "^6.0.0",
+    "styled-components": "^5.3.3"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
