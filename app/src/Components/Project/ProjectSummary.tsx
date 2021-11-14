@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FC } from 'react'
 import styled from 'styled-components/native'
 import ProjectHeading from './ProjectHeading'
 import ProjectSkills from './ProjectSkills'
@@ -6,6 +6,11 @@ import ProjectRequirements from './ProjectRequirements'
 import { FontAwesome5 } from '@expo/vector-icons'
 import { AntDesign } from '@expo/vector-icons'
 import { Feather } from '@expo/vector-icons'
+import { Projects } from './types'
+
+interface ProjectSummaryProps {
+  data: Projects
+}
 
 const ProjectDetails = styled.TouchableOpacity`
   margin: 21px 41px 0px 21px;
@@ -30,7 +35,7 @@ const ProjectDescription = styled.Text`
   margin-top: 4px;
 `
 
-const ProjectSummary = ({ data }) => {
+const ProjectSummary: FC<ProjectSummaryProps> = ({ data }) => {
   const projectList = data.map((project, index) => {
     return (
       <ProjectDetails key={index}>

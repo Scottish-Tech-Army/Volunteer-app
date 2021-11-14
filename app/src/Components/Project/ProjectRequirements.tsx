@@ -1,5 +1,10 @@
-import React from 'react'
+import React, { FC } from 'react'
 import styled from 'styled-components/native'
+
+interface ProjectRequirementsProps {
+  icon: React.ReactNode
+  details: React.ReactNode
+}
 
 const RequirementView = styled.View`
   display: flex;
@@ -11,7 +16,10 @@ const RequirementText = styled.Text`
   margin-left: 13px;
 `
 
-const ProjectRequirements = ({ icon, details }) => {
+const ProjectRequirements: FC<ProjectRequirementsProps> = ({
+  icon,
+  details,
+}) => {
   return (
     <RequirementView>
       {icon}

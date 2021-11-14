@@ -1,6 +1,10 @@
-import React from 'react'
+import React, { FC } from 'react'
 import styled from 'styled-components/native'
 import { Entypo } from '@expo/vector-icons'
+
+interface ProjectSkillsProps {
+  skills: string[]
+}
 
 const SkillsView = styled.View`
   display: flex;
@@ -16,7 +20,7 @@ const SkillText = styled.Text`
   padding: 0px 1px 0px 1px;
 `
 
-const ProjectSkills = ({ skills }) => {
+const ProjectSkills: FC<ProjectSkillsProps> = ({ skills }) => {
   return (
     <SkillsView>
       <Entypo name="tools" size={16} />

@@ -1,17 +1,17 @@
-import React from 'react'
+import React, { FC } from 'react'
 import styled from 'styled-components/native'
 import ProjectSummary from './ProjectSummary'
+import { Projects } from './types'
+
+interface ProjectReturnedListProps {
+  data: Projects
+}
 
 const ScrollableListWrapper = styled.ScrollView`
   height: 60%;
 `
 
-const Text = styled.Text`
-  color: ${props => props.theme.colors.staBlack};
-  padding: 30px 0px;
-`
-
-const ProjectReturnedList = ({ data }) => {
+const ProjectReturnedList: FC<ProjectReturnedListProps> = ({ data }) => {
   return (
     <ScrollableListWrapper>
       <ProjectSummary data={data} />

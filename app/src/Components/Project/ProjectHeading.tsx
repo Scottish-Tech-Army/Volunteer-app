@@ -1,6 +1,10 @@
-import React from 'react'
+import React, { FC } from 'react'
 import styled from 'styled-components/native'
 import { AntDesign } from '@expo/vector-icons'
+
+interface ProjectHeadingProps {
+  title: string
+}
 
 const ProjectHeadingView = styled.View`
   display: flex;
@@ -13,7 +17,7 @@ const ProjectTitle = styled.Text`
   font-size: 18px;
 `
 
-const ProjectHeading = ({ title }) => {
+const ProjectHeading: FC<ProjectHeadingProps> = ({ title }) => {
   return (
     <ProjectHeadingView>
       <ProjectTitle>{title}</ProjectTitle>
