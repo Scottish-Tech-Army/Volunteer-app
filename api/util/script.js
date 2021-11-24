@@ -1,10 +1,12 @@
 import express from "express";
 import fetch from "node-fetch";
 import dotenv from 'dotenv';
+import { writeToJsonFile } from '../js/writeToJsonFile.js';
 dotenv.config();
 
 const app = express();
 const api_key = process.env.API_KEY;
+const email = process.env.EMAIL;
 
 app.get("/", function (req, res, next) {
   
@@ -13,7 +15,7 @@ app.get("/", function (req, res, next) {
     headers: {
       'Authorization': `Basic ${Buffer.from(
         // below use email address you used for jira and generate token from jira
-        `hamidq88@gmail.com:${api_key}`
+        `${email}:${api_key}`
       ).toString('base64')}`,
       'Accept': 'application/json'
     }
@@ -27,7 +29,21 @@ app.get("/", function (req, res, next) {
     }
     return Promise.reject(new Error(response.statusText));
   })
-  .then(json => res.json(json))
+  .then(json => {
+    // console.log(json.issues);
+    const ResData = json.issues.map(x => (
+      { 
+        projectName: x['fields'].summary, 
+        description: x['fields'].description, 
+        jobRole: x['fields'].customfield_10113,
+        projectType: x['fields'].customfield_10112,
+        candidateTimeNeeded: x['fields'].customfield_10062,
+        suitableForBuddy: x['fields'].customfield_10108 ? x['fields'].customfield_10108.value : 'none'     
+      }));
+    writeToJsonFile( ResData  );
+    console.log(ResData);
+    res.json(json)
+  })
   .catch(err => next(err));
 });
 
