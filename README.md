@@ -17,7 +17,9 @@ Welcome to the the Volunteering App Github repo
     > Expo CLI installation:  
     > once installed the previous requirements - run the command terminal and type: **npm install --global expo-cli**
 
-4. Ensure that you have read through https://reactnative.dev/docs/environment-setup  
+4. Ensure that you have read through https://reactnative.dev/docs/environment-setup
+5. Make sure that you have Android 10 installed and not higher.
+6. 
 ​
 # Setup     
 
