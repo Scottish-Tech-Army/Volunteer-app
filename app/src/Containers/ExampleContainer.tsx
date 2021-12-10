@@ -32,7 +32,6 @@ const ExampleContainer = () => {
   const onChangeTheme = ({ theme, darkMode }: Partial<ThemeState>) => {
     dispatch(changeTheme({ theme, darkMode }))
   }
-
   return (
     <ScrollView
       style={Layout.fill}
@@ -46,7 +45,7 @@ const ExampleContainer = () => {
         <Brand />
         {(isLoading || isFetching) && <ActivityIndicator />}
         {!isSuccess ? (
-          <Text style={Fonts.textRegular}>{error}</Text>
+          <Text style={Fonts.textRegular}>{error?.error}</Text>
         ) : (
           <Text style={Fonts.textRegular}>
             {t('example.helloUser', { name: data?.name })}
