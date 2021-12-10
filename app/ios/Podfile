@@ -12,6 +12,7 @@ target 'STA' do
     :hermes_enabled => false
   )
 
+
   target 'STATests' do
     inherit! :complete
     # Pods for testing
