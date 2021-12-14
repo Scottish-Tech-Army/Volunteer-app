@@ -28,7 +28,9 @@ Welcome to the the Volunteering App Github repo
 4. Go to the `app` folder inside the project folder (e.g. **\Volunteer-app path\app**)      
  
 5. type in command terminal: npm install     
-    >**Note:** Inside client folder there is package-lock.json. Everytime this is modified, it is advised to do step 4      before       running the project.      
+    >**Note:** Inside the `app` folder there is package-lock.json. Everytime this is modified, it is advised to do step 4      before       running the project.      
     >**Note:** you may need to run `npm install --legacy-peer-deps`
 
-6. type in command terminal: `npm run ios` or `npm run android`
+6. duplicate the example config file `app/src/Config/index.example.ts` and name your new file `app/src/Config/index.ts`
+
+7. type in command terminal: `npm run ios` or `npm run android`
