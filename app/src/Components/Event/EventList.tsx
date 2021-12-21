@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import styled from 'styled-components/native'
 // import Event component
-import { Events } from './types'
+import { Events, useLazyFetchAllQuery } from '@/Services/modules/events'
 
 interface EventListProps {
     data: Events
@@ -13,6 +13,8 @@ const EventList: FC<EventListProps> = ({ data }) => {
             <p>Event Component here</p>
         )
     } )
+
+    return <>{eventList}</>
 } 
 
 export default EventList;

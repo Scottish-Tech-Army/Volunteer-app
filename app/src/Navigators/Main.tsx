@@ -27,7 +27,7 @@ const MainNavigator = () => {
         name="Events"
         component={EventList}
         options={{
-          tabBarIcon: () => <Entypo color={Colors.text} name="cog" size={24} />,
+          tabBarIcon: () => <Entypo color={Colors.text} name="megaphone" size={24} />,
         }}
       />
       <Tab.Screen

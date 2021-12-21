@@ -1,24 +1,18 @@
 import { api } from '../../api'
 import fetchAll from './fetchAll'
 
-export const projectsApi = api.injectEndpoints({
+export const eventsApi = api.injectEndpoints({
   endpoints: build => ({
     fetchAll: fetchAll(build),
   }),
   overrideExisting: false,
 })
 
-export const { useLazyFetchAllQuery } = projectsApi
+export const { useLazyFetchAllQuery } = eventsApi
 
-export interface Project {
+export interface Event {
   name: string
-  client: string
-  role: string
-  description: string
-  skills: string[]
-  hours: number
-  required: boolean
-  buddying: boolean
+  date: Date
 }
 
-export type Projects = Project[]
+export type Events = Event[]
