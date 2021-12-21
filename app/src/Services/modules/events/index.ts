@@ -3,7 +3,7 @@ import fetchAll from './fetchAll'
 
 export const eventsApi = api.injectEndpoints({
   endpoints: build => ({
-    fetchAll: fetchAll(build),
+    fetchAllEvents: fetchAll(build),
   }),
   overrideExisting: false,
 })
