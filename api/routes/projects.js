@@ -1,8 +1,12 @@
+require('dotenv').config();
+
 const express = require('express');
 const router = express.Router();
 const data = require('../data.json');
 const axios = require('axios').default;
-
+const app = express();
+const api_key = process.env.API_KEY;
+const email = process.env.EMAIL;
 
 router.get('/', (req, res, next) => {
     const fetchAll = async(u) => {
@@ -40,7 +44,7 @@ router.get('/', (req, res, next) => {
                 charityVideo: x['fields'].customfield_10159 ? x['fields'].customfield_10159 : 'none'
               })));
           }
-          return res.json(dataArray);
+          return res.status(200).send(dataArray);
     
         })
         .catch(err => next(err));
