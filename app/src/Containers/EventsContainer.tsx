@@ -32,11 +32,11 @@ const EventList: FC<EventProps> = ({ data }) => {
 }
 
 const EventsContainer = () => {
-  const [fetchAll, { data: events }] = useLazyFetchAllQuery()
+  const [fetchAllEvents, { data: events }] = useLazyFetchAllQuery()
 
   useEffect(() => {
-    fetchAll('')
-  }, [fetchAll])
+    fetchAllEvents('')
+  }, [fetchAllEvents])
 
   if (events) {
     return (
