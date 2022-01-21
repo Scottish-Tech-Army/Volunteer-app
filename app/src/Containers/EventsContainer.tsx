@@ -4,7 +4,7 @@ import TopOfApp from '@/Components/TopOfApp'
 import EventReturnedList from '@/Components/Event/EventReturnedList'
 import { Text, SafeAreaView } from 'react-native'
 import Theme from '@/Theme/OldTheme'
-import { Events, useLazyFetchAllQuery } from '@/Services/modules/events'
+import { Events, useLazyFetchAllEventsQuery } from '@/Services/modules/events'
 
 interface EventProps {
   data: Events
@@ -32,7 +32,9 @@ const EventList: FC<EventProps> = ({ data }) => {
 }
 
 const EventsContainer = () => {
-  const [fetchAllEvents, { data: events }] = useLazyFetchAllQuery()
+
+  const [fetchAllEvents, { data: events }] = useLazyFetchAllEventsQuery()
+console.log(useLazyFetchAllEventsQuery());
 
   useEffect(() => {
     fetchAllEvents('')
