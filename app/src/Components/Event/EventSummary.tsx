@@ -19,7 +19,7 @@ const EventSummary: FC<EventSummaryProps> = ({ data }) => {
   const eventList = data.map((event, index) => {
     return (
         <EventDetails key={index}>
-            <Text>{event.name}</Text>
+            <Text>{event.fields["Event Name"]}</Text>
         </EventDetails>
     )
   })
