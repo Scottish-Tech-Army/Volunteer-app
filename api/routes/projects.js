@@ -12,9 +12,6 @@ const email = process.env.EMAIL;
 router.get('/', async (req, res, next) =>  {
   const ResArray = [];
   const ItArray = [];
-  
-  console.log('api_key', api_key);
-  console.log('Email', email);
 
   const callAllResData = Promise.resolve(jiraResourceDataCall(0));
   const callAllItData = Promise.resolve(jiraItDataCall(0));
@@ -29,9 +26,6 @@ router.get('/', async (req, res, next) =>  {
           'Accept': 'application/json'
         }
       })
-        console.log(`startAt: ${jiraRes.data.startAt}`);
-        console.log(`maxResults: ${jiraRes.data.maxResults}`);
-        console.log(`total: ${jiraRes.data.total}`);
 
         let ResTotalData = parseInt(jiraRes.data.total);
 
@@ -45,11 +39,9 @@ router.get('/', async (req, res, next) =>  {
                 candidateCoreSkills: x['fields'].customfield_10061 ? x['fields'].customfield_10061 : 'none'    
           })
         ));
+
         if(ResArray.length < ResTotalData){
           let ResStartResultSearch = ResArray.length;
-          console.log(startAt);
-          console.log(ResArray.length);
-          console.log(ResTotalData);
           return jiraResourceDataCall(ResStartResultSearch);
         } 
         return;
@@ -65,10 +57,7 @@ router.get('/', async (req, res, next) =>  {
         'Accept': 'application/json'
       }
     })
-    console.log(`startAt: ${jiraIt.data.startAt}`);
-    console.log(`maxResults: ${jiraIt.data.maxResults}`);
-    console.log(`total: ${jiraIt.data.total}`);
-
+ 
     let ItTotalData = parseInt(jiraIt.data.total);
 
     const ItData = jiraIt.data.issues.map(x => (
@@ -81,9 +70,6 @@ router.get('/', async (req, res, next) =>  {
     ));
     if(ItArray.length < ItTotalData){
       let ItStartResultSearch = ItArray.length;
-      console.log(ItstartAt);
-      console.log(ItArray.length);
-      console.log(ItTotalData);
       return jiraItDataCall(ItStartResultSearch);
     } 
     return;
