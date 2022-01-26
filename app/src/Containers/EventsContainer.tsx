@@ -39,8 +39,6 @@ const EventsContainer = () => {
     fetchAllEvents('')
   }, [fetchAllEvents])
 
-  console.log("Events:", events);
-
   if (events) {
     return (
       <Theme>
