@@ -1,6 +1,7 @@
 import React, { FC } from 'react'
 import { Text } from 'react-native'
 import styled from 'styled-components/native'
+import EventHeading from './EventHeading'
 import Feather from 'react-native-vector-icons/Feather'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { Events } from './types'
@@ -19,7 +20,7 @@ const EventSummary: FC<EventSummaryProps> = ({ data }) => {
   const eventList = data.map((event, index) => {
     return (
         <EventDetails key={index}>
-            <Text>{event.fields["Event Name"]}</Text>
+          <EventHeading title={event.fields["Event Name"]} />
         </EventDetails>
     )
   })
