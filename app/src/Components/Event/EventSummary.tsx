@@ -15,17 +15,25 @@ const EventDetails = styled.TouchableOpacity`
   padding: 17px 27px 11px 27px;
   min-height: 68px;
   display: flex;
+  flex-direction: row;
   line-height: 18px;
 `
+
+const RightColumn = styled.View`
+  display: flex;
+`
+
 
 const EventSummary: FC<EventSummaryProps> = ({ data }) => {
   const eventList = data.map((event, index) => {
     return (
         <EventDetails key={index}>
           <EventThumbnail thumbnailUri="https://reactnative.dev/img/tiny_logo.png"/>
-          <EventHeading title={event.fields["Event Name"]} />
-          <EventDate eventDate={new Date(event.fields["Event Date"])} />
-          <EventTime eventTime={Number(event.fields["Event time"])} />
+            <RightColumn>
+              <EventHeading title={event.fields["Event Name"]} />
+              <EventDate eventDate={new Date(event.fields["Event Date"])} />
+              <EventTime eventTime={Number(event.fields["Event time"])} />
+            </RightColumn>
         </EventDetails>
     )
   })
