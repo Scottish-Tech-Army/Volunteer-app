@@ -6,10 +6,10 @@ interface EventThumbnailProps {
 }
 
 const ThumbnailImage = styled.Image`
-    width: 100px;
+    width: 110px;
     height: 100px;
     border-radius: 5px;
-    margin-right: 10px;
+    margin-right: 20px;
 `
 
 const EventThumbnail: FC<EventThumbnailProps> = ({thumbnailUri}) => {
