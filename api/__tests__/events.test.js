@@ -6,7 +6,7 @@ const nock = require('nock')
 
 axios.defaults.adapter = require('axios/lib/adapters/http')
 
-const scope = nock('http://localhost:5000')
+const scopeEvents = nock('http://localhost:3000')
     .get('/airtable/events')
     .reply(200, [
       {
@@ -38,6 +38,53 @@ const scope = nock('http://localhost:5000')
         "createdTime": "2021-09-30T17:41:59.000Z"
       }])
 
+      const scopeSingleEvent = nock('http://localhost:3000')
+      .get('/airtable/event/recAb4kAFdkeKKnLU')
+      .reply(200, 
+        {
+          "id": "recAb4kAFdkeKKnLU",
+          "fields": {
+            "Event Name": "Showcase - Volunteer app",
+            "Attachments": [
+              {
+                "id": "attBLi1thvJY4WPgh",
+                "width": 800,
+                "height": 600,
+                "url": "https://dl.airtable.com/.attachments/57e0272e8d7b5aaa37e3f7a59f2326d8/d1264d9e/image1.jpg",
+                "filename": "profile.jpg",
+                "size": 311694,
+                "type": "image/jpeg",
+                "thumbnails": {
+                  "small": {
+                    "url": "https://dl.airtable.com/.attachmentThumbnails/fe49dfcb6a184c11f6882dd22f43f02d/207e51bb",
+                    "width": 48,
+                    "height": 36
+                  },
+                  "large": {
+                    "url": "https://dl.airtable.com/.attachmentThumbnails/e3a7913515161c83b210a4fec03bc7fa/5bd0c145",
+                    "width": 683,
+                    "height": 512
+                  },
+                  "full": {
+                    "url": "https://dl.airtable.com/.attachmentThumbnails/950e29521098d877ede948702c021c48/3dc57685",
+                    "width": 3000,
+                    "height": 3000
+                  }
+                }
+              }
+            ],
+            "Event Status": "Past",
+            "Event Date": "2021-09-08",
+            "Event time": 43200,
+            "Duration": 3600,
+            "Event Description": "We are proud to showcase our volunteer projects. Come and have a look at the story so far, if you are curious & want to volunteer- join us!",
+            "Event Type": "Internal",
+            "Event link": "https://vimeo.com/583815096",
+            "Event Series": "STA Project Showcase"
+          },
+          "createdTime": "2021-09-21T12:29:41.000Z"
+        })
+
 describe("Test the projects api", () => {
   // jest.setTimeout(60000)
   
@@ -45,11 +92,22 @@ describe("Test the projects api", () => {
  
     
 
-    const response = await axios.get('http://localhost:5000/airtable/events')
+    const response = await axios.get('http://localhost:3000/airtable/events')
  
-    scope.done()
+    scopeEvents.done()
     expect(response.status).toBe(200)
     expect(response.data[0].id).toBe("recAb4kAFdkeKKnLU")
+  });
+
+  test("GET single event", async () => {
+ 
+    
+
+    const response = await axios.get('http://localhost:3000/airtable/event/recAb4kAFdkeKKnLU')
+ 
+    scopeSingleEvent.done()
+    expect(response.status).toBe(200)
+    expect(response.data.id).toBe("recAb4kAFdkeKKnLU")
   });
   
   test("GET single project by ID method should return Not Found", async () => {
