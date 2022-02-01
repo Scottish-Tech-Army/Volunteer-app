@@ -6,8 +6,8 @@ interface EventThumbnailProps {
 }
 
 const ThumbnailImage = styled.Image`
-    width: 96px;
-    height: 96px;
+    width: 100px;
+    height: 100px;
     border-radius: 5px;
     margin-right: 10px;
 `

@@ -4,6 +4,7 @@ import EventHeading from './EventHeading'
 import EventDate from './EventDate'
 import EventThumbnail from './EventThumbnail'
 import EventTime from './EventTime'
+import Feather from 'react-native-vector-icons/Feather'
 import { Events } from './types'
 
 interface EventSummaryProps {
@@ -17,6 +18,8 @@ const EventDetails = styled.TouchableOpacity`
   display: flex;
   flex-direction: row;
   line-height: 18px;
+  border-bottom-width: 1px;
+  border-bottom-color: ${props => props.theme.colors.staBlack};
 `
 
 const RightColumn = styled.View`
@@ -31,9 +34,15 @@ const EventSummary: FC<EventSummaryProps> = ({ data }) => {
           <EventThumbnail thumbnailUri="https://reactnative.dev/img/tiny_logo.png"/>
             <RightColumn>
               <EventHeading title={event.fields["Event Name"]} />
-              <EventDate eventDate={new Date(event.fields["Event Date"])} />
-              <EventTime eventTime={Number(event.fields["Event time"])} />
+              <EventDate 
+                icon={<Feather name="calendar" size={28} />}
+                eventDate={new Date(event.fields["Event Date"])} 
+              />
+              <EventTime 
+                icon={<Feather name="clock" size={28} />}
+                eventTime={Number(event.fields["Event time"])} />
             </RightColumn>
+
         </EventDetails>
     )
   })
