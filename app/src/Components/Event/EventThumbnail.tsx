@@ -1,14 +1,25 @@
 import React, { FC }  from 'react'
-import { ImageComponent } from 'react-native'
+import { Image } from 'react-native'
 import styled from 'styled-components/native'
 
 interface EventThumbnailProps {
-    thumbnail: string
+    thumbnailUri: string
 }
 
-const EventThumbnail: FC<EventThumbnailProps> = ({thumbnail}) => {
+const ThumbnailView = styled.Text`
+    width: 48px;
+    height: 48px;
+    border-radius: 5px;
+    margin-right: 10px;
+`
+
+const EventThumbnail: FC<EventThumbnailProps> = ({thumbnailUri}) => {
   return (
-    <ImageComponent source={{uri: thumbnail}} />
+    <ThumbnailView>
+        <Image source={{
+          uri: thumbnailUri,
+        }}/>
+    </ThumbnailView>
   )
 }
 

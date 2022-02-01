@@ -22,10 +22,10 @@ const EventSummary: FC<EventSummaryProps> = ({ data }) => {
   const eventList = data.map((event, index) => {
     return (
         <EventDetails key={index}>
-          <EventThumbnail />
+          <EventThumbnail thumbnailUri="https://reactnative.dev/img/tiny_logo.png"/>
           <EventHeading title={event.fields["Event Name"]} />
           <EventDate eventDate={new Date(event.fields["Event Date"])} />
-          <EventTime eventDate={new Date(event.fields["Event Date"])} />
+          <EventTime eventTime={Number(event.fields["Event time"])} />
         </EventDetails>
     )
   })

@@ -1,9 +1,8 @@
 import React, { FC }  from 'react'
 import styled from 'styled-components/native'
-import { ImageComponent } from 'react-native'
 
 interface EventTimeProps {
-    eventDate: Date
+    eventTime: number
 }
 
 const DateView = styled.Text`
@@ -12,10 +11,10 @@ const DateView = styled.Text`
   margin-top: 9px;
 `
 
-const EventTime: FC<EventTimeProps> = ({eventDate}) => {
+const EventTime: FC<EventTimeProps> = ({eventTime}) => {
   return (
     <DateView>
-        {eventDate.toDateString()}
+        {eventTime}
     </DateView>
   )
 }
