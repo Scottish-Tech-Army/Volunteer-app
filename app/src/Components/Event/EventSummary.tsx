@@ -1,9 +1,9 @@
 import React, { FC } from 'react'
-import { Text } from 'react-native'
 import styled from 'styled-components/native'
 import EventHeading from './EventHeading'
-import Feather from 'react-native-vector-icons/Feather'
-import AntDesign from 'react-native-vector-icons/AntDesign'
+import EventDate from './EventDate'
+import EventThumbnail from './EventThumbnail'
+import EventTime from './EventTime'
 import { Events } from './types'
 
 interface EventSummaryProps {
@@ -12,15 +12,20 @@ interface EventSummaryProps {
 
 const EventDetails = styled.TouchableOpacity`
   margin: 21px 41px 0px 21px;
-  border: ${props => `2px solid ${props.theme.colors.staBlack}`};
   padding: 17px 27px 11px 27px;
+  min-height: 68px;
+  display: flex;
+  line-height: 18px;
 `
 
 const EventSummary: FC<EventSummaryProps> = ({ data }) => {
   const eventList = data.map((event, index) => {
     return (
         <EventDetails key={index}>
+          <EventThumbnail />
           <EventHeading title={event.fields["Event Name"]} />
+          <EventDate eventDate={new Date(event.fields["Event Date"])} />
+          <EventTime eventDate={new Date(event.fields["Event Date"])} />
         </EventDetails>
     )
   })
