@@ -28,7 +28,7 @@ const scopeEvents = nock('http://localhost:3000')
         "fields": {
           "Event Name": "Showcase - Foodbank Support",
           "Event Status": "Scheduled",
-          "Event Date": "2021-10-20",
+          "Event Date": "2021-10-23",
           "Event time": 50400,
           "Duration": 2700,
           "Event Description": "The team has been steadily working with the Trussell Trust to support the roll out of their volunteer app.\n",
@@ -85,7 +85,46 @@ const scopeEvents = nock('http://localhost:3000')
           "createdTime": "2021-09-21T12:29:41.000Z"
         })
 
-describe("Test the projects api", () => {
+        const pastEvents = nock('http://localhost:3000')
+    .get('/airtable/events/schedule/past')
+    .reply(200, [
+      {
+        "id": "recAb4kAFdkeKKnLU",
+        "fields": {
+          "Event Name": "Showcase - Volunteer app",
+          "Event Status": "Past",
+          "Event Date": "2021-09-08",
+          "Event time": 43200,
+          "Duration": 3600,
+          "Event Description": "We are proud to showcase our volunteer projects. Come and have a look at the story so far, if you are curious & want to volunteer- join us!",
+          "Event Type": "Internal",
+          "Event link": "https://vimeo.com/583815096",
+          "Event Series": "STA Project Showcase"
+        },
+        "createdTime": "2021-09-21T12:29:41.000Z"
+      }])
+
+      const scheduledEvents = nock('http://localhost:3000')
+    .get('/airtable/events/schedule/scheduled')
+    .reply(200, [
+      {
+        "id": "reczf1MnfITcs4G8N",
+        "fields": {
+          "Event Name": "Showcase - Foodbank Support",
+          "Event Status": "Scheduled",
+          "Event Date": "2021-10-23",
+          "Event time": 50400,
+          "Duration": 2700,
+          "Event Description": "The team has been steadily working with the Trussell Trust to support the roll out of their volunteer app.\n",
+          "Event Type": "Internal",
+          "Event Series": "STA Project Showcase"
+        },
+        "createdTime": "2021-09-30T17:41:59.000Z"
+      }])
+
+
+
+describe("Test the events api", () => {
   // jest.setTimeout(60000)
   
   test("GET all method should respond successfully", async () => {
@@ -111,8 +150,31 @@ describe("Test the projects api", () => {
   });
   
   test("GET single project by ID method should return Not Found", async () => {
-    // jest.setTimeout(60000)
     const response = await request(app).get("/airtable/events/1");
     expect(response.statusCode).toBe(404);
   });
+
+  test("GET past events should respond successfully", async () => {
+ 
+    
+
+    const response = await axios.get('http://localhost:3000/airtable/events/schedule/past')
+    console.log(response);
+    pastEvents.done()
+    expect(response.status).toBe(200)
+    expect(response.data[0].id).toBe("recAb4kAFdkeKKnLU")
+  });
+
+  test("GET scheduled events should respond successfully", async () => {
+ 
+    
+
+    const response = await axios.get('http://localhost:3000/airtable/events/schedule/scheduled')
+ 
+    scheduledEvents.done()
+    expect(response.status).toBe(200)
+    expect(response.data[0].id).toBe("reczf1MnfITcs4G8N")
+  });
+
+
 });
