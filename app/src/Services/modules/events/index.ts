@@ -12,20 +12,7 @@ export const eventsApi = api.injectEndpoints({
 export const { useLazyFetchAllEventsQuery } = eventsApi
 
 export interface Event {
-
-  fields: {
-    "id": string,
-    "Event Name": string,
-    "Event Status": string,
-    "Event Date": Date,
-    "Event time": number,
-    "Duration": number,
-    "Event Description": string,
-    "Event Type": string,
-    "Event Series": string
-  },
-  "createdTime": "2021-11-22T20:25:48.000Z"
-
+  fields: {}
 }
 
 export type Events = Event[]
