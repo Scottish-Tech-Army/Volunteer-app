@@ -2,7 +2,7 @@ import React, { FC }  from 'react'
 import styled from 'styled-components/native'
 
 interface EventTimeProps {
-    eventTime: number
+    eventTime: string
     icon: React.ReactNode
 }
 
@@ -19,6 +19,7 @@ const TimeText = styled.Text`
 `
 
 const EventTime: FC<EventTimeProps> = ({eventTime, icon}) => {
+
   return (
     <TimeView>
         {icon}
