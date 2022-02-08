@@ -5,10 +5,11 @@ import ProjectSkills from './ProjectSkills'
 import ProjectRequirements from './ProjectRequirements'
 import Feather from 'react-native-vector-icons/Feather'
 import AntDesign from 'react-native-vector-icons/AntDesign'
-import { Projects } from './types'
+import { Projects } from '@/Services/modules/projects'
 
 interface ProjectSummaryProps {
   data: Projects
+  onPress(): void
 }
 
 const ProjectDetails = styled.TouchableOpacity`
@@ -34,10 +35,10 @@ const ProjectDescription = styled.Text`
   margin-top: 4px;
 `
 
-const ProjectSummary: FC<ProjectSummaryProps> = ({ data }) => {
+const ProjectSummary: FC<ProjectSummaryProps> = ({ data, onPress }) => {
   const projectList = data.map((project, index) => {
     return (
-      <ProjectDetails key={index}>
+      <ProjectDetails key={index} onPress={onPress} >
         <ProjectHeading title={project.name} />
         <ProjectSubTitle>{project.client}</ProjectSubTitle>
         <ProjectRole>{project.role}</ProjectRole>

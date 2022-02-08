@@ -7,9 +7,11 @@ import ProjectReturnedList from '@/Components/Project/ProjectReturnedList'
 import { Text, SafeAreaView } from 'react-native'
 import Theme from '@/Theme/OldTheme'
 import { Projects, useLazyFetchAllQuery } from '@/Services/modules/projects'
+import { navigate } from '@/Navigators/utils'
 
 interface ProjectProps {
   data: Projects
+  onPress(): void
 }
 
 const SafeArea = styled.SafeAreaView`
@@ -23,14 +25,14 @@ const HorizontalLine = styled.View`
   margin: 0px 75px 10px 75px;
 `
 
-const ProjectList: FC<ProjectProps> = ({ data }) => {
+const ProjectList: FC<ProjectProps> = ({ data, onPress }) => {
   return (
     <SafeArea>
       <TopOfApp />
       <ProjectSearch />
       <ProjectOptions />
       <HorizontalLine />
-      <ProjectReturnedList data={data} />
+      <ProjectReturnedList data={data} onPress={onPress}/>
     </SafeArea>
   )
 }
@@ -45,7 +47,7 @@ const HomeContainer = () => {
   if (projects) {
     return (
       <Theme>
-        <ProjectList data={projects} />
+        <ProjectList data={projects} onPress={() => { navigate('ProjectDetail', '' ) }}/>
       </Theme>
     )
   } else {
