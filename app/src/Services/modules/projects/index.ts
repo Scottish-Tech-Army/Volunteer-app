@@ -11,13 +11,15 @@ export const projectsApi = api.injectEndpoints({
 export const { useLazyFetchAllQuery } = projectsApi
 
 export interface Project {
+  key: string
   name: string
+  type: string
   client: string
   role: string
   description: string
   skills: string[]
-  hours: number
-  required: boolean
+  hours: string
+  required: string
   buddying: boolean
 }
 
