@@ -39,9 +39,9 @@ function convertHMS(value: string) {
 
 
 const EventSummary: FC<EventSummaryProps> = ({ data }) => {
-  const eventList = data.map((event, index) => {
+  const eventList = data.map((event) => {
     return (
-        <EventDetails key={index}>
+        <EventDetails key={event.id}>
           <EventThumbnail thumbnailUri="https://reactnative.dev/img/tiny_logo.png"/>
           <RightColumn>
             <EventHeading title={event.fields["Event Name"]} />
