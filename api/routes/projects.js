@@ -35,8 +35,6 @@ router.get('/', async (req, res, next) => {
       },
     );
 
-    console.log(jiraRes.data.issues[0], jiraRes.data.issues[0].fields);
-
     let ResTotalData = parseInt(jiraRes.data.total);
 
     const ResourceDataDump = jiraRes.data.issues.map((x) =>
