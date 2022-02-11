@@ -40,6 +40,7 @@ router.get('/', async (req, res, next) => {
     const ResourceDataDump = jiraRes.data.issues.map((x) =>
       ResArray.push({
         res_id: x['id'],
+        it_related_field_id: x['fields'].customfield_10109,
         jobRole: x['fields'].customfield_10113,
         projectType: x['fields'].customfield_10112,
         suitableForBuddy: x['fields'].customfield_10108 ? x['fields'].customfield_10108.value : 'none',
@@ -73,7 +74,7 @@ router.get('/', async (req, res, next) => {
 
     const ItData = jiraIt.data.issues.map((x) =>
       ItArray.push({
-        it_id: x['id'],
+        it_key: x['key'],
         projectName: x['fields'].summary,
         charityName: x['fields'].customfield_10027,
         charityVideo: x['fields'].customfield_10159 ? x['fields'].customfield_10159 : 'none',
@@ -85,6 +86,27 @@ router.get('/', async (req, res, next) => {
     }
     return;
   }
+
+  function linkData(ResArray, ItArray) {
+    const FinalArray = [];
+    for (let i = 0; i < ResArray.length; i++) {
+      for (let j = 0; j < ItArray.length; j++) {
+        for (const ResData in ResArray[i]) {
+          for (const ItData in ItArray[j]) {
+            if (ResArray[i][ResData] == ItArray[j][ItData]) {
+              FinalArray.push({
+                ResData: ResArray[i],
+                ItData: ItArray[j]
+              })
+            }
+            break;
+          }
+        }
+      }
+    }
+    res.status(200).send(FinalArray);
+  }
+
   Promise.all([callAllResData, callAllItData]).then(() => {
     const final = {
       jiraResBoard: {
@@ -96,7 +118,7 @@ router.get('/', async (req, res, next) => {
         data: ItArray,
       },
     };
-    res.status(200).send(final);
+    return linkData(ResArray, ItArray);
   });
 });
 
