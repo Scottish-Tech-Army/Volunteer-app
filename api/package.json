@@ -20,6 +20,7 @@
     "nodemon": "^2.0.12"
   },
   "devDependencies": {
+    "@faker-js/faker": "^6.0.0-alpha.6",
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "cors": "^2.8.5",
