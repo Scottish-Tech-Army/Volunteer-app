@@ -35,7 +35,7 @@ router.get('/', async (req, res, next) => {
       },
     );
 
-    let ResTotalData = parseInt(jiraRes.data.total);
+    const ResTotalData = parseInt(jiraRes.data.total);
 
     const ResourceDataDump = jiraRes.data.issues.map((x) =>
       ResArray.push({
@@ -70,7 +70,7 @@ router.get('/', async (req, res, next) => {
       },
     );
 
-    let ItTotalData = parseInt(jiraIt.data.total);
+    const ItTotalData = parseInt(jiraIt.data.total);
 
     const ItData = jiraIt.data.issues.map((x) =>
       ItArray.push({
