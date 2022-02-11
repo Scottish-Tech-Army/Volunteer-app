@@ -89,10 +89,10 @@ router.get('/', async (req, res, next) => {
 
   function linkData(ResArray, ItArray) {
     const FinalArray = [];
-    for (var i = 0; i < ResArray.length; i++) {
-      for (var j = 0; j < ItArray.length; j++) {
-        for (var ResData in ResArray[i]) {
-          for (var ItData in ItArray[j]) {
+    for (let i = 0; i < ResArray.length; i++) {
+      for (let j = 0; j < ItArray.length; j++) {
+        for (const ResData in ResArray[i]) {
+          for (const ItData in ItArray[j]) {
             if (ResArray[i][ResData] == ItArray[j][ItData]) {
               FinalArray.push({
                 ResData: ResArray[i],
@@ -104,7 +104,6 @@ router.get('/', async (req, res, next) => {
         }
       }
     }
-    console.log(FinalArray);
     res.status(200).send(FinalArray);
   }
 
