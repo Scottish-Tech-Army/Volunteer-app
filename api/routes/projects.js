@@ -10,7 +10,7 @@ const email = process.env.EMAIL;
 const resourcingJiraBoardName = 'RES';
 const recruiterAssignedJiraColumnName = 'Recruiter Assigned';
 
-// axios.defaults.baseURL= 'https://sta2020.atlassian.net/rest/api/2/search?jql=project='
+
 router.get('/', async (req, res, next) => {
   const ResArray = [];
   const ItArray = [];
@@ -73,18 +73,18 @@ router.get('/', async (req, res, next) => {
     const ItTotalData = parseInt(jiraIt.data.total);
 
     const ItData = jiraIt.data.issues.map((x) =>
-      ItArray.push({
-        it_key: x['key'],
-        projectName: x['fields'].summary,
-        charityName: x['fields'].customfield_10027,
-        charityVideo: x['fields'].customfield_10159 ? x['fields'].customfield_10159 : 'none',
+        ItArray.push({
+          it_key: x['key'],
+          projectName: x['fields'].summary,
+          charityName: x['fields'].customfield_10027,
+          charityVideo: x['fields'].customfield_10159 ? x['fields'].customfield_10159 : 'none',
       }),
     );
     if (ItArray.length < ItTotalData) {
       let ItStartResultSearch = ItArray.length;
       return jiraItDataCall(ItStartResultSearch);
     }
-    return;
+       return;
   }
 
   function linkData(ResArray, ItArray) {
@@ -121,5 +121,74 @@ router.get('/', async (req, res, next) => {
     return linkData(ResArray, ItArray);
   });
 });
+
+router.get('/single', async (req, res, next) => {
+
+  const singleRes = await axios.get(
+    `https://sta2020.atlassian.net/rest/api/3/issue/${req.query.res}`,
+    {
+      headers: {
+        Authorization: `Basic ${Buffer.from(
+          // below use email address you used for jira and generate token from jira
+          `${email}:${api_key}`,
+        ).toString('base64')}`,
+        Accept: 'application/json',
+      },
+    },
+  )
+  // .then((resData) => {
+
+  //   project = {
+  //     res_id: resData.data['id'],
+  //     it_related_field_id: resData.data['fields'].customfield_10109,
+  //     jobRole: resData.data['fields'].customfield_10113,
+  //     projectType: resData.data['fields'].customfield_10112,
+  //     suitableForBuddy: resData.data['fields'].customfield_10108 ? resData.data['fields'].customfield_10108.value : 'none',
+  //     candidateTime: resData.data['fields'].customfield_10062 ? resData.data['fields'].customfield_10062 : 'none',
+  //     candidateCoreSkills: resData.data['fields'].customfield_10061 ? resData.data['fields'].customfield_10061 : 'none',
+  //   }
+ 
+  // }).then(() => {
+    const singleIt =  axios.get(
+      `https://sta2020.atlassian.net/rest/api/3/issue/${req.query.it}`,
+      {
+        headers: {
+          Authorization: `Basic ${Buffer.from(
+            // below use email address you used for jira and generate token from jira
+            `${email}:${api_key}`,
+          ).toString('base64')}`,
+          Accept: 'application/json',
+        },
+      },
+    )
+    // console.log(singleIt);
+  // }).then((itData) => {
+  //   // console.log(itData);
+  //   // project.it_key = itData.data['key'];
+  //   // project.projectName = itData.data['fields'].summary;
+  //   // project.charityName = itData.data['fields'].customfield_10027;
+  //   // project.charityVideo = itData.data['fields'].customfield_10159 ? itData.data['fields'].customfield_10159 : 'none';
+  // })
+  //   res.status(200).json(project)
+
+ const [resResults, itResults] = await Promise.all([singleRes, singleIt])
+  const project = {
+        res_id: resResults.data.id,
+        it_related_field_id: resResults.data.fields.customfield_10109,
+        jobRole: resResults.data.fields.customfield_10113,
+        projectType: resResults.data.fields.customfield_10112,
+        suitableForBuddy: resResults.data.fields.customfield_10108 ? resResults.data.fields.customfield_10108.value : 'none',
+        candidateTime: resResults.data.fields.customfield_10062 ? resResults.data.fields.customfield_10062 : 'none',
+        candidateCoreSkills: resResults.data.fields.customfield_10061 ? resResults.data.fields.customfield_10061 : 'none',
+        it_key: itResults.data.key,
+        projectSummary: itResults.data.fields.description.content,
+        projectName: resResults.data.fields.customfield_10060,
+        charityName: itResults.data.fields.customfield_10027,
+        charityVideo: itResults.data.fields.customfield_10159 ? itResults.data.fields.customfield_10159 : 'none',
+  // })
+      }
+
+      res.json(project)
+})
 
 module.exports = router;
