@@ -5,10 +5,10 @@ import ProjectSkills from './ProjectSkills'
 import ProjectRequirements from './ProjectRequirements'
 import Feather from 'react-native-vector-icons/Feather'
 import AntDesign from 'react-native-vector-icons/AntDesign'
-import { Projects } from '@/Services/modules/projects'
+import { Project } from '@/Services/modules/projects'
 
 interface ProjectSummaryProps {
-  data: Projects
+  project: Project
   onPress(): void
 }
 
@@ -35,10 +35,9 @@ const ProjectDescription = styled.Text`
   margin-top: 4px;
 `
 
-const ProjectSummary: FC<ProjectSummaryProps> = ({ data, onPress }) => {
-  const projectList = data.map((project, index) => {
+const ProjectSummary: FC<ProjectSummaryProps> = ({ project, onPress }) => {  
     return (
-      <ProjectDetails key={index} onPress={onPress} >
+      <ProjectDetails>
         <ProjectHeading title={project.name} />
         <ProjectSubTitle>{project.client}</ProjectSubTitle>
         <ProjectRole>{project.role}</ProjectRole>
@@ -62,9 +61,6 @@ const ProjectSummary: FC<ProjectSummaryProps> = ({ data, onPress }) => {
         />
       </ProjectDetails>
     )
-  })
-
-  return <>{projectList}</>
-}
+  }
 
 export default ProjectSummary

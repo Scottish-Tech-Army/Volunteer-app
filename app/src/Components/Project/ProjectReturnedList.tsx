@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import styled from 'styled-components/native'
+import { FlatList } from 'react-native'
 import ProjectSummary from './ProjectSummary'
 import { Projects } from '@/Services/modules/projects'
 
@@ -8,15 +8,15 @@ interface ProjectReturnedListProps {
   onPress(): void
 }
 
-const ScrollableListWrapper = styled.ScrollView`
-  height: 60%;
-`
-
 const ProjectReturnedList: FC<ProjectReturnedListProps> = ({ data, onPress }) => {
   return (
-    <ScrollableListWrapper>
-      <ProjectSummary data={data} onPress={onPress} />
-    </ScrollableListWrapper>
+    <FlatList 
+      data={data}
+      keyExtractor={ (project) => project.key}
+      renderItem={ ({ item }) => {
+        return <ProjectSummary project={item} onPress={onPress} ></ProjectSummary>;
+      }}
+    />
   )
 }
 
