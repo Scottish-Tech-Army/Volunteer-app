@@ -9,17 +9,15 @@ const api_key = process.env.API_KEY;
 const email = process.env.EMAIL;
 
 app.get("/", function (req, res, next) {
-  const urls = [
-    'https://sta2020.atlassian.net/rest/api/2/search?jql=project=RES&maxResults=1000',
-    'https://sta2020.atlassian.net/rest/api/2/search?jql=project=IT&maxResults=1000'
-  ];
-
-  Promise.all(urls.map(url=> 
-      fetch(url, {  
+  
+  // async function fetchAll(u) {
+   const fetchAll = async(u) => {
+          const responses = await fetch(u, {
             method: 'GET',
             headers: {
               'Authorization': `Basic ${Buffer.from(
-                `tech_admin@scottishtecharmy.org:qSV1Uf9CJBM4NM3nl4ZX50F8`
+                // below use email address you used for jira and generate token from jira
+                `${email}:${api_key}`
               ).toString('base64')}`,
               'Accept': 'application/json'
             }
@@ -34,28 +32,47 @@ app.get("/", function (req, res, next) {
             return Promise.reject(new Error(response.statusText));
           })
           .then(json => {
-            const ResData = json.issues.map(x => (
-              {
-                jobRole: x['fields'].customfield_10113,
-                projectType: x['fields'].customfield_10112,
-                suitableForBuddy: x['fields'].customfield_10108 ? x['fields'].customfield_10108.value : 'none'     
-              }));
+            console.log(`startAt: ${json.startAt}`);
+            console.log(`maxResults: ${json.maxResults}`);
+            console.log(`total: ${json.total}`);
+            if (json.issues[0]['key'].search('RES') > -1) {
+
+              const ResData = json.issues.map(x => (
+                {
+                  id: x['id'],
+                  jobRole: x['fields'].customfield_10113,
+                  projectType: x['fields'].customfield_10112,
+                  suitableForBuddy: x['fields'].customfield_10108 ? x['fields'].customfield_10108.value : 'none'     
+                }));
+              return Promise.resolve(ResData);
+            } else if(json.issues[0]['key'].search('IT') > -1){
 
               const ItData = json.issues.map(x => (
                 { 
+                  id: x['id'],
                   projectName: x['fields'].summary, 
                   charityName: x['fields'].customfield_10027,  
                 }));
-            
-            // writeToJsonFile(ResData);
-            // writeToJsonFile(ItData);
-            console.log(ResData);
-            console.log(ItData);
-          })))
+              return Promise.resolve(ItData);
+            }
+            // writeToJsonFile( ResData  );
+            // console.log(ResData);
+            // res.json(json)
+          })
           .catch(err => next(err));
+
+          console.log(responses);
+        }
+
+
+const path = ['https://sta2020.atlassian.net/rest/api/2/search?jql=project=RES&startAt=101&maxResults=1000',
+              'https://sta2020.atlassian.net/rest/api/2/search?jql=project=IT&startAt=101&maxResults=1000'];
+
+path.forEach(fetchAll);
+    // fetchAll(path);
+
 });
 
-  
-app.listen(5000, function (req, res) {
-  console.log("App running on port 5000");
+app.listen(5001, function (req, res) {
+  console.log("App running on port 5001");
 });
