@@ -156,14 +156,14 @@ router.get('/single', async (req, res, next) => {
         it_related_field_id: resResults.data.fields.customfield_10109,
         jobRole: resResults.data.fields.customfield_10113,
         projectType: resResults.data.fields.customfield_10112,
-        suitableForBuddy: resResults.data.fields.customfield_10108 ? resResults.data.fields.customfield_10108.value : 'none',
-        candidateTime: resResults.data.fields.customfield_10062 ? resResults.data.fields.customfield_10062 : 'none',
-        candidateCoreSkills: resResults.data.fields.customfield_10061 ? resResults.data.fields.customfield_10061 : 'none',
+        suitableForBuddy: resResults.data.fields.customfield_10108.value ?? 'none',
+        candidateTime: resResults.data.fields.customfield_10062 ?? 'none',
+        candidateCoreSkills: resResults.data.fields.customfield_10061 ?? 'none',
         it_key: itResults.data.key,
         projectSummary: itResults.data.fields.description.content,
         projectName: resResults.data.fields.customfield_10060,
         charityName: itResults.data.fields.customfield_10027,
-        charityVideo: itResults.data.fields.customfield_10159 ? itResults.data.fields.customfield_10159 : 'none',
+        charityVideo: itResults.data.fields.customfield_10159 ??'none',
       }
 
       res.json(project)
