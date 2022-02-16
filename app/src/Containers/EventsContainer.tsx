@@ -47,9 +47,7 @@ const EventsContainer = () => {
     )
   } else {
     return (
-      <SafeAreaView>
         <Text>Loading...</Text>
-      </SafeAreaView>
     )
   }
 }
