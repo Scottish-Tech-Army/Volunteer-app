@@ -9,14 +9,7 @@ import { Project } from '@/Services/modules/projects'
 
 interface ProjectSummaryProps {
   project: Project
-  onPress(): void
 }
-
-const ProjectDetails = styled.TouchableOpacity`
-  margin: 21px 41px 0px 21px;
-  border: ${props => `2px solid ${props.theme.colors.staBlack}`};
-  padding: 17px 27px 11px 27px;
-`
 
 const ProjectSubTitle = styled.Text`
   font-weight: 400;
@@ -33,11 +26,12 @@ const ProjectDescription = styled.Text`
   font-weight: 400;
   font-size: 10px;
   margin-top: 4px;
+  margin-bottom: 12px;
 `
 
-const ProjectSummary: FC<ProjectSummaryProps> = ({ project, onPress }) => {  
+const ProjectSummary: FC<ProjectSummaryProps> = ({ project }) => {  
     return (
-      <ProjectDetails>
+      <>
         <ProjectHeading title={project.name} />
         <ProjectSubTitle>{project.client}</ProjectSubTitle>
         <ProjectRole>{project.role}</ProjectRole>
@@ -59,7 +53,7 @@ const ProjectSummary: FC<ProjectSummaryProps> = ({ project, onPress }) => {
               : 'Not suitable for buddying'
           }
         />
-      </ProjectDetails>
+      </>
     )
   }
 

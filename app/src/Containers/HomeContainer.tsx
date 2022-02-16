@@ -11,7 +11,7 @@ import { navigate } from '@/Navigators/utils'
 
 interface ProjectProps {
   data: Projects
-  onPress(): void
+  //onPress(): void
 }
 
 const SafeArea = styled.SafeAreaView`
@@ -25,14 +25,14 @@ const HorizontalLine = styled.View`
   margin: 0px 75px 10px 75px;
 `
 
-const ProjectList: FC<ProjectProps> = ({ data, onPress }) => {
+const ProjectList: FC<ProjectProps> = ({ data }) => {
   return (
     <SafeArea>
       <TopOfApp />
       <ProjectSearch />
       <ProjectOptions />
       <HorizontalLine />
-      <ProjectReturnedList data={data} onPress={onPress}/>
+      <ProjectReturnedList data={data} />
     </SafeArea>
   )
 }
@@ -47,7 +47,7 @@ const HomeContainer = () => {
   if (projects) {
     return (
       <Theme>
-        <ProjectList data={projects} onPress={() => { navigate('ProjectDetail', '' ) }}/>
+        <ProjectList data={projects} />
       </Theme>
     )
   } else {
