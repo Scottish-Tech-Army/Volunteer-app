@@ -136,19 +136,7 @@ router.get('/single', async (req, res, next) => {
       },
     },
   )
-  // .then((resData) => {
 
-  //   project = {
-  //     res_id: resData.data['id'],
-  //     it_related_field_id: resData.data['fields'].customfield_10109,
-  //     jobRole: resData.data['fields'].customfield_10113,
-  //     projectType: resData.data['fields'].customfield_10112,
-  //     suitableForBuddy: resData.data['fields'].customfield_10108 ? resData.data['fields'].customfield_10108.value : 'none',
-  //     candidateTime: resData.data['fields'].customfield_10062 ? resData.data['fields'].customfield_10062 : 'none',
-  //     candidateCoreSkills: resData.data['fields'].customfield_10061 ? resData.data['fields'].customfield_10061 : 'none',
-  //   }
- 
-  // }).then(() => {
     const singleIt =  axios.get(
       `https://sta2020.atlassian.net/rest/api/3/issue/${req.query.it}`,
       {
@@ -161,15 +149,6 @@ router.get('/single', async (req, res, next) => {
         },
       },
     )
-    // console.log(singleIt);
-  // }).then((itData) => {
-  //   // console.log(itData);
-  //   // project.it_key = itData.data['key'];
-  //   // project.projectName = itData.data['fields'].summary;
-  //   // project.charityName = itData.data['fields'].customfield_10027;
-  //   // project.charityVideo = itData.data['fields'].customfield_10159 ? itData.data['fields'].customfield_10159 : 'none';
-  // })
-  //   res.status(200).json(project)
 
  const [resResults, itResults] = await Promise.all([singleRes, singleIt])
   const project = {
@@ -185,7 +164,6 @@ router.get('/single', async (req, res, next) => {
         projectName: resResults.data.fields.customfield_10060,
         charityName: itResults.data.fields.customfield_10027,
         charityVideo: itResults.data.fields.customfield_10159 ? itResults.data.fields.customfield_10159 : 'none',
-  // })
       }
 
       res.json(project)

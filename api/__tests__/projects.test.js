@@ -135,7 +135,7 @@ describe('Test the projects api', () => {
   // Run tests
 
   describe('Test the projects api', () => {
-    test('GET all method should respond successfully', async () => {
+    test('GET a single project method should respond successfully', async () => {
       const response = await axios.get('http://localhost:3000/projects/single?res=15486&it=IT-347');
   
       singleProjectsMock.done();
