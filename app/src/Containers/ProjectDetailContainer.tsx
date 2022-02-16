@@ -1,12 +1,8 @@
-import React, { FC, useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components/native'
 import Theme from '@/Theme/OldTheme'
 import { Project } from '@/Services/modules/projects/index'
 import ProjectFullDetails from '@/Components/Project/ProjectFullDetails'
-
-interface ProjectProps {
-    project: Project
-}
 
 const SafeArea = styled.SafeAreaView`
   background: ${props => props.theme.colors.appBackground};
@@ -14,34 +10,15 @@ const SafeArea = styled.SafeAreaView`
   flex: 1;
 `
 
-const ProjectDetails: FC<ProjectProps> = ({ project }) => {
+const ProjectDetailContainer = (props: { route: { params: { item: Project } } }) => {
+    const { item } = props.route.params;
+    
     return (
         <SafeArea>
-            <ProjectFullDetails project={project} />
+            <Theme>
+                <ProjectFullDetails project={item} />
+            </Theme>
         </SafeArea>
-    )
-}
-
-// NOTE: for testing purposes project data added here  
-const project = {
-    "key": "PKAVS",
-    "name": "project-website-pkavs",
-    "type": "Team-managed software",
-    "client": "PKAVS",
-    "role": "QA Tester",
-    "description": "Blah blah",
-    "skills": ["Acceptance Testing"],
-    "hours": "5-10 hours per week",
-    "required": "One person",
-    "buddying": false
-}
-
-const ProjectDetailContainer = () => {
-    
-     return (
-        <Theme>
-            <ProjectDetails project={project} />
-        </Theme>
     )
 }
 
