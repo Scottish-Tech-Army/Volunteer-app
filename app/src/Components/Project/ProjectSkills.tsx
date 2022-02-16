@@ -9,15 +9,15 @@ interface ProjectSkillsProps {
 const SkillsView = styled.View`
   display: flex;
   flex-direction: row;
-  margin-top: 17px;
   color: ${props => props.theme.colors.staBlack};
 `
 
 const SkillText = styled.Text`
-  border: ${props => `2px solid ${props.theme.colors.staBlack}`};
+  border: ${props => `1px solid ${props.theme.colors.staBlack}`};
+  font-size: 10px;
   border-radius: 4px;
   margin-left: 8.5px;
-  padding: 0px 1px 0px 1px;
+  padding: 0px 1px 0px 2px;
 `
 
 const ProjectSkills: FC<ProjectSkillsProps> = ({ skills }) => {

@@ -1,18 +1,21 @@
 import React, { FC } from 'react'
 import styled from 'styled-components/native'
 import ProjectHeading from './ProjectHeading'
+import ProjectInterestButton from './ProjectInterestButton'
 import ProjectSkills from './ProjectSkills'
 import ProjectRequirements from './ProjectRequirements'
+import ProjectAttachments from './ProjectAttachments'
 import Feather from 'react-native-vector-icons/Feather'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { Project } from '@/Services/modules/projects'
+import { ScrollView } from 'react-native-gesture-handler'
 
 interface ProjectFullDetailsProps {
   project: Project
 }
 
 const ProjectFullDetailsView = styled.View`
-  margin: 38px 27px 0px 27px;
+  margin: 21px 27px 0px 27px;
 `
 
 const ProjectSubTitle = styled.Text`
@@ -33,60 +36,78 @@ const ProjectDescription = styled.Text`
   margin-top: 4px;
 `
 
-const ProjectDetailsBlock = styled.Text`
-  margin: 21px 45px 21px 45px;
+const ProjectDetailsBlock = styled.View`
+  margin: 21px 25px 21px 25px;
   border: ${props => `1.5px solid ${props.theme.colors.staBlack}`};
-  padding: 17px 27px 11px 27px;
+  padding: 17px 20px 11px 20px;
 `
 
 const SectionHeader = styled.Text`
   font-weight: 400;
   font-size: 18px;
+  margin-top: 12px;
 `
 
 // TODO: create ProjectTeam component
 const ProjectTeam = styled.Text`
-  margin: 21px 0px 21px 0px;
+  margin: 12px 0px 12px 0px;
   border: ${props => `2px solid ${props.theme.colors.staBlack}`};
   padding: 17px 27px 11px 27px;
 `
+const HorizontalLine = styled.View`
+  border: ${props => `1px solid ${props.theme.colors.staBlack}`};
+  margin: 12px 0px 12px 0px;
+`
+
 // TODO: create ProjectRelatedRoles component
 const ProjectRelatedRoles = styled.Text`
-  margin: 21px 0px 21px 0px;
+  margin: 12px 0px 21px 0px;
   border: ${props => `2px solid ${props.theme.colors.staBlack}`};
   padding: 17px 27px 11px 27px;
 `
 const ProjectFullDetails: FC<ProjectFullDetailsProps> = ({ project }) => {
-    return (
-      <ProjectFullDetailsView >
-        <ProjectHeading title={project.name} />
-        <ProjectSubTitle>{project.client}</ProjectSubTitle>
-        <ProjectRole>{project.role}</ProjectRole>
-        <ProjectDescription>{project.description}</ProjectDescription>
-        <ProjectDetailsBlock>
-          <ProjectSkills skills={project.skills} />
-          <ProjectRequirements
-            icon={<Feather name="clock" size={16} />}
-            details={project.hours}
+  return (
+      <ScrollView>
+        <ProjectFullDetailsView>
+          <ProjectHeading title={project.name} />
+          <ProjectSubTitle>{project.client}</ProjectSubTitle>
+          <ProjectRole>{project.role}</ProjectRole>
+          <ProjectInterestButton />
+          <ProjectDescription>{project.description}</ProjectDescription>
+          <ProjectDetailsBlock>
+            <ProjectSkills skills={project.skills}/>
+            <ProjectRequirements
+              icon={<Feather name="clock" size={16} />}
+              details={project.hours}
+            />
+            <ProjectRequirements
+              icon={<AntDesign name="user" size={16} />}
+              details={`${project.required} required`}
+            />
+            <ProjectRequirements
+              icon={<Feather name="users" size={16} />}
+              details={
+                project.buddying
+                  ? 'Suitable for buddying'
+                  : 'Not suitable for buddying'
+              }
+            />
+          </ProjectDetailsBlock>
+          <ProjectAttachments
+            icon={<Feather name='file' size={24} />} 
+            details={ "A3 - Project Scope"}
           />
-          <ProjectRequirements
-            icon={<AntDesign name="user" size={16} />}
-            details={`${project.required} required`}
+          <ProjectAttachments
+            icon={<Feather name='video' size={24} />} 
+            details={ "Charity Video" }
           />
-          <ProjectRequirements
-            icon={<Feather name="users" size={16} />}
-            details={
-              project.buddying
-                ? 'Suitable for buddying'
-                : 'Not suitable for buddying'
-            }
-          />
-        </ProjectDetailsBlock>
-        <SectionHeader>Team</SectionHeader>
-        <ProjectTeam>Placeholder text</ProjectTeam>
-        <SectionHeader>Related Roles</SectionHeader>
-        <ProjectRelatedRoles>Placeholder text</ProjectRelatedRoles>
-      </ProjectFullDetailsView>
+          <SectionHeader>Team</SectionHeader>
+          <ProjectTeam>Placeholder text</ProjectTeam>
+          <HorizontalLine />
+          <SectionHeader>Related Roles</SectionHeader>
+          <ProjectRelatedRoles>Placeholder text</ProjectRelatedRoles>
+        </ProjectFullDetailsView>
+      </ScrollView>
     )
   }
 
