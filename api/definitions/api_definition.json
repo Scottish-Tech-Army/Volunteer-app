@@ -8,7 +8,7 @@
 	"paths": {
 		"/projects": {			
 				"get" : {
-					"description" : "Returns a list of available projects",
+					"description" : "Returns a list of available project resources (roles)",
 					"operationId" : "get_projects",
 					"responses" : {
 						"200" : {
@@ -17,13 +17,29 @@
 								"application/json": {
 									"example" : [
 										{
-											"key": "PKAVS",
-											"name": "project-website-pkavs",
-											"type": "Team-managed software",
+											"it_key": "IT-123",
+											"res_id": "10001",
+											"name": "PKAVS project website",
+											"type": "Charity",
 											"client": "PKAVS",
 											"role": "QA Tester",
-											"description": "Blah blah",
+											"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+											"video": "https://vimeo.com/123456",
 											"skills": ["Acceptance Testing"],
+											"hours": "5-10 hours per week",
+											"required": "One person",
+											"buddying": false
+										},
+										{
+											"it_key": "IT-123",
+											"res_id": "10002",
+											"name": "PKAVS project website",
+											"type": "Charity",
+											"client": "PKAVS",
+											"role": "Web designer",
+											"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+											"video": "https://vimeo.com/123456",
+											"skills": ["HTML", "CSS"],
 											"hours": "5-10 hours per week",
 											"required": "One person",
 											"buddying": false
@@ -31,10 +47,11 @@
 										{
 											"key": "SVA",
 											"name": "STA-volunteer Apps",
-											"type": "Team-managed software",
-											"client": "STA - internal",
+											"type": "Internal",
+											"client": "Scottish Tech Army",
 											"role": "Lead developer",
-											"description": "Blah blah",
+											"description": "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+											"video": "",
 											"skills": ["React Native", "Node.js"],
 											"hours": "5-10 hours per week",
 											"required": "One person",
@@ -56,7 +73,7 @@
 		"schemas" : {
 			"project" : {
 				"type": "array",
-				"description" : "Describes a project available for volunteering",
+				"description" : "Describes a project resource (role) available for volunteering",
 				"items": {
 					"type": "object",
 					"properties": {
@@ -83,6 +100,10 @@
 						"description": {
 							"type": "string",
 							"description" : "Description of what the project work involves"
+						},
+						"video": {
+							"type": "string",
+							"description" : "URL of a video introducing the project, if available"
 						},
 						"skills": {
 							"type": "array", 
