@@ -9,6 +9,10 @@ const api_key = process.env.API_KEY;
 const email = process.env.EMAIL;
 const resourcingJiraBoardName = 'RES';
 const recruiterAssignedJiraColumnName = 'Recruiter Assigned';
+const projectJiraBoardName = 'IT';
+const volunteerSearch = 'Volunteer Search';
+const volunteerIntroduction = 'Volunteer Introduction';
+const activityUnderway = 'Activity Underway';
 
 
 router.get('/', async (req, res, next) => {
@@ -19,11 +23,11 @@ router.get('/', async (req, res, next) => {
   const callAllItData = Promise.resolve(jiraItDataCall(0));
 
   async function jiraResourceDataCall(startAt) {
-    const jqlQuery = encodeURIComponent(
+    const resJqlQuery = encodeURIComponent(
       `project=${resourcingJiraBoardName} AND status="${recruiterAssignedJiraColumnName}"`,
     );
     const jiraRes = await axios.get(
-      `https://sta2020.atlassian.net/rest/api/2/search?jql=${jqlQuery}&startAt=${startAt}&maxResults=1000`,
+      `https://sta2020.atlassian.net/rest/api/2/search?jql=${resJqlQuery}&startAt=${startAt}&maxResults=1000`,
       {
         headers: {
           Authorization: `Basic ${Buffer.from(
@@ -57,8 +61,11 @@ router.get('/', async (req, res, next) => {
   }
 
   async function jiraItDataCall(ItstartAt) {
+    const itJqlQuery = encodeURIComponent(
+      `project=${projectJiraBoardName} AND status="${volunteerSearch}" OR status="${volunteerIntroduction}" OR status="${activityUnderway}"`,
+      );
     const jiraIt = await axios.get(
-      `https://sta2020.atlassian.net/rest/api/2/search?jql=project=IT&startAt=${ItstartAt}&maxResults=1000`,
+      `https://sta2020.atlassian.net/rest/api/2/search?jql=${itJqlQuery}&startAt=${ItstartAt}&maxResults=1000`,
       {
         headers: {
           Authorization: `Basic ${Buffer.from(
