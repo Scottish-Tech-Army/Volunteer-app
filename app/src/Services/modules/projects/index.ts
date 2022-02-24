@@ -5,7 +5,7 @@ export const projectsApi = api.injectEndpoints({
   endpoints: build => ({
     fetchAll: fetchAll(build),
   }),
-  overrideExisting: false,
+  overrideExisting: true,
 })
 
 export const { useLazyFetchAllQuery } = projectsApi
