@@ -1,3 +1,4 @@
+import { ImageURISource } from 'react-native'
 import { api } from '../../api'
 import fetchAll from './fetchAll'
 
@@ -11,14 +12,20 @@ export const projectsApi = api.injectEndpoints({
 export const { useLazyFetchAllQuery } = projectsApi
 
 export interface Project {
-  name: string
-  client: string
-  role: string
-  description: string
-  skills: string[]
-  hours: number
-  required: boolean
-  buddying: boolean
+  ResData: {
+    res_id: string
+    projectType: string
+    jobRole: string
+    description: string
+    candidateCoreSkills: string
+    candidateTime: string
+    suitableForBuddy: boolean
+  },
+  ItData: {
+    projectName: string
+    charityName: string
+    charityVideo: ImageURISource
+  }
 }
 
 export type Projects = Project[]
