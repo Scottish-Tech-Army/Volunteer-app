@@ -42,6 +42,7 @@ const ProjectSummary: FC<ProjectSummaryProps> = ({ data }) => {
         <ProjectSubTitle>{project.ItData.charityName}</ProjectSubTitle>
         <ProjectRole>{project.ResData.jobRole}</ProjectRole>
         <ProjectDescription>{project.ResData.description}</ProjectDescription>
+        <ProjectSkills skills={project.ResData.candidateCoreSkills}/>
         <ProjectRequirements
           icon={<Feather name="clock" size={16} />}
           details={project.ResData.candidateTime}
