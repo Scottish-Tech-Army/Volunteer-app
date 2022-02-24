@@ -5,7 +5,7 @@ import ProjectSkills from './ProjectSkills'
 import ProjectRequirements from './ProjectRequirements'
 import Feather from 'react-native-vector-icons/Feather'
 import AntDesign from 'react-native-vector-icons/AntDesign'
-import { Projects } from './types'
+import { Projects } from '@/Services/modules/projects'
 
 interface ProjectSummaryProps {
   data: Projects
@@ -38,23 +38,18 @@ const ProjectSummary: FC<ProjectSummaryProps> = ({ data }) => {
   const projectList = data.map((project, index) => {
     return (
       <ProjectDetails key={index}>
-        <ProjectHeading title={project.name} />
-        <ProjectSubTitle>{project.client}</ProjectSubTitle>
-        <ProjectRole>{project.role}</ProjectRole>
-        <ProjectDescription>{project.description}</ProjectDescription>
-        <ProjectSkills skills={project.skills} />
+        <ProjectHeading title={project.ItData.projectName} />
+        <ProjectSubTitle>{project.ItData.charityName}</ProjectSubTitle>
+        <ProjectRole>{project.ResData.jobRole}</ProjectRole>
+        <ProjectDescription>{project.ResData.description}</ProjectDescription>
         <ProjectRequirements
           icon={<Feather name="clock" size={16} />}
-          details={project.hours}
-        />
-        <ProjectRequirements
-          icon={<AntDesign name="user" size={16} />}
-          details={`${project.required} required`}
+          details={project.ResData.candidateTime}
         />
         <ProjectRequirements
           icon={<Feather name="users" size={16} />}
           details={
-            project.buddying
+            project.ResData.suitableForBuddy
               ? 'Suitable for buddying'
               : 'Not suitable for buddying'
           }
