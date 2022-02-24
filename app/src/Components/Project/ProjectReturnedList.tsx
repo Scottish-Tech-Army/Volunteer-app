@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import styled from 'styled-components/native'
 import ProjectSummary from './ProjectSummary'
-import { Projects } from './types'
+import { Projects } from '@/Services/modules/projects'
 
 interface ProjectReturnedListProps {
   data: Projects
