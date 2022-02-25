@@ -36,16 +36,16 @@ const ProjectList: FC<ProjectProps> = ({ data }) => {
 }
 
 const HomeContainer = () => {
-  const [fetchAll, { data: listData }] = useLazyFetchAllQuery()
+  const [fetchAll, { data: projects }] = useLazyFetchAllQuery()
 
   useEffect(() => {
     fetchAll('')
   }, [fetchAll])
 
-  if (listData) {
+  if (projects) {
     return (
       <Theme>
-        <ProjectList data={listData} />
+        <ProjectList data={projects} />
       </Theme>
     )
   } else {
