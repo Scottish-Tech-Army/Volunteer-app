@@ -6,7 +6,6 @@ import ProjectSkills from './ProjectSkills'
 import ProjectRequirements from './ProjectRequirements'
 import ProjectAttachments from './ProjectAttachments'
 import Feather from 'react-native-vector-icons/Feather'
-import AntDesign from 'react-native-vector-icons/AntDesign'
 import { Project } from '@/Services/modules/projects'
 import { ScrollView } from 'react-native-gesture-handler'
 
@@ -48,7 +47,6 @@ const SectionHeader = styled.Text`
   margin-top: 12px;
 `
 
-// TODO: create ProjectTeam component
 const ProjectTeam = styled.Text`
   margin: 12px 0px 12px 0px;
   border: ${props => `2px solid ${props.theme.colors.staBlack}`};
@@ -59,7 +57,6 @@ const HorizontalLine = styled.View`
   margin: 12px 0px 12px 0px;
 `
 
-// TODO: create ProjectRelatedRoles component
 const ProjectRelatedRoles = styled.Text`
   margin: 12px 0px 21px 0px;
   border: ${props => `2px solid ${props.theme.colors.staBlack}`};
