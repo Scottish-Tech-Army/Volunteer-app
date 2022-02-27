@@ -69,25 +69,21 @@ const ProjectFullDetails: FC<ProjectFullDetailsProps> = ({ project }) => {
   return (
       <ScrollView>
         <ProjectFullDetailsView>
-          <ProjectHeading title={project.name} />
-          <ProjectSubTitle>{project.client}</ProjectSubTitle>
-          <ProjectRole>{project.role}</ProjectRole>
+        <ProjectHeading title={project.ItData.projectName} />
+        <ProjectSubTitle>{project.ItData.charityName}</ProjectSubTitle>
+        <ProjectRole>{project.ResData.jobRole}</ProjectRole>
           <ProjectInterestButton />
-          <ProjectDescription>{project.description}</ProjectDescription>
+        <ProjectDescription>{project.ResData.description}</ProjectDescription>
           <ProjectDetailsBlock>
-            <ProjectSkills skills={project.skills}/>
+          <ProjectSkills skills={project.ResData.candidateCoreSkills}/>
             <ProjectRequirements
               icon={<Feather name="clock" size={16} />}
-              details={project.hours}
-            />
-            <ProjectRequirements
-              icon={<AntDesign name="user" size={16} />}
-              details={`${project.required} required`}
+            details={project.ResData.candidateTime}
             />
             <ProjectRequirements
               icon={<Feather name="users" size={16} />}
               details={
-                project.buddying
+                project.ResData.suitableForBuddy
                   ? 'Suitable for buddying'
                   : 'Not suitable for buddying'
               }
