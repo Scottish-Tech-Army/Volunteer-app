@@ -1,6 +1,8 @@
 require('dotenv').config();
 const AirTable = require('airtable');
 const airTableClient = new AirTable().base(process.env.AIRTABLE_ID);
+const airTableProjectsCacheTable = process.env.AIRTABLE_PROJECTS_CACHE_TABLE;
+const airTableResourcesCacheTable = process.env.AIRTABLE_RESOURCES_CACHE_TABLE;
 const axios = require('axios').default;
 const api_key = process.env.API_KEY;
 const email = process.env.EMAIL;
@@ -32,8 +34,8 @@ async function jiraResourceDataCall(startAt) {
   const ResourceDataDump = jiraRes.data.issues.map((x) =>
     ResArray.push({
       res_id: x['id'],
-      it_related_field_id: x['fields'].customfield_10109, // TODO: change it_key to project_key?
-      projectType: x['fields'].customfield_10112,
+      it_key: x['fields'].customfield_10109,
+      type: x['fields'].customfield_10112,
       role: x['fields'].customfield_10113,
       skills: x['fields'].customfield_10061 ?? '',
       hours: x['fields'].customfield_10062 ? x['fields'].customfield_10062 : '',
@@ -72,7 +74,6 @@ async function jiraItDataCall(ItstartAt) {
       description: x['fields'].description,
       client: x['fields'].customfield_10027,
       video: x['fields'].customfield_10159 ?? '',
-      // TODO: add project type
     }),
   );
   if (ItArray.length < ItTotalData) {
@@ -82,15 +83,17 @@ async function jiraItDataCall(ItstartAt) {
   return;
 }
 
-const filterProjectsConnectedWithResources = (ItArray, ResArray) =>
-  ItArray.filter((project) => ResArray.some((resource) => resource.it_related_field_id === project.it_key));
+function filterProjectsConnectedWithResources(ItArray, ResArray) {
+  return ItArray.filter((project) => ResArray.some((resource) => resource.it_key === project.it_key));
+}
 
-const filterResourcesConnectedWithProjects = (ItArray, ResArray) =>
-  ResArray.filter((resource) => ItArray.some((project) => project.it_key === resource.it_related_field_id));
+function filterResourcesConnectedWithProjects(ItArray, ResArray) {
+  return ResArray.filter((resource) => ItArray.some((project) => project.it_key === resource.it_key));
+}
 
-const formatProjects = (projects, resources) =>
-  projects.map((project) => {
-    const resourcesConnectedToProject = resources.filter((resource) => resource.it_related_field_id === project.it_key);
+function formatProjects(projects, resources) {
+  return projects.map((project) => {
+    const resourcesConnectedToProject = resources.filter((resource) => resource.it_key === project.it_key);
     const projectType = resourcesConnectedToProject.length ? resourcesConnectedToProject[0].projectType : '';
 
     return {
@@ -98,11 +101,12 @@ const formatProjects = (projects, resources) =>
       type: projectType,
     };
   });
+}
 
-const getAllProjectsAndResourcesFromJira = async () => {
+async function getAllProjectsAndResourcesFromJira() {
+  console.log('🛈 Getting data from Jira API - this can take 15 seconds or more');
+
   return new Promise((resolve) => {
-    console.log('Starting...');
-
     const callAllResData = Promise.resolve(jiraResourceDataCall(0));
     const callAllItData = Promise.resolve(jiraItDataCall(0));
 
@@ -111,7 +115,9 @@ const getAllProjectsAndResourcesFromJira = async () => {
       const resourcesFiltered = filterResourcesConnectedWithProjects(ItArray, ResArray);
       const projectsFilteredAndFormatted = formatProjects(projectsFiltered, resourcesFiltered);
 
-      console.log(projectsFilteredAndFormatted.length, resourcesFiltered.length);
+      console.log(
+        `🛈 Found ${projectsFilteredAndFormatted.length} projects matching resources, ${resourcesFiltered.length} resources matching projects`,
+      );
 
       resolve({
         projects: projectsFilteredAndFormatted,
@@ -119,37 +125,132 @@ const getAllProjectsAndResourcesFromJira = async () => {
       });
     });
   });
-};
+}
 
-const cacheProjectsAndResources = async (projects, resources) => {
-  console.log('Start caching...');
+async function cacheProjectsAndResources(projects, resources) {
+  if (!projects.length || !resources.length) {
+    console.error('❌ No projects/resources returned from Jira API, so aborted updating cache');
 
+    return;
+  }
+
+  console.log('🛈 Attempting to cache new data');
+
+  try {
+    await deleteExistingProjectsAndResources();
+  } catch (error) {
+    console.error('❌ Could not delete existing projects/resources records in cache, so aborted updating cache');
+
+    return;
+  }
+
+  try {
+    await addNewProjectsAndResources(projects, resources);
+  } catch (error) {
+    console.error('❌ Could not save new projects/resources records in cache');
+
+    return;
+  }
+
+  console.log('✅ Complete!');
+}
+
+async function addNewProjectsAndResources(projects, resources) {
   // AirTable accepts creating records in groups of 10 (faster than doing just one record at at time),
   // so we chunk our data into an array of arrays, where each top-level array item is an array of up to 10 projects/resources
 
   const projectsChunked = chunkArray(projects, 10);
+  const resourcesChunked = chunkArray(resources, 10);
 
-  projectsChunked.forEach((projectsChunk) => {
-    // await airTableClient.table(process.env.AIRTABLE_PROJECTS_CACHE_TABLE).create({
-    //   fields: project,
-    // });
-    // project.resources.forEach((resource) => {
-    //   const projectResource = {};
-    // });
-  });
-};
+  console.log('🛈 Saving projects');
+  for (const projectsChunk of projectsChunked) {
+    await addNewRecords(airTableProjectsCacheTable, projectsChunk);
+  }
 
-const chunkArray = (array, chunkSize) => {
+  console.log('🛈 Saving resources');
+  for (const resourcesChunk of resourcesChunked) {
+    await addNewRecords(airTableResourcesCacheTable, resourcesChunk);
+  }
+
+  console.log('🛈 Finished saving new cache data');
+}
+
+async function addNewRecords(tableName, recordsChunk) {
+  const recordsChunkFormattedForAirTable = recordsChunk.map((record) => ({
+    fields: record,
+  }));
+
+  const saveResult = await airTableClient.table(tableName).create(recordsChunkFormattedForAirTable);
+  console.log(`🛈 Saved a chunk of ${saveResult.length} records in table ${tableName}`);
+}
+
+function chunkArray(array, chunkSize) {
   const chunked = [];
+
   for (let i = 0; i < array.length; i += chunkSize) {
     chunked.push(array.slice(i, i + chunkSize));
   }
 
   return chunked;
-};
+}
 
-const projectsWithResources = getAllProjectsAndResourcesFromJira().then((data) => {
-  console.log('data', data);
-  console.log('data.projects', data.projects.length, 'data.resources', data.resources.length);
+async function deleteRecords(tableName, recordIds) {
+  return new Promise(async (resolve, reject) => {
+    airTableClient.table(tableName).destroy(recordIds, (error, deletedRecords) => {
+      if (error) {
+        console.error('❌ AirTable delete error', error);
+
+        reject();
+      }
+
+      resolve();
+    });
+  });
+}
+
+async function deleteAllRecords(tableName) {
+  return new Promise(async (resolve, reject) => {
+    const allRecordsRaw = await airTableClient.table(tableName).select().all();
+
+    // AirTable accepts creating records in groups of 10 (faster than doing just one record at at time),
+    // so we chunk our data into an array of arrays, where each top-level array item is an array of up to 10 records
+    const allRecordsChunked = chunkArray(allRecordsRaw, 10);
+
+    allRecordsChunked.forEach(async (recordsChunk) => {
+      const recordIds = recordsChunk.map((record) => record.id);
+
+      try {
+        await deleteRecords(tableName, recordIds);
+      } catch (error) {
+        console.error(`❌ Error deleting all records in table ${tableName}`);
+
+        reject();
+      }
+    });
+
+    resolve();
+  });
+}
+
+function deleteExistingProjectsAndResources() {
+  return new Promise(async (resolve, reject) => {
+    const tables = [airTableProjectsCacheTable, airTableResourcesCacheTable];
+    let success = true;
+
+    for (const tableName of tables) {
+      console.log(`🛈 Deleting old records from ${tableName}`);
+
+      try {
+        await deleteAllRecords(tableName);
+      } catch (error) {
+        reject();
+      }
+    }
+
+    resolve();
+  });
+}
+
+getAllProjectsAndResourcesFromJira().then((data) => {
   cacheProjectsAndResources(data.projects, data.resources);
 });
