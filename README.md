@@ -16,7 +16,6 @@ Welcome to the the Volunteering App Github repo
 3. Ensure that you have read through for your particular platform: https://reactnative.dev/docs/environment-setup
 4. Make sure that you have Android 10 installed and not higher.
 
-
 # Setup  
 
 1. Ensure that you've gone through the following link for your particular platform: https://reactnative.dev/docs/environment-setup
@@ -30,17 +29,17 @@ Welcome to the the Volunteering App Github repo
 5. Create .env file to store Jira API access credentials.
     >**Note** Credentials themselves not provided, these should be requested/provided on joining the dev group.
 
-5. At the command prompt type `npm install` then `npm start` to start the Volunteer App API server.
+6. At the command prompt type `npm install` then `npm start` to start the Volunteer App API server.
 
-6. Go to the `app` folder inside the project folder (e.g. **\Volunteer-app path\app**)      
+7. Go to the `app` folder inside the project folder (e.g. **\Volunteer-app path\app**)      
  
-6. At the command prompt type `npm install`     
-    >**Note:** Inside the `app` folder there is package-lock.json. Everytime this is modified, it is advised to repeat step 5 before  running the project.
+8. At the command prompt type `npm install`     
+    >**Note:** Inside the `app` folder there is package-lock.json. Everytime this is modified, it is advised to repeat step 6 before  running the project.
           
     >**Note:** you may need to run `npm install --legacy-peer-deps`
 
-6. duplicate the example config file `app/src/Config/index.example.ts` and name your new file `app/src/Config/index.ts`
+9. duplicate the example config file `app/src/Config/index.example.ts` and name your new file `app/src/Config/index.ts`
 
-7. Replace the IP address with your own in `STA_BASE_URL: 'http://192.168.1.241:3000'` (localhost may not work if you are using Android, as it interprets it as its own IP address).
+10. Replace the IP address with your own in `STA_BASE_URL: 'http://192.168.1.241:3000'` (localhost may not work if you are using Android, as it interprets it as its own IP address).
 
-7. type in command terminal: `npm run ios` or `npm run android`
+11. type in command terminal: `npm run ios` or `npm run android`
