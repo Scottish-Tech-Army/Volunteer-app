@@ -1,8 +1,9 @@
 require('dotenv').config();
-const express = require('express');
-const router = express.Router();
+const apiDefinition = require('../definitions/api_definition.json');
 const AirTable = require('airtable');
 const airTableClient = new AirTable().base(process.env.AIRTABLE_ID);
+const express = require('express');
+const router = express.Router();
 
 router.get('/', async (req, res, next) => {
   const [projects, resources] = await Promise.all([
@@ -13,37 +14,58 @@ router.get('/', async (req, res, next) => {
   const projectResources = resources.map((resource) => {
     const project = projects.filter((project) => project.it_key === resource.it_key)[0];
 
-    const projectResource = {
+    return formatProjectResourceFromAirTable({
       ...resource,
       ...project,
-    };
-
-    // TODO: move all of this formatting stuff into a separate function so is more easily testable
-    // TODO: check for existence of all boolean properties, using API definition JSON
-    projectResource.buddying = Boolean(projectResource.buddying);
-    // TODO: check for existence of all string properties, using API definition JSON
-    if (!projectResource.hasOwnProperty('video')) projectResource.video = '';
-    projectResource.required = projectResource.required === 1 ? '1 person' : `${projectResource.required} people`;
-    projectResource.skills = splitByLineBreak(removeBlankLines(projectResource.skills));
-
-    return projectResource;
+    });
   });
 
   res.status(200).send(projectResources);
 });
 
-const removeBlankLines = (string) => {
-  return string.replace(/(^[ \t]*\n)/gm, '');
-};
+function formatProjectResourceFromAirTable(projectResource) {
+  const projectResourceFieldDefinitions = apiDefinition.components.schemas.project.items.properties;
 
-const splitByLineBreak = (string) => {
-  return string.split(/[\r\n]+/);
-};
+  for (const [fieldName, fieldProperties] of Object.entries(projectResourceFieldDefinitions)) {
+    // AirTable doesn't include properties that it sees as empty (including boolean false) so we need to populate them
+    if (!projectResource[fieldName]) {
+      switch (fieldProperties.type) {
+        case 'boolean':
+          projectResource[fieldName] = false;
+          break;
+        case 'string':
+          projectResource[fieldName] = '';
+          break;
+      }
+    }
 
-const getAllRecords = async (tableName) => {
+    // Certain fields need to be formatted
+    switch (fieldName) {
+      case 'required':
+        projectResource[fieldName] =
+          projectResource[fieldName] === 1 ? '1 person' : `${projectResource[fieldName]} people`;
+        break;
+      case 'skills':
+        splitByLineBreak(removeBlankLines(projectResource[fieldName]));
+        break;
+    }
+  }
+
+  return projectResource;
+}
+
+async function getAllRecords(tableName) {
   const allRecordsRaw = await airTableClient.table(tableName).select().all();
 
   return allRecordsRaw.map((record) => record.fields);
-};
+}
+
+function removeBlankLines(string) {
+  return string.replace(/(^[ \t]*\n)/gm, '');
+}
+
+function splitByLineBreak(string) {
+  return string.split(/[\r\n]+/);
+}
 
 module.exports = router;
