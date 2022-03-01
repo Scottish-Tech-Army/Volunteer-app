@@ -46,7 +46,9 @@ function formatProjectResourceFromAirTable(projectResource) {
           projectResource[fieldName] === 1 ? '1 person' : `${projectResource[fieldName]} people`;
         break;
       case 'skills':
-        splitByLineBreak(removeBlankLines(projectResource[fieldName]));
+        projectResource[fieldName] = projectResource[fieldName]
+          ? splitByLineBreak(removeBlankLines(projectResource[fieldName]))
+          : [];
         break;
     }
   }
