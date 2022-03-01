@@ -17,11 +17,16 @@ const ProjectTitle = styled.Text`
   font-size: 18px;
 `
 
+const SaveProjectHeart = styled.TouchableOpacity`
+`
+
 const ProjectHeading: FC<ProjectHeadingProps> = ({ title }) => {
   return (
     <ProjectHeadingView>
       <ProjectTitle>{title}</ProjectTitle>
-      <AntDesign name="hearto" size={20} />
+      <SaveProjectHeart>
+        <AntDesign name="hearto" size={20} />
+      </SaveProjectHeart>
     </ProjectHeadingView>
   )
 }
