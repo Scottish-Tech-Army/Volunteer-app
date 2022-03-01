@@ -5,17 +5,11 @@ import ProjectSkills from './ProjectSkills'
 import ProjectRequirements from './ProjectRequirements'
 import Feather from 'react-native-vector-icons/Feather'
 import AntDesign from 'react-native-vector-icons/AntDesign'
-import { Projects } from '@/Services/modules/projects'
+import { Project } from '@/Services/modules/projects'
 
 interface ProjectSummaryProps {
-  data: Projects
+  project: Project
 }
-
-const ProjectDetails = styled.TouchableOpacity`
-  margin: 21px 41px 0px 21px;
-  border: ${props => `2px solid ${props.theme.colors.staBlack}`};
-  padding: 17px 27px 11px 27px;
-`
 
 const ProjectSubTitle = styled.Text`
   font-weight: 400;
@@ -32,12 +26,12 @@ const ProjectDescription = styled.Text`
   font-weight: 400;
   font-size: 10px;
   margin-top: 4px;
+  margin-bottom: 12px;
 `
 
-const ProjectSummary: FC<ProjectSummaryProps> = ({ data }) => {
-  const projectList = data.map((project, index) => {
+const ProjectSummary: FC<ProjectSummaryProps> = ({ project }) => {  
     return (
-      <ProjectDetails key={index}>
+      <>
         <ProjectHeading title={project.ItData.projectName} />
         <ProjectSubTitle>{project.ItData.charityName}</ProjectSubTitle>
         <ProjectRole>{project.ResData.jobRole}</ProjectRole>
@@ -55,11 +49,8 @@ const ProjectSummary: FC<ProjectSummaryProps> = ({ data }) => {
               : 'Not suitable for buddying'
           }
         />
-      </ProjectDetails>
+      </>
     )
-  })
-
-  return <>{projectList}</>
-}
+  }
 
 export default ProjectSummary

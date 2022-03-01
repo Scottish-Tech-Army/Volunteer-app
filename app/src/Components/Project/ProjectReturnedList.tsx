@@ -1,21 +1,33 @@
 import React, { FC } from 'react'
 import styled from 'styled-components/native'
+import { FlatList } from 'react-native'
 import ProjectSummary from './ProjectSummary'
 import { Projects } from '@/Services/modules/projects'
+import { navigate } from '@/Navigators/utils'
 
 interface ProjectReturnedListProps {
   data: Projects
 }
 
-const ScrollableListWrapper = styled.ScrollView`
-  height: 60%;
+const ProjectDetails = styled.TouchableOpacity`
+  margin: 21px 41px 0px 21px;
+  border: ${props => `2px solid ${props.theme.colors.staBlack}`};
+  padding: 17px 27px 11px 27px;
 `
 
 const ProjectReturnedList: FC<ProjectReturnedListProps> = ({ data }) => {
   return (
-    <ScrollableListWrapper>
-      <ProjectSummary data={data} />
-    </ScrollableListWrapper>
+    <FlatList 
+      data={data}
+      keyExtractor={(project) => project.ResData.res_id}
+      renderItem={ ({ item }) => {
+        return (
+          <ProjectDetails onPress={() => { navigate('ProjectDetail', { item, key: item.ResData.res_id }) }}>
+            <ProjectSummary project={item} ></ProjectSummary>
+          </ProjectDetails>
+        )
+      }}
+    />
   )
 }
 
