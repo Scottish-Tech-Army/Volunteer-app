@@ -13,10 +13,6 @@ const activityUnderway = 'Activity Underway';
 const ItArray = [];
 const ResArray = [];
 
-getAllProjectsAndResourcesFromJira().then((data) => {
-  cacheProjectsAndResources(data.projects, data.resources);
-});
-
 async function addNewProjectsAndResources(projects, resources) {
   // AirTable accepts creating records in groups of 10 (faster than doing just one record at at time),
   // so we chunk our data into an array of arrays, where each top-level array item is an array of up to 10 projects/resources
@@ -257,3 +253,16 @@ async function jiraResourceDataCall(startAt) {
   }
   return;
 }
+
+exports.start = function () {
+  console.log(`🛈 Started caching projects and resources at ${new Date()}`);
+
+  ItArray.length = 0;
+  ResArray.length = 0;
+
+  getAllProjectsAndResourcesFromJira().then((data) => {
+    cacheProjectsAndResources(data.projects, data.resources);
+  });
+};
+
+exports.start();
