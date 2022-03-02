@@ -1,6 +1,6 @@
 - [Welcome](#welcome)
 - [Requirements to run the project:](#requirements-to-run-the-project)
-  - [](#)
+- [](#)
 - [Setup](#setup)
 - [For Additional Information:](#for-additional-information)
 
