@@ -1,5 +1,4 @@
 const request = require('supertest');
-const airtable = require('../routes/airTable');
 const app = require('../app')
 var axios = require('axios');
 const nock = require('nock')
@@ -159,7 +158,6 @@ describe("Test the events api", () => {
     
 
     const response = await axios.get('http://localhost:3000/airtable/events/schedule/past')
-    console.log(response);
     pastEvents.done()
     expect(response.status).toBe(200)
     expect(response.data[0].id).toBe("recAb4kAFdkeKKnLU")

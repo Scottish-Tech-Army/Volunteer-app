@@ -2,10 +2,13 @@ require('dotenv').config();
 const apiDefinition = require('../definitions/api_definition.json');
 const AirTable = require('airtable');
 const airTableClient = new AirTable().base(process.env.AIRTABLE_ID);
+const axios = require('axios').default;
+const api_key = process.env.API_KEY;
+const email = process.env.EMAIL;
 const express = require('express');
 const router = express.Router();
 
-router.get('/', async (req, res, next) => {
+router.get('/', async (req, res) => {
   const [projects, resources] = await Promise.all([
     getAllRecords(process.env.AIRTABLE_PROJECTS_CACHE_TABLE),
     getAllRecords(process.env.AIRTABLE_RESOURCES_CACHE_TABLE),
@@ -69,5 +72,45 @@ function removeBlankLines(string) {
 function splitByLineBreak(string) {
   return string.split(/[\r\n]+/);
 }
+
+router.get('/single', async (req, res) => {
+  const singleRes = await axios.get(`https://sta2020.atlassian.net/rest/api/3/issue/${req.query.res}`, {
+    headers: {
+      Authorization: `Basic ${Buffer.from(
+        // below use email address you used for jira and generate token from jira
+        `${email}:${api_key}`,
+      ).toString('base64')}`,
+      Accept: 'application/json',
+    },
+  });
+
+  const singleIt = axios.get(`https://sta2020.atlassian.net/rest/api/3/issue/${req.query.it}`, {
+    headers: {
+      Authorization: `Basic ${Buffer.from(
+        // below use email address you used for jira and generate token from jira
+        `${email}:${api_key}`,
+      ).toString('base64')}`,
+      Accept: 'application/json',
+    },
+  });
+
+  const [resResults, itResults] = await Promise.all([singleRes, singleIt]);
+  const project = {
+    res_id: resResults.data.id,
+    it_related_field_id: resResults.data.fields.customfield_10109,
+    jobRole: resResults.data.fields.customfield_10113,
+    projectType: resResults.data.fields.customfield_10112,
+    suitableForBuddy: resResults.data.fields.customfield_10108.value ?? 'none',
+    candidateTime: resResults.data.fields.customfield_10062 ?? 'none',
+    candidateCoreSkills: resResults.data.fields.customfield_10061 ?? 'none',
+    it_key: itResults.data.key,
+    projectSummary: itResults.data.fields.description.content,
+    projectName: resResults.data.fields.customfield_10060,
+    charityName: itResults.data.fields.customfield_10027,
+    charityVideo: itResults.data.fields.customfield_10159 ?? 'none',
+  };
+
+  res.json(project);
+});
 
 module.exports = router;

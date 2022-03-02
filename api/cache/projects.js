@@ -8,6 +8,10 @@ const api_key = process.env.API_KEY;
 const email = process.env.EMAIL;
 const resourcingJiraBoardName = 'RES';
 const recruiterAssignedJiraColumnName = 'Recruiter Assigned';
+const projectJiraBoardName = 'IT';
+const volunteerSearch = 'Volunteer Search';
+const volunteerIntroduction = 'Volunteer Introduction';
+const activityUnderway = 'Activity Underway';
 
 const ResArray = [];
 const ItArray = [];
@@ -184,8 +188,11 @@ async function getAllProjectsAndResourcesFromJira() {
 }
 
 async function jiraItDataCall(ItstartAt) {
+  const itJqlQuery = encodeURIComponent(
+    `project=${projectJiraBoardName} AND status="${volunteerSearch}" OR status="${volunteerIntroduction}" OR status="${activityUnderway}"`,
+  );
   const jiraIt = await axios.get(
-    `https://sta2020.atlassian.net/rest/api/2/search?jql=project=IT&startAt=${ItstartAt}&maxResults=1000`,
+    `https://sta2020.atlassian.net/rest/api/2/search?jql=${itJqlQuery}&startAt=${ItstartAt}&maxResults=1000`,
     {
       headers: {
         Authorization: `Basic ${Buffer.from(
@@ -216,11 +223,11 @@ async function jiraItDataCall(ItstartAt) {
 }
 
 async function jiraResourceDataCall(startAt) {
-  const jqlQuery = encodeURIComponent(
+  const resJqlQuery = encodeURIComponent(
     `project=${resourcingJiraBoardName} AND status="${recruiterAssignedJiraColumnName}"`,
   );
   const jiraRes = await axios.get(
-    `https://sta2020.atlassian.net/rest/api/2/search?jql=${jqlQuery}&startAt=${startAt}&maxResults=1000`,
+    `https://sta2020.atlassian.net/rest/api/2/search?jql=${resJqlQuery}&startAt=${startAt}&maxResults=1000`,
     {
       headers: {
         Authorization: `Basic ${Buffer.from(
@@ -241,7 +248,7 @@ async function jiraResourceDataCall(startAt) {
       type: x['fields'].customfield_10112,
       role: x['fields'].customfield_10113,
       skills: x['fields'].customfield_10061 ?? '',
-      hours: x['fields'].customfield_10062 ? x['fields'].customfield_10062 : '',
+      hours: x['fields'].customfield_10062 ?? '',
       required: 1, // currently hardcoded as cannot see number of people coming back in Jira results
       buddying: x['fields'].customfield_10108 ? x['fields'].customfield_10108.value.toLowerCase() === 'yes' : false,
     }),
