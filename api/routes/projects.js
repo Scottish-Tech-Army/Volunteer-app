@@ -31,7 +31,7 @@ router.get('/', async (req, res, next) => {
       {
         headers: {
           Authorization: `Basic ${Buffer.from(
-            // below use email address you used for jira and generate token from jira
+            // email address and API-key can be requested in the Volunteer App dev group
             `${email}:${api_key}`,
           ).toString('base64')}`,
           Accept: 'application/json',
@@ -69,7 +69,7 @@ router.get('/', async (req, res, next) => {
       {
         headers: {
           Authorization: `Basic ${Buffer.from(
-            // below use email address you used for jira and generate token from jira
+            // email address and API-key can be requested in the Volunteer App dev group
             `${email}:${api_key}`,
           ).toString('base64')}`,
           Accept: 'application/json',
