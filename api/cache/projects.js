@@ -1,9 +1,7 @@
 require('dotenv').config();
-const AirTable = require('airtable');
-const airTableClient = new AirTable().base(process.env.AIRTABLE_ID);
-const airTableProjectsCacheTable = process.env.AIRTABLE_PROJECTS_CACHE_TABLE;
-const airTableResourcesCacheTable = process.env.AIRTABLE_RESOURCES_CACHE_TABLE;
+const airTable = require('../helpers/airTable');
 const axios = require('axios').default;
+
 const api_key = process.env.API_KEY;
 const email = process.env.EMAIL;
 const resourcingJiraBoardName = 'RES';
@@ -12,9 +10,8 @@ const projectJiraBoardName = 'IT';
 const volunteerSearch = 'Volunteer Search';
 const volunteerIntroduction = 'Volunteer Introduction';
 const activityUnderway = 'Activity Underway';
-
-const ResArray = [];
 const ItArray = [];
+const ResArray = [];
 
 getAllProjectsAndResourcesFromJira().then((data) => {
   cacheProjectsAndResources(data.projects, data.resources);
@@ -29,12 +26,12 @@ async function addNewProjectsAndResources(projects, resources) {
 
   console.log('🛈 Saving projects');
   for (const projectsChunk of projectsChunked) {
-    await addNewRecords(airTableProjectsCacheTable, projectsChunk);
+    await addNewRecords(airTable.projectsCacheTable, projectsChunk);
   }
 
   console.log('🛈 Saving resources');
   for (const resourcesChunk of resourcesChunked) {
-    await addNewRecords(airTableResourcesCacheTable, resourcesChunk);
+    await addNewRecords(airTable.resourcesCacheTable, resourcesChunk);
   }
 
   console.log('🛈 Finished saving new cache data');
@@ -45,7 +42,7 @@ async function addNewRecords(tableName, recordsChunk) {
     fields: record,
   }));
 
-  const saveResult = await airTableClient.table(tableName).create(recordsChunkFormattedForAirTable);
+  await airTable.client.table(tableName).create(recordsChunkFormattedForAirTable);
 }
 
 async function cacheProjectsAndResources(projects, resources) {
@@ -88,7 +85,7 @@ function chunkArray(array, chunkSize) {
 
 async function deleteAllRecords(tableName) {
   return new Promise(async (resolve, reject) => {
-    const allRecordsRaw = await airTableClient.table(tableName).select().all();
+    const allRecordsRaw = await airTable.client.table(tableName).select().all();
 
     // AirTable accepts creating records in groups of 10 (faster than doing just one record at at time),
     // so we chunk our data into an array of arrays, where each top-level array item is an array of up to 10 records
@@ -112,7 +109,7 @@ async function deleteAllRecords(tableName) {
 
 async function deleteRecords(tableName, recordIds) {
   return new Promise(async (resolve, reject) => {
-    airTableClient.table(tableName).destroy(recordIds, (error, deletedRecords) => {
+    airTable.client.table(tableName).destroy(recordIds, (error, deletedRecords) => {
       if (error) {
         console.error('❌ AirTable delete error', error);
 
@@ -126,7 +123,7 @@ async function deleteRecords(tableName, recordIds) {
 
 function deleteExistingProjectsAndResources() {
   return new Promise(async (resolve, reject) => {
-    const tables = [airTableProjectsCacheTable, airTableResourcesCacheTable];
+    const tables = [airTable.projectsCacheTable, airTable.resourcesCacheTable];
     let success = true;
 
     for (const tableName of tables) {

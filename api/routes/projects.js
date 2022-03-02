@@ -1,17 +1,12 @@
-require('dotenv').config();
 const apiDefinition = require('../definitions/api_definition.json');
-const AirTable = require('airtable');
-const airTableClient = new AirTable().base(process.env.AIRTABLE_ID);
-const axios = require('axios').default;
-const api_key = process.env.API_KEY;
-const email = process.env.EMAIL;
+const airTable = require('../helpers/airTable');
 const express = require('express');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
   const [projects, resources] = await Promise.all([
-    getAllRecords(process.env.AIRTABLE_PROJECTS_CACHE_TABLE),
-    getAllRecords(process.env.AIRTABLE_RESOURCES_CACHE_TABLE),
+    getAllRecords(airTable.projectsCacheTable),
+    getAllRecords(airTable.resourcesCacheTable),
   ]);
 
   const projectResources = resources.map((resource) => {
@@ -26,11 +21,35 @@ router.get('/', async (req, res) => {
   res.status(200).send(projectResources);
 });
 
+router.get('/single', async (req, res) => {
+  const projectItKey = req.query.it;
+  const resourceId = req.query.res;
+
+  const [project, resource] = await Promise.all([
+    getRecord(airTable.projectsCacheTable, 'it_key', projectItKey),
+    getRecord(airTable.resourcesCacheTable, 'res_id', resourceId),
+  ]);
+
+  if (!project || !resource) {
+    const error = `Could not find project ${projectItKey} and/or resource ${resourceId}`;
+    console.error(error);
+
+    res.status(204).send({ error });
+  }
+
+  const projectResource = formatProjectResourceFromAirTable({
+    ...resource,
+    ...project,
+  });
+
+  res.status(200).send(projectResource);
+});
+
 function formatProjectResourceFromAirTable(projectResource) {
   const projectResourceFieldDefinitions = apiDefinition.components.schemas.project.items.properties;
 
   for (const [fieldName, fieldProperties] of Object.entries(projectResourceFieldDefinitions)) {
-    // AirTable doesn't include properties that it sees as empty (including boolean false) so we need to populate them
+    // AirTable doesn't include fields that it sees as empty (including its equivalent of boolean false) so we need to populate them
     if (!projectResource[fieldName]) {
       switch (fieldProperties.type) {
         case 'boolean':
@@ -49,6 +68,7 @@ function formatProjectResourceFromAirTable(projectResource) {
           projectResource[fieldName] === 1 ? '1 person' : `${projectResource[fieldName]} people`;
         break;
       case 'skills':
+        // For now, assumption based on available data is that skills are in separate paragraphs in a text field
         projectResource[fieldName] = projectResource[fieldName]
           ? splitByLineBreak(removeBlankLines(projectResource[fieldName]))
           : [];
@@ -60,9 +80,20 @@ function formatProjectResourceFromAirTable(projectResource) {
 }
 
 async function getAllRecords(tableName) {
-  const allRecordsRaw = await airTableClient.table(tableName).select().all();
+  const allRecordsRaw = await airTable.client.table(tableName).select().all();
 
   return allRecordsRaw.map((record) => record.fields);
+}
+
+async function getRecord(tableName, fieldName, fieldValue) {
+  const recordsRaw = await airTable.client
+    .table(tableName)
+    .select({
+      filterByFormula: `{${fieldName}} = '${fieldValue}'`,
+    })
+    .all();
+
+  return recordsRaw.length ? recordsRaw[0].fields : undefined;
 }
 
 function removeBlankLines(string) {
@@ -72,45 +103,5 @@ function removeBlankLines(string) {
 function splitByLineBreak(string) {
   return string.split(/[\r\n]+/);
 }
-
-router.get('/single', async (req, res) => {
-  const singleRes = await axios.get(`https://sta2020.atlassian.net/rest/api/3/issue/${req.query.res}`, {
-    headers: {
-      Authorization: `Basic ${Buffer.from(
-        // below use email address you used for jira and generate token from jira
-        `${email}:${api_key}`,
-      ).toString('base64')}`,
-      Accept: 'application/json',
-    },
-  });
-
-  const singleIt = axios.get(`https://sta2020.atlassian.net/rest/api/3/issue/${req.query.it}`, {
-    headers: {
-      Authorization: `Basic ${Buffer.from(
-        // below use email address you used for jira and generate token from jira
-        `${email}:${api_key}`,
-      ).toString('base64')}`,
-      Accept: 'application/json',
-    },
-  });
-
-  const [resResults, itResults] = await Promise.all([singleRes, singleIt]);
-  const project = {
-    res_id: resResults.data.id,
-    it_related_field_id: resResults.data.fields.customfield_10109,
-    jobRole: resResults.data.fields.customfield_10113,
-    projectType: resResults.data.fields.customfield_10112,
-    suitableForBuddy: resResults.data.fields.customfield_10108.value ?? 'none',
-    candidateTime: resResults.data.fields.customfield_10062 ?? 'none',
-    candidateCoreSkills: resResults.data.fields.customfield_10061 ?? 'none',
-    it_key: itResults.data.key,
-    projectSummary: itResults.data.fields.description.content,
-    projectName: resResults.data.fields.customfield_10060,
-    charityName: itResults.data.fields.customfield_10027,
-    charityVideo: itResults.data.fields.customfield_10159 ?? 'none',
-  };
-
-  res.json(project);
-});
 
 module.exports = router;
