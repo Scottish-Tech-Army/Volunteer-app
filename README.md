@@ -37,10 +37,8 @@ Welcome to the the Volunteering App Github repo
           
     >**Note:** you may need to run `npm install --legacy-peer-deps`
 
-9. duplicate the example config file `app/src/Config/index.example.ts` and name your new file `app/src/Config/index.ts`
-
-10. Replace the IP address with your own in `STA_BASE_URL: 'http://localhost:3000'`.
-    >**Note** localhost may not work if you are using Android, as it interprets it as its own IP address.
+9. Duplicate the example config file `app/src/Config/index.example.ts` and name your new file `app/src/Config/index.ts`
+    >**Note** If the app has difficulty connecting to the API, you may need specify your IP address in `index.ts`. Replace `localhost` in the line `STA_BASE_URL: 'http://localhost:3000'` with your own.
 
 11. type in command terminal: `npm run ios` or `npm run android`
 
