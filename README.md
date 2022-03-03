@@ -39,7 +39,8 @@ Welcome to the the Volunteering App Github repo
 
 9. duplicate the example config file `app/src/Config/index.example.ts` and name your new file `app/src/Config/index.ts`
 
-10. Replace the IP address with your own in `STA_BASE_URL: 'http://192.168.1.241:3000'` (localhost may not work if you are using Android, as it interprets it as its own IP address).
+10. Replace the IP address with your own in `STA_BASE_URL: 'http://localhost:3000'`.
+    >**Note** localhost may not work if you are using Android, as it interprets it as its own IP address.
 
 11. type in command terminal: `npm run ios` or `npm run android`
 
