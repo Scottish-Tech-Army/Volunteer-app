@@ -3,8 +3,8 @@ const airTable = require('../helpers/airTable');
 const arraysHelpers = require('../helpers/arrays');
 const axios = require('axios').default;
 
-const api_key = process.env.API_KEY;
-const email = process.env.EMAIL;
+const api_key = process.env.JIRA_API_KEY;
+const email = process.env.JIRA_EMAIL;
 const resourcingJiraBoardName = 'RES';
 const recruiterAssignedJiraColumnName = 'Recruiter Assigned';
 const projectJiraBoardName = 'IT';

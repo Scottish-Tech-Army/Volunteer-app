@@ -37,6 +37,6 @@ Welcome to the the Volunteering App Github repo
 11. Go to the `api` folder inside the project and enter command: `npm start`
 12. Leave that running and open another command terminal window
 13. Go to the `app` folder inside the project and enter command: `npm run ios` or `npm run android`
-14. Optional: Update the cached projects/resources data from Jira that's stored in a shared AirTable database (you probably only need to use this while developing if you need the very latest data from Jira or you're actively testing the caching mechanism).  Open another command terminal window, go to the `api` folder inside the project.
-    - If you want to update the cached data once only, enter this command: `node cache/projects.js`
-    - If you want to update the cached data regularly using a cron job, enter this command instead: `node cache/cron-jobs.js`  Leave this terminal window open as long as you want this to keep running.
+14. Optional: Update the cached projects/resources data from Jira that's stored in a shared AirTable database *(during development, you probably only need to use this if you need the very latest data from Jira or you're actively testing the caching mechanism)*.  Open another command terminal window, go to the `api` folder inside the project.
+    - If you want to update the cached data once only, enter this command: `node cache/run-projects.js` (During development, this is preferable to running the scheduled cron job.)
+    - If you want to automatically update the cached data regularly using a cron job, enter this command instead: `node cache/run-cron-jobs.js`  Leave this terminal window open as long as you want this to keep running.  (Be careful if using this during development: if multiple developers are running this simultaneously, these could conflict as everyone is accessing the same AirTable tables.)
