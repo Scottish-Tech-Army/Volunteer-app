@@ -3,7 +3,7 @@ const axios = require('axios');
 const arraysHelpers = require('../../helpers/arrays');
 const cacheProjects = require('../../cache/projects');
 const { faker } = require('@faker-js/faker');
-const projectsTestData = require('../test-data/projects');
+const projectsTestData = require('../../__test-data__/projects');
 
 axios.defaults.adapter = require('axios/lib/adapters/http');
 
@@ -86,7 +86,7 @@ describe('Test the projects/resources cache', () => {
 
   test('cacheProjectsAndResources deletes old data and adds new data', async () => {
     // Set up fake test data
-    const fakeProjects = projectsTestData.fakeProjectObjects(faker.datatype.number(30));
+    const fakeProjects = projectsTestData.fakeProjectObjects(faker.datatype.number({ min: 20, max: 30 }));
     const fakeResources = projectsTestData.fakeResourceObjects(faker.datatype.number({ min: 30, max: 50 }));
 
     // Mock dependencies
@@ -184,13 +184,13 @@ describe('Test the projects/resources cache', () => {
 
   test('filterResourcesConnectedWithProjects correctly filters resources', () => {
     // Set up fake test data
-    const fakeProjects = projectsTestData.fakeProjectObjects(4);
+    const fakeProjects = projectsTestData.fakeProjectObjects(5);
     const fakeResources = projectsTestData.fakeResourceObjects(8);
     fakeResources[0].it_key = fakeProjects[0].it_key;
     fakeResources[1].it_key = fakeProjects[0].it_key;
     fakeResources[2].it_key = fakeProjects[1].it_key;
     fakeResources[3].it_key = fakeProjects[1].it_key;
-    fakeResources[4].it_key = fakeResources[5].it_key = fakeResources[6].it_key = fakeResources[7].it_key = 'IT-000';
+    fakeResources[4].it_key = fakeResources[5].it_key = fakeResources[6].it_key = fakeResources[7].it_key = 'IT-000'; // this value will not appear elsewhere in fake test data
 
     // Run test
     const filteredResources = cacheProjects.filterResourcesConnectedWithProjects(fakeProjects, fakeResources);
@@ -200,15 +200,15 @@ describe('Test the projects/resources cache', () => {
 
   test('formatProjects correctly gets project type from resource', () => {
     // Set up fake test data
-    const fakeProjects = projectsTestData.fakeProjectObjects(4);
-    fakeProjects[2].it_key = 'IT-000';
-    fakeProjects[3].it_key = 'IT-001';
+    const fakeProjects = projectsTestData.fakeProjectObjects(5);
+    fakeProjects[2].it_key = 'IT-000'; // this value will not appear elsewhere in fake test data
+    fakeProjects[3].it_key = 'IT-001'; // this value will not appear elsewhere in fake test data
     const fakeResources = projectsTestData.fakeResourceObjects(8);
     fakeResources[0].it_key = fakeProjects[0].it_key;
     fakeResources[1].it_key = fakeProjects[0].it_key;
     fakeResources[2].it_key = fakeProjects[1].it_key;
     fakeResources[3].it_key = fakeProjects[1].it_key;
-    fakeResources[4].it_key = fakeResources[5].it_key = fakeResources[6].it_key = fakeResources[7].it_key = 'IT-002';
+    fakeResources[4].it_key = fakeResources[5].it_key = fakeResources[6].it_key = fakeResources[7].it_key = 'IT-002'; // this value will not appear elsewhere in fake test data
 
     // Run test
     const formattedProjects = cacheProjects.formatProjects(fakeProjects, fakeResources);
@@ -228,6 +228,10 @@ describe('Test the projects/resources cache', () => {
       },
       {
         ...fakeProjects[3],
+        type: '',
+      },
+      {
+        ...fakeProjects[4],
         type: '',
       },
     ]);
@@ -367,5 +371,3 @@ describe('Test the projects/resources cache', () => {
     consoleLogSpy.mockRestore();
   });
 });
-
-// start,

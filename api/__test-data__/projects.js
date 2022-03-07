@@ -96,6 +96,28 @@ function fakeProjectObjects(count) {
   return fakeProjectObjectArray;
 }
 
+function fakeProjectResourceObject() {
+  const projectResourceObject = {
+    ...fakeProjectObject(),
+    ...fakeResourceObject(),
+  };
+
+  projectResourceObject.required = '1 person';
+  projectResourceObject.skills = [projectResourceObject.skills];
+
+  return projectResourceObject;
+}
+
+function fakeProjectResourceObjects(count) {
+  const fakeProjectResourceObjectArray = [];
+
+  for (let i = 0; i < count; i++) {
+    fakeProjectResourceObjectArray.push(fakeProjectResourceObject());
+  }
+
+  return fakeProjectResourceObjectArray;
+}
+
 function fakeProjectAirTableRecords(count) {
   const fakeProjectObjectArray = [];
 
@@ -132,6 +154,28 @@ function fakeResourceObjects(count) {
   return fakeResourceObjectArray;
 }
 
+function fakeAirTableProjectResource(numberRequired, includeBuddying) {
+  const projectResource = {
+    it_key: fakeItKey(),
+    res_id: fakeResId(),
+    name: faker.lorem.sentence(),
+    type: faker.random.arrayElement(projectTypes),
+    client: faker.company.companyName(),
+    role: faker.name.jobTitle(),
+    description: faker.lorem.sentences(4),
+    video: faker.internet.url(),
+    skills: `${faker.lorem.words(5)}
+    
+    ${faker.lorem.words(5)}`,
+    hours: fakeHours(),
+    required: 1,
+  };
+
+  if (includeBuddying) projectResource.buddying = true;
+
+  return projectResource;
+}
+
 module.exports = {
   fakeHours,
   fakeItKey,
@@ -142,7 +186,10 @@ module.exports = {
   fakeJiraResApiResults,
   fakeProjectObject,
   fakeProjectObjects,
+  fakeProjectResourceObject,
+  fakeProjectResourceObjects,
   fakeProjectAirTableRecords,
   fakeResourceObject,
   fakeResourceObjects,
+  fakeAirTableProjectResource,
 };
