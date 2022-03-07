@@ -47,18 +47,20 @@ describe('Test the projects/resources cache', () => {
 
     // Mock dependencies
     const airTableClientCreateMock = jest.fn();
-    const airTableClientTableSpy = jest
-      .spyOn(airTable.client, 'table')
-      .mockImplementation(() => ({ create: airTableClientCreateMock }));
+    const airTableClientTableMock = jest.fn(() => ({ create: airTableClientCreateMock }));
+    const airTableClientSpy = jest
+      .spyOn(airTable, 'client')
+      .mockImplementation(() => ({ table: airTableClientTableMock }));
 
     // Run test
     await cacheProjects.addNewRecords(faker.lorem.words(1), fakeProjectsChunk);
 
-    expect(airTableClientTableSpy).toHaveBeenCalledTimes(1);
+    expect(airTableClientSpy).toHaveBeenCalledTimes(1);
+    expect(airTableClientTableMock).toHaveBeenCalledTimes(1);
     expect(airTableClientCreateMock).toHaveBeenCalledTimes(1);
 
     // Clean up
-    airTableClientTableSpy.mockRestore();
+    airTableClientSpy.mockRestore();
   });
 
   test('cacheProjectsAndResources is aborted if data is empty', async () => {
@@ -120,9 +122,10 @@ describe('Test the projects/resources cache', () => {
     // Mock dependencies
     const airTableClientAllMock = jest.fn(() => fakeRecords);
     const airTableClientSelectMock = jest.fn(() => ({ all: airTableClientAllMock }));
-    const airTableClientTableSpy = jest
-      .spyOn(airTable.client, 'table')
-      .mockImplementation(() => ({ select: airTableClientSelectMock }));
+    const airTableClientTableMock = jest.fn(() => ({ select: airTableClientSelectMock }));
+    const airTableClientSpy = jest
+      .spyOn(airTable, 'client')
+      .mockImplementation(() => ({ table: airTableClientTableMock }));
     const arraysHelpersSpy = jest
       .spyOn(arraysHelpers, 'chunk')
       .mockImplementation(() => [fakeRecords.slice(0, 10), fakeRecords.slice(10, 20), fakeRecords.slice(20)]);
@@ -131,14 +134,15 @@ describe('Test the projects/resources cache', () => {
     // Run test
     await cacheProjects.deleteAllRecords(fakeTableName);
 
-    expect(airTableClientTableSpy).toHaveBeenCalledTimes(1);
-    expect(airTableClientTableSpy).toHaveBeenCalledWith(fakeTableName);
+    expect(airTableClientSpy).toHaveBeenCalledTimes(1);
+    expect(airTableClientTableMock).toHaveBeenCalledTimes(1);
+    expect(airTableClientTableMock).toHaveBeenCalledWith(fakeTableName);
     expect(airTableClientSelectMock).toHaveBeenCalledTimes(1);
     expect(airTableClientAllMock).toHaveBeenCalledTimes(1);
     expect(deleteRecordsSpy).toHaveBeenCalledTimes(Math.ceil(fakeRecordsCount / 10));
 
     // Clean up
-    airTableClientTableSpy.mockRestore();
+    airTableClientSpy.mockRestore();
     arraysHelpersSpy.mockRestore();
     deleteRecordsSpy.mockRestore();
   });
@@ -150,20 +154,22 @@ describe('Test the projects/resources cache', () => {
 
     // Mock dependencies
     const airTableClientDestroyMock = jest.fn((recordIds, done) => done());
-    const airTableClientTableSpy = jest
-      .spyOn(airTable.client, 'table')
-      .mockImplementation(() => ({ destroy: airTableClientDestroyMock }));
+    const airTableClientTableMock = jest.fn(() => ({ destroy: airTableClientDestroyMock }));
+    const airTableClientSpy = jest
+      .spyOn(airTable, 'client')
+      .mockImplementation(() => ({ table: airTableClientTableMock }));
 
     // Run test
     await cacheProjects.deleteRecords(fakeTableName, fakeRecordIds);
 
-    expect(airTableClientTableSpy).toHaveBeenCalledTimes(1);
-    expect(airTableClientTableSpy).toHaveBeenCalledWith(fakeTableName);
+    expect(airTableClientSpy).toHaveBeenCalledTimes(1);
+    expect(airTableClientTableMock).toHaveBeenCalledTimes(1);
+    expect(airTableClientTableMock).toHaveBeenCalledWith(fakeTableName);
     expect(airTableClientDestroyMock).toHaveBeenCalledTimes(1);
     expect(airTableClientDestroyMock).toHaveBeenCalledWith(fakeRecordIds, expect.anything());
 
     // Clean up
-    airTableClientTableSpy.mockRestore();
+    airTableClientSpy.mockRestore();
   });
 
   test('filterProjectsConnectedWithResources correctly filters projects', () => {

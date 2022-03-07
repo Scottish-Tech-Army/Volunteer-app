@@ -1,16 +1,19 @@
 require('dotenv').config();
 const AirTable = require('airtable');
 
-client = new AirTable().base(process.env.AIRTABLE_ID);
+function client() {
+  return new AirTable().base(process.env.AIRTABLE_ID);
+}
 
 async function getAllRecords(tableName) {
-  const allRecordsRaw = await module.exports.client.table(tableName).select().all();
+  const allRecordsRaw = await module.exports.client().table(tableName).select().all();
 
   return allRecordsRaw.map((record) => record.fields);
 }
 
 async function getRecord(tableName, fieldName, fieldValue) {
-  const recordsRaw = await module.exports.client
+  const recordsRaw = await module.exports
+    .client()
     .table(tableName)
     .select({
       filterByFormula: `{${fieldName}} = '${fieldValue}'`,

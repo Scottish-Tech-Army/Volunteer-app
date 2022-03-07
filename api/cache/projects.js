@@ -37,7 +37,7 @@ async function addNewRecords(tableName, recordsChunk) {
     fields: record,
   }));
 
-  await airTable.client.table(tableName).create(recordsChunkFormattedForAirTable);
+  await airTable.client().table(tableName).create(recordsChunkFormattedForAirTable);
 }
 
 async function cacheProjectsAndResources(projects, resources) {
@@ -70,7 +70,7 @@ async function cacheProjectsAndResources(projects, resources) {
 
 async function deleteAllRecords(tableName) {
   return new Promise(async (resolve, reject) => {
-    const allRecordsRaw = await airTable.client.table(tableName).select().all();
+    const allRecordsRaw = await airTable.client().table(tableName).select().all();
 
     // AirTable accepts creating records in groups of 10 (faster than doing just one record at at time),
     // so we chunk our data into an array of arrays, where each top-level array item is an array of up to 10 records
@@ -94,15 +94,18 @@ async function deleteAllRecords(tableName) {
 
 async function deleteRecords(tableName, recordIds) {
   return new Promise(async (resolve, reject) => {
-    airTable.client.table(tableName).destroy(recordIds, (error) => {
-      if (error) {
-        console.error('❌ AirTable delete error', error);
+    airTable
+      .client()
+      .table(tableName)
+      .destroy(recordIds, (error) => {
+        if (error) {
+          console.error('❌ AirTable delete error', error);
 
-        reject();
-      }
+          reject();
+        }
 
-      resolve();
-    });
+        resolve();
+      });
   });
 }
 
