@@ -2,7 +2,7 @@ require('dotenv').config();
 
 const express = require('express');
 const router = express.Router();
-const data = require('../data.json');
+const seedData = require('../data.json'); //dummy data for dev purposes if no authorised credentials
 const axios = require('axios').default;
 const app = express();
 const api_key = process.env.API_KEY;
@@ -31,7 +31,7 @@ router.get('/', async (req, res, next) => {
       {
         headers: {
           Authorization: `Basic ${Buffer.from(
-            // below use email address you used for jira and generate token from jira
+            // email address and API-key can be requested in the Volunteer App dev group
             `${email}:${api_key}`,
           ).toString('base64')}`,
           Accept: 'application/json',
@@ -69,7 +69,7 @@ router.get('/', async (req, res, next) => {
       {
         headers: {
           Authorization: `Basic ${Buffer.from(
-            // below use email address you used for jira and generate token from jira
+            // email address and API-key can be requested in the Volunteer App dev group
             `${email}:${api_key}`,
           ).toString('base64')}`,
           Accept: 'application/json',
@@ -114,7 +114,8 @@ router.get('/', async (req, res, next) => {
     res.status(200).send(FinalArray);
   }
 
-  Promise.all([callAllResData, callAllItData]).then(() => {
+  Promise.all([callAllResData, callAllItData])
+    .then(() => {
     const final = {
       jiraResBoard: {
         'number of results': ResArray.length,
@@ -126,7 +127,13 @@ router.get('/', async (req, res, next) => {
       },
     };
     return linkData(ResArray, ItArray);
-  });
+    })
+    // if unauthorised for Jira API access, load with dummy data
+    .catch (error => {
+      if (error.response.status === 401) {
+        res.json(seedData)
+      }
+    });
 });
 
 router.get('/single', async (req, res, next) => {
