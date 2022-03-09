@@ -1,41 +1,66 @@
-{"projects": [
-
+[
     {
-        "key": "PKAVS",
-        "name": "project-website-pkavs",
-        "type": "Team-managed software",
-        "client": "PKAVS",
-        "role": "QA Tester",
-        "description": "Blah blah",
-        "skills": ["Acceptance Testing"],
-        "hours": "5-10 hours per week",
-        "required": "One person",
-        "buddying": false
+        "ResData": {
+            "res_id": "PKAVS",
+            "projectType": "Team-managed software",
+            "jobRole": "QA Tester",
+            "description": "Blah blah",
+            "candidateCoreSkills": "Acceptance Testing",
+            "candidateTime": "5-10 hours per week",
+            "suitableForBuddy": false
+        },
+        "ItData": {
+            "projectName": "project-website-pkavs",
+            "charityName": "PKAVS",
+            "charityVideo": ""
+        }
     },
     {
-        "key": "SVA",
-        "name": "STA-volunteer Apps",
-        "type": "Team-managed software",
-        "client": "STA - internal",
-        "role": "Lead developer",
-        "description": "Blah blah",
-        "skills": ["React Native", "Node.js"],
-        "hours": "5-10 hours per week",
-        "required": "One person",
-        "buddying": true
+        "ResData": {
+            "res_id": "SVA",
+            "projectType": "Team-managed software",
+            "jobRole": "Lead Developer",
+            "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit, imperdiet rhoncus neque tempor sagittis lobortis magna, nullam dictum leo interdum condimentum orci. Augue feugiat commodo sociosqu nam quisque felis tincidunt nisi cum id, auctor lacinia nec sodales maecenas pretium inceptos bibendum aenean diam orci, curabitur cursus curae dictum class senectus aptent nibh ligula.",
+            "candidateCoreSkills": "React Native, Node.js",
+            "candidateTime": "5-10 hours per week",
+            "suitableForBuddy": true
+        },
+        "ItData": {
+            "projectName": "STA Volunteer App",
+            "charityName": "STA - internal",
+            "charityVideo": ""
+        }
     },
-
     {
-        "key": "SOLE",
-        "name": "SOLE",
-        "type": "Team-managed software",
-        "client": "STA - internal",
-        "role": "Lead test analyst",
-        "description": "The lead tester is a coordination and management role, so an understanding of and experience in a number of testing disciplines, rather than depth in any specific one.",
-        "skills": ["Acceptance Testing", "Unit Testing"],
-        "hours": "5-10 hours per week",
-        "required": "Multiple people",
-        "buddying": true
+        "ResData": {
+            "res_id": "SOLE",
+            "projectType": "Team-managed software",
+            "jobRole": "Lead Test Analyst",
+            "description": "The lead tester is a coordination and management role, so an understanding of and experience in a number of testing disciplines, rather than depth in any specific one.",
+            "candidateCoreSkills": "Acceptance Testing, Unit Testing",
+            "candidateTime": "1-10 hours per week",
+            "suitableForBuddy": true
+        },
+        "ItData": {
+            "projectName": "SOLE",
+            "charityName": "STA - internal",
+            "charityVideo": ""
+        }
+    },
+    {
+        "ResData": {
+            "res_id": "STA",
+            "projectType": "Team-managed software",
+            "jobRole": "Data Analyst",
+            "description": "Blah blah blah blah blah",
+            "candidateCoreSkills": "Ability to research data, build a data dashboard",
+            "candidateTime": "4-8 hours per week",
+            "suitableForBuddy": true
+        },
+        "ItData": {
+            "projectName": "STA Data Dashboard - local authority care stats",
+            "charityName": "STA - internal",
+            "charityVideo": ""
+        }
     }
 ]
-}
