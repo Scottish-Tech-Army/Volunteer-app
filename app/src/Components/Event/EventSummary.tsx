@@ -5,11 +5,11 @@ import EventDate from './EventDate'
 import EventThumbnail from './EventThumbnail'
 import EventTime from './EventTime'
 import Feather from 'react-native-vector-icons/Feather'
-import { Events } from './types'
+import { Event } from '@/Services/modules/events'
 import { string } from 'prop-types'
 
 interface EventSummaryProps {
-  data: Events
+  data: Event
 }
 
 const EventDetails = styled.TouchableOpacity`
