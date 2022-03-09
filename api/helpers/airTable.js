@@ -2,25 +2,45 @@ require('dotenv').config();
 const AirTable = require('airtable');
 
 function client() {
-  return new AirTable().base(process.env.AIRTABLE_ID);
+  try {
+    const airTableClient = new AirTable().base(process.env.AIRTABLE_ID);
+
+    return airTableClient;
+  } catch (error) {
+    return {
+      error,
+    };
+  }
 }
 
 async function getAllRecords(tableName) {
-  const allRecordsRaw = await module.exports.client().table(tableName).select().all();
+  try {
+    const allRecordsRaw = await module.exports.client().table(tableName).select().all();
 
-  return allRecordsRaw.map((record) => record.fields);
+    return allRecordsRaw.map((record) => record.fields);
+  } catch (error) {
+    return {
+      error,
+    };
+  }
 }
 
 async function getRecord(tableName, fieldName, fieldValue) {
-  const recordsRaw = await module.exports
-    .client()
-    .table(tableName)
-    .select({
-      filterByFormula: `{${fieldName}} = '${fieldValue}'`,
-    })
-    .all();
+  try {
+    const recordsRaw = await module.exports
+      .client()
+      .table(tableName)
+      .select({
+        filterByFormula: `{${fieldName}} = '${fieldValue}'`,
+      })
+      .all();
 
-  return recordsRaw.length ? recordsRaw[0].fields : undefined;
+    return recordsRaw.length ? recordsRaw[0].fields : undefined;
+  } catch (error) {
+    return {
+      error,
+    };
+  }
 }
 
 function projectsCacheTable() {
