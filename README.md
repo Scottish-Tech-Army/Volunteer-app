@@ -28,7 +28,7 @@ Welcome to the the Volunteering App Github repo
 5. Copy the `.env.example` file in the api root folder and name your new file `.env` in the same folder. Fill in the empty values (`""`) in your file for any credentials/settings (API keys for STA Jira API access, AirTable, etc).
     >**Note** Credentials themselves not provided, these should be requested/provided on joining the dev group.
 
-6. At the command prompt type `npm install` then `npm start` to start the Volunteer App API server.
+6. At the command prompt type `npm install` then `npm start` to start the Volunteer App API server. Note the port that the server is running on.
 
 7. Go to the `app` folder inside the project folder (e.g. **\Volunteer-app path\app**)
 
@@ -37,7 +37,8 @@ Welcome to the the Volunteering App Github repo
 
     >**Note:** you may need to run `npm install --legacy-peer-deps`
 
-9. Duplicate the example config file `app/src/Config/index.example.ts` and name your new file `app/src/Config/index.ts`
+9. Duplicate the example config file `app/src/Config/index.example.ts` and name your new file `app/src/Config/index.ts`. Edit the `STA_BASE_URL: 'http://localhost:5000'` replacing `5000 `if necessary with the port noted at step 6.
+
     >**Note** If the app has difficulty connecting to the API, you may need specify your IP address in `index.ts`. Replace `localhost` in the line `STA_BASE_URL: 'http://localhost:3000'` with your own.
 
 10. type in command terminal: `npm run ios` or `npm run android`
