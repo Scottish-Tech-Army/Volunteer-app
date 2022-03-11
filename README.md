@@ -30,6 +30,8 @@ Welcome to the the Volunteering App Github repo
 
 6. At the command prompt type `npm install` then `npm start` to start the Volunteer App API server. Note the port that the server is running on.
 
+    >**Note** When rebuilding the API you may receive a message about an incompatible architecture with the n library - this can be fixed by running `npm uninstall n` then `npm install`.
+
 7. Go to the `app` folder inside the project folder (e.g. **\Volunteer-app path\app**)
 
 8. At the command prompt type `npm install`
