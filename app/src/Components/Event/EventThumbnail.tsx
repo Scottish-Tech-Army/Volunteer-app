@@ -1,9 +1,7 @@
 import React, { FC }  from 'react'
 import styled from 'styled-components/native'
+import comingSoonImg from '@/Assets/Images/ComingSoon.png'
 
-interface EventThumbnailProps {
-    thumbnailUri: string
-}
 
 const ThumbnailImage = styled.Image`
     width: 110px;
@@ -12,9 +10,9 @@ const ThumbnailImage = styled.Image`
     margin-right: 20px;
 `
 
-const EventThumbnail: FC<EventThumbnailProps> = ({thumbnailUri}) => {
+const EventThumbnail = () => {
   return (
-    <ThumbnailImage source={{ uri: thumbnailUri }}/>
+    <ThumbnailImage source={comingSoonImg}/>
   )
 }
 

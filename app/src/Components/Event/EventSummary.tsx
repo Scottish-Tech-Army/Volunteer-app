@@ -6,7 +6,6 @@ import EventThumbnail from './EventThumbnail'
 import EventTime from './EventTime'
 import Feather from 'react-native-vector-icons/Feather'
 import { Event } from '@/Services/modules/events'
-import { string } from 'prop-types'
 
 interface EventSummaryProps {
   data: Event
@@ -42,7 +41,7 @@ const EventSummary: FC<EventSummaryProps> = ({ data }) => {
   const eventList = data.map((event) => {
     return (
         <EventDetails key={event.id}>
-          <EventThumbnail thumbnailUri="https://reactnative.dev/img/tiny_logo.png"/>
+          <EventThumbnail />
           <RightColumn>
             <EventHeading title={event.fields["Event Name"]} />
             <EventDate 
