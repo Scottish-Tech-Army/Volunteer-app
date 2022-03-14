@@ -3,6 +3,7 @@ const axios = require('axios');
 const arraysHelpers = require('../../helpers/arrays');
 const cacheProjects = require('../../cache/projects');
 const { faker } = require('@faker-js/faker');
+const projectsHelpers = require('../../helpers/projects');
 const projectsTestData = require('../../__test-data__/projects');
 
 axios.defaults.adapter = require('axios/lib/adapters/http');
@@ -12,15 +13,11 @@ describe('Test the projects/resources cache', () => {
     jest.resetModules();
   });
 
-  test('addNewProjectsAndResources adds new records in chunks', async () => {
+  test('addNewProjectsResources adds new records in chunks', async () => {
     // Set up fake test data
-    const fakeProjectsCount = faker.datatype.number(30);
-    const fakeProjectsChunkCount = Math.ceil(fakeProjectsCount / 10);
-    const fakeProjects = projectsTestData.fakeProjectObjects(fakeProjectsCount);
-
-    const fakeResourcesCount = faker.datatype.number({ min: 30, max: 50 });
-    const fakeResourcesChunkCount = Math.ceil(fakeResourcesCount / 10);
-    const fakeResources = projectsTestData.fakeResourceObjects(fakeResourcesCount);
+    const fakeProjectsResourcesCount = faker.datatype.number({ min: 30, max: 50 });
+    const fakeProjectsResourcesChunkCount = Math.ceil(fakeProjectsResourcesCount / 10);
+    const fakeProjectsResources = projectsTestData.fakeProjectResourceObjects(fakeProjectsResourcesCount);
 
     // Mock dependencies
     const arraysHelpersSpy = jest
@@ -30,10 +27,10 @@ describe('Test the projects/resources cache', () => {
     const consoleLogSpy = jest.spyOn(global.console, 'log').mockImplementation(() => {});
 
     // Run test
-    await cacheProjects.addNewProjectsAndResources(fakeProjects, fakeResources);
+    await cacheProjects.addNewProjectsResources(fakeProjectsResources);
 
-    expect(arraysHelpersSpy).toHaveBeenCalledTimes(2);
-    expect(addNewRecordsSpy).toHaveBeenCalledTimes(fakeProjectsChunkCount + fakeResourcesChunkCount);
+    expect(arraysHelpersSpy).toHaveBeenCalledTimes(1);
+    expect(addNewRecordsSpy).toHaveBeenCalledTimes(fakeProjectsResourcesChunkCount);
 
     // Clean up
     arraysHelpersSpy.mockRestore();
@@ -65,24 +62,24 @@ describe('Test the projects/resources cache', () => {
 
   test('cacheProjectsAndResources is aborted if data is empty', async () => {
     // Mock dependencies
-    const deleteExistingProjectsAndResourcesSpy = jest
-      .spyOn(cacheProjects, 'deleteExistingProjectsAndResources')
+    const deleteAllRecordsSpy = jest
+      .spyOn(cacheProjects, 'deleteAllRecords')
       .mockImplementation(() => Promise.resolve());
-    const addNewProjectsAndResourcesSpy = jest
-      .spyOn(cacheProjects, 'addNewProjectsAndResources')
+    const addNewProjectsResourcesSpy = jest
+      .spyOn(cacheProjects, 'addNewProjectsResources')
       .mockImplementation(() => Promise.resolve());
     const consoleErrorSpy = jest.spyOn(global.console, 'error').mockImplementation(() => {});
 
     // Run test
     await cacheProjects.cacheProjectsAndResources([], []);
 
-    expect(deleteExistingProjectsAndResourcesSpy).toHaveBeenCalledTimes(0);
-    expect(addNewProjectsAndResourcesSpy).toHaveBeenCalledTimes(0);
+    expect(deleteAllRecordsSpy).toHaveBeenCalledTimes(0);
+    expect(addNewProjectsResourcesSpy).toHaveBeenCalledTimes(0);
     expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
 
     // Clean up
-    deleteExistingProjectsAndResourcesSpy.mockRestore();
-    addNewProjectsAndResourcesSpy.mockRestore();
+    deleteAllRecordsSpy.mockRestore();
+    addNewProjectsResourcesSpy.mockRestore();
     consoleErrorSpy.mockRestore();
   });
 
@@ -90,26 +87,34 @@ describe('Test the projects/resources cache', () => {
     // Set up fake test data
     const fakeProjects = projectsTestData.fakeProjectObjects(faker.datatype.number({ min: 20, max: 30 }));
     const fakeResources = projectsTestData.fakeResourceObjects(faker.datatype.number({ min: 30, max: 50 }));
+    const fakeProjectsResources = projectsTestData.fakeProjectResourceObjects(
+      faker.datatype.number({ min: 30, max: 50 }),
+    );
 
     // Mock dependencies
-    const deleteExistingProjectsAndResourcesSpy = jest
-      .spyOn(cacheProjects, 'deleteExistingProjectsAndResources')
+    const combineProjectsAndResourcesSpy = jest
+      .spyOn(projectsHelpers, 'combineProjectsAndResources')
+      .mockImplementation(() => fakeProjectsResources);
+    const deleteAllRecordsSpy = jest
+      .spyOn(cacheProjects, 'deleteAllRecords')
       .mockImplementation(() => Promise.resolve());
-    const addNewProjectsAndResourcesSpy = jest
-      .spyOn(cacheProjects, 'addNewProjectsAndResources')
+    const addNewProjectsResourcesSpy = jest
+      .spyOn(cacheProjects, 'addNewProjectsResources')
       .mockImplementation(() => Promise.resolve());
     const consoleLogSpy = jest.spyOn(global.console, 'log').mockImplementation(() => {});
 
     // Run test
     await cacheProjects.cacheProjectsAndResources(fakeProjects, fakeResources);
 
-    expect(deleteExistingProjectsAndResourcesSpy).toHaveBeenCalledTimes(1);
-    expect(addNewProjectsAndResourcesSpy).toHaveBeenCalledTimes(1);
-    expect(addNewProjectsAndResourcesSpy).toHaveBeenCalledWith(fakeProjects, fakeResources);
+    expect(combineProjectsAndResourcesSpy).toHaveBeenCalledTimes(1);
+    expect(deleteAllRecordsSpy).toHaveBeenCalledTimes(1);
+    expect(addNewProjectsResourcesSpy).toHaveBeenCalledTimes(1);
+    expect(addNewProjectsResourcesSpy).toHaveBeenCalledWith(fakeProjectsResources);
 
     // Clean up
-    deleteExistingProjectsAndResourcesSpy.mockRestore();
-    addNewProjectsAndResourcesSpy.mockRestore();
+    combineProjectsAndResourcesSpy.mockRestore();
+    deleteAllRecordsSpy.mockRestore();
+    addNewProjectsResourcesSpy.mockRestore();
     consoleLogSpy.mockRestore();
   });
 
@@ -130,6 +135,7 @@ describe('Test the projects/resources cache', () => {
       .spyOn(arraysHelpers, 'chunk')
       .mockImplementation(() => [fakeRecords.slice(0, 10), fakeRecords.slice(10, 20), fakeRecords.slice(20)]);
     const deleteRecordsSpy = jest.spyOn(cacheProjects, 'deleteRecords').mockImplementation(() => Promise.resolve());
+    const consoleLogSpy = jest.spyOn(global.console, 'log').mockImplementation(() => {});
 
     // Run test
     await cacheProjects.deleteAllRecords(fakeTableName);
@@ -145,6 +151,7 @@ describe('Test the projects/resources cache', () => {
     airTableClientSpy.mockRestore();
     arraysHelpersSpy.mockRestore();
     deleteRecordsSpy.mockRestore();
+    consoleLogSpy.mockRestore();
   });
 
   test('deleteRecords calls AirTable client', async () => {
@@ -222,11 +229,11 @@ describe('Test the projects/resources cache', () => {
     expect(formattedProjects).toEqual([
       {
         ...fakeProjects[0],
-        type: fakeResources[0].projectType,
+        type: fakeResources[0].type,
       },
       {
         ...fakeProjects[1],
-        type: fakeResources[2].projectType,
+        type: fakeResources[2].type,
       },
       {
         ...fakeProjects[2],
@@ -249,11 +256,11 @@ describe('Test the projects/resources cache', () => {
     const fakeResources = projectsTestData.fakeResourceObjects(25);
 
     // Mock dependencies
-    const jiraItDataCallSpy = jest
-      .spyOn(cacheProjects, 'jiraItDataCall')
+    const getInitialTriageProjectsFromJiraSpy = jest
+      .spyOn(cacheProjects, 'getInitialTriageProjectsFromJira')
       .mockImplementationOnce(() => Promise.resolve(fakeProjects));
-    const jiraResourceDataCallSpy = jest
-      .spyOn(cacheProjects, 'jiraResourceDataCall')
+    const getResourcesFromJiraSpy = jest
+      .spyOn(cacheProjects, 'getResourcesFromJira')
       .mockImplementationOnce(() => Promise.resolve(fakeResources));
     const filterProjectsConnectedWithResourcesSpy = jest
       .spyOn(cacheProjects, 'filterProjectsConnectedWithResources')
@@ -267,8 +274,8 @@ describe('Test the projects/resources cache', () => {
     // Run test
     await cacheProjects.getAllProjectsAndResourcesFromJira();
 
-    expect(jiraItDataCallSpy).toHaveBeenCalledTimes(1);
-    expect(jiraResourceDataCallSpy).toHaveBeenCalledTimes(1);
+    expect(getInitialTriageProjectsFromJiraSpy).toHaveBeenCalledTimes(1);
+    expect(getResourcesFromJiraSpy).toHaveBeenCalledTimes(1);
     expect(filterProjectsConnectedWithResourcesSpy).toHaveBeenCalledTimes(1);
     expect(filterProjectsConnectedWithResourcesSpy).toHaveBeenCalledWith(fakeProjects, fakeResources);
     expect(filterResourcesConnectedWithProjectsSpy).toHaveBeenCalledTimes(1);
@@ -276,15 +283,15 @@ describe('Test the projects/resources cache', () => {
     expect(formatProjectsSpy).toHaveBeenCalledTimes(1);
 
     // Clean up
-    jiraItDataCallSpy.mockRestore();
-    jiraResourceDataCallSpy.mockRestore();
+    getInitialTriageProjectsFromJiraSpy.mockRestore();
+    getResourcesFromJiraSpy.mockRestore();
     filterProjectsConnectedWithResourcesSpy.mockRestore();
     filterResourcesConnectedWithProjectsSpy.mockRestore();
     formatProjectsSpy.mockRestore();
     consoleLogSpy.mockRestore();
   });
 
-  test('jiraItDataCall calls Jira API', async () => {
+  test('getInitialTriageProjectsFromJira calls Jira API', async () => {
     // Set up fake test data
     const fakeProjectsCountMinimum = 10;
     const fakeProjectsCountMaximum = 50;
@@ -295,7 +302,7 @@ describe('Test the projects/resources cache', () => {
     const axiosSpy = jest.spyOn(axios, 'get').mockImplementationOnce(() => Promise.resolve(fakeJiraItApiResults));
 
     // Run test
-    const jiraItArray = await cacheProjects.jiraItDataCall(0, []);
+    const jiraItArray = await cacheProjects.getInitialTriageProjectsFromJira(0, []);
 
     expect(axiosSpy).toHaveBeenCalledTimes(1);
     const randomItemIndex = faker.datatype.number({ min: fakeProjectsCountMinimum - 1, max: fakeProjectsCount - 1 });
@@ -311,7 +318,7 @@ describe('Test the projects/resources cache', () => {
     axiosSpy.mockRestore();
   });
 
-  test('jiraResourceDataCall calls Jira API', async () => {
+  test('getResourcesFromJira calls Jira API', async () => {
     // Set up fake test data
     const fakeResourcesCountMinimum = 30;
     const fakeResourcesCountMaximum = 80;
@@ -325,7 +332,7 @@ describe('Test the projects/resources cache', () => {
     const axiosSpy = jest.spyOn(axios, 'get').mockImplementationOnce(() => Promise.resolve(fakeJiraResApiResults));
 
     // Run test
-    const jiraResArray = await cacheProjects.jiraResourceDataCall(0, []);
+    const jiraResArray = await cacheProjects.getResourcesFromJira(0, []);
 
     expect(axiosSpy).toHaveBeenCalledTimes(1);
     const randomItemIndex = faker.datatype.number({ min: fakeResourcesCountMinimum - 1, max: fakeResourcesCount - 1 });

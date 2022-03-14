@@ -2,6 +2,7 @@ require('dotenv').config();
 const airTable = require('../helpers/airTable');
 const arraysHelpers = require('../helpers/arrays');
 const axios = require('axios').default;
+const projectsHelpers = require('../helpers/projects');
 
 const api_key = process.env.JIRA_API_KEY;
 const email = process.env.JIRA_EMAIL;
@@ -12,21 +13,15 @@ const volunteerSearch = 'Volunteer Search';
 const volunteerIntroduction = 'Volunteer Introduction';
 const activityUnderway = 'Activity Underway';
 
-async function addNewProjectsAndResources(projects, resources) {
+async function addNewProjectsResources(projectsResources) {
   // AirTable accepts creating records in groups of 10 (faster than doing just one record at at time),
   // so we chunk our data into an array of arrays, where each top-level array item is an array of up to 10 projects/resources
 
-  const projectsChunked = arraysHelpers.chunk(projects, 10);
-  const resourcesChunked = arraysHelpers.chunk(resources, 10);
+  const projectsResourcesChunked = arraysHelpers.chunk(projectsResources, 10);
 
-  console.log('🛈 Saving projects');
-  for (const projectsChunk of projectsChunked) {
-    await module.exports.addNewRecords(airTable.projectsCacheTable(), projectsChunk);
-  }
-
-  console.log('🛈 Saving resources');
-  for (const resourcesChunk of resourcesChunked) {
-    await module.exports.addNewRecords(airTable.resourcesCacheTable(), resourcesChunk);
+  console.log('🛈 Saving project resources');
+  for (const projectsResourcesChunk of projectsResourcesChunked) {
+    await module.exports.addNewRecords(airTable.projectsResourcesCacheTable(), projectsResourcesChunk);
   }
 
   console.log('🛈 Finished saving new cache data');
@@ -49,8 +44,10 @@ async function cacheProjectsAndResources(projects, resources) {
 
   console.log('🛈 Attempting to cache new data');
 
+  const projectsResources = projectsHelpers.combineProjectsAndResources(projects, resources);
+
   try {
-    await module.exports.deleteExistingProjectsAndResources();
+    await module.exports.deleteAllRecords(airTable.projectsResourcesCacheTable());
   } catch (error) {
     console.error('❌ Could not delete existing projects/resources records in cache, so aborted updating cache');
 
@@ -58,7 +55,7 @@ async function cacheProjectsAndResources(projects, resources) {
   }
 
   try {
-    await module.exports.addNewProjectsAndResources(projects, resources);
+    await module.exports.addNewProjectsResources(projectsResources);
   } catch (error) {
     console.error('❌ Could not save new projects/resources records in cache');
 
@@ -69,6 +66,8 @@ async function cacheProjectsAndResources(projects, resources) {
 }
 
 async function deleteAllRecords(tableName) {
+  console.log(`🛈 Deleting old records from ${tableName}`);
+
   return new Promise(async (resolve, reject) => {
     const allRecordsRaw = await airTable.client().table(tableName).select().all();
 
@@ -109,24 +108,6 @@ async function deleteRecords(tableName, recordIds) {
   });
 }
 
-function deleteExistingProjectsAndResources() {
-  return new Promise(async (resolve, reject) => {
-    const tables = [airTable.projectsCacheTable(), airTable.resourcesCacheTable()];
-
-    for (const tableName of tables) {
-      console.log(`🛈 Deleting old records from ${tableName}`);
-
-      try {
-        await module.exports.deleteAllRecords(tableName);
-      } catch (error) {
-        reject();
-      }
-    }
-
-    resolve();
-  });
-}
-
 function filterProjectsConnectedWithResources(itArray, resArray) {
   return itArray.filter((project) => resArray.some((resource) => resource.it_key === project.it_key));
 }
@@ -138,7 +119,7 @@ function filterResourcesConnectedWithProjects(itArray, resArray) {
 function formatProjects(projects, resources) {
   return projects.map((project) => {
     const resourcesConnectedToProject = resources.filter((resource) => resource.it_key === project.it_key);
-    const projectType = resourcesConnectedToProject.length ? resourcesConnectedToProject[0].projectType : '';
+    const projectType = resourcesConnectedToProject.length ? resourcesConnectedToProject[0].type : '';
 
     return {
       ...project,
@@ -148,11 +129,11 @@ function formatProjects(projects, resources) {
 }
 
 async function getAllProjectsAndResourcesFromJira() {
-  console.log('🛈 Getting data from Jira API - this can take 15 seconds or more');
+  console.log('🛈 Getting data from Jira API - this can take 5 seconds or more');
 
   return new Promise((resolve) => {
-    const callAllItData = Promise.resolve(module.exports.jiraItDataCall(0, []));
-    const callAllResData = Promise.resolve(module.exports.jiraResourceDataCall(0, []));
+    const callAllItData = Promise.resolve(module.exports.getInitialTriageProjectsFromJira(0, []));
+    const callAllResData = Promise.resolve(module.exports.getResourcesFromJira(0, []));
 
     Promise.all([callAllItData, callAllResData]).then((data) => {
       const itArray = data[0];
@@ -174,7 +155,7 @@ async function getAllProjectsAndResourcesFromJira() {
   });
 }
 
-async function jiraItDataCall(startAt, itArray) {
+async function getInitialTriageProjectsFromJira(startAt, itArray) {
   const itJqlQuery = encodeURIComponent(
     `project=${projectJiraBoardName} AND status="${volunteerSearch}" OR status="${volunteerIntroduction}" OR status="${activityUnderway}"`,
   );
@@ -206,13 +187,13 @@ async function jiraItDataCall(startAt, itArray) {
   if (itArray.length < itTotalData) {
     const itStartResultSearch = itArray.length;
 
-    return module.exports.jiraItDataCall(itStartResultSearch, itArray);
+    return module.exports.getInitialTriageProjectsFromJira(itStartResultSearch, itArray);
   }
 
   return itArray;
 }
 
-async function jiraResourceDataCall(startAt, resArray) {
+async function getResourcesFromJira(startAt, resArray) {
   const resJqlQuery = encodeURIComponent(
     `project=${resourcingJiraBoardName} AND status="${recruiterAssignedJiraColumnName}"`,
   );
@@ -247,7 +228,7 @@ async function jiraResourceDataCall(startAt, resArray) {
   if (resArray.length < resTotalData) {
     const resStartResultSearch = resArray.length;
 
-    return module.exports.jiraResourceDataCall(resStartResultSearch, resArray);
+    return module.exports.getResourcesFromJira(resStartResultSearch, resArray);
   }
 
   return resArray;
@@ -261,17 +242,16 @@ async function start() {
 }
 
 module.exports = {
-  addNewProjectsAndResources,
+  addNewProjectsResources,
   addNewRecords,
   cacheProjectsAndResources,
   deleteAllRecords,
   deleteRecords,
-  deleteExistingProjectsAndResources,
   filterProjectsConnectedWithResources,
   filterResourcesConnectedWithProjects,
   formatProjects,
   getAllProjectsAndResourcesFromJira,
-  jiraItDataCall,
-  jiraResourceDataCall,
+  getInitialTriageProjectsFromJira,
+  getResourcesFromJira,
   start,
 };

@@ -25,13 +25,21 @@ async function getAllRecords(tableName) {
   }
 }
 
-async function getRecord(tableName, fieldName, fieldValue) {
+async function getRecord(tableName, filterQuery) {
+  // See docs on AirTable formula queries here: https://support.airtable.com/hc/en-us/articles/203255215-Formula-Field-Reference#logical
+  let filterFormula = '';
+  for (const [fieldName, fieldValue] of Object.entries(filterQuery)) {
+    filterFormula += `{${fieldName}} = '${fieldValue}',`;
+  }
+  filterFormula = filterFormula.slice(0, -1); // remove last trailing comma
+  filterFormula = `AND(${filterFormula})`;
+
   try {
     const recordsRaw = await module.exports
       .client()
       .table(tableName)
       .select({
-        filterByFormula: `{${fieldName}} = '${fieldValue}'`,
+        filterByFormula: filterFormula,
       })
       .all();
 
@@ -43,18 +51,13 @@ async function getRecord(tableName, fieldName, fieldValue) {
   }
 }
 
-function projectsCacheTable() {
-  return process.env.AIRTABLE_PROJECTS_CACHE_TABLE;
-}
-
-function resourcesCacheTable() {
-  return process.env.AIRTABLE_RESOURCES_CACHE_TABLE;
+function projectsResourcesCacheTable() {
+  return process.env.AIRTABLE_PROJECTS_RESOURCES_CACHE_TABLE;
 }
 
 module.exports = {
   client,
   getAllRecords,
   getRecord,
-  projectsCacheTable,
-  resourcesCacheTable,
+  projectsResourcesCacheTable,
 };

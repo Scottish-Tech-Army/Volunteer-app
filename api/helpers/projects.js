@@ -1,6 +1,17 @@
 const apiDefinition = require('../definitions/api_definition.json');
 const stringsHelper = require('../helpers/strings');
 
+function combineProjectsAndResources(projects, resources) {
+  return resources.map((resource) => {
+    const project = projects.filter((project) => project.it_key === resource.it_key)[0];
+
+    return {
+      ...resource,
+      ...project,
+    };
+  });
+}
+
 /* Takes a project resource object (project and resource combined),
    with the fields as they have come from AirTable,
    and formats it correctly for the API to return it to the user */
@@ -43,5 +54,6 @@ function formatProjectResourceFromAirTable(projectResource) {
 }
 
 module.exports = {
+  combineProjectsAndResources,
   formatProjectResourceFromAirTable,
 };
