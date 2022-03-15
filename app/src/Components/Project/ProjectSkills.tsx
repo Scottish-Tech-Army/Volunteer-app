@@ -3,7 +3,7 @@ import styled from 'styled-components/native'
 import Entypo from 'react-native-vector-icons/Entypo'
 
 interface ProjectSkillsProps {
-  skills: string
+  skills: string[]
 }
 
 const SkillsView = styled.View`
@@ -22,10 +22,14 @@ const SkillText = styled.Text`
 
 const ProjectSkills: FC<ProjectSkillsProps> = ({ skills }) => {
   return (
-    <SkillsView>
-      <Entypo name="tools" size={16} />
-      <SkillText >{skills}</SkillText>
-    </SkillsView>
+    <>
+      {skills.map(skill => (
+        <SkillsView key={skill}>
+          <Entypo name="tools" size={16} />
+          <SkillText>{skill}</SkillText>
+        </SkillsView>
+      ))}
+    </>
   )
 }
 

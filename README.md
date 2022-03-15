@@ -20,27 +20,27 @@ Welcome to the the Volunteering App Github repo
 1. Ensure that you've gone through the following link for your particular platform: https://reactnative.dev/docs/environment-setup
 
 2. Pull the code from Git
- 
+
 3. Open Command terminal
 
 4. Go to the `api` folder inside the project folder (e.g. **\Volunteer-app path\api**)
 
-5. Create .env file to store Jira API access credentials.
+5. Copy the `.env.example` file in the api root folder and name your new file `.env` in the same folder. Fill in the empty values (`""`) in your file for any credentials/settings (API keys for STA Jira API access, AirTable, etc).
     >**Note** Credentials themselves not provided, these should be requested/provided on joining the dev group.
 
 6. At the command prompt type `npm install` then `npm start` to start the Volunteer App API server.
 
-7. Go to the `app` folder inside the project folder (e.g. **\Volunteer-app path\app**)      
- 
-8. At the command prompt type `npm install`     
+7. Go to the `app` folder inside the project folder (e.g. **\Volunteer-app path\app**)
+
+8. At the command prompt type `npm install`
     >**Note:** Inside the `app` folder there is package-lock.json. Everytime this is modified, it is advised to repeat step 6 before  running the project.
-          
+
     >**Note:** you may need to run `npm install --legacy-peer-deps`
 
 9. Duplicate the example config file `app/src/Config/index.example.ts` and name your new file `app/src/Config/index.ts`
     >**Note** If the app has difficulty connecting to the API, you may need specify your IP address in `index.ts`. Replace `localhost` in the line `STA_BASE_URL: 'http://localhost:3000'` with your own.
 
-11. type in command terminal: `npm run ios` or `npm run android`
+10. type in command terminal: `npm run ios` or `npm run android`
 
 # Subsequent run
 
@@ -49,3 +49,9 @@ Welcome to the the Volunteering App Github repo
 2. Go to the `api` folder inside the project folder (e.g. **\Volunteer-app path\api**) and enter `npm start` to start the Volunteer App API server.
 
 3. Go to the `app` folder inside the project folder (e.g. **\Volunteer-app path\app**) and enter `npm run ios` or `npm run android`.
+
+4. Optional: Update the cached projects/resources data from Jira *(during development, you probably only need to use this if you need the very latest data from Jira or you're actively testing the caching mechanism)*.  Open another command terminal window, go to the `api` folder inside the project.
+    - If you want to manually update the cached data, enter this command: `node cache/run-projects.js`
+        >During development, it's preferable to do this than to run the scheduled cron job described below.
+    - If you want to automatically update the cached data regularly using a [cron job](https://en.wikipedia.org/wiki/Cron), enter this command instead: `node cache/run-cron-jobs.js`  Leave this terminal window open as long as you want this to keep running.
+        >Be careful if using this during development: if multiple developers are running this simultaneously, these could conflict if more than one person is updating the same AirTable tables at the same time.

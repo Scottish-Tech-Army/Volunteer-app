@@ -66,25 +66,25 @@ const ProjectFullDetails: FC<ProjectFullDetailsProps> = ({ project }) => {
   return (
       <ScrollView>
         <ProjectFullDetailsView>
-        <ProjectHeading title={project.ItData.projectName} />
-        <ProjectSubTitle>{project.ItData.charityName}</ProjectSubTitle>
-        <ProjectRole>{project.ResData.jobRole}</ProjectRole>
+          <ProjectHeading title={project.name} />
+          <ProjectSubTitle>{project.client}</ProjectSubTitle>
+          <ProjectRole>{project.role}</ProjectRole>
           <ProjectInterestButton />
-        <ProjectDescription>{project.ResData.description}</ProjectDescription>
+          <ProjectDescription>{project.description}</ProjectDescription>
           <ProjectDetailsBlock>
-          <ProjectSkills skills={project.ResData.candidateCoreSkills}/>
-            <ProjectRequirements
-              icon={<Feather name="clock" size={16} />}
-            details={project.ResData.candidateTime}
-            />
-            <ProjectRequirements
-              icon={<Feather name="users" size={16} />}
-              details={
-                project.ResData.suitableForBuddy
-                  ? 'Suitable for buddying'
-                  : 'Not suitable for buddying'
-              }
-            />
+          <ProjectSkills skills={project.skills} />
+          <ProjectRequirements
+            icon={<Feather name="clock" size={16} />}
+            details={project.hours}
+          />
+          <ProjectRequirements
+            icon={<Feather name="users" size={16} />}
+            details={
+              project.buddying
+                ? 'Suitable for buddying'
+                : 'Not suitable for buddying'
+            }
+          />
           </ProjectDetailsBlock>
           <ProjectAttachments
             icon={<Feather name='file' size={24} />} 
@@ -104,4 +104,4 @@ const ProjectFullDetails: FC<ProjectFullDetailsProps> = ({ project }) => {
     )
   }
 
-export default ProjectFullDetails 
+export default ProjectFullDetails
