@@ -19,10 +19,10 @@ const ProjectReturnedList: FC<ProjectReturnedListProps> = ({ data }) => {
   return (
     <FlatList 
       data={data}
-      keyExtractor={(project) => project.ResData.res_id}
+      keyExtractor={(project) => project.res_id}
       renderItem={ ({ item }) => {
         return (
-          <ProjectDetails onPress={() => { navigate('ProjectDetail', { item, key: item.ResData.res_id }) }}>
+          <ProjectDetails onPress={() => { navigate('ProjectDetail', { item, key: item.res_id }) }}>
             <ProjectSummary project={item} ></ProjectSummary>
           </ProjectDetails>
         )

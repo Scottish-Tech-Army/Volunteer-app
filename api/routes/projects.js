@@ -1,179 +1,67 @@
-require('dotenv').config();
-
+const airTable = require('../helpers/airTable');
 const express = require('express');
+const projectsHelper = require('../helpers/projects');
 const router = express.Router();
-const data = require('../data.json');
-const axios = require('axios').default;
-const app = express();
-const api_key = process.env.API_KEY;
-const email = process.env.EMAIL;
-const resourcingJiraBoardName = 'RES';
-const recruiterAssignedJiraColumnName = 'Recruiter Assigned';
-const projectJiraBoardName = 'IT';
-const volunteerSearch = 'Volunteer Search';
-const volunteerIntroduction = 'Volunteer Introduction';
-const activityUnderway = 'Activity Underway';
+const seedData = require('../sample-data/projects.json'); //dummy data for dev purposes if no authorised credentials
 
+router.get('/', async (req, res) => {
+  const projectsResources = await airTable.getAllRecords(airTable.projectsResourcesCacheTable());
 
-router.get('/', async (req, res, next) => {
-  const ResArray = [];
-  const ItArray = [];
-
-  const callAllResData = Promise.resolve(jiraResourceDataCall(0));
-  const callAllItData = Promise.resolve(jiraItDataCall(0));
-
-  async function jiraResourceDataCall(startAt) {
-    const resJqlQuery = encodeURIComponent(
-      `project=${resourcingJiraBoardName} AND status="${recruiterAssignedJiraColumnName}"`,
+  /*
+   * If unauthorised for AirTable API access, load with dummy data for now.
+   * This is to help with rapid early development only and will need to be
+   * removed before being used in a production environment
+   */
+  if (projectsResources.error) {
+    console.error(
+      '❌ Could not connect to AirTable - please check you have the correct details in your .env file.  Returning example results for now -- this is not real data.',
     );
-    const jiraRes = await axios.get(
-      `https://sta2020.atlassian.net/rest/api/2/search?jql=${resJqlQuery}&startAt=${startAt}&maxResults=1000`,
-      {
-        headers: {
-          Authorization: `Basic ${Buffer.from(
-            // below use email address you used for jira and generate token from jira
-            `${email}:${api_key}`,
-          ).toString('base64')}`,
-          Accept: 'application/json',
-        },
-      },
-    );
+    res.status(200).send(seedData);
 
-    const ResTotalData = parseInt(jiraRes.data.total);
-
-    const ResourceDataDump = jiraRes.data.issues.map((x) =>
-      ResArray.push({
-        res_id: x['id'],
-        it_related_field_id: x['fields'].customfield_10109,
-        jobRole: x['fields'].customfield_10113,
-        projectType: x['fields'].customfield_10112,
-        suitableForBuddy: x['fields'].customfield_10108 ? x['fields'].customfield_10108.value : 'none',
-        candidateTime: x['fields'].customfield_10062 ? x['fields'].customfield_10062 : 'none',
-        candidateCoreSkills: x['fields'].customfield_10061 ? x['fields'].customfield_10061 : 'none',
-      }),
-    );
-
-    if (ResArray.length < ResTotalData) {
-      let ResStartResultSearch = ResArray.length;
-      return jiraResourceDataCall(ResStartResultSearch);
-    }
     return;
   }
 
-  async function jiraItDataCall(ItstartAt) {
-    const itJqlQuery = encodeURIComponent(
-      `project=${projectJiraBoardName} AND status="${volunteerSearch}" OR status="${volunteerIntroduction}" OR status="${activityUnderway}"`,
-      );
-    const jiraIt = await axios.get(
-      `https://sta2020.atlassian.net/rest/api/2/search?jql=${itJqlQuery}&startAt=${ItstartAt}&maxResults=1000`,
-      {
-        headers: {
-          Authorization: `Basic ${Buffer.from(
-            // below use email address you used for jira and generate token from jira
-            `${email}:${api_key}`,
-          ).toString('base64')}`,
-          Accept: 'application/json',
-        },
-      },
-    );
+  const projectsResourcesFormatted = projectsResources.map((projectResource) => projectsHelper.formatProjectResourceFromAirTable(projectResource));
 
-    const ItTotalData = parseInt(jiraIt.data.total);
-
-    const ItData = jiraIt.data.issues.map((x) =>
-        ItArray.push({
-          it_key: x['key'],
-          projectName: x['fields'].summary,
-          charityName: x['fields'].customfield_10027,
-          charityVideo: x['fields'].customfield_10159 ? x['fields'].customfield_10159 : 'none',
-      }),
-    );
-    if (ItArray.length < ItTotalData) {
-      let ItStartResultSearch = ItArray.length;
-      return jiraItDataCall(ItStartResultSearch);
-    }
-       return;
-  }
-
-  function linkData(ResArray, ItArray) {
-    const FinalArray = [];
-    for (let i = 0; i < ResArray.length; i++) {
-      for (let j = 0; j < ItArray.length; j++) {
-        for (const ResData in ResArray[i]) {
-          for (const ItData in ItArray[j]) {
-            if (ResArray[i][ResData] == ItArray[j][ItData]) {
-              FinalArray.push({
-                ResData: ResArray[i],
-                ItData: ItArray[j]
-              })
-            }
-            break;
-          }
-        }
-      }
-    }
-    res.status(200).send(FinalArray);
-  }
-
-  Promise.all([callAllResData, callAllItData]).then(() => {
-    const final = {
-      jiraResBoard: {
-        'number of results': ResArray.length,
-        data: ResArray,
-      },
-      jiraItBoard: {
-        'number of results': ItArray.length,
-        data: ItArray,
-      },
-    };
-    return linkData(ResArray, ItArray);
-  });
+  res.status(200).send(projectsResourcesFormatted);
 });
 
-router.get('/single', async (req, res, next) => {
+router.get('/single', async (req, res) => {
+  const projectItKey = req.query.it;
+  const resourceId = req.query.res;
 
-  const singleRes = await axios.get(
-    `https://sta2020.atlassian.net/rest/api/3/issue/${req.query.res}`,
-    {
-      headers: {
-        Authorization: `Basic ${Buffer.from(
-          // below use email address you used for jira and generate token from jira
-          `${email}:${api_key}`,
-        ).toString('base64')}`,
-        Accept: 'application/json',
-      },
-    },
-  )
+  const projectResource = await airTable.getRecord(airTable.projectsResourcesCacheTable(), {
+    it_key: projectItKey,
+    res_id: resourceId,
+  });
 
-    const singleIt =  axios.get(
-      `https://sta2020.atlassian.net/rest/api/3/issue/${req.query.it}`,
-      {
-        headers: {
-          Authorization: `Basic ${Buffer.from(
-            // below use email address you used for jira and generate token from jira
-            `${email}:${api_key}`,
-          ).toString('base64')}`,
-          Accept: 'application/json',
-        },
-      },
-    )
+  /*
+   * If unauthorised for AirTable API access, load with dummy data for now.
+   * This is to help with rapid early development only and will need to be
+   * removed before being used in a production environment
+   */
+  if (projectResource.error) {
+    console.error(
+      '❌ Could not connect to AirTable - please check you have the correct details in your .env file.  Returning example results for now -- this is not real data.',
+    );
+    const seedDataSingle = seedData[0];
+    seedDataSingle.it_key = projectItKey;
+    seedDataSingle.res_id = resourceId;
+    res.status(200).send(seedDataSingle);
 
- const [resResults, itResults] = await Promise.all([singleRes, singleIt])
-  const project = {
-        res_id: resResults.data.id,
-        it_related_field_id: resResults.data.fields.customfield_10109,
-        jobRole: resResults.data.fields.customfield_10113,
-        projectType: resResults.data.fields.customfield_10112,
-        suitableForBuddy: resResults.data.fields.customfield_10108.value ?? 'none',
-        candidateTime: resResults.data.fields.customfield_10062 ?? 'none',
-        candidateCoreSkills: resResults.data.fields.customfield_10061 ?? 'none',
-        it_key: itResults.data.key,
-        projectSummary: itResults.data.fields.description.content,
-        projectName: resResults.data.fields.customfield_10060,
-        charityName: itResults.data.fields.customfield_10027,
-        charityVideo: itResults.data.fields.customfield_10159 ??'none',
-      }
+    return;
+  }
 
-      res.json(project)
-})
+  if (!projectResource) {
+    const error = `Could not find project ${projectItKey} and/or resource ${resourceId}`;
+    console.error(error);
+
+    res.status(204).send({ error });
+  }
+
+  const projectResourceFormatted = projectsHelper.formatProjectResourceFromAirTable(projectResource);
+
+  res.status(200).send(projectResourceFormatted);
+});
 
 module.exports = router;

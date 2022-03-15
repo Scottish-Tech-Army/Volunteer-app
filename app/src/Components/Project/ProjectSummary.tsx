@@ -32,19 +32,19 @@ const ProjectDescription = styled.Text`
 const ProjectSummary: FC<ProjectSummaryProps> = ({ project }) => {  
     return (
       <>
-        <ProjectHeading title={project.ItData.projectName} />
-        <ProjectSubTitle>{project.ItData.charityName}</ProjectSubTitle>
-        <ProjectRole>{project.ResData.jobRole}</ProjectRole>
-        <ProjectDescription>{project.ResData.description}</ProjectDescription>
-        <ProjectSkills skills={project.ResData.candidateCoreSkills}/>
+        <ProjectHeading title={project.name} />
+        <ProjectSubTitle>{project.client}</ProjectSubTitle>
+        <ProjectRole>{project.role}</ProjectRole>
+        <ProjectDescription>{project.description}</ProjectDescription>
+        <ProjectSkills skills={project.skills} />
         <ProjectRequirements
           icon={<Feather name="clock" size={16} />}
-          details={project.ResData.candidateTime}
+          details={project.hours}
         />
         <ProjectRequirements
           icon={<Feather name="users" size={16} />}
           details={
-            project.ResData.suitableForBuddy
+            project.buddying
               ? 'Suitable for buddying'
               : 'Not suitable for buddying'
           }

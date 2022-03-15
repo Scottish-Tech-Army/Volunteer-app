@@ -12,20 +12,18 @@ export const projectsApi = api.injectEndpoints({
 export const { useLazyFetchAllQuery } = projectsApi
 
 export interface Project {
-  ResData: {
-    res_id: string
-    projectType: string
-    jobRole: string
-    description: string
-    candidateCoreSkills: string
-    candidateTime: string
-    suitableForBuddy: boolean
-  },
-  ItData: {
-    projectName: string
-    charityName: string
-    charityVideo: ImageURISource
-  }
+  it_key: string
+  res_id: string
+  name: string
+  type: string
+  client: string
+  role: string
+  description: string
+  video: ImageURISource
+  skills: string[]
+  hours: string
+  required: string
+  buddying: boolean
 }
 
 export type Projects = Project[]
