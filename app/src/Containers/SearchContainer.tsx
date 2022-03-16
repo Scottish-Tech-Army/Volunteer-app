@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import styled from 'styled-components/native'
-import { FlatList, ScrollView, SafeAreaView, SectionList } from 'react-native'
+import { FlatList, ScrollView, SafeAreaView, SectionList, Alert } from 'react-native'
 import TopOfApp from '@/Components/TopOfApp'
 
 const Roles = [
@@ -65,6 +65,11 @@ const QuickSearchTitle = styled.Text`
 `
 
 const SearchContainer = () => {
+    // Show alert to let users know this is stil under development
+    const underDevelopmentAlert = () =>
+        Alert.alert(
+            "Search is under development"
+        )
     return (
         <SafeAreaView>
             <ScrollView>
@@ -72,24 +77,24 @@ const SearchContainer = () => {
                 <Heading>Popular Searches</Heading>
                 <SubHeading>Roles</SubHeading>
                 <SectionView>
-                    {Roles.map(role => (
-                        <QuickSearchButton>
+                    {Roles.map((role, index) => (
+                        <QuickSearchButton onPress={underDevelopmentAlert} key={index}>
                             <QuickSearchTitle>{role}</QuickSearchTitle>
                         </QuickSearchButton>
                     ))}
                 </SectionView>
                 <SubHeading>Causes</SubHeading>
                 <SectionView>
-                    {Causes.map(cause => (
-                        <QuickSearchButton>
+                    {Causes.map((cause, index) => (
+                        <QuickSearchButton onPress={underDevelopmentAlert} key={index}>
                             <QuickSearchTitle>{cause}</QuickSearchTitle>
                         </QuickSearchButton>
                     ))}
                 </SectionView>
                 <SubHeading>Tech Stack / Languages</SubHeading>
                 <SectionView>
-                    {TechStack.map(tech => (
-                        <QuickSearchButton>
+                    {TechStack.map((tech, index) => (
+                        <QuickSearchButton onPress={underDevelopmentAlert} key={index}>
                             <QuickSearchTitle>{tech}</QuickSearchTitle>
                         </QuickSearchButton>
                     ))}
