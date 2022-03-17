@@ -2,7 +2,7 @@ import React from 'react'
 import { SafeAreaView, StatusBar } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
-import { StartupContainer, ProjectDetailContainer } from '@/Containers'
+import { StartupContainer, ProjectDetailContainer, SearchContainer } from '@/Containers'
 import { useTheme } from '@/Hooks'
 import MainNavigator from './Main'
 import { navigationRef } from './utils'
@@ -39,6 +39,14 @@ const ApplicationNavigator = () => {
               title: 'Project Details',
               headerTitleAlign: 'center', //android defaults to left aligned (ios is always centered)
               headerBackTitleVisible: false //ios defaults to title of previous screen
+            }}
+          />
+          <Stack.Screen
+            name="Search"
+            component={SearchContainer}
+            options={{
+              headerTitleAlign: 'center', 
+              headerBackTitleVisible: false 
             }}
           />
         </Stack.Navigator>
