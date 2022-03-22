@@ -181,6 +181,7 @@ async function getInitialTriageProjectsFromJira(startAt, itArray) {
       description: x['fields'].description,
       client: x['fields'].customfield_10027,
       video: x['fields'].customfield_10159 ?? '',
+      scope: x['fields'].customfield_10090,
     }),
   );
 
