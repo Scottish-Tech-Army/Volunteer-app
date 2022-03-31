@@ -26,6 +26,7 @@ function fakeJiraItApiResultIssuesObject() {
       description: faker.lorem.sentences(4),
       customfield_10027: faker.company.companyName(), // client
       customfield_10159: faker.helpers.randomize([faker.internet.url(), '']), // video URL
+      customfield_10090: faker.helpers.randomize([faker.internet.url(), '']) // scope URL
     },
   };
 }
@@ -83,6 +84,7 @@ function fakeProjectObject() {
     description: faker.lorem.sentences(4),
     client: faker.company.companyName(),
     video: faker.internet.url(),
+    scope: faker.internet.url()
   };
 }
 
@@ -164,6 +166,7 @@ function fakeAirTableProjectResource(numberRequired, includeBuddying) {
     role: faker.name.jobTitle(),
     description: faker.lorem.sentences(4),
     video: faker.internet.url(),
+    scope: faker.internet.url(),
     skills: `${faker.lorem.words(5)}
     
     ${faker.lorem.words(5)}`,
