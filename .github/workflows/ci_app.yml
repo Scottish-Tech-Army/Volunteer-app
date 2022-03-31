@@ -5,7 +5,7 @@ on:
   pull_request:
     types: [ opened, synchronize, reopened, edited ]
     paths:
-      - 'client/**'
+      - 'app/**'
 jobs:
   test:
     name: Tests
@@ -15,6 +15,6 @@ jobs:
         uses: actions/checkout@v2
       - name: Run Tests
         run: |
-          cd client
+          cd app
           npm install
           npm test
