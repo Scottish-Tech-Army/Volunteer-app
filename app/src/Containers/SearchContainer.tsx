@@ -1,7 +1,8 @@
 import React, { FC } from 'react'
 import styled from 'styled-components/native'
-import { FlatList, ScrollView, SafeAreaView, SectionList, Alert } from 'react-native'
+import { ScrollView, SafeAreaView } from 'react-native'
 import TopOfApp from '@/Components/TopOfApp'
+import underDevelopmentAlert from '@/Utils/UnderDevelopmentAlert'
 
 const Roles = [
     "Web Developer",
@@ -65,11 +66,6 @@ const QuickSearchTitle = styled.Text`
 `
 
 const SearchContainer = () => {
-    // Show alert to let users know this is stil under development
-    const underDevelopmentAlert = () =>
-        Alert.alert(
-            "Search is under development"
-        )
     return (
         <SafeAreaView>
             <ScrollView>
