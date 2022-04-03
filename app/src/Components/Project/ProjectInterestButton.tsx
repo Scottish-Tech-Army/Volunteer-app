@@ -1,3 +1,4 @@
+import underDevelopmentAlert from '@/Utils/UnderDevelopmentAlert'
 import React from 'react'
 import styled from 'styled-components/native'
 
@@ -17,7 +18,7 @@ const ButtonText = styled.Text`
 
 const ProjectInterestButton = () => {
   return (
-    <Button>
+    <Button onPress={underDevelopmentAlert}>
       <ButtonText>Register Interest</ButtonText>
     </Button>
   )
