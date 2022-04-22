@@ -36,7 +36,7 @@ const FreeSearchBar = ({handleSearch, searchQuery }) => {
       project.name.includes(searchQuery),
     )
     console.log(result)
-    navigate('SearchResult', { result: result })
+    navigate('ProjectSearchResults', { result: result })
   }
 
   return (

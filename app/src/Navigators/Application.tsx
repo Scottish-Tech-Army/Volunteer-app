@@ -53,7 +53,6 @@ const ApplicationNavigator = () => {
             name="ProjectSearchResults"
             component={ProjectSearchResultsContainer}
             options={{
-              headerShown: false, 
               headerBackTitleVisible: false 
             }}
           />
