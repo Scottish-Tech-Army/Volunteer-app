@@ -1,6 +1,11 @@
-import underDevelopmentAlert from '@/Utils/UnderDevelopmentAlert'
 import React from 'react'
 import styled from 'styled-components/native'
+import { navigate } from '@/Navigators/utils'
+import { Project } from '@/Services/modules/projects'
+
+interface ProjectInterestButtonProps {
+  project: Project
+}
 
 const Button = styled.TouchableOpacity`
   display: flex;
@@ -16,9 +21,9 @@ const ButtonText = styled.Text`
   justify-content: center;
 `
 
-const ProjectInterestButton = () => {
+const ProjectInterestButton: FC<ProjectInterestButtonProps> = ({ project }) => {
   return (
-    <Button onPress={underDevelopmentAlert}>
+    <Button onPress={() => { navigate('ProjectRegisterInterest', { project }) }}>
       <ButtonText>Register Interest</ButtonText>
     </Button>
   )

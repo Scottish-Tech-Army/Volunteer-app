@@ -4,6 +4,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import underDevelopmentAlert from '@/Utils/UnderDevelopmentAlert'
 
 interface ProjectHeadingProps {
+  hideSaveProjectIcon?: boolean
   title: string
 }
 
@@ -20,13 +21,15 @@ const ProjectTitle = styled.Text`
 
 const SaveProjectHeart = styled.TouchableOpacity``
 
-const ProjectHeading: FC<ProjectHeadingProps> = ({ title }) => {
+const ProjectHeading: FC<ProjectHeadingProps> = ({ hideSaveProjectIcon, title }) => {
   return (
     <ProjectHeadingView>
       <ProjectTitle>{title}</ProjectTitle>
-      <SaveProjectHeart onPress={underDevelopmentAlert}>
-        <AntDesign name="hearto" size={20} />
-      </SaveProjectHeart>
+      {!hideSaveProjectIcon && (
+          <SaveProjectHeart onPress={underDevelopmentAlert}>
+            <AntDesign name="hearto" size={20} />
+          </SaveProjectHeart>
+      )}
     </ProjectHeadingView>
   )
 }
