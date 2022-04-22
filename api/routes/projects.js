@@ -1,5 +1,7 @@
 const airTable = require('../helpers/airTable');
+const dayjs = require('dayjs')
 const express = require('express');
+const slackService = require('../services/slack');
 const projectsHelper = require('../helpers/projects');
 const router = express.Router();
 const seedData = require('../sample-data/projects.json'); //dummy data for dev purposes if no authorised credentials
@@ -87,6 +89,7 @@ router.post('/single/register-interest', async (req, res) => {
   const projectResourceFormatted = projectsHelper.formatProjectResourceFromAirTable(projectResource);
   
   const dataExpected = [
+    'availableFrom',
     'email',
     'firstName',
     'lastName',
@@ -110,11 +113,21 @@ router.post('/single/register-interest', async (req, res) => {
     return;
   }
 
-  // Send payload to Slack
-  // If there's an error, log it and do 400 response with error message
-  // If successful do 200 response
+  const slackResponse = slackService.postMessage(
+    process.env.SLACK_CHANNEL_VOLUNTEER_PROJECT_INTEREST,
+    `🎉🎉🎉 Hurray! We've got a new volunteer interested in *${projectResourceFormatted.name}* for *${projectResourceFormatted.client}*
 
-  res.status(200).send({ status: 'success' });
+    ➡️ *Role*  ${projectResourceFormatted.role}
+    👤 *Volunteer*  ${req.body.firstName} ${req.body.lastName}
+    ✉️ *Email*  ${req.body.email}
+    🎓 *Happy to mentor?*  ${req.body.happyToMentor ? 'Yes' : 'No'}
+    🧑‍🤝‍🧑 *Looking for a buddy?*  ${req.body.lookingForBuddy ? 'Yes' : 'No'}
+    📅 *Available from*  ${dayjs(req.body.availableFrom, 'YYYY-MM-DD').format('D MMMM YYYY')}
+
+    Please get in touch with them to follow up`,
+  );
+
+  res.status(slackResponse.data ? 200 : 400).send(slackResponse);
 });
 
 module.exports = router;
