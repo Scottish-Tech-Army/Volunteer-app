@@ -14,6 +14,7 @@ type RootStackParamList = {
   Home: undefined
   ProjectDetail: undefined
   Search: undefined
+  ProjectSearchResults: undefined
 }
 
 export const navigationRef = createNavigationContainerRef<RootStackParamList>()
