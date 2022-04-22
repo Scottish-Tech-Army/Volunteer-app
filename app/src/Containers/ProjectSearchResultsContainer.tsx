@@ -31,19 +31,15 @@ const SafeArea = styled.SafeAreaView`
   flex: 1;
 `
 
-const ProjectSearchResultsContainer = () => {
-    const [fetchAll, { data: projects }] = useLazyFetchAllQuery()
+const ProjectSearchResultsContainer = ({ route }) => {
+    const {result} = route.params
 
-    useEffect(() => {
-        fetchAll('')
-    }, [fetchAll])
-
-    if(projects) {
+    if(result) {
         return (
             <SafeArea>
                 <TopOfApp />
                 <ProjectFilterSort />
-                <ProjectReturnedList data={projects} />
+                <ProjectReturnedList data={result} />
             </SafeArea>
         )
   } else {

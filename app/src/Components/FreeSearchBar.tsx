@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components/native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import { View } from 'react-native'
+
+import { navigate } from '@/Navigators/utils'
+import { Projects, useLazyFetchAllQuery } from '@/Services/modules/projects'
 
 const FreeSearchInput = styled.TextInput`
   flex: 1;
@@ -21,12 +23,30 @@ const SearchIcon = styled(FontAwesome)`
   margin-left: 10px;
 `
 
+const FreeSearchBar = ({handleSearch, searchQuery }) => {
+  const [fetchAll, { data: projects }] = useLazyFetchAllQuery()
 
-const FreeSearchBar = () => {
+  useEffect(() => {
+    fetchAll('')
+  }, [fetchAll])
+
+  const handleSubmit = () => {
+    console.log(searchQuery)
+    const result = projects?.filter(project =>
+      project.name.includes(searchQuery),
+    )
+    console.log(result)
+    navigate('SearchResult', { result: result })
+  }
+
   return (
     <FreeSearchViewContainer>
       <SearchIcon name="search" size={18} color="#3C3C3B" />
-      <FreeSearchInput clearButtonMode="always" />
+      <FreeSearchInput
+        onChangeText={handleSearch}
+        onSubmitEditing={handleSubmit}
+        clearButtonMode="always"
+      />
     </FreeSearchViewContainer>
   )
 }

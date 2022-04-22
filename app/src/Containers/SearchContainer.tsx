@@ -1,4 +1,5 @@
-import React, { FC } from 'react'
+import React, { useState } from 'react'
+
 import styled from 'styled-components/native'
 import { ScrollView, SafeAreaView } from 'react-native'
 import TopOfApp from '@/Components/TopOfApp'
@@ -6,29 +7,29 @@ import underDevelopmentAlert from '@/Utils/UnderDevelopmentAlert'
 import FreeSearchBar from '@/Components/FreeSearchBar'
 
 const Roles = [
-    "Web Developer",
-    "Tech Support",
-    "UI/UX",
-    "Researcher",
-    "Scrum Master",
-    "BA/PM",
+  'Web Developer',
+  'Tech Support',
+  'UI/UX',
+  'Researcher',
+  'Scrum Master',
+  'BA/PM',
 ]
 
 const Causes = [
-    "Health & Social Care",
-    "Education & Youth",
-    "Arts & Culture",
-    "Environment & Conservation",
-    "Community Projects",
-    "Internal STA"
+  'Health & Social Care',
+  'Education & Youth',
+  'Arts & Culture',
+  'Environment & Conservation',
+  'Community Projects',
+  'Internal STA',
 ]
 const TechStack = [
-    "Java",
-    "JavaScript",
-    "Python",
-    "AWS",
-    "React Native",
-    "React"
+  'Java',
+  'JavaScript',
+  'Python',
+  'AWS',
+  'React Native',
+  'React',
 ]
 
 const Heading = styled.Text`
@@ -66,41 +67,46 @@ const QuickSearchTitle = styled.Text`
   text-align: center;
 `
 
-
 const SearchContainer = () => {
-    return (
-        <SafeAreaView>
-            <ScrollView>
-                <TopOfApp />
-                <FreeSearchBar />
-                <Heading>Popular Searches</Heading>
-                <SubHeading>Roles</SubHeading>
-                <SectionView>
-                    {Roles.map((role, index) => (
-                        <QuickSearchButton onPress={underDevelopmentAlert} key={index}>
-                            <QuickSearchTitle>{role}</QuickSearchTitle>
-                        </QuickSearchButton>
-                    ))}
-                </SectionView>
-                <SubHeading>Causes</SubHeading>
-                <SectionView>
-                    {Causes.map((cause, index) => (
-                        <QuickSearchButton onPress={underDevelopmentAlert} key={index}>
-                            <QuickSearchTitle>{cause}</QuickSearchTitle>
-                        </QuickSearchButton>
-                    ))}
-                </SectionView>
-                <SubHeading>Tech Stack / Languages</SubHeading>
-                <SectionView>
-                    {TechStack.map((tech, index) => (
-                        <QuickSearchButton onPress={underDevelopmentAlert} key={index}>
-                            <QuickSearchTitle>{tech}</QuickSearchTitle>
-                        </QuickSearchButton>
-                    ))}
-                </SectionView>
-            </ScrollView>
-        </SafeAreaView>
-    )
+  const [searchQuery, setSearchQuery] = useState('')
+
+  const handleSearch = input => {
+    setSearchQuery(input)
+  }
+
+  return (
+    <SafeAreaView>
+      <ScrollView>
+        <TopOfApp />
+        <FreeSearchBar handleSearch={handleSearch} searchQuery={searchQuery} />
+        <Heading>Popular Searches</Heading>
+        <SubHeading>Roles</SubHeading>
+        <SectionView>
+          {Roles.map((role, index) => (
+            <QuickSearchButton onPress={underDevelopmentAlert} key={index}>
+              <QuickSearchTitle>{role}</QuickSearchTitle>
+            </QuickSearchButton>
+          ))}
+        </SectionView>
+        <SubHeading>Causes</SubHeading>
+        <SectionView>
+          {Causes.map((cause, index) => (
+            <QuickSearchButton onPress={underDevelopmentAlert} key={index}>
+              <QuickSearchTitle>{cause}</QuickSearchTitle>
+            </QuickSearchButton>
+          ))}
+        </SectionView>
+        <SubHeading>Tech Stack / Languages</SubHeading>
+        <SectionView>
+          {TechStack.map((tech, index) => (
+            <QuickSearchButton onPress={underDevelopmentAlert} key={index}>
+              <QuickSearchTitle>{tech}</QuickSearchTitle>
+            </QuickSearchButton>
+          ))}
+        </SectionView>
+      </ScrollView>
+    </SafeAreaView>
+  )
 }
 
 export default SearchContainer
