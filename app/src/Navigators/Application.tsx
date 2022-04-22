@@ -2,7 +2,7 @@ import React from 'react'
 import { SafeAreaView, StatusBar } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
-import { StartupContainer, ProjectDetailContainer, SearchContainer } from '@/Containers'
+import { StartupContainer, ProjectDetailContainer, SearchContainer, ProjectSearchResultsContainer } from '@/Containers'
 import { useTheme } from '@/Hooks'
 import MainNavigator from './Main'
 import { navigationRef } from './utils'
@@ -46,6 +46,14 @@ const ApplicationNavigator = () => {
             component={SearchContainer}
             options={{
               headerTitleAlign: 'center', 
+              headerBackTitleVisible: false 
+            }}
+          />
+          <Stack.Screen
+            name="ProjectSearchResults"
+            component={ProjectSearchResultsContainer}
+            options={{
+              headerShown: false, 
               headerBackTitleVisible: false 
             }}
           />
