@@ -3,6 +3,7 @@ import styled from 'styled-components/native'
 import { ScrollView, SafeAreaView } from 'react-native'
 import TopOfApp from '@/Components/TopOfApp'
 import underDevelopmentAlert from '@/Utils/UnderDevelopmentAlert'
+import FreeSearchBar from '@/Components/FreeSearchBar'
 
 const Roles = [
     "Web Developer",
@@ -12,7 +13,7 @@ const Roles = [
     "Scrum Master",
     "BA/PM",
 ]
- 
+
 const Causes = [
     "Health & Social Care",
     "Education & Youth",
@@ -65,11 +66,13 @@ const QuickSearchTitle = styled.Text`
   text-align: center;
 `
 
+
 const SearchContainer = () => {
     return (
         <SafeAreaView>
             <ScrollView>
                 <TopOfApp />
+                <FreeSearchBar />
                 <Heading>Popular Searches</Heading>
                 <SubHeading>Roles</SubHeading>
                 <SectionView>
