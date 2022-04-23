@@ -1,5 +1,4 @@
 import React, { FC, useState } from 'react'
-import dayjs from 'dayjs'
 import DatePicker from 'react-native-date-picker'
 import styled from 'styled-components/native'
 

@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components/native'
 
 interface SubmitButtonProps {
+  disabled: Boolean
   onPress: () => void
   text: String
 }
@@ -21,9 +22,9 @@ const ButtonText = styled.Text`
   text-align: center;
 `
 
-const SubmitButton: FC<SubmitButtonProps> = ({ onPress, text }) => {
+const SubmitButton: FC<SubmitButtonProps> = ({ disabled, onPress, text }) => {
   return (
-    <Button onPress={onPress}>
+    <Button disabled={disabled} onPress={onPress}>
       <ButtonText>{text}</ButtonText>
     </Button>
   )

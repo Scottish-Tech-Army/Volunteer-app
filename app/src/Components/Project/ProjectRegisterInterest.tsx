@@ -1,12 +1,15 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
+import { Alert } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import styled from 'styled-components/native'
+import dayjs from 'dayjs'
 import ProjectHeading from './ProjectHeading'
 import DateTime from '../Forms/DateTime'
 import SubmitButton from '../Forms/SubmitButton'
 import TextInputControl from '../Forms/TextInputControl'
 import YesNoChoice from '../Forms/YesNoChoice'
-import { Project } from '@/Services/modules/projects'
+import { goBack } from '@/Navigators/utils'
+import { Project, useLazyRegisterInterestQuery } from '@/Services/modules/projects'
 import { validateEmail } from '@/Utils/Validation'
 
 interface ProjectRegisterInterestProps {
@@ -39,6 +42,24 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({ project }) 
   const [lookingForBuddy, setLookingForBuddy] = useState(false)
   const today = new Date()
   const oneYearInTheFuture = new Date(new Date().setFullYear(today.getFullYear() + 1))
+  const [registerInterest, { data: responseData, error: responseError }] = useLazyRegisterInterestQuery()
+  const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    if (responseData || responseError) {
+      setLoading(false)
+
+      if (responseData) {
+        Alert.alert('Thanks! One of the STA team will be in touch with you soon on Slack')
+        goBack()
+      }
+
+      if (responseError) {
+        console.error(responseError)
+        Alert.alert("Sorry, we couldn't send your message - please try again. If this keeps happening, please contact the STA Volunteer App team.")
+      }
+    }
+  }, [responseData, responseError])
 
   const validateField = (fieldName: String, value: String): Boolean => {
     let valid = true
@@ -74,7 +95,7 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({ project }) 
         ...latestErrors,
         [fieldName]: {
           type: errorType,
-        }
+        },
       }))
     }
 
@@ -89,12 +110,26 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({ project }) 
     return firstNameValid && lastNameValid && emailValid
   }
 
-  const submitForm = () => {
+  const submitForm = (): void => {
     const formIsValid = validateForm()
 
     if (formIsValid) {
-      // Submit data
-      // Deal with result
+      setLoading(true)
+
+      registerInterest({
+        project: {
+          it_key: project.it_key,
+          res_id: project.res_id,
+        },
+        user: {
+          firstName,
+          lastName,
+          email,
+          happyToMentor,
+          lookingForBuddy,
+          availableFrom: dayjs(availableFromDate).format('YYYY-MM-DD'),
+        },
+      })
     }
   }
   
@@ -138,7 +173,7 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({ project }) 
 
           <DateTime description="Available from..." maximumDate={oneYearInTheFuture} minimumDate={today} mode="date" onChange={(value) => setAvailableFromDate(value)} value={availableFromDate} />
 
-          <SubmitButton onPress={submitForm} text="Submit" />
+          <SubmitButton disabled={loading} onPress={submitForm} text={loading ? 'Sending...' : 'Submit'} />
         </ProjectRegisterInterestView>
       </ScrollView>
     )
