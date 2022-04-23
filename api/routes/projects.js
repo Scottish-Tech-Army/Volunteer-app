@@ -68,6 +68,13 @@ router.get('/single', async (req, res) => {
   res.status(200).send(projectResourceFormatted);
 });
 
+/*
+ * TODO: When authentication has been set up, we need to:
+ *  - Protect this API route, by only allowing requests from authenticated users (otherwise anyone who knows this route exists can post messages to the inital triage Slack channel)
+ *  - Get the user's name and email from their user record instead
+ *  - Save in a database that this user has expressed interest in this project
+ *
+ */
 router.post('/single/register-interest', async (req, res) => {
   const projectItKey = req.query.it;
   const resourceId = req.query.res;
@@ -113,7 +120,7 @@ router.post('/single/register-interest', async (req, res) => {
     return;
   }
 
-  const slackResponse = slackService.postMessage(
+  const slackResponse = await slackService.postMessage(
     process.env.SLACK_CHANNEL_VOLUNTEER_PROJECT_INTEREST,
     `🎉🎉🎉 Hurray! We've got a new volunteer interested in *${projectResourceFormatted.name}* for *${projectResourceFormatted.client}*
 

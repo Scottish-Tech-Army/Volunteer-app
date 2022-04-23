@@ -1,3 +1,9 @@
+/*
+ * POST MESSAGES TO SLACK
+ *
+ * See instructions in the README on how to enable new Slack channels
+ */
+
 require('dotenv').config();
 const axios = require('axios').default;
 
@@ -17,14 +23,28 @@ async function postMessage(channel, text) {
     };
   }
 
-  const response = await axios.post(process.env[webHookEnvVariableName], {
-    text,
-  });
+  try {
+    const response = await axios.post(process.env[webHookEnvVariableName], {
+      text,
+    });
 
-  return response.status === 200 ? {
-    data: 'success',
-  } : {
-    error: response.statusText,
+    if (response.status === 200) {
+      return {
+        data: 'success',
+      };
+    } else {
+      console.error(response.statusText);
+
+      return {
+        error: response.statusText,
+      }
+    }
+  } catch (error) {
+    console.error(error.message);
+
+    return {
+      error: error.message,
+    };
   }
 }
 
