@@ -8,7 +8,7 @@ require('dotenv').config();
 const axios = require('axios').default;
 
 function convertSlackChannelNameToWebHookEnvVariable (channel) {
-  return `SLACK_WEBHOOK_${channel.toUpperCase().replace(/-/g, '_')}`;
+  return `SLACK_SECRET_WEBHOOK_${channel.toUpperCase().replace(/-/g, '_')}`;
 }
 
 async function postMessage(channel, text) {

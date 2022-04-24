@@ -13,6 +13,7 @@ type RootStackParamList = {
   Startup: undefined
   Home: undefined
   ProjectDetail: undefined
+  ProjectRegisterInterest: undefined
   Search: undefined
 }
 

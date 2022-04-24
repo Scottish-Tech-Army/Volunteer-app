@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { FC } from 'react'
 import styled from 'styled-components/native'
 
 interface SubmitButtonProps {
-  disabled: Boolean
+  disabled: boolean
   onPress: () => void
-  text: String
+  text: string
 }
 
 const Button = styled.TouchableOpacity`

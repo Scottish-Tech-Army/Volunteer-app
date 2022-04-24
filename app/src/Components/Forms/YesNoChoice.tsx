@@ -3,9 +3,9 @@ import { Switch } from 'react-native'
 import styled from 'styled-components/native'
 
 interface YesNoChoiceProps {
-  description: String
-  onChange: (value: Boolean) => void
-  value: Boolean
+  description: string
+  onChange: (value: boolean) => void
+  value: boolean
 }
 
 const YesNoChoiceView = styled.View`
@@ -19,14 +19,15 @@ const YesNoChoiceDescription = styled.Text`
   margin-right: 12px;
 `
 
-const YesNoChoice: FC<YesNoChoiceProps> = ({ description, onChange, value }) => {
+const YesNoChoice: FC<YesNoChoiceProps> = ({
+  description,
+  onChange,
+  value,
+}) => {
   return (
     <YesNoChoiceView>
       <YesNoChoiceDescription>{description}</YesNoChoiceDescription>
-      <Switch
-        onValueChange={onChange}
-        value={value}
-      />
+      <Switch onValueChange={onChange} value={value} />
     </YesNoChoiceView>
   )
 }

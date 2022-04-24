@@ -11,7 +11,10 @@ export const projectsApi = api.injectEndpoints({
   overrideExisting: true,
 })
 
-export const { useLazyFetchAllQuery, useLazyRegisterInterestQuery } = projectsApi
+export const {
+  useLazyFetchAllQuery,
+  useLazyRegisterInterestQuery,
+} = projectsApi
 
 export interface Project {
   it_key: string

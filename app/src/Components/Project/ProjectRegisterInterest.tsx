@@ -9,7 +9,10 @@ import SubmitButton from '../Forms/SubmitButton'
 import TextInputControl from '../Forms/TextInputControl'
 import YesNoChoice from '../Forms/YesNoChoice'
 import { goBack } from '@/Navigators/utils'
-import { Project, useLazyRegisterInterestQuery } from '@/Services/modules/projects'
+import {
+  Project,
+  useLazyRegisterInterestQuery,
+} from '@/Services/modules/projects'
 import { validateEmail } from '@/Utils/Validation'
 
 interface ProjectRegisterInterestProps {
@@ -32,17 +35,26 @@ const ProjectRole = styled.Text`
   margin-bottom: 9px;
 `
 
-const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({ project }) => {
+const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
+  project,
+}) => {
   const [availableFromDate, setAvailableFromDate] = useState(new Date())
   const [email, setEmail] = useState('')
-  const [errors, setErrors] = useState({})
+  const [errors, setErrors] = useState<{
+    [key: string]: { type: 'invalid' | 'missing' }
+  }>({})
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [happyToMentor, setHappyToMentor] = useState(false)
   const [lookingForBuddy, setLookingForBuddy] = useState(false)
   const today = new Date()
-  const oneYearInTheFuture = new Date(new Date().setFullYear(today.getFullYear() + 1))
-  const [registerInterest, { data: responseData, error: responseError }] = useLazyRegisterInterestQuery()
+  const oneYearInTheFuture = new Date(
+    new Date().setFullYear(today.getFullYear() + 1),
+  )
+  const [
+    registerInterest,
+    { data: responseData, error: responseError },
+  ] = useLazyRegisterInterestQuery()
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
@@ -50,42 +62,44 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({ project }) 
       setLoading(false)
 
       if (responseData) {
-        Alert.alert('Thanks! One of the STA team will be in touch with you soon on Slack')
+        Alert.alert(
+          'Thanks! One of the STA team will be in touch with you soon on Slack',
+        )
         goBack()
       }
 
       if (responseError) {
         console.error(responseError)
-        Alert.alert("Sorry, we couldn't send your message - please try again. If this keeps happening, please contact the STA Volunteer App team.")
+        Alert.alert(
+          "Sorry, we couldn't send your message - please try again. If this keeps happening, please contact the STA Volunteer App team.",
+        )
       }
     }
   }, [responseData, responseError])
 
-  const validateField = (fieldName: String, value: String): Boolean => {
+  const validateField = (fieldName: string, value: string): boolean => {
     let valid = true
-    let errorType = ''
-  
+    let errorType = 'missing' as 'invalid' | 'missing'
+
     switch (fieldName) {
       case 'email':
-        if (!Boolean(value)) {
+        if (!value) {
           valid = false
-          errorType = 'missing'
         } else if (!validateEmail(value)) {
           valid = false
           errorType = 'invalid'
         }
         break
       default:
-        if (!Boolean(value)) {
+        if (!value) {
           valid = false
-          errorType = 'missing'
         }
         break
     }
 
     if (valid) {
       setErrors(latestErrors => {
-        const updatedErrors = {...latestErrors}
+        const updatedErrors = { ...latestErrors }
         delete updatedErrors[fieldName]
 
         return updatedErrors
@@ -101,12 +115,12 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({ project }) 
 
     return valid
   }
-  
+
   const validateForm = (): Boolean => {
     const firstNameValid = validateField('firstName', firstName)
     const lastNameValid = validateField('lastName', lastName)
     const emailValid = validateField('email', email)
-    
+
     return firstNameValid && lastNameValid && emailValid
   }
 
@@ -132,51 +146,70 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({ project }) 
       })
     }
   }
-  
+
   return (
-      <ScrollView>
-        <ProjectRegisterInterestView>
-          <ProjectHeading hideSaveProjectIcon title={project.name} />
-          <ProjectSubTitle>{project.client}</ProjectSubTitle>
-          <ProjectRole>{project.role}</ProjectRole>
+    <ScrollView>
+      <ProjectRegisterInterestView>
+        <ProjectHeading hideSaveProjectIcon title={project.name} />
+        <ProjectSubTitle>{project.client}</ProjectSubTitle>
+        <ProjectRole>{project.role}</ProjectRole>
 
-          <TextInputControl
-            error={errors.firstName}
-            errorType={errors.firstName?.type}
-            label="First name"
-            onBlur={() => validateField('firstName', firstName)}
-            onChange={setFirstName}
-            type="firstName"
-            value={firstName}
-          />
-          <TextInputControl
-            error={errors.lastName}
-            errorType={errors.lastName?.type}
-            label="Last name"
-            onBlur={() => validateField('lastName', lastName)}
-            onChange={setLastName}
-            type="lastName"
-            value={lastName}
-          />
-          <TextInputControl
-            error={errors.email}
-            errorType={errors.email?.type}
-            label="Email"
-            onBlur={() => validateField('email', email)}
-            onChange={setEmail}
-            type="email"
-            value={email}
-          />
+        <TextInputControl
+          error={errors.hasOwnProperty('firstName')}
+          errorType={errors.firstName?.type}
+          label="First name"
+          onBlur={() => validateField('firstName', firstName)}
+          onChange={setFirstName}
+          type="firstName"
+          value={firstName}
+        />
+        <TextInputControl
+          error={errors.hasOwnProperty('lastName')}
+          errorType={errors.lastName?.type}
+          label="Last name"
+          onBlur={() => validateField('lastName', lastName)}
+          onChange={setLastName}
+          type="lastName"
+          value={lastName}
+        />
+        <TextInputControl
+          error={errors.hasOwnProperty('email')}
+          errorType={errors.email?.type}
+          label="Email"
+          onBlur={() => validateField('email', email)}
+          onChange={setEmail}
+          type="email"
+          value={email}
+        />
 
-          <YesNoChoice description="Happy to mentor" onChange={(value) => setHappyToMentor(value)} value={happyToMentor} />
-          <YesNoChoice description="Looking for a buddy" onChange={(value) => setLookingForBuddy(value)} value={lookingForBuddy} />
+        <YesNoChoice
+          description="Happy to mentor"
+          onChange={value => setHappyToMentor(value)}
+          value={happyToMentor}
+        />
+        <YesNoChoice
+          description="Looking for a buddy"
+          onChange={value => setLookingForBuddy(value)}
+          value={lookingForBuddy}
+        />
 
-          <DateTime description="Available from..." maximumDate={oneYearInTheFuture} minimumDate={today} mode="date" onChange={(value) => setAvailableFromDate(value)} value={availableFromDate} />
+        <DateTime
+          description="Available from..."
+          maximumDate={oneYearInTheFuture}
+          minimumDate={today}
+          mode="date"
+          onChange={value => setAvailableFromDate(value)}
+          value={availableFromDate}
+        />
 
-          <SubmitButton disabled={loading} onPress={submitForm} text={loading ? 'Sending...' : 'Submit'} />
-        </ProjectRegisterInterestView>
-      </ScrollView>
-    )
-  }
+        <SubmitButton
+          disabled={loading}
+          onPress={submitForm}
+          text={loading ? 'Sending...' : 'Submit'}
+        />
+      </ProjectRegisterInterestView>
+    </ScrollView>
+  )
+}
 
 export default ProjectRegisterInterest

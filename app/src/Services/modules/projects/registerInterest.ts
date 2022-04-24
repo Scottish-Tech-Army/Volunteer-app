@@ -1,28 +1,27 @@
 import { Config } from '@/Config'
 import { EndpointBuilder } from '@reduxjs/toolkit/dist/query/endpointDefinitions'
-import { Projects } from '.'
 
 interface ProjectRegisterInterestQuery {
   project: {
-    it_key: String
-    res_id: String
+    it_key: string
+    res_id: string
   }
   user: {
-    firstName: String
-    lastName: String
-    email: String
-    happyToMentor: String
-    lookingForBuddy: String
-    availableFrom: String
+    firstName: string
+    lastName: string
+    email: string
+    happyToMentor: boolean
+    lookingForBuddy: boolean
+    availableFrom: string
   }
 }
 
 export default (build: EndpointBuilder<any, any, any>) =>
-  build.query<{}>({
+  build.query<{ data?: string; error?: string }, ProjectRegisterInterestQuery>({
     query: (query: ProjectRegisterInterestQuery) => ({
       url: `${Config.STA_BASE_URL}/projects/single/register-interest?it=${query.project.it_key}&res=${query.project.res_id}`,
       method: 'POST',
       body: query.user,
     }),
-    // transformResponse: data => data,
+    transformResponse: data => data,
   })

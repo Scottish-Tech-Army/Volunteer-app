@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import styled from 'styled-components/native'
 
 interface ErrorMessageProps {
-  errorType?: 'missing'
+  errorType?: 'invalid' | 'missing'
 }
 
 const ErrorMessageText = styled.Text`
@@ -12,20 +12,19 @@ const ErrorMessageText = styled.Text`
 `
 
 const ErrorMessage: FC<ErrorMessageProps> = ({ errorType }) => {
-  let text = '';
+  let text = ''
+
   switch (errorType) {
     case 'invalid':
-      text = "Please check - this doesn't look right";
-      break;
+      text = "Please check - this doesn't look right"
+      break
     case 'missing':
     default:
       text = 'Please complete this'
-      break;
+      break
   }
 
-  return (
-    <ErrorMessageText>{text}</ErrorMessageText>
-  )
+  return <ErrorMessageText>{text}</ErrorMessageText>
 }
 
 export default ErrorMessage

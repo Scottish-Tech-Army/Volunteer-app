@@ -21,14 +21,17 @@ const ProjectTitle = styled.Text`
 
 const SaveProjectHeart = styled.TouchableOpacity``
 
-const ProjectHeading: FC<ProjectHeadingProps> = ({ hideSaveProjectIcon, title }) => {
+const ProjectHeading: FC<ProjectHeadingProps> = ({
+  hideSaveProjectIcon,
+  title,
+}) => {
   return (
     <ProjectHeadingView>
       <ProjectTitle>{title}</ProjectTitle>
       {!hideSaveProjectIcon && (
-          <SaveProjectHeart onPress={underDevelopmentAlert}>
-            <AntDesign name="hearto" size={20} />
-          </SaveProjectHeart>
+        <SaveProjectHeart onPress={underDevelopmentAlert}>
+          <AntDesign name="hearto" size={20} />
+        </SaveProjectHeart>
       )}
     </ProjectHeadingView>
   )

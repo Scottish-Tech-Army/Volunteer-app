@@ -10,16 +10,18 @@ const SafeArea = styled.SafeAreaView`
   flex: 1;
 `
 
-const ProjectRegisterInterestContainer = (props: { route: { params: { project: Project } } }) => {
-    const { project } = props.route.params;
-    
-    return (
-        <SafeArea>
-            <Theme>
-                <ProjectRegisterInterest project={project} />
-            </Theme>
-        </SafeArea>
-    )
+const ProjectRegisterInterestContainer = (props: {
+  route: { params: { project: Project } }
+}) => {
+  const { project } = props.route.params
+
+  return (
+    <SafeArea>
+      <Theme>
+        <ProjectRegisterInterest project={project} />
+      </Theme>
+    </SafeArea>
+  )
 }
 
 export default ProjectRegisterInterestContainer

@@ -1,9 +1,9 @@
-import React, { FC, useState } from 'react'
+import React, { FC } from 'react'
 import DatePicker from 'react-native-date-picker'
 import styled from 'styled-components/native'
 
 interface DateTimeProps {
-  description: String
+  description: string
   maximumDate?: Date
   minimumDate?: Date
   mode: 'date' | 'datetime' | 'time'
@@ -22,11 +22,14 @@ const DateTimeDescription = styled.Text`
   margin-right: 12px;
 `
 
-const DateTimeValue = styled.Text`
-  font-size: 16px;
-`
-
-const DateTime: FC<DateTimeProps> = ({ description, maximumDate, minimumDate, mode, onChange, value }) => {
+const DateTime: FC<DateTimeProps> = ({
+  description,
+  maximumDate,
+  minimumDate,
+  mode,
+  onChange,
+  value,
+}) => {
   return (
     <DateTimeView>
       <DateTimeDescription>{description}</DateTimeDescription>

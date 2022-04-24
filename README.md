@@ -81,5 +81,5 @@ This file `/api/services/slack.js` allows you to post messages to Slack.  If you
 2. [Set up a webhook](https://api.slack.com/apps/A03ALL3M137/incoming-webhooks?) for the channel you want to post to.  ([More info about Slack webhooks here.](https://api.slack.com/messaging/webhooks))
     >**Note:** this webhook URL must remain secret (don't share it openly, don't commit it to GitHub) as it enables anyone to post to that channel
 
-3. Add the webhook as a variable in your `/api/.env` file (and in `/api/.env.example` but without the webhook URL itself).  This variable must be named `SLACK_WEBHOOK_` and then the name of the Slack channel, all in capitals and with hyphens replaced by underscores.
-    >For example, if the Slack channel is called `my-awesome-channel`, the .env variable should be called `SLACK_WEBHOOK_MY_AWESOME_CHANNEL`
+3. Add the webhook as a variable in your `/api/.env` file (and in `/api/.env.example` but without the webhook URL itself).  This variable must be named `SLACK_SECRET_WEBHOOK_` and then the name of the Slack channel, all in capitals and with hyphens replaced by underscores.
+    >For example, if the Slack channel is called `my-awesome-channel`, the .env variable should be called `SLACK_SECRET_WEBHOOK_MY_AWESOME_CHANNEL`
