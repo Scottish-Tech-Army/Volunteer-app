@@ -45,9 +45,9 @@ async function getRecord(tableName, filterQuery) {
 
     return recordsRaw.length ? recordsRaw[0].fields : undefined;
   } catch (error) {
-    return {
-      error,
-    };
+    console.error(error);
+
+    return;
   }
 }
 

@@ -1,5 +1,5 @@
 const airTable = require('../helpers/airTable');
-const dayjs = require('dayjs')
+const dayjs = require('dayjs');
 const express = require('express');
 const slackService = require('../services/slack');
 const projectsHelper = require('../helpers/projects');
@@ -23,7 +23,9 @@ router.get('/', async (req, res) => {
     return;
   }
 
-  const projectsResourcesFormatted = projectsResources.map((projectResource) => projectsHelper.formatProjectResourceFromAirTable(projectResource));
+  const projectsResourcesFormatted = projectsResources.map((projectResource) =>
+    projectsHelper.formatProjectResourceFromAirTable(projectResource),
+  );
 
   res.status(200).send(projectsResourcesFormatted);
 });
@@ -75,7 +77,9 @@ router.get('/single', async (req, res) => {
  *  - Save in a database that this user has expressed interest in this project
  *
  */
-router.post('/single/register-interest', async (req, res) => {
+router.post('/single/register-interest', async (req, res) => await projectRegisterInterestHandler(req, res));
+
+const projectRegisterInterestHandler = async (req, res) => {
   const projectItKey = req.query.it;
   const resourceId = req.query.res;
 
@@ -94,21 +98,13 @@ router.post('/single/register-interest', async (req, res) => {
   }
 
   const projectResourceFormatted = projectsHelper.formatProjectResourceFromAirTable(projectResource);
-  
-  const dataExpected = [
-    'availableFrom',
-    'email',
-    'firstName',
-    'lastName',
-    'happyToMentor',
-    'lookingForBuddy',
-  ];
+
+  const dataExpected = ['availableFrom', 'email', 'firstName', 'lastName', 'happyToMentor', 'lookingForBuddy'];
 
   const dataNotProvided = [];
 
   for (const dataItemExpected of dataExpected) {
-    if (!req.body?.hasOwnProperty(dataItemExpected))
-      dataNotProvided.push(dataItemExpected);
+    if (!req.body?.hasOwnProperty(dataItemExpected)) dataNotProvided.push(dataItemExpected);
   }
 
   if (dataNotProvided.length) {
@@ -122,7 +118,9 @@ router.post('/single/register-interest', async (req, res) => {
 
   const slackResponse = await slackService.postMessage(
     process.env.SLACK_CHANNEL_VOLUNTEER_PROJECT_INTEREST,
-    `🎉🎉🎉 Hurray! We've got a new volunteer interested in *${projectResourceFormatted.name}* for *${projectResourceFormatted.client}*
+    `🎉🎉🎉 Hurray! We've got a new volunteer interested in *${projectResourceFormatted.name}* for *${
+      projectResourceFormatted.client
+    }*
 
     ➡️ *Role*  ${projectResourceFormatted.role}
     👤 *Volunteer*  ${req.body.firstName} ${req.body.lastName}
@@ -135,6 +133,9 @@ router.post('/single/register-interest', async (req, res) => {
   );
 
   res.status(slackResponse.data ? 200 : 400).send(slackResponse);
-});
+};
 
-module.exports = router;
+module.exports = {
+  projectsApi: router,
+  projectRegisterInterestHandler,
+};
