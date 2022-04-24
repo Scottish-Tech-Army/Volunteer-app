@@ -116,7 +116,7 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
     return valid
   }
 
-  const validateForm = (): Boolean => {
+  const validateForm = (): boolean => {
     const firstNameValid = validateField('firstName', firstName)
     const lastNameValid = validateField('lastName', lastName)
     const emailValid = validateField('email', email)
