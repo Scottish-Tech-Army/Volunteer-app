@@ -70,7 +70,7 @@ const QuickSearchTitle = styled.Text`
 const SearchContainer = () => {
   const [searchQuery, setSearchQuery] = useState('')
 
-  const handleSearch = input => {
+  const handleSearch = (input: React.SetStateAction<string>) => {
     setSearchQuery(input)
   }
 

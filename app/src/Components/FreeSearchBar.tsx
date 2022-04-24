@@ -29,8 +29,8 @@ const FreeSearchBar = ({
   handleSearch,
   searchQuery,
 }: {
-  handleSearch: Function
-  searchQuery: String
+  handleSearch: (text: string) => void
+  searchQuery: string
 }) => {
   const [fetchAll, { data: projects }] = useLazyFetchAllQuery()
 

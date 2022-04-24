@@ -31,8 +31,10 @@ const SafeArea = styled.SafeAreaView`
   flex: 1;
 `
 
-const ProjectSearchResultsContainer = ({ route }) => {
-    const {result} = route.params
+const ProjectSearchResultsContainer = (props: {
+  route: { params: { result: Projects } }
+}) => {
+  const { result } = props.route.params
 
     if(result) {
         return (
