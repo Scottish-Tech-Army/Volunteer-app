@@ -7,6 +7,8 @@ import { useLazyFetchAllQuery } from '@/Services/modules/projects'
 
 const FreeSearchInput = styled.TextInput`
   flex: 1;
+  padding: 0;
+  margin-left: 10px;
 `
 const FreeSearchViewContainer = styled.View`
   width: 70%;
