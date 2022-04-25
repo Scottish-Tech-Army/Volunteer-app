@@ -220,7 +220,7 @@ async function getResourcesFromJira(startAt, resArray) {
       type: x['fields'].customfield_10112,
       role: x['fields'].customfield_10113,
       skills: x['fields'].customfield_10061 ?? '',
-      hours: x['fields'].customfield_10062 ?? '',
+      hours: x['fields'].customfield_10165?.value ?? x['fields'].customfield_10062 ?? '',
       required: 1, // currently hardcoded as cannot see number of people coming back in Jira results
       buddying: x['fields'].customfield_10108 ? x['fields'].customfield_10108.value.toLowerCase() === 'yes' : false,
     }),
