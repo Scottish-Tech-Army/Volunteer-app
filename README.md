@@ -37,10 +37,12 @@ Welcome to the the Volunteering App Github repo
 
     >**Note:** you may need to run `npm install --legacy-peer-deps`
 
-9. Duplicate the example config file `app/src/Config/index.example.ts` and name your new file `app/src/Config/index.ts`
+9. If you are on a Mac, go to the `app/ios` folder in a terminal window. At the command prompt type `pod install`
+
+10. Duplicate the example config file `app/src/Config/index.example.ts` and name your new file `app/src/Config/index.ts`
     >**Note** If the app has difficulty connecting to the API, you may need specify your IP address in `index.ts`. Replace `localhost` in the line `STA_BASE_URL: 'http://localhost:3000'` with your own.
 
-10. type in command terminal: `npm run ios` or `npm run android`
+11. type in command terminal: `npm run ios` or `npm run android`
 
 # Subsequent run
 
