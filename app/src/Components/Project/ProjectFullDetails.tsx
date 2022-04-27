@@ -69,7 +69,7 @@ const ProjectFullDetails: FC<ProjectFullDetailsProps> = ({ project }) => {
           <ProjectHeading title={project.name} />
           <ProjectSubTitle>{project.client}</ProjectSubTitle>
           <ProjectRole>{project.role}</ProjectRole>
-          <ProjectInterestButton />
+          <ProjectInterestButton project={project} />
           <ProjectDescription>{project.description}</ProjectDescription>
           <ProjectDetailsBlock>
           <ProjectSkills skills={project.skills} />
