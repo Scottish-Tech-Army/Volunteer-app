@@ -17,6 +17,7 @@ const FreeSearchViewContainer = styled.View`
   border: 1px solid #3C3C3B;
   border-radius: 15px;
   margin: 0 auto;
+  margin-top: 10px;
 `
 
 const SearchIcon = styled(FontAwesome)`
