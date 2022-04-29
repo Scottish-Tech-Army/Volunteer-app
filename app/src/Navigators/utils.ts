@@ -13,11 +13,18 @@ type RootStackParamList = {
   Startup: undefined
   Home: undefined
   ProjectDetail: undefined
+  ProjectRegisterInterest: undefined
   Search: undefined
   ProjectSearchResults: undefined
 }
 
 export const navigationRef = createNavigationContainerRef<RootStackParamList>()
+
+export function goBack() {
+  if (navigationRef.isReady()) {
+    navigationRef.goBack()
+  }
+}
 
 export function navigate(name: keyof RootStackParamList, params: any) {
   if (navigationRef.isReady()) {
