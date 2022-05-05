@@ -27,7 +27,8 @@ function fakeJiraItApiResultIssuesObject() {
       customfield_10027: faker.company.companyName(), // client
       customfield_10159: faker.helpers.randomize([faker.internet.url(), '']), // video URL
       customfield_10090: faker.helpers.randomize([faker.internet.url(), '']), // scope URL
-      customfield_10148: faker.lorem.sentence() // sector
+      customfield_10148: { value: faker.lorem.sentence(), 
+      }, //sector 
     },
   };
 }
