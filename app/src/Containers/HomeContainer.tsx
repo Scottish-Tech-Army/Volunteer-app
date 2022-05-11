@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import styled from 'styled-components/native'
 import TopOfApp from '@/Components/TopOfApp'
 import ProjectOptions from '@/Components/Project/ProjectOptions'
@@ -7,11 +7,10 @@ import ProjectReturnedList from '@/Components/Project/ProjectReturnedList'
 import { Text, SafeAreaView } from 'react-native'
 import Theme from '@/Theme/OldTheme'
 import { Projects, useLazyFetchAllQuery } from '@/Services/modules/projects'
-import { navigate } from '@/Navigators/utils'
+import ProjectSearchResultsContainer from './ProjectSearchResultsContainer'
 
 interface ProjectProps {
   data: Projects
-  //onPress(): void
 }
 
 const SafeArea = styled.SafeAreaView`
@@ -25,19 +24,22 @@ const HorizontalLine = styled.View`
   margin: 0px 75px 10px 75px;
 `
 
+
 const ProjectList: FC<ProjectProps> = ({ data }) => {
-  return (
-    <SafeArea>
-      <TopOfApp />
-      <ProjectSearch />
-      <ProjectOptions />
-      <HorizontalLine />
-      <ProjectReturnedList data={data} />
-    </SafeArea>
-  )
-}
+    return (
+      <SafeArea>
+        <TopOfApp />
+        <ProjectSearch />
+        <ProjectOptions />
+        <HorizontalLine />
+        <ProjectReturnedList data={data} />
+      </SafeArea>
+    )
+  }
 
 const HomeContainer = () => {
+  //let [searchResults, setSearchResults] = useState([])
+
   const [fetchAll, { data: projects }] = useLazyFetchAllQuery()
 
   useEffect(() => {
@@ -48,6 +50,9 @@ const HomeContainer = () => {
     return (
       <Theme>
         <ProjectList data={projects} />
+
+        {/*}  <ProjectSearchResultsContainer searchResults={searchResults} />  */}
+        
       </Theme>
     )
   } else {

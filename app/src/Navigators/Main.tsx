@@ -1,7 +1,6 @@
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { ExampleContainer } from '@/Containers'
-import { HomeContainer } from '@/Containers'
+import { HomeContainer, ExampleContainer } from '@/Containers'
 import Entypo from 'react-native-vector-icons/Entypo'
 import { useTheme } from '@/Hooks'
 
