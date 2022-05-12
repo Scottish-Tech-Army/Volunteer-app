@@ -13,6 +13,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Create config file
+        working-directory: ./app
+        run: ./scripts/createConfig.sh
       - name: Run Tests
         run: |
           cd app
