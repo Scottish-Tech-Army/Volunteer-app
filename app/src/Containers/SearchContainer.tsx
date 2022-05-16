@@ -6,6 +6,7 @@ import underDevelopmentAlert from '@/Utils/UnderDevelopmentAlert'
 import FreeSearchBar from '@/Components/FreeSearchBar'
 import { navigate } from '@/Navigators/utils'
 import { useLazyFetchAllQuery } from '@/Services/modules/projects'
+import { findStringInArray, findStringInString } from '@/Utils/Search'
 
 const Roles = [
   'Web Developer',
@@ -54,7 +55,7 @@ const QuickSearchButton = styled.TouchableOpacity`
   margin: 20px 0px 0px 15px;
   padding: 5px;
   background-color: #e3e3e3;
-  border: ${props => `1px solid ${props.theme.colors.staBlack}`};
+  border: ${(props) => `1px solid ${props.theme.colors.staBlack}`};
   display: flex;
   justify-content: center;
 `
@@ -64,7 +65,6 @@ const QuickSearchTitle = styled.Text`
 `
 
 const SearchContainer = () => {
-  
   const [searchQuery, setSearchQuery] = useState('')
 
   const handleSearch = (input: React.SetStateAction<string>) => {
@@ -77,28 +77,62 @@ const SearchContainer = () => {
     fetchAll('')
   }, [fetchAll])
 
-  const handleSubmit = () => {
-    const result = projects?.filter(
-      project =>
-        project.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        project.role.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        project.client.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        project.skills.find(skill => skill.toLowerCase().includes(searchQuery.toLowerCase())) ||
-        project.description.toLowerCase().includes(searchQuery.toLowerCase()),
+  const handlePreDefinedChoiceSubmit = (
+    searchField: string,
+    searchQuery: string,
+  ) => {
+    let results = []
+
+    switch (searchField) {
+      case 'skills':
+        results = projects?.filter((project) =>
+          findStringInArray(searchQuery, project[searchField]),
+        )
+        break
+
+      default:
+        results = projects?.filter((project) =>
+          findStringInString(searchQuery, project[searchField]),
+        )
+        break
+    }
+
+    navigate('ProjectSearchResults', { results, searchField, searchQuery })
+  }
+
+  const handleFreeTextSubmit = () => {
+    const results = projects?.filter(
+      (project) =>
+        findStringInString(searchQuery, project.name) ||
+        findStringInString(searchQuery, project.role) ||
+        findStringInString(searchQuery, project.client) ||
+        findStringInString(searchQuery, project.description) ||
+        findStringInArray(searchQuery, project.skills),
     )
-    navigate('ProjectSearchResults', { result: result })
+    navigate('ProjectSearchResults', {
+      results,
+      searchField: undefined,
+      searchQuery,
+    })
   }
 
   return (
     <SafeAreaView>
       <ScrollView>
         <TopOfApp />
-        <FreeSearchBar handleSearch={handleSearch} searchQuery={searchQuery} handleSubmit={handleSubmit} />
+        <FreeSearchBar
+          handleSearch={handleSearch}
+          searchQuery={searchQuery}
+          handleSubmit={handleFreeTextSubmit}
+        />
         <Heading>Popular Searches</Heading>
         <SubHeading>Roles</SubHeading>
         <SectionView>
           {Roles.map((role, index) => (
-            <QuickSearchButton onPress={underDevelopmentAlert} key={index}>
+            <QuickSearchButton
+              onPress={() => handlePreDefinedChoiceSubmit('role', role)}
+              key={index}
+            >
               <QuickSearchTitle>{role}</QuickSearchTitle>
             </QuickSearchButton>
           ))}
