@@ -10,18 +10,16 @@ const SafeArea = styled.SafeAreaView`
   flex: 1;
 `
 
-const ProjectDetailContainer = (props: {
-  route: { params: { item: Project } }
-}) => {
-  const { item } = props.route.params
-
-  return (
-    <SafeArea>
-      <Theme>
-        <ProjectFullDetails project={item} />
-      </Theme>
-    </SafeArea>
-  )
+const ProjectDetailContainer = (props: { route: { params: { item: Project } } }) => {
+    const { item } = props.route.params;
+    
+    return (
+        <SafeArea>
+            <Theme>
+                <ProjectFullDetails project={item} />
+            </Theme>
+        </SafeArea>
+    )
 }
 
 export default ProjectDetailContainer
