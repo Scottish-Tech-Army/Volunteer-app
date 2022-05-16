@@ -1,4 +1,4 @@
-import React, { VoidFunctionComponent } from 'react'
+import React from 'react'
 import styled from 'styled-components/native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
@@ -28,7 +28,7 @@ const FreeSearchBar = ({
   handleSubmit,
 }: {
   handleSearch: (text: string) => void
-  handleSubmit: VoidFunctionComponent
+  handleSubmit: () => void
 }) => {
   return (
     <FreeSearchViewContainer>

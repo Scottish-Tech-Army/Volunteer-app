@@ -5,7 +5,7 @@ import TopOfApp from '@/Components/TopOfApp'
 import underDevelopmentAlert from '@/Utils/UnderDevelopmentAlert'
 import FreeSearchBar from '@/Components/FreeSearchBar'
 import { navigate } from '@/Navigators/utils'
-import { useLazyFetchAllQuery } from '@/Services/modules/projects'
+import { useLazyFetchAllQuery, Project } from '@/Services/modules/projects'
 import { findStringInArray, findStringInString } from '@/Utils/Search'
 
 const Roles = [
@@ -55,7 +55,7 @@ const QuickSearchButton = styled.TouchableOpacity`
   margin: 20px 0px 0px 15px;
   padding: 5px;
   background-color: #e3e3e3;
-  border: ${(props) => `1px solid ${props.theme.colors.staBlack}`};
+  border: ${props => `1px solid ${props.theme.colors.staBlack}`};
   display: flex;
   justify-content: center;
 `
@@ -78,20 +78,20 @@ const SearchContainer = () => {
   }, [fetchAll])
 
   const handlePreDefinedChoiceSubmit = (
-    searchField: string,
+    searchField: 'client' | 'description' | 'name' | 'role' | 'skills',
     searchQuery: string,
   ) => {
-    let results = []
+    let results = [] as Project[] | undefined
 
     switch (searchField) {
       case 'skills':
-        results = projects?.filter((project) =>
+        results = projects?.filter(project =>
           findStringInArray(searchQuery, project[searchField]),
         )
         break
 
       default:
-        results = projects?.filter((project) =>
+        results = projects?.filter(project =>
           findStringInString(searchQuery, project[searchField]),
         )
         break
@@ -102,7 +102,7 @@ const SearchContainer = () => {
 
   const handleFreeTextSubmit = () => {
     const results = projects?.filter(
-      (project) =>
+      project =>
         findStringInString(searchQuery, project.name) ||
         findStringInString(searchQuery, project.role) ||
         findStringInString(searchQuery, project.client) ||
@@ -122,7 +122,6 @@ const SearchContainer = () => {
         <TopOfApp />
         <FreeSearchBar
           handleSearch={handleSearch}
-          searchQuery={searchQuery}
           handleSubmit={handleFreeTextSubmit}
         />
         <Heading>Popular Searches</Heading>
