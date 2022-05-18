@@ -26,7 +26,9 @@ function fakeJiraItApiResultIssuesObject() {
       description: faker.lorem.sentences(4),
       customfield_10027: faker.company.companyName(), // client
       customfield_10159: faker.helpers.randomize([faker.internet.url(), '']), // video URL
-      customfield_10090: faker.helpers.randomize([faker.internet.url(), '']) // scope URL
+      customfield_10090: faker.helpers.randomize([faker.internet.url(), '']), // scope URL
+      customfield_10148: { value: faker.lorem.sentence(), 
+      }, //sector 
     },
   };
 }
@@ -84,7 +86,8 @@ function fakeProjectObject() {
     description: faker.lorem.sentences(4),
     client: faker.company.companyName(),
     video: faker.internet.url(),
-    scope: faker.internet.url()
+    scope: faker.internet.url(),
+    sector: faker.lorem.sentence()
   };
 }
 
@@ -167,6 +170,7 @@ function fakeAirTableProjectResource(numberRequired, includeBuddying) {
     description: faker.lorem.sentences(4),
     video: faker.internet.url(),
     scope: faker.internet.url(),
+    sector: faker.lorem.sentence(),
     skills: `${faker.lorem.words(5)}
     
     ${faker.lorem.words(5)}`,
