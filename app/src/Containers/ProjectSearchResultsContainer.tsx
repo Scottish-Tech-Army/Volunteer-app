@@ -21,19 +21,21 @@ const ProjectSearchResultsContainer = (props: {
   route: {
     params: {
       results: Projects
+      resultsType: 'groupOfTerms' | 'singleTerm'
       searchField: string | undefined
       searchQuery: string
     }
   }
 }) => {
-  const { results, searchField, searchQuery } = props.route.params
+  const { results, resultsType, searchField, searchQuery } = props.route.params
 
   if (results) {
     return (
       <SafeArea>
         <TopOfApp />
         <SearchTerm>
-          Results for {searchField ? `${searchField}:` : ''} "{searchQuery}"
+          Results for {searchField ? `${searchField}` : ''}
+          {resultsType === 'groupOfTerms' ? ' related to' : ''} "{searchQuery}"
         </SearchTerm>
         {Boolean(results.length) && <ProjectFilterSort />}
         <ProjectReturnedList data={results} mode="search" />
