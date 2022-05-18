@@ -34,7 +34,7 @@ const ProjectSearchResultsContainer = (props: {
       <SafeArea>
         <TopOfApp />
         <SearchTerm>
-          Results for {searchField ? `${searchField}` : ''}
+          Results for {searchField ?? ''}
           {resultsType === 'groupOfTerms' ? ' related to' : ''} "{searchQuery}"
         </SearchTerm>
         {Boolean(results.length) && <ProjectFilterSort />}

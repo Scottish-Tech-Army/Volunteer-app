@@ -281,6 +281,7 @@ const SearchContainer = () => {
 
     const results = searchByArray(searchQueries, [
       'client',
+      // default weight is 1, put less importance on description field as more likely to return false positive matches
       { name: 'description', weight: 0.5 },
       'name',
       'role',
