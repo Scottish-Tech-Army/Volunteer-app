@@ -1,57 +1,53 @@
-import React, { FC, useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components/native'
 import TopOfApp from '@/Components/TopOfApp'
-import { Projects, useLazyFetchAllQuery } from '@/Services/modules/projects'
+import { Projects } from '@/Services/modules/projects'
 import ProjectReturnedList from '@/Components/Project/ProjectReturnedList'
 import ProjectFilterSort from '@/Components/Project/ProjectFilterSort'
 import { Text, SafeAreaView } from 'react-native'
-
-/*
-interface SearchResultsProps {
-    searchResults: Projects
-}
-
-
-
-const ProjectSearchResultsContainer: FC<SearchResultsProps> = ({ searchResults }) => {
-    if (searchResults = [] ) return null;
-    return (
-        <SafeArea>
-            <TopOfApp />
-            <ProjectFilterSort />
-            <ProjectReturnedList data={searchResults} />
-        </SafeArea>
-    )
-}
-*/
 
 const SafeArea = styled.SafeAreaView`
   background: ${props => props.theme.colors.appBackground};
   color: ${props => props.theme.colors.staBlack};
   flex: 1;
 `
+const SearchTerm = styled.Text`
+  font-size: 20px;
+  margin: 15px 15px 0px 15px;
+  text-align: center;
+`
 
 const ProjectSearchResultsContainer = (props: {
-  route: { params: { result: Projects } }
+  route: {
+    params: {
+      results: Projects
+      resultsType: 'groupOfTerms' | 'singleTerm'
+      searchField: string | undefined
+      searchQuery: string
+    }
+  }
 }) => {
-  const { result } = props.route.params
+  const { results, resultsType, searchField, searchQuery } = props.route.params
 
-    if(result) {
-        return (
-            <SafeArea>
-                <TopOfApp />
-                <ProjectFilterSort />
-                <ProjectReturnedList data={result} />
-            </SafeArea>
-        )
+  if (results) {
+    return (
+      <SafeArea>
+        <TopOfApp />
+        <SearchTerm>
+          Results for {searchField ?? ''}
+          {resultsType === 'groupOfTerms' ? ' related to' : ''} "{searchQuery}"
+        </SearchTerm>
+        {Boolean(results.length) && <ProjectFilterSort />}
+        <ProjectReturnedList data={results} mode="search" />
+      </SafeArea>
+    )
   } else {
     return (
-        <SafeAreaView>
-            <Text>Loading...</Text>
-        </SafeAreaView>
+      <SafeAreaView>
+        <Text>Loading...</Text>
+      </SafeAreaView>
     )
+  }
 }
-}
-
 
 export default ProjectSearchResultsContainer

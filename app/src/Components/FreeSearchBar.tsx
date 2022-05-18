@@ -1,7 +1,6 @@
-import React, { VoidFunctionComponent } from 'react'
+import React from 'react'
 import styled from 'styled-components/native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
-
 
 const FreeSearchInput = styled.TextInput`
   flex: 1;
@@ -11,10 +10,10 @@ const FreeSearchInput = styled.TextInput`
 const FreeSearchViewContainer = styled.View`
   width: 70%;
   height: 30px;
-  flexDirection: row;
-  alignItems: center;
-  justifyContent: center;
-  border: 1px solid #3C3C3B;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #3c3c3b;
   border-radius: 15px;
   margin: 0 auto;
   margin-top: 10px;
@@ -24,18 +23,23 @@ const SearchIcon = styled(FontAwesome)`
   margin-left: 10px;
 `
 
-const FreeSearchBar = ({ handleSearch, handleSubmit }: {
+const FreeSearchBar = ({
+  handleSearch,
+  handleSubmit,
+}: {
   handleSearch: (text: string) => void
-  handleSubmit: VoidFunctionComponent
+  handleSubmit: () => void
 }) => {
-
   return (
     <FreeSearchViewContainer>
       <SearchIcon name="search" size={18} color="#3C3C3B" />
       <FreeSearchInput
+        clearButtonMode="always"
+        enablesReturnKeyAutomatically
+        maxLength={20}
         onChangeText={handleSearch}
         onSubmitEditing={handleSubmit}
-        clearButtonMode="always"
+        returnKeyType="search"
       />
     </FreeSearchViewContainer>
   )
