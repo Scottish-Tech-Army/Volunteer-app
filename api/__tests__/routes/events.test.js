@@ -1,170 +1,241 @@
+const airTable = require('../../helpers/airTable');
+const axios = require('axios');
+const eventsHelper = require('../../helpers/events');
+const { faker } = require('@faker-js/faker');
 const request = require('supertest');
-const app = require('../../app');
-var axios = require('axios');
+const routesHelper = require('../../helpers/routes');
+const { getEventHandler, getEventsHandler, getScheduledEventsHandler } = require('../../routes/events');
+const eventsTestData = require('../../__test-data__/events');
 const nock = require('nock');
 
 axios.defaults.adapter = require('axios/lib/adapters/http');
 
-const scopeEvents = nock('http://localhost:3000')
-  .get('/airtable/events')
-  .reply(200, [
-    {
-      id: 'recAb4kAFdkeKKnLU',
-      fields: {
-        'Event Name': 'Showcase - Volunteer app',
-        'Event Status': 'Past',
-        'Event Date': '2021-09-08',
-        'Event time': 43200,
-        Duration: 3600,
-        'Event Description':
-          'We are proud to showcase our volunteer projects. Come and have a look at the story so far, if you are curious & want to volunteer- join us!',
-        'Event Type': 'Internal',
-        'Event link': 'https://vimeo.com/583815096',
-        'Event Series': 'STA Project Showcase',
-      },
-      createdTime: '2021-09-21T12:29:41.000Z',
-    },
-    {
-      id: 'reczf1MnfITcs4G8N',
-      fields: {
-        'Event Name': 'Showcase - Foodbank Support',
-        'Event Status': 'Scheduled',
-        'Event Date': '2021-10-23',
-        'Event time': 50400,
-        Duration: 2700,
-        'Event Description':
-          'The team has been steadily working with the Trussell Trust to support the roll out of their volunteer app.\n',
-        'Event Type': 'Internal',
-        'Event Series': 'STA Project Showcase',
-      },
-      createdTime: '2021-09-30T17:41:59.000Z',
-    },
-  ]);
-
-const scopeSingleEvent = nock('http://localhost:3000')
-  .get('/airtable/event/recAb4kAFdkeKKnLU')
-  .reply(200, {
-    id: 'recAb4kAFdkeKKnLU',
-    fields: {
-      'Event Name': 'Showcase - Volunteer app',
-      Attachments: [
-        {
-          id: 'attBLi1thvJY4WPgh',
-          width: 800,
-          height: 600,
-          url: 'https://dl.airtable.com/.attachments/57e0272e8d7b5aaa37e3f7a59f2326d8/d1264d9e/image1.jpg',
-          filename: 'profile.jpg',
-          size: 311694,
-          type: 'image/jpeg',
-          thumbnails: {
-            small: {
-              url: 'https://dl.airtable.com/.attachmentThumbnails/fe49dfcb6a184c11f6882dd22f43f02d/207e51bb',
-              width: 48,
-              height: 36,
-            },
-            large: {
-              url: 'https://dl.airtable.com/.attachmentThumbnails/e3a7913515161c83b210a4fec03bc7fa/5bd0c145',
-              width: 683,
-              height: 512,
-            },
-            full: {
-              url: 'https://dl.airtable.com/.attachmentThumbnails/950e29521098d877ede948702c021c48/3dc57685',
-              width: 3000,
-              height: 3000,
-            },
-          },
-        },
-      ],
-      'Event Status': 'Past',
-      'Event Date': '2021-09-08',
-      'Event time': 43200,
-      Duration: 3600,
-      'Event Description':
-        'We are proud to showcase our volunteer projects. Come and have a look at the story so far, if you are curious & want to volunteer- join us!',
-      'Event Type': 'Internal',
-      'Event link': 'https://vimeo.com/583815096',
-      'Event Series': 'STA Project Showcase',
-    },
-    createdTime: '2021-09-21T12:29:41.000Z',
-  });
-
-const pastEvents = nock('http://localhost:3000')
-  .get('/airtable/events/schedule/past')
-  .reply(200, [
-    {
-      id: 'recAb4kAFdkeKKnLU',
-      fields: {
-        'Event Name': 'Showcase - Volunteer app',
-        'Event Status': 'Past',
-        'Event Date': '2021-09-08',
-        'Event time': 43200,
-        Duration: 3600,
-        'Event Description':
-          'We are proud to showcase our volunteer projects. Come and have a look at the story so far, if you are curious & want to volunteer- join us!',
-        'Event Type': 'Internal',
-        'Event link': 'https://vimeo.com/583815096',
-        'Event Series': 'STA Project Showcase',
-      },
-      createdTime: '2021-09-21T12:29:41.000Z',
-    },
-  ]);
-
-const scheduledEvents = nock('http://localhost:3000')
-  .get('/airtable/events/schedule/scheduled')
-  .reply(200, [
-    {
-      id: 'reczf1MnfITcs4G8N',
-      fields: {
-        'Event Name': 'Showcase - Foodbank Support',
-        'Event Status': 'Scheduled',
-        'Event Date': '2021-10-23',
-        'Event time': 50400,
-        Duration: 2700,
-        'Event Description':
-          'The team has been steadily working with the Trussell Trust to support the roll out of their volunteer app.\n',
-        'Event Type': 'Internal',
-        'Event Series': 'STA Project Showcase',
-      },
-      createdTime: '2021-09-30T17:41:59.000Z',
-    },
-  ]);
-
 describe('Test the events api', () => {
-  // jest.setTimeout(60000)
-
   test('GET all method should respond successfully', async () => {
-    const response = await axios.get('http://localhost:3000/airtable/events');
+    // Set up fake test data
+    const fakeAllEvents = eventsTestData.fakeEventObjects(10);
 
-    scopeEvents.done();
+    // Mock dependencies
+    const requestMock = nock('http://localhost:3000').get('/events').reply(200, fakeAllEvents);
+
+    // Run test
+    const response = await axios.get('http://localhost:3000/events');
+    requestMock.done();
+
     expect(response.status).toBe(200);
-    expect(response.data[0].id).toBe('recAb4kAFdkeKKnLU');
+    expect(response.data).toEqual(fakeAllEvents);
   });
 
-  test('GET single event', async () => {
-    const response = await axios.get('http://localhost:3000/airtable/event/recAb4kAFdkeKKnLU');
+  test('GET single event should respond successfully', async () => {
+    // Set up fake test data
+    const fakeEvent = eventsTestData.fakeEventObject();
 
-    scopeSingleEvent.done();
+    // Mock dependencies
+    const requestMock = nock('http://localhost:3000').get(`/events/${fakeEvent.id}`).reply(200, fakeEvent);
+
+    // Run test
+    const response = await axios.get(`http://localhost:3000/events/${fakeEvent.id}`);
+    requestMock.done();
+
     expect(response.status).toBe(200);
-    expect(response.data.id).toBe('recAb4kAFdkeKKnLU');
-  });
-
-  test('GET single project by ID method should return Not Found', async () => {
-    const response = await request(app).get('/airtable/events/1');
-    expect(response.statusCode).toBe(404);
+    expect(response.data).toEqual(fakeEvent);
   });
 
   test('GET past events should respond successfully', async () => {
-    const response = await axios.get('http://localhost:3000/airtable/events/schedule/past');
-    pastEvents.done();
+    // Set up fake test data
+    const fakePastEvents = eventsTestData.fakeEventObjects(5, 'past');
+
+    // Mock dependencies
+    const requestMock = nock('http://localhost:3000').get('/events/scheduled/past').reply(200, fakePastEvents);
+
+    // Run test
+    const response = await axios.get('http://localhost:3000/events/scheduled/past');
+    requestMock.done();
+
     expect(response.status).toBe(200);
-    expect(response.data[0].id).toBe('recAb4kAFdkeKKnLU');
+    expect(response.data).toEqual(fakePastEvents);
   });
 
-  test('GET scheduled events should respond successfully', async () => {
-    const response = await axios.get('http://localhost:3000/airtable/events/schedule/scheduled');
+  test('GET upcoming events should respond successfully', async () => {
+    // Set up fake test data
+    const fakeFutureEvents = eventsTestData.fakeEventObjects(5, 'future');
 
-    scheduledEvents.done();
+    // Mock dependencies
+    const requestMock = nock('http://localhost:3000').get('/events/scheduled/upcoming').reply(200, fakeFutureEvents);
+
+    // Run test
+    const response = await axios.get('http://localhost:3000/events/scheduled/upcoming');
+    requestMock.done();
+
     expect(response.status).toBe(200);
-    expect(response.data[0].id).toBe('reczf1MnfITcs4G8N');
+    expect(response.data).toEqual(fakeFutureEvents);
+  });
+
+  test('getEventsHandler gets all records from AirTable, formats data and returns a response', async () => {
+    // Set up fake test data
+    const fakeTableName = faker.lorem.word();
+    const fakeEventsCount = faker.datatype.number(10);
+    const fakeEvents = eventsTestData.fakeEventAirTableRecords(fakeEventsCount);
+
+    // Mock dependencies
+    const airTableHelperEventsTableTableSpy = jest
+      .spyOn(airTable, 'eventsTable')
+      .mockImplementation(() => fakeTableName);
+    const airTableHelperGetAllRecordsSpy = jest.spyOn(airTable, 'getAllRecords').mockImplementation(() => fakeEvents);
+    const eventsHelperFormatEventFromAirTable = jest
+      .spyOn(eventsHelper, 'formatEventFromAirTable')
+      .mockImplementation((eventAirTableRecord) => eventAirTableRecord);
+    const responseMock = {
+      send: jest.fn(() => responseMock),
+      status: jest.fn(() => responseMock),
+    };
+
+    // Run test
+    await getEventsHandler({}, responseMock);
+
+    expect(airTableHelperEventsTableTableSpy).toHaveBeenCalledTimes(1);
+    expect(airTableHelperGetAllRecordsSpy).toHaveBeenCalledTimes(1);
+    expect(eventsHelperFormatEventFromAirTable).toHaveBeenCalledTimes(fakeEventsCount);
+    expect(responseMock.status).toHaveBeenCalledTimes(1);
+    expect(responseMock.status).toHaveBeenCalledWith(200);
+    expect(responseMock.send).toHaveBeenCalledTimes(1);
+    expect(responseMock.send).toHaveBeenCalledWith(fakeEvents);
+
+    // Clean up
+    airTableHelperEventsTableTableSpy.mockRestore();
+    airTableHelperGetAllRecordsSpy.mockRestore();
+    eventsHelperFormatEventFromAirTable.mockRestore();
+  });
+
+  test('getEventHandler gets a single record from AirTable, formats data and returns a response', async () => {
+    // Set up fake test data
+    const fakeTableName = faker.lorem.word();
+    const fakeEvent = eventsTestData.fakeEventAirTableRecord();
+    const fakeRequest = {
+      params: {
+        id: fakeEvent.id,
+      },
+    };
+
+    // Mock dependencies
+    const airTableHelperEventsTableTableSpy = jest
+      .spyOn(airTable, 'eventsTable')
+      .mockImplementation(() => fakeTableName);
+    const airTableHelperGetRecordByIdSpy = jest.spyOn(airTable, 'getRecordById').mockImplementation(() => fakeEvent);
+    const eventsHelperFormatEventFromAirTable = jest
+      .spyOn(eventsHelper, 'formatEventFromAirTable')
+      .mockImplementation((eventAirTableRecord) => eventAirTableRecord);
+    const responseMock = {
+      send: jest.fn(() => responseMock),
+      status: jest.fn(() => responseMock),
+    };
+
+    // Run test
+    await getEventHandler(fakeRequest, responseMock);
+
+    expect(airTableHelperEventsTableTableSpy).toHaveBeenCalledTimes(1);
+    expect(airTableHelperGetRecordByIdSpy).toHaveBeenCalledTimes(1);
+    expect(eventsHelperFormatEventFromAirTable).toHaveBeenCalledTimes(1);
+    expect(responseMock.status).toHaveBeenCalledTimes(1);
+    expect(responseMock.status).toHaveBeenCalledWith(200);
+    expect(responseMock.send).toHaveBeenCalledTimes(1);
+    expect(responseMock.send).toHaveBeenCalledWith(fakeEvent);
+
+    // Clean up
+    airTableHelperEventsTableTableSpy.mockRestore();
+    airTableHelperGetRecordByIdSpy.mockRestore();
+    eventsHelperFormatEventFromAirTable.mockRestore();
+  });
+
+  test('getScheduledEventsHandler gets past events and returns a response', async () => {
+    // Set up fake test data
+    const fakeRequest = {
+      params: {
+        schedule: 'past',
+      },
+    };
+    const fakeTableName = faker.lorem.word();
+    const fakePastEventsCount = faker.datatype.number(5);
+    const fakeFutureEventsCount = faker.datatype.number(5);
+    const fakePastEvents = eventsTestData.fakeEventAirTableRecords(fakePastEventsCount, 'past');
+    const fakeFutureEvents = eventsTestData.fakeEventAirTableRecords(fakeFutureEventsCount, 'future');
+    const fakeAllEvents = [...fakePastEvents, ...fakeFutureEvents];
+
+    // Mock dependencies
+    const airTableHelperEventsTableTableSpy = jest
+      .spyOn(airTable, 'eventsTable')
+      .mockImplementation(() => fakeTableName);
+    const airTableHelperGetAllRecordsSpy = jest
+      .spyOn(airTable, 'getAllRecords')
+      .mockImplementation(() => fakeAllEvents);
+    const eventsHelperFormatEventFromAirTable = jest
+      .spyOn(eventsHelper, 'formatEventFromAirTable')
+      .mockImplementation((eventAirTableRecord) => eventAirTableRecord);
+    const responseMock = {
+      send: jest.fn(() => responseMock),
+      status: jest.fn(() => responseMock),
+    };
+
+    // Run test
+    await getScheduledEventsHandler(fakeRequest, responseMock);
+
+    expect(airTableHelperEventsTableTableSpy).toHaveBeenCalledTimes(1);
+    expect(airTableHelperGetAllRecordsSpy).toHaveBeenCalledTimes(1);
+    expect(eventsHelperFormatEventFromAirTable).toHaveBeenCalledTimes(fakePastEventsCount + fakeFutureEventsCount);
+    expect(responseMock.status).toHaveBeenCalledTimes(1);
+    expect(responseMock.status).toHaveBeenCalledWith(200);
+    expect(responseMock.send).toHaveBeenCalledTimes(1);
+    expect(responseMock.send).toHaveBeenCalledWith(fakePastEvents);
+
+    // Clean up
+    airTableHelperEventsTableTableSpy.mockRestore();
+    airTableHelperGetAllRecordsSpy.mockRestore();
+    eventsHelperFormatEventFromAirTable.mockRestore();
+  });
+
+  test('getScheduledEventsHandler gets upcoming events and returns a response', async () => {
+    // Set up fake test data
+    const fakeRequest = {
+      params: {
+        schedule: 'upcoming',
+      },
+    };
+    const fakeTableName = faker.lorem.word();
+    const fakePastEventsCount = faker.datatype.number(5);
+    const fakeFutureEventsCount = faker.datatype.number(5);
+    const fakePastEvents = eventsTestData.fakeEventAirTableRecords(fakePastEventsCount, 'past');
+    const fakeFutureEvents = eventsTestData.fakeEventAirTableRecords(fakeFutureEventsCount, 'future');
+    const fakeAllEvents = [...fakePastEvents, ...fakeFutureEvents];
+
+    // Mock dependencies
+    const airTableHelperEventsTableTableSpy = jest
+      .spyOn(airTable, 'eventsTable')
+      .mockImplementation(() => fakeTableName);
+    const airTableHelperGetAllRecordsSpy = jest
+      .spyOn(airTable, 'getAllRecords')
+      .mockImplementation(() => fakeAllEvents);
+    const eventsHelperFormatEventFromAirTable = jest
+      .spyOn(eventsHelper, 'formatEventFromAirTable')
+      .mockImplementation((eventAirTableRecord) => eventAirTableRecord);
+    const responseMock = {
+      send: jest.fn(() => responseMock),
+      status: jest.fn(() => responseMock),
+    };
+
+    // Run test
+    await getScheduledEventsHandler(fakeRequest, responseMock);
+
+    expect(airTableHelperEventsTableTableSpy).toHaveBeenCalledTimes(1);
+    expect(airTableHelperGetAllRecordsSpy).toHaveBeenCalledTimes(1);
+    expect(eventsHelperFormatEventFromAirTable).toHaveBeenCalledTimes(fakePastEventsCount + fakeFutureEventsCount);
+    expect(responseMock.status).toHaveBeenCalledTimes(1);
+    expect(responseMock.status).toHaveBeenCalledWith(200);
+    expect(responseMock.send).toHaveBeenCalledTimes(1);
+    expect(responseMock.send).toHaveBeenCalledWith(fakeFutureEvents);
+
+    // Clean up
+    airTableHelperEventsTableTableSpy.mockRestore();
+    airTableHelperGetAllRecordsSpy.mockRestore();
+    eventsHelperFormatEventFromAirTable.mockRestore();
   });
 });
