@@ -5,8 +5,8 @@ import { writeToJsonFile } from '../js/writeToJsonFile.js';
 dotenv.config();
 
 const app = express();
-const api_key = process.env.API_KEY;
-const email = process.env.EMAIL;
+const api_key = process.env.JIRA_API_KEY;
+const email = process.env.JIRA_EMAIL;
 
 app.get("/", function (req, res, next) {
   

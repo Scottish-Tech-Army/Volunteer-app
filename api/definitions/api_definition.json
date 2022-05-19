@@ -8,7 +8,7 @@
 	"paths": {
 		"/projects": {			
 				"get" : {
-					"description" : "Returns a list of available projects",
+					"description" : "Returns a list of available project resources (roles)",
 					"operationId" : "get_projects",
 					"responses" : {
 						"200" : {
@@ -17,28 +17,53 @@
 								"application/json": {
 									"example" : [
 										{
-											"key": "PKAVS",
-											"name": "project-website-pkavs",
-											"type": "Team-managed software",
+											"it_key": "IT-123",
+											"res_id": "10001",
+											"name": "PKAVS project website",
+											"type": "Charity",
 											"client": "PKAVS",
 											"role": "QA Tester",
-											"description": "Blah blah",
+											"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+											"video": "https://vimeo.com/123456",
 											"skills": ["Acceptance Testing"],
 											"hours": "5-10 hours per week",
 											"required": "One person",
-											"buddying": false
+											"buddying": false,
+											"scope" : "https://drive.google.com/file/d/1j469c-xp8HPYLocTgz5lMYHnnz7TsRVP/view?usp=sharing",
+											"sector" : "Arts & Culture"
 										},
 										{
-											"key": "SVA",
-											"name": "STA-volunteer Apps",
-											"type": "Team-managed software",
-											"client": "STA - internal",
-											"role": "Lead developer",
-											"description": "Blah blah",
-											"skills": ["React Native", "Node.js"],
-											"hours": "5-10 hours per week",
+											"it_key": "IT-123",
+											"res_id": "10002",
+											"name": "PKAVS project website",
+											"type": "Charity",
+											"client": "PKAVS",
+											"role": "Web designer",
+											"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+											"video": "https://vimeo.com/123456",
+											"skills": ["HTML", "CSS"],
+											"hours": "1-2 days per week",
 											"required": "One person",
-											"buddying": true
+											"buddying": false,
+											"scope" : "https://drive.google.com/file/d/1j469c-xp8HPYLocTgz5lMYHnnz7TsRVP/view?usp=sharing",
+											"sector" : "Arts & Culture"
+
+										},
+										{
+											"it_key": "SVA",
+											"res_id": "10003",
+											"name": "STA-volunteer Apps",
+											"type": "Internal",
+											"client": "Scottish Tech Army",
+											"role": "Lead developer",
+											"description": "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+											"video": "",
+											"skills": ["React Native", "Node.js"],
+											"hours": "2-3 days per week",
+											"required": "One person",
+											"buddying": true,
+											"scope" : "https://drive.google.com/file/d/1j469c-xp8HPYLocTgz5lMYHnnz7TsRVP/view?usp=sharing",
+											"sector" : "Education & Youth"
 										}
 									],
 									"schema" : {
@@ -56,13 +81,17 @@
 		"schemas" : {
 			"project" : {
 				"type": "array",
-				"description" : "Describes a project available for volunteering",
+				"description" : "Describes a project resource (role) available for volunteering",
 				"items": {
 					"type": "object",
 					"properties": {
-						"key": {
+						"it_key": {
 							"type": "string",
 							"description": "Unique identifier for the project"
+						},
+						"res_id": {
+							"type": "string",
+							"description": "Unique identifier for the resource"
 						},
 						"name": {
 							"type": "string",
@@ -84,6 +113,10 @@
 							"type": "string",
 							"description" : "Description of what the project work involves"
 						},
+						"video": {
+							"type": "string",
+							"description" : "URL of a video introducing the project, if available"
+						},
 						"skills": {
 							"type": "array", 
 							"description" : "List of skills required for the project",
@@ -102,6 +135,14 @@
 						"buddying": {
 							"type": "boolean",
 							 "description" : "Wether the project supports buddying"
+						},
+						"scope": {
+							"type": "string",
+							"description" : "Document outlining the scope of the document"
+						}, 
+						"sector": {
+							"type" : "string",
+							"description" : "Project charity sector"
 						}
 					}
 				}

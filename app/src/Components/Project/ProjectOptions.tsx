@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components/native'
+import underDevelopmentAlert from '../../Utils/UnderDevelopmentAlert'
 
 const ProjectOptionsView = styled.View`
   display: flex;
@@ -17,14 +18,14 @@ const ProjectOptionsTouch = styled.TouchableOpacity``
 const ProjectOptions = () => {
   return (
     <ProjectOptionsView>
-      <ProjectOptionsTouch>
+      <ProjectOptionsTouch onPress={underDevelopmentAlert}>
         <ProjectOptionsText>All projects</ProjectOptionsText>
       </ProjectOptionsTouch>
 
-      <ProjectOptionsTouch>
+      <ProjectOptionsTouch onPress={underDevelopmentAlert}>
         <ProjectOptionsText>Saved Projects</ProjectOptionsText>
       </ProjectOptionsTouch>
-      <ProjectOptionsTouch>
+      <ProjectOptionsTouch onPress={underDevelopmentAlert}>
         <ProjectOptionsText>My Projects</ProjectOptionsText>
       </ProjectOptionsTouch>
     </ProjectOptionsView>

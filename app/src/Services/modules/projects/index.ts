@@ -1,31 +1,34 @@
 import { ImageURISource } from 'react-native'
 import { api } from '../../api'
 import fetchAll from './fetchAll'
+import registerInterest from './registerInterest'
 
 export const projectsApi = api.injectEndpoints({
   endpoints: build => ({
     fetchAll: fetchAll(build),
+    registerInterest: registerInterest(build),
   }),
   overrideExisting: true,
 })
 
-export const { useLazyFetchAllQuery } = projectsApi
+export const {
+  useLazyFetchAllQuery,
+  useLazyRegisterInterestQuery,
+} = projectsApi
 
 export interface Project {
-  ResData: {
-    res_id: string
-    projectType: string
-    jobRole: string
-    description: string
-    candidateCoreSkills: string
-    candidateTime: string
-    suitableForBuddy: boolean
-  },
-  ItData: {
-    projectName: string
-    charityName: string
-    charityVideo: ImageURISource
-  }
+  it_key: string
+  res_id: string
+  name: string
+  type: string
+  client: string
+  role: string
+  description: string
+  video: ImageURISource
+  skills: string[]
+  hours: string
+  required: string
+  buddying: boolean
 }
 
 export type Projects = Project[]

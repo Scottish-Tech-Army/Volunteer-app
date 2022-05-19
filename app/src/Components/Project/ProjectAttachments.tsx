@@ -1,3 +1,4 @@
+import underDevelopmentAlert from '@/Utils/UnderDevelopmentAlert'
 import React, { FC } from 'react'
 import styled from 'styled-components/native'
 
@@ -6,7 +7,7 @@ interface ProjectAttachmentsProps {
   details: String
 }
 
-const AttachmentView = styled.View`
+const AttachmentButton = styled.TouchableOpacity`
   display: flex;
   flex-direction: row;
   margin-top: 7px;
@@ -19,10 +20,10 @@ const AttachmentDetails = styled.Text`
 
 const ProjectAttachments: FC<ProjectAttachmentsProps> = ({ icon, details }) => {
   return (
-    <AttachmentView>
+    <AttachmentButton onPress={underDevelopmentAlert}>
       {icon}
       <AttachmentDetails>{details}</AttachmentDetails>
-    </AttachmentView>
+    </AttachmentButton>
   )
 }
 

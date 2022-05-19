@@ -1,0 +1,23 @@
+name: Continuous Integration
+
+# Triggers execute all tests workflow on pull request events
+on:
+  pull_request:
+    types: [ opened, synchronize, reopened, edited ]
+    paths:
+      - 'app/**'
+jobs:
+  test:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Create config file
+        working-directory: ./app
+        run: ./scripts/createConfig.sh
+      - name: Run Tests
+        run: |
+          cd app
+          npm install
+          npm test

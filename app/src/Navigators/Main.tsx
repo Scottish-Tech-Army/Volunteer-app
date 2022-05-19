@@ -1,8 +1,6 @@
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { ExampleContainer } from '@/Containers'
-import { HomeContainer } from '@/Containers'
-import { EventsContainer } from '@/Containers'
+import { HomeContainer, EventsContainer, ExampleContainer } from '@/Containers'
 import Entypo from 'react-native-vector-icons/Entypo'
 import { useTheme } from '@/Hooks'
 
@@ -27,7 +25,9 @@ const MainNavigator = () => {
         name="Events"
         component={EventsContainer}
         options={{
-          tabBarIcon: () => <Entypo color={Colors.text} name="megaphone" size={24} />,
+          tabBarIcon: () => (
+            <Entypo color={Colors.text} name="megaphone" size={24} />
+          ),
         }}
       />
       <Tab.Screen

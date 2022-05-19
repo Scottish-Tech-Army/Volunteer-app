@@ -2,6 +2,7 @@ import React from 'react'
 import Logo from './StaLogo'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import styled from 'styled-components/native'
+import underDevelopmentAlert from '@/Utils/UnderDevelopmentAlert'
 
 const TopView = styled.View`
   color: ${props => props.theme.colors.staBlack};
@@ -10,7 +11,7 @@ const TopView = styled.View`
   justify-content: space-between;
 `
 
-const BurgerView = styled.View`
+const BurgerMenu = styled.TouchableOpacity`
   margin-right: 16px;
   margin-top: 10px;
 `
@@ -19,9 +20,9 @@ const TopOfApp = () => {
   return (
     <TopView>
       <Logo />
-      <BurgerView>
+      <BurgerMenu onPress={underDevelopmentAlert}>
         <FontAwesome name="bars" size={32} />
-      </BurgerView>
+      </BurgerMenu>
     </TopView>
   )
 }
