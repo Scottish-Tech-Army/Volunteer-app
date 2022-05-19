@@ -13,6 +13,9 @@ function formatEventFromAirTable(event) {
     eventFieldDefinitions,
   );
 
+  eventFormatted.duration = airTable.formatDuration(eventFormatted.duration);
+  eventFormatted.time = airTable.formatTime(eventFormatted.time);
+
   return eventFormatted;
 }
 

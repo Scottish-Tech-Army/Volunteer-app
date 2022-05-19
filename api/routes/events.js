@@ -41,15 +41,15 @@ const getScheduledEventsHandler = async (req, res) => {
   const now = dayjs();
 
   if (req.params.schedule === 'past') {
-    const pastEvents = allEvents.filter((event) =>
-      dayjs(`${event.date} ${event.time}`, 'YYYY-MM-DD HH:mm').isBefore(now),
-    );
+    const pastEvents = allEvents
+      .filter((event) => dayjs(`${event.date} ${event.time}`, 'YYYY-MM-DD HH:mm').isBefore(now))
+      .sort((a, b) => (dayjs(a.date, 'YYYY-MM-DD').isAfter(b.date, 'YYYY-MM-DD') ? -1 : 1));
 
     res.status(200).send(pastEvents);
   } else if (req.params.schedule === 'upcoming') {
-    const upcomingEvents = allEvents.filter((event) =>
-      dayjs(`${event.date} ${event.time}`, 'YYYY-MM-DD HH:mm').isAfter(now),
-    );
+    const upcomingEvents = allEvents
+      .filter((event) => dayjs(`${event.date} ${event.time}`, 'YYYY-MM-DD HH:mm').isAfter(now))
+      .sort((a, b) => (dayjs(a.date, 'YYYY-MM-DD').isBefore(b.date, 'YYYY-MM-DD') ? -1 : 1));
 
     res.status(200).send(upcomingEvents);
   } else {

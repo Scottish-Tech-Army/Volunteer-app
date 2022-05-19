@@ -155,8 +155,8 @@ describe('Test the events api', () => {
       },
     };
     const fakeTableName = faker.lorem.word();
-    const fakePastEventsCount = faker.datatype.number(5);
-    const fakeFutureEventsCount = faker.datatype.number(5);
+    const fakePastEventsCount = faker.datatype.number(10);
+    const fakeFutureEventsCount = faker.datatype.number(10);
     const fakePastEvents = eventsTestData.fakeEventAirTableRecords(fakePastEventsCount, 'past');
     const fakeFutureEvents = eventsTestData.fakeEventAirTableRecords(fakeFutureEventsCount, 'future');
     const fakeAllEvents = [...fakePastEvents, ...fakeFutureEvents];
@@ -185,7 +185,12 @@ describe('Test the events api', () => {
     expect(responseMock.status).toHaveBeenCalledTimes(1);
     expect(responseMock.status).toHaveBeenCalledWith(200);
     expect(responseMock.send).toHaveBeenCalledTimes(1);
-    expect(responseMock.send).toHaveBeenCalledWith(fakePastEvents);
+    for (let i = 0; i < fakePastEventsCount.length; i++) {
+      expect(responseMock.send).toHaveBeenCalledWith(expect.arrayContaining(fakePastEvents[i]));
+    }
+    for (let i = 0; i < fakeFutureEventsCount.length; i++) {
+      expect(responseMock.send).not.toHaveBeenCalledWith(expect.arrayContaining(fakeFutureEvents[i]));
+    }
 
     // Clean up
     airTableHelperEventsTableTableSpy.mockRestore();
@@ -231,7 +236,12 @@ describe('Test the events api', () => {
     expect(responseMock.status).toHaveBeenCalledTimes(1);
     expect(responseMock.status).toHaveBeenCalledWith(200);
     expect(responseMock.send).toHaveBeenCalledTimes(1);
-    expect(responseMock.send).toHaveBeenCalledWith(fakeFutureEvents);
+    for (let i = 0; i < fakeFutureEventsCount.length; i++) {
+      expect(responseMock.send).toHaveBeenCalledWith(expect.arrayContaining(fakeFutureEvents[i]));
+    }
+    for (let i = 0; i < fakePastEventsCount.length; i++) {
+      expect(responseMock.send).not.toHaveBeenCalledWith(expect.arrayContaining(fakePastEvents[i]));
+    }
 
     // Clean up
     airTableHelperEventsTableTableSpy.mockRestore();
