@@ -2,7 +2,7 @@ import React, { FC, useEffect } from 'react'
 import styled from 'styled-components/native'
 import TopOfApp from '@/Components/TopOfApp'
 import EventReturnedList from '@/Components/Event/EventReturnedList'
-import { Text, SafeAreaView } from 'react-native'
+import { SafeAreaView, Text } from 'react-native'
 import Theme from '@/Theme/OldTheme'
 import { Events, useLazyFetchAllEventsQuery } from '@/Services/modules/events'
 
@@ -32,7 +32,6 @@ const EventList: FC<EventProps> = ({ data }) => {
 }
 
 const EventsContainer = () => {
-
   const [fetchAllEvents, { data: events }] = useLazyFetchAllEventsQuery()
 
   useEffect(() => {
@@ -47,7 +46,9 @@ const EventsContainer = () => {
     )
   } else {
     return (
+      <SafeAreaView>
         <Text>Loading...</Text>
+      </SafeAreaView>
     )
   }
 }

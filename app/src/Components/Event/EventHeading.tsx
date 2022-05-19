@@ -1,6 +1,5 @@
 import React, { FC } from 'react'
 import styled from 'styled-components/native'
-import AntDesign from 'react-native-vector-icons/AntDesign'
 
 interface EventHeadingProps {
   title: string

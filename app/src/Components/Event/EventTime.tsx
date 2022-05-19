@@ -1,9 +1,9 @@
-import React, { FC }  from 'react'
+import React, { FC } from 'react'
 import styled from 'styled-components/native'
 
 interface EventTimeProps {
-    eventTime: string
-    icon: React.ReactNode
+  eventTime: string
+  icon: React.ReactNode
 }
 
 const TimeView = styled.View`
@@ -18,12 +18,11 @@ const TimeText = styled.Text`
   margin-left: 10px;
 `
 
-const EventTime: FC<EventTimeProps> = ({eventTime, icon}) => {
-
+const EventTime: FC<EventTimeProps> = ({ eventTime, icon }) => {
   return (
     <TimeView>
-        {icon}
-        <TimeText>{eventTime}</TimeText>
+      {icon}
+      <TimeText>{eventTime}</TimeText>
     </TimeView>
   )
 }
