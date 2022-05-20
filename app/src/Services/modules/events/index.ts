@@ -21,7 +21,7 @@ export interface Event {
   type: string
   series: string
   video: string
-  createdTime: string
+  images: string[]
 }
 
 export type Events = Event[]

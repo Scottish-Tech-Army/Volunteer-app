@@ -6,9 +6,12 @@ const apiDefinition = require('../definitions/api_definition.json');
 function formatEventFromAirTable(event) {
   const eventFieldDefinitions = apiDefinition.components.schemas.event.items.properties;
 
+  const images = event.images?.length ? event.images.map((airTableImageObject) => airTableImageObject.url) : [];
+
   const eventFormatted = airTable.addEmptyFields(
     {
       ...event,
+      images,
     },
     eventFieldDefinitions,
   );

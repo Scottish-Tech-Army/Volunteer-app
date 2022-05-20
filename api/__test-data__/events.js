@@ -5,46 +5,17 @@ const durations = ['1 hour', '2 hours', '4 hours 30 minutes', '1 day'];
 const series = ['', 'Agile Practices', 'Cyber Security', 'Microsoft', 'STA Orientation', 'STA Project Showcase'];
 const times = ['10:00', '12:00', '15:30', '19:00'];
 
-function fakeAttachment() {
-  return {
-    id: faker.datatype.uuid(),
-    width: faker.datatype.number(1000),
-    height: faker.datatype.number(1000),
-    url: faker.internet.url(),
-    filename: faker.system.commonFileName('jpg'),
-    size: faker.datatype.number(1000000),
-    type: 'image/jpeg',
-    thumbnails: {
-      small: {
-        url: faker.internet.url(),
-        width: faker.datatype.number(100),
-        height: faker.datatype.number(100),
-      },
-      large: {
-        url: faker.internet.url(),
-        width: faker.datatype.number(1000),
-        height: faker.datatype.number(1000),
-      },
-      full: {
-        url: faker.internet.url(),
-        width: faker.datatype.number(5000),
-        height: faker.datatype.number(5000),
-      },
-    },
-  };
-}
-
-function fakeAttachments() {
+function fakeImages() {
   const count = faker.datatype.number(3);
-  const attachments = [];
+  const images = [];
 
   if (count) {
     for (let i = 0; i < count; i++) {
-      attachments.push(fakeAttachment());
+      images.push(faker.internet.url());
     }
   }
 
-  return attachments;
+  return images;
 }
 
 function fakeDate(type) {
@@ -78,7 +49,7 @@ function fakeEventObject(dateType) {
     notes: faker.lorem.sentence(),
     series: faker.random.arrayElement(series),
     video: faker.internet.url(),
-    attachments: fakeAttachments(),
+    images: fakeImages(),
   };
 }
 
@@ -116,11 +87,10 @@ function fakeEventAirTableRecord(dateType) {
 }
 
 module.exports = {
-  fakeAttachment,
-  fakeAttachments,
   fakeDate,
   fakeEventObject,
   fakeEventObjects,
   fakeEventAirTableRecords,
   fakeEventAirTableRecord,
+  fakeImages,
 };
