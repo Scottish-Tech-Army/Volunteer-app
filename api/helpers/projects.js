@@ -1,3 +1,4 @@
+const airTable = require('../helpers/airTable');
 const apiDefinition = require('../definitions/api_definition.json');
 const stringsHelper = require('../helpers/strings');
 
@@ -16,25 +17,13 @@ function combineProjectsAndResources(projects, resources) {
    with the fields as they have come from AirTable,
    and formats it correctly for the API to return it to the user */
 function formatProjectResourceFromAirTable(projectResource) {
-  const projectResourceFormatted = {
-    ...projectResource,
-  };
-
   const projectResourceFieldDefinitions = apiDefinition.components.schemas.project.items.properties;
 
-  for (const [fieldName, fieldProperties] of Object.entries(projectResourceFieldDefinitions)) {
-    // AirTable doesn't include fields that it sees as empty (including its equivalent of boolean false) so we need to populate them
-    if (!projectResource[fieldName]) {
-      switch (fieldProperties.type) {
-        case 'boolean':
-          projectResourceFormatted[fieldName] = false;
-          break;
-        case 'string':
-          projectResourceFormatted[fieldName] = '';
-          break;
-      }
-    }
+  const projectResourceFormatted = airTable.addEmptyFields({
+    ...projectResource,
+  }, projectResourceFieldDefinitions);
 
+  for (const [fieldName, fieldProperties] of Object.entries(projectResourceFieldDefinitions)) {
     // Certain fields need to be formatted
     switch (fieldName) {
       case 'required':

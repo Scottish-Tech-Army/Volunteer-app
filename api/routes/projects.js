@@ -4,6 +4,7 @@ const express = require('express');
 const slackService = require('../services/slack');
 const projectsHelper = require('../helpers/projects');
 const router = express.Router();
+const routesHelper = require('../helpers/routes');
 const seedData = require('../sample-data/projects.json'); //dummy data for dev purposes if no authorised credentials
 
 router.get('/', async (req, res) => {
@@ -15,10 +16,11 @@ router.get('/', async (req, res) => {
    * removed before being used in a production environment
    */
   if (projectsResources.error) {
-    console.error(
-      '❌ Could not connect to AirTable - please check you have the correct details in your .env file.  Returning example results for now -- this is not real data.',
+    routesHelper.sendError(
+      res,
+      `${airTable.connectionErrorMessage()} Returning example results for now -- this is not real data.`,
+      seedData,
     );
-    res.status(400).send(seedData);
 
     return;
   }
@@ -34,7 +36,7 @@ router.get('/single', async (req, res) => {
   const projectItKey = req.query.it;
   const resourceId = req.query.res;
 
-  const projectResource = await airTable.getRecord(airTable.projectsResourcesCacheTable(), {
+  const projectResource = await airTable.getRecordByQuery(airTable.projectsResourcesCacheTable(), {
     it_key: projectItKey,
     res_id: resourceId,
   });
@@ -44,23 +46,12 @@ router.get('/single', async (req, res) => {
    * This is to help with rapid early development only and will need to be
    * removed before being used in a production environment
    */
-  if (projectResource.error) {
-    console.error(
-      '❌ Could not connect to AirTable - please check you have the correct details in your .env file.  Returning example results for now -- this is not real data.',
+  if (!projectResource || projectResource.error) {
+    routesHelper.sendError(
+      res,
+      `❌ Could not find project ${projectItKey} and/or resource ${resourceId}. Please check these details are correct and check your AirTable details are correct in your .env file.  Returning example results for now -- this is not real data.`,
+      seedDataSingle,
     );
-    const seedDataSingle = seedData[0];
-    seedDataSingle.it_key = projectItKey;
-    seedDataSingle.res_id = resourceId;
-    res.status(200).send(seedDataSingle);
-
-    return;
-  }
-
-  if (!projectResource) {
-    const error = `Could not find project ${projectItKey} and/or resource ${resourceId}`;
-    console.error(error);
-
-    res.status(400).send({ error });
 
     return;
   }
@@ -83,16 +74,16 @@ const projectRegisterInterestHandler = async (req, res) => {
   const projectItKey = req.query.it;
   const resourceId = req.query.res;
 
-  const projectResource = await airTable.getRecord(airTable.projectsResourcesCacheTable(), {
+  const projectResource = await airTable.getRecordByQuery(airTable.projectsResourcesCacheTable(), {
     it_key: projectItKey,
     res_id: resourceId,
   });
 
-  if (!projectResource) {
-    const error = `Could not find project ${projectItKey} and/or resource ${resourceId}`;
-    console.error(error);
-
-    res.status(400).send({ error });
+  if (!projectResource || projectResource.error) {
+    routesHelper.sendError(
+      res,
+      `❌ Could not find project ${projectItKey} and/or resource ${resourceId}. Please check these details are correct and check your AirTable details are correct in your .env file.  Returning example results for now -- this is not real data.`,
+    );
 
     return;
   }
@@ -108,10 +99,7 @@ const projectRegisterInterestHandler = async (req, res) => {
   }
 
   if (dataNotProvided.length) {
-    const error = `These properties were missing from your request: ${dataNotProvided.join(', ')}`;
-    console.error(error);
-
-    res.status(400).send({ error });
+    routesHelper.sendError(res, `These properties were missing from your request: ${dataNotProvided.join(', ')}`);
 
     return;
   }

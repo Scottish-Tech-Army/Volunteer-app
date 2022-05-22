@@ -27,8 +27,7 @@ function fakeJiraItApiResultIssuesObject() {
       customfield_10027: faker.company.companyName(), // client
       customfield_10159: faker.helpers.randomize([faker.internet.url(), '']), // video URL
       customfield_10090: faker.helpers.randomize([faker.internet.url(), '']), // scope URL
-      customfield_10148: { value: faker.lorem.sentence(), 
-      }, //sector 
+      customfield_10148: { value: faker.lorem.sentence() }, //sector
     },
   };
 }
@@ -87,7 +86,7 @@ function fakeProjectObject() {
     client: faker.company.companyName(),
     video: faker.internet.url(),
     scope: faker.internet.url(),
-    sector: faker.lorem.sentence()
+    sector: faker.lorem.sentence(),
   };
 }
 
@@ -159,7 +158,7 @@ function fakeResourceObjects(count) {
   return fakeResourceObjectArray;
 }
 
-function fakeAirTableProjectResource(numberRequired, includeBuddying) {
+function fakeAirTableProjectResource(includeBuddying) {
   const projectResource = {
     it_key: fakeItKey(),
     res_id: fakeResId(),

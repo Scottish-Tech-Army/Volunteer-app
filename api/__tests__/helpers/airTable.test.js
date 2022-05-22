@@ -3,6 +3,35 @@ const airTable = require('../../helpers/airTable');
 const airTableTestData = require('../../__test-data__/airTable');
 
 describe('Test the AirTable helpers', () => {
+  test('addEmptyFields adds all empty fields', () => {
+    // Set up fake test data
+    const fakeRecord = {};
+    const fakeFieldDefinitions = {
+      arrayField: {
+        type: 'array',
+      },
+      booleanField: {
+        type: 'boolean',
+      },
+      numberField: {
+        type: 'number',
+      },
+      stringField: {
+        type: 'string',
+      },
+    };
+
+    // Run test
+    const recordWithBlankFieldsAdded = airTable.addEmptyFields(fakeRecord, fakeFieldDefinitions);
+
+    expect(recordWithBlankFieldsAdded).toEqual({
+      arrayField: [],
+      booleanField: false,
+      numberField: 0,
+      stringField: '',
+    });
+  });
+
   test('getAllRecords gets records from AirTable and returns relevant data', async () => {
     // Set up fake test data
     const fakeRecordsCount = faker.datatype.number({ min: 10, max: 30 });
@@ -32,7 +61,33 @@ describe('Test the AirTable helpers', () => {
     airTableClientSpy.mockRestore();
   });
 
-  test('getRecord get a record from AirTable and returns relevant data', async () => {
+  test('getRecordById gets a record from AirTable and returns relevant data', async () => {
+    // Set up fake test data
+    const fakeTableName = faker.lorem.words(1);
+    const fakeRecords = airTableTestData.fakeAirTableRecordsRaw(1, fakeTableName);
+
+    // Mock dependencies
+    const airTableClientFindMock = jest.fn(() => fakeRecords[0]);
+    const airTableClientTableMock = jest.fn(() => ({ find: airTableClientFindMock }));
+    const airTableClientSpy = jest
+      .spyOn(airTable, 'client')
+      .mockImplementation(() => ({ table: airTableClientTableMock }));
+
+    // Run test
+    const record = await airTable.getRecordById(fakeTableName, fakeRecords[0].id);
+
+    expect(airTableClientSpy).toHaveBeenCalledTimes(1);
+    expect(airTableClientTableMock).toHaveBeenCalledTimes(1);
+    expect(airTableClientTableMock).toHaveBeenCalledWith(fakeTableName);
+    expect(airTableClientFindMock).toHaveBeenCalledTimes(1);
+    expect(airTableClientFindMock).toHaveBeenCalledWith(fakeRecords[0].id);
+    expect(record).toEqual(fakeRecords[0].fields);
+
+    // Clean up
+    airTableClientSpy.mockRestore();
+  });
+
+  test('getRecordByQuery gets a record from AirTable and returns relevant data', async () => {
     // Set up fake test data
     const fakeTableName = faker.lorem.words(1);
     const fakeRecords = airTableTestData.fakeAirTableRecordsRaw(1, fakeTableName);
@@ -50,7 +105,7 @@ describe('Test the AirTable helpers', () => {
       .mockImplementation(() => ({ table: airTableClientTableMock }));
 
     // Run test
-    const record = await airTable.getRecord(fakeTableName, {
+    const record = await airTable.getRecordByQuery(fakeTableName, {
       [fakeFieldName1]: fakeFieldValue1,
       [fakeFieldName2]: fakeFieldValue2,
     });

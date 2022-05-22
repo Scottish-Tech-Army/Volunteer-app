@@ -1,152 +1,433 @@
-{ 
-	"openapi" : "3.0.3",
-    "info": {
-        "title": "STA Projects API",
-		"description" : "API to list and query available STA volunteer projects",
-        "version": "1.0"
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "STA Projects API",
+    "description": "API to list and query available STA volunteer projects",
+    "version": "1.0"
+  },
+  "paths": {
+    "/events": {
+      "get": {
+        "description": "Returns a list of all events past and future",
+        "operationId": "get_events",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "id": "rec8VDT5j4Q67WRHv",
+                    "name": "Data Collective",
+                    "date": "2023-01-19",
+                    "time": "11:00",
+                    "duration": "1 hour",
+                    "description": "What could we do with the data",
+                    "type": "External",
+                    "notes": "",
+                    "series": "Data Collective",
+                    "video": "https://vimeo.com/583815096",
+                    "images": []
+                  },
+                  {
+                    "id": "rec44Y3rVY6hqACD5",
+                    "name": "Microsoft power bi",
+                    "date": "2023-02-21",
+                    "time": "14:00",
+                    "duration": "2 hours",
+                    "description": "Delivered by the Customer service team",
+                    "type": "Internal",
+                    "notes": "",
+                    "series": "Microsoft",
+                    "video": "",
+                    "images": [
+                      "https://dl.airtable.com/.attachments/6a55ab19223701f38cc61d0b1c127748/cfcd129b/power-bi.jpg?ts=1652968234&userId=usrrNJEU7hToH1AMK&cs=a8456be5328462cd"
+                    ]
+                  }
+                ],
+                "schema": {
+                  "$ref": "#/components/schemas/event"
+                }
+              }
+            }
+          }
+        }
+      }
     },
-	"paths": {
-		"/projects": {			
-				"get" : {
-					"description" : "Returns a list of available project resources (roles)",
-					"operationId" : "get_projects",
-					"responses" : {
-						"200" : {
-							"description" : "OK",
-							"content":{
-								"application/json": {
-									"example" : [
-										{
-											"it_key": "IT-123",
-											"res_id": "10001",
-											"name": "PKAVS project website",
-											"type": "Charity",
-											"client": "PKAVS",
-											"role": "QA Tester",
-											"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-											"video": "https://vimeo.com/123456",
-											"skills": ["Acceptance Testing"],
-											"hours": "5-10 hours per week",
-											"required": "One person",
-											"buddying": false,
-											"scope" : "https://drive.google.com/file/d/1j469c-xp8HPYLocTgz5lMYHnnz7TsRVP/view?usp=sharing",
-											"sector" : "Arts & Culture"
-										},
-										{
-											"it_key": "IT-123",
-											"res_id": "10002",
-											"name": "PKAVS project website",
-											"type": "Charity",
-											"client": "PKAVS",
-											"role": "Web designer",
-											"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-											"video": "https://vimeo.com/123456",
-											"skills": ["HTML", "CSS"],
-											"hours": "1-2 days per week",
-											"required": "One person",
-											"buddying": false,
-											"scope" : "https://drive.google.com/file/d/1j469c-xp8HPYLocTgz5lMYHnnz7TsRVP/view?usp=sharing",
-											"sector" : "Arts & Culture"
-
-										},
-										{
-											"it_key": "SVA",
-											"res_id": "10003",
-											"name": "STA-volunteer Apps",
-											"type": "Internal",
-											"client": "Scottish Tech Army",
-											"role": "Lead developer",
-											"description": "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-											"video": "",
-											"skills": ["React Native", "Node.js"],
-											"hours": "2-3 days per week",
-											"required": "One person",
-											"buddying": true,
-											"scope" : "https://drive.google.com/file/d/1j469c-xp8HPYLocTgz5lMYHnnz7TsRVP/view?usp=sharing",
-											"sector" : "Education & Youth"
-										}
-									],
-									"schema" : {
-										"$ref": "#/components/schemas/project" 
-									}
-								}
-							}
-						}
-					}
-				}
-			
-		}       
+    "/events/{:id}": {
+      "get": {
+        "description": "Returns an individual event, selected by its ID",
+        "operationId": "get_event",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": "rec8VDT5j4Q67WRHv",
+                  "name": "Data Collective",
+                  "date": "2023-01-19",
+                  "time": "11:00",
+                  "duration": "1 hour",
+                  "description": "What could we do with the data",
+                  "type": "External",
+                  "notes": "",
+                  "series": "Data Collective",
+                  "video": "https://vimeo.com/583815096",
+                  "images": []
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/event"
+                }
+              }
+            }
+          }
+        }
+      }
     },
-	"components" : {
-		"schemas" : {
-			"project" : {
-				"type": "array",
-				"description" : "Describes a project resource (role) available for volunteering",
-				"items": {
-					"type": "object",
-					"properties": {
-						"it_key": {
-							"type": "string",
-							"description": "Unique identifier for the project"
-						},
-						"res_id": {
-							"type": "string",
-							"description": "Unique identifier for the resource"
-						},
-						"name": {
-							"type": "string",
-							"description": "Descriptive name for the project"
-						},
-						"type": {
-							"type": "string",
-							"description": "The type of project"
-						},
-						"client": {
-							"type": "string",
-							"description" : "The name of the client"
-						},
-						"role": {
-							"type": "string",
-							"description" : "The role the volunteer is expexcted to play on the project"
-						},
-						"description": {
-							"type": "string",
-							"description" : "Description of what the project work involves"
-						},
-						"video": {
-							"type": "string",
-							"description" : "URL of a video introducing the project, if available"
-						},
-						"skills": {
-							"type": "array", 
-							"description" : "List of skills required for the project",
-							"items" : {
-								"type" : "string"
-							}
-						},
-						"hours": {
-							"type": "string",
-							"description" : "Hourly commitment required for the project"
-						},
-						"required": {
-							"type": "string",
-							"description" : "Number of people required"
-						},
-						"buddying": {
-							"type": "boolean",
-							 "description" : "Wether the project supports buddying"
-						},
-						"scope": {
-							"type": "string",
-							"description" : "Document outlining the scope of the document"
-						}, 
-						"sector": {
-							"type" : "string",
-							"description" : "Project charity sector"
-						}
-					}
-				}
-			}			
-		}
-	}
+    "/events/scheduled/past": {
+      "get": {
+        "description": "Returns a list of past events",
+        "operationId": "get_past_events",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "id": "rec8VDT5j4Q67WRHv",
+                    "name": "Data Collective",
+                    "date": "2023-01-19",
+                    "time": "11:00",
+                    "duration": "1 hour",
+                    "description": "What could we do with the data",
+                    "type": "External",
+                    "notes": "",
+                    "series": "Data Collective",
+                    "video": "https://vimeo.com/583815096",
+                    "images": []
+                  },
+                  {
+                    "id": "rec44Y3rVY6hqACD5",
+                    "name": "Microsoft power bi",
+                    "date": "2023-02-21",
+                    "time": "14:00",
+                    "duration": "2 hours",
+                    "description": "Delivered by the Customer service team",
+                    "type": "Internal",
+                    "notes": "",
+                    "series": "Microsoft",
+                    "video": "",
+                    "images": [
+                      "https://dl.airtable.com/.attachments/6a55ab19223701f38cc61d0b1c127748/cfcd129b/power-bi.jpg?ts=1652968234&userId=usrrNJEU7hToH1AMK&cs=a8456be5328462cd"
+                    ]
+                  }
+                ],
+                "schema": {
+                  "$ref": "#/components/schemas/event"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/events/scheduled/upcoming": {
+      "get": {
+        "description": "Returns a list of upcoming events (later today and any time in the future)",
+        "operationId": "get_upcoming_events",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "id": "rec8VDT5j4Q67WRHv",
+                    "name": "Data Collective",
+                    "date": "2023-01-19",
+                    "time": "11:00",
+                    "duration": "1 hour",
+                    "description": "What could we do with the data",
+                    "type": "External",
+                    "notes": "",
+                    "series": "Data Colllective",
+                    "video": "",
+                    "images": []
+                  },
+                  {
+                    "id": "rec44Y3rVY6hqACD5",
+                    "name": "Microsoft power bi",
+                    "date": "2023-02-21",
+                    "time": "14:00",
+                    "duration": "2 hours",
+                    "description": "Delivered by the Customer service team",
+                    "type": "Internal",
+                    "notes": "",
+                    "series": "Microsoft",
+                    "images": [
+                      "https://dl.airtable.com/.attachments/6a55ab19223701f38cc61d0b1c127748/cfcd129b/power-bi.jpg?ts=1652968234&userId=usrrNJEU7hToH1AMK&cs=a8456be5328462cd"
+                    ]
+                  }
+                ],
+                "schema": {
+                  "$ref": "#/components/schemas/event"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/projects": {
+      "get": {
+        "description": "Returns a list of available project resources (roles)",
+        "operationId": "get_projects",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "it_key": "IT-123",
+                    "res_id": "10001",
+                    "name": "PKAVS project website",
+                    "type": "Charity",
+                    "client": "PKAVS",
+                    "role": "QA Tester",
+                    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+                    "video": "https://vimeo.com/123456",
+                    "skills": ["Acceptance Testing"],
+                    "hours": "5-10 hours per week",
+                    "required": "One person",
+                    "buddying": false,
+                    "scope": "https://drive.google.com/file/d/1j469c-xp8HPYLocTgz5lMYHnnz7TsRVP/view?usp=sharing",
+                    "sector": "Arts & Culture"
+                  },
+                  {
+                    "it_key": "IT-123",
+                    "res_id": "10002",
+                    "name": "PKAVS project website",
+                    "type": "Charity",
+                    "client": "PKAVS",
+                    "role": "Web designer",
+                    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+                    "video": "https://vimeo.com/123456",
+                    "skills": ["HTML", "CSS"],
+                    "hours": "1-2 days per week",
+                    "required": "One person",
+                    "buddying": false,
+                    "scope": "https://drive.google.com/file/d/1j469c-xp8HPYLocTgz5lMYHnnz7TsRVP/view?usp=sharing",
+                    "sector": "Arts & Culture"
+                  },
+                  {
+                    "it_key": "SVA",
+                    "res_id": "10003",
+                    "name": "STA-volunteer Apps",
+                    "type": "Internal",
+                    "client": "Scottish Tech Army",
+                    "role": "Lead developer",
+                    "description": "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                    "video": "",
+                    "skills": ["React Native", "Node.js"],
+                    "hours": "2-3 days per week",
+                    "required": "One person",
+                    "buddying": true,
+                    "scope": "https://drive.google.com/file/d/1j469c-xp8HPYLocTgz5lMYHnnz7TsRVP/view?usp=sharing",
+                    "sector": "Education & Youth"
+                  }
+                ],
+                "schema": {
+                  "$ref": "#/components/schemas/project"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/projects/single?res={:res_id}&it={:it_key}": {
+      "get": {
+        "description": "Returns a single project resource, selected by its resource ID and in-triage key",
+        "operationId": "get_project",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "example": {
+                  "it_key": "IT-123",
+                  "res_id": "10001",
+                  "name": "PKAVS project website",
+                  "type": "Charity",
+                  "client": "PKAVS",
+                  "role": "QA Tester",
+                  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+                  "video": "https://vimeo.com/123456",
+                  "skills": ["Acceptance Testing"],
+                  "hours": "5-10 hours per week",
+                  "required": "One person",
+                  "buddying": false,
+                  "scope": "https://drive.google.com/file/d/1j469c-xp8HPYLocTgz5lMYHnnz7TsRVP/view?usp=sharing",
+                  "sector": "Arts & Culture"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/project"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/projects/single/register-interest?res={:res_id}&it={:it_key}": {
+      "post": {
+        "description": "User registers interest in a particular project",
+        "operationId": "post_project_register_interest",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": "Message sent"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "event": {
+        "type": "array",
+        "description": "Describes an event volunteers might be interested in",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Unique identifier"
+            },
+            "name": {
+              "type": "string",
+              "description": "Descriptive name"
+            },
+            "date": {
+              "type": "string",
+              "description": "The date as YYYY-MM-DD"
+            },
+            "time": {
+              "type": "string",
+              "description": "The time as HH:mm"
+            },
+            "duration": {
+              "type": "string",
+              "description": "How long the event lasts, e.g. 1 hour"
+            },
+            "description": {
+              "type": "string",
+              "description": "Information about the event"
+            },
+            "type": {
+              "type": "string",
+              "description": "This can be 'Internal' or 'External'"
+            },
+            "series": {
+              "type": "string",
+              "description": "The event series this is part of (if any)"
+            },
+            "video": {
+              "type": "string",
+              "description": "URL of the event video (normally used to watch a past event)"
+            },
+            "notes": {
+              "type": "string",
+              "description": "Extra notes about the event (possibly for internal use?)"
+            },
+            "images": {
+              "type": "array",
+              "description": "Images for the event (if any)",
+              "items": {
+                "type": "string",
+                "description": "URL of the image"
+              }
+            }
+          }
+        }
+      },
+      "project": {
+        "type": "array",
+        "description": "Describes a project resource (role) available for volunteering",
+        "items": {
+          "type": "object",
+          "properties": {
+            "it_key": {
+              "type": "string",
+              "description": "Unique identifier for the project"
+            },
+            "res_id": {
+              "type": "string",
+              "description": "Unique identifier for the resource"
+            },
+            "name": {
+              "type": "string",
+              "description": "Descriptive name for the project"
+            },
+            "type": {
+              "type": "string",
+              "description": "The type of project"
+            },
+            "client": {
+              "type": "string",
+              "description": "The name of the client"
+            },
+            "role": {
+              "type": "string",
+              "description": "The role the volunteer is expexcted to play on the project"
+            },
+            "description": {
+              "type": "string",
+              "description": "Description of what the project work involves"
+            },
+            "video": {
+              "type": "string",
+              "description": "URL of a video introducing the project, if available"
+            },
+            "skills": {
+              "type": "array",
+              "description": "List of skills required for the project",
+              "items": {
+                "type": "string"
+              }
+            },
+            "hours": {
+              "type": "string",
+              "description": "Hourly commitment required for the project"
+            },
+            "required": {
+              "type": "string",
+              "description": "Number of people required"
+            },
+            "buddying": {
+              "type": "boolean",
+              "description": "Wether the project supports buddying"
+            },
+            "scope": {
+              "type": "string",
+              "description": "Document outlining the scope of the document"
+            },
+            "sector": {
+              "type": "string",
+              "description": "Project charity sector"
+            }
+          }
+        }
+      }
+    }
+  }
 }
