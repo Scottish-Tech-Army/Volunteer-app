@@ -4,6 +4,7 @@ import { ScrollView } from 'react-native-gesture-handler'
 import styled from 'styled-components/native'
 import dayjs from 'dayjs'
 import ProjectHeading from './ProjectHeading'
+import DateControls from '../Forms/DateControls'
 import DateTime from '../Forms/DateTime'
 import SubmitButton from '../Forms/SubmitButton'
 import TextInputControl from '../Forms/TextInputControl'
@@ -192,7 +193,7 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
           onChange={value => setLookingForBuddy(value)}
           value={lookingForBuddy}
         />
-
+        <DateControls />
         <DateTime
           description="Available from..."
           maximumDate={oneYearInTheFuture}
