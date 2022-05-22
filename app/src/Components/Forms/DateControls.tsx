@@ -1,9 +1,11 @@
-import { Calendar, CalendarList, Agenda } from 'react-native-calendars'
+import { Calendar } from 'react-native-calendars'
 import React, { FC } from 'react'
 import styled from 'styled-components/native'
+import { Text } from 'react-native';
 
-interface CalendarProps {
-    markedColour: string;
+interface DateControlsProps {
+    markedColour?: string;
+    markedDates?: string;
 }
 
 const CalendarView = styled.View`
@@ -11,17 +13,24 @@ const CalendarView = styled.View`
     flex-direction: column;
 `
 
-const DateControls: FC<CalendarProps> = ({ markedColour }: CalendarProps) => {
+const DateControls: FC<DateControlsProps> = (
+    { markedColour }: DateControlsProps,
+    { markedDates }: DateControlsProps,
+) => {
     return (
         <CalendarView>
             <Calendar
+                // Weeks start on Monday
+                firstDay={1}
                 // Collection of dates that have to be marked. Default = {}
                 markedDates={{
-                    '2022-05-16': { selected: true, marked: true, selectedColor: 'blue' },
-                    '2022-05-17': { marked: true },
-                    '2022-05-18': { marked: true, dotColor: markedColour, activeOpacity: 0 },
-                    '2022-05-19': { disabled: true, disableTouchEvent: true }
+                    '2022-05-18': { marked: true, dotColor: markedColour }
                 }}
+                onDayPress={
+                    day => {
+                        console.log('selected day', day);
+                    }
+                }
             />
         </CalendarView>
     )
