@@ -3,6 +3,7 @@ import styled from 'styled-components/native'
 import { FlatList } from 'react-native'
 import EventSummary from './EventSummary'
 import { Events } from '@/Services/modules/events'
+import { navigate } from '@/Navigators/utils'
 
 interface EventReturnedListProps {
   data: Events

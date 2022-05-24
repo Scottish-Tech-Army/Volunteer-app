@@ -6,6 +6,7 @@ import EventThumbnail from './EventThumbnail'
 import EventTime from './EventTime'
 import Feather from 'react-native-vector-icons/Feather'
 import { Event } from '@/Services/modules/events'
+import { navigate } from '@/Navigators/utils'
 
 interface EventSummaryProps {
   data: Event
@@ -27,7 +28,11 @@ const RightColumn = styled.View`
 `
 
 const EventSummary: FC<EventSummaryProps> = ({ data }) => (
-  <EventDetails key={data.id}>
+  <EventDetails
+    key={data.id}
+    onPress={() => {
+      console.log('Event detail clicked');
+    }}>
     <EventThumbnail />
     <RightColumn>
       <EventHeading title={data.name} />
