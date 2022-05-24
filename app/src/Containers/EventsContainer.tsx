@@ -2,6 +2,7 @@ import React, { FC, useEffect } from 'react'
 import styled from 'styled-components/native'
 import TopOfApp from '@/Components/TopOfApp'
 import EventReturnedList from '@/Components/Event/EventReturnedList'
+import EventOptions from '@/Components/Event/EventOptions'
 import { SafeAreaView, Text } from 'react-native'
 import Theme from '@/Theme/OldTheme'
 import { Events, useLazyFetchAllEventsQuery } from '@/Services/modules/events'
@@ -25,6 +26,7 @@ const EventList: FC<EventProps> = ({ data }) => {
   return (
     <SafeArea>
       <TopOfApp />
+      <EventOptions />
       <HorizontalLine />
       <EventReturnedList data={data} />
     </SafeArea>

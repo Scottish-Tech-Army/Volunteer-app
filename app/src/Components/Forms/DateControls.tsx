@@ -20,7 +20,7 @@ const DateControls: FC<DateControlsProps> = (
     return (
         <CalendarView>
             <Calendar
-                // Weeks start on Monday
+                // Weeks start on Monday, no matter what Americans think
                 firstDay={1}
                 // Collection of dates that have to be marked. Default = {}
                 markedDates={{
