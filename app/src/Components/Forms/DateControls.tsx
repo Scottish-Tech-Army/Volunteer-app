@@ -23,8 +23,12 @@ const DateControls: FC<DateControlsProps> = (
                 // Weeks start on Monday, no matter what Americans think
                 firstDay={1}
                 // Collection of dates that have to be marked. Default = {}
+                markingType={'period'}
                 markedDates={{
-                    '2022-05-18': { marked: true, dotColor: markedColour }
+                    '2022-05-31': { textColor: 'blue' },
+                    '2022-05-19': { startingDay: true, color: 'blue', textColor: 'white' },
+                    '2022-05-20': { selected: true, endingDay: true, color: 'blue', textColor: 'white' },
+                    '2022-05-04': { disabled: true, startingDay: true, color: 'green', endingDay: true }
                 }}
                 onDayPress={
                     day => {
