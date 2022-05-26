@@ -161,7 +161,7 @@ const Causes = [
   'Arts & Culture',
   'Environment & Conservation',
   'Community Projects',
-  'Internal STA',
+  'Internal STA Project',
 ]
 const TechStack = [
   'Java',
@@ -243,7 +243,7 @@ const SearchContainer = () => {
   }
 
   const handlePreDefinedChoiceSubmit = (
-    searchField: 'client' | 'description' | 'name' | 'role' | 'skills',
+    searchField: 'client' | 'description' | 'name' | 'role' | 'skills' | 'sector',
     searchQueryChoice: string,
   ) => {
     let searchQueries = [] as string[]
@@ -288,6 +288,7 @@ const SearchContainer = () => {
       'name',
       'role',
       'skills',
+      'sector',
     ])
 
     navigate('ProjectSearchResults', {
@@ -348,7 +349,7 @@ const SearchContainer = () => {
         <SubHeading>Causes</SubHeading>
         <SectionView>
           {Causes.map((cause, index) => (
-            <QuickSearchButton onPress={underDevelopmentAlert} key={index}>
+            <QuickSearchButton onPress={() => handlePreDefinedChoiceSubmit('sector', cause) } key={index}>
               <QuickSearchTitle>{cause}</QuickSearchTitle>
             </QuickSearchButton>
           ))}
