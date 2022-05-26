@@ -1,4 +1,4 @@
-import React, { useState, useEffect, SetStateAction } from 'react'
+import React, { useState, useEffect } from 'react'
 import Fuse from 'fuse.js' // fuzzy text search - see docs at https://fusejs.io
 import styled from 'styled-components/native'
 import { ScrollView, SafeAreaView } from 'react-native'
@@ -13,6 +13,7 @@ import {
 } from '@/Services/modules/projects'
 import { dedupeArrayOfObjects } from '@/Utils/Lists'
 
+//define titles for quick search buttons
 const Roles = [
   'Web Developer',
   'Tech Support',
