@@ -255,14 +255,12 @@ const SearchContainer = () => {
     searchQueryChoice: string,
   ) => {
     let searchQueries = [] as string[]
-    let resultsType = 'singleTerm'
 
     if (searchField === 'role') {
       const relatedRoles = getRelatedRoles(searchQueryChoice)
 
       if (relatedRoles?.length) {
         searchQueries = relatedRoles
-        resultsType = 'groupOfTerms'
       }
     }
 
@@ -272,7 +270,6 @@ const SearchContainer = () => {
 
     navigate('ProjectSearchResults', {
       results,
-      resultsType,
       searchField,
       searchQuery: searchQueryChoice,
     })
@@ -301,7 +298,6 @@ const SearchContainer = () => {
 
     navigate('ProjectSearchResults', {
       results,
-      resultsType: 'singleTerm',
       searchField: undefined,
       searchQuery,
     })
