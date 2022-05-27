@@ -1,6 +1,7 @@
 import React, { FC } from 'react'
 import styled from 'styled-components/native'
 import AntDesign from 'react-native-vector-icons/AntDesign'
+import MainTitle from '../MainTitle'
 import underDevelopmentAlert from '@/Utils/UnderDevelopmentAlert'
 
 interface ProjectHeadingProps {
@@ -14,11 +15,6 @@ const ProjectHeadingView = styled.View`
   justify-content: space-between;
 `
 
-const ProjectTitle = styled.Text`
-  font-weight: 700;
-  font-size: 18px;
-`
-
 const SaveProjectHeart = styled.TouchableOpacity``
 
 const ProjectHeading: FC<ProjectHeadingProps> = ({
@@ -27,7 +23,7 @@ const ProjectHeading: FC<ProjectHeadingProps> = ({
 }) => {
   return (
     <ProjectHeadingView>
-      <ProjectTitle>{title}</ProjectTitle>
+      <MainTitle text={title} />
       {!hideSaveProjectIcon && (
         <SaveProjectHeart onPress={underDevelopmentAlert}>
           <AntDesign name="hearto" size={20} />

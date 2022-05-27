@@ -1,9 +1,9 @@
 import React, { FC } from 'react'
+import Feather from 'react-native-vector-icons/Feather'
 import styled from 'styled-components/native'
 
 interface EventTimeProps {
-  eventTime: string
-  icon: React.ReactNode
+  time: string
 }
 
 const TimeView = styled.View`
@@ -18,11 +18,11 @@ const TimeText = styled.Text`
   margin-left: 10px;
 `
 
-const EventTime: FC<EventTimeProps> = ({ eventTime, icon }) => {
+const EventTime: FC<EventTimeProps> = ({ time }) => {
   return (
     <TimeView>
-      {icon}
-      <TimeText>{eventTime}</TimeText>
+      <Feather name="clock" size={28} />
+      <TimeText>{time}</TimeText>
     </TimeView>
   )
 }

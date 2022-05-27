@@ -8,7 +8,7 @@ interface EventReturnedListProps {
   data: Events
 }
 
-const EventDetails = styled.TouchableOpacity`
+const EventList = styled.TouchableOpacity`
   margin: 21px 21px 0px 21px;
 `
 const NoneFound = styled.Text`
@@ -23,9 +23,9 @@ const EventReturnedList: FC<EventReturnedListProps> = ({ data }) => {
       keyExtractor={event => event.id}
       renderItem={({ item }) => {
         return (
-          <EventDetails>
-            <EventSummary data={item} />
-          </EventDetails>
+          <EventList>
+            <EventSummary event={item} />
+          </EventList>
         )
       }}
     />

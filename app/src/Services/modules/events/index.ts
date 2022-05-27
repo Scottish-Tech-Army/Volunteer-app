@@ -14,10 +14,10 @@ export interface Event {
   id: string
   name: string
   status: string
-  date: string
-  time: string
+  date: string // in format YYYY-MM-DD
+  time: string // using 24-hour clock in format 19:00
   duration: number // seconds
-  description: string
+  description: string // this may contain HTML
   type: string
   series: string
   video: string

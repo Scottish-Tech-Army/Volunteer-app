@@ -1,9 +1,9 @@
 import React, { FC } from 'react'
+import Feather from 'react-native-vector-icons/Feather'
 import styled from 'styled-components/native'
 
 interface EventDateProps {
-  eventDate: Date
-  icon: React.ReactNode
+  date: Date
 }
 
 const DateView = styled.View`
@@ -18,11 +18,11 @@ const DateText = styled.Text`
   margin-left: 10px;
 `
 
-const EventDate: FC<EventDateProps> = ({ eventDate, icon }) => {
+const EventDate: FC<EventDateProps> = ({ date }) => {
   return (
     <DateView>
-      {icon}
-      <DateText>{eventDate.toDateString()}</DateText>
+      <Feather name="calendar" size={28} />
+      <DateText>{date.toDateString()}</DateText>
     </DateView>
   )
 }
