@@ -5597,7 +5597,7 @@
   "resolved" "https://registry.npmjs.org/mockdate/-/mockdate-3.0.5.tgz"
   "version" "3.0.5"
 
-"moment@^2.24.0":
+"moment@^2.22.0", "moment@^2.24.0":
   "integrity" "sha512-c6YRvhEo//6T2Jz/vVtYzqBzwvPT95JBQ+smCytzf7c50oMZRsR/a4w88aD34I+/QVSfnoAnSBFPJHItlOMJVw=="
   "resolved" "https://registry.npmjs.org/moment/-/moment-2.29.3.tgz"
   "version" "2.29.3"
@@ -6380,6 +6380,13 @@
   "integrity" "sha512-buJkmVkyJIQwqeV1/1YYLVmBj9ah1L9AFJVFad20aObJuyxPSqJZClmuwDjVH1kf9jqXICDHJEH3bbagtr6Hfg=="
   "resolved" "https://registry.npmjs.org/react-native-date-picker/-/react-native-date-picker-4.2.1.tgz"
   "version" "4.2.1"
+
+"react-native-datepicker@^1.7.2":
+  "integrity" "sha1-WNCCJZGgrJsyq6CCZQIioO4pZp0="
+  "resolved" "https://registry.npmjs.org/react-native-datepicker/-/react-native-datepicker-1.7.2.tgz"
+  "version" "1.7.2"
+  dependencies:
+    "moment" "^2.22.0"
 
 "react-native-flipper@^0.113.0", "react-native-flipper@>=0.100.0":
   "integrity" "sha512-WHliie4qnx97K86wsBStqFFw5jxMNHOZJSugETYPv9fp+5Ne5PQ5QV2qRE4BX17/VrNz6BdeeW/9WVImV6CZMA=="

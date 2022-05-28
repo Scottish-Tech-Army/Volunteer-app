@@ -10,7 +10,8 @@ import {
   Projects,
 } from '@/Services/modules/projects'
 import DateControls from '@/Components/Forms/DateControls'
-import DateTime from '@/Components/Forms/DateTime';
+import DateTime from '@/Components/Forms/DateTime'
+import DatePicker from 'react-native-datepicker';
 
 const Heading = styled.Text`
   font-weight: bold;
@@ -59,6 +60,13 @@ const EventSearchContainer = () => {
             <RangeTitle>This month</RangeTitle>
           </RangeButton>
         </SectionView>
+        <DatePicker
+          style={{ width: 200 }}
+          date={availableFromDate}
+          mode="date"
+          placeholder="select date"
+          format="YYYY-MM-DD"
+        />
         <DateTime
           description="Events from..."
           mode="date"
