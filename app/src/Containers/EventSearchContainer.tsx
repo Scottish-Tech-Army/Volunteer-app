@@ -10,6 +10,7 @@ import {
   Projects,
 } from '@/Services/modules/projects'
 import DateControls from '@/Components/Forms/DateControls'
+import DateTime from '@/Components/Forms/DateTime';
 
 const Heading = styled.Text`
   font-weight: bold;
@@ -37,6 +38,8 @@ const RangeTitle = styled.Text`
 `
 
 const EventSearchContainer = () => {
+  const [availableFromDate, setAvailableFromDate] = useState(new Date())
+
   return (
     <SafeAreaView>
       <ScrollView>
@@ -56,6 +59,12 @@ const EventSearchContainer = () => {
             <RangeTitle>This month</RangeTitle>
           </RangeButton>
         </SectionView>
+        <DateTime
+          description="Events from..."
+          mode="date"
+          onChange={value => console.log(value)}
+          value={availableFromDate}
+        />
         <DateControls></DateControls>
         <SectionView>
         </SectionView>
