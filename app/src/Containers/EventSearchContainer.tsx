@@ -61,8 +61,11 @@ const EventSearchContainer = () => {
   const handleSearch = (input: React.SetStateAction<string>) => {
     console.log(input)
   }
+  const handleSubmit = () => {
+    console.log('Submit')
+  }
 
-  const onChange = (event, selectedDate) => {
+  const onChange = (selectedDate: any) => {
     const currentDate = selectedDate;
     setShow(false);
     setDate(currentDate);
@@ -77,8 +80,8 @@ const EventSearchContainer = () => {
       <ScrollView>
         <TopOfApp />
         <FreeSearchBar
-          placeholder="Search by title, description, or tags"
-          onChangeText={handleSearch}
+          handleSearch={handleSearch}
+          handleSubmit={handleSubmit}
         />
         <SectionView>
           <EventButton
@@ -98,9 +101,7 @@ const EventSearchContainer = () => {
           onPress={showDatepicker}>
           <EventTitle>Pick date</EventTitle>
         </EventButton>
-        <SectionView>
-          <Label>{date.toLocaleString()}</Label>
-        </SectionView>
+        <Label>{date.toLocaleString()}</Label>
         {show && (
           <DateTimePicker
             testID="dateTimePicker"
