@@ -1,14 +1,8 @@
-import React, { useState, useEffect, SetStateAction } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components/native'
 import { ScrollView, SafeAreaView, Button, Text } from 'react-native'
 import TopOfApp from '@/Components/TopOfApp'
 import underDevelopmentAlert from '@/Utils/UnderDevelopmentAlert'
-import { navigate } from '@/Navigators/utils'
-import {
-  useLazyFetchAllQuery,
-  Project,
-  Projects,
-} from '@/Services/modules/projects'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import FreeSearchBar from '@/Components/FreeSearchBar';
 
