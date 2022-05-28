@@ -21,7 +21,6 @@ const ProjectSearchResultsContainer = (props: {
   route: {
     params: {
       results: Projects
-      resultsType: 'groupOfTerms' | 'singleTerm'
       searchField: string | undefined
       searchQuery: string
     }
@@ -34,7 +33,7 @@ const ProjectSearchResultsContainer = (props: {
       <SafeArea>
         <TopOfApp />
         <SearchTerm>
-          Results for {searchField === 'sector' ? 'charity' : ''} {searchField ?? ''} "{searchQuery}"
+          Results for {searchField === 'sector' ? 'cause' : searchField} "{searchQuery}"
         </SearchTerm>
         {Boolean(results.length) && <ProjectFilterSort />}
         <ProjectReturnedList data={results} mode="search" />
