@@ -9,14 +9,17 @@ import {
   Project,
   Projects,
 } from '@/Services/modules/projects'
-import DateControls from '@/Components/Forms/DateControls'
-import DateTime from '@/Components/Forms/DateTime'
-import DatePicker from 'react-native-datepicker'
-import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePicker from '@react-native-community/datetimepicker'
+import FreeSearchBar from '@/Components/FreeSearchBar';
 
 const Heading = styled.Text`
   font-weight: bold;
   font-size: 18px;
+  margin: 15px 15px 0px 15px;
+`
+const Label = styled.Text`
+  font-weight: bold;
+  font-size: 14px;
   margin: 15px 15px 0px 15px;
 `
 const SectionView = styled.View`
@@ -24,7 +27,7 @@ const SectionView = styled.View`
   flex-direction: row;
   flex-wrap: wrap;
 `
-const RangeButton = styled.TouchableOpacity`
+const EventButton = styled.TouchableOpacity`
   width: 28%;
   height: 50px;
   margin: 20px 0px 0px 15px;
@@ -34,15 +37,30 @@ const RangeButton = styled.TouchableOpacity`
   display: flex;
   justify-content: center;
 `
-const RangeTitle = styled.Text`
+const EventTitle = styled.Text`
   display: flex;
   text-align: center;
 `
 
 const EventSearchContainer = () => {
-  const [date, setDate] = useState(new Date(1598051730000));
-  const [mode, setMode] = useState('date');
-  const [show, setShow] = useState(false);
+  const PopularSearches = [
+    'Talk to the hiring manager',
+    'Atlassian huddle',
+    'Orientation',
+    'Showcase',
+  ]
+  const ProjectSearches = [
+    'Sole drop-in',
+    'Volunteering app',
+    'Eleos drop-in',
+    'Climate change app',
+  ]
+  const [date, setDate] = useState(new Date()); // initial date value (today)
+  const [show, setShow] = useState(false);      // hide modal date picker
+
+  const handleSearch = (input: React.SetStateAction<string>) => {
+    console.log(input)
+  }
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
@@ -50,51 +68,63 @@ const EventSearchContainer = () => {
     setDate(currentDate);
   };
 
-  const showMode = (currentMode) => {
-    setShow(true);
-    setMode(currentMode);
-  };
-
   const showDatepicker = () => {
-    showMode('date');
-  };
-
-  const showTimepicker = () => {
-    showMode('time');
+    setShow(true);
   };
 
   return (
     <SafeAreaView>
       <ScrollView>
         <TopOfApp />
-        <Heading>Upcoming events</Heading>
-        <SectionView>
-          <RangeButton
-            onPress={underDevelopmentAlert}>
-            <RangeTitle>Today</RangeTitle>
-          </RangeButton>
-          <RangeButton
-            onPress={underDevelopmentAlert}>
-            <RangeTitle>This week</RangeTitle>
-          </RangeButton>
-          <RangeButton
-            onPress={underDevelopmentAlert}>
-            <RangeTitle>This month</RangeTitle>
-          </RangeButton>
-        </SectionView>
-        <Button onPress={showDatepicker} title="Show date picker!" />
-        <Text>selected: {date.toLocaleString()}</Text>
-      {show && (
-        <DateTimePicker
-          testID="dateTimePicker"
-          value={date}
-          mode={mode}
-          is24Hour={true}
-          onChange={onChange}
+        <FreeSearchBar
+          placeholder="Search by title, description, or tags"
+          onChangeText={handleSearch}
         />
-      )}
-        <DateControls></DateControls>
         <SectionView>
+          <EventButton
+            onPress={underDevelopmentAlert}>
+            <EventTitle>Today</EventTitle>
+          </EventButton>
+          <EventButton
+            onPress={underDevelopmentAlert}>
+            <EventTitle>This week</EventTitle>
+          </EventButton>
+          <EventButton
+            onPress={underDevelopmentAlert}>
+            <EventTitle>This month</EventTitle>
+          </EventButton>
+        </SectionView>
+        <EventButton
+          onPress={showDatepicker}>
+          <EventTitle>Pick date</EventTitle>
+        </EventButton>
+        <SectionView>
+          <Label>{date.toLocaleString()}</Label>
+        </SectionView>
+        {show && (
+          <DateTimePicker
+            testID="dateTimePicker"
+            value={date}
+            is24Hour={true}
+            onChange={onChange}
+            style={{ flex: 1 }}
+          />
+        )}
+        <Heading>Popular</Heading>
+        <SectionView>
+          {PopularSearches.map((event, index) => (
+            <EventButton onPress={underDevelopmentAlert} key={index}>
+              <EventTitle>{event}</EventTitle>
+            </EventButton>
+          ))}
+        </SectionView>
+        <Heading>Project Specific</Heading>
+        <SectionView>
+          {ProjectSearches.map((event, index) => (
+            <EventButton onPress={underDevelopmentAlert} key={index}>
+              <EventTitle>{event}</EventTitle>
+            </EventButton>
+          ))}
         </SectionView>
       </ScrollView>
     </SafeAreaView>
