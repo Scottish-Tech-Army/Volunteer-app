@@ -1,6 +1,6 @@
 import React, { useState, useEffect, SetStateAction } from 'react'
 import styled from 'styled-components/native'
-import { ScrollView, SafeAreaView } from 'react-native'
+import { ScrollView, SafeAreaView, Button, Text } from 'react-native'
 import TopOfApp from '@/Components/TopOfApp'
 import underDevelopmentAlert from '@/Utils/UnderDevelopmentAlert'
 import { navigate } from '@/Navigators/utils'
@@ -11,7 +11,8 @@ import {
 } from '@/Services/modules/projects'
 import DateControls from '@/Components/Forms/DateControls'
 import DateTime from '@/Components/Forms/DateTime'
-import DatePicker from 'react-native-datepicker';
+import DatePicker from 'react-native-datepicker'
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 const Heading = styled.Text`
   font-weight: bold;
@@ -39,7 +40,28 @@ const RangeTitle = styled.Text`
 `
 
 const EventSearchContainer = () => {
-  const [availableFromDate, setAvailableFromDate] = useState(new Date())
+  const [date, setDate] = useState(new Date(1598051730000));
+  const [mode, setMode] = useState('date');
+  const [show, setShow] = useState(false);
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate;
+    setShow(false);
+    setDate(currentDate);
+  };
+
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  const showDatepicker = () => {
+    showMode('date');
+  };
+
+  const showTimepicker = () => {
+    showMode('time');
+  };
 
   return (
     <SafeAreaView>
@@ -60,19 +82,17 @@ const EventSearchContainer = () => {
             <RangeTitle>This month</RangeTitle>
           </RangeButton>
         </SectionView>
-        <DatePicker
-          style={{ width: 200 }}
-          date={availableFromDate}
-          mode="date"
-          placeholder="select date"
-          format="YYYY-MM-DD"
+        <Button onPress={showDatepicker} title="Show date picker!" />
+        <Text>selected: {date.toLocaleString()}</Text>
+      {show && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={date}
+          mode={mode}
+          is24Hour={true}
+          onChange={onChange}
         />
-        <DateTime
-          description="Events from..."
-          mode="date"
-          onChange={value => console.log(value)}
-          value={availableFromDate}
-        />
+      )}
         <DateControls></DateControls>
         <SectionView>
         </SectionView>
