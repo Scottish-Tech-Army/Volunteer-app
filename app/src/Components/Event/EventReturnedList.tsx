@@ -2,13 +2,14 @@ import React, { FC } from 'react'
 import styled from 'styled-components/native'
 import { FlatList } from 'react-native'
 import EventSummary from './EventSummary'
+import { navigate } from '@/Navigators/utils'
 import { Events } from '@/Services/modules/events'
 
 interface EventReturnedListProps {
   data: Events
 }
 
-const EventList = styled.TouchableOpacity`
+const EventListItem = styled.TouchableOpacity`
   margin: 21px 21px 0px 21px;
 `
 const NoneFound = styled.Text`
@@ -23,9 +24,13 @@ const EventReturnedList: FC<EventReturnedListProps> = ({ data }) => {
       keyExtractor={event => event.id}
       renderItem={({ item }) => {
         return (
-          <EventList>
+          <EventListItem
+            onPress={() =>
+              navigate('EventDetail', { event: item, key: item.id })
+            }
+          >
             <EventSummary event={item} />
-          </EventList>
+          </EventListItem>
         )
       }}
     />

@@ -1,5 +1,6 @@
 import React, { FC, useEffect } from 'react'
 import styled from 'styled-components/native'
+import SafeArea from '@/Components/SafeArea'
 import TopOfApp from '@/Components/TopOfApp'
 import ProjectOptions from '@/Components/Project/ProjectOptions'
 import ProjectSearch from '@/Components/Project/ProjectSearch'
@@ -11,12 +12,6 @@ import { Projects, useLazyFetchAllQuery } from '@/Services/modules/projects'
 interface ProjectProps {
   data: Projects
 }
-
-const SafeArea = styled.SafeAreaView`
-  background: ${props => props.theme.colors.appBackground};
-  color: ${props => props.theme.colors.staBlack};
-  flex: 1;
-`
 
 const HorizontalLine = styled.View`
   border: ${props => `1px solid ${props.theme.colors.staBlack}`};

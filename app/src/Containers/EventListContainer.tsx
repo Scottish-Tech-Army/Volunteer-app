@@ -1,5 +1,6 @@
 import React, { FC, useEffect } from 'react'
 import styled from 'styled-components/native'
+import SafeArea from '@/Components/SafeArea'
 import TopOfApp from '@/Components/TopOfApp'
 import EventReturnedList from '@/Components/Event/EventReturnedList'
 import { SafeAreaView, Text } from 'react-native'
@@ -9,12 +10,6 @@ import { Events, useLazyFetchAllEventsQuery } from '@/Services/modules/events'
 interface EventProps {
   data: Events
 }
-
-const SafeArea = styled.SafeAreaView`
-  background: ${props => props.theme.colors.appBackground};
-  color: ${props => props.theme.colors.staBlack};
-  flex: 1;
-`
 
 const HorizontalLine = styled.View`
   border: ${props => `1px solid ${props.theme.colors.staBlack}`};
@@ -31,7 +26,7 @@ const EventList: FC<EventProps> = ({ data }) => {
   )
 }
 
-const EventsContainer = () => {
+const EventListContainer = () => {
   const [fetchAllEvents, { data: events }] = useLazyFetchAllEventsQuery()
 
   useEffect(() => {
@@ -53,4 +48,4 @@ const EventsContainer = () => {
   }
 }
 
-export default EventsContainer
+export default EventListContainer

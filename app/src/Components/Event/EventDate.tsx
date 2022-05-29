@@ -3,7 +3,7 @@ import Feather from 'react-native-vector-icons/Feather'
 import styled from 'styled-components/native'
 
 interface EventDateProps {
-  date: Date
+  date: string // YYYY-MM-DD
 }
 
 const DateView = styled.View`
@@ -22,7 +22,7 @@ const EventDate: FC<EventDateProps> = ({ date }) => {
   return (
     <DateView>
       <Feather name="calendar" size={28} />
-      <DateText>{date.toDateString()}</DateText>
+      <DateText>{new Date(date).toDateString()}</DateText>
     </DateView>
   )
 }

@@ -1,23 +1,24 @@
 import React, { FC } from 'react'
 import styled from 'styled-components/native'
-import EventHeading from './EventHeading'
 import EventDate from './EventDate'
-import EventImage from './EventImage'
 import EventTime from './EventTime'
+import comingSoonImg from '@/Assets/Images/ComingSoon.png'
+import ImageThumbnail from '@/Components/ImageThumbnail'
+import Title from '@/Components/Title'
 import { Event } from '@/Services/modules/events'
 
 interface EventSummaryProps {
   event: Event
 }
 
-const EventDetails = styled.TouchableOpacity`
-  padding: 17px 27px 27px 27px;
-  min-height: 68px;
+const EventInfo = styled.View`
+  border-bottom-color: ${props => props.theme.colors.greyFaint};
+  border-bottom-width: 2px;
   display: flex;
   flex-direction: row;
   line-height: 18px;
-  border-bottom-width: 1px;
-  border-bottom-color: ${props => props.theme.colors.staBlack};
+  min-height: 68px;
+  padding: 7px 0 27px;
   width: 100%;
 `
 
@@ -26,14 +27,16 @@ const RightColumn = styled.View`
 `
 
 const EventSummary: FC<EventSummaryProps> = ({ event }) => (
-  <EventDetails key={event.id}>
-    <EventImage url={event.images[0]} />
+  <EventInfo key={event.id}>
+    <ImageThumbnail
+      image={event.images.length ? event.images[0] : comingSoonImg}
+    />
     <RightColumn>
-      <EventHeading title={event.name} />
-      <EventDate date={new Date(event.date)} />
+      <Title text={event.name} type="list" />
+      <EventDate date={event.date} />
       <EventTime time={event.time} />
     </RightColumn>
-  </EventDetails>
+  </EventInfo>
 )
 
 export default EventSummary

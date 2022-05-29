@@ -1,9 +1,9 @@
 import React, { FC } from 'react'
 import styled from 'styled-components/native'
 import EventDate from './EventDate'
-import EventImage from './EventImage'
+import EventImage from '../ImageThumbnail'
 import EventTime from './EventTime'
-import MainTitle from '../MainTitle'
+import Title from '../Title'
 import { Event } from '@/Services/modules/events'
 import { ScrollView } from 'react-native-gesture-handler'
 
@@ -21,7 +21,6 @@ const EventDescription = styled.Text`
   margin-top: 4px;
 `
 
-// TODO: make event date not need to use date each time
 // TODO: description -- allow HTML
 // TODO: images -- fit to size
 // TODO: images -- show multiple
@@ -30,10 +29,10 @@ const EventDetails: FC<EventDetailsProps> = ({ event }) => {
   return (
     <ScrollView>
       <EventDetailsView>
-        <MainTitle text={event.name} />
-        <EventDate date={new Date(event.date)} />
+        <Title text={event.name} type="main" />
+        <EventDate date={event.date} />
         <EventTime time={event.time} />
-        <EventImage url={event.images[0]} />
+        <EventImage image={event.images[0]} />
         <EventDescription>{event.description}</EventDescription>
       </EventDetailsView>
     </ScrollView>

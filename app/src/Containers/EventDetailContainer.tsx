@@ -1,14 +1,8 @@
 import React from 'react'
-import styled from 'styled-components/native'
+import EventDetails from '@/Components/Event/EventDetails'
+import SafeArea from '@/Components/SafeArea'
 import Theme from '@/Theme/OldTheme'
 import { Event } from '@/Services/modules/events/index'
-import EventDetails from '@/Components/Event/EventDetails'
-
-const SafeArea = styled.SafeAreaView`
-  background: ${props => props.theme.colors.appBackground};
-  color: ${props => props.theme.colors.staBlack};
-  flex: 1;
-`
 
 const EventDetailContainer = (props: {
   route: { params: { event: Event } }

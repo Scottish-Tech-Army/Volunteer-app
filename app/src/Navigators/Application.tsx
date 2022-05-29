@@ -3,6 +3,7 @@ import { SafeAreaView, StatusBar } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
 import {
+  EventDetailContainer,
   StartupContainer,
   ProjectDetailContainer,
   ProjectRegisterInterestContainer,
@@ -70,6 +71,15 @@ const ApplicationNavigator = () => {
             options={{
               headerBackTitleVisible: false,
               title: 'Project Search Results',
+            }}
+          />
+          <Stack.Screen
+            name="EventDetail"
+            component={EventDetailContainer}
+            options={{
+              title: 'Event Details',
+              headerTitleAlign: 'center', //android defaults to left aligned (ios is always centered)
+              headerBackTitleVisible: false, //ios defaults to title of previous screen
             }}
           />
         </Stack.Navigator>
