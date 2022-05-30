@@ -58,11 +58,11 @@ async function cacheProjectsAndResources(projects, resources) {
     await module.exports.addNewProjectsResources(projectsResources);
   } catch (error) {
     console.error('❌ Could not save new projects/resources records in cache');
-  
+
     return;
   }
 
-  console.log('✅ Complete!');
+  console.log('🏁 Complete!');
 }
 
 async function deleteAllRecords(tableName) {
@@ -182,7 +182,7 @@ async function getInitialTriageProjectsFromJira(startAt, itArray) {
       client: x['fields'].customfield_10027,
       video: x['fields'].customfield_10159 ?? '',
       scope: x['fields'].customfield_10090,
-      sector: x['fields'].customfield_10148?.value ?? ''
+      sector: x['fields'].customfield_10148?.value ?? '',
     }),
   );
 
@@ -236,8 +236,8 @@ async function getResourcesFromJira(startAt, resArray) {
   return resArray;
 }
 
-async function start() {
-  console.log(`🛈 Started caching projects and resources at ${new Date()}`);
+async function startCachingLatestFromJira() {
+  console.log(`🚀 Started caching projects and resources at ${new Date()}`);
 
   const allProjectsAndResources = await module.exports.getAllProjectsAndResourcesFromJira();
   module.exports.cacheProjectsAndResources(allProjectsAndResources.projects, allProjectsAndResources.resources);
@@ -255,5 +255,5 @@ module.exports = {
   getAllProjectsAndResourcesFromJira,
   getInitialTriageProjectsFromJira,
   getResourcesFromJira,
-  start,
+  startCachingLatestFromJira,
 };

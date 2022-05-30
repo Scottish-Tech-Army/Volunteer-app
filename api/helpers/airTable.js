@@ -129,6 +129,33 @@ function projectsResourcesCacheTable() {
   return process.env.AIRTABLE_PROJECTS_RESOURCES_CACHE_TABLE;
 }
 
+function simplifyAttachmentsData(attachmentsFieldDataFromAirTable) {
+  return attachmentsFieldDataFromAirTable?.length
+    ? attachmentsFieldDataFromAirTable.map((airTableAttachmentObject) => airTableAttachmentObject.url)
+    : [];
+}
+
+// You only need to include the fields you want to update
+// For examples of updating data see https://airtable.com/appcvHsm6PC8mZth2/api/docs#javascript/table:sta%20events:update
+async function updateRecordById(tableName, recordId, fields) {
+  try {
+    const updateData = [
+      {
+        id: recordId,
+        fields,
+      },
+    ];
+
+    const result = await module.exports.client().table(tableName).update(updateData);
+
+    return result;
+  } catch (error) {
+    console.error(error);
+
+    return error;
+  }
+}
+
 module.exports = {
   addEmptyFields,
   client,
@@ -140,4 +167,6 @@ module.exports = {
   getRecordById,
   getRecordByQuery,
   projectsResourcesCacheTable,
+  simplifyAttachmentsData,
+  updateRecordById,
 };

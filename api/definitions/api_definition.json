@@ -27,6 +27,7 @@
                     "notes": "",
                     "series": "Data Collective",
                     "video": "https://vimeo.com/583815096",
+                    "video_thumbnail": "https://dl.airtable.com/.attachments/02b4bf4e52db4d9d85575186c487c635/c05231f4/1218826759-b3cef7ddaf08fa26e375d87a2fc78e7fc0ca49ffb2809197dcf3ea6bec5e09ec-d_1280?ts=1653904352&userId=usrrNJEU7hToH1AMK&cs=ee8f353da772f926",
                     "images": []
                   },
                   {
@@ -40,6 +41,7 @@
                     "notes": "",
                     "series": "Microsoft",
                     "video": "",
+                    "video_thumbnail": "",
                     "images": [
                       "https://dl.airtable.com/.attachments/6a55ab19223701f38cc61d0b1c127748/cfcd129b/power-bi.jpg?ts=1652968234&userId=usrrNJEU7hToH1AMK&cs=a8456be5328462cd"
                     ]
@@ -74,6 +76,7 @@
                   "notes": "",
                   "series": "Data Collective",
                   "video": "https://vimeo.com/583815096",
+                  "video_thumbnail": "https://dl.airtable.com/.attachments/02b4bf4e52db4d9d85575186c487c635/c05231f4/1218826759-b3cef7ddaf08fa26e375d87a2fc78e7fc0ca49ffb2809197dcf3ea6bec5e09ec-d_1280?ts=1653904352&userId=usrrNJEU7hToH1AMK&cs=ee8f353da772f926",
                   "images": []
                 },
                 "schema": {
@@ -106,6 +109,7 @@
                     "notes": "",
                     "series": "Data Collective",
                     "video": "https://vimeo.com/583815096",
+                    "video_thumbnail": "https://dl.airtable.com/.attachments/02b4bf4e52db4d9d85575186c487c635/c05231f4/1218826759-b3cef7ddaf08fa26e375d87a2fc78e7fc0ca49ffb2809197dcf3ea6bec5e09ec-d_1280?ts=1653904352&userId=usrrNJEU7hToH1AMK&cs=ee8f353da772f926",
                     "images": []
                   },
                   {
@@ -119,6 +123,7 @@
                     "notes": "",
                     "series": "Microsoft",
                     "video": "",
+                    "video_thumbnail": "",
                     "images": [
                       "https://dl.airtable.com/.attachments/6a55ab19223701f38cc61d0b1c127748/cfcd129b/power-bi.jpg?ts=1652968234&userId=usrrNJEU7hToH1AMK&cs=a8456be5328462cd"
                     ]
@@ -154,6 +159,7 @@
                     "notes": "",
                     "series": "Data Colllective",
                     "video": "",
+                    "video_thumbnail": "",
                     "images": []
                   },
                   {
@@ -166,6 +172,8 @@
                     "type": "Internal",
                     "notes": "",
                     "series": "Microsoft",
+                    "video": "",
+                    "video_thumbnail": "",
                     "images": [
                       "https://dl.airtable.com/.attachments/6a55ab19223701f38cc61d0b1c127748/cfcd129b/power-bi.jpg?ts=1652968234&userId=usrrNJEU7hToH1AMK&cs=a8456be5328462cd"
                     ]
@@ -331,7 +339,7 @@
             },
             "description": {
               "type": "string",
-              "description": "Information about the event"
+              "description": "Information about the event, may include markdown code (https://www.markdownguide.org/getting-started/)"
             },
             "type": {
               "type": "string",
@@ -343,7 +351,11 @@
             },
             "video": {
               "type": "string",
-              "description": "URL of the event video (normally used to watch a past event)"
+              "description": "URL of the event video (if any), normally used to watch a past event"
+            },
+            "video_thumbnail": {
+              "type": "string",
+              "description": "URL of a thumbnail image of the event video (if any)"
             },
             "notes": {
               "type": "string",

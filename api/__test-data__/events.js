@@ -49,6 +49,7 @@ function fakeEventObject(dateType) {
     notes: faker.lorem.sentence(),
     series: faker.random.arrayElement(series),
     video: faker.internet.url(),
+    video_thumbnail: faker.internet.url(),
     images: fakeImages(),
   };
 }
@@ -63,25 +64,28 @@ function fakeEventObjects(count, dateType) {
   return fakeEventObjectArray;
 }
 
-function fakeEventAirTableRecords(count, dateType) {
+function fakeEventAirTableRecords(count, dateType, includeVideo = false) {
   const fakeEventObjectArray = [];
 
   for (let i = 0; i < count; i++) {
-    fakeEventObjectArray.push(fakeEventAirTableRecord(dateType));
+    fakeEventObjectArray.push(fakeEventAirTableRecord(dateType, includeVideo));
   }
 
   return fakeEventObjectArray;
 }
 
-function fakeEventAirTableRecord(dateType) {
+function fakeEventAirTableRecord(dateType, includeVideo = false) {
   const event = {
     ...fakeEventObject(dateType),
     time: faker.datatype.number(19) * 60 * 60,
   };
 
-  delete event.description;
   delete event.notes;
-  delete event.video;
+
+  if (!includeVideo) {
+    delete event.video;
+    delete event.video_thumbnail;
+  }
 
   return event;
 }

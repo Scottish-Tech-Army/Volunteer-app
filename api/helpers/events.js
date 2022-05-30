@@ -6,12 +6,15 @@ const apiDefinition = require('../definitions/api_definition.json');
 function formatEventFromAirTable(event) {
   const eventFieldDefinitions = apiDefinition.components.schemas.event.items.properties;
 
-  const images = event.images?.length ? event.images.map((airTableImageObject) => airTableImageObject.url) : [];
+  const images = airTable.simplifyAttachmentsData(event.images);
+  const video_thumbnails = airTable.simplifyAttachmentsData(event.video_thumbnail);
+  const video_thumbnail = video_thumbnails.length ? video_thumbnails[0] : '';
 
   const eventFormatted = airTable.addEmptyFields(
     {
       ...event,
       images,
+      video_thumbnail,
     },
     eventFieldDefinitions,
   );

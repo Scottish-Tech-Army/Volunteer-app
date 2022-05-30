@@ -1,3 +1,3 @@
 const projects = require('./projects');
 
-projects.start();
+projects.startCachingLatestFromJira();
