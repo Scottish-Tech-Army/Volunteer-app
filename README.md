@@ -53,24 +53,39 @@ Welcome to the the Volunteering App Github repo
 3. Go to the `app` folder inside the project folder (e.g. **\Volunteer-app path\app**) and enter `npm run ios` or `npm run android`.
 
 4. Optional: Update the cached projects/resources data from Jira *(during development, you probably only need to use this if you need the very latest data from Jira or you're actively testing the caching mechanism)*.  Open another command terminal window, go to the `api` folder inside the project.
-    - If you want to manually update the cached data, enter this command: `node cache/run-projects.js`
+    - If you want to manually update cached projects data, enter this command: `node cron-jobs/run-projects.js`
         >During development, it's preferable to do this than to run the scheduled cron job described below.
-    - If you want to automatically update the cached data regularly using a [cron job](https://en.wikipedia.org/wiki/Cron), enter this command instead: `node cache/run-cron-jobs.js`  Leave this terminal window open as long as you want this to keep running.
+    - If you want to automatically run all cron jobs regularly , enter this command instead: `node cron-jobs/run-cron-jobs.js`  Leave this terminal window open as long as you want this to keep running.
+        >See more about [cron jobs](#cron-jobs) below
         >Be careful if using this during development: if multiple developers are running this simultaneously, these could conflict if more than one person is updating the same AirTable tables at the same time.
+
+5. Optional: Add event video thumbnail images. Open another command terminal window, go to the `api` folder inside the project.
+    - If you want to manually add event video thumbnails, enter this command: `node cron-jobs/run-events.js`
+    - See the previous step above on how to run all cron jobs automatically.
         
 # Development
 
 ## API
 
-### Caching
+### Cron jobs
+
+[Cron jobs](https://en.wikipedia.org/wiki/Cron) are bits of code that can run regularly in the background to carry out things that need to be done repeatedly on a schedule (rather than code that's triggered by a user request, like most of our API).
+
+These are stored in the `/api/cron-jobs` directory.  Please see instructions at the end of the [Subsequent run](#subsequent-run) section above on how to run these scripts.
+
+We make use of cron jobs on the API server for a couple of things:
 
 #### Projects
 
 Projects data comes originally from Jira.  We have found the Jira API can be too slow for us to fetch data from it each time a request is made to the API (partly because of the speed of Jira's API itself, partly because we may be making multiple calls and then combining the data received).
 
-So instead we store a cached copy of projects data, in the format we use it in our API, in our own database (currently AirTable) so that we can deliver a fast response when someone calls our API.  There are scripts in the `/api/cache` directory that can be run as a [cron job](https://en.wikipedia.org/wiki/Cron) to regularly update our database from the Jira API.
+So instead we store a cached copy of projects data, in the format we use it in our API, in our own database (currently AirTable) so that we can deliver a fast response when someone calls our API.  There are projects scripts that can be run as a cron job to regularly update our database from the Jira API.
 
-Please see instructions at the end of the [Subsequent run](#subsequent-run) section above on how to run these scripts.
+#### Events
+
+There is also a cron job for events that have videos, to automatically grab thumbnail images from Vimeo (it's usually past events that have videos).
+
+This job checks if a new event video has been added, if so it saves a thumbnail image of the video from Vimeo, so we can display this thumbnail in the app.
 
 ### Services
 
