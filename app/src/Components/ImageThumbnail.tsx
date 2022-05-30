@@ -11,7 +11,7 @@ interface ImageThumbnailProps {
 
 const ImageThumbnailImage = styled.Image`
   aspect-ratio: ${4 / 3};
-  border-radius: 5px;
+  border-radius: 25px;
   height: 105px;
   margin-right: 20px;
   width: auto;
@@ -19,6 +19,7 @@ const ImageThumbnailImage = styled.Image`
 
 const ImageThumbnail: FC<ImageThumbnailProps> = ({ image }) => (
   <ImageThumbnailImage
+    resizeMode="contain"
     source={
       typeof image === 'string'
         ? {

@@ -21,6 +21,7 @@ export interface Event {
   type: string
   series: string
   video: string
+  video_thumbnail: string
   images: string[]
 }
 

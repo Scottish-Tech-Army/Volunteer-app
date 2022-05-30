@@ -1,39 +1,64 @@
 import React, { FC } from 'react'
+import { ScrollView } from 'react-native-gesture-handler'
+import Markdown from 'react-native-simple-markdown'
 import styled from 'styled-components/native'
 import EventDate from './EventDate'
-import EventImage from '../ImageThumbnail'
+import ImageLarge from '../ImageLarge'
 import EventTime from './EventTime'
 import Title from '../Title'
+import comingSoonImg from '@/Assets/Images/ComingSoon.png'
 import { Event } from '@/Services/modules/events'
-import { ScrollView } from 'react-native-gesture-handler'
+import ThemeVariables from '@/Theme/Variables'
 
 interface EventDetailsProps {
   event: Event
 }
 
+const EventDateTime = styled.View`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  margin: 10px 0 25px;
+`
+const EventDescription = styled.View`
+  margin-top: 20px;
+`
+const EventDescriptionMarkdownStyles = {
+  text: {
+    fontSize: ThemeVariables.FontSize.regular,
+  },
+}
 const EventDetailsView = styled.View`
   margin: 21px 27px 0px 27px;
 `
 
-const EventDescription = styled.Text`
-  font-weight: 400;
-  font-size: 14px;
-  margin-top: 4px;
-`
-
-// TODO: description -- allow HTML
-// TODO: images -- fit to size
-// TODO: images -- show multiple
+// TODO: images -- show multiple if there are multiple
+// TODO: video -- show in place of image if exists
 
 const EventDetails: FC<EventDetailsProps> = ({ event }) => {
   return (
     <ScrollView>
       <EventDetailsView>
         <Title text={event.name} type="main" />
-        <EventDate date={event.date} />
-        <EventTime time={event.time} />
-        <EventImage image={event.images[0]} />
-        <EventDescription>{event.description}</EventDescription>
+
+        <EventDateTime>
+          <EventDate date={event.date} />
+          <EventTime time={event.time} />
+        </EventDateTime>
+
+        {event.images.length <= 1 ? (
+          <ImageLarge
+            image={event.images.length ? event.images[0] : comingSoonImg}
+          />
+        ) : (
+          <></>
+        )}
+
+        <EventDescription>
+          <Markdown styles={EventDescriptionMarkdownStyles}>
+            {event.description}
+          </Markdown>
+        </EventDescription>
       </EventDetailsView>
     </ScrollView>
   )

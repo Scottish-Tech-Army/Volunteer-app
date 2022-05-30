@@ -29,7 +29,11 @@ const RightColumn = styled.View`
 const EventSummary: FC<EventSummaryProps> = ({ event }) => (
   <EventInfo key={event.id}>
     <ImageThumbnail
-      image={event.images.length ? event.images[0] : comingSoonImg}
+      image={
+        event.video_thumbnail ?? event.images.length
+          ? event.images[0]
+          : comingSoonImg
+      }
     />
     <RightColumn>
       <Title text={event.name} type="list" />

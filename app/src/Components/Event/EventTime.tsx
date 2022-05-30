@@ -1,6 +1,7 @@
 import React, { FC } from 'react'
 import Feather from 'react-native-vector-icons/Feather'
 import styled from 'styled-components/native'
+import ThemeVariables from '@/Theme/Variables'
 
 interface EventTimeProps {
   time: string
@@ -14,7 +15,7 @@ const TimeView = styled.View`
 
 const TimeText = styled.Text`
   font-weight: 600;
-  font-size: 16px;
+  font-size: ${ThemeVariables.FontSize.small}px;
   margin-left: 10px;
 `
 
