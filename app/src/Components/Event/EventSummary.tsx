@@ -30,7 +30,9 @@ const EventSummary: FC<EventSummaryProps> = ({ event }) => (
   <EventInfo key={event.id}>
     <ImageThumbnail
       image={
-        event.video_thumbnail ?? event.images.length
+        event.video_thumbnail
+          ? event.video_thumbnail
+          : event.images.length
           ? event.images[0]
           : comingSoonImg
       }

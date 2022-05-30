@@ -4,6 +4,7 @@ import Markdown from 'react-native-simple-markdown'
 import styled from 'styled-components/native'
 import EventDate from './EventDate'
 import ImageLarge from '../ImageLarge'
+import ImageSwiper from '../ImageSwiper'
 import EventTime from './EventTime'
 import Title from '../Title'
 import comingSoonImg from '@/Assets/Images/ComingSoon.png'
@@ -32,7 +33,6 @@ const EventDetailsView = styled.View`
   margin: 21px 27px 0px 27px;
 `
 
-// TODO: images -- show multiple if there are multiple
 // TODO: video -- show in place of image if exists
 
 const EventDetails: FC<EventDetailsProps> = ({ event }) => {
@@ -51,7 +51,7 @@ const EventDetails: FC<EventDetailsProps> = ({ event }) => {
             image={event.images.length ? event.images[0] : comingSoonImg}
           />
         ) : (
-          <></>
+          <ImageSwiper images={event.images} />
         )}
 
         <EventDescription>
