@@ -29,6 +29,7 @@ export interface Project {
   hours: string
   required: string
   buddying: boolean
+  sector: string
 }
 
 export type Projects = Project[]

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, SetStateAction } from 'react'
+import React, { useState, useEffect } from 'react'
 import Fuse from 'fuse.js' // fuzzy text search - see docs at https://fusejs.io
 import styled from 'styled-components/native'
 import { ScrollView, SafeAreaView } from 'react-native'
@@ -13,6 +13,7 @@ import {
 } from '@/Services/modules/projects'
 import { dedupeArrayOfObjects } from '@/Utils/Lists'
 
+// define titles for quick search buttons relating to job roles
 const Roles = [
   'Web Developer',
   'Tech Support',
@@ -21,6 +22,7 @@ const Roles = [
   'Scrum Master',
   'BA/PM',
 ]
+// define groups of related job roles
 const RolesRelated = [
   {
     roles: [
@@ -155,14 +157,18 @@ const RolesRelated = [
     ],
   },
 ]
+
+// define titles for quick search buttons relating to charity sectors
 const Causes = [
   'Health & Social Care',
   'Education & Youth',
   'Arts & Culture',
   'Environment & Conservation',
   'Community Projects',
-  'Internal STA',
+  'Internal STA Project',
 ]
+
+// define titles for quick search buttons relating to tech stack
 const TechStack = [
   'Java',
   'JavaScript',
@@ -206,16 +212,18 @@ const QuickSearchTitle = styled.Text`
 const SearchContainer = () => {
   const [searchQuery, setSearchQuery] = useState('')
 
-  const handleSearch = (input: React.SetStateAction<string>) => {
+  const handleFreeTextSearch = (input: React.SetStateAction<string>) => {
     setSearchQuery(input)
   }
 
+  // fetch all projects
   const [fetchAll, { data: projects }] = useLazyFetchAllQuery()
 
   useEffect(() => {
     fetchAll('')
   }, [fetchAll])
 
+  // ensure job title searches find related roles
   const getRelatedRoles = (
     possibleRoleSearchQuery: string,
   ): string[] | undefined => {
@@ -242,19 +250,17 @@ const SearchContainer = () => {
     return undefined
   }
 
-  const handlePreDefinedChoiceSubmit = (
-    searchField: 'client' | 'description' | 'name' | 'role' | 'skills',
+  const handleQuickSearchSubmit = (
+    searchField: 'client' | 'description' | 'name' | 'role' | 'skills' | 'sector',
     searchQueryChoice: string,
   ) => {
     let searchQueries = [] as string[]
-    let resultsType = 'singleTerm'
 
     if (searchField === 'role') {
       const relatedRoles = getRelatedRoles(searchQueryChoice)
 
       if (relatedRoles?.length) {
         searchQueries = relatedRoles
-        resultsType = 'groupOfTerms'
       }
     }
 
@@ -264,7 +270,6 @@ const SearchContainer = () => {
 
     navigate('ProjectSearchResults', {
       results,
-      resultsType,
       searchField,
       searchQuery: searchQueryChoice,
     })
@@ -288,11 +293,11 @@ const SearchContainer = () => {
       'name',
       'role',
       'skills',
+      'sector',
     ])
 
     navigate('ProjectSearchResults', {
       results,
-      resultsType: 'singleTerm',
       searchField: undefined,
       searchQuery,
     })
@@ -330,7 +335,7 @@ const SearchContainer = () => {
       <ScrollView>
         <TopOfApp />
         <FreeSearchBar
-          handleSearch={handleSearch}
+          handleSearch={handleFreeTextSearch}
           handleSubmit={handleFreeTextSubmit}
         />
         <Heading>Popular Searches</Heading>
@@ -338,7 +343,7 @@ const SearchContainer = () => {
         <SectionView>
           {Roles.map((role, index) => (
             <QuickSearchButton
-              onPress={() => handlePreDefinedChoiceSubmit('role', role)}
+              onPress={() => handleQuickSearchSubmit('role', role)}
               key={index}
             >
               <QuickSearchTitle>{role}</QuickSearchTitle>
@@ -348,7 +353,7 @@ const SearchContainer = () => {
         <SubHeading>Causes</SubHeading>
         <SectionView>
           {Causes.map((cause, index) => (
-            <QuickSearchButton onPress={underDevelopmentAlert} key={index}>
+            <QuickSearchButton onPress={() => handleQuickSearchSubmit('sector', cause) } key={index}>
               <QuickSearchTitle>{cause}</QuickSearchTitle>
             </QuickSearchButton>
           ))}
