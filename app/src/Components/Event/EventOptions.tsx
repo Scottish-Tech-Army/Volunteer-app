@@ -1,6 +1,3 @@
-/*
- *  Shamelessly duplicated from ProjectOptions.tsx
- */
 import React from 'react'
 import styled from 'styled-components/native'
 import underDevelopmentAlert from '../../Utils/UnderDevelopmentAlert'
