@@ -80,6 +80,7 @@ const ApplicationNavigator = () => {
             options={{
               headerTitleAlign: 'center',
               headerBackTitleVisible: false,
+              title: 'Event Search',
             }}
           />
         </Stack.Navigator>
