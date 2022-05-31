@@ -49,7 +49,7 @@ const EventSearchContainer = () => {
     'Eleos drop-in',
     'Climate change app',
   ]
-  
+
   const [date, setDate] = useState(new Date()) // initial date value (today)
   const [show, setShow] = useState(false) // hide modal date picker
 
@@ -60,15 +60,15 @@ const EventSearchContainer = () => {
     console.log('Submit')
   }
 
-  const onChange = (event, selectedDate) => {
+  const onChange = (event: any, selectedDate: any) => {
     const currentDate = selectedDate
     setShow(false)
     setDate(currentDate)
-  };
+  }
 
   const showDatepicker = () => {
     setShow(true)
-  };
+  }
 
   return (
     <SafeAreaView>
@@ -99,6 +99,7 @@ const EventSearchContainer = () => {
             value={date}
             is24Hour={true}
             onChange={onChange}
+            // eslint-disable-next-line react-native/no-inline-styles
             style={{ flex: 1 }}
           />
         )}
