@@ -49,8 +49,9 @@ const EventSearchContainer = () => {
     'Eleos drop-in',
     'Climate change app',
   ]
-  const [date, setDate] = useState(new Date()); // initial date value (today)
-  const [show, setShow] = useState(false);      // hide modal date picker
+  
+  const [date, setDate] = useState(new Date()) // initial date value (today)
+  const [show, setShow] = useState(false) // hide modal date picker
 
   const handleSearch = (input: React.SetStateAction<string>) => {
     console.log(input)
@@ -59,14 +60,14 @@ const EventSearchContainer = () => {
     console.log('Submit')
   }
 
-  const onChange = (selectedDate: any) => {
-    const currentDate = selectedDate;
-    setShow(false);
-    setDate(currentDate);
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate
+    setShow(false)
+    setDate(currentDate)
   };
 
   const showDatepicker = () => {
-    setShow(true);
+    setShow(true)
   };
 
   return (
@@ -78,21 +79,17 @@ const EventSearchContainer = () => {
           handleSubmit={handleSubmit}
         />
         <SectionView>
-          <EventButton
-            onPress={underDevelopmentAlert}>
+          <EventButton onPress={underDevelopmentAlert}>
             <EventTitle>Today</EventTitle>
           </EventButton>
-          <EventButton
-            onPress={underDevelopmentAlert}>
+          <EventButton onPress={underDevelopmentAlert}>
             <EventTitle>This week</EventTitle>
           </EventButton>
-          <EventButton
-            onPress={underDevelopmentAlert}>
+          <EventButton onPress={underDevelopmentAlert}>
             <EventTitle>This month</EventTitle>
           </EventButton>
         </SectionView>
-        <EventButton
-          onPress={showDatepicker}>
+        <EventButton onPress={showDatepicker}>
           <EventTitle>Pick date</EventTitle>
         </EventButton>
         <Label>{date.toLocaleString()}</Label>
