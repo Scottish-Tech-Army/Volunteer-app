@@ -4,7 +4,7 @@ import { ScrollView, SafeAreaView } from 'react-native'
 import TopOfApp from '@/Components/TopOfApp'
 import underDevelopmentAlert from '@/Utils/UnderDevelopmentAlert'
 import DateTimePicker from '@react-native-community/datetimepicker'
-import FreeSearchBar from '@/Components/FreeSearchBar';
+import FreeSearchBar from '@/Components/FreeSearchBar'
 
 const Heading = styled.Text`
   font-weight: bold;
