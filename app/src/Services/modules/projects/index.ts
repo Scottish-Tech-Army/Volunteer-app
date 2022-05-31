@@ -24,7 +24,7 @@ export interface Project {
   client: string
   role: string
   description: string
-  video: ImageURISource
+  video: string
   skills: string[]
   hours: string
   required: string

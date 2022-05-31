@@ -35,6 +35,28 @@ function formatProjectResourceFromAirTable(projectResource) {
       }
     }
 
+    // get ID from Vimeo URL
+    if(projectResource[fieldName]=='video') {
+      const vimeoID = '';
+       projectResourceFormatted[fieldName] = (videoUrl) =>{
+        if(!/^https?:\/\//i.test(url)){
+          url = "http://" + url
+        }
+        let parsed = new URL(videoUrl)
+        console.log(vimeoID);
+        return vimeoID = parsed.pathname.split('/')[1]
+      }
+      
+      // get MP4 from Vimeo api using the ID
+          fetch(`https://player.vimeo.com/video/${vimeoID}/config`)
+          .then(res => res.json())
+          .then(res => this.setState({
+           thumbnailUrl: res.video.thumbs['640'],
+            videoUrl: res.request.files.hls.cdns[res.request.files.hls.default_cdn].url,
+            video: res.video,
+      }));
+    }
+
     // Certain fields need to be formatted
     switch (fieldName) {
       case 'required':
@@ -46,8 +68,8 @@ function formatProjectResourceFromAirTable(projectResource) {
         projectResourceFormatted[fieldName] = projectResource[fieldName]
           ? stringsHelper.splitByLineBreak(stringsHelper.removeBlankLines(projectResource[fieldName]))
           : [];
-        break;
-    }
+        break;       
+    } 
   }
 
   return projectResourceFormatted;

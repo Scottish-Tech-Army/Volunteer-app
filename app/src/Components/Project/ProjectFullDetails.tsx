@@ -2,6 +2,7 @@ import React, { FC } from 'react'
 import styled from 'styled-components/native'
 import ProjectHeading from './ProjectHeading'
 import ProjectInterestButton from './ProjectInterestButton'
+import ProjectVideo from './ProjectVideo'
 import ProjectSkills from './ProjectSkills'
 import ProjectRequirements from './ProjectRequirements'
 import ProjectAttachments from './ProjectAttachments'
@@ -90,10 +91,7 @@ const ProjectFullDetails: FC<ProjectFullDetailsProps> = ({ project }) => {
             icon={<Feather name='file' size={24} />} 
             details={ "A3 - Project Scope"}
           />
-          <ProjectAttachments
-            icon={<Feather name='video' size={24} />} 
-            details={ "Charity Video" }
-          />
+          <ProjectVideo project={project} />
           <SectionHeader>Team</SectionHeader>
           <ProjectTeam>Placeholder text</ProjectTeam>
           <HorizontalLine />
