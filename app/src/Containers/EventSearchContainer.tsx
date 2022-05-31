@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components/native'
-import { ScrollView, SafeAreaView, Button, Text } from 'react-native'
+import { ScrollView, SafeAreaView } from 'react-native'
 import TopOfApp from '@/Components/TopOfApp'
 import underDevelopmentAlert from '@/Utils/UnderDevelopmentAlert'
 import DateTimePicker from '@react-native-community/datetimepicker'
