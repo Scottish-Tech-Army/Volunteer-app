@@ -18,41 +18,37 @@ const EventOptionsTouch = styled.TouchableOpacity``
 
 function EventOptions() {
   const [selectedOption, setSelectedOption] = React.useState('upcoming')
-  const clickPastEvents = () => {
-    setSelectedOption('past')
-  }
   const clickUpcomingEvents = () => {
     setSelectedOption('upcoming')
   }
-  const clickMyEvents = () => {
-    setSelectedOption('my')
-    underDevelopmentAlert
-  }
   return (
     <EventOptionsView>
-      <EventOptionsTouch
-        style={{
-          backgroundColor: selectedOption === 'past' ? 'blue' : 'red',
-        }}
-        onPress={underDevelopmentAlert}
-      >
-        <EventOptionsText>Past</EventOptionsText>
+      <EventOptionsTouch onPress={underDevelopmentAlert}>
+        <EventOptionsText
+          style={{
+            fontWeight: selectedOption === 'past' ? 'bold' : 'normal',
+          }}
+        >
+          Past
+        </EventOptionsText>
       </EventOptionsTouch>
-      <EventOptionsTouch
-        style={{
-          backgroundColor: selectedOption === 'upcoming' ? 'blue' : 'red',
-        }}
-        onPress={clickUpcomingEvents}
-      >
-        <EventOptionsText>Upcoming</EventOptionsText>
+      <EventOptionsTouch onPress={clickUpcomingEvents}>
+        <EventOptionsText
+          style={{
+            fontWeight: selectedOption === 'upcoming' ? 'bold' : 'normal',
+          }}
+        >
+          Upcoming
+        </EventOptionsText>
       </EventOptionsTouch>
-      <EventOptionsTouch
-        style={{
-          backgroundColor: selectedOption === 'my' ? 'blue' : 'red',
-        }}
-        onPress={underDevelopmentAlert}
-      >
-        <EventOptionsText>My Events</EventOptionsText>
+      <EventOptionsTouch onPress={underDevelopmentAlert}>
+        <EventOptionsText
+          style={{
+            fontWeight: selectedOption === 'my' ? 'bold' : 'normal',
+          }}
+        >
+          My Events
+        </EventOptionsText>
       </EventOptionsTouch>
     </EventOptionsView>
   )
