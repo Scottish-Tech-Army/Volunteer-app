@@ -1,4 +1,4 @@
-import { string } from 'prop-types'
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react'
 import styled from 'styled-components/native'
 import underDevelopmentAlert from '../../Utils/UnderDevelopmentAlert'
@@ -12,7 +12,6 @@ const EventOptionsView = styled.View`
 
 const EventOptionsText = styled.Text`
   font-size: 18px;
-  font-weight: bold;
 `
 
 const EventOptionsTouch = styled.TouchableOpacity``
@@ -26,18 +25,33 @@ function EventOptions() {
     setSelectedOption('upcoming')
   }
   const clickMyEvents = () => {
-    setSelectedOption('popular')
+    setSelectedOption('my')
     underDevelopmentAlert
   }
   return (
     <EventOptionsView>
-      <EventOptionsTouch onPress={underDevelopmentAlert}>
+      <EventOptionsTouch
+        style={{
+          backgroundColor: selectedOption === 'past' ? 'blue' : 'red',
+        }}
+        onPress={underDevelopmentAlert}
+      >
         <EventOptionsText>Past</EventOptionsText>
       </EventOptionsTouch>
-      <EventOptionsTouch onPress={clickUpcomingEvents}>
+      <EventOptionsTouch
+        style={{
+          backgroundColor: selectedOption === 'upcoming' ? 'blue' : 'red',
+        }}
+        onPress={clickUpcomingEvents}
+      >
         <EventOptionsText>Upcoming</EventOptionsText>
       </EventOptionsTouch>
-      <EventOptionsTouch onPress={underDevelopmentAlert}>
+      <EventOptionsTouch
+        style={{
+          backgroundColor: selectedOption === 'my' ? 'blue' : 'red',
+        }}
+        onPress={underDevelopmentAlert}
+      >
         <EventOptionsText>My Events</EventOptionsText>
       </EventOptionsTouch>
     </EventOptionsView>
