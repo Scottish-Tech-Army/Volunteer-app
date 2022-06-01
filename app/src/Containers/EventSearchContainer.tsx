@@ -58,10 +58,6 @@ const EventSearchContainer = () => {
     setDate(currentDate)
   }
 
-  const showDatepicker = () => {
-    setShow(true)
-  }
-
   return (
     <SafeAreaView>
       <ScrollView>
@@ -81,7 +77,7 @@ const EventSearchContainer = () => {
             <EventTitle>This month</EventTitle>
           </QuickSearchButton>
         </SectionView>
-        <QuickSearchButton onPress={showDatepicker}>
+        <QuickSearchButton onPress={() => setShow(true)}>
           <EventTitle>Pick date</EventTitle>
         </QuickSearchButton>
         <Label>{date.toLocaleString()}</Label>
