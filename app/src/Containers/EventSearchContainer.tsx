@@ -4,6 +4,7 @@ import { ScrollView, SafeAreaView } from 'react-native'
 import TopOfApp from '@/Components/TopOfApp'
 import underDevelopmentAlert from '@/Utils/UnderDevelopmentAlert'
 import DateTimePicker from '@react-native-community/datetimepicker'
+import QuickSearchButton from '@/Components/Forms/QuickSearchButton'
 import FreeSearchBar from '@/Components/FreeSearchBar'
 
 const Heading = styled.Text`
@@ -21,16 +22,7 @@ const SectionView = styled.View`
   flex-direction: row;
   flex-wrap: wrap;
 `
-const EventButton = styled.TouchableOpacity`
-  width: 28%;
-  height: 50px;
-  margin: 20px 0px 0px 15px;
-  padding: 5px;
-  background-color: #e3e3e3;
-  border: ${props => `1px solid ${props.theme.colors.staBlack}`};
-  display: flex;
-  justify-content: center;
-`
+
 const EventTitle = styled.Text`
   display: flex;
   text-align: center;
@@ -79,19 +71,19 @@ const EventSearchContainer = () => {
           handleSubmit={handleSubmit}
         />
         <SectionView>
-          <EventButton onPress={underDevelopmentAlert}>
+          <QuickSearchButton onPress={underDevelopmentAlert}>
             <EventTitle>Today</EventTitle>
-          </EventButton>
-          <EventButton onPress={underDevelopmentAlert}>
+          </QuickSearchButton>
+          <QuickSearchButton onPress={underDevelopmentAlert}>
             <EventTitle>This week</EventTitle>
-          </EventButton>
-          <EventButton onPress={underDevelopmentAlert}>
+          </QuickSearchButton>
+          <QuickSearchButton onPress={underDevelopmentAlert}>
             <EventTitle>This month</EventTitle>
-          </EventButton>
+          </QuickSearchButton>
         </SectionView>
-        <EventButton onPress={showDatepicker}>
+        <QuickSearchButton onPress={showDatepicker}>
           <EventTitle>Pick date</EventTitle>
-        </EventButton>
+        </QuickSearchButton>
         <Label>{date.toLocaleString()}</Label>
         {show && (
           <DateTimePicker
@@ -106,17 +98,17 @@ const EventSearchContainer = () => {
         <Heading>Popular</Heading>
         <SectionView>
           {PopularSearches.map((event, index) => (
-            <EventButton onPress={underDevelopmentAlert} key={index}>
+            <QuickSearchButton onPress={underDevelopmentAlert} key={index}>
               <EventTitle>{event}</EventTitle>
-            </EventButton>
+            </QuickSearchButton>
           ))}
         </SectionView>
         <Heading>Project Specific</Heading>
         <SectionView>
           {ProjectSearches.map((event, index) => (
-            <EventButton onPress={underDevelopmentAlert} key={index}>
+            <QuickSearchButton onPress={underDevelopmentAlert} key={index}>
               <EventTitle>{event}</EventTitle>
-            </EventButton>
+            </QuickSearchButton>
           ))}
         </SectionView>
       </ScrollView>
