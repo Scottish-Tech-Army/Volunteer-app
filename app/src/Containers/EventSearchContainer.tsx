@@ -3,7 +3,7 @@ import styled from 'styled-components/native'
 import { ScrollView, SafeAreaView } from 'react-native'
 import TopOfApp from '@/Components/TopOfApp'
 import underDevelopmentAlert from '@/Utils/UnderDevelopmentAlert'
-import DateTimePicker from '@react-native-community/datetimepicker'
+import CalendarPicker from 'react-native-calendar-picker'
 import QuickSearchButton from '@/Components/Forms/QuickSearchButton'
 import FreeSearchBar from '@/Components/FreeSearchBar'
 
@@ -12,17 +12,16 @@ const Heading = styled.Text`
   font-size: 18px;
   margin: 15px 15px 0px 15px;
 `
-const Label = styled.Text`
-  font-weight: bold;
-  font-size: 14px;
-  margin: 15px 15px 0px 15px;
-`
 const SectionView = styled.View`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
 `
-
+const Label = styled.Text`
+  font-weight: bold;
+  font-size: 14px;
+  margin: 15px 15px 0px 15px;
+`
 const EventTitle = styled.Text`
   display: flex;
   text-align: center;
@@ -41,21 +40,22 @@ const EventSearchContainer = () => {
     'Eleos drop-in',
     'Climate change app',
   ]
-
-  const [date, setDate] = useState(new Date()) // initial date value (today)
-  const [show, setShow] = useState(false) // hide modal date picker
-
   const handleSearch = (input: React.SetStateAction<string>) => {
     console.log(input)
   }
   const handleSubmit = () => {
     console.log('Submit')
   }
-
-  const onChange = (event: any, selectedDate: any) => {
-    const currentDate = selectedDate
-    setShow(false)
-    setDate(currentDate)
+  const [startDate, setStartDate] = useState(new Date())
+  const [endDate, setEndDate] = useState(new Date())
+  const onDateChange = (date: Date, type: string) => {
+    //function to handle the date change
+    if (type === 'END_DATE') {
+      setEndDate(date)
+    } else {
+      setEndDate(date)
+      setStartDate(date)
+    }
   }
 
   return (
@@ -77,20 +77,30 @@ const EventSearchContainer = () => {
             <EventTitle>This month</EventTitle>
           </QuickSearchButton>
         </SectionView>
-        <QuickSearchButton onPress={() => setShow(true)}>
-          <EventTitle>Pick date</EventTitle>
-        </QuickSearchButton>
-        <Label>{date.toLocaleString()}</Label>
-        {show && (
-          <DateTimePicker
-            testID="dateTimePicker"
-            value={date}
-            is24Hour={true}
-            onChange={onChange}
-            // eslint-disable-next-line react-native/no-inline-styles
-            style={{ flex: 1 }}
-          />
-        )}
+        <CalendarPicker
+          startFromMonday={true}
+          allowRangeSelection={true}
+          minDate={new Date()}
+          maxDate={new Date(2050, 6, 3)}
+          weekdays={['M', 'T', 'W', 'T', 'F', 'S', 'S']}
+          months={[
+            'Jan',
+            'Feb',
+            'Mar',
+            'Apr',
+            'May',
+            'Jun',
+            'Jul',
+            'Aug',
+            'Sep',
+            'Oct',
+            'Nov',
+            'Dec',
+          ]}
+          onDateChange={onDateChange}
+        />
+        <Label>Start date: {startDate ? startDate.toLocaleString() : ''}</Label>
+        <Label>End date: {endDate ? endDate.toLocaleString() : ''}</Label>
         <Heading>Popular</Heading>
         <SectionView>
           {PopularSearches.map((event, index) => (
