@@ -6,7 +6,6 @@ import EventThumbnail from './EventThumbnail'
 import EventTime from './EventTime'
 import Feather from 'react-native-vector-icons/Feather'
 import { Event } from '@/Services/modules/events'
-import { navigate } from '@/Navigators/utils'
 
 interface EventSummaryProps {
   data: Event
