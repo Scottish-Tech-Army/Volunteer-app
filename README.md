@@ -2,6 +2,7 @@
 - [Requirements to run the project:](#requirements-to-run-the-project)
 - [Setup and first run](#setup-and-first-run)
 - [Development](#development)
+- [AWS Deployment](#aws-deployment)
 
 # Welcome
 
