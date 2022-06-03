@@ -46,6 +46,7 @@ const EventSearchContainer = () => {
   const handleSubmit = () => {
     console.log('Submit')
   }
+  const [calendarPickerWidth, setCalendarPickerWidth] = useState(0)
   const [startDate, setStartDate] = useState(new Date())
   const [endDate, setEndDate] = useState(new Date())
   const onDateChange = (date: Date, type: string) => {
@@ -60,7 +61,12 @@ const EventSearchContainer = () => {
 
   return (
     <SafeAreaView>
-      <ScrollView>
+      <ScrollView
+        onLayout={onLayoutEvent => {
+          const { width } = onLayoutEvent.nativeEvent.layout
+          setCalendarPickerWidth(width)
+        }}
+      >
         <TopOfApp />
         <FreeSearchBar
           handleSearch={handleSearch}
@@ -98,6 +104,7 @@ const EventSearchContainer = () => {
             'Dec',
           ]}
           onDateChange={onDateChange}
+          width={calendarPickerWidth}
         />
         <Label>Start date: {startDate ? startDate.toLocaleString() : ''}</Label>
         <Label>End date: {endDate ? endDate.toLocaleString() : ''}</Label>
