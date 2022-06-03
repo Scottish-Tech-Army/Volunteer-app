@@ -85,3 +85,30 @@ This file `/api/services/slack.js` allows you to post messages to Slack.  If you
 
 3. Add the webhook as a variable in your `/api/.env` file (and in `/api/.env.example` but without the webhook URL itself).  This variable must be named `SLACK_SECRET_WEBHOOK_` and then the name of the Slack channel, all in capitals and with hyphens replaced by underscores.
     >For example, if the Slack channel is called `my-awesome-channel`, the .env variable should be called `SLACK_SECRET_WEBHOOK_MY_AWESOME_CHANNEL`
+
+# AWS Deployment
+
+June 2022:
+
+In the volapp-dev-test account, an [Elastic Beanstalk](https://eu-west-2.console.aws.amazon.com/elasticbeanstalk/home?region=eu-west-2#/environments) environment called Volunteerapp-env has been created (manually for now).
+
+You can connect your app to this environment by changing STA_BASE_URL to the load balancer address in `Volunteer-app/app/src/Config/index.ts`:
+
+`  STA_BASE_URL: 'http://volunteerapp-env.eba-ivfm2tgp.eu-west-2.elasticbeanstalk.com',`
+
+Note - as we move this into IaC and set up some build pipelines, things like env names, app names, domain names, IP Addresses will probably change.
+
+For support, please @ David Calder in the [volunteer-app](https://scottishtecharmy.slack.com/archives/C01SUL6K5E1) Slack channel
+
+## Updating the app
+1. Git clone Scottish-Tech-Army/Volunteer-app to your computer
+2. `cd Volunteer-app/api`
+3. `zip ../myapp.zip -r * .[^.]*`
+4. Go to the AWS Management Console and navigate to Elastic Beanstalk.
+5. In [Application versions](https://eu-west-2.console.aws.amazon.com/elasticbeanstalk/home?region=eu-west-2#/application/versions?applicationName=volunteer-app), Upload the myapp.zip that you created in step 3.
+6. Now select the version label you've just created and then select Action > Deploy
+7. Go to the environment dashboard and check the version label has updated and the Health is OK. If not, check the Logs (menu on the left hand side).
+
+## Known issues
+* The iOS simulator only works with the IP Address of the Load Balancer as the value of STA_BASE_URL:
+   * `  STA_BASE_URL: 'http://18.134.220.155',`
