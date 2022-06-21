@@ -190,7 +190,12 @@ async function getInitialTriageProjectsFromJira(startAt, itArray) {
 
     return module.exports.getInitialTriageProjectsFromJira(itStartResultSearch, itArray);
   }
-
+  
+  if(jiraIt.video != null) {
+    itArray.push({
+      video_file: getVideoFileFromVimeo(video),
+    });
+  }
   return itArray;
 }
 
