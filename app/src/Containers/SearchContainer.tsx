@@ -316,7 +316,7 @@ const SearchContainer = () => {
         const fuse = new Fuse(projects, {
           keys: searchKeys,
           minMatchCharLength: 2,
-          threshold: 0.4,
+          threshold: 0.3,
         })
 
         const fuseResults = fuse.search(searchQueryItem)
@@ -361,7 +361,7 @@ const SearchContainer = () => {
         <SubHeading>Tech Stack / Languages</SubHeading>
         <SectionView>
           {TechStack.map((tech, index) => (
-            <QuickSearchButton onPress={underDevelopmentAlert} key={index}>
+            <QuickSearchButton onPress={() => handleQuickSearchSubmit('skills', tech)} key={index}>
               <QuickSearchTitle>{tech}</QuickSearchTitle>
             </QuickSearchButton>
           ))}
