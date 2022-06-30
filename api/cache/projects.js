@@ -3,7 +3,7 @@ const airTable = require('../helpers/airTable');
 const arraysHelpers = require('../helpers/arrays');
 const axios = require('axios').default;
 const projectsHelpers = require('../helpers/projects');
-
+const videoHelper = require('../services/video');
 const api_key = process.env.JIRA_API_KEY;
 const email = process.env.JIRA_EMAIL;
 const resourcingJiraBoardName = 'RES';
@@ -174,16 +174,22 @@ async function getInitialTriageProjectsFromJira(startAt, itArray) {
 
   const itTotalData = parseInt(jiraIt.data.total);
 
-  jiraIt.data.issues.map((x) =>
-    itArray.push({
+  await Promise.all(jiraIt.data.issues.map(async (x) => {
+    project = {
       it_key: x['key'],
       name: x['fields'].summary,
       description: x['fields'].description,
       client: x['fields'].customfield_10027,
       video: x['fields'].customfield_10159 ?? '',
       scope: x['fields'].customfield_10090,
-    }),
-  );
+    }
+
+    const videoFile =  await videoHelper.getVideoFileFromVimeo(project.video)
+    project.video_file = videoFile
+
+    console.log(project)
+    itArray.push(project);
+  }));
 
   if (itArray.length < itTotalData) {
     const itStartResultSearch = itArray.length;
@@ -191,12 +197,7 @@ async function getInitialTriageProjectsFromJira(startAt, itArray) {
     return module.exports.getInitialTriageProjectsFromJira(itStartResultSearch, itArray);
   }
   
-  if(jiraIt.video != null) {
-    itArray.push({
-      video_file: getVideoFileFromVimeo(video),
-    });
-  }
-  return itArray;
+    return itArray;
 }
 
 async function getResourcesFromJira(startAt, resArray) {
@@ -230,13 +231,13 @@ async function getResourcesFromJira(startAt, resArray) {
       buddying: x['fields'].customfield_10108 ? x['fields'].customfield_10108.value.toLowerCase() === 'yes' : false,
     }),
   );
-
+  
   if (resArray.length < resTotalData) {
     const resStartResultSearch = resArray.length;
 
     return module.exports.getResourcesFromJira(resStartResultSearch, resArray);
   }
-
+  
   return resArray;
 }
 

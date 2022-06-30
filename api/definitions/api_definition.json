@@ -29,7 +29,8 @@
 											"hours": "5-10 hours per week",
 											"required": "One person",
 											"buddying": false,
-											"scope" : "https://drive.google.com/file/d/1j469c-xp8HPYLocTgz5lMYHnnz7TsRVP/view?usp=sharing"
+											"scope" : "https://drive.google.com/file/d/1j469c-xp8HPYLocTgz5lMYHnnz7TsRVP/view?usp=sharing",
+											"video_file": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4"
 										},
 										{
 											"it_key": "IT-123",
@@ -44,7 +45,8 @@
 											"hours": "1-2 days per week",
 											"required": "One person",
 											"buddying": false,
-											"scope" : "https://drive.google.com/file/d/1j469c-xp8HPYLocTgz5lMYHnnz7TsRVP/view?usp=sharing"
+											"scope" : "https://drive.google.com/file/d/1j469c-xp8HPYLocTgz5lMYHnnz7TsRVP/view?usp=sharing",
+											"video_file": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4"
 
 										},
 										{
@@ -60,7 +62,8 @@
 											"hours": "2-3 days per week",
 											"required": "One person",
 											"buddying": true,
-											"scope" : "https://drive.google.com/file/d/1j469c-xp8HPYLocTgz5lMYHnnz7TsRVP/view?usp=sharing"
+											"scope" : "https://drive.google.com/file/d/1j469c-xp8HPYLocTgz5lMYHnnz7TsRVP/view?usp=sharing",
+											"video_file": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4"
 										}
 									],
 									"schema" : {
@@ -136,6 +139,10 @@
 						"scope": {
 							"type": "string",
 							"description" : "Document outlining the scope of the document"
+						},
+						 "video_file": {
+							"type": "string",
+							"description" : "MP4 of the project video, if available"
 						}
 					}
 				}

@@ -1,20 +1,27 @@
+const axios = require('axios').default;
+
+
 async function getVideoFileFromVimeo(video) {
-
-        if(!/^https?:\/\//i.test(url)){
-          url = "http://" + url
-        }
+  if (video !== '') {
         let parsed = new URL(video)
-        vimeoID = parsed.pathname.split('/')[1]
-        console.log(vimeoID);
+        
+        
+        const vimeoId = parsed.pathname.split('/')[1]
 
+        if(vimeoId.match(/^[0-9]+$/)) {
+        const vimeoData = await axios.get(
+          `https://player.vimeo.com/video/${vimeoId}/config`,
+          {
+              Accept: 'application/json',
+          })
 
-const videoFile = await axios.get(
-    'https://player.vimeo.com/video/${vimeoID}/config')
-    .then(res => this.setState({
-        thumbnailUrl: res.video.thumbs['640'],
-         videoUrl: res.request.files.hls.cdns[res.request.files.hls.default_cdn].url,
-         video: res.video,
-    }));   
-    console.log(videoFile)
-    return module.exports.getVideoFileFromVimeo(video);
-}
+          const videoFile = vimeoData.data.request.files.progressive[0].url
+                  // console.log(videoFile)
+    return videoFile;
+        }
+        }
+     }
+    
+module.exports = {
+  getVideoFileFromVimeo,
+};
