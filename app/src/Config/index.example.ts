@@ -6,5 +6,6 @@ export const Config = {
   EXAMPLE_USER_URL: 'https://jsonplaceholder.typicode.com',
   // STA Base API URL (localhost may not work on Android as it points to
   // the local device, you can try using your local IP address instead)
-  STA_BASE_URL: 'http://localhost:5000',
+  STA_BASE_URL:
+    'http://volunteerapp-env.eba-ivfm2tgp.eu-west-2.elasticbeanstalk.com',
 }
