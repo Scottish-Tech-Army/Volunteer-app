@@ -7,11 +7,9 @@ import ProjectReturnedList from '@/Components/Project/ProjectReturnedList'
 import { Text, SafeAreaView } from 'react-native'
 import Theme from '@/Theme/OldTheme'
 import { Projects, useLazyFetchAllQuery } from '@/Services/modules/projects'
-import { navigate } from '@/Navigators/utils'
 
 interface ProjectProps {
   data: Projects
-  //onPress(): void
 }
 
 const SafeArea = styled.SafeAreaView`
@@ -32,12 +30,14 @@ const ProjectList: FC<ProjectProps> = ({ data }) => {
       <ProjectSearch />
       <ProjectOptions />
       <HorizontalLine />
-      <ProjectReturnedList data={data} />
+      <ProjectReturnedList data={data} mode="fullList" />
     </SafeArea>
   )
 }
 
 const HomeContainer = () => {
+  //let [searchResults, setSearchResults] = useState([])
+
   const [fetchAll, { data: projects }] = useLazyFetchAllQuery()
 
   useEffect(() => {

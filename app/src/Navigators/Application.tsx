@@ -6,6 +6,7 @@ import {
   StartupContainer,
   ProjectDetailContainer,
   ProjectRegisterInterestContainer,
+  ProjectSearchResultsContainer,
   SearchContainer,
 } from '@/Containers'
 import { useTheme } from '@/Hooks'
@@ -61,6 +62,14 @@ const ApplicationNavigator = () => {
             options={{
               headerTitleAlign: 'center',
               headerBackTitleVisible: false,
+            }}
+          />
+          <Stack.Screen
+            name="ProjectSearchResults"
+            component={ProjectSearchResultsContainer}
+            options={{
+              headerBackTitleVisible: false,
+              title: 'Project Search Results',
             }}
           />
         </Stack.Navigator>

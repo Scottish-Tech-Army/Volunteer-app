@@ -58,7 +58,7 @@ async function cacheProjectsAndResources(projects, resources) {
     await module.exports.addNewProjectsResources(projectsResources);
   } catch (error) {
     console.error('❌ Could not save new projects/resources records in cache');
-
+  
     return;
   }
 
@@ -182,13 +182,8 @@ async function getInitialTriageProjectsFromJira(startAt, itArray) {
       client: x['fields'].customfield_10027,
       video: x['fields'].customfield_10159 ?? '',
       scope: x['fields'].customfield_10090,
+      sector: x['fields'].customfield_10148?.value ?? '',
     }
-
-    const videoFile =  await videoHelper.getVideoFileFromVimeo(project.video)
-    project.video_file = videoFile
-
-    console.log(project)
-    itArray.push(project);
   }));
 
   if (itArray.length < itTotalData) {
