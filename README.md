@@ -1,8 +1,10 @@
 - [Welcome](#welcome)
+- [Download the app!](#download-the-app)
 - [Requirements to run the project:](#requirements-to-run-the-project)
 - [Setup and first run](#setup-and-first-run)
 - [Development](#development)
-- [AWS Deployment](#aws-deployment)
+- [API deployment on AWS](#api-deployment-on-aws)
+- [App deployment](#app-deployment)
 
 # Welcome
 
@@ -136,19 +138,19 @@ For support, please @ David Calder in the [volunteer-app](https://scottishtechar
 
 # App deployment
 
-1. In the pull request for the changes you're making (e.g. a new app feature), befor you submit the PR for review, update the `version` number in `app/package.json`.  Normally for minor features/fixes, just update the last part of the version number (e.g. 1.0.24 becomes 1.0.25).
+1. In the pull request for the changes you're making (e.g. a new app feature), befor you submit the PR for review, update the `version` number in `app/package.json`.  Normally for minor features/fixes, just update the last part of the version number (e.g. `"1.0.24"` becomes `"1.0.25"`).
 
-2. Update `app/android/app/build.gradle` at the same time (be careful here! there are other files called `build.gradle` i other similar directories).  About halfway down the file there are two things you need to update:
+2. Update `app/android/app/build.gradle` at the same time (be careful here! there are other files called `build.gradle` in other similar directories).  About halfway down the file there are two things you need to update:
 
-    a. `versionCode` - this must be 1 higher than the existing number, e.g. 48 becomes 49 (don't use any dots in this one), no quote marks
+    a. `versionCode` - this must be 1 higher than the existing number, e.g. `48` becomes `49` (don't use any dots in this one), no quote marks
 
-    b. `versionName` - make this the same as `version` in `app/package.json`, this should be in quotes (e.g. "1.0.24" becomes 1.0.25)
+    b. `versionName` - make this the same as `version` in `app/package.json`, this should be in quotes (e.g. `"1.0.24"` becomes `"1.0.25"`)
 
 3. Get your pull request approved as you normally would.  When you're ready to merge your code into the `main` branch and deploy the updated app, double-check your version numbers in the previous steps are still right compared to what's in `main` (somebody else could have merged in code recently and changed the version numbers since you last checked).
 
-4. Deploy to the Google Play Store: go to the `app/android` directory in a terminal window and run the command `fastlane beta`.  You'll be prompted twice at the beginning for passwords -- both are the password you created in the 'Setup to deploy the app' sectio above.  The process can take a while (20 minutes or more)!  If it fails, try [the troubleshooting tips here](https://thecodingmachine.github.io/react-native-boilerplate/docs/BetaBuild/#troubleshooting) or ask for help on the team Slack channel if you can't figure it out.
+4. **Deploy to the Google Play Store:** go to the `app/android` directory in a terminal window and run the command `fastlane beta`.  You'll be prompted twice at the beginning for passwords -- both are the password you created in the [Setup to deploy the app section](#setup-to-deploy-the-app) above.  The process can take a while (20 minutes or more)!  If it fails, try [the troubleshooting tips here](https://thecodingmachine.github.io/react-native-boilerplate/docs/BetaBuild/#troubleshooting) or ask for help on the team Slack channel if you can't figure it out.
 
 5. If you have access, check in the [Google Play Console](https://play.google.com/console) that the new version of the app has successfully been added (Volunteer app > Release > Internal testing) -- you should see the new version number next to 'Latest release' under 'Track summary'.
 
-6. Download the updated version of the app to your Android phone (see download instructions near the top of this README).
+6. Download the updated version of the app to your Android phone ([see download instructions](#download-the-app) near the top of this README).
 
