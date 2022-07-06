@@ -59,3 +59,4 @@ buck-out/
 /ios/Pods/
 
 template/plugins/typescript/template/tsconfig.json
+.env
