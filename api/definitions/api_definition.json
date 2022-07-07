@@ -30,7 +30,9 @@
 											"required": "One person",
 											"buddying": false,
 											"scope" : "https://drive.google.com/file/d/1j469c-xp8HPYLocTgz5lMYHnnz7TsRVP/view?usp=sharing",
-											"sector" : "Arts & Culture"
+											"sector" : "Arts & Culture", 
+											"video_file": "https://vod-progressive.akamaized.net/exp=1657227176~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F678%2F28%2F703391800%2F3256486964.mp4~hmac=e76bbd7e698f0d46c373bce069f936a24182694a1b0d140a63fcf240a2e8b65c/vimeo-prod-skyfire-std-us/01/678/28/703391800/3256486964.mp4"
+										
 										},
 										{
 											"it_key": "IT-123",
@@ -46,7 +48,8 @@
 											"required": "One person",
 											"buddying": false,
 											"scope" : "https://drive.google.com/file/d/1j469c-xp8HPYLocTgz5lMYHnnz7TsRVP/view?usp=sharing",
-											"sector" : "Arts & Culture"
+											"sector" : "Arts & Culture",
+											"video_file": "https://vod-progressive.akamaized.net/exp=1657227176~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F678%2F28%2F703391800%2F3256486964.mp4~hmac=e76bbd7e698f0d46c373bce069f936a24182694a1b0d140a63fcf240a2e8b65c/vimeo-prod-skyfire-std-us/01/678/28/703391800/3256486964.mp4"
 
 										},
 										{
@@ -63,7 +66,8 @@
 											"required": "One person",
 											"buddying": true,
 											"scope" : "https://drive.google.com/file/d/1j469c-xp8HPYLocTgz5lMYHnnz7TsRVP/view?usp=sharing",
-											"sector" : "Education & Youth"
+											"sector" : "Education & Youth",
+											"video_file": "https://vod-progressive.akamaized.net/exp=1657227176~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F678%2F28%2F703391800%2F3256486964.mp4~hmac=e76bbd7e698f0d46c373bce069f936a24182694a1b0d140a63fcf240a2e8b65c/vimeo-prod-skyfire-std-us/01/678/28/703391800/3256486964.mp4"
 										}
 									],
 									"schema" : {
@@ -143,6 +147,10 @@
 						"sector": {
 							"type" : "string",
 							"description" : "Project charity sector"
+						}, 
+						"video_file": {
+							"type" : "string",
+							"description" : "MP4 of a video introducing the project, if available"
 						}
 					}
 				}

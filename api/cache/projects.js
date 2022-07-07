@@ -175,7 +175,7 @@ async function getInitialTriageProjectsFromJira(startAt, itArray) {
   const itTotalData = parseInt(jiraIt.data.total);
 
   await Promise.all(jiraIt.data.issues.map(async (x) => {
-    project = {
+    const project = {
       it_key: x['key'],
       name: x['fields'].summary,
       description: x['fields'].description,
@@ -184,6 +184,12 @@ async function getInitialTriageProjectsFromJira(startAt, itArray) {
       scope: x['fields'].customfield_10090,
       sector: x['fields'].customfield_10148?.value ?? '',
     }
+
+    const videoFile =  await videoHelper.getVideoFileFromVimeo(project.video)
+    project.video_file = videoFile
+
+    console.log(project)
+    itArray.push(project);
   }));
 
   if (itArray.length < itTotalData) {

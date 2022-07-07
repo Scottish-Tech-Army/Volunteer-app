@@ -87,7 +87,8 @@ function fakeProjectObject() {
     client: faker.company.companyName(),
     video: faker.internet.url(),
     scope: faker.internet.url(),
-    sector: faker.lorem.sentence()
+    sector: faker.lorem.sentence(),
+    video_file: faker.internet.url(),
   };
 }
 
@@ -171,8 +172,8 @@ function fakeAirTableProjectResource(numberRequired, includeBuddying) {
     video: faker.internet.url(),
     scope: faker.internet.url(),
     sector: faker.lorem.sentence(),
+    video_file: faker.internet.url(),
     skills: `${faker.lorem.words(5)}
-    
     ${faker.lorem.words(5)}`,
     hours: fakeHours(),
     required: 1,
