@@ -28,46 +28,60 @@ Ask the team on Slack - one of the dev team needs to go to [the Google Play Cons
 
 1. Node.js LTS release
 2. npm
-   >npm usually is installed when Node.js is installed. type npm --version to check if it is installed after installing Node.js in Command Terminal 
-3. Ensure that you have read through for your particular platform: https://reactnative.dev/docs/environment-setup
-4. Make sure that you have Android 10 installed and not higher.
+   > npm usually is installed when Node.js is installed. type npm --version to check if it is installed after installing Node.js in Command Terminal
+3. Go to the following link: https://reactnative.dev/docs/environment-setup - choose the 'React Native CLI Quickstart' tab, and follow the instructions for your platform
+
+   > **Note** Where the instructions refer to a particular version of Android or the Android SDK platform, use **Android 10** and **SDK platform 29** instead of the more recent one.
+
+   > **Note** You can skip the sections of the React Native docs that describe setting up and running a new project, since we already have one.
 
 # Setup and first run
 
-1. Ensure that you've gone through the following link for your particular platform: https://reactnative.dev/docs/environment-setup
+1. Ensure that you've gone through the setup instructions at the following link for your particular platform: https://reactnative.dev/docs/environment-setup (see notes [above](#requirements-to-run-the-project))
 
-2. Pull the code from Git
+2. Clone the code from GitHub:
+
+   > `git clone https://github.com/Scottish-Tech-Army/Volunteer-app.git`
 
 3. Open Command terminal
 
-4. Go to the `api` folder inside the project folder (e.g. **\Volunteer-app path\api**)
+4. Go to the `api` folder inside the project folder (e.g. **/path/to/Volunteer-app/api**)
 
-5. Copy the `.env.example` file in the api root folder and name your new file `.env` in the same folder. Fill in the empty values (`""`) in your file for any credentials/settings (API keys for STA Jira API access, AirTable, etc).
-    >**Note** Credentials themselves not provided, these should be requested/provided on joining the dev group.
+5. Copy the `.env.example` file in the api root folder and name your new file `.env` in the same folder. Fill in the empty values (`""`) in your file for any credentials/settings (API keys for STA Jira API access, AirTable, etc)
 
-6. At the command prompt type `npm install` then `npm start` to start the Volunteer App API server.
+   > **Note** For security reasons, the credentials themselves are not provided here. Ask in the [volunteer-app](https://scottishtecharmy.slack.com/archives/C01SUL6K5E1) Slack channel when you join the dev group, and somebody will send them to you.
 
-7. Go to the `app` folder inside the project folder (e.g. **\Volunteer-app path\app**)
+6. At the command prompt type `npm install` then `npm start` to start the Volunteer App API server. You should see a message that says `Volunteer App API is listening on port <number>` - make a note of the port number for later
+
+7. Go to the `app` folder inside the project folder (e.g. **/path/to/Volunteer-app/app**)
 
 8. At the command prompt type `npm install`
-    >**Note:** Inside the `app` folder there is package-lock.json. Everytime this is modified, it is advised to repeat step 6 before  running the project.
 
-    >**Note:** you may need to run `npm install --legacy-peer-deps`
+   > **Note** Inside the `app` folder there is `package-lock.json`. Everytime this is modified, it is advised to repeat step 6 before running the project.
 
-9. If you are on a Mac, go to the `app/ios` folder in a terminal window. At the command prompt type `pod install`
+   > **Note** you may need to run `npm install --legacy-peer-deps` or `npm install --force`
+
+9. If you are on a Mac and want to run the iOS build of the app, go to the `app/ios` folder in a terminal window. At the command prompt type `pod install`
 
 10. Duplicate the example config file `app/src/Config/index.example.ts` and name your new file `app/src/Config/index.ts`
-    >**Note** If the app has difficulty connecting to the API, you may need specify your IP address in `index.ts`. Replace `localhost` in the line `STA_BASE_URL: 'http://localhost:3000'` with your own.
 
-11. type in command terminal: `npm run ios` or `npm run android`
+**Note** If the app has difficulty connecting to the API, you may need to specify your private IP address and API port number in `app/src/Config/index.ts`. The IP address settings may vary depending on the setup of your dev machine and local network. IP settings that have worked for others include: `127.0.0.1` (the loopback address); the private IP of the local dev machine; and the private IP of the default gateway for your network. You made a note of the API port number earlier. In the line `STA_BASE_URL: 'http://localhost:3000'`, replace `localhost` with your own IP, and if necessary, replace `3000` with the port number.
+
+**Help** You can find the IP addresses for your dev machine and default gateway by following the instructions for your platform [here](https://www.techbout.com/find-public-and-private-ip-address-44552/).
+
+**Example** If your computer's private IP is 192.168.1.50 and the API is listening on port 3000, the line should now read `STA_BASE_URL: 'http://192.168.1.50:3000'`.
+
+11. Type in command terminal: `npm run ios` or `npm run android`
+
+12. When you've got the app to run, make a PR to improve this README! Fix something that caused you headaches, update something that's no longer correct, or add a training resource, or add something else you think would help other people to get up and running.
 
 # Subsequent run
 
 1. Open Command terminal.
 
-2. Go to the `api` folder inside the project folder (e.g. **\Volunteer-app path\api**) and enter `npm start` to start the Volunteer App API server.
+2. Go to the `api` folder inside the project folder (e.g. **/path/to/Volunteer-app/api**) and enter `npm start` to start the Volunteer App API server.
 
-3. Go to the `app` folder inside the project folder (e.g. **\Volunteer-app path\app**) and enter `npm run ios` or `npm run android`.
+3. Go to the `app` folder inside the project folder (e.g. **/path/to/Volunteer-app/app**) and enter `npm run ios` or `npm run android`.
 
 4. Optional: Update the cached projects/resources data from Jira *(during development, you probably only need to use this if you need the very latest data from Jira or you're actively testing the caching mechanism)*.  Open another command terminal window, go to the `api` folder inside the project.
     - If you want to manually update the cached data, enter this command: `node cache/run-projects.js`
