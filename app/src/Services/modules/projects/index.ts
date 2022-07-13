@@ -1,4 +1,3 @@
-import { ImageURISource } from 'react-native'
 import { api } from '../../api'
 import fetchAll from './fetchAll'
 import registerInterest from './registerInterest'
@@ -29,6 +28,7 @@ export interface Project {
   hours: string
   required: string
   buddying: boolean
+  sector: string
   video_file: string
 }
 

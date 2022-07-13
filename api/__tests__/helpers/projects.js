@@ -1,3 +1,4 @@
+const airTable = require('../../helpers/airTable');
 const { faker } = require('@faker-js/faker');
 const projectsHelpers = require('../../helpers/projects');
 const stringsHelpers = require('../../helpers/strings');
@@ -19,10 +20,7 @@ describe('Test the projects helpers', () => {
     fakeResources[4].it_key = fakeProjects[1].it_key;
 
     // Run test
-    const combinedProjectsResources = projectsHelpers.combineProjectsAndResources(
-      fakeProjects,
-      fakeResources,
-    );
+    const combinedProjectsResources = projectsHelpers.combineProjectsAndResources(fakeProjects, fakeResources);
 
     expect(combinedProjectsResources.length).toEqual(5);
     expect(combinedProjectsResources[0]).toEqual({
@@ -49,9 +47,13 @@ describe('Test the projects helpers', () => {
 
   test('formatProjectResourceFromAirTable correctly formats data it receives from AirTable', async () => {
     // Set up fake test data
-    const fakeProjectResourceDataFromAirTable = projectsTestData.fakeAirTableProjectResource(1, false);
+    const fakeProjectResourceDataFromAirTable = projectsTestData.fakeAirTableProjectResource(false);
 
     // Mock dependencies
+    airTable;
+    const airTableAddEmptyFieldsSpy = jest
+      .spyOn(airTable, 'addEmptyFields')
+      .mockImplementation((projectResource) => projectResource);
     const stringsHelpersSplitByLineBreakSpy = jest
       .spyOn(stringsHelpers, 'splitByLineBreak')
       .mockImplementation(() => {});
@@ -64,13 +66,14 @@ describe('Test the projects helpers', () => {
       fakeProjectResourceDataFromAirTable,
     );
 
+    expect(airTableAddEmptyFieldsSpy).toHaveBeenCalledTimes(1);
     expect(stringsHelpersSplitByLineBreakSpy).toHaveBeenCalledTimes(1);
     expect(stringsHelpersRemoveBlankLinesSpy).toHaveBeenCalledTimes(1);
     expect(stringsHelpersRemoveBlankLinesSpy).toHaveBeenCalledWith(fakeProjectResourceDataFromAirTable.skills);
-    expect(formattedProjectResource.buddying).toEqual(false);
     expect(formattedProjectResource.required).toEqual('1 person');
 
     // Clean up
+    airTableAddEmptyFieldsSpy.mockRestore();
     stringsHelpersSplitByLineBreakSpy.mockRestore();
     stringsHelpersRemoveBlankLinesSpy.mockRestore();
   });
