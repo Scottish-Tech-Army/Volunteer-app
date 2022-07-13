@@ -1,22 +1,27 @@
 import React, { FC } from 'react'
 import Video from 'react-native-video'
-import { Project } from '@/Services/modules/projects/index'
+import styled from 'styled-components/native'
 
 interface VideoProps {
-    videoURL: string
+    details: string
   }
 
-const ProjectVideo: FC<VideoProps> = ({ videoURL }) => {
-        return (
-            <Video  
-                source= {{uri: videoURL}}         
-                paused={true}                 
-                style={{ width: 350, height: 250 }}
-                controls={true}
-                
-            />
-        )
-    }
+const VideoView = styled.View`
+  margin: 27px 0px 27px 0px;` 
+ 
 
+const ProjectVideo: FC<VideoProps> = ({ details }) => {
+    if (!details) return null;
+        return (
+            <VideoView >
+            <Video
+                source= {{uri: details}}         
+                paused={true}                 
+                style={{width: 330, height: 250 }}
+                controls={true}
+            />
+            </VideoView>
+        )
+    }   
 
 export default ProjectVideo
