@@ -1,10 +1,11 @@
 - [Welcome](#welcome)
 - [Requirements to run the project:](#requirements-to-run-the-project)
 - [Setup and first run](#setup-and-first-run)
+- [Troubleshooting](#troubleshooting)
 - [Development](#development)
 - [AWS Deployment](#aws-deployment)
 - [Training resources](#training-resources)
-- [Troubleshooting](#troubleshooting)
+
 
 # Welcome
 
@@ -56,6 +57,24 @@ Welcome to the the Volunteering App Github repo
 11. Type in command terminal: `npm run ios` or `npm run android`
 
 12. When you've got the app to run, make a PR to improve this README! Fix something that caused you headaches, update something that's no longer correct, or add a training resource, or add something else you think would help other people to get up and running.
+
+# Troubleshooting
+
+Below are some commonly encountered issues and possible ways to resolve them. If it still doesn't work, post in the [volunteer-app](https://scottishtecharmy.slack.com/archives/C01SUL6K5E1) Slack channel and someone will help you.
+
+## The app won't build
+
+- When I run `npm install`, it fails with dependency resolution errors
+  > Sometimes this happens when one or more of the project dependencies gets updated and is out of step with the others. Try running `npm install --legacy-peer-deps` or `npm install --force`.
+- When I run `npm run android`, it fails and says that `ANDROID_HOME` is not set
+  > Go to the [React Native setup guide](https://reactnative.dev/docs/environment-setup), choose the 'React Native CLI Quickstart' tab, choose your platform, and make sure that you've set the ANDROID_HOME environment variable as described there. You may need to restart your terminal window in order for the change to take effect.
+
+## The app builds, but crashes when I run it
+
+- The app gets stuck on the 'loading' screen
+  > Make sure the API is running on your local machine, and that your **api/.env** and **app/Config/index.ts** files are configured correctly (see [Setup and first run](#setup-and-first-run) above. Make sure you have set your [IP address](https://www.techbout.com/find-public-and-private-ip-address-44552/) in **app/Config/index.ts** correctly; depending on your local network configuration, it may be subject to change between runs of the app.
+- The app crashes with an error that says 'Metro has encountered an error: Cannot read properties of undefined (reading 'transformFile')'
+  > Make sure you are using the LTS version of Node (currently v16); see [suggested solutions on StackOverflow](https://stackoverflow.com/questions/69647332/cannot-read-properties-of-undefined-reading-transformfile-at-bundler-transfo). If you want to keep your current version of Node as well, you can use tools such as [nvm (MacOS/Linux)](https://github.com/nvm-sh/nvm) or [nvm-windows](https://github.com/coreybutler/nvm-windows) to manage your Node installations.
 
 # Subsequent run
 
@@ -131,21 +150,3 @@ For support, please @ David Calder in the [volunteer-app](https://scottishtechar
 - [Learn React (official tutorial, beta version)](https://beta.reactjs.org/learn) - if you are new to working with React, this is a good place to start. (The tutorial on the non-beta site is ok but quite out of date; the beta version is mostly complete and much improved)
 - [React Native docs](https://reactnative.dev/) - React, but for building cross-platform mobile apps
 - [Express JS docs](https://expressjs.com/) - this is the framework used to build the API
-
-# Troubleshooting
-
-Below are some commonly encountered issues and possible ways to resolve them. If it still doesn't work, post in the [volunteer-app](https://scottishtecharmy.slack.com/archives/C01SUL6K5E1) Slack channel and someone will help you.
-
-## The app won't build
-
-- When I run `npm install`, it fails with dependency resolution errors
-  > Sometimes this happens when one or more of the project dependencies gets updated and is out of step with the others. Try running `npm install --legacy-peer-deps` or `npm install --force`.
-- When I run `npm run android`, it fails and says that `ANDROID_HOME` is not set
-  > Go to the [React Native setup guide](https://reactnative.dev/docs/environment-setup), choose the 'React Native CLI Quickstart' tab, choose your platform, and make sure that you've set the ANDROID_HOME environment variable as described there. You may need to restart your terminal window in order for the change to take effect.
-
-## The app builds, but crashes when I run it
-
-- The app gets stuck on the 'loading' screen
-  > Make sure the API is running on your local machine, and that your **api/.env** and **app/Config/index.ts** files are configured correctly (see [Setup and first run](#setup-and-first-run) above)
-- The app crashes with an error that says 'Metro has encountered an error: Cannot read properties of undefined (reading 'transformFile')'
-  > Make sure you are using the LTS version of Node (currently v16); see [suggested solutions on StackOverflow](https://stackoverflow.com/questions/69647332/cannot-read-properties-of-undefined-reading-transformfile-at-bundler-transfo). If you want to keep your current version of Node as well, you can use tools such as [nvm (MacOS/Linux)](https://github.com/nvm-sh/nvm) or [nvm-windows](https://github.com/coreybutler/nvm-windows) to manage your Node installations.
