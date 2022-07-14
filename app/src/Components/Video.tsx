@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import Video from 'react-native-video'
+import VideoComponent from 'react-native-video'
 import styled from 'styled-components/native'
 
 interface VideoProps {
@@ -10,11 +10,11 @@ const VideoView = styled.View`
   margin: 27px 0px 27px 0px;` 
  
 
-const ProjectVideo: FC<VideoProps> = ({ details }) => {
+const Video: FC<VideoProps> = ({ details }) => {
     if (!details) return null;
         return (
             <VideoView >
-            <Video
+            <VideoComponent
                 source= {{uri: details}}         
                 paused={true}                 
                 style={{width: 330, height: 250 }}
@@ -24,4 +24,4 @@ const ProjectVideo: FC<VideoProps> = ({ details }) => {
         )
     }   
 
-export default ProjectVideo
+export default Video
