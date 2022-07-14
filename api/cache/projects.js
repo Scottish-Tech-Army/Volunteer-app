@@ -185,10 +185,9 @@ async function getInitialTriageProjectsFromJira(startAt, itArray) {
       sector: x['fields'].customfield_10148?.value ?? '',
     }
 
-    const videoFile =  await videoHelper.getVideoFileFromVimeo(project.video)
-    project.video_file = videoFile
+    const videoFile =  await videoHelper.getVideoFileFromVimeo(project.video);
+    project.video_file = videoFile;
 
-    console.log(project)
     itArray.push(project);
   }));
 
