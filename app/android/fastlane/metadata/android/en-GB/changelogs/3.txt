@@ -1,0 +1,1 @@
+Add version number on 'Example' user screen, to make debugging easier

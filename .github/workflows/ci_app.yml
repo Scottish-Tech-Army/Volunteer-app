@@ -19,5 +19,5 @@ jobs:
       - name: Run Tests
         run: |
           cd app
-          npm install
+          npm install --legacy-peer-deps
           npm test
