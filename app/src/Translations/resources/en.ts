@@ -1,5 +1,5 @@
 export default {
-  welcome: 'Welcome to React Native STA by TheCodingMachine',
+  welcome: 'Welcome to the Scottish Tech Army App',
   actions: {
     continue: 'Continue',
   },
