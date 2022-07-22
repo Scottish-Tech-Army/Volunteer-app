@@ -1,4 +1,4 @@
-package org.scottishtecharmy.volunteerapp;
+package com.sta;
 
 import android.os.Bundle;
 import com.facebook.react.ReactActivity;

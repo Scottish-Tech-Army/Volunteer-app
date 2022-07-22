@@ -9,7 +9,6 @@
     "lib": ["es6"],
     "moduleResolution": "node",
     "noEmit": true,
-    "resolveJsonModule": true,
     "strict": true,
     "target": "esnext",
     "baseUrl": "./src",

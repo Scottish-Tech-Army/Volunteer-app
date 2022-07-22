@@ -13,7 +13,6 @@ import { Brand } from '@/Components'
 import { useTheme } from '@/Hooks'
 import { useLazyFetchOneQuery } from '@/Services/modules/users'
 import { changeTheme, ThemeState } from '@/Store/Theme'
-import { version } from '../../package.json'
 
 const ExampleContainer = () => {
   const { t } = useTranslation()
@@ -97,8 +96,6 @@ const ExampleContainer = () => {
       >
         <Text style={Fonts.textRegular}>Light</Text>
       </TouchableOpacity>
-
-      <Text style={Fonts.textSmall}>Version {version}</Text>
     </ScrollView>
   )
 }
