@@ -2,6 +2,8 @@
 - [Download the app!](#download-the-app)
 - [Requirements to run the project:](#requirements-to-run-the-project)
 - [Setup and first run](#setup-and-first-run)
+- [Subsequent run](#subsequent-run)
+- [Setup to deploy the app](#setup-to-deploy-the-app)
 - [Development](#development)
 - [API deployment on AWS](#api-deployment-on-aws)
 - [App deployment](#app-deployment)
@@ -90,7 +92,7 @@ You don't need to worry about doing this section until you're through all the st
 2. Add the `key.json` file into the `/app/android/` directory.  This file contains credentials for uploading the app to the Google Play Store.  Ask on Slack for another developer in the team to send you it.
     > Because this contains sensitive access credentials we should never commit this to GitHub as our repository is open-source, anyone can see it.
 
-3. Create a personal upload key to digitally 'sign' the app when you send it to the Google Play Store.  Follow the instructions in the ['Generating an upload key' section of this page](https://reactnative.dev/docs/signed-apk-android#generating-a-signing-key).  As part of doing that you'll be asked to set a password -- save this somewhere safe (e.g. [a password manager](https://www.techradar.com/uk/best/password-manager)), you'll need it in the future.  Put the `my-upload-key.keystore` file you create into the `/app/android` directory.
+3. Create a personal upload key to digitally 'sign' the app when you send it to the Google Play Store.  Follow the instructions in the ['Generating an upload key' section of this page](https://reactnative.dev/docs/signed-apk-android#generating-a-signing-key).  As part of doing that you'll be asked to set a password -- save this somewhere safe (e.g. [a password manager](https://www.techradar.com/uk/best/password-manager)), you'll need it in the future.  Put the `my-release-key.keystore` file you create into the `/app/android` directory.
     > This file also should never be committed to GitHub.
 
 ## TestFlight (iOS)
