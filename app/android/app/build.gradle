@@ -1,6 +1,21 @@
 apply plugin: "com.android.application"
 
 import com.android.build.OutputFile
+import groovy.json.JsonSlurper
+
+/**
+ * Get the SemVer marketing version string (versionName in Android terms)
+ * from the app package.json
+ */
+def getVersionFromPackageJson() {
+    //  Read and parse package.json file from the React-Native app project root
+    // (i.e. Volunteer-app/app/package.json)
+    def packageJsonFile = new File("$rootDir/../package.json")
+    def packageJsonObj = new JsonSlurper().parseText(packageJsonFile.text)
+
+    // Return the version string
+    return packageJsonObj["version"]
+}
 
 /**
  * The react.gradle file registers a task for each build variant (e.g. bundleDebugJsAndAssets
@@ -130,7 +145,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 4
-        versionName "1.0.3"
+        versionName getVersionFromPackageJson()
     }
     splits {
         abi {
