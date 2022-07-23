@@ -29,7 +29,7 @@ const StartupContainer = () => {
     <View style={[Layout.fill, Layout.colCenter]}>
       <Brand />
       <ActivityIndicator size={'large'} style={[Gutters.largeVMargin]} />
-      <Text style={Fonts.textCenter}>{t('welcome')}</Text>
+      <Text style={Fonts.textCenter, Fonts.textSmall}>{t('welcome')}</Text>
     </View>
   )
 }
