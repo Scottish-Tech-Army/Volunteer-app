@@ -2,11 +2,13 @@
 - [Download the app!](#download-the-app)
 - [Requirements to run the project:](#requirements-to-run-the-project)
 - [Setup and first run](#setup-and-first-run)
+- [Troubleshooting](#troubleshooting)
 - [Subsequent run](#subsequent-run)
 - [Setup to deploy the app](#setup-to-deploy-the-app)
 - [Development](#development)
 - [API deployment on AWS](#api-deployment-on-aws)
 - [App deployment](#app-deployment)
+- [Training resources](#training-resources)
 
 # Welcome
 
@@ -74,6 +76,24 @@ Ask the team on Slack - one of the dev team needs to go to [the Google Play Cons
 11. Type in command terminal: `npm run ios` or `npm run android`
 
 12. When you've got the app to run, make a PR to improve this README! Fix something that caused you headaches, update something that's no longer correct, or add a training resource, or add something else you think would help other people to get up and running.
+
+# Troubleshooting
+
+Below are some commonly encountered issues and possible ways to resolve them. If it still doesn't work, post in the [volunteer-app](https://scottishtecharmy.slack.com/archives/C01SUL6K5E1) Slack channel and someone will help you.
+
+## The app won't build
+
+- When I run `npm install`, it fails with dependency resolution errors
+  > Sometimes this happens when one or more of the project dependencies gets updated and is out of step with the others. Try running `npm install --legacy-peer-deps` or `npm install --force`.
+- When I run `npm run android`, it fails and says that `ANDROID_HOME` is not set
+  > Go to the [React Native setup guide](https://reactnative.dev/docs/environment-setup), choose the 'React Native CLI Quickstart' tab, choose your platform, and make sure that you've set the ANDROID_HOME environment variable as described there. You may need to restart your terminal window in order for the change to take effect.
+
+## The app builds, but crashes when I run it
+
+- The app gets stuck on the 'loading' screen
+  > Make sure the API is running on your local machine, and that your **api/.env** and **app/Config/index.ts** files are configured correctly (see [Setup and first run](#setup-and-first-run) above)
+- The app crashes with an error that says 'Metro has encountered an error: Cannot read properties of undefined (reading 'transformFile')'
+  > Make sure you are using the LTS version of Node (currently v16); see [suggested solutions on StackOverflow](https://stackoverflow.com/questions/69647332/cannot-read-properties-of-undefined-reading-transformfile-at-bundler-transfo). If you want to keep your current version of Node as well, you can use tools such as [nvm (MacOS/Linux)](https://github.com/nvm-sh/nvm) or [nvm-windows](https://github.com/coreybutler/nvm-windows) to manage your Node installations.
 
 # Subsequent run
 
@@ -206,3 +226,11 @@ For support, please @ David Calder in the [volunteer-app](https://scottishtechar
 9. In `/app/src/Config/index.ts` set `STA_BASE_URL` to point to **the IP address** for the external URL for the API endpoint on AWS, see [known issues](#known-issues) above -- not to your localhost or its IP address.
 
 [More instructions to be added]
+
+# Training resources
+
+- [STA Vimeo Showcase - Volunteer App Training](https://vimeo.com/showcase/9205161) - recordings of STA training sessions relevant to the volunteer app
+- [Learn React (official tutorial, beta version)](https://beta.reactjs.org/learn) - if you are new to working with React, this is a good place to start. (The tutorial on the non-beta site is ok but quite out of date; the beta version is mostly complete and much improved)
+- [React Native docs](https://reactnative.dev/) - React, but for building cross-platform mobile apps
+- [Express JS docs](https://expressjs.com/) - this is the framework used to build the API
+- [React Native Boilerplate docs](https://thecodingmachine.github.io/react-native-boilerplate/) - the project template used to kickstart our app. The docs include lots of useful information about the project structure and what some of the dependencies are used for.
