@@ -1,5 +1,6 @@
 - [Welcome](#welcome)
 - [Download the app!](#download-the-app)
+- [Updating to the latest version of the app](#updating-to-the-latest-version-of-the-app)
 - [Requirements to run the project:](#requirements-to-run-the-project)
 - [Setup and first run](#setup-and-first-run)
 - [Subsequent run](#subsequent-run)
@@ -22,7 +23,23 @@ Ask Joanna on Slack to set you up, you'll get an email invitation to download Te
 
 ## Android
 
-Ask the team on Slack - one of the dev team needs to go to [the Google Play Console](https://play.google.com/console) > Volunteer app > Release > Testing > Internal testing, then they'll add your email address to the 'STA Volunteer App' Testers group (NB this must be the email address you use for the Google Play account on your phone).  Once that's done, you go to [this page](https://play.google.com/apps/internaltest/4701609055165574724) and follow instructions to download the app.
+Ask the team on Slack - one of the dev team needs to go to [the Google Play Console](https://play.google.com/console) > Volunteer app > Release > Testing > Internal testing, then they'll add your email address to the 'STA Volunteer App' Testers group (NB this must be the email address you use for the Google Play account on your phone).
+
+Once that's done, you go to [this page](https://play.google.com/apps/internaltest/4701609055165574724) and follow instructions to download the app.
+
+# Updating to the latest version of the app
+
+The app is being updated regularly and while it's in private testing your phone won't automatically download the latest version.  Here's what you do to get the latest version:
+
+## iOS
+
+[To add]
+
+## Android
+
+On your phone, go to the Play Store page from the app itself -- long press on the icon, choose App Info, then App details in store.  Then if you see an 'Update' button click that to install the latest version on your device.
+
+Alternatively, you can go to the link in the instructions above for installing the Android app, then to the Google Play Store page it takes you to.  If there's an 'Update' button there click that to install the latest version on your device.
 
 # Requirements to run the project:
 
@@ -68,6 +85,7 @@ Ask the team on Slack - one of the dev team needs to go to [the Google Play Cons
 2. Go to the `api` folder inside the project folder (e.g. **\Volunteer-app path\api**) and enter `npm start` to start the Volunteer App API server.
 
 3. Go to the `app` folder inside the project folder (e.g. **\Volunteer-app path\app**) and enter `npm run ios` or `npm run android`.
+    >**On Android,** if you get an error message that includes `INSTALL_FAILED_UPDATE_INCOMPATIBLE` this may be because you previously installed a newer version of the app for your emulator (e.g. on a new branch or testing someone else's pull request) then you switched back to an earlier version.  Uninstall the app from your emulator with the command `adb shell pm uninstall org.scottishtecharmy.volunteerapp` then run `npm run android` again.
 
 4. Optional: Update the cached projects/resources data from Jira *(during development, you probably only need to use this if you need the very latest data from Jira or you're actively testing the caching mechanism)*.  Open another command terminal window, go to the `api` folder inside the project.
     - If you want to manually update the cached data, enter this command: `node cache/run-projects.js`
@@ -89,11 +107,12 @@ You don't need to worry about doing this section until you're through all the st
 
     ## Google Play Store (Android)
 
-2. Add the `key.json` file into the `/app/android/` directory.  This file contains credentials for uploading the app to the Google Play Store.  Ask on Slack for another developer in the team to send you it.
-    > Because this contains sensitive access credentials we should never commit this to GitHub as our repository is open-source, anyone can see it.
+2. Add `key.json` and `my-release-key.keystore` files into the `/app/android/` directory.  These files contain credentials for uploading the app to the Google Play Store.  Ask on Slack for another developer in the team to send you these files.  Also ask them for the password for the `my-release-key.keystore` file -- save this somewhere safe (e.g. [a password manager](https://www.techradar.com/uk/best/password-manager)), you'll need it in the future to deploy the app.
+    > Because these files contain sensitive access credentials we should never commit them to GitHub as our repository is open-source, anyone can see it.
 
-3. Create a personal upload key to digitally 'sign' the app when you send it to the Google Play Store.  Follow the instructions in the ['Generating an upload key' section of this page](https://reactnative.dev/docs/signed-apk-android#generating-a-signing-key).  As part of doing that you'll be asked to set a password -- save this somewhere safe (e.g. [a password manager](https://www.techradar.com/uk/best/password-manager)), you'll need it in the future.  Put the `my-release-key.keystore` file you create into the `/app/android` directory.
-    > This file also should never be committed to GitHub.
+    > On some systems, the terminal has a problem if the password for `my-release-key.keystore` contains symbols, so this password may need to be letters and numbers only (just make sure it's a long, strong password).  If you need to change the password locally you can use this command `keytool -storepasswd -keystore path/to/my-release-key.keystore -storetype PKCS12`
+
+3. Ask Joanna to give you Developer access to the STA Google Play Store account. That will allow you to check whether releases you deploy have uploaded successfully, and you'll be able to add new testers.
 
 ## TestFlight (iOS)
 
@@ -172,11 +191,11 @@ For support, please @ David Calder in the [volunteer-app](https://scottishtechar
 
 4. Get your pull request approved as you normally would.  When you're ready to merge your code into the `main` branch and deploy the updated app, double-check your version numbers in the previous steps are still right compared to what's in `main` (somebody else could have merged in code recently and changed the version numbers since you last checked - if you need to, update the version numbers before merging).
 
+5. In `/app/src/Config/index.ts` set `STA_BASE_URL` to point to the external URL for [the API endpoint on AWS](#api-deployment-on-aws) -- not to your localhost or its IP address, otherwise the app won't be able to connect to the API when it's installed on someone's phone.
+
     ## Google Play Store (Android)
 
-5. In `/app/src/Config/index.ts` set `STA_BASE_URL` to point to the external URL for [the API endpoint on AWS](#api-deployment-on-aws) -- not to your localhost or its IP address.
-
-6. Go to the `/app/android` directory in a terminal window and run the command `fastlane beta`.  You'll be prompted twice at the beginning for passwords -- both are the password you created in the [Setup to deploy the app section](#setup-to-deploy-the-app) above.
+6. Go to the `/app/android` directory in a terminal window and run the command `fastlane beta`.  You'll be prompted twice at the beginning for passwords -- both are the password you got for the `my-release-key.keystore` file in the [Setup to deploy the app section](#setup-to-deploy-the-app) above.
     > The process can take a while (sometimes 30 minutes or more)!  If it fails, try [the troubleshooting tips here](https://thecodingmachine.github.io/react-native-boilerplate/docs/BetaBuild/#troubleshooting), see [Google Play Store known issues](#google-play-store-known-issues) below or ask for help on the team Slack channel if you can't figure it out.
 
 7. If you have access, check in the [Google Play Console](https://play.google.com/console) that the new version of the app has successfully been added (Volunteer app > Release > Internal testing) -- you should see the new version number next to 'Latest release' under 'Track summary'.
