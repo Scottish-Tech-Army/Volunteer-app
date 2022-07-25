@@ -68,13 +68,15 @@ Alternatively, you can go to the link in the instructions above for installing t
 
    > **Note** For security reasons, the credentials themselves are not provided here. Ask in the [volunteer-app](https://scottishtecharmy.slack.com/archives/C01SUL6K5E1) Slack channel when you join the dev group, and somebody will send them to you.
 
-6. At the command prompt type `npm install` then `npm start` to start the Volunteer App API server. You should see a message that says `Volunteer App API is listening on port <number>` - make a note of the port number for later
+6. At the command prompt type `npm install` then `npm start` to start the Volunteer App API server. You should see a message that says `Volunteer App API is listening on port <number>` - make a note of the port number for later.
+
+> **Note** Inside the `api` folder there are files `package.json` and `package-lock.json`. Everytime either of these is modified, it is advised to repeat this step before running the project.
 
 7. Go to the `app` folder inside the project folder (e.g. **/path/to/Volunteer-app/app**)
 
 8. At the command prompt type `npm install`
 
-   > **Note** Inside the `app` folder there is `package-lock.json`. Everytime this is modified, it is advised to repeat step 6 before running the project.
+   > **Note** Inside the `app` folder there are files `package.json` and `package-lock.json`. Everytime either of these is modified, it is advised to repeat this step before running the project.
 
    > **Note** you may need to run `npm install --legacy-peer-deps` or `npm install --force`
 

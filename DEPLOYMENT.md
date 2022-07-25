@@ -8,7 +8,7 @@ This file gives instructions for deploying the API to AWS, and the app to TestFl
 
 This is how you get set up ready to deploy the app to the Google Play Store (for Android) and TestFlight (for iOS) later, using [Fastlane](https://fastlane.tools/).
 
-You don't need to worry about doing this section until you're through all the steps above and you've solved any headaches getting the API and the app running locally.
+You don't need to worry about doing this section until you've gone through all the setup steps in the [README](README.md) and you've solved any headaches getting the API and the app running locally.
 
 **If you're on a Mac** you can deploy the Android and iOS versions of the app.
 
@@ -94,7 +94,5 @@ For support, please @ David Calder in the [volunteer-app](https://scottishtechar
    - Near the end of the deployment process an AAB file is uploaded to the Google Play Store. This can take some time (e.g. 20 minutes on slow internet connections). It should be working, unless you get a `HTTPClient::SendTimeoutError: execution expired` error message in your terminal window. If the Fastlane process fails for this reason, you may need to run it again.
 
    ## TestFlight (iOS)
-
-9. In `/app/src/Config/index.ts` set `STA_BASE_URL` to point to **the IP address** for the external URL for the API endpoint on AWS, see [known issues](#known-issues) above -- not to your localhost or its IP address.
 
 [More instructions to be added]
