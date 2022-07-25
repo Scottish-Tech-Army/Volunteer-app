@@ -12,3 +12,7 @@ fastlane/test_output
 
 # Fastlane builds
 builds/*
+
+# Play Store credentials
+key.json
+
