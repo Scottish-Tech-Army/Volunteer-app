@@ -27,7 +27,7 @@ const RightColumn = styled.View`
 `
 
 const EventSummary: FC<EventSummaryProps> = ({ data }) => (
-  <EventDetails key={data.id}>
+  <EventDetails>
     <EventThumbnail />
     <RightColumn>
       <EventHeading title={data.name} />

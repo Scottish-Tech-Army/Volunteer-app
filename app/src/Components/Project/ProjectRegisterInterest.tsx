@@ -192,7 +192,6 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
           onChange={value => setLookingForBuddy(value)}
           value={lookingForBuddy}
         />
-
         <DateTime
           description="Available from..."
           maximumDate={oneYearInTheFuture}

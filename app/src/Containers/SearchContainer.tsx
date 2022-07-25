@@ -12,6 +12,7 @@ import {
   Projects,
 } from '@/Services/modules/projects'
 import { dedupeArrayOfObjects } from '@/Utils/Lists'
+import QuickSearchButton from '@/Components/Forms/QuickSearchButton'
 
 // define titles for quick search buttons relating to job roles
 const Roles = [
@@ -193,16 +194,6 @@ const SectionView = styled.View`
   flex-direction: column;
   flex-wrap: wrap;
   height: 180px;
-`
-const QuickSearchButton = styled.TouchableOpacity`
-  width: 28%;
-  height: 50px;
-  margin: 20px 0px 0px 15px;
-  padding: 5px;
-  background-color: #e3e3e3;
-  border: ${props => `1px solid ${props.theme.colors.staBlack}`};
-  display: flex;
-  justify-content: center;
 `
 const QuickSearchTitle = styled.Text`
   display: flex;
