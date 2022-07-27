@@ -84,7 +84,7 @@ Alternatively, you can go to the link in the instructions above for installing t
 
 10. Duplicate the example config file `app/src/Config/index.example.ts` and name your new file `app/src/Config/index.ts`
 
-**Note** If the app has difficulty connecting to the API, you may need to specify your private IP address and API port number in `app/src/Config/index.ts`. The IP address settings may vary depending on the setup of your dev machine and local network. IP settings that have worked for others include: `127.0.0.1` (the loopback address); the private IP of the local dev machine; and the private IP of the default gateway for your network. You made a note of the API port number earlier. In the line `STA_BASE_URL: 'http://localhost:3000'`, replace `localhost` with your own IP, and if necessary, replace `3000` with the port number.
+**Note** If the app has difficulty connecting to the API, you may need to specify your private IP address and API port number in `app/src/Config/index.ts`. The IP address settings may vary depending on the setup of your dev machine and local network. There are various different IP settings that have worked for others, which include: `10.0.2.2` ([a special alias that the Android emulator uses for your dev machine](https://developer.android.com/studio/run/emulator-networking)); the private IP of the local dev machine; and the private IP of the default gateway for your network. You made a note of the API port number earlier. In the line `STA_BASE_URL: 'http://localhost:3000'`, replace `localhost` with your own IP, and if necessary, replace `3000` with the port number.
 
 **Help** You can find the IP addresses for your dev machine and default gateway by following the instructions for your platform [here](https://www.techbout.com/find-public-and-private-ip-address-44552/).
 
@@ -143,7 +143,6 @@ So instead we store a cached copy of projects data, in the format we use it in o
 Please see instructions at the end of the [Subsequent run](#subsequent-run) section above on how to run these scripts.
 
 ### Services
-
 
 #### Slack
 
