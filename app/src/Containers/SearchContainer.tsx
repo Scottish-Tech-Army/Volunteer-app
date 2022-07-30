@@ -256,12 +256,11 @@ const SearchContainer = () => {
       if (relatedRoles?.length) {
         searchQueries = relatedRoles
       }
-      results = fuzzySearchByArray(searchQueries, [searchField]) // we needs to use fuzzy search as the roles can includes various options for a role 
+      results = fuzzySearchByArray(searchQueries, [searchField]) // we need to use fuzzy search as the roles should include various options of a role (i.e. without it developer does not include web developer results) 
     }
     else {
-    results = exactSearchByArray(searchQueries, searchField)
+    results = exactSearchByArray(searchQueries, searchField) // here we do not want to use fuzzy search as it would include unwanted results
     }
-    
 
     navigate('ProjectSearchResults', {
       results,
@@ -270,8 +269,6 @@ const SearchContainer = () => {
     })
   }
   
-  
-
   const handleFreeTextSubmit = () => {
     let searchQueries = [] as string[]
 
@@ -306,40 +303,23 @@ const SearchContainer = () => {
   ): Projects => {
     let results = [] as Projects
 
-    console.log("searchQueries", searchQueries)
-    console.log("searchField", searchField)
-
     if (projects) {
       results = projects.filter(
         project => {
           const anySearchQueriesMatching = searchQueries.some(searchQuery => {
-            if (typeof project[searchField] === "string") { // most fields are strings, skills is an array
-            
-              console.log("checking if searchField includes searchQuery", project[searchField].includes(searchQuery)) 
-
+            if (typeof project[searchField] === "string") { // most fields are strings, but some are an array of strings (i.e. skills)
               const isString = project[searchField] as string
               return isString.toLowerCase().includes(searchQuery.toLowerCase())
-          }
-          else if (Array.isArray(project[searchField])) { //assume it's an array, ie skills
-            const arrayOfStrings = project[searchField] as string[]
-
-            console.log("arrayOfStrings", arrayOfStrings)
-            console.log("checking arrayOfStrings includes searchQuery", arrayOfStrings.some(item => item.includes(searchQuery)))
-
-            return arrayOfStrings.some(item => item.toLowerCase().includes(searchQuery.toLowerCase()))
-          } 
-          
-          
-        }
-
-      )
-      console.log("checking anySearchQueriesMatching", anySearchQueriesMatching)
-
+            }
+            else if (Array.isArray(project[searchField])) { // assume it's an array, ie skills
+              const arrayOfStrings = project[searchField] as string[]
+              return arrayOfStrings.some(item => item.toLowerCase().includes(searchQuery.toLowerCase()))
+            }
+          })
           return anySearchQueriesMatching // returns a boolean
-
-    })
+        }
+      )
     }
-
     return results
   }
 
@@ -366,7 +346,6 @@ const SearchContainer = () => {
       fuseResultsArray = dedupeArrayOfObjects(fuseResultsArray)
       results = fuseResultsArray.map(result => result.item)
     }
-
     return results
   }
 
