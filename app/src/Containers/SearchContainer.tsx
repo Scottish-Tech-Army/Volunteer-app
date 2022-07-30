@@ -241,11 +241,15 @@ const SearchContainer = () => {
     return undefined
   }
 
+  
   const handleQuickSearchSubmit = (
     searchField: 'client' | 'description' | 'name' | 'role' | 'skills' | 'sector',
     searchQueryChoice: string,
   ) => {
     let searchQueries = [] as string[]
+    let results = [] as Projects
+
+    searchQueries.push(searchQueryChoice)
 
     if (searchField === 'role') {
       const relatedRoles = getRelatedRoles(searchQueryChoice)
@@ -253,11 +257,12 @@ const SearchContainer = () => {
       if (relatedRoles?.length) {
         searchQueries = relatedRoles
       }
+      results = fuzzySearchByArray(searchQueries, [searchField]) // we needs to use fuzzy search as the roles can includes various options for a role 
     }
-
-    searchQueries.push(searchQueryChoice)
-
-    const results = searchByArray(searchQueries, [searchField])
+    else {
+    results = exactSearchByArray(searchQueries, searchField)
+    }
+    
 
     navigate('ProjectSearchResults', {
       results,
@@ -265,6 +270,8 @@ const SearchContainer = () => {
       searchQuery: searchQueryChoice,
     })
   }
+  
+  
 
   const handleFreeTextSubmit = () => {
     let searchQueries = [] as string[]
@@ -277,7 +284,7 @@ const SearchContainer = () => {
 
     searchQueries.push(searchQuery)
 
-    const results = searchByArray(searchQueries, [
+    const results = fuzzySearchByArray(searchQueries, [
       'client',
       // default weight is 1, put less importance on description field as more likely to return false positive matches
       { name: 'description', weight: 0.5 },
@@ -294,7 +301,50 @@ const SearchContainer = () => {
     })
   }
 
-  const searchByArray = (
+  const exactSearchByArray = (
+    searchQueries: string[],
+    searchField: 'client' | 'description' | 'name' | 'role' | 'skills' | 'sector',
+  ): Projects => {
+    let results = [] as Projects
+
+    console.log("searchQueries", searchQueries)
+    console.log("searchField", searchField)
+
+    if (projects) {
+      results = projects.filter(
+        project => {
+          const anySearchQueriesMatching = searchQueries.some(searchQuery => {
+            if (typeof project[searchField] === "string") { // most fields are strings, skills is an array
+            
+              console.log("checking if searchField includes searchQuery", project[searchField].includes(searchQuery)) 
+
+              const isString = project[searchField] as string
+              return isString.toLowerCase().includes(searchQuery.toLowerCase())
+          }
+          else if (Array.isArray(project[searchField])) { //assume it's an array, ie skills
+            const arrayOfStrings = project[searchField] as string[]
+
+            console.log("arrayOfStrings", arrayOfStrings)
+            console.log("checking arrayOfStrings includes searchQuery", arrayOfStrings.some(item => item.includes(searchQuery)))
+
+            return arrayOfStrings.some(item => item.toLowerCase().includes(searchQuery.toLowerCase()))
+          } 
+          
+          
+        }
+
+      )
+      console.log("checking anySearchQueriesMatching", anySearchQueriesMatching)
+
+          return anySearchQueriesMatching // returns a boolean
+
+    })
+    }
+
+    return results
+  }
+
+  const fuzzySearchByArray = (
     searchQueries: string[],
     searchKeys: any[],
   ): Projects => {
