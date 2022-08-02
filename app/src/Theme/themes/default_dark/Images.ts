@@ -1,12 +1,10 @@
 /**
- * Images should be stored in the `App/Images` directory and referenced using variables defined here.
+ *  Replacement images used by the dark theme. 
+ *  Should be stored in /src/Assets/Images preferably PNG or SVG.
  */
 
 export default function () {
   return {
-    logo: {
-      uri:
-        'https://thecodingmachine.github.io/react-native-boilerplate/img/TOM-small.png',
-    },
+    logo: require('@/Assets/Images/LongLogoDark.png'),
   }
 }
