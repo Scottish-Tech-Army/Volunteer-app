@@ -26,6 +26,8 @@ platform :android do
     store_password = prompt(text: "Signing Store Password: ", secure_text: true)
     key_password = prompt(text: "Alias Key Password: ", secure_text: true)
     releaseFilePath = File.join(Dir.pwd, "..", "my-release-key.keystore")
+    new_version_code = google_play_track_version_codes(track:"internal").last.to_i + 1
+    android_set_version_code(version_code: new_version_code)
     gradle(task: 'clean')
     gradle(
       task: 'bundle',
