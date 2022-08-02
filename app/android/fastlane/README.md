@@ -31,6 +31,14 @@ Runs all the tests
 
 Submit a new Beta Build to Play Store
 
+### android make_changelog
+
+```sh
+[bundle exec] fastlane android make_changelog
+```
+
+Create changelog txt file for the current versionCode and update CHANGELOG.md
+
 ----
 
 This README.md is auto-generated and will be re-generated every time [_fastlane_](https://fastlane.tools) is run.
