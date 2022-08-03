@@ -308,8 +308,8 @@ const SearchContainer = () => {
         project => {
           const anySearchQueriesMatching = searchQueries.some(searchQuery => {
             if (typeof project[searchField] === "string") { // most fields are strings, but some are an array of strings (i.e. skills)
-              const isString = project[searchField] as string
-              return isString.toLowerCase().includes(searchQuery.toLowerCase())
+              const stringSearchField = project[searchField] as string
+              return stringSearchField.toLowerCase().includes(searchQuery.toLowerCase())
             }
             else if (Array.isArray(project[searchField])) { // assume it's an array, ie skills
               const arrayOfStrings = project[searchField] as string[]
