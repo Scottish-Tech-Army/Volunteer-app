@@ -311,7 +311,7 @@ describe('Test the projects/resources cache', () => {
       name: fakeJiraItApiResults.data.issues[randomItemIndex].fields.summary,
       description: fakeJiraItApiResults.data.issues[randomItemIndex].fields.description,
       client: fakeJiraItApiResults.data.issues[randomItemIndex].fields.customfield_10027,
-      video: fakeJiraItApiResults.data.issues[randomItemIndex].fields.customfield_10159,
+      video_webpage: fakeJiraItApiResults.data.issues[randomItemIndex].fields.customfield_10159,
       scope: fakeJiraItApiResults.data.issues[randomItemIndex].fields.customfield_10090,
       sector: fakeJiraItApiResults.data.issues[randomItemIndex].fields.customfield_10148.value
     });

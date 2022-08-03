@@ -3,7 +3,7 @@ const airTable = require('../helpers/airTable');
 const arraysHelpers = require('../helpers/arrays');
 const axios = require('axios').default;
 const projectsHelpers = require('../helpers/projects');
-const videoHelper = require('../services/video');
+const videoHelper = require('../services/vimeo');
 const api_key = process.env.JIRA_API_KEY;
 const email = process.env.JIRA_EMAIL;
 const resourcingJiraBoardName = 'RES';
@@ -185,7 +185,11 @@ async function getInitialTriageProjectsFromJira(startAt, itArray) {
       sector: x['fields'].customfield_10148?.value ?? '',
     }
 
-    const videoFile =  await videoHelper.getVideoFileFromVimeo(project.video);
+   /**
+   * video_webpage is required in order to retrieve the video MP4 file from Vimeo
+   * Vimeo MP4 links will expire after 1 hour but the cron job should run every 15mins to update them
+   */  
+    const videoFile =  await videoHelper.getVideoFileFromVimeo(project.video_webpage);
     project.video_file = videoFile;
 
     itArray.push(project);
