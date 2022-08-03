@@ -3,22 +3,22 @@ import VideoComponent from 'react-native-video'
 import styled from 'styled-components/native'
 
 interface VideoProps {
-    details: string
+    url: string
   }
 
 const VideoView = styled.View`
   margin: 27px 0px 27px 0px;` 
  
 
-const Video: FC<VideoProps> = ({ details }) => {
-    if (!details) return null;
+const Video: FC<VideoProps> = ({ url }) => {
+    if (!url) return null;
         return (
             <VideoView >
             <VideoComponent
-                source= {{uri: details}}         
-                paused={true}                 
+                source= {{uri: url}}         
+                paused                
                 style={{width: 330, height: 250 }}
-                controls={true}
+                controls
             />
             </VideoView>
         )
