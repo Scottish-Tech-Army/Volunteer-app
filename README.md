@@ -167,8 +167,6 @@ The app is currently deployed for internal testing. We deploy the API to AWS, an
 
 # Training resources
 
-[More instructions to be added]
-
 - [STA Vimeo Showcase - Volunteer App Training](https://vimeo.com/showcase/9205161) - recordings of STA training sessions relevant to the volunteer app
 - [Learn React (official tutorial, beta version)](https://beta.reactjs.org/learn) - if you are new to working with React, this is a good place to start. (The tutorial on the non-beta site is ok but quite out of date; the beta version is mostly complete and much improved)
 - [React Native docs](https://reactnative.dev/) - React, but for building cross-platform mobile apps
