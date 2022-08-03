@@ -256,7 +256,7 @@ const SearchContainer = () => {
       if (relatedRoles?.length) {
         searchQueries = relatedRoles
       }
-      results = fuzzySearchByArray(searchQueries, [searchField]) // we need to use fuzzy search as the roles should include various options of a role (i.e. without it developer does not include web developer results) 
+      results = fuzzySearchByArray(searchQueries, [searchField]) // we need to use fuzzy search as the roles names are not exact (charities use different ways of naming roles)
     }
     else {
     results = exactSearchByArray(searchQueries, searchField) // here we do not want to use fuzzy search as it would include unwanted results
