@@ -247,8 +247,8 @@ const SearchContainer = () => {
   ) => {
     let searchQueries = [] as string[]
     let results = [] as Projects
-
-    searchQueries.push(searchQueryChoice)
+    
+    searchQueries = searchQueries.concat(searchQuery)
 
     if (searchField === 'role') {
       const relatedRoles = getRelatedRoles(searchQueryChoice)
