@@ -180,7 +180,7 @@ async function getInitialTriageProjectsFromJira(startAt, itArray) {
       name: x['fields'].summary,
       description: x['fields'].description,
       client: x['fields'].customfield_10027,
-      video: x['fields'].customfield_10159 ?? '',
+      video_webpage: x['fields'].customfield_10159 ?? '',
       scope: x['fields'].customfield_10090,
       sector: x['fields'].customfield_10148?.value ?? '',
     }
