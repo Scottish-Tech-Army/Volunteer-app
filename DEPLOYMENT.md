@@ -28,7 +28,9 @@ You don't need to worry about doing this section until you've gone through all t
 
 ## TestFlight (iOS)
 
-[To add]
+4. Ask Joanna to give you Developer access to the STA App Store Connect account. This will allow you to make a build and send it to Test Flight and check whether releases you deploy have uploaded successfully.
+
+5. Duplicate the `app/.env.example` file and name it `app/.env` then add your App Store Connect email address in place of the example one in the `APPLE_ID` variable.
 
 # API deployment on AWS
 
@@ -95,10 +97,12 @@ For support, please @ David Calder in the [volunteer-app](https://scottishtechar
 
    ## TestFlight (iOS)
 
-9. Go to the `/app/ios` directory in a terminal window and run the command `fastlane beta`.  You'll be prompted to login (maybe several times) with your App Store Connect login.
+9. Make sure you have your email set in the  `APPLE_ID` variable in `app/.env`.
+
+10. Go to the `/app/ios` directory in a terminal window and run the command `fastlane beta`.  You'll be prompted to login (maybe several times) with your App Store Connect login.
     > The process can take a while (sometimes 30 minutes or more)!  If it fails, try [the troubleshooting tips here](https://thecodingmachine.github.io/react-native-boilerplate/docs/BetaBuild/#troubleshooting), or ask for help on the team Slack channel if you can't figure it out.
 
-10. If you have access, check in the [App Store Connect](https://appstoreconnect.apple.com/apps) that the new version of the app has successfully been uploaded and processed (STA Volunteer app > TestFlight) -- you should see the new build number below the latest version.
+11. If you have access, check in the [App Store Connect](https://appstoreconnect.apple.com/apps) that the new version of the app has successfully been uploaded and processed (STA Volunteer app > TestFlight) -- you should see the new build number below the latest version.
 
-11. If you are part of the iOS beta test group, you should get a notification on your phone from TestFlight that a new version is available to test. Download the updated version of the app to your iPhone ([see download instructions](#download-the-app) near the top of this README).
+12. If you are part of the iOS beta test group, you should get a notification on your phone from TestFlight that a new version is available to test. Download the updated version of the app to your iPhone ([see download instructions](#download-the-app) near the top of this README).
 

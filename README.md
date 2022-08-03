@@ -33,7 +33,11 @@ The app is being updated regularly and while it's in private testing your phone 
 
 ## iOS
 
-[To add]
+If you are in the Beta test group and you have the Test Flight App installed on your phone, you should receive an email and a push notification that a new version is available. In the TestFlight app Tap the **Update** button next to the STA Volunteer App to download the new version (pull down to refresh if you don't see the new update).
+
+You can also install previous builds if you tap on the **STA Volunteer App** > **App Information** > **Previous Builds**. Note: Test Flight builds expire after about 90 days, so you won't be able to download them if they are older.
+
+If you're not in the Beta test group, reach out to Joanna who can add you.
 
 ## Android
 
