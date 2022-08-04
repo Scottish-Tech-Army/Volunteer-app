@@ -48,7 +48,7 @@ function fakeEventObject(dateType) {
     type: faker.random.arrayElement(eventTypes),
     notes: faker.lorem.sentence(),
     series: faker.random.arrayElement(series),
-    video_webpage: faker.internet.url(),
+    video: faker.internet.url(),
     images: fakeImages(),
   };
 }

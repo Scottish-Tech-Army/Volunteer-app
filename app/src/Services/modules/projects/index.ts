@@ -23,7 +23,7 @@ export interface Project {
   client: string
   role: string
   description: string
-  video: string
+  video_webPage: string
   skills: string[]
   hours: string
   required: string
