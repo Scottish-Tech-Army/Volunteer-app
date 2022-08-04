@@ -248,7 +248,7 @@ const SearchContainer = () => {
     let searchQueries = [] as string[]
     let results = [] as Projects
     
-    searchQueries = searchQueries.concat(searchQuery)
+    searchQueries.push(searchQueryChoice)
 
     if (searchField === 'role') {
       const relatedRoles = getRelatedRoles(searchQueryChoice)
@@ -275,10 +275,8 @@ const SearchContainer = () => {
     const relatedRoles = getRelatedRoles(searchQuery)
 
     if (relatedRoles?.length) {
-      searchQueries = relatedRoles
+      searchQueries = searchQueries.concat(relatedRoles)
     }
-
-    searchQueries.push(searchQuery)
 
     const results = fuzzySearchByArray(searchQueries, [
       'client',
@@ -306,7 +304,7 @@ const SearchContainer = () => {
     if (projects) {
       results = projects.filter(
         project => {
-          const anySearchQueriesMatching = searchQueries.some(searchQuery => {
+          const isAnySearchQueriesMatching = searchQueries.some(searchQuery => {
             if (typeof project[searchField] === "string") { // most fields are strings, but some are an array of strings (i.e. skills)
               const stringSearchField = project[searchField] as string
               return stringSearchField.toLowerCase().includes(searchQuery.toLowerCase())
@@ -316,7 +314,7 @@ const SearchContainer = () => {
               return arrayOfStrings.some(item => item.toLowerCase().includes(searchQuery.toLowerCase()))
             }
           })
-          return anySearchQueriesMatching // returns a boolean
+          return isAnySearchQueriesMatching // returns a boolean
         }
       )
     }
