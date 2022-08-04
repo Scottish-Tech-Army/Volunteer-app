@@ -336,7 +336,7 @@ const SearchContainer = () => {
         const fuse = new Fuse(projects, {
           keys: searchKeys,
           minMatchCharLength: 2,
-          threshold: 0.3,
+          threshold: 0.4,
         })
 
         const fuseResults = fuse.search(searchQueryItem)
