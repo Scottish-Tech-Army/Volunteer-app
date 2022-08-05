@@ -259,7 +259,7 @@ const SearchContainer = () => {
       results = fuzzySearchByArray(searchQueries, [searchField]) // we need to use fuzzy search as the roles names are not exact (charities use different ways of naming roles)
     }
     else {
-    results = exactSearchByArray(searchQueries, searchField) // here we do not want to use fuzzy search as it would include unwanted results
+    results = searchByArray(searchQueries, searchField) // here we do not want to use fuzzy search as it would include unwanted results
     }
 
     navigate('ProjectSearchResults', {
@@ -295,7 +295,7 @@ const SearchContainer = () => {
     })
   }
 
-  const exactSearchByArray = (
+  const searchByArray = (
     searchQueries: string[],
     searchField: 'client' | 'description' | 'name' | 'role' | 'skills' | 'sector',
   ): Projects => {
@@ -311,7 +311,7 @@ const SearchContainer = () => {
             }
             else if (Array.isArray(project[searchField])) { // assume it's an array, ie skills
               const arrayOfStrings = project[searchField] as string[]
-              return arrayOfStrings.some(item => item.toLowerCase().includes(searchQuery.toLowerCase()))
+              return arrayOfStrings.some(item => item.toLowerCase().includes(searchQuery.toLowerCase())) // we need to find the search words in a descriptive paragraph (i.e. skills are not in a list)
             }
           })
           return isAnySearchQueriesMatching // returns a boolean
