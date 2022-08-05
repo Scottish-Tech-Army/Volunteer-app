@@ -3,11 +3,11 @@
 - [Updating to the latest version of the app](#updating-to-the-latest-version-of-the-app)
 - [Requirements to run the project:](#requirements-to-run-the-project)
 - [Setup and first run](#setup-and-first-run)
+- [Troubleshooting](#troubleshooting)
 - [Subsequent run](#subsequent-run)
-- [Setup to deploy the app](#setup-to-deploy-the-app)
 - [Development](#development)
-- [API deployment on AWS](#api-deployment-on-aws)
-- [App deployment](#app-deployment)
+- [Deploying the app and API](#deploying-the-app-and-api)
+- [Training resources](#training-resources)
 
 # Welcome
 
@@ -46,48 +46,79 @@ Alternatively, you can go to the link in the instructions above for installing t
 1. Node.js LTS release
 2. npm
    > npm usually is installed when Node.js is installed. type npm --version to check if it is installed after installing Node.js in Command Terminal
-3. Ensure that you have read through for your particular platform: https://reactnative.dev/docs/environment-setup
-4. Make sure that you have Android 10 installed and not higher.
+3. Go to the following link: https://reactnative.dev/docs/environment-setup - choose the 'React Native CLI Quickstart' tab, and follow the instructions for your platform
+
+   > **Note** Where the instructions refer to a particular version of Android or the Android SDK platform, use **Android 10** and **SDK platform 29** instead of the more recent one.
+
+   > **Note** You can skip the sections of the React Native docs that describe setting up and running a new project, since we already have one.
 
 # Setup and first run
 
-1. Ensure that you've gone through the following link for your particular platform: https://reactnative.dev/docs/environment-setup
+1. Ensure that you've gone through the setup instructions at the following link for your particular platform: https://reactnative.dev/docs/environment-setup (see notes [above](#requirements-to-run-the-project))
 
-2. Pull the code from Git
+2. Clone the code from GitHub:
+
+   > `git clone https://github.com/Scottish-Tech-Army/Volunteer-app.git`
 
 3. Open Command terminal
 
-4. Go to the `api` folder inside the project folder (e.g. **\Volunteer-app path\api**)
+4. Go to the `api` folder inside the project folder (e.g. **/path/to/Volunteer-app/api**)
 
-5. Copy the `.env.example` file in the api root folder and name your new file `.env` in the same folder. Fill in the empty values (`""`) in your file for any credentials/settings (API keys for STA Jira API access, AirTable, etc).
+5. Copy the `.env.example` file in the api root folder and name your new file `.env` in the same folder. Fill in the empty values (`""`) in your file for any credentials/settings (API keys for STA Jira API access, AirTable, etc)
 
-   > **Note** Credentials themselves not provided, these should be requested/provided on joining the dev group.
+   > **Note** For security reasons, the credentials themselves are not provided here. Ask in the [volunteer-app](https://scottishtecharmy.slack.com/archives/C01SUL6K5E1) Slack channel when you join the dev group, and somebody will send them to you.
 
-6. At the command prompt type `npm install` then `npm start` to start the Volunteer App API server.
+6. At the command prompt type `npm install` then `npm start` to start the Volunteer App API server. You should see a message that says `Volunteer App API is listening on port <number>` - make a note of the port number for later.
 
-7. Go to the `app` folder inside the project folder (e.g. **\Volunteer-app path\app**)
+> **Note** Inside the `api` folder there are files `package.json` and `package-lock.json`. Everytime either of these is modified, it is advised to repeat this step before running the project.
+
+7. Go to the `app` folder inside the project folder (e.g. **/path/to/Volunteer-app/app**)
 
 8. At the command prompt type `npm install`
 
-   > **Note:** Inside the `app` folder there is package-lock.json. Everytime this is modified, it is advised to repeat step 6 before running the project.
+   > **Note** Inside the `app` folder there are files `package.json` and `package-lock.json`. Everytime either of these is modified, it is advised to repeat this step before running the project.
 
-   > **Note:** you may need to run `npm install --legacy-peer-deps`
+   > **Note** you may need to run `npm install --legacy-peer-deps` or `npm install --force`
 
-9. If you are on a Mac, go to the `app/ios` folder in a terminal window. At the command prompt type `pod install`
+9. If you are on a Mac and want to run the iOS build of the app, go to the `app/ios` folder in a terminal window. At the command prompt type `pod install`
 
 10. Duplicate the example config file `app/src/Config/index.example.ts` and name your new file `app/src/Config/index.ts`
 
-    > **Note** If the app has difficulty connecting to the API, you may need specify your IP address in `index.ts`. Replace `localhost` in the line `STA_BASE_URL: 'http://localhost:3000'` with your own.
+**Note** If the app has difficulty connecting to the API, you may need to specify your private IP address and API port number in `app/src/Config/index.ts`. The IP address settings may vary depending on the setup of your dev machine and local network. There are various different IP settings that have worked for others, which include: `10.0.2.2` ([a special alias that the Android emulator uses for your dev machine](https://developer.android.com/studio/run/emulator-networking)); the private IP of the local dev machine; and the private IP of the default gateway for your network. You made a note of the API port number earlier. In the line `STA_BASE_URL: 'http://localhost:3000'`, replace `localhost` with your own IP, and if necessary, replace `3000` with the port number.
 
-11. type in command terminal: `npm run ios` or `npm run android`
+**Help** You can find the IP addresses for your dev machine and default gateway by following the instructions for your platform [here](https://www.techbout.com/find-public-and-private-ip-address-44552/).
+
+**Example** If your computer's private IP is 192.168.1.50 and the API is listening on port 3000, the line should now read `STA_BASE_URL: 'http://192.168.1.50:3000'`.
+
+11. Type in command terminal: `npm run ios` or `npm run android`
+
+12. When you've got the app to run, make a PR to improve this README! Fix something that caused you headaches, update something that's no longer correct, or add a training resource, or add something else you think would help other people to get up and running.
+
+# Troubleshooting
+
+Below are some commonly encountered issues and possible ways to resolve them. If it still doesn't work, post in the [volunteer-app](https://scottishtecharmy.slack.com/archives/C01SUL6K5E1) Slack channel and someone will help you.
+
+## The app won't build
+
+- When I run `npm install`, it fails with dependency resolution errors
+  > Sometimes this happens when one or more of the project dependencies gets updated and is out of step with the others. Try running `npm install --legacy-peer-deps` or `npm install --force`.
+- When I run `npm run android`, it fails and says that `ANDROID_HOME` is not set
+  > Go to the [React Native setup guide](https://reactnative.dev/docs/environment-setup), choose the 'React Native CLI Quickstart' tab, choose your platform, and make sure that you've set the ANDROID_HOME environment variable as described there. You may need to restart your terminal window in order for the change to take effect.
+
+## The app builds, but crashes when I run it
+
+- The app gets stuck on the 'loading' screen
+  > Make sure the API is running on your local machine, and that your **api/.env** and **app/Config/index.ts** files are configured correctly (see [Setup and first run](#setup-and-first-run) above)
+- The app crashes with an error that says 'Metro has encountered an error: Cannot read properties of undefined (reading 'transformFile')'
+  > Make sure you are using the LTS version of Node (currently v16); see [suggested solutions on StackOverflow](https://stackoverflow.com/questions/69647332/cannot-read-properties-of-undefined-reading-transformfile-at-bundler-transfo). If you want to keep your current version of Node as well, you can use tools such as [nvm (MacOS/Linux)](https://github.com/nvm-sh/nvm) or [nvm-windows](https://github.com/coreybutler/nvm-windows) to manage your Node installations.
 
 # Subsequent run
 
 1. Open Command terminal.
 
-2. Go to the `api` folder inside the project folder (e.g. **\Volunteer-app path\api**) and enter `npm start` to start the Volunteer App API server.
+2. Go to the `api` folder inside the project folder (e.g. **/path/to/Volunteer-app/api**) and enter `npm start` to start the Volunteer App API server.
 
-3. Go to the `app` folder inside the project folder (e.g. **\Volunteer-app path\app**) and enter `npm run ios` or `npm run android`.
+3. Go to the `app` folder inside the project folder (e.g. **/path/to/Volunteer-app/app**) and enter `npm run ios` or `npm run android`.
 
    > **On Android,** if you get an error message that includes `INSTALL_FAILED_UPDATE_INCOMPATIBLE` this may be because you previously installed a newer version of the app for your emulator (e.g. on a new branch or testing someone else's pull request) then you switched back to an earlier version. Uninstall the app from your emulator with the command `adb shell pm uninstall org.scottishtecharmy.volunteerapp` then run `npm run android` again.
 
@@ -96,32 +127,6 @@ Alternatively, you can go to the link in the instructions above for installing t
      > During development, it's preferable to do this than to run the scheduled cron job described below.
    - If you want to automatically update the cached data regularly using a [cron job](https://en.wikipedia.org/wiki/Cron), enter this command instead: `node cache/run-cron-jobs.js` Leave this terminal window open as long as you want this to keep running.
      > Be careful if using this during development: if multiple developers are running this simultaneously, these could conflict if more than one person is updating the same AirTable tables at the same time.
-
-# Setup to deploy the app
-
-This is how you get set up ready to deploy the app to the Google Play Store (for Android) and TestFlight (for iOS) later, using [Fastlane](https://fastlane.tools/).
-
-You don't need to worry about doing this section until you're through all the steps above and you've solved any headaches getting the API and the app running locally.
-
-**If you're on a Mac** you can deploy the Android and iOS versions of the app.
-
-**If you're on Windows/Linux** you can only deploy the Android version of the app (you'll always need to get another team member with a Mac to deploy the iOS version).
-
-1. Install Fastlane: [Mac instructions in the 'Installing Fastlane' section here](https://thecodingmachine.github.io/react-native-boilerplate/docs/BetaBuild/#installing-fastlane) - [Windows/Linux instructions here](https://docs.fastlane.tools/getting-started/android/setup/)
-
-   ## Google Play Store (Android)
-
-2. Add `key.json` and `my-release-key.keystore` files into the `/app/android/` directory. These files contain credentials for uploading the app to the Google Play Store. Ask on Slack for another developer in the team to send you these files. Also ask them for the password for the `my-release-key.keystore` file -- save this somewhere safe (e.g. [a password manager](https://www.techradar.com/uk/best/password-manager)), you'll need it in the future to deploy the app.
-
-   > Because these files contain sensitive access credentials we should never commit them to GitHub as our repository is open-source, anyone can see it.
-
-   > On some systems, the terminal has a problem if the password for `my-release-key.keystore` contains symbols, so this password may need to be letters and numbers only (just make sure it's a long, strong password). If you need to change the password locally you can use this command `keytool -storepasswd -keystore path/to/my-release-key.keystore -storetype PKCS12`
-
-3. Ask Joanna to give you Developer access to the STA Google Play Store account. That will allow you to check whether releases you deploy have uploaded successfully, and you'll be able to add new testers.
-
-## TestFlight (iOS)
-
-[To add]
 
 # Development
 
@@ -152,67 +157,14 @@ This file `/api/services/slack.js` allows you to post messages to Slack. If you 
 3. Add the webhook as a variable in your `/api/.env` file (and in `/api/.env.example` but without the webhook URL itself). This variable must be named `SLACK_SECRET_WEBHOOK_` and then the name of the Slack channel, all in capitals and with hyphens replaced by underscores.
    > For example, if the Slack channel is called `my-awesome-channel`, the .env variable should be called `SLACK_SECRET_WEBHOOK_MY_AWESOME_CHANNEL`
 
-# API deployment on AWS
+# Deploying the app and API
 
-June 2022:
+The app is currently deployed for internal testing. We deploy the API to AWS, and for the app, we use [Fastlane](https://fastlane.tools/) to deploy to [TestFlight](https://developer.apple.com/testflight/) (iOS) and the [Google Play Store](https://play.google.com/) (Android). Deployment instructions can be found [here](DEPLOYMENT.md).
 
-In the volapp-dev-test account, an [Elastic Beanstalk](https://eu-west-2.console.aws.amazon.com/elasticbeanstalk/home?region=eu-west-2#/environments) environment called Volunteerapp-env has been created (manually for now).
+# Training resources
 
-You can connect your app to this environment by changing STA_BASE_URL to the load balancer address in `Volunteer-app/app/src/Config/index.ts`:
-
-` STA_BASE_URL: 'http://volunteerapp-env.eba-ivfm2tgp.eu-west-2.elasticbeanstalk.com',`
-
-Note - as we move this into IaC and set up some build pipelines, things like env names, app names, domain names, IP Addresses will probably change.
-
-For support, please @ David Calder in the [volunteer-app](https://scottishtecharmy.slack.com/archives/C01SUL6K5E1) Slack channel
-
-## Updating the app
-
-1. Git clone Scottish-Tech-Army/Volunteer-app to your computer
-2. `cd Volunteer-app/api`
-3. `zip ../myapp.zip -r * .[^.]*`
-4. Go to the AWS Management Console and navigate to Elastic Beanstalk.
-5. In [Application versions](https://eu-west-2.console.aws.amazon.com/elasticbeanstalk/home?region=eu-west-2#/application/versions?applicationName=volunteer-app), Upload the myapp.zip that you created in step 3.
-6. Now select the version label you've just created and then select Action > Deploy
-7. Go to the environment dashboard and check the version label has updated and the Health is OK. If not, check the Logs (menu on the left hand side).
-
-## Known issues
-
-- The iOS simulator only works with the IP Address of the Load Balancer as the value of STA_BASE_URL:
-  - ` STA_BASE_URL: 'http://18.134.220.155',`
-
-# App deployment
-
-**If you're on a Mac** you can deploy the Android and iOS versions of the app.
-
-**If you're on Windows/Linux** you can only deploy the Android version of the app (you'll always need to get another team member with a Mac to deploy the iOS version).
-
-1. In the pull request for the changes you're making (e.g. a new app feature), before you submit the PR for review, update the `version` name in `app/package.json`. Normally for minor features/fixes, just update the last number in the version name (e.g. `"1.0.24"` becomes `"1.0.25"`).
-
-2. Add changelog notes - a quick summary (a line or two will usually do) of what this new version does. These should be added to the 'Unreleased' section of [app/android/app/CHANGELOG.md](app/android/app/CHANGELOG.md). You may wish to use the structure suggested by the [Keep a Changelog](https://keepachangelog.com/) project, and use subheadings to indicate additions, changes, fixes, etc.
-
-3. Navigate to the `app/android` directory and run `fastlane pre_beta`. This will update the Android version code (a unique build number), generate a version-specific changelog (`app/android/app/fastlane/metadata/android/en-GB/changelogs/<versionCode>.txt`) from your updates in CHANGELOG.md, and update CHANGELOG.md to move the unreleased changes to the new version.
-
-4. Get your pull request approved as you normally would. When you're ready to merge your code into the `main` branch and deploy the updated app, double-check that your version name and version code from the previous steps are still right compared to what's in `main` (somebody else could have merged in code recently and changed the version name since you last checked - if you need to, update the version name and/or version code and/or changelog files before merging).
-
-5. In `/app/src/Config/index.ts` set `STA_BASE_URL` to point to the external URL for [the API endpoint on AWS](#api-deployment-on-aws) -- not to your localhost or its IP address, otherwise the app won't be able to connect to the API when it's installed on someone's phone.
-
-   ## Google Play Store (Android)
-
-6. Go to the `/app/android` directory in a terminal window and run the command `fastlane beta`. You'll be prompted twice at the beginning for passwords -- both are the password you got for the `my-release-key.keystore` file in the [Setup to deploy the app section](#setup-to-deploy-the-app) above.
-
-   > The process can take a while (sometimes 30 minutes or more)! If it fails, try [the troubleshooting tips here](https://thecodingmachine.github.io/react-native-boilerplate/docs/BetaBuild/#troubleshooting), see [Google Play Store known issues](#google-play-store-known-issues) below or ask for help on the team Slack channel if you can't figure it out.
-
-7. If you have access, check in the [Google Play Console](https://play.google.com/console) that the new version of the app has successfully been added (Volunteer app > Release > Internal testing) -- you should see the new version number next to 'Latest release' under 'Track summary'.
-
-8. Download the updated version of the app to your Android phone ([see download instructions](#download-the-app) near the top of this README). On the Google Play Store screen, there should be an 'Update' button to download the latest version of the app to your device.
-
-   ### Google Play Store known issues
-
-   - Near the end of the deployment process an AAB file is uploaded to the Google Play Store. This can take some time (e.g. 20 minutes on slow internet connections). It should be working, unless you get a `HTTPClient::SendTimeoutError: execution expired` error message in your terminal window. If the Fastlane process fails for this reason, you may need to run it again.
-
-   ## TestFlight (iOS)
-
-9. In `/app/src/Config/index.ts` set `STA_BASE_URL` to point to **the IP address** for the external URL for the API endpoint on AWS, see [known issues](#known-issues) above -- not to your localhost or its IP address.
-
-[More instructions to be added]
+- [STA Vimeo Showcase - Volunteer App Training](https://vimeo.com/showcase/9205161) - recordings of STA training sessions relevant to the volunteer app
+- [Learn React (official tutorial, beta version)](https://beta.reactjs.org/learn) - if you are new to working with React, this is a good place to start. (The tutorial on the non-beta site is ok but quite out of date; the beta version is mostly complete and much improved)
+- [React Native docs](https://reactnative.dev/) - React, but for building cross-platform mobile apps
+- [Express JS docs](https://expressjs.com/) - this is the framework used to build the API
+- [React Native Boilerplate docs](https://thecodingmachine.github.io/react-native-boilerplate/) - the project template used to kickstart our app. The docs include lots of useful information about the project structure and what some of the dependencies are used for.
