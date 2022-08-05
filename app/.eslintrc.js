@@ -16,6 +16,12 @@ module.exports = {
     'react/require-default-props': 'off',
     'react/default-props-match-prop-types': ['error'],
     'react/sort-prop-types': ['error'],
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto',
+      },
+    ],
   },
   settings: {
     'import/resolver': {
