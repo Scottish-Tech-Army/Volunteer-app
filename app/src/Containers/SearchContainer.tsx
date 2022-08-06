@@ -3,7 +3,6 @@ import Fuse from 'fuse.js' // fuzzy text search - see docs at https://fusejs.io
 import styled from 'styled-components/native'
 import { ScrollView, SafeAreaView } from 'react-native'
 import TopOfApp from '@/Components/TopOfApp'
-import underDevelopmentAlert from '@/Utils/UnderDevelopmentAlert'
 import FreeSearchBar from '@/Components/FreeSearchBar'
 import { navigate } from '@/Navigators/utils'
 import {
@@ -241,23 +240,27 @@ const SearchContainer = () => {
     return undefined
   }
 
+  
   const handleQuickSearchSubmit = (
     searchField: 'client' | 'description' | 'name' | 'role' | 'skills' | 'sector',
     searchQueryChoice: string,
   ) => {
     let searchQueries = [] as string[]
+    let results = [] as Projects
+    
+    searchQueries.push(searchQueryChoice)
 
     if (searchField === 'role') {
       const relatedRoles = getRelatedRoles(searchQueryChoice)
 
       if (relatedRoles?.length) {
-        searchQueries = relatedRoles
+        searchQueries = searchQueries.concat(relatedRoles)
       }
+      results = fuzzySearchByArray(searchQueries, [searchField]) // we need to use fuzzy search as the roles names are not exact (charities use different ways of naming roles)
     }
-
-    searchQueries.push(searchQueryChoice)
-
-    const results = searchByArray(searchQueries, [searchField])
+    else {
+    results = searchByArray(searchQueries, searchField) // here we do not want to use fuzzy search as it would include unwanted results
+    }
 
     navigate('ProjectSearchResults', {
       results,
@@ -265,7 +268,7 @@ const SearchContainer = () => {
       searchQuery: searchQueryChoice,
     })
   }
-
+  
   const handleFreeTextSubmit = () => {
     let searchQueries = [] as string[]
 
@@ -275,9 +278,7 @@ const SearchContainer = () => {
       searchQueries = relatedRoles
     }
 
-    searchQueries.push(searchQuery)
-
-    const results = searchByArray(searchQueries, [
+    const results = fuzzySearchByArray(searchQueries, [
       'client',
       // default weight is 1, put less importance on description field as more likely to return false positive matches
       { name: 'description', weight: 0.5 },
@@ -295,6 +296,32 @@ const SearchContainer = () => {
   }
 
   const searchByArray = (
+    searchQueries: string[],
+    searchField: 'client' | 'description' | 'name' | 'role' | 'skills' | 'sector',
+  ): Projects => {
+    let results = [] as Projects
+
+    if (projects) {
+      results = projects.filter(
+        project => {
+          const isAnySearchQueriesMatching = searchQueries.some(searchQuery => {
+            if (typeof project[searchField] === "string") { // most fields are strings, but some are an array of strings (i.e. skills)
+              const stringSearchField = project[searchField] as string
+              return stringSearchField.toLowerCase().includes(searchQuery.toLowerCase())
+            }
+            else if (Array.isArray(project[searchField])) { // assume it's an array, ie skills
+              const arrayOfStrings = project[searchField] as string[]
+              return arrayOfStrings.some(item => item.toLowerCase().includes(searchQuery.toLowerCase())) // we need to find the search words in a descriptive paragraph (i.e. skills are not in a list)
+            }
+          })
+          return isAnySearchQueriesMatching // returns a boolean
+        }
+      )
+    }
+    return results
+  }
+
+  const fuzzySearchByArray = (
     searchQueries: string[],
     searchKeys: any[],
   ): Projects => {
@@ -317,7 +344,6 @@ const SearchContainer = () => {
       fuseResultsArray = dedupeArrayOfObjects(fuseResultsArray)
       results = fuseResultsArray.map(result => result.item)
     }
-
     return results
   }
 
@@ -352,7 +378,7 @@ const SearchContainer = () => {
         <SubHeading>Tech Stack / Languages</SubHeading>
         <SectionView>
           {TechStack.map((tech, index) => (
-            <QuickSearchButton onPress={underDevelopmentAlert} key={index}>
+            <QuickSearchButton onPress={() => handleQuickSearchSubmit('skills', tech)} key={index}>
               <QuickSearchTitle>{tech}</QuickSearchTitle>
             </QuickSearchButton>
           ))}
