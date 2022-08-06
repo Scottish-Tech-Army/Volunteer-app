@@ -254,7 +254,7 @@ const SearchContainer = () => {
       const relatedRoles = getRelatedRoles(searchQueryChoice)
 
       if (relatedRoles?.length) {
-        searchQueries = relatedRoles
+        searchQueries = searchQueries.concat(relatedRoles)
       }
       results = fuzzySearchByArray(searchQueries, [searchField]) // we need to use fuzzy search as the roles names are not exact (charities use different ways of naming roles)
     }
@@ -275,7 +275,7 @@ const SearchContainer = () => {
     const relatedRoles = getRelatedRoles(searchQuery)
 
     if (relatedRoles?.length) {
-      searchQueries = searchQueries.concat(relatedRoles)
+      searchQueries = relatedRoles
     }
 
     const results = fuzzySearchByArray(searchQueries, [
