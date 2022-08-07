@@ -67,13 +67,9 @@ For support, please @ David Calder in the [volunteer-app](https://scottishtechar
 
 1. In the pull request for the changes you're making (e.g. a new app feature), before you submit the PR for review, update the `version` number in `app/package.json`. Normally for minor features/fixes, just update the last part of the version number (e.g. `"1.0.24"` becomes `"1.0.25"`).
 
-2. Update `/app/android/app/build.gradle` at the same time _(be careful here! there are other files called `build.gradle` in other similar directories)_. About halfway down the file there are two things you need to update:
+2. Add changelog notes - a quick summary (a line or two will usually do) of what this new version does. These should be added to the 'Unreleased' section of [app/android/app/CHANGELOG.md](app/android/app/CHANGELOG.md). You may wish to use the structure suggested by the [Keep a Changelog](https://keepachangelog.com/) project, and use subheadings to indicate additions, changes, fixes, etc.
 
-   a. `versionCode` - this must be 1 higher than the existing number, e.g. `48` becomes `49` (don't use any dots in this one), no quote marks
-
-   b. `versionName` - make this the same as `version` in `/app/package.json`, this should be in quotes (e.g. `"1.0.24"` becomes `"1.0.25"`)
-
-3. Add changelog notes - a quick summary (a line or two will usually do) of what this new version does. This should be a .txt file in `/app/android/fastlane/metadata/android/en-GB/changelogs` named `X.txt` where `X` is the same number you used for `versionCode` in the previous step, e.g. `/app/android/fastlane/metadata/android/en-GB/changelogs/49.txt`
+3. If updating the Android version, navigate to the `app/android` directory and run `fastlane pre_beta`. This will update the Android version code (a unique build number), generate a version-specific changelog (`app/android/app/fastlane/metadata/android/en-GB/changelogs/<versionCode>.txt`) from your updates in CHANGELOG.md, and update CHANGELOG.md to move the unreleased changes to the new version.
 
 4. Get your pull request approved as you normally would. When you're ready to merge your code into the `main` branch and deploy the updated app, double-check your version numbers in the previous steps are still right compared to what's in `main` (somebody else could have merged in code recently and changed the version numbers since you last checked - if you need to, update the version numbers before merging).
 
