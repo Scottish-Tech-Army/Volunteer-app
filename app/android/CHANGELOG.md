@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [1.0.3 (version code 5)] - 2022-08-12Z
+
 ### Changed
 
 - Dark mode now uses a more suitable version of the STA logo
@@ -14,6 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - Automated version numbers for Android builds
+- Quick search for projects by tech stack
 
 ### Fixed
 
