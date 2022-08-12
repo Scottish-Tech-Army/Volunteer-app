@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - Automated version numbers for Android builds
+- Quick search for projects by tech stack
 
 ### Fixed
 
