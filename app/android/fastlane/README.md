@@ -31,6 +31,14 @@ Runs all the tests
 
 Submit a new Beta Build to Play Store
 
+### android pre_beta
+
+```sh
+[bundle exec] fastlane android pre_beta
+```
+
+Update version code and changelogs before making an internal release
+
 ### android make_changelog
 
 ```sh
