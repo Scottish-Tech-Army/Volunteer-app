@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import {
+  Linking, 
   View,
   ActivityIndicator,
   Text,
@@ -14,6 +15,11 @@ import { useTheme } from '@/Hooks'
 import { useLazyFetchOneQuery } from '@/Services/modules/users'
 import { changeTheme, ThemeState } from '@/Store/Theme'
 import { version } from '../../package.json'
+import styled from 'styled-components/native'
+
+const PolicyDiv = styled.View`
+  marginTop:20px;
+`
 
 const ExampleContainer = () => {
   const { t } = useTranslation()
@@ -99,6 +105,17 @@ const ExampleContainer = () => {
       </TouchableOpacity>
 
       <Text style={Fonts.textSmall}>Version {version}</Text>
+
+      <PolicyDiv style={[Layout.row, Layout.fullWidth, Layout.justifyContentBetween]}>
+        <TouchableOpacity
+          onPress = {() => Linking.openURL('https://www.scottishtecharmy.org/app-privacy-policy')}>
+          <Text style={Fonts.textSmall}>Privacy Policy</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress = {() => Linking.openURL('https://www.scottishtecharmy.org/app-terms-conditions')}>
+          <Text style={Fonts.textSmall}>Terms & Conditions</Text> 
+        </TouchableOpacity>
+      </PolicyDiv>
     </ScrollView>
   )
 }
