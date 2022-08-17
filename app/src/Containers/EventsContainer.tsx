@@ -1,10 +1,12 @@
 import React, { FC, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import styled from 'styled-components/native'
 import TopOfApp from '@/Components/TopOfApp'
 import EventReturnedList from '@/Components/Event/EventReturnedList'
 import EventSearch from '@/Components/Event/EventSearch'
 import EventOptions from '@/Components/Event/EventOptions'
 import { SafeAreaView, Text } from 'react-native'
+import { setEvents } from '@/Store/Events'
 import Theme from '@/Theme/OldTheme'
 import { Events, useLazyFetchAllEventsQuery } from '@/Services/modules/events'
 
@@ -35,17 +37,27 @@ const EventList: FC<EventProps> = ({ data }) => {
   )
 }
 
-const EventsContainer = () => {
+const EventsContainer = (props: {
+  route: { params: { eventsSearchResults: Events | undefined } }
+}) => {
   const [fetchAllEvents, { data: events }] = useLazyFetchAllEventsQuery()
+  const dispatch = useDispatch()
+  const eventsSearchResults = props?.route?.params?.eventsSearchResults
 
   useEffect(() => {
     fetchAllEvents('')
+
+    // Store all upcoming events in the Redux store so they can be used by other components e.g. EventSearchContainer
+    if (events)
+      dispatch(setEvents({ upcoming: events }))
   }, [fetchAllEvents])
 
-  if (events) {
+  if (eventsSearchResults || events) {
+    const eventsToShow = eventsSearchResults ?? events as Events
+
     return (
       <Theme>
-        <EventList data={events} />
+        <EventList data={eventsToShow} />
       </Theme>
     )
   } else {

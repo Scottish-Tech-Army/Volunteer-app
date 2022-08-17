@@ -8,12 +8,12 @@ import {
   ProjectRegisterInterestContainer,
   ProjectSearchResultsContainer,
   SearchContainer,
-  EventsContainer
+  EventsContainer,
+  EventSearchContainer
 } from '@/Containers'
 import { useTheme } from '@/Hooks'
 import MainNavigator from './Main'
 import { navigationRef } from './utils'
-import EventSearchContainer from '@/Containers/EventSearchContainer'
 
 const Stack = createStackNavigator()
 
@@ -73,6 +73,11 @@ const ApplicationNavigator = () => {
               headerBackTitleVisible: false,
               title: 'Project Search Results',
             }}
+          />
+          <Stack.Screen
+            name="Events"
+            component={EventsContainer}
+            options={{ headerShown: false }}
           />
           <Stack.Screen
             name="EventSearch"
