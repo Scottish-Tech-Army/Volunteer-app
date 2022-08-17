@@ -18,7 +18,7 @@ import { version } from '../../package.json'
 import styled from 'styled-components/native'
 
 const PolicyDiv = styled.View`
-  marginTop:20px;
+  marginVertical:20px;
 `
 
 const ExampleContainer = () => {
@@ -42,8 +42,8 @@ const ExampleContainer = () => {
   return (
     <ScrollView
       style={Layout.fill}
-      contentContainerStyle={[
-        Layout.fill,
+      contentContainerStyle={[ 
+        // Layout.fill, 
         Layout.colCenter,
         Gutters.smallHPadding,
       ]}
@@ -116,6 +116,7 @@ const ExampleContainer = () => {
           <Text style={Fonts.textSmall}>Terms & Conditions</Text> 
         </TouchableOpacity>
       </PolicyDiv>
+
     </ScrollView>
   )
 }
