@@ -14,6 +14,8 @@ import { useTheme } from '@/Hooks'
 import MainNavigator from './Main'
 import { navigationRef } from './utils'
 import EventSearchContainer from '@/Containers/EventSearchContainer'
+import WelcomeContainer from '@/Containers/WelcomeContainer'
+
 
 const Stack = createStackNavigator()
 
@@ -82,7 +84,13 @@ const ApplicationNavigator = () => {
               headerBackTitleVisible: false,
               title: 'Event Search',
             }}
+            />
+          <Stack.Screen
+          name="Welcome"
+          component={WelcomeContainer}
+          options={{headerShown:false}}
           />
+          
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaView>
