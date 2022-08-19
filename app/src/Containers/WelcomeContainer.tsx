@@ -5,13 +5,14 @@ import {View, Text, Image, Button} from 'react-native'
 import Logo from '@/Assets/Images/LongLogo.png'
 import styled from 'styled-components/native'
 import GetStartedButton from '@/Components/Welcome/GetStartedButton'
+import WelcomeSlider from '@/Components/Welcome/WelcomeSlider'
 
 
 const StaHeaderImage = styled.Image`
-  width: 90%;
-  height: 120px;
-  margin-left: 16px;
-  margin-top: 10px;
+  width: 339px;
+  height: 58px;
+  margin-top: 22px;
+  margin-bottom: 22px;
 `
 
 
@@ -23,6 +24,7 @@ const WelcomeContainer = () => {
     return(
         <View style={[Layout.fill, Layout.colVCenter]}>
             <StaHeaderImage source={Logo} />
+            <WelcomeSlider />
             <GetStartedButton />
         </View>
     )
