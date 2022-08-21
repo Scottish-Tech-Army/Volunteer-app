@@ -92,7 +92,7 @@ const ProjectFullDetails: FC<ProjectFullDetailsProps> = ({ project }) => {
             icon={<Feather name='file' size={24} />} 
             details={ "A3 - Project Scope"}
           />
-          <Video details={project.video_file} />
+          <Video url={project.video_file} />
           <SectionHeader>Team</SectionHeader>
           <ProjectTeam>Placeholder text</ProjectTeam>
           <HorizontalLine />

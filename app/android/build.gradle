@@ -36,7 +36,7 @@ allprojects {
         maven { url 'https://www.jitpack.io' }
 
         /**
-         Jcenter is currently require in order for the video componenet to work on Andriod.
+         Jcenter is currently required in order for the video component to work on Andriod.
          This will be updated to a non-deprecated service in the future
         */
         jcenter()

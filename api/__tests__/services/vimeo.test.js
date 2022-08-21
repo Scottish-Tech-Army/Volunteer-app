@@ -10,7 +10,7 @@ describe('Test the Vimeo service', () => {
     const fakeVimeoId =   faker.datatype.number({ min: 100000000, max: 999999999 });
     const fakeVideoWebPage = `https://vimeo.com/${fakeVimeoId}`;
     const fakeApiVimeoCall = `https://player.vimeo.com/video/${fakeVimeoId}/config`;
-    const fakeVimeoParameter = {Accept: 'application/json'};
+    const fakeAxiosConfig = {Accept: 'application/json'};
     const fakeVideoFile = faker.internet.url();
     const fakeVimeoData = {
       data: {
@@ -33,7 +33,7 @@ describe('Test the Vimeo service', () => {
     const response = await vimeo.getVideoFileFromVimeo(fakeVideoWebPage);
 
     expect(axiosSpy).toHaveBeenCalledTimes(1);
-    expect(axiosSpy).toHaveBeenCalledWith(fakeApiVimeoCall, fakeVimeoParameter);
+    expect(axiosSpy).toHaveBeenCalledWith(fakeApiVimeoCall, fakeAxiosConfig);
     expect(response).toEqual(fakeVideoFile);
 
 
