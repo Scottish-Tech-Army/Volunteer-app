@@ -9,7 +9,7 @@ import {
   ProjectSearchResultsContainer,
   SearchContainer,
   EventsContainer,
-  EventSearchContainer
+  EventSearchContainer,
 } from '@/Containers'
 import { useTheme } from '@/Hooks'
 import MainNavigator from './Main'

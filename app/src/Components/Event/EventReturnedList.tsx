@@ -31,7 +31,7 @@ const EventReturnedList: FC<EventReturnedListProps> = ({ data }) => {
     />
   ) : (
     <>
-      <NoneFound>Sorry, we couldn't find any events at the moment</NoneFound>
+      <NoneFound>Sorry, we couldn't find any events</NoneFound>
     </>
   )
 }

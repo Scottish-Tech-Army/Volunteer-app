@@ -1,14 +1,20 @@
-import React, { FC, useEffect } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components/native'
+import { EventSearchInterface } from './EventSearchContainer'
 import TopOfApp from '@/Components/TopOfApp'
+import EventOptions from '@/Components/Event/EventOptions'
 import EventReturnedList from '@/Components/Event/EventReturnedList'
 import EventSearch from '@/Components/Event/EventSearch'
-import EventOptions from '@/Components/Event/EventOptions'
+import EventUpcomingQuickSearchButtons from '@/Components/Event/EventUpcomingQuickSearchButtons'
+import { EventsRange } from '@/Services/modules/events'
 import { SafeAreaView, Text } from 'react-native'
 import { setEvents } from '@/Store/Events'
 import Theme from '@/Theme/OldTheme'
-import { Events, useLazyFetchAllEventsQuery } from '@/Services/modules/events'
+import {
+  Events,
+  useLazyFetchAllUpcomingEventsQuery,
+} from '@/Services/modules/events'
 
 interface EventProps {
   data: Events
@@ -25,35 +31,89 @@ const HorizontalLine = styled.View`
   margin: 0px 75px 10px 75px;
 `
 
-const EventList: FC<EventProps> = ({ data }) => {
-  return (
-    <SafeArea>
-      <TopOfApp />
-      <EventSearch />
-      <EventOptions />
-      <HorizontalLine />
-      <EventReturnedList data={data} />
-    </SafeArea>
-  )
-}
+const SearchResultsContainer = styled.View`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  width: 100%;
+`
+
+const SearchResultsLabel = styled.Text`
+  color: ${props => props.theme.colors.staBlack};
+  text-align: center;
+  width: 100%;
+`
 
 const EventsContainer = (props: {
-  route: { params: { eventsSearchResults: Events | undefined } }
+  route: {
+    params: {
+      search: EventSearchInterface
+    }
+  }
 }) => {
-  const [fetchAllEvents, { data: events }] = useLazyFetchAllEventsQuery()
+  const [fetchAllUpcomingEvents, { data: allUpcomingEvents }] =
+    useLazyFetchAllUpcomingEventsQuery()
   const dispatch = useDispatch()
-  const eventsSearchResults = props?.route?.params?.eventsSearchResults
+  const eventsSearch = props.route.params?.search
+  const [selectedOption, setSelectedOption] = useState<
+    EventsRange | 'myEvents'
+  >(EventsRange.Upcoming)
 
   useEffect(() => {
-    fetchAllEvents('')
+    // Get all upcoming events from the API
+    fetchAllUpcomingEvents('')
 
-    // Store all upcoming events in the Redux store so they can be used by other components e.g. EventSearchContainer
-    if (events)
-      dispatch(setEvents({ upcoming: events }))
-  }, [fetchAllEvents])
+    // Store all upcoming events in the Redux store so they can be used by other components too e.g. EventSearchContainer
+    if (allUpcomingEvents) {
+      dispatch(setEvents({ upcoming: allUpcomingEvents }))
+    }
+  }, [allUpcomingEvents, dispatch, fetchAllUpcomingEvents])
 
-  if (eventsSearchResults || events) {
-    const eventsToShow = eventsSearchResults ?? events as Events
+  const EventList: FC<EventProps> = ({ data }) => {
+    return (
+      <SafeArea>
+        <TopOfApp />
+        <EventSearch />
+        <EventOptions
+          onSelectedOptionChange={(selectedOption: EventsRange | 'myEvents') =>
+            setSelectedOption(selectedOption)
+          }
+        />
+
+        {/* If the user has done a quick search for upcoming events, show those
+        quick search buttons so they can amend their quick search if they want */}
+        {selectedOption === EventsRange.Upcoming &&
+          eventsSearch?.range === EventsRange.Upcoming &&
+          eventsSearch?.quickSearchChoice && (
+            <SearchResultsContainer>
+              <EventUpcomingQuickSearchButtons
+                selectedButton={eventsSearch?.quickSearchChoice}
+              />
+            </SearchResultsContainer>
+          )}
+
+        {selectedOption === EventsRange.Upcoming &&
+          eventsSearch?.range === EventsRange.Upcoming &&
+          eventsSearch.type === 'date' &&
+          !eventsSearch?.quickSearchChoice && (
+            <SearchResultsContainer>
+              <SearchResultsLabel>
+                Results for {eventsSearch.description}
+              </SearchResultsLabel>
+            </SearchResultsContainer>
+          )}
+
+        <HorizontalLine />
+        <EventReturnedList data={data} />
+      </SafeArea>
+    )
+  }
+
+  if (allUpcomingEvents || eventsSearch) {
+    const eventsToShow = eventsSearch
+      ? eventsSearch.results
+      : (allUpcomingEvents as Events)
 
     return (
       <Theme>

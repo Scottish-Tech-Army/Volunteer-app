@@ -1,7 +1,9 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react'
+import React, { FC, useState } from 'react'
 import styled from 'styled-components/native'
+import { EventsRange } from '@/Services/modules/events'
 import underDevelopmentAlert from '../../Utils/UnderDevelopmentAlert'
+import { navigate } from '@/Navigators/utils'
 
 const EventOptionsView = styled.View`
   display: flex;
@@ -16,26 +18,40 @@ const EventOptionsText = styled.Text`
 
 const EventOptionsTouch = styled.TouchableOpacity``
 
-function EventOptions() {
-  const [selectedOption, setSelectedOption] = React.useState('upcoming')
-  const clickUpcomingEvents = () => {
-    setSelectedOption('upcoming')
+interface EventOptionsProps {
+  onSelectedOptionChange: (newSelectedOption: EventsRange | 'myEvents') => void
+}
+
+const EventOptions: FC<EventOptionsProps> = ({ onSelectedOptionChange }) => {
+  const [selectedOption, setSelectedOption] = useState<
+    EventsRange | 'myEvents'
+  >(EventsRange.Upcoming)
+
+  const handleSelectedOptionChange = (
+    newSelectedOption: EventsRange | 'myEvents',
+  ) => {
+    setSelectedOption(newSelectedOption)
+    onSelectedOptionChange(newSelectedOption) // update the parent component telling it the user has changed option
   }
+
   return (
     <EventOptionsView>
       <EventOptionsTouch onPress={underDevelopmentAlert}>
         <EventOptionsText
           style={{
-            fontWeight: selectedOption === 'past' ? 'bold' : 'normal',
+            fontWeight: selectedOption === EventsRange.Past ? 'bold' : 'normal',
           }}
         >
           Past
         </EventOptionsText>
       </EventOptionsTouch>
-      <EventOptionsTouch onPress={clickUpcomingEvents}>
+      <EventOptionsTouch
+        onPress={() => handleSelectedOptionChange(EventsRange.Upcoming)}
+      >
         <EventOptionsText
           style={{
-            fontWeight: selectedOption === 'upcoming' ? 'bold' : 'normal',
+            fontWeight:
+              selectedOption === EventsRange.Upcoming ? 'bold' : 'normal',
           }}
         >
           Upcoming
@@ -44,7 +60,7 @@ function EventOptions() {
       <EventOptionsTouch onPress={underDevelopmentAlert}>
         <EventOptionsText
           style={{
-            fontWeight: selectedOption === 'my' ? 'bold' : 'normal',
+            fontWeight: selectedOption === 'myEvents' ? 'bold' : 'normal',
           }}
         >
           My Events

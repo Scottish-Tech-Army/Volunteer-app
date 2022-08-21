@@ -6,8 +6,8 @@ const slice = createSlice({
   initialState: { upcoming: [] } as EventsState,
   reducers: {
     setEvents: (state, { payload: { upcoming } }: EventsPayload) => {
-      console.log('state', state)
-      console.log('payload - upcoming', upcoming)
+      // console.log('state', state)
+      // console.log('payload - upcoming', upcoming)
       if (typeof upcoming !== 'undefined') {
         state.upcoming = upcoming
       }
