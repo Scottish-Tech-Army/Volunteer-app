@@ -50,5 +50,11 @@ export default function ({ FontSize, Colors }: ThemeVariables): ThemeFonts {
     textRight: {
       textAlign: 'right',
     },
+    poppins: {
+      fontFamily:'Poppins-Medium'
+    },
+    bebasNeue: {
+      fontFamily:'BebasNeue-Regular'
+    }
   })
 }

@@ -13,7 +13,7 @@ const GetStartedButton = () => {
         display:flex;
         alignItems:center;
         justifyContent:center;
-        elevation: 2;
+        elevation: 4;
     `
 
     const GetStartedText = styled.Text`
