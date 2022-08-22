@@ -13,39 +13,15 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 # Available Actions
 
-## Android
+## iOS
 
-### android test
-
-```sh
-[bundle exec] fastlane android test
-```
-
-Runs all the tests
-
-### android beta
+### ios beta
 
 ```sh
-[bundle exec] fastlane android beta
+[bundle exec] fastlane ios beta
 ```
 
-Submit a new Beta Build to Play Store
-
-### android pre_beta
-
-```sh
-[bundle exec] fastlane android pre_beta
-```
-
-Update version code and changelogs before making an internal release
-
-### android make_changelog
-
-```sh
-[bundle exec] fastlane android make_changelog
-```
-
-Create changelog txt file for the current versionCode and update CHANGELOG.md
+Push a new beta build to TestFlight
 
 ----
 
