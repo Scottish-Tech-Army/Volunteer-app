@@ -14,6 +14,7 @@ const GetStartedButton = () => {
         alignItems:center;
         justifyContent:center;
         elevation: 4;
+        marginTop:20px;
     `
 
     const GetStartedText = styled.Text`

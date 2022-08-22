@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {View, Text, Image, FlatList, I18nManager, Platform}from 'react-native'
 import { useTheme } from '@/Hooks'
 
@@ -6,12 +6,21 @@ import { MySlides } from './Slides'
 
 const isAndroidRTL = I18nManager.isRTL && Platform.OS === 'android';
 
-const WelcomeSlider = ({setActiveIndex, windowHeight, windowWidth}) => {
+const WelcomeSlider = ({activeIndex, setActiveIndex, windowHeight, windowWidth, slideRef}) => {
     const slides = MySlides()
     const { Layout, Fonts } = useTheme()
 
-    const myFlatlistRef = React.createRef()
-    const rtlSafeIndex = (i: number) => (isAndroidRTL ? slides.length - 1 - i : i);
+    // useEffect(() => {
+    //     if(activeIndex !== slideRef.current){
+    //         slideRef.current.scrollToOffset({
+    //             offset: rtlSafeIndex(slideNum) * windowWidth,
+    //         });
+    //     }
+
+    // }, [activeIndex])
+
+    
+    const rtlSafeIndex = (i) => (isAndroidRTL ? slides.length - 1 - i : i);
 
     const renderItem = ({item}) => {
         return(
@@ -30,12 +39,12 @@ const WelcomeSlider = ({setActiveIndex, windowHeight, windowWidth}) => {
         const newIndex = rtlSafeIndex(Math.round(offset / windowWidth));
         setActiveIndex(newIndex)
     }
-    const ref = React.createRef()
+    
 
     return (
         <View style={[{flex:0.9, width:378 }]}>
             <FlatList
-                ref = {(list) => {list}}
+                ref = {slideRef}
                 data={slides} 
                 horizontal // items (slides) are stacked horizontally instead of vertically
                 pagingEnabled 
