@@ -32,15 +32,15 @@ const EventSearchUpcomingQuickSearchButtons: FC<
     (state: { events: EventsState }) => state.events.upcoming,
   )
 
-  const handleDateQuickSearch = (
+  const handleSearch = (
     quickSearchChoice: EventQuickSearchChoice,
-    quickSearchStartDate: Date,
-    quickSearchEndDate: Date,
+    startDate: Date,
+    endDate: Date,
   ): void => {
     const eventsSearchResults = filterEventsByDate(
       allUpcomingEvents,
-      quickSearchStartDate,
-      quickSearchEndDate,
+      startDate,
+      endDate,
     )
 
     navigate('Events', {
@@ -57,7 +57,7 @@ const EventSearchUpcomingQuickSearchButtons: FC<
     <>
       <QuickSearchButton
         onPress={() =>
-          handleDateQuickSearch(
+          handleSearch(
             EventQuickSearchChoice.Today,
             dayjs().startOf('day').toDate(),
             dayjs().endOf('day').toDate(),
@@ -77,7 +77,7 @@ const EventSearchUpcomingQuickSearchButtons: FC<
       </QuickSearchButton>
       <QuickSearchButton
         onPress={() =>
-          handleDateQuickSearch(
+          handleSearch(
             EventQuickSearchChoice.ThisWeek,
             dayjs().startOf('week').toDate(),
             dayjs().endOf('week').toDate(),
@@ -97,7 +97,7 @@ const EventSearchUpcomingQuickSearchButtons: FC<
       </QuickSearchButton>
       <QuickSearchButton
         onPress={() =>
-          handleDateQuickSearch(
+          handleSearch(
             EventQuickSearchChoice.ThisMonth,
             dayjs().startOf('month').toDate(),
             dayjs().endOf('month').toDate(),

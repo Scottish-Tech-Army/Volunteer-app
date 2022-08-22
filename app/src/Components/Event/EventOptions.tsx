@@ -29,7 +29,7 @@ const EventOptions: FC<EventOptionsProps> = ({ selected }) => {
   ) => {
     navigate('Events', {
       screen: 'Events',
-      selectedRangeOption: newSelectedOption,
+      selectedOption: newSelectedOption,
     })
   }
 

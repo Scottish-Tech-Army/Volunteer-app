@@ -48,7 +48,7 @@ const SearchResultsLabel = styled.Text`
 const EventsContainer = (props: {
   route: {
     params: {
-      selectedRangeOption?: EventsRange | 'myEvents'
+      selectedOption?: EventsRange | 'myEvents'
       search: EventSearchInterface
     }
   }
@@ -69,7 +69,7 @@ const EventsContainer = (props: {
     fetchAllUpcomingEvents('')
   }, [])
 
-  // When the component is first created...
+  // When allUpcomingEvents is set...
   useEffect(() => {
     // Store all upcoming events in the Redux store so they can be used by other components too e.g. EventSearchContainer
     if (allUpcomingEvents) {
@@ -78,11 +78,11 @@ const EventsContainer = (props: {
   }, [allUpcomingEvents])
 
   // When the user changes search options or they tap Past/Upcoming/My events navigation occurs,
-  // this changes the route parameters - we use this to update EventOptions and whether to show
-  // search results or all events in the list
+  // this changes the route parameters - we use this to update EventOptions and to work out
+  // whether to show events search results or all events in the list
   useEffect(() => {
     setSelectedOption(
-      props.route.params?.selectedRangeOption ?? EventsRange.Upcoming,
+      props.route.params?.selectedOption ?? EventsRange.Upcoming,
     )
     setEventsSearch(props.route.params?.search)
   }, [props.route.params])
@@ -95,7 +95,8 @@ const EventsContainer = (props: {
         <EventOptions selected={EventsRange.Upcoming} />
 
         {/* If the user has done a quick search for upcoming events, show those
-        quick search buttons so they can amend their quick search if they want */}
+            quick search buttons so they can amend their quick search if they want,
+            without having to go back to the search screen */}
         {selectedOption === EventsRange.Upcoming &&
           eventsSearch?.range === EventsRange.Upcoming &&
           eventsSearch?.quickSearchChoice && (
@@ -106,6 +107,8 @@ const EventsContainer = (props: {
             </SearchResultsContainer>
           )}
 
+        {/* If the user has searched using the calendar date picker,
+            show some text indicating the dates they searched for */}
         {selectedOption === EventsRange.Upcoming &&
           eventsSearch?.range === EventsRange.Upcoming &&
           eventsSearch.type === 'date' &&

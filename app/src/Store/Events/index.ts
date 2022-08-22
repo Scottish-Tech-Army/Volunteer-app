@@ -1,5 +1,5 @@
 // Set up the Redux store to allow us to share events data across different app components
-// setEvents is what is dispatched to store events
+// setEvents is what's dispatched to actually store the events
 
 import { createSlice } from '@reduxjs/toolkit'
 import { Events } from '@/Services/modules/events'
