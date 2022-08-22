@@ -8,12 +8,12 @@ export function MySlides() {
         {
             image:<Image style={{height:283, width:378}} source={tempPic}></Image>,
             title: "Welcome",
-            text: "Lorem Ipsum"
+            text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eu nisl vitae nisl lobortis rutrum."
         },
         {
             image:<Image style={{height:283, width:378}} source={tempPic}></Image>,
             title: "Volunteer",
-            text: "Lorem Ipsum"
+            text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eu nisl vitae nisl lobortis rutrum."
         },
         {
             image:<Image style={{height:283, width:378}} source={tempPic}></Image>,
