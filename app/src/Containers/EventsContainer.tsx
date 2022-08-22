@@ -63,6 +63,20 @@ const EventsContainer = (props: {
     EventsRange | 'myEvents'
   >(EventsRange.Upcoming)
 
+  // When the component is first created...
+  useEffect(() => {
+    // Get all upcoming events from the API
+    fetchAllUpcomingEvents('')
+  }, [])
+
+  // When the component is first created...
+  useEffect(() => {
+    // Store all upcoming events in the Redux store so they can be used by other components too e.g. EventSearchContainer
+    if (allUpcomingEvents) {
+      dispatch(setEvents({ upcoming: allUpcomingEvents }))
+    }
+  }, [allUpcomingEvents])
+
   // When the user changes search options or they tap Past/Upcoming/My events navigation occurs,
   // this changes the route parameters - we use this to update EventOptions and whether to show
   // search results or all events in the list
@@ -72,17 +86,6 @@ const EventsContainer = (props: {
     )
     setEventsSearch(props.route.params?.search)
   }, [props.route.params])
-
-  // When the component is first created...
-  useEffect(() => {
-    // Get all upcoming events from the API
-    fetchAllUpcomingEvents('')
-
-    // Store all upcoming events in the Redux store so they can be used by other components too e.g. EventSearchContainer
-    if (allUpcomingEvents) {
-      dispatch(setEvents({ upcoming: allUpcomingEvents }))
-    }
-  }, [])
 
   const EventList: FC<EventProps> = ({ data }) => {
     return (
