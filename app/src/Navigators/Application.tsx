@@ -75,11 +75,6 @@ const ApplicationNavigator = () => {
             }}
           />
           <Stack.Screen
-            name="Events"
-            component={EventsContainer}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
             name="EventSearch"
             component={EventSearchContainer}
             options={{

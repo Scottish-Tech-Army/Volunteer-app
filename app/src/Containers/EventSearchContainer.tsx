@@ -1,20 +1,16 @@
 import React, { useState } from 'react'
 import dayjs from 'dayjs'
 import styled from 'styled-components/native'
-import { Alert, ScrollView, SafeAreaView } from 'react-native'
-import { useSelector } from 'react-redux'
+import { ScrollView, SafeAreaView } from 'react-native'
 import TopOfApp from '@/Components/TopOfApp'
 import underDevelopmentAlert from '@/Utils/UnderDevelopmentAlert'
-import CalendarPicker from 'react-native-calendar-picker'
-import EventUpcomingQuickSearchButtons, {
+import EventSearchCalendarPicker from '@/Components/Event/EventSearchCalendarPicker'
+import EventSearchUpcomingQuickSearch, {
   EventQuickSearchChoice,
-} from '@/Components/Event/EventUpcomingQuickSearchButtons'
+} from '@/Components/Event/EventSearchUpcomingQuickSearch'
 import QuickSearchButton from '@/Components/Forms/QuickSearchButton'
-import SubmitButton from '@/Components/Forms/SubmitButton'
 import FreeSearchBar from '@/Components/FreeSearchBar'
 import { Events } from '@/Services/modules/events'
-import { navigate } from '@/Navigators/utils'
-import { EventsState } from '@/Store/Events'
 
 const Heading = styled.Text`
   font-weight: bold;
@@ -22,12 +18,9 @@ const Heading = styled.Text`
   margin: 15px 15px 0px 15px;
 `
 const SectionView = styled.View`
-  border-bottom-color: ${props => props.theme.colors.staBlack};
-  border-bottom-width: 1px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  padding-bottom: 20px;
   margin: 20px 0;
 `
 const Label = styled.Text`
@@ -60,9 +53,14 @@ export const filterEventsByDate = (
     )
     const eventEndDate = eventStartDate.add(event.duration, 'minute')
 
+    // Match events where either the event start date or the event end date
+    // falls within the dates the user's searching for.
+    // This means we'll include multi-day events that only partly fall inside the search dates.
     return (
-      eventStartDate.isAfter(filterStartDate) &&
-      eventEndDate.isBefore(filterEndDate)
+      (eventStartDate.isAfter(filterStartDate) &&
+        eventStartDate.isBefore(filterEndDate)) ||
+      (eventEndDate.isAfter(filterStartDate) &&
+        eventEndDate.isBefore(filterEndDate))
     )
   })
 
@@ -80,69 +78,20 @@ const EventSearchContainer = () => {
     'Climate change app',
   ]
 
-  // Get all upcoming events from the Redux store (these are added to the store by the EventsContainer component)
-  const allUpcomingEvents = useSelector(
-    (state: { events: EventsState }) => state.events.upcoming,
-  )
   const [calendarPickerWidth, setCalendarPickerWidth] = useState(0)
-  const [calendarPickerStartDate, setCalendarPickerStartDate] = useState<
-    Date | undefined
-  >()
-  const [calendarPickerEndDate, setCalendarPickerEndDate] = useState<
-    Date | undefined
-  >()
 
   const handleSearch = (input: React.SetStateAction<string>) => {
     console.log(input)
   }
+
   const handleSubmit = () => {
     console.log('Submit')
-  }
-
-  const handleCalendarPickerSearch = (): void => {
-    if (!calendarPickerStartDate || !calendarPickerEndDate) {
-      Alert.alert('Please pick a start and end date')
-
-      return
-    }
-
-    const eventsSearchResults = filterEventsByDate(
-      allUpcomingEvents,
-      calendarPickerStartDate,
-      calendarPickerEndDate,
-    )
-
-    navigate('Events', {
-      search: {
-        type: 'date',
-        undefined,
-        range: 'upcoming',
-        results: eventsSearchResults,
-        description: `${dayjs(calendarPickerStartDate).format(
-          'DD/MM/YYYY',
-        )} - ${dayjs(calendarPickerEndDate).format('DD/MM/YYYY')}`,
-      },
-    })
-  }
-
-  const onCalendarPickerChange = (date: Date, type: string) => {
-    switch (type) {
-      case 'START_DATE':
-        setCalendarPickerStartDate(
-          date ? dayjs(date).startOf('day').toDate() : undefined,
-        )
-        break
-      case 'END_DATE':
-        setCalendarPickerEndDate(
-          date ? dayjs(date).endOf('day').toDate() : undefined,
-        )
-        break
-    }
   }
 
   return (
     <SafeAreaView>
       <ScrollView
+        // When we know the width of the screen, we need to tell the calendar picker what width to be
         onLayout={onLayoutEvent => {
           const { width } = onLayoutEvent.nativeEvent.layout
           setCalendarPickerWidth(width)
@@ -156,50 +105,11 @@ const EventSearchContainer = () => {
         />
 
         <SectionView>
-          <EventUpcomingQuickSearchButtons />
+          <EventSearchUpcomingQuickSearch />
         </SectionView>
 
         <SectionView>
-          <CalendarPicker
-            startFromMonday={true}
-            allowRangeSelection={true}
-            minDate={new Date()}
-            maxDate={new Date(2050, 6, 3)}
-            weekdays={['M', 'T', 'W', 'T', 'F', 'S', 'S']}
-            months={[
-              'Jan',
-              'Feb',
-              'Mar',
-              'Apr',
-              'May',
-              'Jun',
-              'Jul',
-              'Aug',
-              'Sep',
-              'Oct',
-              'Nov',
-              'Dec',
-            ]}
-            onDateChange={onCalendarPickerChange}
-            width={calendarPickerWidth}
-          />
-          <SubmitButton
-            disabled={false}
-            onPress={handleCalendarPickerSearch}
-            text="Search dates"
-          />
-          <Label>
-            Start date:{' '}
-            {calendarPickerStartDate
-              ? calendarPickerStartDate.toLocaleString()
-              : ''}
-          </Label>
-          <Label>
-            End date:{' '}
-            {calendarPickerEndDate
-              ? calendarPickerEndDate.toLocaleString()
-              : ''}
-          </Label>
+          <EventSearchCalendarPicker width={calendarPickerWidth} />
         </SectionView>
 
         <Heading>Popular</Heading>

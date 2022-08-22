@@ -6,7 +6,7 @@ import TopOfApp from '@/Components/TopOfApp'
 import EventOptions from '@/Components/Event/EventOptions'
 import EventReturnedList from '@/Components/Event/EventReturnedList'
 import EventSearch from '@/Components/Event/EventSearch'
-import EventUpcomingQuickSearchButtons from '@/Components/Event/EventUpcomingQuickSearchButtons'
+import EventSearchUpcomingQuickSearch from '@/Components/Event/EventSearchUpcomingQuickSearch'
 import { EventsRange } from '@/Services/modules/events'
 import { SafeAreaView, Text } from 'react-native'
 import { setEvents } from '@/Store/Events'
@@ -48,6 +48,7 @@ const SearchResultsLabel = styled.Text`
 const EventsContainer = (props: {
   route: {
     params: {
+      selectedRangeOption?: EventsRange | 'myEvents'
       search: EventSearchInterface
     }
   }
@@ -55,11 +56,24 @@ const EventsContainer = (props: {
   const [fetchAllUpcomingEvents, { data: allUpcomingEvents }] =
     useLazyFetchAllUpcomingEventsQuery()
   const dispatch = useDispatch()
-  const eventsSearch = props.route.params?.search
+  const [eventsSearch, setEventsSearch] = useState<
+    EventSearchInterface | undefined
+  >()
   const [selectedOption, setSelectedOption] = useState<
     EventsRange | 'myEvents'
   >(EventsRange.Upcoming)
 
+  // When the user changes search options or they tap Past/Upcoming/My events navigation occurs,
+  // this changes the route parameters - we use this to update EventOptions and whether to show
+  // search results or all events in the list
+  useEffect(() => {
+    setSelectedOption(
+      props.route.params?.selectedRangeOption ?? EventsRange.Upcoming,
+    )
+    setEventsSearch(props.route.params?.search)
+  }, [props.route.params])
+
+  // When the component is first created...
   useEffect(() => {
     // Get all upcoming events from the API
     fetchAllUpcomingEvents('')
@@ -68,18 +82,14 @@ const EventsContainer = (props: {
     if (allUpcomingEvents) {
       dispatch(setEvents({ upcoming: allUpcomingEvents }))
     }
-  }, [allUpcomingEvents, dispatch, fetchAllUpcomingEvents])
+  }, [])
 
   const EventList: FC<EventProps> = ({ data }) => {
     return (
       <SafeArea>
         <TopOfApp />
         <EventSearch />
-        <EventOptions
-          onSelectedOptionChange={(selectedOption: EventsRange | 'myEvents') =>
-            setSelectedOption(selectedOption)
-          }
-        />
+        <EventOptions selected={EventsRange.Upcoming} />
 
         {/* If the user has done a quick search for upcoming events, show those
         quick search buttons so they can amend their quick search if they want */}
@@ -87,7 +97,7 @@ const EventsContainer = (props: {
           eventsSearch?.range === EventsRange.Upcoming &&
           eventsSearch?.quickSearchChoice && (
             <SearchResultsContainer>
-              <EventUpcomingQuickSearchButtons
+              <EventSearchUpcomingQuickSearch
                 selectedButton={eventsSearch?.quickSearchChoice}
               />
             </SearchResultsContainer>

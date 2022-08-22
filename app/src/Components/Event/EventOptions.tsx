@@ -1,5 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { FC, useState } from 'react'
+import React, { FC } from 'react'
+import { useNavigation } from '@react-navigation/native'
 import styled from 'styled-components/native'
 import { EventsRange } from '@/Services/modules/events'
 import underDevelopmentAlert from '../../Utils/UnderDevelopmentAlert'
@@ -19,19 +20,17 @@ const EventOptionsText = styled.Text`
 const EventOptionsTouch = styled.TouchableOpacity``
 
 interface EventOptionsProps {
-  onSelectedOptionChange: (newSelectedOption: EventsRange | 'myEvents') => void
+  selected: EventsRange | 'myEvents'
 }
 
-const EventOptions: FC<EventOptionsProps> = ({ onSelectedOptionChange }) => {
-  const [selectedOption, setSelectedOption] = useState<
-    EventsRange | 'myEvents'
-  >(EventsRange.Upcoming)
-
+const EventOptions: FC<EventOptionsProps> = ({ selected }) => {
   const handleSelectedOptionChange = (
     newSelectedOption: EventsRange | 'myEvents',
   ) => {
-    setSelectedOption(newSelectedOption)
-    onSelectedOptionChange(newSelectedOption) // update the parent component telling it the user has changed option
+    navigate('Events', {
+      screen: 'Events',
+      selectedRangeOption: newSelectedOption,
+    })
   }
 
   return (
@@ -39,7 +38,7 @@ const EventOptions: FC<EventOptionsProps> = ({ onSelectedOptionChange }) => {
       <EventOptionsTouch onPress={underDevelopmentAlert}>
         <EventOptionsText
           style={{
-            fontWeight: selectedOption === EventsRange.Past ? 'bold' : 'normal',
+            fontWeight: selected === EventsRange.Past ? 'bold' : 'normal',
           }}
         >
           Past
@@ -50,8 +49,7 @@ const EventOptions: FC<EventOptionsProps> = ({ onSelectedOptionChange }) => {
       >
         <EventOptionsText
           style={{
-            fontWeight:
-              selectedOption === EventsRange.Upcoming ? 'bold' : 'normal',
+            fontWeight: selected === EventsRange.Upcoming ? 'bold' : 'normal',
           }}
         >
           Upcoming
@@ -60,7 +58,7 @@ const EventOptions: FC<EventOptionsProps> = ({ onSelectedOptionChange }) => {
       <EventOptionsTouch onPress={underDevelopmentAlert}>
         <EventOptionsText
           style={{
-            fontWeight: selectedOption === 'myEvents' ? 'bold' : 'normal',
+            fontWeight: selected === 'myEvents' ? 'bold' : 'normal',
           }}
         >
           My Events

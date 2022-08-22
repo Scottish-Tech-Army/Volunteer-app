@@ -15,7 +15,7 @@ export enum EventQuickSearchChoice {
   ThisMonth = 'This month',
 }
 
-interface EventUpcomingQuickSearchProps {
+interface EventSearchUpcomingQuickSearchProps {
   selectedButton?: EventQuickSearchChoice | undefined
 }
 
@@ -24,9 +24,9 @@ const ButtonTitle = styled.Text`
   text-align: center;
 `
 
-const EventUpcomingQuickSearchButtons: FC<EventUpcomingQuickSearchProps> = ({
-  selectedButton,
-}) => {
+const EventSearchUpcomingQuickSearchButtons: FC<
+  EventSearchUpcomingQuickSearchProps
+> = ({ selectedButton }) => {
   // Get all upcoming events from the Redux store (these are added to the store by the EventsContainer component)
   const allUpcomingEvents = useSelector(
     (state: { events: EventsState }) => state.events.upcoming,
@@ -119,4 +119,4 @@ const EventUpcomingQuickSearchButtons: FC<EventUpcomingQuickSearchProps> = ({
   )
 }
 
-export default EventUpcomingQuickSearchButtons
+export default EventSearchUpcomingQuickSearchButtons

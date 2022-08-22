@@ -1,3 +1,6 @@
+// Set up the Redux store to allow us to share events data across different app components
+// setEvents is what is dispatched to store events
+
 import { createSlice } from '@reduxjs/toolkit'
 import { Events } from '@/Services/modules/events'
 
@@ -6,8 +9,6 @@ const slice = createSlice({
   initialState: { upcoming: [] } as EventsState,
   reducers: {
     setEvents: (state, { payload: { upcoming } }: EventsPayload) => {
-      // console.log('state', state)
-      // console.log('payload - upcoming', upcoming)
       if (typeof upcoming !== 'undefined') {
         state.upcoming = upcoming
       }
