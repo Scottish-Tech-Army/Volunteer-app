@@ -41,28 +41,32 @@ const PaginationDots = ({activeIndex, setActiveIndex, windowWidth, slideRef}) =>
     const styles = StyleSheet.create({
        
         paginationContainer: {
-            flex: 0.01,
+            flex: 0.05,
             justifyContent: 'center',
             alignContent: 'center',
         },
         paginationDots: {
-            height: 16,
+            height: 24,
             margin: 16,
             flexDirection: isAndroidRTL ? 'row-reverse' : 'row',
             justifyContent: 'center',
             alignItems: 'center',
         },
         dot: {
-            width: 10,
-            height: 10,
-            borderRadius: 6,
+            width: 24,
+            height: 24,
+            borderRadius: 24,
             marginHorizontal: 16,
+            borderColor:'#707070',
+            borderWidth:2,
+            overflow:'hidden',
+            
           },
           activeDotStyle: {
-            backgroundColor: 'rgba(255, 255, 255, .9)',
+            backgroundColor: '#707070',
           },
           dotStyle: {
-            backgroundColor: 'rgba(0, 0, 0, .2)',
+            backgroundColor: '#ffffff',
           },
     })
 
