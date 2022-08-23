@@ -3,9 +3,9 @@ import {TouchableOpacity, Text} from 'react-native'
 import styled from 'styled-components/native'
 import { goBack, navigateAndSimpleReset } from '@/Navigators/utils'
 
-const GetStartedButton = () => {
+const WelcomeButton = () => {
 
-    const GetStartedButton = styled.TouchableOpacity`
+    const WelcomeButton = styled.TouchableOpacity`
         backgroundColor:#EC6730;
         width:244px;
         height:42px;
@@ -29,10 +29,10 @@ const GetStartedButton = () => {
     }
 
     return (
-        <GetStartedButton onPress={handlePress}>
+        <WelcomeButton onPress={handlePress}>
             <GetStartedText>Get Started</GetStartedText>
-        </GetStartedButton>
+        </WelcomeButton>
     )
 }
 
-export default GetStartedButton
+export default WelcomeButton

@@ -1,12 +1,12 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 import { SafeAreaView, View, TouchableOpacity, I18nManager, Platform } from "react-native";
-import { MySlides } from './Slides'
+import { WelcomeSlides } from './WelcomeSlides'
 const isAndroidRTL = I18nManager.isRTL && Platform.OS === 'android';
 
-const PaginationDots = ({activeIndex, setActiveIndex, windowWidth, slideRef}) => {
+const WelcomePaginationDots = ({activeIndex, setActiveIndex, windowWidth, slideRef}) => {
     const rtlSafeIndex = (i) => (isAndroidRTL ? slides.length - 1 - i : i);
-    const slides = MySlides()
+    const slides = WelcomeSlides()
     
 
     const goToSlide = (slideNum) => () => {
@@ -70,5 +70,5 @@ const PaginationDots = ({activeIndex, setActiveIndex, windowWidth, slideRef}) =>
           },
     })
 
-    export default PaginationDots
+    export default WelcomePaginationDots
    

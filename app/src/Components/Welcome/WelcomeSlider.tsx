@@ -2,12 +2,12 @@ import React, { useEffect } from 'react'
 import {View, Text, Image, FlatList, I18nManager, Platform}from 'react-native'
 import { useTheme } from '@/Hooks'
 
-import { MySlides } from './Slides'
+import { WelcomeSlides } from './WelcomeSlides'
 
 const isAndroidRTL = I18nManager.isRTL && Platform.OS === 'android';
 
 const WelcomeSlider = ({activeIndex, setActiveIndex, windowHeight, windowWidth, slideRef}) => {
-    const slides = MySlides()
+    const slides = WelcomeSlides()
     const { Layout, Fonts } = useTheme()
 
     // useEffect(() => {

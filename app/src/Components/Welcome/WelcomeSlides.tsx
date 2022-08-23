@@ -4,7 +4,7 @@ import Welcome from '@/Assets/Images/Welcome.png'
 import Volunteer from '@/Assets/Images/Volunteer.png'
 import MakeAnImpact from '@/Assets/Images/MakeAnImpact.png'
 
-export function MySlides() {
+export function WelcomeSlides() {
 
     return [
         {
