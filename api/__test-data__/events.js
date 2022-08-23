@@ -1,7 +1,7 @@
 const { faker } = require('@faker-js/faker');
 
 const eventTypes = ['Internal', 'External'];
-const durations = [60, 120, 360, 480]; // example event durations in minutes -- 1, 2, 3 and 4 hours
+const durations = [60, 120, 360, 480]; // example event durations in minutes -- 1, 2, 6 and 8 hours
 const series = ['', 'Agile Practices', 'Cyber Security', 'Microsoft', 'STA Orientation', 'STA Project Showcase'];
 const times = ['10:00', '12:00', '15:30', '19:00'];
 
