@@ -41,5 +41,36 @@ platform :android do
     upload_to_play_store(
       track: 'internal'
     )
-    end
+  end
+
+  desc "Update version code and changelogs before making an internal release"
+  lane :pre_beta do
+    new_version_code = google_play_track_version_codes(track:"internal").last.to_i + 1
+    android_set_version_code(version_code: new_version_code)
+    make_changelog
+  end
+  
+  desc "Create changelog txt file for the current versionCode and update CHANGELOG.md"
+  lane :make_changelog do
+    version_code = android_get_version_code
+
+    # Get the version name from the app package.json
+    # The android_get_version_name action from the versioning_android plugin doesn't work,
+    # probably since our build.gradle is reading the version name from package.json at build time
+    package_json_file = File.open(File.join(Dir.pwd, "..", "..", "package.json"), "r")
+    package_json_contents = JSON.parse(package_json_file.read)
+    version_name = package_json_contents["version"]
+    package_json_file.close
+
+    # Make a txt file in the metadata/android/en-GB directory,
+    # containing the changes for this version only (from the Unreleased section of CHANGELOG.md)
+    metadata_dir = File.join(Dir.pwd, "metadata", "android", "en-GB", "changelogs")
+    log_file = File.open("#{metadata_dir}/#{version_code}.txt", "w")
+    changes = read_changelog
+    log_file.puts(changes)
+    log_file.close
+
+    # update CHANGELOG.md: move everything that was under Unreleased into a new section for this build
+    stamp_changelog(section_identifier: "#{version_name} (version code #{version_code})")
+  end
 end

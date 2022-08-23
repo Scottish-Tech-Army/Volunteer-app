@@ -1,7 +1,10 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react'
+import React, { FC } from 'react'
+import { useNavigation } from '@react-navigation/native'
 import styled from 'styled-components/native'
+import { EventsRange } from '@/Services/modules/events'
 import underDevelopmentAlert from '../../Utils/UnderDevelopmentAlert'
+import { navigate } from '@/Navigators/utils'
 
 const EventOptionsView = styled.View`
   display: flex;
@@ -16,26 +19,37 @@ const EventOptionsText = styled.Text`
 
 const EventOptionsTouch = styled.TouchableOpacity``
 
-function EventOptions() {
-  const [selectedOption, setSelectedOption] = React.useState('upcoming')
-  const clickUpcomingEvents = () => {
-    setSelectedOption('upcoming')
+interface EventOptionsProps {
+  selected: EventsRange | 'myEvents'
+}
+
+const EventOptions: FC<EventOptionsProps> = ({ selected }) => {
+  const handleSelectedOptionChange = (
+    newSelectedOption: EventsRange | 'myEvents',
+  ) => {
+    navigate('Events', {
+      screen: 'Events',
+      selectedOption: newSelectedOption,
+    })
   }
+
   return (
     <EventOptionsView>
       <EventOptionsTouch onPress={underDevelopmentAlert}>
         <EventOptionsText
           style={{
-            fontWeight: selectedOption === 'past' ? 'bold' : 'normal',
+            fontWeight: selected === EventsRange.Past ? 'bold' : 'normal',
           }}
         >
           Past
         </EventOptionsText>
       </EventOptionsTouch>
-      <EventOptionsTouch onPress={clickUpcomingEvents}>
+      <EventOptionsTouch
+        onPress={() => handleSelectedOptionChange(EventsRange.Upcoming)}
+      >
         <EventOptionsText
           style={{
-            fontWeight: selectedOption === 'upcoming' ? 'bold' : 'normal',
+            fontWeight: selected === EventsRange.Upcoming ? 'bold' : 'normal',
           }}
         >
           Upcoming
@@ -44,7 +58,7 @@ function EventOptions() {
       <EventOptionsTouch onPress={underDevelopmentAlert}>
         <EventOptionsText
           style={{
-            fontWeight: selectedOption === 'my' ? 'bold' : 'normal',
+            fontWeight: selected === 'myEvents' ? 'bold' : 'normal',
           }}
         >
           My Events

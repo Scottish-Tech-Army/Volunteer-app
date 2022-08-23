@@ -1,9 +1,7 @@
 require('dotenv').config();
 const AirTable = require('airtable');
 const dayjs = require('dayjs');
-const duration = require('dayjs/plugin/duration');
 const relativeTime = require('dayjs/plugin/relativeTime');
-dayjs.extend(duration);
 dayjs.extend(relativeTime);
 
 // AirTable doesn't include fields that it sees as empty (including its equivalent of boolean false) so we need to populate them
@@ -50,17 +48,11 @@ function eventsTable() {
   return process.env.AIRTABLE_EVENTS_TABLE;
 }
 
-// AirTable returns durations (time format fields) as a number of seconds (e.g. 3600) rather than a human-friendly amount of time (e.g. "1 hour")
+// AirTable returns durations as a number of seconds (e.g. 3600 = 1 hour), we want it in minutes (e.g. 60 = 1 hour)
 function formatDuration(durationInSeconds) {
   if (!durationInSeconds) return durationInSeconds;
 
-  return dayjs
-    .duration({
-      seconds: Number(durationInSeconds),
-    })
-    .humanize()
-    .replace(/a /g, '1 ')
-    .replace(/an /g, '1 '); // dayjs outputs human-friendly durations as e.g. "a day" or "an hour" when we want to display this as "1 day" or "1 hour"
+  return durationInSeconds / 60;
 }
 
 // AirTable returns times as a number of seconds from midnight (e.g. 39600) rather than a human-friendly time (e.g. "11:00")

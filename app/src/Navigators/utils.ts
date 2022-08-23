@@ -16,6 +16,7 @@ type RootStackParamList = {
   ProjectRegisterInterest: undefined
   Search: undefined
   ProjectSearchResults: undefined
+  Events: undefined
   EventDetail: undefined
   EventSearch: undefined
 }
