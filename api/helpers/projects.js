@@ -36,7 +36,7 @@ function formatProjectResourceFromAirTable(projectResource) {
           ? stringsHelper.splitByLineBreak(stringsHelper.removeBlankLines(projectResource[fieldName]))
           : [];
         break;
-    }
+    } 
   }
 
   return projectResourceFormatted;

@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [1.0.6 (version code 7)] - 2022-08-23Z
+
+### Changed
+
+- Vimeo MP4 video file is now part of the project cache 
+
+### Added
+
+- Video component to display the Vimeo video file in the app
+
 ## [1.0.5 (version code 6)] - 2022-08-22Z
 
 ### Changed
