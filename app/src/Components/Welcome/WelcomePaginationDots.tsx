@@ -1,14 +1,16 @@
 import React from "react";
 import { StyleSheet } from "react-native";
-import { SafeAreaView, View, TouchableOpacity, } from "react-native";
+import { SafeAreaView, View, TouchableOpacity, I18nManager, Platform } from "react-native";
 
-const WelcomePaginationDots = ({activeIndex, setActiveIndex, windowWidth, slideRef, slides, rtlSafeIndex, isAndroidRtl}) => {
-    
 
-    const goToSlide = (slideNum:number) => () => {
+
+const PaginationDots = ({activeIndex, setActiveIndex, slideRef, rtlSafeIndex, slides,}) => {
+
+    const goToSlide = (slideNum) => () => {
         setActiveIndex(slideNum)
         slideRef.current?.scrollToOffset({
-            offset: rtlSafeIndex(slideNum) * windowWidth,
+            animated:true,
+            offset: Math.ceil(rtlSafeIndex(slideNum) * 378),
         });
         };
 
@@ -44,7 +46,7 @@ const WelcomePaginationDots = ({activeIndex, setActiveIndex, windowWidth, slideR
         paginationDots: {
             height: 24,
             margin: 16,
-            flexDirection: isAndroidRTL ? 'row-reverse' : 'row',
+            flexDirection: 'row',
             justifyContent: 'center',
             alignItems: 'center',
         },
@@ -66,5 +68,5 @@ const WelcomePaginationDots = ({activeIndex, setActiveIndex, windowWidth, slideR
           },
     })
 
-    export default WelcomePaginationDots
+    export default PaginationDots
    
