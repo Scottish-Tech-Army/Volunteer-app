@@ -1,15 +1,11 @@
 import React from "react";
 import { StyleSheet } from "react-native";
-import { SafeAreaView, View, TouchableOpacity, I18nManager, Platform } from "react-native";
-import { WelcomeSlides } from './WelcomeSlides'
-const isAndroidRTL = I18nManager.isRTL && Platform.OS === 'android';
+import { SafeAreaView, View, TouchableOpacity, } from "react-native";
 
-const WelcomePaginationDots = ({activeIndex, setActiveIndex, windowWidth, slideRef}) => {
-    const rtlSafeIndex = (i) => (isAndroidRTL ? slides.length - 1 - i : i);
-    const slides = WelcomeSlides()
+const WelcomePaginationDots = ({activeIndex, setActiveIndex, windowWidth, slideRef, slides, rtlSafeIndex, isAndroidRtl}) => {
     
 
-    const goToSlide = (slideNum) => () => {
+    const goToSlide = (slideNum:number) => () => {
         setActiveIndex(slideNum)
         slideRef.current?.scrollToOffset({
             offset: rtlSafeIndex(slideNum) * windowWidth,
