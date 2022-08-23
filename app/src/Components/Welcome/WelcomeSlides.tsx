@@ -3,24 +3,28 @@ import {Image} from 'react-native'
 import Welcome from '@/Assets/Images/Welcome.png'
 import Volunteer from '@/Assets/Images/Volunteer.png'
 import MakeAnImpact from '@/Assets/Images/MakeAnImpact.png'
+import styled from 'styled-components/native'
 
-
+const WelcomeImage = styled.Image`
+    height:283px;
+    width:378px;
+`
 
 export function WelcomeSlides() {
 
     return [
         {
-            image:<Image style={{height:283, width:378}} source={Welcome}></Image>,
+            image:<WelcomeImage source={Welcome} resizeMode={'contain'}></WelcomeImage>,
             title: "Welcome",
             text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eu nisl vitae nisl lobortis rutrum."
         },
         {
-            image:<Image style={{height:283, width:378}} source={Volunteer}></Image>,
+            image:<WelcomeImage source={Volunteer} resizeMode={'contain'}></WelcomeImage>,
             title: "Volunteer",
             text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eu nisl vitae nisl lobortis rutrum."
         },
         {
-            image:<Image style={{height:283, width:378}} source={MakeAnImpact}></Image>,
+            image:<WelcomeImage source={MakeAnImpact} resizeMode={'contain'}></WelcomeImage>,
             title: "Make an Impact",
             text: "In the first year of the STA our volunteers saved the third sector in Scotland over £1m"
         }

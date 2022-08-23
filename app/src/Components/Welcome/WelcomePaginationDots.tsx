@@ -1,65 +1,68 @@
-import React from "react";
+import React, {FC, Ref} from "react";
 import { StyleSheet } from "react-native";
-import { SafeAreaView, View, TouchableOpacity, I18nManager, Platform } from "react-native";
+import { View, TouchableOpacity, } from "react-native";
+import styled from 'styled-components/native'
 
+const PaginationContainer = styled.View`
+    justifyContent: center;
+    alignContent: center;
+`
 
+const DotsContainer = styled.View`
+    height: 24px;
+    margin: 16px;
+    flexDirection: row;
+    justifyContent: center;
+    alignItems: center;
+`
 
-const PaginationDots = ({activeIndex, setActiveIndex, slideRef, rtlSafeIndex, slides,}) => {
+const Dot = styled.TouchableOpacity`
+    width: 24px;
+    height: 24px;
+    borderRadius: 24px;
+    marginHorizontal: 16px;
+    borderColor:#707070;
+    borderWidth:2px;
+    overflow:hidden;
+`
+interface PaginationProps {
+    activeIndex:number
+    setActiveIndex: Function
+    slideRef: Ref<null>
+    rtlSafeIndex: Function
+    slides:Array<Object>
 
-    const goToSlide = (slideNum) => () => {
+}
+
+const PaginationDots:FC<PaginationProps> = ({activeIndex, setActiveIndex, slideRef, rtlSafeIndex, slides,}) => {
+
+    const goToSlide = (slideNum:number) => () => {
         setActiveIndex(slideNum)
         slideRef.current?.scrollToOffset({
-            animated:true,
-            offset: Math.ceil(rtlSafeIndex(slideNum) * 378),
+            offset: rtlSafeIndex(slideNum) * 378
         });
         };
 
     return (
-        <View style={styles.paginationContainer}>
-        <SafeAreaView>
-            <View style={styles.paginationDots}>
+        <PaginationContainer >
+            <DotsContainer >
             {slides.length > 1 &&
-                slides.map((_, i) => (
-                <TouchableOpacity
+                slides.map((_, i:number) => (
+                <Dot
                     hitSlop={{ left: 15, right: 15, top: 15, bottom: 15 }}
                     key={i}
                     style={[
-                    styles.dot,
                     rtlSafeIndex(i) === activeIndex ? styles.activeDotStyle : styles.dotStyle,
                     ]}
                     onPress={goToSlide(i)}
                 />
                 ))}
-            </View>
-        </SafeAreaView>
-        </View>
+            </DotsContainer>
+        </PaginationContainer>
     );
                 }
 
     const styles = StyleSheet.create({
-       
-        paginationContainer: {
-            flex: 0.05,
-            justifyContent: 'center',
-            alignContent: 'center',
-        },
-        paginationDots: {
-            height: 24,
-            margin: 16,
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-        },
-        dot: {
-            width: 24,
-            height: 24,
-            borderRadius: 24,
-            marginHorizontal: 16,
-            borderColor:'#707070',
-            borderWidth:2,
-            overflow:'hidden',
-            
-          },
           activeDotStyle: {
             backgroundColor: '#707070',
           },
