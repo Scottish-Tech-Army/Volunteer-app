@@ -21,7 +21,7 @@
                     "name": "Data Collective",
                     "date": "2023-01-19",
                     "time": "11:00",
-                    "duration": "1 hour",
+                    "duration": 60,
                     "description": "What could we do with the data",
                     "type": "External",
                     "notes": "",
@@ -34,7 +34,7 @@
                     "name": "Microsoft power bi",
                     "date": "2023-02-21",
                     "time": "14:00",
-                    "duration": "2 hours",
+                    "duration": 120,
                     "description": "Delivered by the Customer service team",
                     "type": "Internal",
                     "notes": "",
@@ -68,7 +68,7 @@
                   "name": "Data Collective",
                   "date": "2023-01-19",
                   "time": "11:00",
-                  "duration": "1 hour",
+                  "duration": 60,
                   "description": "What could we do with the data",
                   "type": "External",
                   "notes": "",
@@ -100,7 +100,7 @@
                     "name": "Data Collective",
                     "date": "2023-01-19",
                     "time": "11:00",
-                    "duration": "1 hour",
+                    "duration": 60,
                     "description": "What could we do with the data",
                     "type": "External",
                     "notes": "",
@@ -113,7 +113,7 @@
                     "name": "Microsoft power bi",
                     "date": "2023-02-21",
                     "time": "14:00",
-                    "duration": "2 hours",
+                    "duration": 120,
                     "description": "Delivered by the Customer service team",
                     "type": "Internal",
                     "notes": "",
@@ -148,7 +148,7 @@
                     "name": "Data Collective",
                     "date": "2023-01-19",
                     "time": "11:00",
-                    "duration": "1 hour",
+                    "duration": 60,
                     "description": "What could we do with the data",
                     "type": "External",
                     "notes": "",
@@ -161,7 +161,7 @@
                     "name": "Microsoft power bi",
                     "date": "2023-02-21",
                     "time": "14:00",
-                    "duration": "2 hours",
+                    "duration": 120,
                     "description": "Delivered by the Customer service team",
                     "type": "Internal",
                     "notes": "",
@@ -198,13 +198,14 @@
                     "client": "PKAVS",
                     "role": "QA Tester",
                     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-                    "video": "https://vimeo.com/123456",
+                    "video_webpage": "https://vimeo.com/123456",
                     "skills": ["Acceptance Testing"],
                     "hours": "5-10 hours per week",
                     "required": "One person",
                     "buddying": false,
                     "scope": "https://drive.google.com/file/d/1j469c-xp8HPYLocTgz5lMYHnnz7TsRVP/view?usp=sharing",
-                    "sector": "Arts & Culture"
+                    "sector": "Arts & Culture",
+					"video_file": "https://vod-progressive.akamaized.net/exp=1657227176~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F678%2F28%2F703391800%2F3256486964.mp4~hmac=e76bbd7e698f0d46c373bce069f936a24182694a1b0d140a63fcf240a2e8b65c/vimeo-prod-skyfire-std-us/01/678/28/703391800/3256486964.mp4"
                   },
                   {
                     "it_key": "IT-123",
@@ -214,13 +215,14 @@
                     "client": "PKAVS",
                     "role": "Web designer",
                     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-                    "video": "https://vimeo.com/123456",
+                    "video_webpage": "https://vimeo.com/123456",
                     "skills": ["HTML", "CSS"],
                     "hours": "1-2 days per week",
                     "required": "One person",
                     "buddying": false,
                     "scope": "https://drive.google.com/file/d/1j469c-xp8HPYLocTgz5lMYHnnz7TsRVP/view?usp=sharing",
-                    "sector": "Arts & Culture"
+                    "sector": "Arts & Culture",
+					"video_file": "https://vod-progressive.akamaized.net/exp=1657227176~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F678%2F28%2F703391800%2F3256486964.mp4~hmac=e76bbd7e698f0d46c373bce069f936a24182694a1b0d140a63fcf240a2e8b65c/vimeo-prod-skyfire-std-us/01/678/28/703391800/3256486964.mp4"
                   },
                   {
                     "it_key": "SVA",
@@ -230,13 +232,14 @@
                     "client": "Scottish Tech Army",
                     "role": "Lead developer",
                     "description": "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                    "video": "",
+                    "video_webpage": "",
                     "skills": ["React Native", "Node.js"],
                     "hours": "2-3 days per week",
                     "required": "One person",
                     "buddying": true,
                     "scope": "https://drive.google.com/file/d/1j469c-xp8HPYLocTgz5lMYHnnz7TsRVP/view?usp=sharing",
-                    "sector": "Education & Youth"
+                    "sector": "Education & Youth",
+					"video_file": "https://vod-progressive.akamaized.net/exp=1657227176~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F678%2F28%2F703391800%2F3256486964.mp4~hmac=e76bbd7e698f0d46c373bce069f936a24182694a1b0d140a63fcf240a2e8b65c/vimeo-prod-skyfire-std-us/01/678/28/703391800/3256486964.mp4"
                   }
                 ],
                 "schema": {
@@ -265,13 +268,14 @@
                   "client": "PKAVS",
                   "role": "QA Tester",
                   "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-                  "video": "https://vimeo.com/123456",
+                  "video_webpage": "https://vimeo.com/123456",
                   "skills": ["Acceptance Testing"],
                   "hours": "5-10 hours per week",
                   "required": "One person",
                   "buddying": false,
                   "scope": "https://drive.google.com/file/d/1j469c-xp8HPYLocTgz5lMYHnnz7TsRVP/view?usp=sharing",
-                  "sector": "Arts & Culture"
+                  "sector": "Arts & Culture",
+				  "video_file": "https://vod-progressive.akamaized.net/exp=1657227176~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F678%2F28%2F703391800%2F3256486964.mp4~hmac=e76bbd7e698f0d46c373bce069f936a24182694a1b0d140a63fcf240a2e8b65c/vimeo-prod-skyfire-std-us/01/678/28/703391800/3256486964.mp4"
                 },
                 "schema": {
                   "$ref": "#/components/schemas/project"
@@ -326,8 +330,8 @@
               "description": "The time as HH:mm"
             },
             "duration": {
-              "type": "string",
-              "description": "How long the event lasts, e.g. 1 hour"
+              "type": "number",
+              "description": "How long the event lasts, in minutes e.g. 60 = 1 hour"
             },
             "description": {
               "type": "string",
@@ -341,7 +345,7 @@
               "type": "string",
               "description": "The event series this is part of (if any)"
             },
-            "video": {
+            "video_webpage": {
               "type": "string",
               "description": "URL of the event video (normally used to watch a past event)"
             },
@@ -394,9 +398,9 @@
               "type": "string",
               "description": "Description of what the project work involves"
             },
-            "video": {
+            "video_webpage": {
               "type": "string",
-              "description": "URL of a video introducing the project, if available"
+              "description": "URL of the charity introducing the project. Expected to be a Vimeo Webpage"
             },
             "skills": {
               "type": "array",
@@ -424,7 +428,11 @@
             "sector": {
               "type": "string",
               "description": "Project charity sector"
-            }
+            }, 
+			"video_file": {
+				"type" : "string",
+				"description" : "MP4 file of the video introducing the project from the Vimeo webpage"
+			}
           }
         }
       }

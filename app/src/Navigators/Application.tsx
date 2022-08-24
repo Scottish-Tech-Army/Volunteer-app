@@ -8,13 +8,13 @@ import {
   ProjectRegisterInterestContainer,
   ProjectSearchResultsContainer,
   SearchContainer,
-  EventsContainer
+  EventsContainer,
+  EventSearchContainer,
+  WelcomeContainer,
 } from '@/Containers'
 import { useTheme } from '@/Hooks'
 import MainNavigator from './Main'
 import { navigationRef } from './utils'
-import EventSearchContainer from '@/Containers/EventSearchContainer'
-import WelcomeContainer from '@/Containers/WelcomeContainer'
 
 
 const Stack = createStackNavigator()

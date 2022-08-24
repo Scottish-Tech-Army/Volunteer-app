@@ -16,7 +16,7 @@ const PageBottom = styled.View`
 `
 
 
-const WelcomeContainer:FC = () => {
+const WelcomeContainer = () => {
     const [activeIndex, setActiveIndex] = useState(0)
     const {Layout} = useTheme()
     const slideRef = useRef(null)

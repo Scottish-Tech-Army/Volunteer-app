@@ -5,6 +5,7 @@ const cacheProjects = require('../../cache/projects');
 const { faker } = require('@faker-js/faker');
 const projectsHelpers = require('../../helpers/projects');
 const projectsTestData = require('../../__test-data__/projects');
+const vimeo = require('../../services/vimeo');
 
 axios.defaults.adapter = require('axios/lib/adapters/http');
 
@@ -297,27 +298,32 @@ describe('Test the projects/resources cache', () => {
     const fakeProjectsCountMaximum = 50;
     const fakeProjectsCount = faker.datatype.number({ min: fakeProjectsCountMinimum, max: fakeProjectsCountMaximum });
     const fakeJiraItApiResults = projectsTestData.fakeJiraItApiResults(fakeProjectsCount);
+    const fakeVideoFile = faker.internet.url();
 
     // Mock dependencies
     const axiosSpy = jest.spyOn(axios, 'get').mockImplementationOnce(() => Promise.resolve(fakeJiraItApiResults));
+    const vimeoSpy = jest.spyOn(vimeo, 'getVideoFileFromVimeo').mockImplementation(() => Promise.resolve(fakeVideoFile));
 
     // Run test
     const jiraItArray = await cacheProjects.getInitialTriageProjectsFromJira(0, []);
 
     expect(axiosSpy).toHaveBeenCalledTimes(1);
+    expect(vimeoSpy).toHaveBeenCalledTimes(fakeProjectsCount);
     const randomItemIndex = faker.datatype.number({ min: fakeProjectsCountMinimum - 1, max: fakeProjectsCount - 1 });
     expect(jiraItArray[randomItemIndex]).toEqual({
       it_key: fakeJiraItApiResults.data.issues[randomItemIndex].key,
       name: fakeJiraItApiResults.data.issues[randomItemIndex].fields.summary,
       description: fakeJiraItApiResults.data.issues[randomItemIndex].fields.description,
       client: fakeJiraItApiResults.data.issues[randomItemIndex].fields.customfield_10027,
-      video: fakeJiraItApiResults.data.issues[randomItemIndex].fields.customfield_10159,
+      video_webpage: fakeJiraItApiResults.data.issues[randomItemIndex].fields.customfield_10159,
       scope: fakeJiraItApiResults.data.issues[randomItemIndex].fields.customfield_10090,
-      sector: fakeJiraItApiResults.data.issues[randomItemIndex].fields.customfield_10148.value
+      sector: fakeJiraItApiResults.data.issues[randomItemIndex].fields.customfield_10148.value,
+      video_file: fakeVideoFile,
     });
 
     // Clean up
     axiosSpy.mockRestore();
+    vimeoSpy.mockRestore();
   });
 
   test('getResourcesFromJira calls Jira API', async () => {

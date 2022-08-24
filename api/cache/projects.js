@@ -3,7 +3,7 @@ const airTable = require('../helpers/airTable');
 const arraysHelpers = require('../helpers/arrays');
 const axios = require('axios').default;
 const projectsHelpers = require('../helpers/projects');
-
+const vimeoService = require('../services/vimeo');
 const api_key = process.env.JIRA_API_KEY;
 const email = process.env.JIRA_EMAIL;
 const resourcingJiraBoardName = 'RES';
@@ -174,25 +174,34 @@ async function getInitialTriageProjectsFromJira(startAt, itArray) {
 
   const itTotalData = parseInt(jiraIt.data.total);
 
-  jiraIt.data.issues.map((x) =>
-    itArray.push({
+  await Promise.all(jiraIt.data.issues.map(async (x) => {
+    const project = {
       it_key: x['key'],
       name: x['fields'].summary,
       description: x['fields'].description,
       client: x['fields'].customfield_10027,
-      video: x['fields'].customfield_10159 ?? '',
+      video_webpage: x['fields'].customfield_10159 ?? '',
       scope: x['fields'].customfield_10090,
-      sector: x['fields'].customfield_10148?.value ?? ''
-    }),
-  );
+      sector: x['fields'].customfield_10148?.value ?? '',
+    }
+
+   /**
+   * video_webpage is required in order to retrieve the video MP4 file from Vimeo
+   * Vimeo MP4 links will expire after 1 hour but the cron job should run every 15mins to update them
+   */  
+    const videoFile =  await vimeoService.getVideoFileFromVimeo(project.video_webpage);
+    project.video_file = videoFile;
+
+    itArray.push(project);
+  }));
 
   if (itArray.length < itTotalData) {
     const itStartResultSearch = itArray.length;
 
     return module.exports.getInitialTriageProjectsFromJira(itStartResultSearch, itArray);
   }
-
-  return itArray;
+  
+    return itArray;
 }
 
 async function getResourcesFromJira(startAt, resArray) {
@@ -226,13 +235,13 @@ async function getResourcesFromJira(startAt, resArray) {
       buddying: x['fields'].customfield_10108 ? x['fields'].customfield_10108.value.toLowerCase() === 'yes' : false,
     }),
   );
-
+  
   if (resArray.length < resTotalData) {
     const resStartResultSearch = resArray.length;
 
     return module.exports.getResourcesFromJira(resStartResultSearch, resArray);
   }
-
+  
   return resArray;
 }
 

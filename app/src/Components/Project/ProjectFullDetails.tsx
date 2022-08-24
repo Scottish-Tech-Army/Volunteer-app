@@ -2,12 +2,14 @@ import React, { FC } from 'react'
 import styled from 'styled-components/native'
 import ProjectHeading from './ProjectHeading'
 import ProjectInterestButton from './ProjectInterestButton'
+import Video from '../Video'
 import ProjectSkills from './ProjectSkills'
 import ProjectRequirements from './ProjectRequirements'
 import ProjectAttachments from './ProjectAttachments'
 import Feather from 'react-native-vector-icons/Feather'
 import { Project } from '@/Services/modules/projects'
 import { ScrollView } from 'react-native-gesture-handler'
+
 
 interface ProjectFullDetailsProps {
   project: Project
@@ -90,10 +92,7 @@ const ProjectFullDetails: FC<ProjectFullDetailsProps> = ({ project }) => {
             icon={<Feather name='file' size={24} />} 
             details={ "A3 - Project Scope"}
           />
-          <ProjectAttachments
-            icon={<Feather name='video' size={24} />} 
-            details={ "Charity Video" }
-          />
+          <Video url={project.video_file} />
           <SectionHeader>Team</SectionHeader>
           <ProjectTeam>Placeholder text</ProjectTeam>
           <HorizontalLine />
