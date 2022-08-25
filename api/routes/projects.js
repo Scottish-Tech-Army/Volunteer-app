@@ -5,21 +5,14 @@ const slackService = require('../services/slack');
 const projectsHelper = require('../helpers/projects');
 const router = express.Router();
 const routesHelper = require('../helpers/routes');
-const seedData = require('../sample-data/projects.json'); //dummy data for dev purposes if no authorised credentials
 
 router.get('/', async (req, res) => {
   const projectsResources = await airTable.getAllRecords(airTable.projectsResourcesCacheTable());
 
-  /*
-   * If unauthorised for AirTable API access, load with dummy data for now.
-   * This is to help with rapid early development only and will need to be
-   * removed before being used in a production environment
-   */
   if (projectsResources.error) {
     routesHelper.sendError(
       res,
-      `${airTable.connectionErrorMessage()} Returning example results for now -- this is not real data.`,
-      seedData,
+      `Database connection error: ${airTable.connectionErrorMessage()}`,
     );
 
     return;
@@ -41,16 +34,10 @@ router.get('/single', async (req, res) => {
     res_id: resourceId,
   });
 
-  /*
-   * If unauthorised for AirTable API access, load with dummy data for now.
-   * This is to help with rapid early development only and will need to be
-   * removed before being used in a production environment
-   */
   if (!projectResource || projectResource.error) {
     routesHelper.sendError(
       res,
-      `❌ Could not find project ${projectItKey} and/or resource ${resourceId}. Please check these details are correct and check your AirTable details are correct in your .env file.  Returning example results for now -- this is not real data.`,
-      seedDataSingle,
+      `Could not find project matching it_key ${projectItKey} and/or res_id ${resourceId} - please check these details are correct.  Please check database details are correct in the API .env file.`,
     );
 
     return;
@@ -82,7 +69,7 @@ const projectRegisterInterestHandler = async (req, res) => {
   if (!projectResource || projectResource.error) {
     routesHelper.sendError(
       res,
-      `❌ Could not find project ${projectItKey} and/or resource ${resourceId}. Please check these details are correct and check your AirTable details are correct in your .env file.  Returning example results for now -- this is not real data.`,
+      `Could not find project matching it_key ${projectItKey} and/or res_id ${resourceId} - please check these details are correct.  Please check database details are correct in the API .env file.`,
     );
 
     return;

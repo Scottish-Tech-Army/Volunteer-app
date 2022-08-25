@@ -31,8 +31,7 @@ const ProjectList: FC<ProjectProps> = ({ data }) => {
 }
 
 const HomeContainer = () => {
-  //let [searchResults, setSearchResults] = useState([])
-
+  
   const [fetchAll, { data: projects }] = useLazyFetchAllQuery()
 
   useEffect(() => {

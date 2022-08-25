@@ -15,9 +15,11 @@ import { setupListeners } from '@reduxjs/toolkit/query'
 
 import { api } from '@/Services/api'
 import * as modules from '@/Services/modules'
+import events from './Events'
 import theme from './Theme'
 
 const reducers = combineReducers({
+  events,
   theme,
   ...Object.values(modules).reduce(
     (acc, module) => ({
@@ -31,7 +33,7 @@ const reducers = combineReducers({
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['theme'],
+  whitelist: ['events', 'theme'],
 }
 
 const persistedReducer = persistReducer(persistConfig, reducers)

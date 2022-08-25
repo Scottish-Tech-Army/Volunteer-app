@@ -1,4 +1,3 @@
-import { ImageURISource } from 'react-native'
 import { api } from '../../api'
 import fetchAll from './fetchAll'
 import registerInterest from './registerInterest'
@@ -24,11 +23,13 @@ export interface Project {
   client: string
   role: string
   description: string
-  video: ImageURISource
+  video_webpage: string
   skills: string[]
   hours: string
   required: string
   buddying: boolean
+  sector: string
+  video_file: string
 }
 
 export type Projects = Project[]

@@ -8,7 +8,7 @@ import { Projects } from '@/Services/modules/projects'
 import { Text, SafeAreaView } from 'react-native'
 
 const SearchTerm = styled.Text`
-  font-size: 20px;
+  font-size: 18px;
   margin: 15px 15px 0px 15px;
   text-align: center;
 `
@@ -17,21 +17,19 @@ const ProjectSearchResultsContainer = (props: {
   route: {
     params: {
       results: Projects
-      resultsType: 'groupOfTerms' | 'singleTerm'
       searchField: string | undefined
       searchQuery: string
     }
   }
 }) => {
-  const { results, resultsType, searchField, searchQuery } = props.route.params
+  const { results, searchField, searchQuery } = props.route.params
 
   if (results) {
     return (
       <SafeArea>
         <TopOfApp />
         <SearchTerm>
-          Results for {searchField ?? ''}
-          {resultsType === 'groupOfTerms' ? ' related to' : ''} "{searchQuery}"
+          Results for {searchField === 'sector' ? 'cause' : searchField} "{searchQuery}"
         </SearchTerm>
         {Boolean(results.length) && <ProjectFilterSort />}
         <ProjectReturnedList data={results} mode="search" />

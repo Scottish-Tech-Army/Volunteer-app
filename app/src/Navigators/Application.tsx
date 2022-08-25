@@ -9,6 +9,8 @@ import {
   ProjectRegisterInterestContainer,
   ProjectSearchResultsContainer,
   SearchContainer,
+  EventsContainer,
+  EventSearchContainer,
 } from '@/Containers'
 import { useTheme } from '@/Hooks'
 import MainNavigator from './Main'
@@ -80,6 +82,15 @@ const ApplicationNavigator = () => {
               title: 'Event Details',
               headerTitleAlign: 'center', //android defaults to left aligned (ios is always centered)
               headerBackTitleVisible: false, //ios defaults to title of previous screen
+            }}
+          />
+          <Stack.Screen
+            name="EventSearch"
+            component={EventSearchContainer}
+            options={{
+              headerTitleAlign: 'center',
+              headerBackTitleVisible: false,
+              title: 'Event Search',
             }}
           />
         </Stack.Navigator>

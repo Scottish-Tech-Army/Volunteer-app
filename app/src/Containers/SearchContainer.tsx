@@ -1,9 +1,8 @@
-import React, { useState, useEffect, SetStateAction } from 'react'
+import React, { useState, useEffect } from 'react'
 import Fuse from 'fuse.js' // fuzzy text search - see docs at https://fusejs.io
 import styled from 'styled-components/native'
 import { ScrollView, SafeAreaView } from 'react-native'
 import TopOfApp from '@/Components/TopOfApp'
-import underDevelopmentAlert from '@/Utils/UnderDevelopmentAlert'
 import FreeSearchBar from '@/Components/FreeSearchBar'
 import { navigate } from '@/Navigators/utils'
 import {
@@ -12,7 +11,9 @@ import {
   Projects,
 } from '@/Services/modules/projects'
 import { dedupeArrayOfObjects } from '@/Utils/Lists'
+import QuickSearchButton from '@/Components/Forms/QuickSearchButton'
 
+// define titles for quick search buttons relating to job roles
 const Roles = [
   'Web Developer',
   'Tech Support',
@@ -21,6 +22,7 @@ const Roles = [
   'Scrum Master',
   'BA/PM',
 ]
+// define groups of related job roles
 const RolesRelated = [
   {
     roles: [
@@ -155,14 +157,18 @@ const RolesRelated = [
     ],
   },
 ]
+
+// define titles for quick search buttons relating to charity sectors
 const Causes = [
   'Health & Social Care',
   'Education & Youth',
   'Arts & Culture',
   'Environment & Conservation',
   'Community Projects',
-  'Internal STA',
+  'Internal STA Project',
 ]
+
+// define titles for quick search buttons relating to tech stack
 const TechStack = [
   'Java',
   'JavaScript',
@@ -188,16 +194,6 @@ const SectionView = styled.View`
   flex-wrap: wrap;
   height: 180px;
 `
-const QuickSearchButton = styled.TouchableOpacity`
-  width: 28%;
-  height: 50px;
-  margin: 20px 0px 0px 15px;
-  padding: 5px;
-  background-color: #e3e3e3;
-  border: ${props => `1px solid ${props.theme.colors.staBlack}`};
-  display: flex;
-  justify-content: center;
-`
 const QuickSearchTitle = styled.Text`
   display: flex;
   text-align: center;
@@ -206,16 +202,18 @@ const QuickSearchTitle = styled.Text`
 const SearchContainer = () => {
   const [searchQuery, setSearchQuery] = useState('')
 
-  const handleSearch = (input: React.SetStateAction<string>) => {
+  const handleFreeTextSearch = (input: React.SetStateAction<string>) => {
     setSearchQuery(input)
   }
 
+  // fetch all projects
   const [fetchAll, { data: projects }] = useLazyFetchAllQuery()
 
   useEffect(() => {
     fetchAll('')
   }, [fetchAll])
 
+  // ensure job title searches find related roles
   const getRelatedRoles = (
     possibleRoleSearchQuery: string,
   ): string[] | undefined => {
@@ -242,34 +240,35 @@ const SearchContainer = () => {
     return undefined
   }
 
-  const handlePreDefinedChoiceSubmit = (
-    searchField: 'client' | 'description' | 'name' | 'role' | 'skills',
+  
+  const handleQuickSearchSubmit = (
+    searchField: 'client' | 'description' | 'name' | 'role' | 'skills' | 'sector',
     searchQueryChoice: string,
   ) => {
     let searchQueries = [] as string[]
-    let resultsType = 'singleTerm'
+    let results = [] as Projects
+    
+    searchQueries.push(searchQueryChoice)
 
     if (searchField === 'role') {
       const relatedRoles = getRelatedRoles(searchQueryChoice)
 
       if (relatedRoles?.length) {
-        searchQueries = relatedRoles
-        resultsType = 'groupOfTerms'
+        searchQueries = searchQueries.concat(relatedRoles)
       }
+      results = fuzzySearchByArray(searchQueries, [searchField]) // we need to use fuzzy search as the roles names are not exact (charities use different ways of naming roles)
     }
-
-    searchQueries.push(searchQueryChoice)
-
-    const results = searchByArray(searchQueries, [searchField])
+    else {
+    results = searchByArray(searchQueries, searchField) // here we do not want to use fuzzy search as it would include unwanted results
+    }
 
     navigate('ProjectSearchResults', {
       results,
-      resultsType,
       searchField,
       searchQuery: searchQueryChoice,
     })
   }
-
+  
   const handleFreeTextSubmit = () => {
     let searchQueries = [] as string[]
 
@@ -279,26 +278,50 @@ const SearchContainer = () => {
       searchQueries = relatedRoles
     }
 
-    searchQueries.push(searchQuery)
-
-    const results = searchByArray(searchQueries, [
+    const results = fuzzySearchByArray(searchQueries, [
       'client',
       // default weight is 1, put less importance on description field as more likely to return false positive matches
       { name: 'description', weight: 0.5 },
       'name',
       'role',
       'skills',
+      'sector',
     ])
 
     navigate('ProjectSearchResults', {
       results,
-      resultsType: 'singleTerm',
       searchField: undefined,
       searchQuery,
     })
   }
 
   const searchByArray = (
+    searchQueries: string[],
+    searchField: 'client' | 'description' | 'name' | 'role' | 'skills' | 'sector',
+  ): Projects => {
+    let results = [] as Projects
+
+    if (projects) {
+      results = projects.filter(
+        project => {
+          const isAnySearchQueriesMatching = searchQueries.some(searchQuery => {
+            if (typeof project[searchField] === "string") { // most fields are strings, but some are an array of strings (i.e. skills)
+              const stringSearchField = project[searchField] as string
+              return stringSearchField.toLowerCase().includes(searchQuery.toLowerCase())
+            }
+            else if (Array.isArray(project[searchField])) { // assume it's an array, ie skills
+              const arrayOfStrings = project[searchField] as string[]
+              return arrayOfStrings.some(item => item.toLowerCase().includes(searchQuery.toLowerCase())) // we need to find the search words in a descriptive paragraph (i.e. skills are not in a list)
+            }
+          })
+          return isAnySearchQueriesMatching // returns a boolean
+        }
+      )
+    }
+    return results
+  }
+
+  const fuzzySearchByArray = (
     searchQueries: string[],
     searchKeys: any[],
   ): Projects => {
@@ -321,7 +344,6 @@ const SearchContainer = () => {
       fuseResultsArray = dedupeArrayOfObjects(fuseResultsArray)
       results = fuseResultsArray.map(result => result.item)
     }
-
     return results
   }
 
@@ -330,7 +352,7 @@ const SearchContainer = () => {
       <ScrollView>
         <TopOfApp />
         <FreeSearchBar
-          handleSearch={handleSearch}
+          handleSearch={handleFreeTextSearch}
           handleSubmit={handleFreeTextSubmit}
         />
         <Heading>Popular Searches</Heading>
@@ -338,7 +360,7 @@ const SearchContainer = () => {
         <SectionView>
           {Roles.map((role, index) => (
             <QuickSearchButton
-              onPress={() => handlePreDefinedChoiceSubmit('role', role)}
+              onPress={() => handleQuickSearchSubmit('role', role)}
               key={index}
             >
               <QuickSearchTitle>{role}</QuickSearchTitle>
@@ -348,7 +370,7 @@ const SearchContainer = () => {
         <SubHeading>Causes</SubHeading>
         <SectionView>
           {Causes.map((cause, index) => (
-            <QuickSearchButton onPress={underDevelopmentAlert} key={index}>
+            <QuickSearchButton onPress={() => handleQuickSearchSubmit('sector', cause) } key={index}>
               <QuickSearchTitle>{cause}</QuickSearchTitle>
             </QuickSearchButton>
           ))}
@@ -356,7 +378,7 @@ const SearchContainer = () => {
         <SubHeading>Tech Stack / Languages</SubHeading>
         <SectionView>
           {TechStack.map((tech, index) => (
-            <QuickSearchButton onPress={underDevelopmentAlert} key={index}>
+            <QuickSearchButton onPress={() => handleQuickSearchSubmit('skills', tech)} key={index}>
               <QuickSearchTitle>{tech}</QuickSearchTitle>
             </QuickSearchButton>
           ))}
