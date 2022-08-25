@@ -3,7 +3,7 @@ import { ThemeProvider } from 'styled-components/native'
 
 const theme = {
   colors: {
-    appBackground: '#ffffff',
+    appBackground: '#E5E5E5',
     greyFaint: '#f2f2f2',
     staBlack: '#3c3c3b',
     staOrange: '#ec6730',
