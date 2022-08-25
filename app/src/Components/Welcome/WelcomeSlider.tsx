@@ -1,45 +1,36 @@
 //Horizontal flatlist contains welcome, volunteer and make an impact screens
 
 import React, { FC, Ref } from 'react'
-import {View, Text, Image, FlatList,}from 'react-native'
 import { useTheme } from '@/Hooks'
 import styled from 'styled-components/native'
 
 const SlideContainer = styled.View`
     flex:1;
-    marginVertical:10px;
     width:378px; 
     alignItems:center;
-    height:90%;
 `
 
 const TextContainer = styled.View`
     width:358px;
-    height:30%;
+    height:25%;
     paddingHorizontal:8px;
-    
 `
 
 const TitleText = styled.Text`
-    fontFamily:BebasNeue-Regular;
     textAlign:center;
-    fontSize:64px;
-    marginTop:6%;
-    marginBottom:4%;
-    color: #3C3C3B;
+    marginTop:7%;
+    marginBottom:3%;
 `
 
 const SlideText = styled.Text`
-    fontFamily:Poppins-Medium;
     textAlign:center;
     fontSize:18px;
-    color: #3C3C3B;
-    marginVertical:3%;
-    
+    marginTop:1%;
+    marginBottom:1%;
 `
 
 const FList = styled.FlatList`
-    flex:0.75;
+    flex:0.8;
     width:378px;
 `
 
@@ -52,7 +43,7 @@ interface SliderProps {
 }
 
 const WelcomeSlider: FC<SliderProps> = ({setActiveIndex, windowWidth, slideRef, slides, isAndroidRTL}) => {
-  
+    
     const { Fonts } = useTheme()
     const rtlSafeIndex = (i:number) => (isAndroidRTL ? slides.length - 1 - i : i);
     const renderItem = ({item}) => {
@@ -60,8 +51,8 @@ const WelcomeSlider: FC<SliderProps> = ({setActiveIndex, windowWidth, slideRef, 
         <SlideContainer >
             {item.image}
             <TextContainer>
-            <TitleText numberOfLines={1} adjustsFontSizeToFit>{item.title}</TitleText>
-            <SlideText numberOfLines={3} adjustsFontSizeToFit>{item.text}</SlideText>
+            <TitleText numberOfLines={1} adjustsFontSizeToFit style={[Fonts.bebasNeue, Fonts.textVLarge]}>{item.title}</TitleText>
+            <SlideText numberOfLines={3} adjustsFontSizeToFit style={[Fonts.textRegular, Fonts.poppins]}>{item.text}</SlideText>
             </TextContainer>
         </SlideContainer>
         )
@@ -83,7 +74,7 @@ const WelcomeSlider: FC<SliderProps> = ({setActiveIndex, windowWidth, slideRef, 
             showsHorizontalScrollIndicator={false}
             bounces={false}
             renderItem={renderItem}
-            keyExtractor = {(item:Object, index:number) => index.toString()}
+            keyExtractor = {(item, index:number) => index.toString()}
             onMomentumScrollEnd={handleMomentumScrollEnd}
             extraData={windowWidth} 
             initialNumToRender={3}

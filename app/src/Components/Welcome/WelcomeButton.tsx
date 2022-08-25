@@ -3,12 +3,13 @@
 import React from 'react'
 import {TouchableOpacity, Text} from 'react-native'
 import styled from 'styled-components/native'
-import { goBack, navigateAndSimpleReset } from '@/Navigators/utils'
+import { navigateAndSimpleReset } from '@/Navigators/utils'
+import { useTheme } from '@/Hooks'
 
 const WelcomeButton = () => {
+    const { Colors, Fonts } = useTheme()
 
     const WelcomeButton = styled.TouchableOpacity`
-        backgroundColor:#EC6730;
         width:244px;
         height:42px;
         borderRadius:8px;
@@ -20,7 +21,7 @@ const WelcomeButton = () => {
     `
 
     const GetStartedText = styled.Text`
-        color:white;
+        color:#ffffff;
         lineHeight:24px;
         fontSize:18px;
         fontWeight:400;
@@ -31,8 +32,8 @@ const WelcomeButton = () => {
     }
 
     return (
-        <WelcomeButton onPress={handlePress}>
-            <GetStartedText>Get Started</GetStartedText>
+        <WelcomeButton style={{backgroundColor:Colors.welcomeButton}} onPress={handlePress}>
+            <GetStartedText style={[Fonts.poppins]}>Get Started</GetStartedText>
         </WelcomeButton>
     )
 }

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { useTheme } from '@/Hooks'
 import { Brand } from '@/Components'
 import { setDefaultTheme } from '@/Store/Theme'
-import { navigateAndSimpleReset } from '@/Navigators/utils'
+import { navigateAndSimpleReset } from '@/Navigators/utils' 
 
 const StartupContainer = () => {
   const { Layout, Gutters, Fonts } = useTheme()
@@ -29,7 +29,7 @@ const StartupContainer = () => {
     <View style={[Layout.fill, Layout.colCenter]}>
       <Brand />
       <ActivityIndicator size={'large'} style={[Gutters.largeVMargin]} />
-      <Text style={Fonts.textCenter, Fonts.textSmall}>{t('welcome')}</Text>
+      <Text style={[Fonts.textCenter, Fonts.textSmall]}>{t('welcome')}</Text>
     </View>
   )
 }

@@ -6,5 +6,6 @@
 export default function () {
   return {
     logo: require('@/Assets/Images/LongLogoDark.png'),
+    extraLongLogo: require('@/Assets/Images/ExtraLongLogoDark.png')
   }
 }

@@ -23,6 +23,10 @@ export default function ({ FontSize, Colors }: ThemeVariables): ThemeFonts {
       fontSize: FontSize.large,
       color: Colors.text,
     },
+    textVLarge: {
+      fontSize: FontSize.large*1.5,
+      color: Colors.text
+    },
     titleSmall: {
       fontSize: FontSize.small * 2,
       fontWeight: 'bold',
@@ -55,6 +59,9 @@ export default function ({ FontSize, Colors }: ThemeVariables): ThemeFonts {
     },
     bebasNeue: {
       fontFamily:'BebasNeue-Regular'
+    },
+    upperCase:{
+      textTransform: 'uppercase'
     }
   })
 }

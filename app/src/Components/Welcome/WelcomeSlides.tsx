@@ -1,19 +1,19 @@
 //Data to be rendered in the flatlist 'WelcomeSlider'
 
 import React from 'react'
-import {Image} from 'react-native'
+import {Image, View} from 'react-native'
 import Welcome from '@/Assets/Images/Welcome.png'
 import Volunteer from '@/Assets/Images/Volunteer.png'
 import MakeAnImpact from '@/Assets/Images/MakeAnImpact.png'
 import styled from 'styled-components/native'
 
+
 const WelcomeImage = styled.Image`
-    height:54%;
-    width:378px;
+    height:55%;
 `
 
 export function WelcomeSlides() {
-
+    
     return [
         {
             image:<WelcomeImage source={Welcome} resizeMode={'contain'}></WelcomeImage>,

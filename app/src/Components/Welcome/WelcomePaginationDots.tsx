@@ -1,20 +1,18 @@
 //Dots that indicate which slide user is on.  Clickable to navigate to next slide.
 
 import React, {FC, Ref} from "react";
-import { StyleSheet } from "react-native";
-import { View, TouchableOpacity, } from "react-native";
 import styled from 'styled-components/native'
+import { useTheme } from '@/Hooks'
 
 const PaginationContainer = styled.View`
     justifyContent: center;
     alignContent: center;
     margin:22px;
-    
 `
 
 const DotsContainer = styled.View`
     height: 16px;
-    margin: 16px;
+    marginTop: 16px;
     flexDirection: row;
     justifyContent: center;
     alignItems: center;
@@ -40,6 +38,8 @@ interface PaginationProps {
 
 const PaginationDots:FC<PaginationProps> = ({activeIndex, setActiveIndex, slideRef, rtlSafeIndex, slides,}) => {
 
+    const {Colors} = useTheme()
+    
     const goToSlide = (slideNum:number) => () => {
         setActiveIndex(slideNum)
         slideRef.current?.scrollToOffset({
@@ -56,7 +56,7 @@ const PaginationDots:FC<PaginationProps> = ({activeIndex, setActiveIndex, slideR
                     hitSlop={{ left: 15, right: 15, top: 15, bottom: 15 }}
                     key={i}
                     style={[
-                    rtlSafeIndex(i) === activeIndex ? styles.activeDotStyle : styles.dotStyle,
+                    rtlSafeIndex(i) === activeIndex ? {backgroundColor:Colors.dotActive} : {backgroundColor:Colors.dot},
                     ]}
                     onPress={goToSlide(i)}
                 />
@@ -65,15 +65,6 @@ const PaginationDots:FC<PaginationProps> = ({activeIndex, setActiveIndex, slideR
         </PaginationContainer>
     );
                 }
-
-    const styles = StyleSheet.create({
-          activeDotStyle: {
-            backgroundColor: '#707070',
-          },
-          dotStyle: {
-            backgroundColor: '#ffffff',
-          },
-    })
 
     export default PaginationDots
    

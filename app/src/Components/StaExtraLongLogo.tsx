@@ -1,14 +1,25 @@
 import React from 'react'
+import {View, Image} from 'react-native'
 import styled from 'styled-components/native'
-import StaHeaderLogo from '@/Assets/Images/ExtraLongLogo.png'
 
-const StaHeaderLogoImage = styled.Image`
-  margin-top: 5%;
-  margin-bottom: 5%;
+import { useTheme } from '@/Hooks'
+
+const StaHeaderLogoImage = styled.Image` 
+ 
+  
+`
+
+const HeaderView = styled.View`
+  height:58px;
+  width:85%;
+  marginVertical:5%;
 `
 
 const StaExtraLongLogo = () => {
-    return <StaHeaderLogoImage source={StaHeaderLogo} />
+  const { Images, Layout } = useTheme()
+    return  <HeaderView>
+              <StaHeaderLogoImage style={Layout.fullSize} resizeMode={'contain'} source={Images.extraLongLogo} />
+            </HeaderView>
   }
 
   export default StaExtraLongLogo

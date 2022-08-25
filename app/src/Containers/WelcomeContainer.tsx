@@ -1,6 +1,6 @@
-import React, {useState, useRef, FC} from 'react'
+import React, {useState, useRef} from 'react'
 import { useTheme } from '@/Hooks'
-import {View, Dimensions, I18nManager, Platform, SafeAreaView} from 'react-native'
+import {Dimensions, I18nManager, Platform, SafeAreaView} from 'react-native'
 import StaExtraLongLogo from '@/Components/StaExtraLongLogo'
 import WelcomeButton from '@/Components/Welcome/WelcomeButton'
 import WelcomeSlider from '@/Components/Welcome/WelcomeSlider'
@@ -12,19 +12,20 @@ const windowWidth : number = Dimensions.get('window').width;
 const isAndroidRTL = I18nManager.isRTL && Platform.OS === 'android';
 
 const PageBottom = styled.View`
-    height:1%;
+    height:6%;
+    marginTop:5px;
 `
 
 
 const WelcomeContainer = () => {
     const [activeIndex, setActiveIndex] = useState(0)
-    const {Layout} = useTheme()
+    const {Layout, Colors} = useTheme()
     const slideRef = useRef(null)
     const rtlSafeIndex = (i:number) => (isAndroidRTL ? slides.length - 1 - i : i);
     const slides = WelcomeSlides()
 
     return(
-        <SafeAreaView style={[Layout.fill, Layout.colVCenter, {backgroundColor:'#FFFFFF'}]}>
+        <SafeAreaView style={[Layout.fill, Layout.colVCenter,]}>
             <StaExtraLongLogo />
             <WelcomeSlider  windowWidth={windowWidth}  setActiveIndex={setActiveIndex} slideRef={slideRef} slides={slides} isAndroidRTL={isAndroidRTL}/>
             <PageBottom>
