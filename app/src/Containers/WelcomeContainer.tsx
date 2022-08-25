@@ -12,7 +12,7 @@ const windowWidth : number = Dimensions.get('window').width;
 const isAndroidRTL = I18nManager.isRTL && Platform.OS === 'android';
 
 const PageBottom = styled.View`
-    flex:0.25;
+    height:1%;
 `
 
 

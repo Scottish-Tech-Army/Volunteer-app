@@ -1,3 +1,5 @@
+//Horizontal flatlist contains welcome, volunteer and make an impact screens
+
 import React, { FC, Ref } from 'react'
 import {View, Text, Image, FlatList,}from 'react-native'
 import { useTheme } from '@/Hooks'
@@ -8,18 +10,22 @@ const SlideContainer = styled.View`
     marginVertical:10px;
     width:378px; 
     alignItems:center;
+    height:90%;
 `
 
 const TextContainer = styled.View`
     width:358px;
+    height:30%;
     paddingHorizontal:8px;
+    
 `
 
 const TitleText = styled.Text`
     fontFamily:BebasNeue-Regular;
     textAlign:center;
     fontSize:64px;
-    marginVertical:25px;
+    marginTop:6%;
+    marginBottom:4%;
     color: #3C3C3B;
 `
 
@@ -28,10 +34,12 @@ const SlideText = styled.Text`
     textAlign:center;
     fontSize:18px;
     color: #3C3C3B;
+    marginVertical:3%;
+    
 `
 
 const FList = styled.FlatList`
-    flex:0.9;
+    flex:0.75;
     width:378px;
 `
 
@@ -52,8 +60,8 @@ const WelcomeSlider: FC<SliderProps> = ({setActiveIndex, windowWidth, slideRef, 
         <SlideContainer >
             {item.image}
             <TextContainer>
-            <TitleText >{item.title}</TitleText>
-            <SlideText>{item.text}</SlideText>
+            <TitleText numberOfLines={1} adjustsFontSizeToFit>{item.title}</TitleText>
+            <SlideText numberOfLines={3} adjustsFontSizeToFit>{item.text}</SlideText>
             </TextContainer>
         </SlideContainer>
         )

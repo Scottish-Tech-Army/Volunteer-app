@@ -1,3 +1,5 @@
+//Data to be rendered in the flatlist 'WelcomeSlider'
+
 import React from 'react'
 import {Image} from 'react-native'
 import Welcome from '@/Assets/Images/Welcome.png'
@@ -6,7 +8,7 @@ import MakeAnImpact from '@/Assets/Images/MakeAnImpact.png'
 import styled from 'styled-components/native'
 
 const WelcomeImage = styled.Image`
-    height:283px;
+    height:54%;
     width:378px;
 `
 

@@ -1,3 +1,5 @@
+//Dots that indicate which slide user is on.  Clickable to navigate to next slide.
+
 import React, {FC, Ref} from "react";
 import { StyleSheet } from "react-native";
 import { View, TouchableOpacity, } from "react-native";
@@ -6,10 +8,12 @@ import styled from 'styled-components/native'
 const PaginationContainer = styled.View`
     justifyContent: center;
     alignContent: center;
+    margin:22px;
+    
 `
 
 const DotsContainer = styled.View`
-    height: 24px;
+    height: 16px;
     margin: 16px;
     flexDirection: row;
     justifyContent: center;
