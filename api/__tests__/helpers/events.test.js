@@ -24,6 +24,7 @@ describe('Test the events helpers', () => {
     // Run test
     const formattedEvent = eventsHelpers.formatEventFromAirTable(fakeEventFromAirTable);
 
+    // simplifyAttachmentsData should be called once for images, once for video_thumbnail 
     expect(simplifyAttachmentsDataSpy).toHaveBeenCalledTimes(2);
     expect(formattedEvent.video_thumbnail).toEqual(fakeSimplifiedAttachmentsData[0]);
     expect(formatDurationSpy).toHaveBeenCalledTimes(1);

@@ -1,4 +1,4 @@
-// Get a video thumbnail for an event video
+// Get video thumbnails and MP4 video files for event videos
 
 require('dotenv').config();
 const axios = require('axios').default;

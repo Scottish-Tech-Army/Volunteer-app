@@ -126,14 +126,14 @@ Below are some commonly encountered issues and possible ways to resolve them. If
 
    > **On Android,** if you get an error message that includes `INSTALL_FAILED_UPDATE_INCOMPATIBLE` this may be because you previously installed a newer version of the app for your emulator (e.g. on a new branch or testing someone else's pull request) then you switched back to an earlier version. Uninstall the app from your emulator with the command `adb shell pm uninstall org.scottishtecharmy.volunteerapp` then run `npm run android` again.
 
-4. Optional: Update the cached projects/resources data from Jira *(during development, you probably only need to use this if you need the very latest data from Jira or you're actively testing the caching mechanism)*.  Open another command terminal window, go to the `api` folder inside the project.
+4. Optional: Update the cached projects data from Jira *(during development, you probably only need to use this if you need the very latest data from Jira or to update project video files whose URLs expire after an hour)*.  Open another command terminal window, go to the `api` folder inside the project.
     - If you want to manually update cached projects data, enter this command: `node cron-jobs/run-projects.js`
         >During development, it's preferable to do this than to run the scheduled cron job described below.
     - If you want to automatically run all cron jobs regularly , enter this command instead: `node cron-jobs/run-cron-jobs.js`  Leave this terminal window open as long as you want this to keep running.
         >See more about [cron jobs](#cron-jobs) below
         >Be careful if using this during development: if multiple developers are running this simultaneously, these could conflict if more than one person is updating the same AirTable tables at the same time.
 
-5. Optional: Add event video thumbnail images. Open another command terminal window, go to the `api` folder inside the project.
+5. Optional: Add event video thumbnail images and update event video files whose URLs expire after an hour. Open another command terminal window, go to the `api` folder inside the project.
     - If you want to manually add event video thumbnails, enter this command: `node cron-jobs/run-events.js`
     - See the previous step above on how to run all cron jobs automatically.
 
@@ -157,9 +157,9 @@ So instead we store a cached copy of projects data, in the format we use it in o
 
 #### Events
 
-There is also a cron job for events that have videos, to automatically grab thumbnail images from Vimeo (it's usually past events that have videos).
+There is also a cron job for events that have videos (these are usually past events - the videos are event recordings).
 
-This job checks if a new event video has been added, if so it saves a thumbnail image of the video from Vimeo, so we can display this thumbnail in the app.
+This job grabs video thumbnail images from Vimeo and saves them in AirTable, and updates AirTable with video file URLs which expire after an hour.
 
 ### Services
 

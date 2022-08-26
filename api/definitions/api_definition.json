@@ -220,7 +220,7 @@
                     "buddying": false,
                     "scope": "https://drive.google.com/file/d/1j469c-xp8HPYLocTgz5lMYHnnz7TsRVP/view?usp=sharing",
                     "sector": "Arts & Culture",
-					"video_file": "https://vod-progressive.akamaized.net/exp=1657227176~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F678%2F28%2F703391800%2F3256486964.mp4~hmac=e76bbd7e698f0d46c373bce069f936a24182694a1b0d140a63fcf240a2e8b65c/vimeo-prod-skyfire-std-us/01/678/28/703391800/3256486964.mp4"
+                    "video_file": "https://vod-progressive.akamaized.net/exp=1657227176~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F678%2F28%2F703391800%2F3256486964.mp4~hmac=e76bbd7e698f0d46c373bce069f936a24182694a1b0d140a63fcf240a2e8b65c/vimeo-prod-skyfire-std-us/01/678/28/703391800/3256486964.mp4"
                   },
                   {
                     "it_key": "IT-123",
@@ -237,7 +237,7 @@
                     "buddying": false,
                     "scope": "https://drive.google.com/file/d/1j469c-xp8HPYLocTgz5lMYHnnz7TsRVP/view?usp=sharing",
                     "sector": "Arts & Culture",
-					"video_file": "https://vod-progressive.akamaized.net/exp=1657227176~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F678%2F28%2F703391800%2F3256486964.mp4~hmac=e76bbd7e698f0d46c373bce069f936a24182694a1b0d140a63fcf240a2e8b65c/vimeo-prod-skyfire-std-us/01/678/28/703391800/3256486964.mp4"
+                    "video_file": "https://vod-progressive.akamaized.net/exp=1657227176~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F678%2F28%2F703391800%2F3256486964.mp4~hmac=e76bbd7e698f0d46c373bce069f936a24182694a1b0d140a63fcf240a2e8b65c/vimeo-prod-skyfire-std-us/01/678/28/703391800/3256486964.mp4"
                   },
                   {
                     "it_key": "SVA",
@@ -254,7 +254,7 @@
                     "buddying": true,
                     "scope": "https://drive.google.com/file/d/1j469c-xp8HPYLocTgz5lMYHnnz7TsRVP/view?usp=sharing",
                     "sector": "Education & Youth",
-					"video_file": "https://vod-progressive.akamaized.net/exp=1657227176~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F678%2F28%2F703391800%2F3256486964.mp4~hmac=e76bbd7e698f0d46c373bce069f936a24182694a1b0d140a63fcf240a2e8b65c/vimeo-prod-skyfire-std-us/01/678/28/703391800/3256486964.mp4"
+                    "video_file": "https://vod-progressive.akamaized.net/exp=1657227176~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F678%2F28%2F703391800%2F3256486964.mp4~hmac=e76bbd7e698f0d46c373bce069f936a24182694a1b0d140a63fcf240a2e8b65c/vimeo-prod-skyfire-std-us/01/678/28/703391800/3256486964.mp4"
                   }
                 ],
                 "schema": {
@@ -290,7 +290,7 @@
                   "buddying": false,
                   "scope": "https://drive.google.com/file/d/1j469c-xp8HPYLocTgz5lMYHnnz7TsRVP/view?usp=sharing",
                   "sector": "Arts & Culture",
-				  "video_file": "https://vod-progressive.akamaized.net/exp=1657227176~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F678%2F28%2F703391800%2F3256486964.mp4~hmac=e76bbd7e698f0d46c373bce069f936a24182694a1b0d140a63fcf240a2e8b65c/vimeo-prod-skyfire-std-us/01/678/28/703391800/3256486964.mp4"
+                  "video_file": "https://vod-progressive.akamaized.net/exp=1657227176~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F678%2F28%2F703391800%2F3256486964.mp4~hmac=e76bbd7e698f0d46c373bce069f936a24182694a1b0d140a63fcf240a2e8b65c/vimeo-prod-skyfire-std-us/01/678/28/703391800/3256486964.mp4"
                 },
                 "schema": {
                   "$ref": "#/components/schemas/project"
@@ -350,7 +350,7 @@
             },
             "description": {
               "type": "string",
-              "description": "Information about the event, may include markdown code (https://www.markdownguide.org/getting-started/)"
+              "description": "Information about the event, this may include markdown code for formatting bold, links, etc (https://www.markdownguide.org/getting-started/)"
             },
             "type": {
               "type": "string",
@@ -451,11 +451,11 @@
             "sector": {
               "type": "string",
               "description": "Project charity sector"
-            }, 
-			"video_file": {
-				"type" : "string",
-				"description" : "URL of MP4 file of the video introducing the project from the Vimeo webpage. These URLs expire every hour"
-			}
+            },
+            "video_file": {
+              "type": "string",
+              "description": "URL of MP4 file of the video introducing the project from the Vimeo webpage. These URLs expire every hour"
+            }
           }
         }
       }
