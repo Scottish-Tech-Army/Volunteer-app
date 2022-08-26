@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [1.0.7 (version code 8)] - 2022-08-26Z
+
+### Changed
+
+- Events list displays better, especially images
+- Some small components moved out into separate files, e.g. title, safe area
+
+### Added
+
+- Event details screen
+- Image components - thumbnail, large (full-width), and swiper to see multiple images
+
 ## [1.0.6 (version code 7)] - 2022-08-23Z
 
 ### Changed
