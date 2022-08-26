@@ -29,7 +29,8 @@ export interface Event {
   description: string // note: this may contain HTML
   type: string
   series: string
-  video: string
+  video_webpage: string
+  video_file: string
   video_thumbnail: string
   images: string[]
 }

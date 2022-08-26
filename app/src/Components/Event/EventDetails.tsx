@@ -1,25 +1,35 @@
+// Event details screen to show a single event -- all details, video/images, etc
+
 import React, { FC } from 'react'
 import { ScrollView } from 'react-native-gesture-handler'
 import Markdown from 'react-native-simple-markdown'
 import styled from 'styled-components/native'
-import EventDate from './EventDate'
-import ImageLarge from '../ImageLarge'
-import ImageSwiper from '../ImageSwiper'
-import EventTime from './EventTime'
-import Title from '../Title'
 import comingSoonImg from '@/Assets/Images/ComingSoon.png'
 import { Event } from '@/Services/modules/events'
 import ThemeVariables from '@/Theme/Variables'
+import EventSeries from './EventSeries'
+import EventDate from './EventDate'
+import EventTime from './EventTime'
+import ImageLarge from '../ImageLarge'
+import ImageSwiper from '../ImageSwiper'
+import Title from '../Title'
+import Video from '../Video'
 
 interface EventDetailsProps {
   event: Event
 }
 
+const EventTopInfo = styled.View`
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  margin: 10px 0 30px;
+`
 const EventDateTime = styled.View`
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  margin: 10px 0 25px;
+  margin-bottom: 10px;
 `
 const EventDescription = styled.View`
   margin-top: 20px;
@@ -33,28 +43,35 @@ const EventDetailsView = styled.View`
   margin: 21px 27px 0px 27px;
 `
 
-// TODO: video -- show in place of image if exists
-
 const EventDetails: FC<EventDetailsProps> = ({ event }) => {
   return (
     <ScrollView>
       <EventDetailsView>
         <Title text={event.name} type="main" />
 
-        <EventDateTime>
-          <EventDate date={event.date} />
-          <EventTime time={event.time} />
-        </EventDateTime>
+        <EventTopInfo>
+          <EventDateTime>
+            <EventDate date={event.date} />
+            <EventTime time={event.time} />
+          </EventDateTime>
 
-        {event.images.length <= 1 ? (
+          {event.series ? <EventSeries text={event.series} /> : null}
+        </EventTopInfo>
+
+        {/* If there's a video, show this.  Otherwise, show event image(s) if there are any, or the 'coming soon' image. */}
+        {event.video_file ? (
+          <Video url={event.video_file} />
+        ) : event.images.length > 1 ? (
+          <ImageSwiper images={event.images} />
+        ) : (
           <ImageLarge
             image={event.images.length ? event.images[0] : comingSoonImg}
           />
-        ) : (
-          <ImageSwiper images={event.images} />
         )}
 
         <EventDescription>
+          {/* Event description can contain markdown code for formatting e.g. bold, links, etc.
+              (For info on markdown in general see https://www.markdownguide.org/getting-started/) */}
           <Markdown styles={EventDescriptionMarkdownStyles}>
             {event.description}
           </Markdown>

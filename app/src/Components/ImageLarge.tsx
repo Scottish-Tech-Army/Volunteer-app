@@ -28,7 +28,7 @@ const ImageLarge: FC<ImageLargeProps> = ({ containerWidth, image }) => {
 
   const style = {
     aspectRatio,
-    backgroundColor: 'white',
+    backgroundColor: 'transparent',
     borderRadius: 25,
     width: containerWidth ?? '100%',
   }

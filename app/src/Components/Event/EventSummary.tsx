@@ -1,3 +1,5 @@
+// Short summary of an event for using in a list of events
+
 import React, { FC } from 'react'
 import styled from 'styled-components/native'
 import EventDate from './EventDate'

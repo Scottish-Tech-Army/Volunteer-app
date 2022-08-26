@@ -1,4 +1,4 @@
-// Image swiper -- user can swipe left-to-right to see multiple images
+// Image swiper -- shows multiple images, user can swipe left-to-right to see them
 // (a bit like on an Instagram post that has more than one photo)
 
 // Automatically adjusts to fill the available width in its parent component
@@ -15,7 +15,7 @@ interface ImageSwiperProps {
 }
 
 const ImageSwiperContainer = styled.View`
-  background-color: white;
+  background-color: transparent;
   border-radius: 25px;
   width: 100%;
 `
@@ -25,7 +25,6 @@ const ImageSwiper: FC<ImageSwiperProps> = ({ images }) => {
 
   const styles = StyleSheet.create({
     container: {
-      backgroundColor: 'white',
       borderRadius: 25,
       width: containerWidth,
     },
