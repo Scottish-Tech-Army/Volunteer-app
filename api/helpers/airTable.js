@@ -121,13 +121,16 @@ function projectsResourcesCacheTable() {
   return process.env.AIRTABLE_PROJECTS_RESOURCES_CACHE_TABLE;
 }
 
+// Data from 'attachment' fields in AirTable (images or files) come through in a nested array of objects
+// We simplify this to just get an array of URLs to the files instead
 function simplifyAttachmentsData(attachmentsFieldDataFromAirTable) {
   return attachmentsFieldDataFromAirTable?.length
     ? attachmentsFieldDataFromAirTable.map((airTableAttachmentObject) => airTableAttachmentObject.url)
     : [];
 }
 
-// You only need to include the fields you want to update
+// Update an AirTable record based on its ID
+// You only need to include the fields you want to update (not other fields, which will remain untouched)
 // For examples of updating data see https://airtable.com/appcvHsm6PC8mZth2/api/docs#javascript/table:sta%20events:update
 async function updateRecordById(tableName, recordId, fields) {
   try {

@@ -5,24 +5,78 @@ const { faker } = require('@faker-js/faker');
 const eventsHelper = require('../../helpers/events');
 const eventsTestData = require('../../__test-data__/events');
 const timing = require('../../util/timing');
+const vimeoService = require('../../services/vimeo');
 
 axios.defaults.adapter = require('axios/lib/adapters/http');
 
-describe('Test the events get video thumbnails cron job', () => {
+describe('Test the events cron jobs', () => {
   beforeEach(() => {
     jest.resetModules();
   });
 
-  test('addEventsVideoThumbnailIfNeeded attempts to add video thumbnails for events tha need them', async () => {
+  test('addEventsVideoFiles adds video files to events that have a video', async () => {
     // Set up fake test data
     const fakeTableName = faker.lorem.word();
     const fakeEventsCountMin = 10;
     const fakeEventsCountMax = 20;
-    const fakeEventsCountWithoutVideoThumbnail = faker.datatype.number({ min: 2, max: 5 });
+    const fakeEventsCountWithoutVideoWebpage = faker.datatype.number({ min: 2, max: 5 }); // how many events with no video
+
+    let videoWebpagesRemoved = 0;
+    const fakeEvents = eventsTestData
+      .fakeEventObjects(faker.datatype.number({ min: fakeEventsCountMin, max: fakeEventsCountMax }))
+      // Remove video_webpage from some events, so that we have a mix of events with and without videos,
+      // so we can be sure we're only trying to get a video_file when we need to
+      .map((event) => {
+        if (videoWebpagesRemoved < fakeEventsCountWithoutVideoWebpage) {
+          delete event.video_webpage;
+          videoWebpagesRemoved++;
+        }
+
+        return event;
+      });
+
+    const fakeEventsCountWithVideoWebpage = fakeEvents.length - fakeEventsCountWithoutVideoWebpage; // how many events with a video
+
+    // Mock dependencies
+    const getVideoFileFromVimeoSpy = jest
+      .spyOn(vimeoService, 'getVideoFileFromVimeo')
+      .mockImplementation(() => Promise.resolve(faker.internet.url()));
+    const airTableUpdateRecordByIdSpy = jest
+      .spyOn(airTable, 'updateRecordById')
+      .mockImplementation(() => Promise.resolve({}));
+    const airTableEventsTableSpy = jest.spyOn(airTable, 'eventsTable').mockImplementation(() => fakeTableName);
+    const timingDelaySpy = jest.spyOn(timing, 'delay').mockImplementation(() => Promise.resolve());
+    const consoleLogSpy = jest.spyOn(global.console, 'log').mockImplementation(() => {});
+
+    // Run the function we're testing
+    await eventsCronJobs.addEventsVideoFiles(fakeEvents);
+
+    // Check our test expectations are met
+    expect(getVideoFileFromVimeoSpy).toHaveBeenCalledTimes(fakeEventsCountWithVideoWebpage);
+    expect(airTableUpdateRecordByIdSpy).toHaveBeenCalledTimes(fakeEventsCountWithVideoWebpage);
+    expect(airTableEventsTableSpy).toHaveBeenCalledTimes(fakeEventsCountWithVideoWebpage);
+    expect(timingDelaySpy).toHaveBeenCalledTimes(fakeEventsCountWithVideoWebpage);
+
+    // Clean up
+    getVideoFileFromVimeoSpy.mockRestore();
+    airTableUpdateRecordByIdSpy.mockRestore();
+    airTableEventsTableSpy.mockRestore();
+    timingDelaySpy.mockRestore();
+    consoleLogSpy.mockRestore();
+  });
+
+  test('addEventsVideoThumbnails adds video thumbnails for events that have a video but no thumbnail', async () => {
+    // Set up fake test data
+    const fakeTableName = faker.lorem.word();
+    const fakeEventsCountMin = 10;
+    const fakeEventsCountMax = 20;
+    const fakeEventsCountWithoutVideoThumbnail = faker.datatype.number({ min: 2, max: 5 }); // how many events have a video but don't have a video thumbnail
 
     let videoThumbnailsRemoved = 0;
-    let fakeEvents = eventsTestData
+    const fakeEvents = eventsTestData
       .fakeEventObjects(faker.datatype.number({ min: fakeEventsCountMin, max: fakeEventsCountMax }))
+      // Remove thumbnails from some events that have videos, to check that thumbnails are only added for events that don't have them
+      // so we can be sure we're only adding thumbnails to events that don't have them yet
       .map((event) => {
         if (videoThumbnailsRemoved < fakeEventsCountWithoutVideoThumbnail) {
           delete event.video_thumbnail;
@@ -33,8 +87,8 @@ describe('Test the events get video thumbnails cron job', () => {
       });
 
     // Mock dependencies
-    const getVideoThumbnailSpy = jest
-      .spyOn(eventsCronJobs, 'getVideoThumbnail')
+    const getVideoThumbnailFromVimeoSpy = jest
+      .spyOn(vimeoService, 'getVideoThumbnailFromVimeo')
       .mockImplementation(() => Promise.resolve(faker.internet.url()));
     const airTableUpdateRecordByIdSpy = jest
       .spyOn(airTable, 'updateRecordById')
@@ -43,16 +97,17 @@ describe('Test the events get video thumbnails cron job', () => {
     const timingDelaySpy = jest.spyOn(timing, 'delay').mockImplementation(() => Promise.resolve());
     const consoleLogSpy = jest.spyOn(global.console, 'log').mockImplementation(() => {});
 
-    // Run test
-    await eventsCronJobs.addEventsVideoThumbnailIfNeeded(fakeEvents);
+    // Run the function we're testing
+    await eventsCronJobs.addEventsVideoThumbnails(fakeEvents);
 
-    expect(getVideoThumbnailSpy).toHaveBeenCalledTimes(fakeEventsCountWithoutVideoThumbnail);
+    // Check our test expectations are met
+    expect(getVideoThumbnailFromVimeoSpy).toHaveBeenCalledTimes(fakeEventsCountWithoutVideoThumbnail);
     expect(airTableUpdateRecordByIdSpy).toHaveBeenCalledTimes(fakeEventsCountWithoutVideoThumbnail);
     expect(airTableEventsTableSpy).toHaveBeenCalledTimes(fakeEventsCountWithoutVideoThumbnail);
     expect(timingDelaySpy).toHaveBeenCalledTimes(fakeEventsCountWithoutVideoThumbnail);
 
     // Clean up
-    getVideoThumbnailSpy.mockRestore();
+    getVideoThumbnailFromVimeoSpy.mockRestore();
     airTableUpdateRecordByIdSpy.mockRestore();
     airTableEventsTableSpy.mockRestore();
     timingDelaySpy.mockRestore();
@@ -85,55 +140,6 @@ describe('Test the events get video thumbnails cron job', () => {
     eventsHelperFormatEventFromAirTable.mockRestore();
   });
 
-  test('getVideoThumbnail calls the Vimeo API and returns the thumbnail URL', async () => {
-    // Set up fake test data
-    const fakeVimeoVideoId = faker.datatype.number({ min: 10000000, max: 99999999 });
-    const fakeVideoUrl = `https://vimeo.com/${fakeVimeoVideoId}`;
-    const fakeThumbnailUrlBase = faker.internet.url();
-    const fakeThumbnailUrl960 = faker.internet.url();
-    const fakeThumbnailUrl1280 = faker.internet.url();
-    const fakeAxiosVimeoResponse = {
-      data: {
-        video: {
-          thumbs: {
-            base: fakeThumbnailUrlBase,
-            960: fakeThumbnailUrl960,
-            1280: fakeThumbnailUrl1280,
-          },
-        },
-      },
-      status: 200,
-    };
-
-    // Mock dependencies
-    const axiosSpy = jest.spyOn(axios, 'get').mockImplementationOnce(() => Promise.resolve(fakeAxiosVimeoResponse));
-    const getVimeoVideoIdFromUrlSpy = jest
-      .spyOn(eventsCronJobs, 'getVimeoVideoIdFromUrl')
-      .mockImplementationOnce(() => fakeVimeoVideoId);
-
-    // Run test
-    const thumbnailUrl = await eventsCronJobs.getVideoThumbnail(fakeVideoUrl);
-
-    expect(axiosSpy).toHaveBeenCalledTimes(1);
-    expect(getVimeoVideoIdFromUrlSpy).toHaveBeenCalledTimes(1);
-    expect(thumbnailUrl).toEqual(fakeThumbnailUrl1280);
-
-    // Clean up
-    axiosSpy.mockRestore();
-    getVimeoVideoIdFromUrlSpy.mockRestore();
-  });
-
-  test('getVimeoVideoIdFromUrl correctly returns the Vimeo video ID', () => {
-    // Set up fake test data
-    const fakeVimeoVideoId = faker.datatype.number({ min: 10000000, max: 99999999 });
-    const fakeVimeoVideoUrl = `https://vimeo.com/${fakeVimeoVideoId}?possibleParameter=xyz#possible-hash`;
-
-    // Run test
-    const videoId = eventsCronJobs.getVimeoVideoIdFromUrl(fakeVimeoVideoUrl);
-
-    expect(videoId).toEqual(fakeVimeoVideoId.toString());
-  });
-
   test('startGettingNewVideoThumbnails gets all events then attempts to add video thumbnails', async () => {
     // Set up fake test data
     const fakeEvents = eventsTestData.fakeEventObjects(20);
@@ -142,8 +148,8 @@ describe('Test the events get video thumbnails cron job', () => {
     const getAllEventsSpy = jest
       .spyOn(eventsCronJobs, 'getAllEvents')
       .mockImplementationOnce(() => Promise.resolve(fakeEvents));
-    const addEventsVideoThumbnailIfNeededSpy = jest
-      .spyOn(eventsCronJobs, 'addEventsVideoThumbnailIfNeeded')
+    const addEventsVideoThumbnailsSpy = jest
+      .spyOn(eventsCronJobs, 'addEventsVideoThumbnails')
       .mockImplementationOnce(() => Promise.resolve());
     const consoleLogSpy = jest.spyOn(global.console, 'log').mockImplementation(() => {});
 
@@ -151,12 +157,38 @@ describe('Test the events get video thumbnails cron job', () => {
     await eventsCronJobs.startGettingNewVideoThumbnails();
 
     expect(getAllEventsSpy).toHaveBeenCalledTimes(1);
-    expect(addEventsVideoThumbnailIfNeededSpy).toHaveBeenCalledTimes(1);
-    expect(addEventsVideoThumbnailIfNeededSpy).toHaveBeenCalledWith(fakeEvents);
+    expect(addEventsVideoThumbnailsSpy).toHaveBeenCalledTimes(1);
+    expect(addEventsVideoThumbnailsSpy).toHaveBeenCalledWith(fakeEvents);
 
     // Clean up
     getAllEventsSpy.mockRestore();
-    addEventsVideoThumbnailIfNeededSpy.mockRestore();
+    addEventsVideoThumbnailsSpy.mockRestore();
+    consoleLogSpy.mockRestore();
+  });
+
+  test('startGettingVideoFiles gets all events then attempts to add video files', async () => {
+    // Set up fake test data
+    const fakeEvents = eventsTestData.fakeEventObjects(20);
+
+    // Mock dependencies
+    const getAllEventsSpy = jest
+      .spyOn(eventsCronJobs, 'getAllEvents')
+      .mockImplementationOnce(() => Promise.resolve(fakeEvents));
+    const addEventsVideoFilesSpy = jest
+      .spyOn(eventsCronJobs, 'addEventsVideoFiles')
+      .mockImplementationOnce(() => Promise.resolve());
+    const consoleLogSpy = jest.spyOn(global.console, 'log').mockImplementation(() => {});
+
+    // Run test
+    await eventsCronJobs.startGettingVideoFiles();
+
+    expect(getAllEventsSpy).toHaveBeenCalledTimes(1);
+    expect(addEventsVideoFilesSpy).toHaveBeenCalledTimes(1);
+    expect(addEventsVideoFilesSpy).toHaveBeenCalledWith(fakeEvents);
+
+    // Clean up
+    getAllEventsSpy.mockRestore();
+    addEventsVideoFilesSpy.mockRestore();
     consoleLogSpy.mockRestore();
   });
 });

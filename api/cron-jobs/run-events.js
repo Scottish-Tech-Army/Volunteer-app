@@ -1,3 +1,3 @@
 const events = require('./events');
 
-events.startGettingNewVideoThumbnails();
+events.startGettingNewVideoThumbnails().then(() => events.startGettingVideoFiles());

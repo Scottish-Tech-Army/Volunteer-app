@@ -48,7 +48,8 @@ function fakeEventObject(dateType) {
     type: faker.random.arrayElement(eventTypes),
     notes: faker.lorem.sentence(),
     series: faker.random.arrayElement(series),
-    video: faker.internet.url(),
+    video_webpage: faker.internet.url(),
+    video_file: faker.internet.url(),
     video_thumbnail: faker.internet.url(),
     images: fakeImages(),
   };
@@ -83,7 +84,8 @@ function fakeEventAirTableRecord(dateType, includeVideo = false) {
   delete event.notes;
 
   if (!includeVideo) {
-    delete event.video;
+    delete event.video_webpage;
+    delete event.video_file;
     delete event.video_thumbnail;
   }
 

@@ -9,11 +9,12 @@ console.log(
 // See the README for more information on cron jobs and projects caching
 
 // Runs every 15 minutes when activated
-cron.schedule('*/15 * * * *', () => {
-  projects.startCachingLatestFromJira();
+cron.schedule('*/15 * * * *', async () => {
+  await projects.startCachingLatestFromJira();
 });
 
 // Runs once every day at midnight when activated
-cron.schedule('0 0 * * *', () => {
-  events.startGettingNewVideoThumbnails();
+cron.schedule('0 0 * * *', async () => {
+  await events.startGettingNewVideoThumbnails();
+  await events.startGettingVideoFiles();
 });
