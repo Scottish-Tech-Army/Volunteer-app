@@ -26,7 +26,7 @@ export interface Event {
   date: string // in format YYYY-MM-DD
   time: string // using 24-hour clock in format 19:00
   duration: number // minutes
-  description: string // note: this may contain HTML
+  description: string // note: this may contain markdown code
   type: string
   series: string
   video_webpage: string

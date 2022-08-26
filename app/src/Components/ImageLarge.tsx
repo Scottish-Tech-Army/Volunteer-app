@@ -36,12 +36,12 @@ const ImageLarge: FC<ImageLargeProps> = ({ containerWidth, image }) => {
   useEffect(() => {
     // Set the component size based on the size of the source image
     if (typeof image === 'string') {
-      // External URLs
+      // If the image is an external URL...
       Image.getSize(image, (width, height) => {
         setImageDimensions({ height, width })
       })
     } else {
-      // Images imported as modules
+      // Otherwise assume the image is imported as a module
       const { width, height } = Image.resolveAssetSource(image)
       setImageDimensions({ height, width })
     }

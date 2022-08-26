@@ -1,4 +1,5 @@
 // Short summary of an event for using in a list of events
+// Shows event name, image, date and time
 
 import React, { FC } from 'react'
 import styled from 'styled-components/native'
