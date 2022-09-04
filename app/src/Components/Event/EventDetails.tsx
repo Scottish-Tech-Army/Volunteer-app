@@ -32,7 +32,7 @@ const EventDateTime = styled.View`
   margin-bottom: 10px;
 `
 const EventDescription = styled.View`
-  margin-top: 20px;
+  margin-top: 50px;
 `
 const EventDescriptionMarkdownStyles = {
   text: {
