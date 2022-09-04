@@ -40,11 +40,13 @@ async function getVideoThumbnailFromVimeo(videoWebpageUrl) {
       if (vimeoResponse.data?.video?.thumbs) {
         // Vimeo API returns a variety of different size thumbnails -- numbers refer to pixel widths of images
         // We use a large one if it exists
-        return (
+        const thumbnailUrl =
           vimeoResponse.data.video.thumbs['1280'] ??
           vimeoResponse.data.video.thumbs['960'] ??
-          vimeoResponse.data.video.thumbs.base
-        );
+          vimeoResponse.data.video.thumbs.base;
+
+        // Add a file extension in order to make sure the image shows in the front-end app -- on some emulators had problems where the image did not include an extension
+        return `${thumbnailUrl}.jpg`;
       } else {
         console.error(`❌ Could not get Vimeo thumbnail for video ID ${vimeoId} -- no thumbnail returned from Vimeo`);
       }

@@ -81,7 +81,7 @@ describe('Test the Vimeo service', () => {
     expect(getVimeoVideoIdFromUrlSpy).toHaveBeenCalledTimes(1);
     expect(axiosSpy).toHaveBeenCalledTimes(1);
     expect(axiosSpy).toHaveBeenCalledWith(fakeApiVimeoCall);
-    expect(response).toEqual(fakeThumbnail1280);
+    expect(response).toEqual(`${fakeThumbnail1280}.jpg`);
 
     // Clean up
     getVimeoVideoIdFromUrlSpy.mockRestore();
