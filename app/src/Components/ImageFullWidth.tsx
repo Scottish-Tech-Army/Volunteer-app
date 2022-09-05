@@ -5,17 +5,17 @@ import React, { FC, useEffect, useState } from 'react'
 import { Image, ImageSourcePropType } from 'react-native'
 import styled from 'styled-components/native'
 
-interface ImageLargeProps {
+interface ImageFullWidthProps {
   image: string | ImageSourcePropType
   containerWidth?: number
 }
 
-const ImageLargeImage = styled.Image`
+const ImageFullWidthImage = styled.Image`
   border-radius: 25px;
   height: auto;
 `
 
-const ImageLarge: FC<ImageLargeProps> = ({ containerWidth, image }) => {
+const ImageFullWidth: FC<ImageFullWidthProps> = ({ containerWidth, image }) => {
   const [imageDimensions, setImageDimensions] = useState({
     height: 0,
     width: 0,
@@ -48,7 +48,7 @@ const ImageLarge: FC<ImageLargeProps> = ({ containerWidth, image }) => {
   }, [image])
 
   return (
-    <ImageLargeImage
+    <ImageFullWidthImage
       // This resizeMode ensures the whole of the image will always be seen, but means images may be different heights.  See https://reactnative.dev/docs/image#resizemode for other options.
       resizeMode="contain"
       source={
@@ -63,4 +63,4 @@ const ImageLarge: FC<ImageLargeProps> = ({ containerWidth, image }) => {
   )
 }
 
-export default ImageLarge
+export default ImageFullWidth

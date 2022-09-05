@@ -10,7 +10,7 @@ import ThemeVariables from '@/Theme/Variables'
 import EventSeries from './EventSeries'
 import EventDate from './EventDate'
 import EventTime from './EventTime'
-import ImageLarge from '../ImageLarge'
+import ImageFullWidth from '../ImageFullWidth'
 import ImageSwiper from '../ImageSwiper'
 import Title from '../Title'
 import Video from '../Video'
@@ -64,7 +64,7 @@ const EventDetails: FC<EventDetailsProps> = ({ event }) => {
         ) : event.images.length > 1 ? (
           <ImageSwiper images={event.images} />
         ) : (
-          <ImageLarge
+          <ImageFullWidth
             image={event.images.length ? event.images[0] : comingSoonImg}
           />
         )}

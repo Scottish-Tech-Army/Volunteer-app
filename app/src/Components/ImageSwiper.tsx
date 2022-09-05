@@ -8,7 +8,7 @@ import React, { FC, useState } from 'react'
 import { ImageSourcePropType, StyleSheet } from 'react-native'
 import { SwiperFlatList } from 'react-native-swiper-flatlist'
 import styled from 'styled-components/native'
-import ImageLarge from './ImageLarge'
+import ImageFullWidth from './ImageFullWidth'
 
 interface ImageSwiperProps {
   images: (string | ImageSourcePropType)[]
@@ -54,7 +54,7 @@ const ImageSwiper: FC<ImageSwiperProps> = ({ images }) => {
         paginationStyle={styles.pagination}
         paginationStyleItem={styles.paginationItem}
         renderItem={({ item }) => (
-          <ImageLarge containerWidth={containerWidth} image={item} />
+          <ImageFullWidth containerWidth={containerWidth} image={item} />
         )}
         showPagination
         style={styles.container}
