@@ -58,11 +58,11 @@ async function cacheProjectsAndResources(projects, resources) {
     await module.exports.addNewProjectsResources(projectsResources);
   } catch (error) {
     console.error('❌ Could not save new projects/resources records in cache');
-  
+
     return;
   }
 
-  console.log('✅ Complete!');
+  console.log('🏁 Complete!');
 }
 
 async function deleteAllRecords(tableName) {
@@ -174,34 +174,36 @@ async function getInitialTriageProjectsFromJira(startAt, itArray) {
 
   const itTotalData = parseInt(jiraIt.data.total);
 
-  await Promise.all(jiraIt.data.issues.map(async (x) => {
-    const project = {
-      it_key: x['key'],
-      name: x['fields'].summary,
-      description: x['fields'].description,
-      client: x['fields'].customfield_10027,
-      video_webpage: x['fields'].customfield_10159 ?? '',
-      scope: x['fields'].customfield_10090,
-      sector: x['fields'].customfield_10148?.value ?? '',
-    }
+  await Promise.all(
+    jiraIt.data.issues.map(async (x) => {
+      const project = {
+        it_key: x['key'],
+        name: x['fields'].summary,
+        description: x['fields'].description,
+        client: x['fields'].customfield_10027,
+        video_webpage: x['fields'].customfield_10159 ?? '',
+        scope: x['fields'].customfield_10090,
+        sector: x['fields'].customfield_10148?.value ?? '',
+      };
 
-   /**
-   * video_webpage is required in order to retrieve the video MP4 file from Vimeo
-   * Vimeo MP4 links will expire after 1 hour but the cron job should run every 15mins to update them
-   */  
-    const videoFile =  await vimeoService.getVideoFileFromVimeo(project.video_webpage);
-    project.video_file = videoFile;
+      /**
+       * video_webpage is required in order to retrieve the video MP4 file from Vimeo
+       * Vimeo MP4 links will expire after 1 hour but the cron job should run every 15mins to update them
+       */
+      const videoFile = await vimeoService.getVideoFileFromVimeo(project.video_webpage);
+      project.video_file = videoFile;
 
-    itArray.push(project);
-  }));
+      itArray.push(project);
+    }),
+  );
 
   if (itArray.length < itTotalData) {
     const itStartResultSearch = itArray.length;
 
     return module.exports.getInitialTriageProjectsFromJira(itStartResultSearch, itArray);
   }
-  
-    return itArray;
+
+  return itArray;
 }
 
 async function getResourcesFromJira(startAt, resArray) {
@@ -235,18 +237,18 @@ async function getResourcesFromJira(startAt, resArray) {
       buddying: x['fields'].customfield_10108 ? x['fields'].customfield_10108.value.toLowerCase() === 'yes' : false,
     }),
   );
-  
+
   if (resArray.length < resTotalData) {
     const resStartResultSearch = resArray.length;
 
     return module.exports.getResourcesFromJira(resStartResultSearch, resArray);
   }
-  
+
   return resArray;
 }
 
-async function start() {
-  console.log(`🛈 Started caching projects and resources at ${new Date()}`);
+async function startCachingLatestFromJira() {
+  console.log(`🚀 Started caching projects and resources at ${new Date()}`);
 
   const allProjectsAndResources = await module.exports.getAllProjectsAndResourcesFromJira();
   module.exports.cacheProjectsAndResources(allProjectsAndResources.projects, allProjectsAndResources.resources);
@@ -264,5 +266,5 @@ module.exports = {
   getAllProjectsAndResourcesFromJira,
   getInitialTriageProjectsFromJira,
   getResourcesFromJira,
-  start,
+  startCachingLatestFromJira,
 };

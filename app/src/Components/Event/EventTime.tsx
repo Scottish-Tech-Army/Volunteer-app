@@ -1,9 +1,10 @@
 import React, { FC } from 'react'
+import Feather from 'react-native-vector-icons/Feather'
 import styled from 'styled-components/native'
+import ThemeVariables from '@/Theme/Variables'
 
 interface EventTimeProps {
-  eventTime: string
-  icon: React.ReactNode
+  time: string
 }
 
 const TimeView = styled.View`
@@ -14,15 +15,15 @@ const TimeView = styled.View`
 
 const TimeText = styled.Text`
   font-weight: 600;
-  font-size: 16px;
+  font-size: ${ThemeVariables.FontSize.small}px;
   margin-left: 10px;
 `
 
-const EventTime: FC<EventTimeProps> = ({ eventTime, icon }) => {
+const EventTime: FC<EventTimeProps> = ({ time }) => {
   return (
     <TimeView>
-      {icon}
-      <TimeText>{eventTime}</TimeText>
+      <Feather name="clock" size={28} />
+      <TimeText>{time}</TimeText>
     </TimeView>
   )
 }

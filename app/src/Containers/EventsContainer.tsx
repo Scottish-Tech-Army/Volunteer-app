@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components/native'
+import SafeArea from '@/Components/SafeArea'
 import { EventSearchInterface } from './EventSearchContainer'
 import TopOfApp from '@/Components/TopOfApp'
 import EventOptions from '@/Components/Event/EventOptions'
@@ -19,12 +20,6 @@ import {
 interface EventProps {
   data: Events
 }
-
-const SafeArea = styled.SafeAreaView`
-  background: ${props => props.theme.colors.appBackground};
-  color: ${props => props.theme.colors.staBlack};
-  flex: 1;
-`
 
 const HorizontalLine = styled.View`
   border: ${props => `1px solid ${props.theme.colors.staBlack}`};
@@ -53,8 +48,10 @@ const EventsContainer = (props: {
     }
   }
 }) => {
-  const [fetchAllUpcomingEvents, { data: allUpcomingEvents }] =
-    useLazyFetchAllUpcomingEventsQuery()
+  const [
+    fetchAllUpcomingEvents,
+    { data: allUpcomingEvents },
+  ] = useLazyFetchAllUpcomingEventsQuery()
   const dispatch = useDispatch()
   const [eventsSearch, setEventsSearch] = useState<
     EventSearchInterface | undefined

@@ -1,16 +1,12 @@
 import React from 'react'
 import styled from 'styled-components/native'
+import SafeArea from '@/Components/SafeArea'
 import TopOfApp from '@/Components/TopOfApp'
-import { Projects } from '@/Services/modules/projects'
 import ProjectReturnedList from '@/Components/Project/ProjectReturnedList'
 import ProjectFilterSort from '@/Components/Project/ProjectFilterSort'
+import { Projects } from '@/Services/modules/projects'
 import { Text, SafeAreaView } from 'react-native'
 
-const SafeArea = styled.SafeAreaView`
-  background: ${props => props.theme.colors.appBackground};
-  color: ${props => props.theme.colors.staBlack};
-  flex: 1;
-`
 const SearchTerm = styled.Text`
   font-size: 18px;
   margin: 15px 15px 0px 15px;

@@ -123,4 +123,48 @@ describe('Test the AirTable helpers', () => {
     // Clean up
     airTableClientSpy.mockRestore();
   });
+
+  test('simplifyAttachmentsData correctly returns a simplified, flattened array', () => {
+    // Set up fake test data
+    const fakeAttachmentsData = airTableTestData.fakeAirTableAttachmentsData(2);
+
+    // Run test
+    const simplifiedAttachmentsData = airTable.simplifyAttachmentsData(fakeAttachmentsData);
+
+    expect(simplifiedAttachmentsData[0]).toEqual(fakeAttachmentsData[0].url);
+    expect(simplifiedAttachmentsData[1]).toEqual(fakeAttachmentsData[1].url);
+  });
+
+  test('updateRecordById updates a record in AirTable', async () => {
+    // Set up fake test data
+    const fakeTableName = faker.lorem.words(1);
+    const fakeRecordId = faker.datatype.uuid();
+    const fakeFields = {
+      [faker.lorem.word()]: faker.lorem.words(5),
+    };
+
+    // Mock dependencies
+    const airTableClientUpdateMock = jest.fn(() => Promise.resolve({}));
+    const airTableClientTableMock = jest.fn(() => ({ update: airTableClientUpdateMock }));
+    const airTableClientSpy = jest
+      .spyOn(airTable, 'client')
+      .mockImplementation(() => ({ table: airTableClientTableMock }));
+
+    // Run test
+    await airTable.updateRecordById(fakeTableName, fakeRecordId, fakeFields);
+
+    expect(airTableClientSpy).toHaveBeenCalledTimes(1);
+    expect(airTableClientTableMock).toHaveBeenCalledTimes(1);
+    expect(airTableClientTableMock).toHaveBeenCalledWith(fakeTableName);
+    expect(airTableClientUpdateMock).toHaveBeenCalledTimes(1);
+    expect(airTableClientUpdateMock).toHaveBeenCalledWith([
+      {
+        id: fakeRecordId,
+        fields: fakeFields,
+      },
+    ]);
+
+    // Clean up
+    airTableClientSpy.mockRestore();
+  });
 });

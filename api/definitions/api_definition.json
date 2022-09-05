@@ -26,7 +26,9 @@
                     "type": "External",
                     "notes": "",
                     "series": "Data Collective",
-                    "video": "https://vimeo.com/583815096",
+                    "video_webpage": "https://vimeo.com/583815096",
+                    "video_file": "https://vod-progressive.akamaized.net/exp=1657227176~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F678%2F28%2F703391800%2F3256486964.mp4~hmac=e76bbd7e698f0d46c373bce069f936a24182694a1b0d140a63fcf240a2e8b65c/vimeo-prod-skyfire-std-us/01/678/28/703391800/3256486964.mp4",
+                    "video_thumbnail": "https://dl.airtable.com/.attachments/02b4bf4e52db4d9d85575186c487c635/c05231f4/1218826759-b3cef7ddaf08fa26e375d87a2fc78e7fc0ca49ffb2809197dcf3ea6bec5e09ec-d_1280?ts=1653904352&userId=usrrNJEU7hToH1AMK&cs=ee8f353da772f926",
                     "images": []
                   },
                   {
@@ -39,7 +41,9 @@
                     "type": "Internal",
                     "notes": "",
                     "series": "Microsoft",
-                    "video": "",
+                    "video_webpage": "",
+                    "video_file": "",
+                    "video_thumbnail": "",
                     "images": [
                       "https://dl.airtable.com/.attachments/6a55ab19223701f38cc61d0b1c127748/cfcd129b/power-bi.jpg?ts=1652968234&userId=usrrNJEU7hToH1AMK&cs=a8456be5328462cd"
                     ]
@@ -73,7 +77,9 @@
                   "type": "External",
                   "notes": "",
                   "series": "Data Collective",
-                  "video": "https://vimeo.com/583815096",
+                  "video_webpage": "https://vimeo.com/583815096",
+                  "video_file": "https://vod-progressive.akamaized.net/exp=1657227176~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F678%2F28%2F703391800%2F3256486964.mp4~hmac=e76bbd7e698f0d46c373bce069f936a24182694a1b0d140a63fcf240a2e8b65c/vimeo-prod-skyfire-std-us/01/678/28/703391800/3256486964.mp4",
+                  "video_thumbnail": "https://dl.airtable.com/.attachments/02b4bf4e52db4d9d85575186c487c635/c05231f4/1218826759-b3cef7ddaf08fa26e375d87a2fc78e7fc0ca49ffb2809197dcf3ea6bec5e09ec-d_1280?ts=1653904352&userId=usrrNJEU7hToH1AMK&cs=ee8f353da772f926",
                   "images": []
                 },
                 "schema": {
@@ -105,7 +111,9 @@
                     "type": "External",
                     "notes": "",
                     "series": "Data Collective",
-                    "video": "https://vimeo.com/583815096",
+                    "video_webpage": "https://vimeo.com/583815096",
+                    "video_file": "https://vod-progressive.akamaized.net/exp=1657227176~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F678%2F28%2F703391800%2F3256486964.mp4~hmac=e76bbd7e698f0d46c373bce069f936a24182694a1b0d140a63fcf240a2e8b65c/vimeo-prod-skyfire-std-us/01/678/28/703391800/3256486964.mp4",
+                    "video_thumbnail": "https://dl.airtable.com/.attachments/02b4bf4e52db4d9d85575186c487c635/c05231f4/1218826759-b3cef7ddaf08fa26e375d87a2fc78e7fc0ca49ffb2809197dcf3ea6bec5e09ec-d_1280?ts=1653904352&userId=usrrNJEU7hToH1AMK&cs=ee8f353da772f926",
                     "images": []
                   },
                   {
@@ -118,7 +126,9 @@
                     "type": "Internal",
                     "notes": "",
                     "series": "Microsoft",
-                    "video": "",
+                    "video_webpage": "",
+                    "video_file": "",
+                    "video_thumbnail": "",
                     "images": [
                       "https://dl.airtable.com/.attachments/6a55ab19223701f38cc61d0b1c127748/cfcd129b/power-bi.jpg?ts=1652968234&userId=usrrNJEU7hToH1AMK&cs=a8456be5328462cd"
                     ]
@@ -153,7 +163,9 @@
                     "type": "External",
                     "notes": "",
                     "series": "Data Colllective",
-                    "video": "",
+                    "video_webpage": "",
+                    "video_file": "",
+                    "video_thumbnail": "",
                     "images": []
                   },
                   {
@@ -166,6 +178,9 @@
                     "type": "Internal",
                     "notes": "",
                     "series": "Microsoft",
+                    "video_webpage": "",
+                    "video_file": "",
+                    "video_thumbnail": "",
                     "images": [
                       "https://dl.airtable.com/.attachments/6a55ab19223701f38cc61d0b1c127748/cfcd129b/power-bi.jpg?ts=1652968234&userId=usrrNJEU7hToH1AMK&cs=a8456be5328462cd"
                     ]
@@ -205,7 +220,7 @@
                     "buddying": false,
                     "scope": "https://drive.google.com/file/d/1j469c-xp8HPYLocTgz5lMYHnnz7TsRVP/view?usp=sharing",
                     "sector": "Arts & Culture",
-					"video_file": "https://vod-progressive.akamaized.net/exp=1657227176~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F678%2F28%2F703391800%2F3256486964.mp4~hmac=e76bbd7e698f0d46c373bce069f936a24182694a1b0d140a63fcf240a2e8b65c/vimeo-prod-skyfire-std-us/01/678/28/703391800/3256486964.mp4"
+                    "video_file": "https://vod-progressive.akamaized.net/exp=1657227176~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F678%2F28%2F703391800%2F3256486964.mp4~hmac=e76bbd7e698f0d46c373bce069f936a24182694a1b0d140a63fcf240a2e8b65c/vimeo-prod-skyfire-std-us/01/678/28/703391800/3256486964.mp4"
                   },
                   {
                     "it_key": "IT-123",
@@ -222,7 +237,7 @@
                     "buddying": false,
                     "scope": "https://drive.google.com/file/d/1j469c-xp8HPYLocTgz5lMYHnnz7TsRVP/view?usp=sharing",
                     "sector": "Arts & Culture",
-					"video_file": "https://vod-progressive.akamaized.net/exp=1657227176~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F678%2F28%2F703391800%2F3256486964.mp4~hmac=e76bbd7e698f0d46c373bce069f936a24182694a1b0d140a63fcf240a2e8b65c/vimeo-prod-skyfire-std-us/01/678/28/703391800/3256486964.mp4"
+                    "video_file": "https://vod-progressive.akamaized.net/exp=1657227176~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F678%2F28%2F703391800%2F3256486964.mp4~hmac=e76bbd7e698f0d46c373bce069f936a24182694a1b0d140a63fcf240a2e8b65c/vimeo-prod-skyfire-std-us/01/678/28/703391800/3256486964.mp4"
                   },
                   {
                     "it_key": "SVA",
@@ -239,7 +254,7 @@
                     "buddying": true,
                     "scope": "https://drive.google.com/file/d/1j469c-xp8HPYLocTgz5lMYHnnz7TsRVP/view?usp=sharing",
                     "sector": "Education & Youth",
-					"video_file": "https://vod-progressive.akamaized.net/exp=1657227176~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F678%2F28%2F703391800%2F3256486964.mp4~hmac=e76bbd7e698f0d46c373bce069f936a24182694a1b0d140a63fcf240a2e8b65c/vimeo-prod-skyfire-std-us/01/678/28/703391800/3256486964.mp4"
+                    "video_file": "https://vod-progressive.akamaized.net/exp=1657227176~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F678%2F28%2F703391800%2F3256486964.mp4~hmac=e76bbd7e698f0d46c373bce069f936a24182694a1b0d140a63fcf240a2e8b65c/vimeo-prod-skyfire-std-us/01/678/28/703391800/3256486964.mp4"
                   }
                 ],
                 "schema": {
@@ -275,7 +290,7 @@
                   "buddying": false,
                   "scope": "https://drive.google.com/file/d/1j469c-xp8HPYLocTgz5lMYHnnz7TsRVP/view?usp=sharing",
                   "sector": "Arts & Culture",
-				  "video_file": "https://vod-progressive.akamaized.net/exp=1657227176~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F678%2F28%2F703391800%2F3256486964.mp4~hmac=e76bbd7e698f0d46c373bce069f936a24182694a1b0d140a63fcf240a2e8b65c/vimeo-prod-skyfire-std-us/01/678/28/703391800/3256486964.mp4"
+                  "video_file": "https://vod-progressive.akamaized.net/exp=1657227176~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F678%2F28%2F703391800%2F3256486964.mp4~hmac=e76bbd7e698f0d46c373bce069f936a24182694a1b0d140a63fcf240a2e8b65c/vimeo-prod-skyfire-std-us/01/678/28/703391800/3256486964.mp4"
                 },
                 "schema": {
                   "$ref": "#/components/schemas/project"
@@ -335,7 +350,7 @@
             },
             "description": {
               "type": "string",
-              "description": "Information about the event"
+              "description": "Information about the event, this may include markdown code for formatting bold, links, etc (https://www.markdownguide.org/getting-started/)"
             },
             "type": {
               "type": "string",
@@ -347,7 +362,15 @@
             },
             "video_webpage": {
               "type": "string",
-              "description": "URL of the event video (normally used to watch a past event)"
+              "description": "URL of the event video (if any). Expected to be a Vimeo page. Normally used to watch a past event"
+            },
+            "video_file": {
+              "type": "string",
+              "description": "URL of MP4 file of the event video (if any), returned from the Vimeo API. These URLs expire every hour"
+            },
+            "video_thumbnail": {
+              "type": "string",
+              "description": "URL of a thumbnail image of the event video (if any)"
             },
             "notes": {
               "type": "string",
@@ -428,11 +451,11 @@
             "sector": {
               "type": "string",
               "description": "Project charity sector"
-            }, 
-			"video_file": {
-				"type" : "string",
-				"description" : "MP4 file of the video introducing the project from the Vimeo webpage"
-			}
+            },
+            "video_file": {
+              "type": "string",
+              "description": "URL of MP4 file of the video introducing the project from the Vimeo webpage. These URLs expire every hour"
+            }
           }
         }
       }

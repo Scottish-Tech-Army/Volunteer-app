@@ -1,12 +1,14 @@
 import React, { FC } from 'react'
+import Feather from 'react-native-vector-icons/Feather'
 import styled from 'styled-components/native'
+import ThemeVariables from '@/Theme/Variables'
 
 interface EventDateProps {
-  eventDate: Date
-  icon: React.ReactNode
+  date: string // YYYY-MM-DD
 }
 
 const DateView = styled.View`
+  margin-right: 20px;
   margin-top: 9px;
   display: flex;
   flex-direction: row;
@@ -14,15 +16,15 @@ const DateView = styled.View`
 
 const DateText = styled.Text`
   font-weight: 600;
-  font-size: 16px;
+  font-size: ${ThemeVariables.FontSize.small}px;
   margin-left: 10px;
 `
 
-const EventDate: FC<EventDateProps> = ({ eventDate, icon }) => {
+const EventDate: FC<EventDateProps> = ({ date }) => {
   return (
     <DateView>
-      {icon}
-      <DateText>{eventDate.toDateString()}</DateText>
+      <Feather name="calendar" size={28} />
+      <DateText>{new Date(date).toDateString()}</DateText>
     </DateView>
   )
 }

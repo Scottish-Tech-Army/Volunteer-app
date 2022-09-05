@@ -1,24 +1,27 @@
+// Short summary of an event for using in a list of events
+// Shows event name, image, date and time
+
 import React, { FC } from 'react'
 import styled from 'styled-components/native'
-import EventHeading from './EventHeading'
 import EventDate from './EventDate'
-import EventThumbnail from './EventThumbnail'
 import EventTime from './EventTime'
-import Feather from 'react-native-vector-icons/Feather'
+import comingSoonImg from '@/Assets/Images/ComingSoon.png'
+import ImageThumbnail from '@/Components/ImageThumbnail'
+import Title from '@/Components/Title'
 import { Event } from '@/Services/modules/events'
 
 interface EventSummaryProps {
-  data: Event
+  event: Event
 }
 
-const EventDetails = styled.TouchableOpacity`
-  padding: 17px 27px 27px 27px;
-  min-height: 68px;
+const EventInfo = styled.View`
+  border-bottom-color: ${props => props.theme.colors.greyFaint};
+  border-bottom-width: 2px;
   display: flex;
   flex-direction: row;
   line-height: 18px;
-  border-bottom-width: 1px;
-  border-bottom-color: ${props => props.theme.colors.staBlack};
+  min-height: 68px;
+  padding: 7px 0 27px;
   width: 100%;
 `
 
@@ -26,21 +29,23 @@ const RightColumn = styled.View`
   display: flex;
 `
 
-const EventSummary: FC<EventSummaryProps> = ({ data }) => (
-  <EventDetails>
-    <EventThumbnail />
+const EventSummary: FC<EventSummaryProps> = ({ event }) => (
+  <EventInfo key={event.id}>
+    <ImageThumbnail
+      image={
+        event.video_thumbnail
+          ? event.video_thumbnail
+          : event.images.length
+          ? event.images[0]
+          : comingSoonImg
+      }
+    />
     <RightColumn>
-      <EventHeading title={data.name} />
-      <EventDate
-        icon={<Feather name="calendar" size={28} />}
-        eventDate={new Date(data.date)}
-      />
-      <EventTime
-        icon={<Feather name="clock" size={28} />}
-        eventTime={data.time}
-      />
+      <Title text={event.name} type="list" />
+      <EventDate date={event.date} />
+      <EventTime time={event.time} />
     </RightColumn>
-  </EventDetails>
+  </EventInfo>
 )
 
 export default EventSummary

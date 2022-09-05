@@ -1,7 +1,7 @@
 const airTable = require('../../helpers/airTable');
 const axios = require('axios');
 const arraysHelpers = require('../../helpers/arrays');
-const cacheProjects = require('../../cache/projects');
+const cacheProjects = require('../../cron-jobs/projects');
 const { faker } = require('@faker-js/faker');
 const projectsHelpers = require('../../helpers/projects');
 const projectsTestData = require('../../__test-data__/projects');
@@ -9,7 +9,7 @@ const vimeo = require('../../services/vimeo');
 
 axios.defaults.adapter = require('axios/lib/adapters/http');
 
-describe('Test the projects/resources cache', () => {
+describe('Test the projects/resources caching cron job', () => {
   beforeEach(() => {
     jest.resetModules();
   });
@@ -302,7 +302,9 @@ describe('Test the projects/resources cache', () => {
 
     // Mock dependencies
     const axiosSpy = jest.spyOn(axios, 'get').mockImplementationOnce(() => Promise.resolve(fakeJiraItApiResults));
-    const vimeoSpy = jest.spyOn(vimeo, 'getVideoFileFromVimeo').mockImplementation(() => Promise.resolve(fakeVideoFile));
+    const vimeoSpy = jest
+      .spyOn(vimeo, 'getVideoFileFromVimeo')
+      .mockImplementation(() => Promise.resolve(fakeVideoFile));
 
     // Run test
     const jiraItArray = await cacheProjects.getInitialTriageProjectsFromJira(0, []);
@@ -360,7 +362,7 @@ describe('Test the projects/resources cache', () => {
     axiosSpy.mockRestore();
   });
 
-  test('start gets all data from Jira API then attempts to cache it', async () => {
+  test('startCachingLatestFromJira gets all data from Jira API then attempts to cache it', async () => {
     // Set up fake test data
     const fakeProjects = projectsTestData.fakeProjectObjects(15);
     const fakeResources = projectsTestData.fakeResourceObjects(25);
@@ -380,7 +382,7 @@ describe('Test the projects/resources cache', () => {
     const consoleLogSpy = jest.spyOn(global.console, 'log').mockImplementation(() => {});
 
     // Run test
-    await cacheProjects.start();
+    await cacheProjects.startCachingLatestFromJira();
 
     expect(getAllProjectsAndResourcesFromJiraSpy).toHaveBeenCalledTimes(1);
     expect(cacheProjectsAndResourcesSpy).toHaveBeenCalledTimes(1);
