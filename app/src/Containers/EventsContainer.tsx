@@ -15,6 +15,7 @@ import Theme from '@/Theme/OldTheme'
 import {
   Events,
   useLazyFetchAllUpcomingEventsQuery,
+  useLazyFetchAllPastEventsQuery
 } from '@/Services/modules/events'
 
 interface EventProps {
@@ -52,18 +53,26 @@ const EventsContainer = (props: {
     fetchAllUpcomingEvents,
     { data: allUpcomingEvents },
   ] = useLazyFetchAllUpcomingEventsQuery()
+
+  const [
+    fetchAllPastEvents,
+    { data: allPastEvents},
+  ] = useLazyFetchAllPastEventsQuery() // added to useLazyFetch re PastEvents - need to investigate more
+
   const dispatch = useDispatch()
   const [eventsSearch, setEventsSearch] = useState<
     EventSearchInterface | undefined
   >()
   const [selectedOption, setSelectedOption] = useState<
     EventsRange | 'myEvents'
-  >(EventsRange.Upcoming)
+    >(EventsRange.Upcoming) // (EventsRange.Upcoming)
+// Above fetchAllUpcomingEvents is set by default to allUpcomingEvents
 
   // When the component is first created...
   useEffect(() => {
     // Get all upcoming events from the API
     fetchAllUpcomingEvents('')
+    fetchAllPastEvents('')
   }, [])
 
   // When allUpcomingEvents is set...
@@ -84,12 +93,13 @@ const EventsContainer = (props: {
     setEventsSearch(props.route.params?.search)
   }, [props.route.params])
 
+  // Bellow <EventOptions selected={EventsRange.Upcoming} /> changed to selected={selectedOption}
   const EventList: FC<EventProps> = ({ data }) => {
     return (
       <SafeArea>
         <TopOfApp />
         <EventSearch />
-        <EventOptions selected={EventsRange.Upcoming} />
+        <EventOptions selected={selectedOption} /> 
 
         {/* If the user has done a quick search for upcoming events, show those
             quick search buttons so they can amend their quick search if they want,
@@ -123,18 +133,32 @@ const EventsContainer = (props: {
     )
   }
 
-  if (allUpcomingEvents || eventsSearch) {
-    const eventsToShow = eventsSearch
-      ? eventsSearch.results
-      : (allUpcomingEvents as Events)
+  const [eventsToShow, setEventsToShow] = useState<Events>() // holding state for which event are being rendered
 
-    return (
-      <Theme>
-        <EventList data={eventsToShow} />
-      </Theme>
-    )
-  } else {
-    return (
+  useEffect (() => {
+    eventToShow()
+  }, [allUpcomingEvents, [props.route.params]])
+
+  const eventToShow = () => {
+    if(eventsSearch){ 
+      setEventsToShow(eventsSearch.results)
+    } else if (!eventsSearch && allUpcomingEvents && selectedOption === EventsRange.Upcoming){
+      setEventsToShow(allUpcomingEvents as Events)
+    } else if (!eventsSearch && allUpcomingEvents && allPastEvents && selectedOption === EventsRange.Past){
+      setEventsToShow(allPastEvents as Events)
+    }
+  } // Logic for deciding which event to render
+
+  if(eventsToShow){
+    if (allUpcomingEvents || eventsSearch) {
+      return (
+        <Theme>
+          <EventList data={eventsToShow} />
+        </Theme>
+      )
+    }
+    } else {
+      return (
       <SafeAreaView>
         <Text>Loading...</Text>
       </SafeAreaView>
@@ -142,4 +166,4 @@ const EventsContainer = (props: {
   }
 }
 
-export default EventsContainer
+export default EventsContainer;
