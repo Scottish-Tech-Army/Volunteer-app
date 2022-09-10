@@ -48,13 +48,20 @@ For support, please @ David Calder in the [volunteer-app](https://scottishtechar
 
 ## Updating the API
 
-1. Git clone Scottish-Tech-Army/Volunteer-app to your computer
-2. `cd Volunteer-app/api`
-3. `zip ../myapp.zip -r * .[^.]*`
-4. Go to the AWS Management Console and navigate to Elastic Beanstalk.
-5. In [Application versions](https://eu-west-2.console.aws.amazon.com/elasticbeanstalk/home?region=eu-west-2#/application/versions?applicationName=volunteer-app), Upload the myapp.zip that you created in step 3.
-6. Now select the version label you've just created and then select Action > Deploy
-7. Go to the environment dashboard and check the version label has updated and the Health is OK. If not, check the Logs (menu on the left hand side).
+We've had some issues with the API breaking when we've tried to deploy changes to AWS.  For now, this is the recommended way to make sure you can deploy without worrying about breaking it, while we work on a better longer-term solution.
+
+1. If you're completing a pull request, once it's approved merge in your latest changes to the `main` branch like you normally would.
+2. Then, clone a **new, clean copy of the repo** into a new directory on your computer.  E.g. `git clone git@github.com:Scottish-Tech-Army/Volunteer-app.git volunteer-app-aws-deployment` will clone it into a directory called `volunteer-app-aws-deployment`.  You can call this directory whatever you want, the important thing is to clone a new copy separate from the directory you normally use when working on the app/API code -- this new directory is what we're going to use to deploy to AWS.
+3. Copy your `api/.env` file from your normal working directory into this new directory.
+E.g. `cp Volunteer-app/api/.env volunteer-app-aws-deployment/api/.env` (but this command depends what directory you're in and what you've named these directories).  Check that the `.env` file now exists in the `api` directory of your new copy of the repo -- it's vital for the API to work.
+4. **Don't do anything else in your new directory** (e.g. `volunteer-app-aws-deployment`).  Don't do `npm install` or `npm start` or anything else.
+5. Go into the `api` directory of your new copy of the repo, e.g. `cd volunteer-app-aws-deployment/api`
+6. In that `api` directory, zip it up into a file: `zip ../../myapp.zip -r * .[^.]*`
+7. Go to the AWS Management Console and navigate to [Elastic Beanstalk](https://eu-west-2.console.aws.amazon.com/elasticbeanstalk/home?region=eu-west-2#/environments).
+8. In [Application versions](https://eu-west-2.console.aws.amazon.com/elasticbeanstalk/home?region=eu-west-2#/application/versions?applicationName=volunteer-app), Upload the myapp.zip that you created in step 6.
+9. Now select the version label you've just created and then select Action > Deploy
+10. Go to the environment dashboard and check the version label has updated and the Health is OK. If not, check the Logs (menu on the left hand side) or ask someone else in the team for help.
+11. Delete the new directory containing copy of the repo you made in step 2 and everything in it, e.g. `rm -rf volunteer-app-aws-deployment/`
 
 ## Known issues
 
