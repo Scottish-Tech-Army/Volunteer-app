@@ -57,11 +57,13 @@ E.g. `cp Volunteer-app/api/.env volunteer-app-aws-deployment/api/.env` (but this
 4. **Don't do anything else in your new directory** (e.g. `volunteer-app-aws-deployment`).  Don't do `npm install` or `npm start` or anything else.
 5. Go into the `api` directory of your new copy of the repo, e.g. `cd volunteer-app-aws-deployment/api`
 6. In that `api` directory, zip it up into a file: `zip ../../myapp.zip -r * .[^.]*`  This `myapp.zip` file will be created in the directory above `volunteer-app-aws-deployment`
-7. Go to the AWS Management Console and navigate to [Elastic Beanstalk](https://eu-west-2.console.aws.amazon.com/elasticbeanstalk/home?region=eu-west-2#/environments).
-8. In [Application versions](https://eu-west-2.console.aws.amazon.com/elasticbeanstalk/home?region=eu-west-2#/application/versions?applicationName=volunteer-app), Upload the myapp.zip that you created in step 6.
-9. Now select the version label you've just created and then select Action > Deploy
-10. Go to the environment dashboard and check the version label has updated and the Health is OK. If not, check the Logs (menu on the left hand side) or ask someone else in the team for help.
-11. Delete the new directory containing copy of the repo you made in step 2 and everything in it, e.g. `rm -rf volunteer-app-aws-deployment/`
+7. If you're not already, [log into the STA AWS account here](https://scottishtecharmy.awsapps.com/start#/)
+8. In the AWS Management Console navigate to [Elastic Beanstalk](https://eu-west-2.console.aws.amazon.com/elasticbeanstalk/home?region=eu-west-2#/environments).
+9. In the [Volunteer App Application versions](https://eu-west-2.console.aws.amazon.com/elasticbeanstalk/home?region=eu-west-2#/application/versions?applicationName=volunteer-app), Upload the myapp.zip that you created in step 6.
+10. Now select the version label you've just created and then select Action > Deploy
+11. Go to the environment dashboard and check the version label has updated and the Health is OK. If not, check the Logs (menu on the left hand side) or ask someone else in the team for help.
+12. Also check one of the API endpoints to make sure it's working, e.g. `http://volunteerapp-env.eba-ivfm2tgp.eu-west-2.elasticbeanstalk.com/projects` or `http://18.134.220.155/projects` -- at least one of these should work.
+13. Delete the new directory containing copy of the repo you made in step 2 and everything in it, e.g. `rm -rf volunteer-app-aws-deployment/`
 
 ## Known issues
 
