@@ -1,3 +1,7 @@
+/**
+ * @file Extended ESLint checks to require a minimum level of JSDoc comment coverage
+ */
+
 module.exports = {
   extends: ['.eslintrc.js', 'plugin:jsdoc/recommended'],
   rules: {

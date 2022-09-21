@@ -1,3 +1,7 @@
+/**
+ * @file Core ESLint config, for use pre-commit
+ */
+
 module.exports = {
   env: {
     'jest/globals': true,
