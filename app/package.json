@@ -8,6 +8,7 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint .",
+    "lint-ci": "eslint . -c .eslintrc.ci.js --ext .js,.jsx,.ts,.tsx",
     "type-check": "tsc",
     "prepare": "cd .. && husky install .husky",
     "lint-app": "lint-staged --quiet"
