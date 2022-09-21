@@ -3,9 +3,9 @@ name: Continuous Integration
 # Triggers execute all tests workflow on pull request events
 on:
   pull_request:
-    types: [ opened, synchronize, reopened, edited ]
+    types: [opened, synchronize, reopened, edited]
     paths:
-      - 'app/**'
+      - "app/**"
 jobs:
   test:
     name: Tests
@@ -21,3 +21,15 @@ jobs:
           cd app
           npm install --legacy-peer-deps
           npm test
+  lint:
+    name: ESLint + JSDoc checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Install deps
+        working-directory: ./app
+        run: npm install --legacy-peer-deps
+      - name: Run ESLint with extended checks
+        working-directory: ./app
+        run: npx eslint $(git diff --name-only --relative origin/main HEAD . | grep -E '\.(js|jsx|ts|tsx)$'| xargs) -c .eslintrc.ci.js --no-error-on-unmatched-pattern
