@@ -26,10 +26,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
+        # This needs to be v1 in order for it to pick up main correctly so that we can diff against it; see https://github.com/actions/checkout/issues/296
         uses: actions/checkout@v1
       - name: Install deps
         working-directory: ./app
         run: npm install --legacy-peer-deps
       - name: Run ESLint with extended checks
         working-directory: ./app
-        run: npx eslint $(git diff --name-only --relative origin/main HEAD . | grep -E '\.(js|jsx|ts|tsx)$'| xargs) -c .eslintrc.ci.js --no-error-on-unmatched-pattern
+        # Run ESLint only on files that
+        # - have changed in this branch vs the current tip of the main branch
+        # - are in the current working directory (./app)
+        # - have extensions .js, .jsx, .ts, .tsx
+        # The file paths need to be supplied relative to the ./app directory because that's where ESLint runs. By default, the git diff command gives them relative to the repo root; --relative makes them relative to the current working directory.
+        run: npx eslint $(git diff --name-only --relative origin/main HEAD . | grep -E '\.(js|jsx|ts|tsx)$'| xargs) -c .eslintrc.ci.js
