@@ -10,10 +10,7 @@ router.get('/', async (req, res) => {
   const projectsResources = await airTable.getAllRecords(airTable.projectsResourcesCacheTable());
 
   if (projectsResources.error) {
-    routesHelper.sendError(
-      res,
-      `Database connection error: ${airTable.connectionErrorMessage()}`,
-    );
+    routesHelper.sendError(res, `Database connection error: ${airTable.connectionErrorMessage()}`);
 
     return;
   }
@@ -25,28 +22,27 @@ router.get('/', async (req, res) => {
   res.status(200).send(projectsResourcesFormatted);
 });
 
-router.get('/single', async (req, res) => {
-  const projectItKey = req.query.it;
-  const resourceId = req.query.res;
+router.get('/:res_id', async (req, res) => getProjectHandler(req, res));
 
-  const projectResource = await airTable.getRecordByQuery(airTable.projectsResourcesCacheTable(), {
-    it_key: projectItKey,
+const getProjectHandler = async (req, res) => {
+  const resourceId = req.params.res_id;
+  const project = await airTable.getRecordByQuery(airTable.projectsResourcesCacheTable(), {
     res_id: resourceId,
   });
 
-  if (!projectResource || projectResource.error) {
+  if (!project || project.error) {
     routesHelper.sendError(
       res,
-      `Could not find project matching it_key ${projectItKey} and/or res_id ${resourceId} - please check these details are correct.  Please check database details are correct in the API .env file.`,
+      `❌ Could not find project matching res_id ${resourceId}. Please check the res_id and check your AirTable details are correct in your .env file.`,
     );
 
     return;
   }
 
-  const projectResourceFormatted = projectsHelper.formatProjectResourceFromAirTable(projectResource);
+  const projectFormatted = projectsHelper.formatProjectResourceFromAirTable(project);
 
-  res.status(200).send(projectResourceFormatted);
-});
+  res.status(200).send(projectFormatted);
+};
 
 /*
  * TODO: When authentication has been set up, we need to:
@@ -55,21 +51,19 @@ router.get('/single', async (req, res) => {
  *  - Save in a database that this user has expressed interest in this project
  *
  */
-router.post('/single/register-interest', async (req, res) => await projectRegisterInterestHandler(req, res));
+router.post('/:res_id/register-interest', async (req, res) => await projectRegisterInterestHandler(req, res));
 
 const projectRegisterInterestHandler = async (req, res) => {
-  const projectItKey = req.query.it;
-  const resourceId = req.query.res;
+  const resourceId = req.params.res_id;
 
   const projectResource = await airTable.getRecordByQuery(airTable.projectsResourcesCacheTable(), {
-    it_key: projectItKey,
     res_id: resourceId,
   });
 
   if (!projectResource || projectResource.error) {
     routesHelper.sendError(
       res,
-      `Could not find project matching it_key ${projectItKey} and/or res_id ${resourceId} - please check these details are correct.  Please check database details are correct in the API .env file.`,
+      `Could not find project matching res_id ${resourceId}. Please check the res_id and check your AirTable details are correct in your .env file.`,
     );
 
     return;
@@ -111,6 +105,7 @@ const projectRegisterInterestHandler = async (req, res) => {
 };
 
 module.exports = {
+  getProjectHandler,
   projectsApi: router,
   projectRegisterInterestHandler,
 };

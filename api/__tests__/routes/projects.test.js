@@ -5,6 +5,7 @@ const { faker } = require('@faker-js/faker');
 const nock = require('nock');
 const { projectRegisterInterestHandler } = require('../../routes/projects');
 const projectsHelper = require('../../helpers/projects');
+const { getProjectHandler } = require('../../routes/projects');
 const projectsTestData = require('../../__test-data__/projects');
 const request = require('supertest');
 const slackService = require('../../services/slack');
@@ -33,30 +34,64 @@ describe('Test the projects api', () => {
     expect(response.data).toEqual(fakeProjectResources);
   });
 
-  test('GET single project by ID method should return Not Found', async () => {
-    const response = await request(app).get('/projects/1');
-    expect(response.statusCode).toBe(404);
-  });
-
   test('GET a single project method should respond successfully', async () => {
     // Set up fake test data
     const fakeProjectResource = projectsTestData.fakeProjectResourceObject();
 
     // Mock dependencies
-    const singleProjectsMock = nock('http://localhost:3000')
-      .get(`/projects/single?res=${fakeProjectResource.res_id}&it=${fakeProjectResource.it_key}`)
+    const singleProjectMock = nock('http://localhost:3000')
+      .get(`/projects/${fakeProjectResource.res_id}`)
       .reply(200, fakeProjectResource);
 
     // Run test
-    const response = await axios.get(
-      `http://localhost:3000/projects/single?res=${fakeProjectResource.res_id}&it=${fakeProjectResource.it_key}`,
-    );
-
-    singleProjectsMock.done();
+    const response = await axios.get(`http://localhost:3000/projects/${fakeProjectResource.res_id}`);
+    singleProjectMock.done();
 
     expect(response.status).toBe(200);
-    expect(response.data.res_id).toBe(fakeProjectResource.res_id);
-    expect(response.data.it_key).toBe(fakeProjectResource.it_key);
+    expect(response.data).toEqual(fakeProjectResource);
+  });
+
+  test('getProjectHandler gets a single record from AirTable, formats data and returns a response', async () => {
+    // Set up fake test data
+    const fakeTableName = faker.lorem.word();
+    const fakeProjectResource = projectsTestData.fakeProjectAirTableRecords(1)[0];
+    const fakeRequest = {
+      params: {
+        res_id: fakeProjectResource.res_id,
+      },
+    };
+
+    // Mock dependencies
+    const airTableHelperProjectsTableSpy = jest
+      .spyOn(airTable, 'projectsResourcesCacheTable')
+      .mockImplementation(() => fakeTableName);
+    const airTableHelperGetRecordByQuerySpy = jest
+      .spyOn(airTable, 'getRecordByQuery')
+      .mockImplementation(() => fakeProjectResource);
+    const projectsHelperFormatProjectResourceFromAirTable = jest
+      .spyOn(projectsHelper, 'formatProjectResourceFromAirTable')
+      .mockImplementation((projectAirTableRecord) => projectAirTableRecord);
+    const responseMock = {
+      send: jest.fn(() => responseMock),
+      status: jest.fn(() => responseMock),
+    };
+
+    // Run test
+    await getProjectHandler(fakeRequest, responseMock);
+
+    // Check test expectations are met
+    expect(airTableHelperProjectsTableSpy).toHaveBeenCalledTimes(1);
+    expect(airTableHelperGetRecordByQuerySpy).toHaveBeenCalledTimes(1);
+    expect(projectsHelperFormatProjectResourceFromAirTable).toHaveBeenCalledTimes(1);
+    expect(responseMock.status).toHaveBeenCalledTimes(1);
+    expect(responseMock.status).toHaveBeenCalledWith(200);
+    expect(responseMock.send).toHaveBeenCalledTimes(1);
+    expect(responseMock.send).toHaveBeenCalledWith(fakeProjectResource);
+
+    // Clean up
+    airTableHelperProjectsTableSpy.mockRestore();
+    airTableHelperGetRecordByQuerySpy.mockRestore();
+    projectsHelperFormatProjectResourceFromAirTable.mockRestore();
   });
 
   test('POST register interest in a single project method should respond successfully', async () => {
@@ -76,12 +111,13 @@ describe('Test the projects api', () => {
 
     // Mock dependencies
     const requestMock = nock('http://localhost:3000')
-      .post(`/projects/single/register-interest?res=${fakeProjectResource.res_id}&it=${fakeProjectResource.it_key}`)
+      .post(`/projects/${fakeProjectResource.res_id}/register-interest`)
       .reply(200, responseData);
 
     // Run test
     const response = await axios.post(
-      `http://localhost:3000/projects/single/register-interest?res=${fakeProjectResource.res_id}&it=${fakeProjectResource.it_key}`,
+      `http://localhost:3000/projects/${fakeProjectResource.res_id}/register-interest`,
+      postData,
     );
     requestMock.done();
 
@@ -94,9 +130,8 @@ describe('Test the projects api', () => {
     const fakeTableName = faker.lorem.word();
     const fakeProjectResource = projectsTestData.fakeAirTableProjectResource(true);
     const fakeRequest = {
-      query: {
-        it: fakeProjectResource.it_key,
-        res: fakeProjectResource.res_id,
+      params: {
+        res_id: fakeProjectResource.res_id,
       },
       body: {
         firstName: faker.name.firstName(),
@@ -132,8 +167,7 @@ describe('Test the projects api', () => {
     expect(airTableHelperProjectsResourcesCacheTableSpy).toHaveBeenCalledTimes(1);
     expect(airTableHelperGetRecordByQuerySpy).toHaveBeenCalledTimes(1);
     expect(airTableHelperGetRecordByQuerySpy).toHaveBeenCalledWith(fakeTableName, {
-      it_key: fakeRequest.query.it,
-      res_id: fakeRequest.query.res,
+      res_id: fakeRequest.params.res_id,
     });
     expect(projectsHelperFormatProjectResourceFromAirTableSpy).toHaveBeenCalledTimes(1);
     expect(slackServicePostMessageSpy).toHaveBeenCalledTimes(1);
@@ -154,9 +188,8 @@ describe('Test the projects api', () => {
     const fakeTableName = faker.lorem.word();
     const fakeProjectResource = projectsTestData.fakeAirTableProjectResource(true);
     const fakeRequest = {
-      query: {
-        it: fakeProjectResource.it_key,
-        res: fakeProjectResource.res_id,
+      params: {
+        res_id: fakeProjectResource.res_id,
       },
       body: {
         firstName: faker.name.firstName(),
@@ -193,8 +226,7 @@ describe('Test the projects api', () => {
     expect(airTableHelperProjectsResourcesCacheTableSpy).toHaveBeenCalledTimes(1);
     expect(airTableHelperGetRecordByQuerySpy).toHaveBeenCalledTimes(1);
     expect(airTableHelperGetRecordByQuerySpy).toHaveBeenCalledWith(fakeTableName, {
-      it_key: fakeRequest.query.it,
-      res_id: fakeRequest.query.res,
+      res_id: fakeRequest.params.res_id,
     });
     expect(projectsHelperFormatProjectResourceFromAirTableSpy).not.toHaveBeenCalled();
     expect(slackServicePostMessageSpy).not.toHaveBeenCalled();
@@ -216,9 +248,8 @@ describe('Test the projects api', () => {
     const fakeTableName = faker.lorem.word();
     const fakeProjectResource = projectsTestData.fakeAirTableProjectResource(true);
     const fakeRequest = {
-      query: {
-        it: fakeProjectResource.it_key,
-        res: fakeProjectResource.res_id,
+      params: {
+        res_id: fakeProjectResource.res_id,
       },
       body: {},
     };
@@ -248,8 +279,7 @@ describe('Test the projects api', () => {
     expect(airTableHelperProjectsResourcesCacheTableSpy).toHaveBeenCalledTimes(1);
     expect(airTableHelperGetRecordByQuerySpy).toHaveBeenCalledTimes(1);
     expect(airTableHelperGetRecordByQuerySpy).toHaveBeenCalledWith(fakeTableName, {
-      it_key: fakeRequest.query.it,
-      res_id: fakeRequest.query.res,
+      res_id: fakeRequest.params.res_id,
     });
     expect(projectsHelperFormatProjectResourceFromAirTableSpy).toHaveBeenCalledTimes(1);
     expect(slackServicePostMessageSpy).not.toHaveBeenCalled();
@@ -271,9 +301,8 @@ describe('Test the projects api', () => {
     const fakeTableName = faker.lorem.word();
     const fakeProjectResource = projectsTestData.fakeAirTableProjectResource(true);
     const fakeRequest = {
-      query: {
-        it: fakeProjectResource.it_key,
-        res: fakeProjectResource.res_id,
+      params: {
+        res_id: fakeProjectResource.res_id,
       },
       body: {
         firstName: faker.name.firstName(),
@@ -311,8 +340,7 @@ describe('Test the projects api', () => {
     expect(airTableHelperProjectsResourcesCacheTableSpy).toHaveBeenCalledTimes(1);
     expect(airTableHelperGetRecordByQuerySpy).toHaveBeenCalledTimes(1);
     expect(airTableHelperGetRecordByQuerySpy).toHaveBeenCalledWith(fakeTableName, {
-      it_key: fakeRequest.query.it,
-      res_id: fakeRequest.query.res,
+      res_id: fakeRequest.params.res_id,
     });
     expect(projectsHelperFormatProjectResourceFromAirTableSpy).toHaveBeenCalledTimes(1);
     expect(slackServicePostMessageSpy).toHaveBeenCalledTimes(1);
