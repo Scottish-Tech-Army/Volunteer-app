@@ -7,7 +7,7 @@ import TopOfApp from '@/Components/TopOfApp'
 import EventOptions from '@/Components/Event/EventOptions'
 import EventReturnedList from '@/Components/Event/EventReturnedList'
 import EventSearch from '@/Components/Event/EventSearch'
-import EventSearchUpcomingQuickSearch from '@/Components/Event/EventSearchUpcomingQuickSearch'
+import EventSearchUpcomingQuickSearch from '@/Components/Event/EventSearchQuickSearchUpcoming'
 import { EventsRange } from '@/Services/modules/events'
 import { SafeAreaView, Text } from 'react-native'
 import { setEvents } from '@/Store/Events'
@@ -48,10 +48,8 @@ const EventsContainer = (props: {
     }
   }
 }) => {
-  const [
-    fetchAllUpcomingEvents,
-    { data: allUpcomingEvents },
-  ] = useLazyFetchAllUpcomingEventsQuery()
+  const [fetchAllUpcomingEvents, { data: allUpcomingEvents }] =
+    useLazyFetchAllUpcomingEventsQuery()
   const dispatch = useDispatch()
   const [eventsSearch, setEventsSearch] = useState<
     EventSearchInterface | undefined
@@ -96,10 +94,10 @@ const EventsContainer = (props: {
             without having to go back to the search screen */}
         {selectedOption === EventsRange.Upcoming &&
           eventsSearch?.range === EventsRange.Upcoming &&
-          eventsSearch?.quickSearchChoice && (
+          eventsSearch?.quickSearchUpcomingChoice && (
             <SearchResultsContainer>
               <EventSearchUpcomingQuickSearch
-                selectedButton={eventsSearch?.quickSearchChoice}
+                selectedButton={eventsSearch?.quickSearchUpcomingChoice}
               />
             </SearchResultsContainer>
           )}
@@ -109,7 +107,7 @@ const EventsContainer = (props: {
         {selectedOption === EventsRange.Upcoming &&
           eventsSearch?.range === EventsRange.Upcoming &&
           eventsSearch.type === 'date' &&
-          !eventsSearch?.quickSearchChoice && (
+          !eventsSearch?.quickSearchUpcomingChoice && (
             <SearchResultsContainer>
               <SearchResultsLabel>
                 Results for {eventsSearch.description}

@@ -8,7 +8,7 @@ import {
   ProjectDetailContainer,
   ProjectRegisterInterestContainer,
   ProjectSearchResultsContainer,
-  SearchContainer,
+  ProjectSearchContainer,
   EventsContainer,
   EventSearchContainer,
   WelcomeContainer,
@@ -16,7 +16,6 @@ import {
 import { useTheme } from '@/Hooks'
 import MainNavigator from './Main'
 import { navigationRef } from './utils'
-
 
 const Stack = createStackNavigator()
 
@@ -63,7 +62,7 @@ const ApplicationNavigator = () => {
           />
           <Stack.Screen
             name="Search"
-            component={SearchContainer}
+            component={ProjectSearchContainer}
             options={{
               headerTitleAlign: 'center',
               headerBackTitleVisible: false,
@@ -94,13 +93,12 @@ const ApplicationNavigator = () => {
               headerBackTitleVisible: false,
               title: 'Event Search',
             }}
-            />
-          <Stack.Screen
-          name="Welcome"
-          component={WelcomeContainer}
-          options={{headerShown:false}}
           />
-          
+          <Stack.Screen
+            name="Welcome"
+            component={WelcomeContainer}
+            options={{ headerShown: false }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaView>
