@@ -4,7 +4,7 @@ const slice = createSlice({
   name: 'welcome',
   initialState: { welcome: null, show: null } as WelcomeState,
   reducers: {
-    changeWelcome: (state, { payload: { theme: welcome, darkMode: show } }: ThemePayload) => {
+    changeWelcome: (state, { payload: { welcome: welcome, show: show } }: WelcomePayload) => {
       if (typeof welcome !== 'undefined') {
         state.welcome = welcome
       }
