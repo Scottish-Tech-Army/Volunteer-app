@@ -266,7 +266,7 @@
         }
       }
     },
-    "/projects/{:res_id}": {
+    "/projects/single?res={:res_id}&it={:it_key}": {
       "get": {
         "description": "Returns a single project resource, selected by its resource ID and in-triage key",
         "operationId": "get_project",
@@ -301,7 +301,7 @@
         }
       }
     },
-    "/projects/{:res_id}/register-interest": {
+    "/projects/single/register-interest?res={:res_id}&it={:it_key}": {
       "post": {
         "description": "User registers interest in a particular project",
         "operationId": "post_project_register_interest",
@@ -393,13 +393,13 @@
         "items": {
           "type": "object",
           "properties": {
-            "res_id": {
-              "type": "string",
-              "description": "Unique identifier from Jira for the resource (aka the 'project' in the app) -- this is the unique ID to use to identify a record"
-            },
             "it_key": {
               "type": "string",
-              "description": "Identifier from Jira for the wider task (e.g. a website build), which may have more than one resource (role)"
+              "description": "Unique identifier for the project"
+            },
+            "res_id": {
+              "type": "string",
+              "description": "Unique identifier for the resource"
             },
             "name": {
               "type": "string",

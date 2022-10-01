@@ -15,7 +15,7 @@ export const { useLazyFetchAllQuery, useLazyRegisterInterestQuery } =
 
 export interface Project {
   it_key: string
-  res_id: string // this is the unique ID for a project
+  res_id: string
   name: string
   type: string
   client: string
