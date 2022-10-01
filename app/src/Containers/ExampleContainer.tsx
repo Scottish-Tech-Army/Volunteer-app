@@ -14,6 +14,7 @@ import { Brand } from '@/Components'
 import { useTheme } from '@/Hooks'
 import { useLazyFetchOneQuery } from '@/Services/modules/users'
 import { changeTheme, ThemeState } from '@/Store/Theme'
+import { changeWelcome, WelcomeState } from '@/Store/Welcome'
 import { version } from '../../package.json'
 import styled from 'styled-components/native'
 
@@ -39,6 +40,12 @@ const ExampleContainer = () => {
   const onChangeTheme = ({ theme, darkMode }: Partial<ThemeState>) => {
     dispatch(changeTheme({ theme, darkMode }))
   }
+
+  // Handle show splash screen event
+  const onChangeSplash = ({ welcome, show }: Partial<WelcomeState>) => {
+    dispatch(changeWelcome({ welcome, show }))
+  }
+
   return (
     <ScrollView
       style={Layout.fill}
@@ -102,6 +109,22 @@ const ExampleContainer = () => {
         onPress={() => onChangeTheme({ darkMode: false })}
       >
         <Text style={Fonts.textRegular}>Light</Text>
+      </TouchableOpacity>
+
+      <Text style={[Fonts.textRegular, Gutters.smallBMargin]}>
+        Welcome splash screen :
+      </Text>
+      <TouchableOpacity
+        style={[Common.button.outlineRounded, Gutters.regularBMargin]}
+        onPress={() => onChangeSplash({ show: true})}
+      >
+        <Text style={Fonts.textRegular}>Show</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={[Common.button.outlineRounded, Gutters.regularBMargin]}
+        onPress={() => onChangeSplash({ show: false})}
+      >
+        <Text style={Fonts.textRegular}>Do not show</Text>
       </TouchableOpacity>
 
       <Text style={Fonts.textSmall}>Version {version}</Text>

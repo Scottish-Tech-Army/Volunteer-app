@@ -17,6 +17,7 @@ import { api } from '@/Services/api'
 import * as modules from '@/Services/modules'
 import events from './Events'
 import theme from './Theme'
+import welcome from './Welcome'
 
 const reducers = combineReducers({
   events,
@@ -33,7 +34,7 @@ const reducers = combineReducers({
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['events', 'theme'],
+  whitelist: ['events', 'theme', 'welcome'],
 }
 
 const persistedReducer = persistReducer(persistConfig, reducers)

@@ -12,7 +12,7 @@ const StartupContainer = () => {
   const { t } = useTranslation()
 
   // Todo: Hardcoded - replace from reducer
-  const showWelcome = false
+  const showWelcome = true
 
   const init = async () => {
     await new Promise(resolve =>
@@ -21,6 +21,7 @@ const StartupContainer = () => {
       }, 2000),
     )
     await setDefaultTheme({ theme: 'default', darkMode: null })
+    
     // Don't show the welcome screen if it's deselcted in Example.
     showWelcome ? navigateAndSimpleReset('Welcome') : navigateAndSimpleReset('Main')
   }
