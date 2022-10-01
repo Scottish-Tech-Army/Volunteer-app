@@ -1,116 +1,331 @@
-const airTable = require('../helpers/airTable');
-const dayjs = require('dayjs');
-const express = require('express');
-const slackService = require('../services/slack');
-const projectsHelper = require('../helpers/projects');
-const router = express.Router();
-const routesHelper = require('../helpers/routes');
+const airTable = require('../../helpers/airTable');
+const app = require('../../app');
+const axios = require('axios');
+const { faker } = require('@faker-js/faker');
+const nock = require('nock');
+const { projectRegisterInterestHandler } = require('../../routes/projects');
+const projectsHelper = require('../../helpers/projects');
+const projectsTestData = require('../../__test-data__/projects');
+const request = require('supertest');
+const slackService = require('../../services/slack');
 
-router.get('/', async (req, res) => {
-  const projectsResources = await airTable.getAllRecords(airTable.projectsResourcesCacheTable());
+axios.defaults.adapter = require('axios/lib/adapters/http');
 
-  if (projectsResources.error) {
-    routesHelper.sendError(
-      res,
-      `Database connection error: ${airTable.connectionErrorMessage()}`,
-    );
-
-    return;
-  }
-
-  const projectsResourcesFormatted = projectsResources.map((projectResource) =>
-    projectsHelper.formatProjectResourceFromAirTable(projectResource),
-  );
-
-  res.status(200).send(projectsResourcesFormatted);
-});
-
-router.get('/single', async (req, res) => {
-  const projectItKey = req.query.it;
-  const resourceId = req.query.res;
-
-  const projectResource = await airTable.getRecordByQuery(airTable.projectsResourcesCacheTable(), {
-    it_key: projectItKey,
-    res_id: resourceId,
+describe('Test the projects api', () => {
+  beforeEach(() => {
+    jest.resetModules();
   });
 
-  if (!projectResource || projectResource.error) {
-    routesHelper.sendError(
-      res,
-      `Could not find project matching it_key ${projectItKey} and/or res_id ${resourceId} - please check these details are correct.  Please check database details are correct in the API .env file.`,
+  test('GET all method should respond successfully', async () => {
+    // Set up fake test data
+    const fakeProjectResources = projectsTestData.fakeProjectResourceObjects(
+      faker.datatype.number({ min: 30, max: 50 }),
     );
 
-    return;
-  }
+    // Mock dependencies
+    const requestMock = nock('http://localhost:3000').get('/projects').reply(200, fakeProjectResources);
 
-  const projectResourceFormatted = projectsHelper.formatProjectResourceFromAirTable(projectResource);
+    // Run test
+    const response = await axios.get('http://localhost:3000/projects');
+    requestMock.done();
 
-  res.status(200).send(projectResourceFormatted);
-});
-
-/*
- * TODO: When authentication has been set up, we need to:
- *  - Protect this API route, by only allowing requests from authenticated users (otherwise anyone who knows this route exists can post messages to the inital triage Slack channel)
- *  - Get the user's name and email from their user record instead
- *  - Save in a database that this user has expressed interest in this project
- *
- */
-router.post('/single/register-interest', async (req, res) => await projectRegisterInterestHandler(req, res));
-
-const projectRegisterInterestHandler = async (req, res) => {
-  const projectItKey = req.query.it;
-  const resourceId = req.query.res;
-
-  const projectResource = await airTable.getRecordByQuery(airTable.projectsResourcesCacheTable(), {
-    it_key: projectItKey,
-    res_id: resourceId,
+    expect(response.status).toBe(200);
+    expect(response.data).toEqual(fakeProjectResources);
   });
 
-  if (!projectResource || projectResource.error) {
-    routesHelper.sendError(
-      res,
-      `Could not find project matching it_key ${projectItKey} and/or res_id ${resourceId} - please check these details are correct.  Please check database details are correct in the API .env file.`,
+  test('GET single project by ID method should return Not Found', async () => {
+    const response = await request(app).get('/projects/1');
+    expect(response.statusCode).toBe(404);
+  });
+
+  test('GET a single project method should respond successfully', async () => {
+    // Set up fake test data
+    const fakeProjectResource = projectsTestData.fakeProjectResourceObject();
+
+    // Mock dependencies
+    const singleProjectsMock = nock('http://localhost:3000')
+      .get(`/projects/single?res=${fakeProjectResource.res_id}&it=${fakeProjectResource.it_key}`)
+      .reply(200, fakeProjectResource);
+
+    // Run test
+    const response = await axios.get(
+      `http://localhost:3000/projects/single?res=${fakeProjectResource.res_id}&it=${fakeProjectResource.it_key}`,
     );
 
-    return;
-  }
+    singleProjectsMock.done();
 
-  const projectResourceFormatted = projectsHelper.formatProjectResourceFromAirTable(projectResource);
+    expect(response.status).toBe(200);
+    expect(response.data.res_id).toBe(fakeProjectResource.res_id);
+    expect(response.data.it_key).toBe(fakeProjectResource.it_key);
+  });
 
-  const dataExpected = ['availableFrom', 'email', 'firstName', 'lastName', 'happyToMentor', 'lookingForBuddy'];
+  test('POST register interest in a single project method should respond successfully', async () => {
+    // Set up fake test data
+    const fakeProjectResource = projectsTestData.fakeProjectResourceObject();
+    const postData = {
+      firstName: faker.name.firstName(),
+      lastName: faker.name.lastName(),
+      email: faker.internet.email(),
+      happyToMentor: faker.datatype.boolean(),
+      lookingForBuddy: faker.datatype.boolean(),
+      availableFrom: '2022-12-31',
+    };
+    const responseData = {
+      data: 'success',
+    };
 
-  const dataNotProvided = [];
+    // Mock dependencies
+    const requestMock = nock('http://localhost:3000')
+      .post(`/projects/single/register-interest?res=${fakeProjectResource.res_id}&it=${fakeProjectResource.it_key}`)
+      .reply(200, responseData);
 
-  for (const dataItemExpected of dataExpected) {
-    if (!req.body?.hasOwnProperty(dataItemExpected)) dataNotProvided.push(dataItemExpected);
-  }
+    // Run test
+    const response = await axios.post(
+      `http://localhost:3000/projects/single/register-interest?res=${fakeProjectResource.res_id}&it=${fakeProjectResource.it_key}`,
+    );
+    requestMock.done();
 
-  if (dataNotProvided.length) {
-    routesHelper.sendError(res, `These properties were missing from your request: ${dataNotProvided.join(', ')}`);
+    expect(response.status).toBe(200);
+    expect(response.data).toEqual(responseData);
+  });
 
-    return;
-  }
+  test('projectRegisterInterestHandler calls AirTable and Slack and returns a response', async () => {
+    // Set up fake test data
+    const fakeTableName = faker.lorem.word();
+    const fakeProjectResource = projectsTestData.fakeAirTableProjectResource(true);
+    const fakeRequest = {
+      query: {
+        it: fakeProjectResource.it_key,
+        res: fakeProjectResource.res_id,
+      },
+      body: {
+        firstName: faker.name.firstName(),
+        lastName: faker.name.lastName(),
+        email: faker.internet.email(),
+        happyToMentor: faker.datatype.boolean(),
+        lookingForBuddy: faker.datatype.boolean(),
+        availableFrom: '2022-12-31',
+      },
+    };
 
-  const slackResponse = await slackService.postMessage(
-    process.env.SLACK_CHANNEL_VOLUNTEER_PROJECT_INTEREST,
-    `🎉🎉🎉 Hurray! We've got a new volunteer interested in *${projectResourceFormatted.name}* for *${
-      projectResourceFormatted.client
-    }*
+    // Mock dependencies
+    const airTableHelperProjectsResourcesCacheTableSpy = jest
+      .spyOn(airTable, 'projectsResourcesCacheTable')
+      .mockImplementation(() => fakeTableName);
+    const airTableHelperGetRecordByQuerySpy = jest
+      .spyOn(airTable, 'getRecordByQuery')
+      .mockImplementation(() => fakeProjectResource);
+    const projectsHelperFormatProjectResourceFromAirTableSpy = jest
+      .spyOn(projectsHelper, 'formatProjectResourceFromAirTable')
+      .mockImplementation(() => fakeProjectResource);
+    const slackServicePostMessageSpy = jest
+      .spyOn(slackService, 'postMessage')
+      .mockImplementation(() => ({ data: 'success' }));
+    const responseMock = {
+      send: jest.fn(() => responseMock),
+      status: jest.fn(() => responseMock),
+    };
 
-    ➡️ *Role*  ${projectResourceFormatted.role}
-    👤 *Volunteer*  ${req.body.firstName} ${req.body.lastName}
-    ✉️ *Email*  ${req.body.email}
-    🎓 *Happy to mentor?*  ${req.body.happyToMentor ? 'Yes' : 'No'}
-    🧑‍🤝‍🧑 *Looking for a buddy?*  ${req.body.lookingForBuddy ? 'Yes' : 'No'}
-    📅 *Available from*  ${dayjs(req.body.availableFrom, 'YYYY-MM-DD').format('D MMMM YYYY')}
+    // Run test
+    await projectRegisterInterestHandler(fakeRequest, responseMock);
 
-    Please get in touch with them to follow up`,
-  );
+    expect(airTableHelperProjectsResourcesCacheTableSpy).toHaveBeenCalledTimes(1);
+    expect(airTableHelperGetRecordByQuerySpy).toHaveBeenCalledTimes(1);
+    expect(airTableHelperGetRecordByQuerySpy).toHaveBeenCalledWith(fakeTableName, {
+      it_key: fakeRequest.query.it,
+      res_id: fakeRequest.query.res,
+    });
+    expect(projectsHelperFormatProjectResourceFromAirTableSpy).toHaveBeenCalledTimes(1);
+    expect(slackServicePostMessageSpy).toHaveBeenCalledTimes(1);
+    expect(responseMock.status).toHaveBeenCalledTimes(1);
+    expect(responseMock.status).toHaveBeenCalledWith(200);
+    expect(responseMock.send).toHaveBeenCalledTimes(1);
+    expect(responseMock.send).toHaveBeenCalledWith({ data: 'success' });
 
-  res.status(slackResponse.data ? 200 : 400).send(slackResponse);
-};
+    // Clean up
+    airTableHelperProjectsResourcesCacheTableSpy.mockRestore();
+    airTableHelperGetRecordByQuerySpy.mockRestore();
+    projectsHelperFormatProjectResourceFromAirTableSpy.mockRestore();
+    slackServicePostMessageSpy.mockRestore();
+  });
 
-module.exports = {
-  projectsApi: router,
-  projectRegisterInterestHandler,
-};
+  test('projectRegisterInterestHandler returns an error if project cannot be found', async () => {
+    // Set up fake test data
+    const fakeTableName = faker.lorem.word();
+    const fakeProjectResource = projectsTestData.fakeAirTableProjectResource(true);
+    const fakeRequest = {
+      query: {
+        it: fakeProjectResource.it_key,
+        res: fakeProjectResource.res_id,
+      },
+      body: {
+        firstName: faker.name.firstName(),
+        lastName: faker.name.lastName(),
+        email: faker.internet.email(),
+        happyToMentor: faker.datatype.boolean(),
+        lookingForBuddy: faker.datatype.boolean(),
+        availableFrom: '2022-12-31',
+      },
+    };
+
+    // Mock dependencies
+    const consoleErrorSpy = jest.spyOn(global.console, 'error').mockImplementation(() => {});
+    const airTableHelperProjectsResourcesCacheTableSpy = jest
+      .spyOn(airTable, 'projectsResourcesCacheTable')
+      .mockImplementation(() => fakeTableName);
+    const airTableHelperGetRecordByQuerySpy = jest
+      .spyOn(airTable, 'getRecordByQuery')
+      .mockImplementation(() => undefined);
+    const projectsHelperFormatProjectResourceFromAirTableSpy = jest
+      .spyOn(projectsHelper, 'formatProjectResourceFromAirTable')
+      .mockImplementation(() => fakeProjectResource);
+    const slackServicePostMessageSpy = jest
+      .spyOn(slackService, 'postMessage')
+      .mockImplementation(() => ({ data: 'success' }));
+    const responseMock = {
+      send: jest.fn(() => responseMock),
+      status: jest.fn(() => responseMock),
+    };
+
+    // Run test
+    await projectRegisterInterestHandler(fakeRequest, responseMock);
+
+    expect(airTableHelperProjectsResourcesCacheTableSpy).toHaveBeenCalledTimes(1);
+    expect(airTableHelperGetRecordByQuerySpy).toHaveBeenCalledTimes(1);
+    expect(airTableHelperGetRecordByQuerySpy).toHaveBeenCalledWith(fakeTableName, {
+      it_key: fakeRequest.query.it,
+      res_id: fakeRequest.query.res,
+    });
+    expect(projectsHelperFormatProjectResourceFromAirTableSpy).not.toHaveBeenCalled();
+    expect(slackServicePostMessageSpy).not.toHaveBeenCalled();
+    expect(responseMock.status).toHaveBeenCalledTimes(1);
+    expect(responseMock.status).toHaveBeenCalledWith(400);
+    expect(responseMock.send).toHaveBeenCalledTimes(1);
+    expect(responseMock.send).not.toHaveBeenCalledWith({ data: 'success' });
+
+    // Clean up
+    consoleErrorSpy.mockRestore();
+    airTableHelperProjectsResourcesCacheTableSpy.mockRestore();
+    airTableHelperGetRecordByQuerySpy.mockRestore();
+    projectsHelperFormatProjectResourceFromAirTableSpy.mockRestore();
+    slackServicePostMessageSpy.mockRestore();
+  });
+
+  test('projectRegisterInterestHandler returns an error if data is missing from the request', async () => {
+    // Set up fake test data
+    const fakeTableName = faker.lorem.word();
+    const fakeProjectResource = projectsTestData.fakeAirTableProjectResource(true);
+    const fakeRequest = {
+      query: {
+        it: fakeProjectResource.it_key,
+        res: fakeProjectResource.res_id,
+      },
+      body: {},
+    };
+
+    // Mock dependencies
+    const consoleErrorSpy = jest.spyOn(global.console, 'error').mockImplementation(() => {});
+    const airTableHelperProjectsResourcesCacheTableSpy = jest
+      .spyOn(airTable, 'projectsResourcesCacheTable')
+      .mockImplementation(() => fakeTableName);
+    const airTableHelperGetRecordByQuerySpy = jest
+      .spyOn(airTable, 'getRecordByQuery')
+      .mockImplementation(() => fakeProjectResource);
+    const projectsHelperFormatProjectResourceFromAirTableSpy = jest
+      .spyOn(projectsHelper, 'formatProjectResourceFromAirTable')
+      .mockImplementation(() => fakeProjectResource);
+    const slackServicePostMessageSpy = jest
+      .spyOn(slackService, 'postMessage')
+      .mockImplementation(() => ({ data: 'success' }));
+    const responseMock = {
+      send: jest.fn(() => responseMock),
+      status: jest.fn(() => responseMock),
+    };
+
+    // Run test
+    await projectRegisterInterestHandler(fakeRequest, responseMock);
+
+    expect(airTableHelperProjectsResourcesCacheTableSpy).toHaveBeenCalledTimes(1);
+    expect(airTableHelperGetRecordByQuerySpy).toHaveBeenCalledTimes(1);
+    expect(airTableHelperGetRecordByQuerySpy).toHaveBeenCalledWith(fakeTableName, {
+      it_key: fakeRequest.query.it,
+      res_id: fakeRequest.query.res,
+    });
+    expect(projectsHelperFormatProjectResourceFromAirTableSpy).toHaveBeenCalledTimes(1);
+    expect(slackServicePostMessageSpy).not.toHaveBeenCalled();
+    expect(responseMock.status).toHaveBeenCalledTimes(1);
+    expect(responseMock.status).toHaveBeenCalledWith(400);
+    expect(responseMock.send).toHaveBeenCalledTimes(1);
+    expect(responseMock.send).not.toHaveBeenCalledWith({ data: 'success' });
+
+    // Clean up
+    consoleErrorSpy.mockRestore();
+    airTableHelperProjectsResourcesCacheTableSpy.mockRestore();
+    airTableHelperGetRecordByQuerySpy.mockRestore();
+    projectsHelperFormatProjectResourceFromAirTableSpy.mockRestore();
+    slackServicePostMessageSpy.mockRestore();
+  });
+
+  test('projectRegisterInterestHandler returns an error if Slack service returns an error', async () => {
+    // Set up fake test data
+    const fakeTableName = faker.lorem.word();
+    const fakeProjectResource = projectsTestData.fakeAirTableProjectResource(true);
+    const fakeRequest = {
+      query: {
+        it: fakeProjectResource.it_key,
+        res: fakeProjectResource.res_id,
+      },
+      body: {
+        firstName: faker.name.firstName(),
+        lastName: faker.name.lastName(),
+        email: faker.internet.email(),
+        happyToMentor: faker.datatype.boolean(),
+        lookingForBuddy: faker.datatype.boolean(),
+        availableFrom: '2022-12-31',
+      },
+    };
+    const slackErrorResponse = { error: 'Some error message' };
+
+    // Mock dependencies
+    const consoleErrorSpy = jest.spyOn(global.console, 'error').mockImplementation(() => {});
+    const airTableHelperProjectsResourcesCacheTableSpy = jest
+      .spyOn(airTable, 'projectsResourcesCacheTable')
+      .mockImplementation(() => fakeTableName);
+    const airTableHelperGetRecordByQuerySpy = jest
+      .spyOn(airTable, 'getRecordByQuery')
+      .mockImplementation(() => fakeProjectResource);
+    const projectsHelperFormatProjectResourceFromAirTableSpy = jest
+      .spyOn(projectsHelper, 'formatProjectResourceFromAirTable')
+      .mockImplementation(() => fakeProjectResource);
+    const slackServicePostMessageSpy = jest
+      .spyOn(slackService, 'postMessage')
+      .mockImplementation(() => slackErrorResponse);
+    const responseMock = {
+      send: jest.fn(() => responseMock),
+      status: jest.fn(() => responseMock),
+    };
+
+    // Run test
+    await projectRegisterInterestHandler(fakeRequest, responseMock);
+
+    expect(airTableHelperProjectsResourcesCacheTableSpy).toHaveBeenCalledTimes(1);
+    expect(airTableHelperGetRecordByQuerySpy).toHaveBeenCalledTimes(1);
+    expect(airTableHelperGetRecordByQuerySpy).toHaveBeenCalledWith(fakeTableName, {
+      it_key: fakeRequest.query.it,
+      res_id: fakeRequest.query.res,
+    });
+    expect(projectsHelperFormatProjectResourceFromAirTableSpy).toHaveBeenCalledTimes(1);
+    expect(slackServicePostMessageSpy).toHaveBeenCalledTimes(1);
+    expect(responseMock.status).toHaveBeenCalledTimes(1);
+    expect(responseMock.status).toHaveBeenCalledWith(400);
+    expect(responseMock.send).toHaveBeenCalledTimes(1);
+    expect(responseMock.send).toHaveBeenCalledWith(slackErrorResponse);
+
+    // Clean up
+    consoleErrorSpy.mockRestore();
+    airTableHelperProjectsResourcesCacheTableSpy.mockRestore();
+    airTableHelperGetRecordByQuerySpy.mockRestore();
+    projectsHelperFormatProjectResourceFromAirTableSpy.mockRestore();
+    slackServicePostMessageSpy.mockRestore();
+  });
+});

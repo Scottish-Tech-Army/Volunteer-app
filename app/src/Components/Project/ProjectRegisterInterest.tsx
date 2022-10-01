@@ -130,6 +130,7 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
 
       registerInterest({
         project: {
+          it_key: project.it_key,
           res_id: project.res_id,
         },
         user: {
