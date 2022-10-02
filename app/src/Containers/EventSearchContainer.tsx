@@ -1,3 +1,5 @@
+// Events search screen container
+
 import React, { useState } from 'react'
 import dayjs from 'dayjs'
 import styled from 'styled-components/native'

@@ -1,3 +1,5 @@
+// Shows a list of events -- either all past/upcoming/my events, or events search results
+
 import React, { FC, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components/native'
@@ -105,8 +107,7 @@ const EventsContainer = (props: {
             </SearchResultsContainer>
           )}
 
-        {/* If the user has searched using the calendar date picker,
-            show some text indicating the dates they searched for */}
+        {/* If the user has searched, show some text indicating what they searched for */}
         {Boolean(eventsSearch?.description) && (
           <SearchResultsContainer>
             <SearchResultsLabel>

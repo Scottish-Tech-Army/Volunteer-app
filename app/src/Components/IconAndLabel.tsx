@@ -1,3 +1,5 @@
+// Displays a small icon (left) and a text label (to the right)
+
 import React, { FC } from 'react'
 import Feather from 'react-native-vector-icons/Feather'
 import styled from 'styled-components/native'

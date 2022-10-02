@@ -1,3 +1,5 @@
+// Projects search screen container
+
 import React, { useState, useEffect } from 'react'
 import Fuse from 'fuse.js' // fuzzy text search - see docs at https://fusejs.io
 import styled from 'styled-components/native'

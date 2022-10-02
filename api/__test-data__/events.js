@@ -1,3 +1,5 @@
+// Provides sample data for events tests
+
 const { faker } = require('@faker-js/faker');
 
 const eventTypes = ['Internal', 'External'];

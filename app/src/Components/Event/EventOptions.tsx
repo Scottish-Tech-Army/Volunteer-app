@@ -1,3 +1,5 @@
+// The past/upcoming/my events tabs shown at the top of the events list screen
+
 /* eslint-disable react-native/no-inline-styles */
 import React, { FC } from 'react'
 import styled from 'styled-components/native'
