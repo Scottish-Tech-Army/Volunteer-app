@@ -57,7 +57,7 @@ const EventsContainer = (props: {
   const [
     fetchAllPastEvents,
     { data: allPastEvents},
-  ] = useLazyFetchAllPastEventsQuery() // added to useLazyFetch re PastEvents - need to investigate more
+  ] = useLazyFetchAllPastEventsQuery()
 
   const dispatch = useDispatch()
   const [eventsSearch, setEventsSearch] = useState<
@@ -65,8 +65,7 @@ const EventsContainer = (props: {
   >()
   const [selectedOption, setSelectedOption] = useState<
     EventsRange | 'myEvents'
-    >(EventsRange.Upcoming) // (EventsRange.Upcoming)
-// Above fetchAllUpcomingEvents is set by default to allUpcomingEvents
+    >(EventsRange.Upcoming)
 
   // When the component is first created...
   useEffect(() => {
@@ -93,8 +92,9 @@ const EventsContainer = (props: {
     setEventsSearch(props.route.params?.search)
   }, [props.route.params])
 
-  // Bellow <EventOptions selected={EventsRange.Upcoming} /> changed to selected={selectedOption}
   const EventList: FC<EventProps> = ({ data }) => {
+    console.log('selectedOption', selectedOption);
+    
     return (
       <SafeArea>
         <TopOfApp />
@@ -128,7 +128,8 @@ const EventsContainer = (props: {
           )}
 
         <HorizontalLine />
-        <EventReturnedList data={data} />
+        <EventReturnedList data={data} eventsRange={selectedOption} />
+        
       </SafeArea>
     )
   }
@@ -147,18 +148,16 @@ const EventsContainer = (props: {
     } else if (!eventsSearch && allUpcomingEvents && allPastEvents && selectedOption === EventsRange.Past){
       setEventsToShow(allPastEvents as Events)
     }
-  } // Logic for deciding which event to render
+  }
 
-  if(eventsToShow){
-    if (allUpcomingEvents || eventsSearch) {
-      return (
-        <Theme>
-          <EventList data={eventsToShow} />
-        </Theme>
-      )
-    }
-    } else {
-      return (
+  if (eventsToShow) {
+    return (
+      <Theme>
+        <EventList data={eventsToShow} />
+      </Theme>
+    )
+  } else {
+    return (
       <SafeAreaView>
         <Text>Loading...</Text>
       </SafeAreaView>
@@ -166,4 +165,4 @@ const EventsContainer = (props: {
   }
 }
 
-export default EventsContainer;
+export default EventsContainer

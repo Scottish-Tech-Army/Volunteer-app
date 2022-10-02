@@ -3,7 +3,7 @@ import fetchAllEvents from './fetchAll'
 
 export enum EventsRange {
   Past = 'past',
-  Upcoming = 'upcoming',
+  Upcoming = 'upcoming'
 }
 
 export const eventsApi = api.injectEndpoints({

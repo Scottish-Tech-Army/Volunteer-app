@@ -60,3 +60,6 @@ buck-out/
 
 template/plugins/typescript/template/tsconfig.json
 .env
+
+.watchman-cookie*
+.vscode/

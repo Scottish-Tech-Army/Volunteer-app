@@ -27,18 +27,12 @@ const EventOptions: FC<EventOptionsProps> = ({ selected }) => {
   const handleSelectedOptionChange = (
     newSelectedOption: EventsRange | 'myEvents',
   ) => {
-    console.log(newSelectedOption);
-    
     navigate('Events', {
       screen: 'Events',
       selectedOption: newSelectedOption,
     })
   }
 
-  // const clickPastEvents = () => {
-  //   setSelectedOption('past')
-  //   console.log('Hello, past events here!')
-  // }
 
   return (
     <EventOptionsView>
