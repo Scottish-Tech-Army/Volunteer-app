@@ -2,9 +2,12 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const slice = createSlice({
   name: 'welcome',
-  initialState: { welcome: null, show: null } as WelcomeState,
+  initialState: { 
+    welcome: null, 
+    show: null
+  } as WelcomeState,
   reducers: {
-    changeWelcome: (state, { payload: { welcome: welcome, show: show } }: WelcomePayload) => {
+    changeWelcome: (state, { payload: { welcome, show } }: WelcomePayload) => {
       if (typeof welcome !== 'undefined') {
         state.welcome = welcome
       }

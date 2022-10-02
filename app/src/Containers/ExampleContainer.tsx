@@ -8,13 +8,13 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 import { Brand } from '@/Components'
 import { useTheme } from '@/Hooks'
 import { useLazyFetchOneQuery } from '@/Services/modules/users'
 import { changeTheme, ThemeState } from '@/Store/Theme'
-import { changeWelcome, WelcomeState } from '@/Store/Welcome'
+import { changeWelcome, toggle, WelcomeState } from '@/Store/Welcome'
 import { version } from '../../package.json'
 import styled from 'styled-components/native'
 
@@ -39,11 +39,12 @@ const ExampleContainer = () => {
 
   const onChangeTheme = ({ theme, darkMode }: Partial<ThemeState>) => {
     dispatch(changeTheme({ theme, darkMode }))
+    console.log(darkMode)
   }
 
-  // Handle show splash screen event
   const onChangeSplash = ({ welcome, show }: Partial<WelcomeState>) => {
     dispatch(changeWelcome({ welcome, show }))
+    console.log(show)
   }
 
   return (
@@ -116,13 +117,13 @@ const ExampleContainer = () => {
       </Text>
       <TouchableOpacity
         style={[Common.button.outlineRounded, Gutters.regularBMargin]}
-        onPress={() => onChangeSplash({ show: true})}
+        onPress={() => onChangeSplash({ show: true })}
       >
         <Text style={Fonts.textRegular}>Show</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={[Common.button.outlineRounded, Gutters.regularBMargin]}
-        onPress={() => onChangeSplash({ show: false})}
+        onPress={() => onChangeSplash({ show: false })}
       >
         <Text style={Fonts.textRegular}>Do not show</Text>
       </TouchableOpacity>

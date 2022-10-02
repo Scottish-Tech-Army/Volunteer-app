@@ -4,15 +4,14 @@ import { useTranslation } from 'react-i18next'
 import { useTheme } from '@/Hooks'
 import { Brand } from '@/Components'
 import { setDefaultTheme } from '@/Store/Theme'
+import { setDefaultWelcome, WelcomeState } from '@/Store/Welcome'
 import { navigateAndSimpleReset } from '@/Navigators/utils' 
+import { useSelector } from 'react-redux'
 
 const StartupContainer = () => {
   const { Layout, Gutters, Fonts } = useTheme()
 
   const { t } = useTranslation()
-
-  // Todo: Hardcoded - replace from reducer
-  const showWelcome = true
 
   const init = async () => {
     await new Promise(resolve =>
@@ -21,7 +20,13 @@ const StartupContainer = () => {
       }, 2000),
     )
     await setDefaultTheme({ theme: 'default', darkMode: null })
+    // await setDefaultWelcome({ show: true })
     
+    // Todo: Hardcoded - replace from reducer
+    const showWelcome = true
+    // const showWelcome = useSelector(
+    //   (state: { show: WelcomeState }) => state.show
+    // )
     // Don't show the welcome screen if it's deselcted in Example.
     showWelcome ? navigateAndSimpleReset('Welcome') : navigateAndSimpleReset('Main')
   }

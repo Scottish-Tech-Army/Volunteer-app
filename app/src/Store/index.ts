@@ -22,6 +22,7 @@ import welcome from './Welcome'
 const reducers = combineReducers({
   events,
   theme,
+  welcome,
   ...Object.values(modules).reduce(
     (acc, module) => ({
       ...acc,
