@@ -159,7 +159,7 @@ const EventSearchContainer = () => {
             <EventSearchQuickSearch
               choices={eventSeriesChoices}
               field={EventsSearchField.Series}
-              heading="Series"
+              heading="Event Series"
             />
           </SectionView>
         )}
