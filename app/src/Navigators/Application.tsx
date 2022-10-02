@@ -9,7 +9,6 @@ import {
   ProjectRegisterInterestContainer,
   ProjectSearchResultsContainer,
   ProjectSearchContainer,
-  EventsContainer,
   EventSearchContainer,
   WelcomeContainer,
 } from '@/Containers'
@@ -61,7 +60,7 @@ const ApplicationNavigator = () => {
             }}
           />
           <Stack.Screen
-            name="Search"
+            name="ProjectSearch"
             component={ProjectSearchContainer}
             options={{
               headerTitleAlign: 'center',

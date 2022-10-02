@@ -8,6 +8,7 @@ import { navigate } from '@/Navigators/utils'
 import {
   useLazyFetchAllQuery,
   Projects,
+  ProjectsSearchField,
   RolesRelated,
 } from '@/Services/modules/projects'
 import { searchByArray, fuzzySearchByArray } from '@/Utils/Search'
@@ -65,10 +66,10 @@ const QuickSearchTitle = styled.Text`
 `
 
 const ProjectSearchContainer = () => {
-  const [searchQuery, setSearchQuery] = useState('')
+  const [freeTextSearchQuery, setFreeTextSearchQuery] = useState('')
 
   const handleFreeTextChange = (input: React.SetStateAction<string>) => {
-    setSearchQuery(input)
+    setFreeTextSearchQuery(input)
   }
 
   // fetch all projects
@@ -106,13 +107,7 @@ const ProjectSearchContainer = () => {
   }
 
   const handleQuickSearchSubmit = (
-    searchField:
-      | 'client'
-      | 'description'
-      | 'name'
-      | 'role'
-      | 'skills'
-      | 'sector',
+    searchField: ProjectsSearchField,
     searchQueryChoice: string,
   ) => {
     let searchQueries = [] as string[]
@@ -144,10 +139,10 @@ const ProjectSearchContainer = () => {
 
   const handleFreeTextSubmit = () => {
     // Add free text to list of search queries
-    let searchQueries = [searchQuery]
+    const searchQueries = [freeTextSearchQuery]
 
     // If the free text query matches a group of job roles, add these to the list of search queries too
-    const relatedRoles = getRelatedRoles(searchQuery)
+    const relatedRoles = getRelatedRoles(freeTextSearchQuery)
     if (relatedRoles?.length) {
       searchQueries.push(...relatedRoles)
     }
@@ -170,7 +165,7 @@ const ProjectSearchContainer = () => {
     navigate('ProjectSearchResults', {
       results,
       searchField: undefined,
-      searchQuery,
+      freeTextSearchQuery,
     })
   }
 
@@ -187,7 +182,9 @@ const ProjectSearchContainer = () => {
         <SectionView>
           {Roles.map((role, index) => (
             <QuickSearchButton
-              onPress={() => handleQuickSearchSubmit('role', role)}
+              onPress={() =>
+                handleQuickSearchSubmit(ProjectsSearchField.Role, role)
+              }
               key={index}
             >
               <QuickSearchTitle>{role}</QuickSearchTitle>
@@ -198,7 +195,9 @@ const ProjectSearchContainer = () => {
         <SectionView>
           {Causes.map((cause, index) => (
             <QuickSearchButton
-              onPress={() => handleQuickSearchSubmit('sector', cause)}
+              onPress={() =>
+                handleQuickSearchSubmit(ProjectsSearchField.Sector, cause)
+              }
               key={index}
             >
               <QuickSearchTitle>{cause}</QuickSearchTitle>
@@ -209,7 +208,9 @@ const ProjectSearchContainer = () => {
         <SectionView>
           {TechStack.map((tech, index) => (
             <QuickSearchButton
-              onPress={() => handleQuickSearchSubmit('skills', tech)}
+              onPress={() =>
+                handleQuickSearchSubmit(ProjectsSearchField.Skills, tech)
+              }
               key={index}
             >
               <QuickSearchTitle>{tech}</QuickSearchTitle>

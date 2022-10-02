@@ -1,8 +1,8 @@
 // Functions used across more than one search screen (e.g. searching events, projects)
 
 import Fuse from 'fuse.js' // fuzzy text search - see docs at https://fusejs.io
-import { Event } from '@/Services/modules/events'
-import { Project } from '@/Services/modules/projects'
+import { Event, EventsSearchField } from '@/Services/modules/events'
+import { Project, ProjectsSearchField } from '@/Services/modules/projects'
 import { dedupeArrayOfObjects } from './Lists'
 
 interface GenericObject {
@@ -24,13 +24,12 @@ const convertToGenericObject = (
   return genericObject
 }
 
+// Search an array of objects for an exact match
 export const searchByArray = (
-  // We set the type this way here rather than using Events | Projects | undefined
+  // We set the type of arrayToSearch this way here rather than using Events | Projects | undefined
   // because otherwise TypeScript complains about the use of array filter below
   arrayToSearch: (Event | Project)[] | undefined,
-  searchField:
-    | ('client' | 'description' | 'name' | 'role' | 'skills' | 'sector') // project fields we may want to search
-    | ('description' | 'name' | 'series'), // event fields we may want to search
+  searchField: ProjectsSearchField | EventsSearchField,
   searchQueries: string[],
 ): (Event | Project)[] => {
   let results = [] as (Event | Project)[]
@@ -66,8 +65,9 @@ export const searchByArray = (
   return results
 }
 
+// Search an array of objects for an approximate (fuzzy) match
 export const fuzzySearchByArray = (
-  // We set the type this way here rather than using Events | Projects | undefined
+  // We set the type of arrayToSearch this way here rather than using Events | Projects | undefined
   // because otherwise TypeScript complains about the use of array in the first argument with new Fuse below
   arrayToSearch: (Event | Project)[] | undefined,
   searchFields: any[],

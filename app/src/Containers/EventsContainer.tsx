@@ -6,8 +6,9 @@ import { EventSearchInterface } from './EventSearchContainer'
 import TopOfApp from '@/Components/TopOfApp'
 import EventOptions from '@/Components/Event/EventOptions'
 import EventReturnedList from '@/Components/Event/EventReturnedList'
-import EventSearch from '@/Components/Event/EventSearch'
+import SearchIconButton from '@/Components/SearchIconButton'
 import EventSearchUpcomingQuickSearch from '@/Components/Event/EventSearchQuickSearchUpcoming'
+import { navigate } from '@/Navigators/utils'
 import { EventsRange } from '@/Services/modules/events'
 import { SafeAreaView, Text } from 'react-native'
 import { setEvents } from '@/Store/Events'
@@ -44,7 +45,7 @@ const EventsContainer = (props: {
   route: {
     params: {
       selectedOption?: EventsRange | 'myEvents'
-      search: EventSearchInterface
+      search?: EventSearchInterface
     }
   }
 }) => {
@@ -77,7 +78,9 @@ const EventsContainer = (props: {
   // whether to show events search results or all events in the list
   useEffect(() => {
     setSelectedOption(
-      props.route.params?.selectedOption ?? EventsRange.Upcoming,
+      props.route.params?.selectedOption ??
+        props.route.params?.search?.range ??
+        EventsRange.Upcoming,
     )
     setEventsSearch(props.route.params?.search)
   }, [props.route.params])
@@ -86,8 +89,8 @@ const EventsContainer = (props: {
     return (
       <SafeArea>
         <TopOfApp />
-        <EventSearch />
-        <EventOptions selected={EventsRange.Upcoming} />
+        <SearchIconButton onPress={() => navigate('EventSearch', '')} />
+        <EventOptions selected={selectedOption} />
 
         {/* If the user has done a quick search for upcoming events, show those
             quick search buttons so they can amend their quick search if they want,
@@ -104,16 +107,13 @@ const EventsContainer = (props: {
 
         {/* If the user has searched using the calendar date picker,
             show some text indicating the dates they searched for */}
-        {selectedOption === EventsRange.Upcoming &&
-          eventsSearch?.range === EventsRange.Upcoming &&
-          eventsSearch.type === 'date' &&
-          !eventsSearch?.quickSearchUpcomingChoice && (
-            <SearchResultsContainer>
-              <SearchResultsLabel>
-                Results for {eventsSearch.description}
-              </SearchResultsLabel>
-            </SearchResultsContainer>
-          )}
+        {Boolean(eventsSearch?.description) && (
+          <SearchResultsContainer>
+            <SearchResultsLabel>
+              Results for {eventsSearch?.description}
+            </SearchResultsLabel>
+          </SearchResultsContainer>
+        )}
 
         <HorizontalLine />
         <EventReturnedList data={data} />

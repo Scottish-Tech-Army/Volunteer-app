@@ -5,14 +5,13 @@ import styled from 'styled-components/native'
 import underDevelopmentAlert from '@/Utils/UnderDevelopmentAlert'
 import { navigate } from '@/Navigators/utils'
 
-
 const TopView = styled.View`
   color: ${props => props.theme.colors.staBlack};
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 `
-const TopRightView = styled.View` 
+const TopRightView = styled.View`
   display: flex;
   flex-direction: row;
 `
@@ -21,7 +20,7 @@ const SearchIcon = styled.TouchableOpacity`
   margin-top: 10px;
 `
 const BurgerMenu = styled.TouchableOpacity`
-  margin-right: 16px;  
+  margin-right: 16px;
   margin-top: 10px;
 `
 
@@ -30,7 +29,7 @@ const TopOfAppWithSearch = () => {
     <TopView>
       <Logo />
       <TopRightView>
-        <SearchIcon onPress={() => { navigate('Search', '') }}>
+        <SearchIcon onPress={() => navigate('ProjectSearch', '')}>
           <FontAwesome name="search" size={30} />
         </SearchIcon>
         <BurgerMenu onPress={underDevelopmentAlert}>

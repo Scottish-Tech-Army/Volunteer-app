@@ -5,7 +5,7 @@ import styled from 'styled-components/native'
 import { useSelector } from 'react-redux'
 import QuickSearchButton from '@/Components/Forms/QuickSearchButton'
 import Title from '@/Components/Title'
-import { filterEventsByDate } from '@/Containers/EventSearchContainer'
+import { EventsSearchField } from '@/Services/modules/events'
 import { navigate } from '@/Navigators/utils'
 import { EventsState } from '@/Store/Events'
 import { searchByArray } from '@/Utils/Search'
@@ -17,7 +17,7 @@ export interface EventQuickSearchChoice {
 
 interface EventSearchQuickSearchProps {
   choices: EventQuickSearchChoice[]
-  field: 'description' | 'name' | 'series'
+  field: EventsSearchField
   heading: string
 }
 
@@ -66,6 +66,7 @@ const EventSearchQuickSearchButtons: FC<EventSearchQuickSearchProps> = ({
         quickSearchChoice,
         range: 'all',
         results: eventsSearchResults,
+        description: `${heading.toLowerCase()} "${quickSearchChoice}"`,
       },
     })
   }

@@ -2,17 +2,6 @@ import { api } from '../../api'
 import fetchAll from './fetchAll'
 import registerInterest from './registerInterest'
 
-export const projectsApi = api.injectEndpoints({
-  endpoints: build => ({
-    fetchAll: fetchAll(build),
-    registerInterest: registerInterest(build),
-  }),
-  overrideExisting: true,
-})
-
-export const { useLazyFetchAllQuery, useLazyRegisterInterestQuery } =
-  projectsApi
-
 export interface Project {
   it_key: string
   res_id: string
@@ -31,6 +20,26 @@ export interface Project {
 }
 
 export type Projects = Project[]
+
+export enum ProjectsSearchField {
+  Client = 'client',
+  Description = 'description',
+  Name = 'name',
+  Role = 'role',
+  Sector = 'sector',
+  Skills = 'skills',
+}
+
+export const projectsApi = api.injectEndpoints({
+  endpoints: build => ({
+    fetchAll: fetchAll(build),
+    registerInterest: registerInterest(build),
+  }),
+  overrideExisting: true,
+})
+
+export const { useLazyFetchAllQuery, useLazyRegisterInterestQuery } =
+  projectsApi
 
 // Groups of related job roles
 // These are used e.g. for searching projects

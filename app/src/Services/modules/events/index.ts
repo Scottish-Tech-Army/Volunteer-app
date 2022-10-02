@@ -1,9 +1,36 @@
 import { api } from '../../api'
 import fetchAllEvents from './fetchAll'
 
+export interface Event {
+  id: string
+  name: string
+  status: string
+  date: string // in format YYYY-MM-DD
+  time: string // using 24-hour clock in format 19:00
+  duration: number // minutes
+  description: string // note: this may contain markdown code
+  type: string
+  series: string
+  related_initiative: string
+  video_webpage: string
+  video_file: string
+  video_thumbnail: string
+  images: string[]
+}
+
+export type Events = Event[]
+
 export enum EventsRange {
+  All = 'all',
   Past = 'past',
   Upcoming = 'upcoming',
+}
+
+export enum EventsSearchField {
+  Description = 'description',
+  Name = 'name',
+  RelatedInitiative = 'related_initiative',
+  Series = 'series',
 }
 
 export const eventsApi = api.injectEndpoints({
@@ -18,21 +45,3 @@ export const {
   useLazyFetchAllPastEventsQuery,
   useLazyFetchAllUpcomingEventsQuery,
 } = eventsApi
-
-export interface Event {
-  id: string
-  name: string
-  status: string
-  date: string // in format YYYY-MM-DD
-  time: string // using 24-hour clock in format 19:00
-  duration: number // minutes
-  description: string // note: this may contain markdown code
-  type: string
-  series: string
-  video_webpage: string
-  video_file: string
-  video_thumbnail: string
-  images: string[]
-}
-
-export type Events = Event[]
