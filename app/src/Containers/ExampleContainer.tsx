@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 import { Brand } from '@/Components'
 import { useTheme } from '@/Hooks'
@@ -36,6 +36,10 @@ const ExampleContainer = () => {
   useEffect(() => {
     fetchOne(userId)
   }, [fetchOne, userId])
+
+  const showWelcome = useSelector(
+    (state: { welcome: WelcomeState }) => state.welcome.show,
+  )
 
   const onChangeTheme = ({ theme, darkMode }: Partial<ThemeState>) => {
     dispatch(changeTheme({ theme, darkMode }))
@@ -113,18 +117,23 @@ const ExampleContainer = () => {
       <Text style={[Fonts.textRegular, Gutters.smallBMargin]}>
         Show welcome splash screen :
       </Text>
-      <TouchableOpacity
-        style={[Common.button.outlineRounded, Gutters.regularBMargin]}
-        onPress={() => onChangeSplash({ show: true })}
-      >
-        <Text style={Fonts.textRegular}>Yes</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={[Common.button.outlineRounded, Gutters.regularBMargin]}
-        onPress={() => onChangeSplash({ show: false })}
-      >
-        <Text style={Fonts.textRegular}>No</Text>
-      </TouchableOpacity>
+      
+      <View style={[Layout.rowHCenter, Layout.justifyContentBetween]}>
+        <TouchableOpacity
+          style={ (showWelcome) ? ([Common.button.rounded, Gutters.regularBMargin]) : 
+                                  ([Common.button.outlineRounded, Gutters.regularBMargin])}
+          onPress={() => onChangeSplash({ show: true })}
+        >
+          <Text style={Fonts.textRegular}>Yes</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={ (!showWelcome) ? ([Common.button.rounded, Gutters.regularBMargin]) : 
+                                  ([Common.button.outlineRounded, Gutters.regularBMargin])}
+          onPress={() => onChangeSplash({ show: false })}
+        >
+          <Text style={Fonts.textRegular}>No</Text>
+        </TouchableOpacity>
+      </View>
 
       <Text style={Fonts.textSmall}>Version {version}</Text>
 
