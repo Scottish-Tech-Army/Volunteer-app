@@ -13,6 +13,10 @@ const StartupContainer = () => {
 
   const { t } = useTranslation()
 
+  const showWelcome = useSelector(
+    (state: { welcome: WelcomeState }) => state.welcome.show,
+  )
+
   const init = async () => {
     await new Promise(resolve =>
       setTimeout(() => {
@@ -20,13 +24,8 @@ const StartupContainer = () => {
       }, 2000),
     )
     await setDefaultTheme({ theme: 'default', darkMode: null })
-    // await setDefaultWelcome({ show: true })
-    
-    // Todo: Hardcoded - replace from reducer
-    const showWelcome = true
-    // const showWelcome = useSelector(
-    //   (state: { show: WelcomeState }) => state.show
-    // )
+    await setDefaultWelcome({ welcome: 'default', show: true })
+      
     // Don't show the welcome screen if it's deselcted in Example.
     showWelcome ? navigateAndSimpleReset('Welcome') : navigateAndSimpleReset('Main')
   }
