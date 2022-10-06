@@ -138,13 +138,15 @@ const EventsContainer = (props: {
 
   useEffect (() => {
     eventToShow()
-  }, [allUpcomingEvents, allPastEvents, eventsSearch, props.route.params])
+  }, [allUpcomingEvents, [props.route.params]])
 
   const eventToShow = () => {
-    if(eventsSearch){ 
+    if (eventsSearch){ 
       setEventsToShow(eventsSearch.results)
-    } else if (!eventsSearch && allUpcomingEvents && selectedOption === EventsRange.Upcoming){
+    } else if (allUpcomingEvents && selectedOption === EventsRange.Upcoming){
       setEventsToShow(allUpcomingEvents)
+    } else if (allPastEvents && selectedOption === EventsRange.Past) {
+      setEventsToShow(allPastEvents)
     }
   }
 
