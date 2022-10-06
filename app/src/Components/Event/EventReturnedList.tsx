@@ -18,7 +18,7 @@ const NoneFound = styled.Text`
   font-size: 18px;
   margin: 15px 15px 0px 15px;
 `
-//EventsRange added to include past and upcoming Events
+
 const EventReturnedList: FC<EventReturnedListProps> = ({ data, eventsRange }) => {
   return data.length ? (
     <FlatList

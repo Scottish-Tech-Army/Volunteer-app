@@ -93,7 +93,7 @@ const EventsContainer = (props: {
   }, [props.route.params])
 
   const EventList: FC<EventProps> = ({ data }) => {
-    console.log('selectedOption', selectedOption);
+
     
     return (
       <SafeArea>
@@ -134,19 +134,17 @@ const EventsContainer = (props: {
     )
   }
 
-  const [eventsToShow, setEventsToShow] = useState<Events>() // holding state for which event are being rendered
+  const [eventsToShow, setEventsToShow] = useState<Events>() 
 
   useEffect (() => {
     eventToShow()
-  }, [allUpcomingEvents, [props.route.params]])
+  }, [allUpcomingEvents, allPastEvents, eventsSearch, props.route.params])
 
   const eventToShow = () => {
     if(eventsSearch){ 
       setEventsToShow(eventsSearch.results)
     } else if (!eventsSearch && allUpcomingEvents && selectedOption === EventsRange.Upcoming){
-      setEventsToShow(allUpcomingEvents as Events)
-    } else if (!eventsSearch && allUpcomingEvents && allPastEvents && selectedOption === EventsRange.Past){
-      setEventsToShow(allPastEvents as Events)
+      setEventsToShow(allUpcomingEvents)
     }
   }
 

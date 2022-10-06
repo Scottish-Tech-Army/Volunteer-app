@@ -12,7 +12,7 @@ import { Event } from '@/Services/modules/events'
 
 interface EventSummaryProps {
   event: Event
-  hideDateTime?: boolean // it can be a Boolean or Not
+  hideDateTime?: boolean
 }
 
 const EventInfo = styled.View`
@@ -29,7 +29,7 @@ const EventInfo = styled.View`
 const RightColumn = styled.View`
   display: flex;
 `
-// full event and hideDateTime bellow
+
 const EventSummary: FC<EventSummaryProps> = ({ event, hideDateTime }) => (
   <EventInfo key={event.id}>
     <ImageThumbnail
@@ -55,6 +55,5 @@ const EventSummary: FC<EventSummaryProps> = ({ event, hideDateTime }) => (
     </RightColumn>
   </EventInfo>
 )
-// Above !hideDateTime with date and time to hide ('!' is a non-Null assertion)
 
 export default EventSummary
