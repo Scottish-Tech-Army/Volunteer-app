@@ -1,13 +1,12 @@
 import React, {useState, useRef} from 'react'
 import { useTheme } from '@/Hooks'
-import {Dimensions, I18nManager, Platform, SafeAreaView, StyleSheet, View} from 'react-native'
+import {Dimensions, I18nManager, Platform, SafeAreaView} from 'react-native'
 import StaExtraLongLogo from '@/Components/StaExtraLongLogo'
 import WelcomeButton from '@/Components/Welcome/WelcomeButton'
 import WelcomeSlider from '@/Components/Welcome/WelcomeSlider'
 import { WelcomeSlides } from '@/Components/Welcome/WelcomeSlides'
 import WelcomePaginationDots from '@/Components/Welcome/WelcomePaginationDots'
 import styled from 'styled-components/native'
-import { Switch } from 'react-native-gesture-handler'
 
 const windowWidth : number = Dimensions.get('window').width;
 const isAndroidRTL = I18nManager.isRTL && Platform.OS === 'android';
@@ -24,12 +23,6 @@ const WelcomeContainer = () => {
     const slideRef = useRef(null)
     const rtlSafeIndex = (i:number) => (isAndroidRTL ? slides.length - 1 - i : i);
     const slides = WelcomeSlides()
-
-    // Event handler for the switch
-    const [isEnabled, setIsEnabled] = useState(false);
-    const toggleSwitch = () => setIsEnabled(
-        previousState => !previousState
-    );
 
     return(
         <SafeAreaView style={[Layout.fill, Layout.colVCenter,]}>
