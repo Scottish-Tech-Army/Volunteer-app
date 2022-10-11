@@ -15,6 +15,7 @@ import Theme from '@/Theme/OldTheme'
 import {
   Events,
   useLazyFetchAllUpcomingEventsQuery,
+  useLazyFetchAllPastEventsQuery
 } from '@/Services/modules/events'
 
 interface EventProps {
@@ -52,18 +53,25 @@ const EventsContainer = (props: {
     fetchAllUpcomingEvents,
     { data: allUpcomingEvents },
   ] = useLazyFetchAllUpcomingEventsQuery()
+
+  const [
+    fetchAllPastEvents,
+    { data: allPastEvents},
+  ] = useLazyFetchAllPastEventsQuery()
+
   const dispatch = useDispatch()
   const [eventsSearch, setEventsSearch] = useState<
     EventSearchInterface | undefined
   >()
   const [selectedOption, setSelectedOption] = useState<
     EventsRange | 'myEvents'
-  >(EventsRange.Upcoming)
+    >(EventsRange.Upcoming)
 
   // When the component is first created...
   useEffect(() => {
     // Get all upcoming events from the API
     fetchAllUpcomingEvents('')
+    fetchAllPastEvents('')
   }, [])
 
   // When allUpcomingEvents is set...
@@ -85,11 +93,13 @@ const EventsContainer = (props: {
   }, [props.route.params])
 
   const EventList: FC<EventProps> = ({ data }) => {
+
+    
     return (
       <SafeArea>
         <TopOfApp />
         <EventSearch />
-        <EventOptions selected={EventsRange.Upcoming} />
+        <EventOptions selected={selectedOption} /> 
 
         {/* If the user has done a quick search for upcoming events, show those
             quick search buttons so they can amend their quick search if they want,
@@ -118,16 +128,29 @@ const EventsContainer = (props: {
           )}
 
         <HorizontalLine />
-        <EventReturnedList data={data} />
+        <EventReturnedList data={data} eventsRange={selectedOption} />
+        
       </SafeArea>
     )
   }
 
-  if (allUpcomingEvents || eventsSearch) {
-    const eventsToShow = eventsSearch
-      ? eventsSearch.results
-      : (allUpcomingEvents as Events)
+  const [eventsToShow, setEventsToShow] = useState<Events>() 
 
+  useEffect (() => {
+    eventToShow()
+  }, [eventsSearch, allUpcomingEvents, allPastEvents, selectedOption]) 
+
+  const eventToShow = () => {
+    if (eventsSearch){ 
+      setEventsToShow(eventsSearch.results)
+    } else if (allUpcomingEvents && selectedOption === EventsRange.Upcoming){
+      setEventsToShow(allUpcomingEvents)
+    } else if (allPastEvents && selectedOption === EventsRange.Past) {
+      setEventsToShow(allPastEvents)
+    }
+  }
+
+  if (eventsToShow) {
     return (
       <Theme>
         <EventList data={eventsToShow} />
