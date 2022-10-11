@@ -138,7 +138,7 @@ const EventsContainer = (props: {
 
   useEffect (() => {
     eventToShow()
-  }, [allUpcomingEvents, [props.route.params]])
+  }, [eventsSearch, allUpcomingEvents, allPastEvents, selectedOption]) 
 
   const eventToShow = () => {
     if (eventsSearch){ 
