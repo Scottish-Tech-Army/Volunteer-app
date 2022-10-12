@@ -81,7 +81,6 @@ const EventsContainer = (props: {
     }
   }, [allUpcomingEvents])
 
-  // When allUpcomingEvents is set...
   useEffect(() => {
     // Store events in the Redux store so they can be used by other components too e.g. EventSearchContainer
     if (allPastEvents) {

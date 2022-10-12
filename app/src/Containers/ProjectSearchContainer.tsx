@@ -167,7 +167,7 @@ const ProjectSearchContainer = () => {
     navigate('ProjectSearchResults', {
       results,
       searchField: undefined,
-      freeTextSearchQuery,
+      searchQuery: freeTextSearchQuery,
     })
   }
 
