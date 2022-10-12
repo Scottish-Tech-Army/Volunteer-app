@@ -1,11 +1,12 @@
 import React, { FC, useEffect } from 'react'
+import { Text, SafeAreaView } from 'react-native'
 import styled from 'styled-components/native'
 import SafeArea from '@/Components/SafeArea'
 import TopOfApp from '@/Components/TopOfApp'
 import ProjectOptions from '@/Components/Project/ProjectOptions'
-import ProjectSearch from '@/Components/Project/ProjectSearch'
 import ProjectReturnedList from '@/Components/Project/ProjectReturnedList'
-import { Text, SafeAreaView } from 'react-native'
+import SearchIconButton from '@/Components/SearchIconButton'
+import { navigate } from '@/Navigators/utils'
 import Theme from '@/Theme/OldTheme'
 import { Projects, useLazyFetchAllQuery } from '@/Services/modules/projects'
 
@@ -22,7 +23,7 @@ const ProjectList: FC<ProjectProps> = ({ data }) => {
   return (
     <SafeArea>
       <TopOfApp />
-      <ProjectSearch />
+      <SearchIconButton onPress={() => navigate('ProjectSearch', '')} />
       <ProjectOptions />
       <HorizontalLine />
       <ProjectReturnedList data={data} mode="fullList" />
@@ -31,7 +32,6 @@ const ProjectList: FC<ProjectProps> = ({ data }) => {
 }
 
 const HomeContainer = () => {
-  
   const [fetchAll, { data: projects }] = useLazyFetchAllQuery()
 
   useEffect(() => {

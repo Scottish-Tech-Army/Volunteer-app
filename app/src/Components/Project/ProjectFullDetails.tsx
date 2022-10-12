@@ -10,7 +10,6 @@ import Feather from 'react-native-vector-icons/Feather'
 import { Project } from '@/Services/modules/projects'
 import { ScrollView } from 'react-native-gesture-handler'
 
-
 interface ProjectFullDetailsProps {
   project: Project
 }
@@ -66,14 +65,14 @@ const ProjectRelatedRoles = styled.Text`
 `
 const ProjectFullDetails: FC<ProjectFullDetailsProps> = ({ project }) => {
   return (
-      <ScrollView>
-        <ProjectFullDetailsView>
-          <ProjectHeading title={project.name} />
-          <ProjectSubTitle>{project.client}</ProjectSubTitle>
-          <ProjectRole>{project.role}</ProjectRole>
-          <ProjectInterestButton project={project} />
-          <ProjectDescription>{project.description}</ProjectDescription>
-          <ProjectDetailsBlock>
+    <ScrollView>
+      <ProjectFullDetailsView>
+        <ProjectHeading screen="details" title={project.name} />
+        <ProjectSubTitle>{project.client}</ProjectSubTitle>
+        <ProjectRole>{project.role}</ProjectRole>
+        <ProjectInterestButton project={project} />
+        <ProjectDescription>{project.description}</ProjectDescription>
+        <ProjectDetailsBlock>
           <ProjectSkills skills={project.skills} />
           <ProjectRequirements
             icon={<Feather name="clock" size={16} />}
@@ -87,20 +86,20 @@ const ProjectFullDetails: FC<ProjectFullDetailsProps> = ({ project }) => {
                 : 'Not suitable for buddying'
             }
           />
-          </ProjectDetailsBlock>
-          <ProjectAttachments
-            icon={<Feather name='file' size={24} />} 
-            details={ "A3 - Project Scope"}
-          />
-          <Video url={project.video_file} />
-          <SectionHeader>Team</SectionHeader>
-          <ProjectTeam>Placeholder text</ProjectTeam>
-          <HorizontalLine />
-          <SectionHeader>Related Roles</SectionHeader>
-          <ProjectRelatedRoles>Placeholder text</ProjectRelatedRoles>
-        </ProjectFullDetailsView>
-      </ScrollView>
-    )
-  }
+        </ProjectDetailsBlock>
+        <ProjectAttachments
+          icon={<Feather name="file" size={24} />}
+          details={'A3 - Project Scope'}
+        />
+        <Video url={project.video_file} />
+        <SectionHeader>Team</SectionHeader>
+        <ProjectTeam>Placeholder text</ProjectTeam>
+        <HorizontalLine />
+        <SectionHeader>Related Roles</SectionHeader>
+        <ProjectRelatedRoles>Placeholder text</ProjectRelatedRoles>
+      </ProjectFullDetailsView>
+    </ScrollView>
+  )
+}
 
 export default ProjectFullDetails

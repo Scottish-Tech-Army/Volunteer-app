@@ -6,7 +6,10 @@ import styled from 'styled-components/native'
 
 interface TitleProps {
   text: string
-  type: 'list' | 'main' // use 'list' for a title appearing in a list, 'main' for a single main title on a screen
+  // Use 'list' for a title appearing in a list,
+  // 'main' for a single main title on a screen
+  // 'subtitle' for a secondary title on a screen
+  type: 'list' | 'main' | 'subtitle'
 }
 
 const TitleText = styled.Text`
@@ -18,6 +21,7 @@ const Title: FC<TitleProps> = ({ text, type }) => {
   let fontSize
   switch (type) {
     case 'list':
+    case 'subtitle':
       fontSize = 18
       break
     case 'main':

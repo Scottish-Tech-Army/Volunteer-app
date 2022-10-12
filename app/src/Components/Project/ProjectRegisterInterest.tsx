@@ -51,10 +51,8 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
   const oneYearInTheFuture = new Date(
     new Date().setFullYear(today.getFullYear() + 1),
   )
-  const [
-    registerInterest,
-    { data: responseData, error: responseError },
-  ] = useLazyRegisterInterestQuery()
+  const [registerInterest, { data: responseData, error: responseError }] =
+    useLazyRegisterInterestQuery()
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
@@ -150,7 +148,11 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
   return (
     <ScrollView>
       <ProjectRegisterInterestView>
-        <ProjectHeading hideSaveProjectIcon title={project.name} />
+        <ProjectHeading
+          hideSaveProjectIcon
+          screen="details"
+          title={project.name}
+        />
         <ProjectSubTitle>{project.client}</ProjectSubTitle>
         <ProjectRole>{project.role}</ProjectRole>
 
