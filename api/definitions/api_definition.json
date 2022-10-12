@@ -18,14 +18,15 @@
                 "example": [
                   {
                     "id": "rec8VDT5j4Q67WRHv",
-                    "name": "Data Collective",
+                    "name": "Showcase - Volunteer app",
                     "date": "2023-01-19",
                     "time": "11:00",
                     "duration": 60,
-                    "description": "What could we do with the data",
-                    "type": "External",
+                    "description": "**We are proud to showcase our volunteer projects.** Come and have a look at the story so far, if you are curious & want to volunteer- join us!",
+                    "type": "Internal",
                     "notes": "",
-                    "series": "Data Collective",
+                    "series": "STA Project Showcase",
+                    "related_initiative": "Volunteer app",
                     "video_webpage": "https://vimeo.com/583815096",
                     "video_file": "https://vod-progressive.akamaized.net/exp=1657227176~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F678%2F28%2F703391800%2F3256486964.mp4~hmac=e76bbd7e698f0d46c373bce069f936a24182694a1b0d140a63fcf240a2e8b65c/vimeo-prod-skyfire-std-us/01/678/28/703391800/3256486964.mp4",
                     "video_thumbnail": "https://dl.airtable.com/.attachments/02b4bf4e52db4d9d85575186c487c635/c05231f4/1218826759-b3cef7ddaf08fa26e375d87a2fc78e7fc0ca49ffb2809197dcf3ea6bec5e09ec-d_1280?ts=1653904352&userId=usrrNJEU7hToH1AMK&cs=ee8f353da772f926",
@@ -38,9 +39,10 @@
                     "time": "14:00",
                     "duration": 120,
                     "description": "Delivered by the Customer service team",
-                    "type": "Internal",
+                    "type": "External",
                     "notes": "",
                     "series": "Microsoft",
+                    "related_initiative": "",
                     "video_webpage": "",
                     "video_file": "",
                     "video_thumbnail": "",
@@ -69,18 +71,19 @@
               "application/json": {
                 "example": {
                   "id": "rec8VDT5j4Q67WRHv",
-                  "name": "Data Collective",
-                  "date": "2023-01-19",
-                  "time": "11:00",
-                  "duration": 60,
-                  "description": "What could we do with the data",
-                  "type": "External",
-                  "notes": "",
-                  "series": "Data Collective",
-                  "video_webpage": "https://vimeo.com/583815096",
-                  "video_file": "https://vod-progressive.akamaized.net/exp=1657227176~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F678%2F28%2F703391800%2F3256486964.mp4~hmac=e76bbd7e698f0d46c373bce069f936a24182694a1b0d140a63fcf240a2e8b65c/vimeo-prod-skyfire-std-us/01/678/28/703391800/3256486964.mp4",
-                  "video_thumbnail": "https://dl.airtable.com/.attachments/02b4bf4e52db4d9d85575186c487c635/c05231f4/1218826759-b3cef7ddaf08fa26e375d87a2fc78e7fc0ca49ffb2809197dcf3ea6bec5e09ec-d_1280?ts=1653904352&userId=usrrNJEU7hToH1AMK&cs=ee8f353da772f926",
-                  "images": []
+                    "name": "Showcase - Volunteer app",
+                    "date": "2023-01-19",
+                    "time": "11:00",
+                    "duration": 60,
+                    "description": "**We are proud to showcase our volunteer projects.** Come and have a look at the story so far, if you are curious & want to volunteer- join us!",
+                    "type": "Internal",
+                    "notes": "",
+                    "series": "STA Project Showcase",
+                    "related_initiative": "Volunteer app",
+                    "video_webpage": "https://vimeo.com/583815096",
+                    "video_file": "https://vod-progressive.akamaized.net/exp=1657227176~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F678%2F28%2F703391800%2F3256486964.mp4~hmac=e76bbd7e698f0d46c373bce069f936a24182694a1b0d140a63fcf240a2e8b65c/vimeo-prod-skyfire-std-us/01/678/28/703391800/3256486964.mp4",
+                    "video_thumbnail": "https://dl.airtable.com/.attachments/02b4bf4e52db4d9d85575186c487c635/c05231f4/1218826759-b3cef7ddaf08fa26e375d87a2fc78e7fc0ca49ffb2809197dcf3ea6bec5e09ec-d_1280?ts=1653904352&userId=usrrNJEU7hToH1AMK&cs=ee8f353da772f926",
+                    "images": []
                 },
                 "schema": {
                   "$ref": "#/components/schemas/event"
@@ -103,14 +106,15 @@
                 "example": [
                   {
                     "id": "rec8VDT5j4Q67WRHv",
-                    "name": "Data Collective",
+                    "name": "Showcase - Volunteer app",
                     "date": "2023-01-19",
                     "time": "11:00",
                     "duration": 60,
-                    "description": "What could we do with the data",
-                    "type": "External",
+                    "description": "**We are proud to showcase our volunteer projects.** Come and have a look at the story so far, if you are curious & want to volunteer- join us!",
+                    "type": "Internal",
                     "notes": "",
-                    "series": "Data Collective",
+                    "series": "STA Project Showcase",
+                    "related_initiative": "Volunteer app",
                     "video_webpage": "https://vimeo.com/583815096",
                     "video_file": "https://vod-progressive.akamaized.net/exp=1657227176~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F678%2F28%2F703391800%2F3256486964.mp4~hmac=e76bbd7e698f0d46c373bce069f936a24182694a1b0d140a63fcf240a2e8b65c/vimeo-prod-skyfire-std-us/01/678/28/703391800/3256486964.mp4",
                     "video_thumbnail": "https://dl.airtable.com/.attachments/02b4bf4e52db4d9d85575186c487c635/c05231f4/1218826759-b3cef7ddaf08fa26e375d87a2fc78e7fc0ca49ffb2809197dcf3ea6bec5e09ec-d_1280?ts=1653904352&userId=usrrNJEU7hToH1AMK&cs=ee8f353da772f926",
@@ -126,6 +130,7 @@
                     "type": "Internal",
                     "notes": "",
                     "series": "Microsoft",
+                    "related_initiative": "",
                     "video_webpage": "",
                     "video_file": "",
                     "video_thumbnail": "",
@@ -155,17 +160,18 @@
                 "example": [
                   {
                     "id": "rec8VDT5j4Q67WRHv",
-                    "name": "Data Collective",
+                    "name": "Showcase - Volunteer app",
                     "date": "2023-01-19",
                     "time": "11:00",
                     "duration": 60,
-                    "description": "What could we do with the data",
-                    "type": "External",
+                    "description": "**We are proud to showcase our volunteer projects.** Come and have a look at the story so far, if you are curious & want to volunteer- join us!",
+                    "type": "Internal",
                     "notes": "",
-                    "series": "Data Colllective",
-                    "video_webpage": "",
-                    "video_file": "",
-                    "video_thumbnail": "",
+                    "series": "STA Project Showcase",
+                    "related_initiative": "Volunteer app",
+                    "video_webpage": "https://vimeo.com/583815096",
+                    "video_file": "https://vod-progressive.akamaized.net/exp=1657227176~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F678%2F28%2F703391800%2F3256486964.mp4~hmac=e76bbd7e698f0d46c373bce069f936a24182694a1b0d140a63fcf240a2e8b65c/vimeo-prod-skyfire-std-us/01/678/28/703391800/3256486964.mp4",
+                    "video_thumbnail": "https://dl.airtable.com/.attachments/02b4bf4e52db4d9d85575186c487c635/c05231f4/1218826759-b3cef7ddaf08fa26e375d87a2fc78e7fc0ca49ffb2809197dcf3ea6bec5e09ec-d_1280?ts=1653904352&userId=usrrNJEU7hToH1AMK&cs=ee8f353da772f926",
                     "images": []
                   },
                   {
@@ -178,6 +184,7 @@
                     "type": "Internal",
                     "notes": "",
                     "series": "Microsoft",
+                    "related_initiative": "",
                     "video_webpage": "",
                     "video_file": "",
                     "video_thumbnail": "",
@@ -359,6 +366,10 @@
             "series": {
               "type": "string",
               "description": "The event series this is part of (if any)"
+            },
+            "related_initiative": {
+              "type": "string",
+              "description": "The initiative (e.g. an STA project, like the Volunteer app), that this is related to (if any).  This is not named 'related_project' in order to avoid confusion, as in code/data we generally use 'project' to mean a project role."
             },
             "video_webpage": {
               "type": "string",

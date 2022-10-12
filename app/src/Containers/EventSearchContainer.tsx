@@ -1,44 +1,39 @@
+// Events search screen container
+
 import React, { useState } from 'react'
 import dayjs from 'dayjs'
 import styled from 'styled-components/native'
 import { ScrollView, SafeAreaView } from 'react-native'
+import { useSelector } from 'react-redux'
 import TopOfApp from '@/Components/TopOfApp'
-import underDevelopmentAlert from '@/Utils/UnderDevelopmentAlert'
 import EventSearchCalendarPicker from '@/Components/Event/EventSearchCalendarPicker'
-import EventSearchUpcomingQuickSearch, {
+import EventSearchQuickSearch, {
   EventQuickSearchChoice,
-} from '@/Components/Event/EventSearchUpcomingQuickSearch'
-import QuickSearchButton from '@/Components/Forms/QuickSearchButton'
+} from '@/Components/Event/EventSearchQuickSearch'
+import EventSearchQuickSearchUpcoming, {
+  EventQuickSearchUpcomingChoice,
+} from '@/Components/Event/EventSearchQuickSearchUpcoming'
 import FreeSearchBar from '@/Components/FreeSearchBar'
-import { Events } from '@/Services/modules/events'
+import { EventsSearchField } from '@/Services/modules/events'
+import { navigate } from '@/Navigators/utils'
+import { Event, Events, EventsRange } from '@/Services/modules/events'
+import { EventsState } from '@/Store/Events'
+import { dedupeArray } from '@/Utils/Lists'
+import { fuzzySearchByArray } from '@/Utils/Search'
 
-const Heading = styled.Text`
-  font-weight: bold;
-  font-size: 18px;
-  margin: 15px 15px 0px 15px;
-`
 const SectionView = styled.View`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  margin: 20px 0;
-`
-const Label = styled.Text`
-  font-weight: bold;
-  font-size: 14px;
-  margin: 15px 15px 0px 15px;
-`
-const EventTitle = styled.Text`
-  display: flex;
-  text-align: center;
+  margin: 10px 0;
 `
 
 export interface EventSearchInterface {
   type: 'date' | 'text' // what type of search is it
-  quickSearchChoice?: EventQuickSearchChoice // quick search (if any)
-  range: 'past' | 'upcoming' // which range of events are being searched
+  range: EventsRange // which range of events are being searched (past/upcoming/all)
   results: Events // the events results for this search
   description?: string // some text to tell the user what the search was, e.g. the date range
+  quickSearchUpcomingChoice?: EventQuickSearchUpcomingChoice // upcoming date quick search (if any)
 }
 
 export const filterEventsByDate = (
@@ -65,28 +60,89 @@ export const filterEventsByDate = (
   })
 
 const EventSearchContainer = () => {
-  const PopularSearches = [
-    'Talk to the hiring manager',
-    'Atlassian huddle',
-    'Orientation',
-    'Showcase',
-  ]
-  const ProjectSearches = [
-    'Sole drop-in',
-    'Volunteering app',
-    'Eleos drop-in',
-    'Climate change app',
-  ]
-
+  const [freeTextSearchQuery, setFreeTextSearchQuery] = useState('')
   const [calendarPickerWidth, setCalendarPickerWidth] = useState(0)
 
-  const handleSearch = (input: React.SetStateAction<string>) => {
-    console.log(input)
+  // Get events from the Redux store (these are added to the store by the EventsContainer component)
+  const allPastEvents = useSelector(
+    (state: { events: EventsState }) => state.events.past,
+  )
+  const allUpcomingEvents = useSelector(
+    (state: { events: EventsState }) => state.events.upcoming,
+  )
+
+  const allEvents = [...allUpcomingEvents, ...allPastEvents]
+
+  const getQuickSearchChoices = (
+    eventSearchField: EventsSearchField,
+  ): EventQuickSearchChoice[] => {
+    // Get all the values of what we're looking for in events
+    // e.g. all series in events
+    const values = allEvents
+      .filter(event => Boolean(event[eventSearchField]))
+      .map(event => event[eventSearchField])
+
+    // Remove duplicate values
+    const valuesUnique = dedupeArray(values)
+
+    // Sort alphabetically
+    const valuesUniqueSorted = valuesUnique.sort()
+
+    // Convert into a quick search choice object
+    return valuesUniqueSorted.map(
+      value =>
+        ({
+          text: value,
+          value: value,
+        } as EventQuickSearchChoice),
+    )
   }
 
-  const handleSubmit = () => {
-    console.log('Submit')
+  const handleFreeTextChange = (input: React.SetStateAction<string>) => {
+    setFreeTextSearchQuery(input)
   }
+
+  const handleFreeTextSubmit = () => {
+    const results = fuzzySearchByArray(
+      allEvents,
+      [
+        // We reduce the 'weight' (aka importance) put on the description field as it's more likely to return
+        //  false positive matches because there's more general text in that field
+        { name: 'description', weight: 0.5 },
+        { name: 'name', weight: 1 },
+        { name: 'related_initiative', weight: 1 },
+        { name: 'series', weight: 1 },
+      ],
+      [freeTextSearchQuery],
+    ) as Events
+
+    const resultsLatestFirst = results.sort((eventA: Event, eventB: Event) => {
+      const eventADate = dayjs(
+        `${eventA.date} ${eventA.time}`,
+        'YYYY-MM-DD HH:mm',
+      )
+      const eventBDate = dayjs(
+        `${eventB.date} ${eventB.time}`,
+        'YYYY-MM-DD HH:mm',
+      )
+
+      return eventADate.isBefore(eventBDate) ? 1 : -1
+    })
+
+    navigate('Events', {
+      search: {
+        type: 'text',
+        range: 'all',
+        results: resultsLatestFirst,
+        description: `"${freeTextSearchQuery}"`,
+      },
+    })
+  }
+
+  const eventSeriesChoices = getQuickSearchChoices(EventsSearchField.Series)
+  const relatedInitiativeChoices = getQuickSearchChoices(
+    EventsSearchField.RelatedInitiative,
+  )
 
   return (
     <SafeAreaView>
@@ -100,35 +156,37 @@ const EventSearchContainer = () => {
         <TopOfApp />
 
         <FreeSearchBar
-          handleSearch={handleSearch}
-          handleSubmit={handleSubmit}
+          handleChangeText={handleFreeTextChange}
+          handleSubmit={handleFreeTextSubmit}
         />
 
         <SectionView>
-          <EventSearchUpcomingQuickSearch />
+          <EventSearchQuickSearchUpcoming />
         </SectionView>
 
         <SectionView>
           <EventSearchCalendarPicker width={calendarPickerWidth} />
         </SectionView>
 
-        <Heading>Popular</Heading>
-        <SectionView>
-          {PopularSearches.map((event, index) => (
-            <QuickSearchButton onPress={underDevelopmentAlert} key={index}>
-              <EventTitle>{event}</EventTitle>
-            </QuickSearchButton>
-          ))}
-        </SectionView>
+        {Boolean(eventSeriesChoices.length) && (
+          <SectionView>
+            <EventSearchQuickSearch
+              choices={eventSeriesChoices}
+              field={EventsSearchField.Series}
+              heading="Event Series"
+            />
+          </SectionView>
+        )}
 
-        <Heading>Project Specific</Heading>
-        <SectionView>
-          {ProjectSearches.map((event, index) => (
-            <QuickSearchButton onPress={underDevelopmentAlert} key={index}>
-              <EventTitle>{event}</EventTitle>
-            </QuickSearchButton>
-          ))}
-        </SectionView>
+        {Boolean(relatedInitiativeChoices.length) && (
+          <SectionView>
+            <EventSearchQuickSearch
+              choices={relatedInitiativeChoices}
+              field={EventsSearchField.RelatedInitiative}
+              heading="Project Specific"
+            />
+          </SectionView>
+        )}
       </ScrollView>
     </SafeAreaView>
   )

@@ -1,6 +1,7 @@
+// The past/upcoming/my events tabs shown at the top of the events list screen
+
 /* eslint-disable react-native/no-inline-styles */
 import React, { FC } from 'react'
-import { useNavigation } from '@react-navigation/native'
 import styled from 'styled-components/native'
 import { EventsRange } from '@/Services/modules/events'
 import underDevelopmentAlert from '../../Utils/UnderDevelopmentAlert'

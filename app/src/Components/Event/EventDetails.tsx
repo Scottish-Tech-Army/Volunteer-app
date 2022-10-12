@@ -7,8 +7,9 @@ import styled from 'styled-components/native'
 import comingSoonImg from '@/Assets/Images/ComingSoon.png'
 import { Event } from '@/Services/modules/events'
 import ThemeVariables from '@/Theme/Variables'
-import EventSeries from './EventSeries'
 import EventDate from './EventDate'
+import EventRelatedInitiative from './EventRelatedInitiative'
+import EventSeries from './EventSeries'
 import EventTime from './EventTime'
 import ImageFullWidth from '../ImageFullWidth'
 import ImageSwiper from '../ImageSwiper'
@@ -56,6 +57,10 @@ const EventDetails: FC<EventDetailsProps> = ({ event }) => {
           </EventDateTime>
 
           {event.series ? <EventSeries text={event.series} /> : null}
+
+          {Boolean(event.related_initiative) && (
+            <EventRelatedInitiative text={event.related_initiative} />
+          )}
         </EventTopInfo>
 
         {/* If there's a video, show this.  Otherwise, show event image(s) if there are any, or the 'coming soon' image. */}
@@ -68,7 +73,6 @@ const EventDetails: FC<EventDetailsProps> = ({ event }) => {
             image={event.images.length ? event.images[0] : comingSoonImg}
           />
         )}
-
 
         <EventDescription>
           {/* Event description can contain markdown code for formatting e.g. bold, links, etc.

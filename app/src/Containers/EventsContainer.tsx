@@ -1,3 +1,5 @@
+// Shows a list of events -- either all past/upcoming/my events, or events search results
+
 import React, { FC, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components/native'
@@ -6,8 +8,9 @@ import { EventSearchInterface } from './EventSearchContainer'
 import TopOfApp from '@/Components/TopOfApp'
 import EventOptions from '@/Components/Event/EventOptions'
 import EventReturnedList from '@/Components/Event/EventReturnedList'
-import EventSearch from '@/Components/Event/EventSearch'
-import EventSearchUpcomingQuickSearch from '@/Components/Event/EventSearchUpcomingQuickSearch'
+import SearchIconButton from '@/Components/SearchIconButton'
+import EventSearchUpcomingQuickSearch from '@/Components/Event/EventSearchQuickSearchUpcoming'
+import { navigate } from '@/Navigators/utils'
 import { EventsRange } from '@/Services/modules/events'
 import { SafeAreaView, Text } from 'react-native'
 import { setEvents } from '@/Store/Events'
@@ -15,7 +18,7 @@ import Theme from '@/Theme/OldTheme'
 import {
   Events,
   useLazyFetchAllUpcomingEventsQuery,
-  useLazyFetchAllPastEventsQuery
+  useLazyFetchAllPastEventsQuery,
 } from '@/Services/modules/events'
 
 interface EventProps {
@@ -45,19 +48,15 @@ const EventsContainer = (props: {
   route: {
     params: {
       selectedOption?: EventsRange | 'myEvents'
-      search: EventSearchInterface
+      search?: EventSearchInterface
     }
   }
 }) => {
-  const [
-    fetchAllUpcomingEvents,
-    { data: allUpcomingEvents },
-  ] = useLazyFetchAllUpcomingEventsQuery()
+  const [fetchAllUpcomingEvents, { data: allUpcomingEvents }] =
+    useLazyFetchAllUpcomingEventsQuery()
 
-  const [
-    fetchAllPastEvents,
-    { data: allPastEvents},
-  ] = useLazyFetchAllPastEventsQuery()
+  const [fetchAllPastEvents, { data: allPastEvents }] =
+    useLazyFetchAllPastEventsQuery()
 
   const dispatch = useDispatch()
   const [eventsSearch, setEventsSearch] = useState<
@@ -65,7 +64,7 @@ const EventsContainer = (props: {
   >()
   const [selectedOption, setSelectedOption] = useState<
     EventsRange | 'myEvents'
-    >(EventsRange.Upcoming)
+  >(EventsRange.Upcoming)
 
   // When the component is first created...
   useEffect(() => {
@@ -74,76 +73,80 @@ const EventsContainer = (props: {
     fetchAllPastEvents('')
   }, [])
 
-  // When allUpcomingEvents is set...
+  // When events have been loaded...
   useEffect(() => {
-    // Store all upcoming events in the Redux store so they can be used by other components too e.g. EventSearchContainer
+    // Store events in the Redux store so they can be used by other components too e.g. EventSearchContainer
     if (allUpcomingEvents) {
       dispatch(setEvents({ upcoming: allUpcomingEvents }))
     }
   }, [allUpcomingEvents])
+
+  useEffect(() => {
+    // Store events in the Redux store so they can be used by other components too e.g. EventSearchContainer
+    if (allPastEvents) {
+      dispatch(setEvents({ past: allPastEvents }))
+    }
+  }, [allPastEvents])
 
   // When the user changes search options or they tap Past/Upcoming/My events navigation occurs,
   // this changes the route parameters - we use this to update EventOptions and to work out
   // whether to show events search results or all events in the list
   useEffect(() => {
     setSelectedOption(
-      props.route.params?.selectedOption ?? EventsRange.Upcoming,
+      props.route.params?.selectedOption ??
+        props.route.params?.search?.range ??
+        EventsRange.Upcoming,
     )
     setEventsSearch(props.route.params?.search)
   }, [props.route.params])
 
   const EventList: FC<EventProps> = ({ data }) => {
-
-    
     return (
       <SafeArea>
         <TopOfApp />
-        <EventSearch />
-        <EventOptions selected={selectedOption} /> 
+
+        <SearchIconButton onPress={() => navigate('EventSearch', '')} />
+
+        <EventOptions selected={selectedOption} />
 
         {/* If the user has done a quick search for upcoming events, show those
             quick search buttons so they can amend their quick search if they want,
             without having to go back to the search screen */}
         {selectedOption === EventsRange.Upcoming &&
           eventsSearch?.range === EventsRange.Upcoming &&
-          eventsSearch?.quickSearchChoice && (
+          eventsSearch?.quickSearchUpcomingChoice && (
             <SearchResultsContainer>
               <EventSearchUpcomingQuickSearch
-                selectedButton={eventsSearch?.quickSearchChoice}
+                selectedButton={eventsSearch?.quickSearchUpcomingChoice}
               />
             </SearchResultsContainer>
           )}
 
-        {/* If the user has searched using the calendar date picker,
-            show some text indicating the dates they searched for */}
-        {selectedOption === EventsRange.Upcoming &&
-          eventsSearch?.range === EventsRange.Upcoming &&
-          eventsSearch.type === 'date' &&
-          !eventsSearch?.quickSearchChoice && (
-            <SearchResultsContainer>
-              <SearchResultsLabel>
-                Results for {eventsSearch.description}
-              </SearchResultsLabel>
-            </SearchResultsContainer>
-          )}
+        {/* If the user has searched, show some text indicating what they searched for */}
+        {Boolean(eventsSearch?.description) && (
+          <SearchResultsContainer>
+            <SearchResultsLabel>
+              Results for {eventsSearch?.description}
+            </SearchResultsLabel>
+          </SearchResultsContainer>
+        )}
 
         <HorizontalLine />
         <EventReturnedList data={data} eventsRange={selectedOption} />
-        
       </SafeArea>
     )
   }
 
-  const [eventsToShow, setEventsToShow] = useState<Events>() 
+  const [eventsToShow, setEventsToShow] = useState<Events>()
 
-  useEffect (() => {
+  useEffect(() => {
     eventToShow()
-  }, [eventsSearch, allUpcomingEvents, allPastEvents, selectedOption]) 
+  }, [eventsSearch, allUpcomingEvents, allPastEvents, selectedOption])
 
   const eventToShow = () => {
-    if (eventsSearch){ 
+    if (eventsSearch) {
       setEventsToShow(eventsSearch.results)
-    } else if (allUpcomingEvents && selectedOption === EventsRange.Upcoming){
+    } else if (allUpcomingEvents && selectedOption === EventsRange.Upcoming) {
       setEventsToShow(allUpcomingEvents)
     } else if (allPastEvents && selectedOption === EventsRange.Past) {
       setEventsToShow(allPastEvents)

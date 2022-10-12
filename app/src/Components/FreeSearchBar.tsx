@@ -24,10 +24,10 @@ const SearchIcon = styled(FontAwesome)`
 `
 
 const FreeSearchBar = ({
-  handleSearch,
+  handleChangeText,
   handleSubmit,
 }: {
-  handleSearch: (text: string) => void
+  handleChangeText: (text: string) => void
   handleSubmit: () => void
 }) => {
   return (
@@ -37,7 +37,7 @@ const FreeSearchBar = ({
         clearButtonMode="always"
         enablesReturnKeyAutomatically
         maxLength={20}
-        onChangeText={handleSearch}
+        onChangeText={handleChangeText}
         onSubmitEditing={handleSubmit}
         returnKeyType="search"
       />
