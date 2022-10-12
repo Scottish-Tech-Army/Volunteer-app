@@ -46,14 +46,15 @@ const EventSearchQuickSearchButtons: FC<EventSearchQuickSearchProps> = ({
   field,
   heading,
 }) => {
-  // Get all upcoming events from the Redux store (these are added to the store by the EventsContainer component)
+  // Get events from the Redux store (these are added to the store by the EventsContainer component)
+  const allPastEvents = useSelector(
+    (state: { events: EventsState }) => state.events.past,
+  )
   const allUpcomingEvents = useSelector(
     (state: { events: EventsState }) => state.events.upcoming,
   )
 
-  // TODO: when past events are also being brought into the app, change the line below
-  // to combine allUpcomingEvents and past events e.g. const allEvents = [...allUpcomingEvents, ...allPastEvents]
-  const allEvents = [...allUpcomingEvents]
+  const allEvents = [...allUpcomingEvents, ...allPastEvents]
 
   const handleSearch = (quickSearchChoice: string): void => {
     const eventsSearchResults = searchByArray(allEvents, field, [

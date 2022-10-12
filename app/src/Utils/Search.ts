@@ -73,10 +73,6 @@ export const fuzzySearchByArray = (
   searchFields: any[],
   searchQueries: string[],
 ): (Event | Project)[] => {
-  console.log('searchFields', searchFields)
-  console.log('searchQueries', searchQueries)
-  console.log('arrayToSearch', arrayToSearch)
-
   let results = [] as (Event | Project)[]
 
   if (arrayToSearch) {

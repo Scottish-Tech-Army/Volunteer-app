@@ -74,6 +74,7 @@ const EventDetails: FC<EventDetailsProps> = ({ event }) => {
           />
         )}
 
+
         <EventDescription>
           {/* Event description can contain markdown code for formatting e.g. bold, links, etc.
               (For info on markdown in general see https://www.markdownguide.org/getting-started/) */}

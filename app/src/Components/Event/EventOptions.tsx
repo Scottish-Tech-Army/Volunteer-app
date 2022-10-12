@@ -34,9 +34,10 @@ const EventOptions: FC<EventOptionsProps> = ({ selected }) => {
     })
   }
 
+
   return (
     <EventOptionsView>
-      <EventOptionsTouch onPress={underDevelopmentAlert}>
+      <EventOptionsTouch onPress={() => handleSelectedOptionChange(EventsRange.Past)}>
         <EventOptionsText
           style={{
             fontWeight: selected === EventsRange.Past ? 'bold' : 'normal',

@@ -16,7 +16,7 @@ import EventSearchQuickSearchUpcoming, {
 import FreeSearchBar from '@/Components/FreeSearchBar'
 import { EventsSearchField } from '@/Services/modules/events'
 import { navigate } from '@/Navigators/utils'
-import { Events, EventsRange } from '@/Services/modules/events'
+import { Event, Events, EventsRange } from '@/Services/modules/events'
 import { EventsState } from '@/Store/Events'
 import { dedupeArray } from '@/Utils/Lists'
 import { fuzzySearchByArray } from '@/Utils/Search'
@@ -63,14 +63,15 @@ const EventSearchContainer = () => {
   const [freeTextSearchQuery, setFreeTextSearchQuery] = useState('')
   const [calendarPickerWidth, setCalendarPickerWidth] = useState(0)
 
-  // Get all upcoming events from the Redux store (these are added to the store by the EventsContainer component)
+  // Get events from the Redux store (these are added to the store by the EventsContainer component)
+  const allPastEvents = useSelector(
+    (state: { events: EventsState }) => state.events.past,
+  )
   const allUpcomingEvents = useSelector(
     (state: { events: EventsState }) => state.events.upcoming,
   )
 
-  // TODO: when past events are also being brought into the app, change the line below
-  // to combine allUpcomingEvents and past events e.g. const allEvents = [...allUpcomingEvents, ...allPastEvents]
-  const allEvents = [...allUpcomingEvents]
+  const allEvents = [...allUpcomingEvents, ...allPastEvents]
 
   const getQuickSearchChoices = (
     eventSearchField: EventsSearchField,
@@ -113,13 +114,26 @@ const EventSearchContainer = () => {
         { name: 'series', weight: 1 },
       ],
       [freeTextSearchQuery],
-    )
+    ) as Events
+
+    const resultsLatestFirst = results.sort((eventA: Event, eventB: Event) => {
+      const eventADate = dayjs(
+        `${eventA.date} ${eventA.time}`,
+        'YYYY-MM-DD HH:mm',
+      )
+      const eventBDate = dayjs(
+        `${eventB.date} ${eventB.time}`,
+        'YYYY-MM-DD HH:mm',
+      )
+
+      return eventADate.isBefore(eventBDate) ? 1 : -1
+    })
 
     navigate('Events', {
       search: {
         type: 'text',
         range: 'all',
-        results,
+        results: resultsLatestFirst,
         description: `"${freeTextSearchQuery}"`,
       },
     })

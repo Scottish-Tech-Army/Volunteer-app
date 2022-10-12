@@ -18,6 +18,7 @@ import Theme from '@/Theme/OldTheme'
 import {
   Events,
   useLazyFetchAllUpcomingEventsQuery,
+  useLazyFetchAllPastEventsQuery,
 } from '@/Services/modules/events'
 
 interface EventProps {
@@ -53,6 +54,10 @@ const EventsContainer = (props: {
 }) => {
   const [fetchAllUpcomingEvents, { data: allUpcomingEvents }] =
     useLazyFetchAllUpcomingEventsQuery()
+
+  const [fetchAllPastEvents, { data: allPastEvents }] =
+    useLazyFetchAllPastEventsQuery()
+
   const dispatch = useDispatch()
   const [eventsSearch, setEventsSearch] = useState<
     EventSearchInterface | undefined
@@ -65,15 +70,24 @@ const EventsContainer = (props: {
   useEffect(() => {
     // Get all upcoming events from the API
     fetchAllUpcomingEvents('')
+    fetchAllPastEvents('')
   }, [])
 
-  // When allUpcomingEvents is set...
+  // When events have been loaded...
   useEffect(() => {
-    // Store all upcoming events in the Redux store so they can be used by other components too e.g. EventSearchContainer
+    // Store events in the Redux store so they can be used by other components too e.g. EventSearchContainer
     if (allUpcomingEvents) {
       dispatch(setEvents({ upcoming: allUpcomingEvents }))
     }
   }, [allUpcomingEvents])
+
+  // When allUpcomingEvents is set...
+  useEffect(() => {
+    // Store events in the Redux store so they can be used by other components too e.g. EventSearchContainer
+    if (allPastEvents) {
+      dispatch(setEvents({ past: allPastEvents }))
+    }
+  }, [allPastEvents])
 
   // When the user changes search options or they tap Past/Upcoming/My events navigation occurs,
   // this changes the route parameters - we use this to update EventOptions and to work out
@@ -91,7 +105,9 @@ const EventsContainer = (props: {
     return (
       <SafeArea>
         <TopOfApp />
+
         <SearchIconButton onPress={() => navigate('EventSearch', '')} />
+
         <EventOptions selected={selectedOption} />
 
         {/* If the user has done a quick search for upcoming events, show those
@@ -117,16 +133,28 @@ const EventsContainer = (props: {
         )}
 
         <HorizontalLine />
-        <EventReturnedList data={data} />
+        <EventReturnedList data={data} eventsRange={selectedOption} />
       </SafeArea>
     )
   }
 
-  if (allUpcomingEvents || eventsSearch) {
-    const eventsToShow = eventsSearch
-      ? eventsSearch.results
-      : (allUpcomingEvents as Events)
+  const [eventsToShow, setEventsToShow] = useState<Events>()
 
+  useEffect(() => {
+    eventToShow()
+  }, [eventsSearch, allUpcomingEvents, allPastEvents, selectedOption])
+
+  const eventToShow = () => {
+    if (eventsSearch) {
+      setEventsToShow(eventsSearch.results)
+    } else if (allUpcomingEvents && selectedOption === EventsRange.Upcoming) {
+      setEventsToShow(allUpcomingEvents)
+    } else if (allPastEvents && selectedOption === EventsRange.Past) {
+      setEventsToShow(allPastEvents)
+    }
+  }
+
+  if (eventsToShow) {
     return (
       <Theme>
         <EventList data={eventsToShow} />
