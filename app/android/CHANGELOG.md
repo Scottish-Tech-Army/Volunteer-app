@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [1.0.8 (version code 9)] - 2022-10-02Z
+
+### Added
+
+- You can now search events fully - added free text search and working quick search buttons
+
 ## [1.0.7 (version code 8)] - 2022-08-26Z
 
 ### Changed

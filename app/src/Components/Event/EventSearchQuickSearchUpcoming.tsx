@@ -9,14 +9,14 @@ import { filterEventsByDate } from '@/Containers/EventSearchContainer'
 import { navigate } from '@/Navigators/utils'
 import { EventsState } from '@/Store/Events'
 
-export enum EventQuickSearchChoice {
+export enum EventQuickSearchUpcomingChoice {
   Today = 'Today',
   ThisWeek = 'This week',
   ThisMonth = 'This month',
 }
 
-interface EventSearchUpcomingQuickSearchProps {
-  selectedButton?: EventQuickSearchChoice | undefined
+interface EventSearchQuickSearchUpcomingProps {
+  selectedButton?: EventQuickSearchUpcomingChoice | undefined
 }
 
 const ButtonTitle = styled.Text`
@@ -24,8 +24,8 @@ const ButtonTitle = styled.Text`
   text-align: center;
 `
 
-const EventSearchUpcomingQuickSearchButtons: FC<
-  EventSearchUpcomingQuickSearchProps
+const EventSearchQuickSearchUpcomingButtons: FC<
+  EventSearchQuickSearchUpcomingProps
 > = ({ selectedButton }) => {
   // Get all upcoming events from the Redux store (these are added to the store by the EventsContainer component)
   const allUpcomingEvents = useSelector(
@@ -33,7 +33,7 @@ const EventSearchUpcomingQuickSearchButtons: FC<
   )
 
   const handleSearch = (
-    quickSearchChoice: EventQuickSearchChoice,
+    quickSearchChoice: EventQuickSearchUpcomingChoice,
     startDate: Date,
     endDate: Date,
   ): void => {
@@ -58,7 +58,7 @@ const EventSearchUpcomingQuickSearchButtons: FC<
       <QuickSearchButton
         onPress={() =>
           handleSearch(
-            EventQuickSearchChoice.Today,
+            EventQuickSearchUpcomingChoice.Today,
             dayjs().startOf('day').toDate(),
             dayjs().endOf('day').toDate(),
           )
@@ -67,7 +67,7 @@ const EventSearchUpcomingQuickSearchButtons: FC<
         <ButtonTitle
           style={{
             fontWeight:
-              selectedButton === EventQuickSearchChoice.Today
+              selectedButton === EventQuickSearchUpcomingChoice.Today
                 ? 'bold'
                 : 'normal',
           }}
@@ -78,7 +78,7 @@ const EventSearchUpcomingQuickSearchButtons: FC<
       <QuickSearchButton
         onPress={() =>
           handleSearch(
-            EventQuickSearchChoice.ThisWeek,
+            EventQuickSearchUpcomingChoice.ThisWeek,
             dayjs().startOf('week').toDate(),
             dayjs().endOf('week').toDate(),
           )
@@ -87,7 +87,7 @@ const EventSearchUpcomingQuickSearchButtons: FC<
         <ButtonTitle
           style={{
             fontWeight:
-              selectedButton === EventQuickSearchChoice.ThisWeek
+              selectedButton === EventQuickSearchUpcomingChoice.ThisWeek
                 ? 'bold'
                 : 'normal',
           }}
@@ -98,7 +98,7 @@ const EventSearchUpcomingQuickSearchButtons: FC<
       <QuickSearchButton
         onPress={() =>
           handleSearch(
-            EventQuickSearchChoice.ThisMonth,
+            EventQuickSearchUpcomingChoice.ThisMonth,
             dayjs().startOf('month').toDate(),
             dayjs().endOf('month').toDate(),
           )
@@ -107,7 +107,7 @@ const EventSearchUpcomingQuickSearchButtons: FC<
         <ButtonTitle
           style={{
             fontWeight:
-              selectedButton === EventQuickSearchChoice.ThisMonth
+              selectedButton === EventQuickSearchUpcomingChoice.ThisMonth
                 ? 'bold'
                 : 'normal',
           }}
@@ -119,4 +119,4 @@ const EventSearchUpcomingQuickSearchButtons: FC<
   )
 }
 
-export default EventSearchUpcomingQuickSearchButtons
+export default EventSearchQuickSearchUpcomingButtons
