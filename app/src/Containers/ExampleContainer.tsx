@@ -1,6 +1,9 @@
+/**
+ * @file Container used on to hold Example configuration options
+ */
 import React, { useState, useEffect } from 'react'
 import {
-  Linking, 
+  Linking,
   View,
   ActivityIndicator,
   Text,
@@ -8,17 +11,18 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 import { Brand } from '@/Components'
 import { useTheme } from '@/Hooks'
 import { useLazyFetchOneQuery } from '@/Services/modules/users'
 import { changeTheme, ThemeState } from '@/Store/Theme'
+import { changeWelcome, WelcomeState } from '@/Store/Welcome'
 import { version } from '../../package.json'
 import styled from 'styled-components/native'
 
 const PolicyDiv = styled.View`
-  marginVertical:20px;
+  marginvertical: 20px;
 `
 
 const ExampleContainer = () => {
@@ -27,23 +31,30 @@ const ExampleContainer = () => {
   const dispatch = useDispatch()
 
   const [userId, setUserId] = useState('9')
-  const [
-    fetchOne,
-    { data, isSuccess, isLoading, isFetching, error },
-  ] = useLazyFetchOneQuery()
+  const [fetchOne, { data, isSuccess, isLoading, isFetching, error }] =
+    useLazyFetchOneQuery()
 
   useEffect(() => {
     fetchOne(userId)
   }, [fetchOne, userId])
 
+  const showWelcome = useSelector(
+    (state: { welcome: WelcomeState }) => state.welcome.show,
+  )
+
   const onChangeTheme = ({ theme, darkMode }: Partial<ThemeState>) => {
     dispatch(changeTheme({ theme, darkMode }))
   }
+
+  const onChangeSplash = ({ welcome, show }: Partial<WelcomeState>) => {
+    dispatch(changeWelcome({ welcome, show }))
+  }
+
   return (
     <ScrollView
       style={Layout.fill}
-      contentContainerStyle={[ 
-        // Layout.fill, 
+      contentContainerStyle={[
+        // Layout.fill,
         Layout.colCenter,
         Gutters.smallHPadding,
       ]}
@@ -104,19 +115,57 @@ const ExampleContainer = () => {
         <Text style={Fonts.textRegular}>Light</Text>
       </TouchableOpacity>
 
+      <Text style={[Fonts.textRegular, Gutters.smallBMargin]}>
+        Show welcome splash screen :
+      </Text>
+
+      <View style={[Layout.rowHCenter, Layout.justifyContentBetween]}>
+        <TouchableOpacity
+          style={
+            showWelcome
+              ? [Common.button.rounded, Gutters.regularBMargin]
+              : [Common.button.outlineRounded, Gutters.regularBMargin]
+          }
+          onPress={() => onChangeSplash({ show: true })}
+        >
+          <Text style={Fonts.textRegular}>Yes</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={
+            !showWelcome
+              ? [Common.button.rounded, Gutters.regularBMargin]
+              : [Common.button.outlineRounded, Gutters.regularBMargin]
+          }
+          onPress={() => onChangeSplash({ show: false })}
+        >
+          <Text style={Fonts.textRegular}>No</Text>
+        </TouchableOpacity>
+      </View>
+
       <Text style={Fonts.textSmall}>Version {version}</Text>
 
-      <PolicyDiv style={[Layout.row, Layout.fullWidth, Layout.justifyContentBetween]}>
+      <PolicyDiv
+        style={[Layout.row, Layout.fullWidth, Layout.justifyContentBetween]}
+      >
         <TouchableOpacity
-          onPress = {() => Linking.openURL('https://www.scottishtecharmy.org/app-privacy-policy')}>
+          onPress={() =>
+            Linking.openURL(
+              'https://www.scottishtecharmy.org/app-privacy-policy',
+            )
+          }
+        >
           <Text style={Fonts.textSmall}>Privacy Policy</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress = {() => Linking.openURL('https://www.scottishtecharmy.org/app-terms-conditions')}>
-          <Text style={Fonts.textSmall}>Terms & Conditions</Text> 
+          onPress={() =>
+            Linking.openURL(
+              'https://www.scottishtecharmy.org/app-terms-conditions',
+            )
+          }
+        >
+          <Text style={Fonts.textSmall}>Terms & Conditions</Text>
         </TouchableOpacity>
       </PolicyDiv>
-
     </ScrollView>
   )
 }
