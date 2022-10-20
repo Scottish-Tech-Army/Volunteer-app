@@ -1,10 +1,13 @@
+/**
+ * @file Store for welcome screen setting in Example Container.
+ */
 import { createSlice } from '@reduxjs/toolkit'
 
 const slice = createSlice({
   name: 'welcome',
-  initialState: { 
-    welcome: null, 
-    show: null
+  initialState: {
+    welcome: null,
+    show: null,
   } as WelcomeState,
   reducers: {
     changeWelcome: (state, { payload: { welcome, show } }: WelcomePayload) => {

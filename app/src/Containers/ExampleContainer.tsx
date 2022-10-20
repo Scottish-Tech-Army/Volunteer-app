@@ -1,6 +1,9 @@
+/**
+ * @file Container used on to hold Example configuration options
+ */
 import React, { useState, useEffect } from 'react'
 import {
-  Linking, 
+  Linking,
   View,
   ActivityIndicator,
   Text,
@@ -19,7 +22,7 @@ import { version } from '../../package.json'
 import styled from 'styled-components/native'
 
 const PolicyDiv = styled.View`
-  marginVertical:20px;
+  marginvertical: 20px;
 `
 
 const ExampleContainer = () => {
@@ -28,10 +31,8 @@ const ExampleContainer = () => {
   const dispatch = useDispatch()
 
   const [userId, setUserId] = useState('9')
-  const [
-    fetchOne,
-    { data, isSuccess, isLoading, isFetching, error },
-  ] = useLazyFetchOneQuery()
+  const [fetchOne, { data, isSuccess, isLoading, isFetching, error }] =
+    useLazyFetchOneQuery()
 
   useEffect(() => {
     fetchOne(userId)
@@ -52,8 +53,8 @@ const ExampleContainer = () => {
   return (
     <ScrollView
       style={Layout.fill}
-      contentContainerStyle={[ 
-        // Layout.fill, 
+      contentContainerStyle={[
+        // Layout.fill,
         Layout.colCenter,
         Gutters.smallHPadding,
       ]}
@@ -117,18 +118,24 @@ const ExampleContainer = () => {
       <Text style={[Fonts.textRegular, Gutters.smallBMargin]}>
         Show welcome splash screen :
       </Text>
-      
+
       <View style={[Layout.rowHCenter, Layout.justifyContentBetween]}>
         <TouchableOpacity
-          style={ (showWelcome) ? ([Common.button.rounded, Gutters.regularBMargin]) : 
-                                  ([Common.button.outlineRounded, Gutters.regularBMargin])}
+          style={
+            showWelcome
+              ? [Common.button.rounded, Gutters.regularBMargin]
+              : [Common.button.outlineRounded, Gutters.regularBMargin]
+          }
           onPress={() => onChangeSplash({ show: true })}
         >
           <Text style={Fonts.textRegular}>Yes</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={ (!showWelcome) ? ([Common.button.rounded, Gutters.regularBMargin]) : 
-                                  ([Common.button.outlineRounded, Gutters.regularBMargin])}
+          style={
+            !showWelcome
+              ? [Common.button.rounded, Gutters.regularBMargin]
+              : [Common.button.outlineRounded, Gutters.regularBMargin]
+          }
           onPress={() => onChangeSplash({ show: false })}
         >
           <Text style={Fonts.textRegular}>No</Text>
@@ -137,17 +144,28 @@ const ExampleContainer = () => {
 
       <Text style={Fonts.textSmall}>Version {version}</Text>
 
-      <PolicyDiv style={[Layout.row, Layout.fullWidth, Layout.justifyContentBetween]}>
+      <PolicyDiv
+        style={[Layout.row, Layout.fullWidth, Layout.justifyContentBetween]}
+      >
         <TouchableOpacity
-          onPress = {() => Linking.openURL('https://www.scottishtecharmy.org/app-privacy-policy')}>
+          onPress={() =>
+            Linking.openURL(
+              'https://www.scottishtecharmy.org/app-privacy-policy',
+            )
+          }
+        >
           <Text style={Fonts.textSmall}>Privacy Policy</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress = {() => Linking.openURL('https://www.scottishtecharmy.org/app-terms-conditions')}>
-          <Text style={Fonts.textSmall}>Terms & Conditions</Text> 
+          onPress={() =>
+            Linking.openURL(
+              'https://www.scottishtecharmy.org/app-terms-conditions',
+            )
+          }
+        >
+          <Text style={Fonts.textSmall}>Terms & Conditions</Text>
         </TouchableOpacity>
       </PolicyDiv>
-
     </ScrollView>
   )
 }

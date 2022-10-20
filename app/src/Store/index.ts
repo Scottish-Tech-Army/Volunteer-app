@@ -1,3 +1,6 @@
+/**
+ * @file contains store.
+ */
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { combineReducers, Middleware } from 'redux'
 import {
@@ -50,6 +53,7 @@ const store = configureStore({
     }).concat(api.middleware as Middleware)
 
     if (__DEV__ && !process.env.JEST_WORKER_ID) {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
       const createDebugger = require('redux-flipper').default
       middlewares.push(createDebugger())
     }

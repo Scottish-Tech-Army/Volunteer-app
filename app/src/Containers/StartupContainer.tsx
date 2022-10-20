@@ -1,3 +1,6 @@
+/**
+ * @file Main container scaffold used on startup.
+ */
 import React, { useEffect } from 'react'
 import { ActivityIndicator, View, Text } from 'react-native'
 import { useTranslation } from 'react-i18next'
@@ -5,7 +8,7 @@ import { useTheme } from '@/Hooks'
 import { Brand } from '@/Components'
 import { setDefaultTheme } from '@/Store/Theme'
 import { setDefaultWelcome, WelcomeState } from '@/Store/Welcome'
-import { navigateAndSimpleReset } from '@/Navigators/utils' 
+import { navigateAndSimpleReset } from '@/Navigators/utils'
 import { useSelector } from 'react-redux'
 
 const StartupContainer = () => {
@@ -25,9 +28,11 @@ const StartupContainer = () => {
     )
     await setDefaultTheme({ theme: 'default', darkMode: null })
     await setDefaultWelcome({ welcome: 'default', show: true })
-      
+
     // Don't show the welcome screen if it's deselcted in Example.
-    showWelcome ? navigateAndSimpleReset('Welcome') : navigateAndSimpleReset('Main')
+    showWelcome
+      ? navigateAndSimpleReset('Welcome')
+      : navigateAndSimpleReset('Main')
   }
 
   useEffect(() => {
