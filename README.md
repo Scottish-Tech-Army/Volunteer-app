@@ -11,7 +11,7 @@
 
 # Welcome
 
-Welcome to the the Volunteering App Github repo
+Welcome to the the Volunteering App Github repo.
 
 # Download the app!
 
