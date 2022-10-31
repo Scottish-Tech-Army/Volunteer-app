@@ -4,7 +4,7 @@ import styled from 'styled-components/native'
 
 interface ProjectAttachmentsProps {
   icon: React.ReactNode
-  details: String
+  details: string
   url: string
 }
 
@@ -19,12 +19,12 @@ const AttachmentDetails = styled.Text`
   margin-left: 12px;
 `
 
-const ProjectAttachments: FC<ProjectAttachmentsProps> = ({ icon, details, url}) => {
+const ProjectAttachments: FC<ProjectAttachmentsProps> = ({ icon, details, url }) => {
   // Project Attachments will not be displayed if URL is null or not a validate PDF format (.pdf)
-  if (!url || !url.match(".pdf")) return null;
+  if (!url || !url.match(".pdf")) return null
   return (
     <AttachmentButton onPress={() =>
-      navigate('ProjectScope', {pdf: url})
+      navigate('ProjectScope', { pdf: url })
     }>
       {icon}
       <AttachmentDetails>{details}</AttachmentDetails>

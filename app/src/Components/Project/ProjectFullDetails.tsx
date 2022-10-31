@@ -88,8 +88,8 @@ const ProjectFullDetails: FC<ProjectFullDetailsProps> = ({ project }) => {
           />
           </ProjectDetailsBlock>
           <ProjectAttachments
-            icon={<Feather name='file' size={24} />} 
-            details={ "A3 - Project Scope"}
+            icon={<Feather name="file" size={24} />} 
+            details={'A3 - Project Scope'}
             url={project.scope}
           />
           <Video url={project.video_file} />
