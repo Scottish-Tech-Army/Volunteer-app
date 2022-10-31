@@ -1,3 +1,6 @@
+/**
+ * @file contains store.
+ */
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { combineReducers, Middleware } from 'redux'
 import {
@@ -17,10 +20,12 @@ import { api } from '@/Services/api'
 import * as modules from '@/Services/modules'
 import events from './Events'
 import theme from './Theme'
+import welcome from './Welcome'
 
 const reducers = combineReducers({
   events,
   theme,
+  welcome,
   ...Object.values(modules).reduce(
     (acc, module) => ({
       ...acc,
@@ -33,7 +38,7 @@ const reducers = combineReducers({
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['events', 'theme'],
+  whitelist: ['events', 'theme', 'welcome'],
 }
 
 const persistedReducer = persistReducer(persistConfig, reducers)
@@ -48,6 +53,7 @@ const store = configureStore({
     }).concat(api.middleware as Middleware)
 
     if (__DEV__ && !process.env.JEST_WORKER_ID) {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
       const createDebugger = require('redux-flipper').default
       middlewares.push(createDebugger())
     }
