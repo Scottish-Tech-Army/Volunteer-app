@@ -8,8 +8,7 @@ import {
   ProjectDetailContainer,
   ProjectRegisterInterestContainer,
   ProjectSearchResultsContainer,
-  SearchContainer,
-  EventsContainer,
+  ProjectSearchContainer,
   EventSearchContainer,
   WelcomeContainer,
 } from '@/Containers'
@@ -17,7 +16,6 @@ import { useTheme } from '@/Hooks'
 import MainNavigator from './Main'
 import { navigationRef } from './utils'
 import ProjectScope from '@/Components/Project/ProjectScope'
-
 
 const Stack = createStackNavigator()
 
@@ -63,8 +61,8 @@ const ApplicationNavigator = () => {
             }}
           />
           <Stack.Screen
-            name="Search"
-            component={SearchContainer}
+            name="ProjectSearch"
+            component={ProjectSearchContainer}
             options={{
               headerTitleAlign: 'center',
               headerBackTitleVisible: false,
@@ -95,13 +93,13 @@ const ApplicationNavigator = () => {
               headerBackTitleVisible: false,
               title: 'Event Search',
             }}
-            />
-          <Stack.Screen
-          name="Welcome"
-          component={WelcomeContainer}
-          options={{headerShown:false}}
           />
-            <Stack.Screen
+          <Stack.Screen
+            name="Welcome"
+            component={WelcomeContainer}
+            options={{ headerShown: false }}
+          />
+           <Stack.Screen
             name="ProjectScope"
             component={ProjectScope}
             options={{
@@ -110,7 +108,6 @@ const ApplicationNavigator = () => {
               headerBackTitleVisible: false, //ios defaults to title of previous screen
             }}
           />
-          
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaView>

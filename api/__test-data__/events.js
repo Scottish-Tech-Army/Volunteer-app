@@ -1,8 +1,11 @@
+// Provides sample data for events tests
+
 const { faker } = require('@faker-js/faker');
 
 const eventTypes = ['Internal', 'External'];
 const durations = [60, 120, 360, 480]; // example event durations in minutes -- 1, 2, 6 and 8 hours
 const series = ['', 'Agile Practices', 'Cyber Security', 'Microsoft', 'STA Orientation', 'STA Project Showcase'];
+const relatedInitiatives = ['', 'Volunteering app', 'Eleos', 'Climate change app', 'Sole'];
 const times = ['10:00', '12:00', '15:30', '19:00'];
 
 function fakeImages() {
@@ -48,6 +51,7 @@ function fakeEventObject(dateType) {
     type: faker.random.arrayElement(eventTypes),
     notes: faker.lorem.sentence(),
     series: faker.random.arrayElement(series),
+    related_initiative: faker.random.arrayElement(relatedInitiatives),
     video_webpage: faker.internet.url(),
     video_file: faker.internet.url(),
     video_thumbnail: faker.internet.url(),

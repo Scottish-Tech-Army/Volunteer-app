@@ -1,31 +1,12 @@
 import React, { FC } from 'react'
-import Feather from 'react-native-vector-icons/Feather'
-import styled from 'styled-components/native'
-import ThemeVariables from '@/Theme/Variables'
+import IconAndLabel from '@/Components/IconAndLabel'
 
 interface EventTimeProps {
   time: string
 }
 
-const TimeView = styled.View`
-  margin-top: 9px;
-  display: flex;
-  flex-direction: row;
-`
-
-const TimeText = styled.Text`
-  font-weight: 600;
-  font-size: ${ThemeVariables.FontSize.small}px;
-  margin-left: 10px;
-`
-
-const EventTime: FC<EventTimeProps> = ({ time }) => {
-  return (
-    <TimeView>
-      <Feather name="clock" size={28} />
-      <TimeText>{time}</TimeText>
-    </TimeView>
-  )
-}
+const EventTime: FC<EventTimeProps> = ({ time }) => (
+  <IconAndLabel icon="clock" text={time} />
+)
 
 export default EventTime

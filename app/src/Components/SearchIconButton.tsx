@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { FC } from 'react'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import styled from 'styled-components/native'
-import { navigate } from '@/Navigators/utils'
+
+interface SearchIconButtonProps {
+  onPress: () => void
+}
 
 const EventSearchView = styled.TouchableOpacity`
   display: flex;
@@ -10,12 +13,12 @@ const EventSearchView = styled.TouchableOpacity`
   margin-right: 54px;
 `
 
-const EventSearch = () => {
+const SearchIconButton: FC<SearchIconButtonProps> = ({ onPress }) => {
   return (
-    <EventSearchView onPress={() => { navigate('EventSearch', '') }}>
+    <EventSearchView onPress={onPress}>
       <FontAwesome name="search" size={38} />
     </EventSearchView>
   )
 }
 
-export default EventSearch
+export default SearchIconButton
