@@ -30,6 +30,7 @@ export interface Project {
   buddying: boolean
   sector: string
   video_file: string
+  scope: string
 }
 
 export type Projects = Project[]

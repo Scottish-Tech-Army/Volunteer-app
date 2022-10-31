@@ -1,10 +1,11 @@
-import underDevelopmentAlert from '@/Utils/UnderDevelopmentAlert'
+import { navigate } from '@/Navigators/utils'
 import React, { FC } from 'react'
 import styled from 'styled-components/native'
 
 interface ProjectAttachmentsProps {
   icon: React.ReactNode
   details: String
+  url: string
 }
 
 const AttachmentButton = styled.TouchableOpacity`
@@ -18,9 +19,13 @@ const AttachmentDetails = styled.Text`
   margin-left: 12px;
 `
 
-const ProjectAttachments: FC<ProjectAttachmentsProps> = ({ icon, details }) => {
+const ProjectAttachments: FC<ProjectAttachmentsProps> = ({ icon, details, url}) => {
+  // Project Attachments will not be displayed if URL is null or not a validate PDF format (.pdf)
+  if (!url || !url.match(".pdf")) return null;
   return (
-    <AttachmentButton onPress={underDevelopmentAlert}>
+    <AttachmentButton onPress={() =>
+      navigate('ProjectScope', {pdf: url})
+    }>
       {icon}
       <AttachmentDetails>{details}</AttachmentDetails>
     </AttachmentButton>
