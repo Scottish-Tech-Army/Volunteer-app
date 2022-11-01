@@ -9,7 +9,7 @@ import {
   createNavigationContainerRef,
 } from '@react-navigation/native'
 
-type RootStackParamList = {
+export type RootStackParamList = {
   Startup: undefined
   Home: undefined
   ProjectDetail: undefined

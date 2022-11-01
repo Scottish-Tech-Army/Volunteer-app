@@ -11,7 +11,7 @@ import YesNoChoice from '../Forms/YesNoChoice'
 import { goBack } from '@/Navigators/utils'
 import {
   Project,
-  useLazyRegisterInterestQuery,
+  useLazyProjectRegisterInterestQuery,
 } from '@/Services/modules/projects'
 import { validateEmail } from '@/Utils/Validation'
 
@@ -52,7 +52,7 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
     new Date().setFullYear(today.getFullYear() + 1),
   )
   const [registerInterest, { data: responseData, error: responseError }] =
-    useLazyRegisterInterestQuery()
+    useLazyProjectRegisterInterestQuery()
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {

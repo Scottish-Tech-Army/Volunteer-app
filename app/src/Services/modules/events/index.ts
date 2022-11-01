@@ -22,6 +22,7 @@ export type Events = Event[]
 
 export enum EventsRange {
   All = 'all',
+  MyEvents = 'myEvents',
   Past = 'past',
   Upcoming = 'upcoming',
 }

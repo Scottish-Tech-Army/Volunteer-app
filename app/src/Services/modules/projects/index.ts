@@ -32,14 +32,16 @@ export enum ProjectsSearchField {
 
 export const projectsApi = api.injectEndpoints({
   endpoints: build => ({
-    fetchAll: fetchAll(build),
-    registerInterest: registerInterest(build),
+    fetchAllProjects: fetchAll(build),
+    projectRegisterInterest: registerInterest(build),
   }),
   overrideExisting: true,
 })
 
-export const { useLazyFetchAllQuery, useLazyRegisterInterestQuery } =
-  projectsApi
+export const {
+  useLazyFetchAllProjectsQuery,
+  useLazyProjectRegisterInterestQuery,
+} = projectsApi
 
 // Groups of related job roles
 // These are used e.g. for searching projects

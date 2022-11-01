@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
 import {
   EventDetailContainer,
+  ListContainer,
   StartupContainer,
   ProjectDetailContainer,
   ProjectRegisterInterestContainer,
@@ -86,7 +87,7 @@ const ApplicationNavigator = () => {
           />
           <Stack.Screen
             name="EventSearch"
-            component={EventSearchContainer}
+            component={ListContainer}
             options={{
               headerTitleAlign: 'center',
               headerBackTitleVisible: false,
