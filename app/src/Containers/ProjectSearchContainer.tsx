@@ -8,7 +8,7 @@ import TopOfApp from '@/Components/TopOfApp'
 import FreeSearchBar from '@/Components/FreeSearchBar'
 import { navigate } from '@/Navigators/utils'
 import {
-  useLazyFetchAllQuery,
+  useLazyFetchAllProjectsQuery,
   Projects,
   ProjectsSearchField,
   RolesRelated,
@@ -75,7 +75,7 @@ const ProjectSearchContainer = () => {
   }
 
   // fetch all projects
-  const [fetchAll, { data: projects }] = useLazyFetchAllQuery()
+  const [fetchAll, { data: projects }] = useLazyFetchAllProjectsQuery()
 
   useEffect(() => {
     fetchAll('')

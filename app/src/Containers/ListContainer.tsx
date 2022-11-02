@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-shadow */
 import React, { FC, useEffect, useState } from 'react'
 import { Text } from 'react-native'
 import { useDispatch } from 'react-redux'
@@ -35,7 +36,7 @@ export enum ListType {
   Projects = 'projects',
 }
 
-interface ListRouteParams {
+export interface ListRouteParams {
   type: ListType
   events?: {
     selectedOption?: EventsRange
@@ -108,6 +109,8 @@ const ListContainer = (props: {
 
   // When the container is first created, get data from the API
   useEffect(() => {
+    console.log('ListContainer created', params.type)
+
     switch (params.type) {
       case ListType.Events:
         fetchAllUpcomingEvents('')
@@ -117,23 +120,33 @@ const ListContainer = (props: {
         fetchAllProjects('')
         break
     }
-  }, [])
+  }, [
+    fetchAllUpcomingEvents,
+    fetchAllPastEvents,
+    fetchAllProjects,
+    params.type,
+  ])
 
   // When data has loaded, store data in the Redux store so it can be used by other containers/components too e.g. search containers
   useEffect(() => {
     if (allUpcomingEvents) {
+      console.log('Data loaded - allUpcomingEvents')
       dispatch(setEvents({ upcoming: allUpcomingEvents }))
     }
     if (allPastEvents) {
+      console.log('Data loaded - allPastEvents')
       dispatch(setEvents({ past: allPastEvents }))
     }
     if (allProjects) {
+      console.log('Data loaded - allProjects')
       dispatch(setProjects(allProjects))
     }
-  }, [allUpcomingEvents, allPastEvents, allProjects])
+  }, [allUpcomingEvents, allPastEvents, allProjects, dispatch])
 
   // Set which data to show in the list
   useEffect(() => {
+    console.log('Set which data to show')
+
     switch (params.type) {
       case ListType.Events:
         if (eventsSearch) {
@@ -158,10 +171,13 @@ const ListContainer = (props: {
     allUpcomingEvents,
     allPastEvents,
     eventsSelectedOption,
+    allProjects,
   ])
 
   // Determine whether the user's seeing everything, or search results
   useEffect(() => {
+    console.log("Determine whether the user's seeing everything")
+
     switch (params.type) {
       case ListType.Events:
         setIsSearchResults(Boolean(params.events?.search))
@@ -175,6 +191,8 @@ const ListContainer = (props: {
 
   // Set options to send to List component
   useEffect(() => {
+    console.log('Set options to send to List component')
+
     switch (params.type) {
       case ListType.Events:
         setListOptions({
@@ -200,6 +218,9 @@ const ListContainer = (props: {
   // this changes the route parameters - we use this to update EventOptions and to work out
   // whether to show events search results or all events in the list
   useEffect(() => {
+    console.log('params?.events changed')
+    console.log(params?.events)
+
     setEventsSelectedOption(
       params?.events?.selectedOption ??
         params?.events?.search?.range ??
@@ -223,13 +244,17 @@ const ListContainer = (props: {
 
         {listItemsToShow !== undefined && listOptions ? (
           <>
+            {/* Search icon/button */}
             {searchDestination !== undefined && (
               <SearchIconButton
                 onPress={() => navigate(searchDestination, '')}
               />
             )}
 
-            <EventOptions selected={eventsSelectedOption} />
+            {/* Past / Upcoming / My Events choice */}
+            {params.type === ListType.Events && (
+              <EventOptions selected={eventsSelectedOption} />
+            )}
 
             {/* If the user has done a quick search for upcoming events, show those
           quick search buttons so they can amend their quick search if they want,

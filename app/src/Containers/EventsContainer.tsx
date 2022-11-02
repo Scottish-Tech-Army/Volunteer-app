@@ -47,7 +47,7 @@ const SearchResultsLabel = styled.Text`
 const EventsContainer = (props: {
   route: {
     params: {
-      selectedOption?: EventsRange | 'myEvents'
+      selectedOption?: EventsRange
       search?: EventSearchInterface
     }
   }
@@ -62,9 +62,9 @@ const EventsContainer = (props: {
   const [eventsSearch, setEventsSearch] = useState<
     EventSearchInterface | undefined
   >()
-  const [selectedOption, setSelectedOption] = useState<
-    EventsRange | 'myEvents'
-  >(EventsRange.Upcoming)
+  const [selectedOption, setSelectedOption] = useState<EventsRange>(
+    EventsRange.Upcoming,
+  )
 
   // When the component is first created...
   useEffect(() => {

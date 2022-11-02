@@ -87,7 +87,7 @@ const ApplicationNavigator = () => {
           />
           <Stack.Screen
             name="EventSearch"
-            component={ListContainer}
+            component={EventSearchContainer}
             options={{
               headerTitleAlign: 'center',
               headerBackTitleVisible: false,

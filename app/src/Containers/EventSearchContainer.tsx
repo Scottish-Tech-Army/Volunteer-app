@@ -14,6 +14,7 @@ import EventSearchQuickSearchUpcoming, {
   EventQuickSearchUpcomingChoice,
 } from '@/Components/Event/EventSearchQuickSearchUpcoming'
 import FreeSearchBar from '@/Components/FreeSearchBar'
+import { ListRouteParams, ListType } from '@/Containers/ListContainer'
 import { EventsSearchField } from '@/Services/modules/events'
 import { navigate } from '@/Navigators/utils'
 import { Event, Events, EventsRange } from '@/Services/modules/events'
@@ -130,13 +131,16 @@ const EventSearchContainer = () => {
     })
 
     navigate('Events', {
-      search: {
-        type: 'text',
-        range: 'all',
-        results: resultsLatestFirst,
-        description: `"${freeTextSearchQuery}"`,
+      type: ListType.Events,
+      events: {
+        search: {
+          type: 'text',
+          range: 'all',
+          results: resultsLatestFirst,
+          description: `"${freeTextSearchQuery}"`,
+        },
       },
-    })
+    } as ListRouteParams)
   }
 
   const eventSeriesChoices = getQuickSearchChoices(EventsSearchField.Series)

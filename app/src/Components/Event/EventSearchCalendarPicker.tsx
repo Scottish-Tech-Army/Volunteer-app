@@ -8,6 +8,7 @@ import CalendarPicker from 'react-native-calendar-picker' // Note: this package 
 import { EventSearchInterface } from '@/Containers/EventSearchContainer'
 import SubmitButton from '@/Components/Forms/SubmitButton'
 import { filterEventsByDate } from '@/Containers/EventSearchContainer'
+import { ListRouteParams, ListType } from '@/Containers/ListContainer'
 import { navigate } from '@/Navigators/utils'
 import { EventsState } from '@/Store/Events'
 
@@ -46,13 +47,16 @@ const EventSearchCalendarPicker: FC<EventSearchCalendarPickerProps> = ({
         : `${startDateString} - ${endDateString}`
 
     navigate('Events', {
-      search: {
-        type: 'date',
-        range: 'upcoming',
-        results: eventsSearchResults,
-        description,
-      } as EventSearchInterface,
-    })
+      type: ListType.Events,
+      events: {
+        search: {
+          type: 'date',
+          range: 'upcoming',
+          results: eventsSearchResults,
+          description,
+        },
+      },
+    } as ListRouteParams)
   }
 
   const onDateChange = (date: Date, type: string) => {

@@ -3,6 +3,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { FC } from 'react'
 import styled from 'styled-components/native'
+import { ListRouteParams, ListType } from '@/Containers/ListContainer'
 import { EventsRange } from '@/Services/modules/events'
 import underDevelopmentAlert from '../../Utils/UnderDevelopmentAlert'
 import { navigate } from '@/Navigators/utils'
@@ -21,23 +22,24 @@ const EventOptionsText = styled.Text`
 const EventOptionsTouch = styled.TouchableOpacity``
 
 interface EventOptionsProps {
-  selected: EventsRange | 'myEvents'
+  selected: EventsRange
 }
 
 const EventOptions: FC<EventOptionsProps> = ({ selected }) => {
-  const handleSelectedOptionChange = (
-    newSelectedOption: EventsRange | 'myEvents',
-  ) => {
+  const handleSelectedOptionChange = (newSelectedOption: EventsRange) => {
     navigate('Events', {
-      screen: 'Events',
-      selectedOption: newSelectedOption,
-    })
+      type: ListType.Events,
+      events: {
+        selectedOption: newSelectedOption,
+      },
+    } as ListRouteParams)
   }
-
 
   return (
     <EventOptionsView>
-      <EventOptionsTouch onPress={() => handleSelectedOptionChange(EventsRange.Past)}>
+      <EventOptionsTouch
+        onPress={() => handleSelectedOptionChange(EventsRange.Past)}
+      >
         <EventOptionsText
           style={{
             fontWeight: selected === EventsRange.Past ? 'bold' : 'normal',

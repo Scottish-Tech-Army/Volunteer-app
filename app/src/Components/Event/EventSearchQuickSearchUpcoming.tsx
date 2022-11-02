@@ -6,6 +6,7 @@ import styled from 'styled-components/native'
 import { useSelector } from 'react-redux'
 import QuickSearchButton from '@/Components/Forms/QuickSearchButton'
 import { filterEventsByDate } from '@/Containers/EventSearchContainer'
+import { ListRouteParams, ListType } from '@/Containers/ListContainer'
 import { navigate } from '@/Navigators/utils'
 import { EventsState } from '@/Store/Events'
 
@@ -44,13 +45,16 @@ const EventSearchQuickSearchUpcomingButtons: FC<
     )
 
     navigate('Events', {
-      search: {
-        type: 'date',
-        quickSearchChoice,
-        range: 'upcoming',
-        results: eventsSearchResults,
+      type: ListType.Events,
+      events: {
+        search: {
+          type: 'date',
+          quickSearchChoice,
+          range: 'upcoming',
+          results: eventsSearchResults,
+        },
       },
-    })
+    } as ListRouteParams)
   }
 
   return (

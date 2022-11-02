@@ -7,7 +7,7 @@ import { Events, EventsRange } from '@/Services/modules/events'
 
 interface EventReturnedListProps {
   data: Events
-  eventsRange: EventsRange | 'myEvents'
+  eventsRange: EventsRange
 }
 
 const EventListItem = styled.TouchableOpacity`
@@ -19,7 +19,10 @@ const NoneFound = styled.Text`
   margin: 15px 15px 0px 15px;
 `
 
-const EventReturnedList: FC<EventReturnedListProps> = ({ data, eventsRange }) => {
+const EventReturnedList: FC<EventReturnedListProps> = ({
+  data,
+  eventsRange,
+}) => {
   return data.length ? (
     <FlatList
       data={data}
@@ -31,7 +34,10 @@ const EventReturnedList: FC<EventReturnedListProps> = ({ data, eventsRange }) =>
               navigate('EventDetail', { event: item, key: item.id })
             }
           >
-            <EventSummary event={item} hideDateTime={eventsRange === EventsRange.Past} />
+            <EventSummary
+              event={item}
+              hideDateTime={eventsRange === EventsRange.Past}
+            />
           </EventListItem>
         )
       }}

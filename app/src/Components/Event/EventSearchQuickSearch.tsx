@@ -5,6 +5,7 @@ import styled from 'styled-components/native'
 import { useSelector } from 'react-redux'
 import QuickSearchButton from '@/Components/Forms/QuickSearchButton'
 import Title from '@/Components/Title'
+import { ListRouteParams, ListType } from '@/Containers/ListContainer'
 import { EventsSearchField } from '@/Services/modules/events'
 import { navigate } from '@/Navigators/utils'
 import { EventsState } from '@/Store/Events'
@@ -62,14 +63,17 @@ const EventSearchQuickSearchButtons: FC<EventSearchQuickSearchProps> = ({
     ])
 
     navigate('Events', {
-      search: {
-        type: 'text',
-        quickSearchChoice,
-        range: 'all',
-        results: eventsSearchResults,
-        description: `${heading.toLowerCase()} "${quickSearchChoice}"`,
+      type: ListType.Events,
+      events: {
+        search: {
+          type: 'text',
+          quickSearchChoice,
+          range: 'all',
+          results: eventsSearchResults,
+          description: `${heading.toLowerCase()} "${quickSearchChoice}"`,
+        },
       },
-    })
+    } as ListRouteParams)
   }
 
   return (
