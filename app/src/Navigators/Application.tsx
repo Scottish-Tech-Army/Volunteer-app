@@ -1,3 +1,6 @@
+/**
+ * @file Navigators/Application
+ */
 import React from 'react'
 import { SafeAreaView, StatusBar } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
@@ -99,7 +102,7 @@ const ApplicationNavigator = () => {
             component={WelcomeContainer}
             options={{ headerShown: false }}
           />
-           <Stack.Screen
+          <Stack.Screen
             name="ProjectScope"
             component={ProjectScope}
             options={{

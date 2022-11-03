@@ -1,3 +1,10 @@
+/**
+ * @file Project Full Details
+ */
+/**
+ * Displays a list of available project roles 
+ * @param {project} project object 
+ */
 import React, { FC } from 'react'
 import styled from 'styled-components/native'
 import ProjectHeading from './ProjectHeading'
@@ -86,21 +93,21 @@ const ProjectFullDetails: FC<ProjectFullDetailsProps> = ({ project }) => {
                 : 'Not suitable for buddying'
             }
           />
-          </ProjectDetailsBlock>
-          <ProjectAttachments
-            icon={<Feather name="file" size={24} />} 
-            details={'A3 - Project Scope'}
-            url={project.scope}
-          />
-          <Video url={project.video_file} />
-          <SectionHeader>Team</SectionHeader>
-          <ProjectTeam>Placeholder text</ProjectTeam>
-          <HorizontalLine />
-          <SectionHeader>Related Roles</SectionHeader>
-          <ProjectRelatedRoles>Placeholder text</ProjectRelatedRoles>
-        </ProjectFullDetailsView>
-      </ScrollView>
-    )
-  }
+        </ProjectDetailsBlock>
+        <ProjectAttachments
+          icon={<Feather name="file" size={24} />}
+          details={'A3 - Project Scope'}
+          url={project.scope}
+        />
+        <Video url={project.video_file} />
+        <SectionHeader>Team</SectionHeader>
+        <ProjectTeam>Placeholder text</ProjectTeam>
+        <HorizontalLine />
+        <SectionHeader>Related Roles</SectionHeader>
+        <ProjectRelatedRoles>Placeholder text</ProjectRelatedRoles>
+      </ProjectFullDetailsView>
+    </ScrollView>
+  )
+}
 
 export default ProjectFullDetails

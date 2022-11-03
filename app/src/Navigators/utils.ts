@@ -1,4 +1,5 @@
 /**
+ * @file Navigators/utils
  * Used to navigating without the navigation prop
  * @see https://reactnavigation.org/docs/navigating-without-navigation-prop/
  *

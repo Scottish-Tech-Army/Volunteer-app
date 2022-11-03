@@ -1,3 +1,6 @@
+/**
+ * @file projects/index
+ */
 import { api } from '../../api'
 import fetchAll from './fetchAll'
 import registerInterest from './registerInterest'
