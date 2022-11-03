@@ -1,5 +1,5 @@
 /**
- * @file Project Attachments 
+ * @file Project Attachments
  */
 /**
  * Displays the attachment button

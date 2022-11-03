@@ -12,7 +12,6 @@ import PDFView from 'react-native-view-pdf'
 import React, { FC } from 'react'
 import { Route, View } from 'react-native'
 
-
 interface ProjectScopeProps {
   route: Route
 }

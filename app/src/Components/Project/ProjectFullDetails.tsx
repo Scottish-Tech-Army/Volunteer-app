@@ -2,8 +2,8 @@
  * @file Project Full Details
  */
 /**
- * Displays a list of available project roles 
- * @param {project} project object 
+ * Displays a list of available project roles
+ * @param {project} project object
  */
 import React, { FC } from 'react'
 import styled from 'styled-components/native'
