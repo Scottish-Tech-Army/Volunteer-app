@@ -25,18 +25,31 @@ type RootStackParamList = {
 
 export const navigationRef = createNavigationContainerRef<RootStackParamList>()
 
+/**
+ * Button to go back
+ */
 export function goBack() {
   if (navigationRef.isReady()) {
     navigationRef.goBack()
   }
 }
 
+/**
+ * Navigate to a route in current navigation tree
+ * @param {name} name of the route to navigate to.
+ * @param {params} params object for the route.
+ */
 export function navigate(name: keyof RootStackParamList, params: any) {
   if (navigationRef.isReady()) {
     navigationRef.navigate(name, params)
   }
 }
 
+/**
+ * Reset the navigation state to the provided state.
+ * @param {routes} routes of the navigation.
+ * @param {index} index of the route to reset.
+ */
 export function navigateAndReset(routes = [], index = 0) {
   if (navigationRef.isReady()) {
     navigationRef.dispatch(
@@ -48,6 +61,11 @@ export function navigateAndReset(routes = [], index = 0) {
   }
 }
 
+/**
+ * Reset the navigation state to the provided state.
+ * @param {name} name of the route to navigate to.
+ * @param {index} index of the route to reset.
+ */
 export function navigateAndSimpleReset(name: string, index = 0) {
   if (navigationRef.isReady()) {
     navigationRef.dispatch(

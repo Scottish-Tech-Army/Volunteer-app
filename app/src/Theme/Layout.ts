@@ -106,5 +106,8 @@ export default function ({}: ThemeVariables): ThemeLayout {
     rotate90Inverse: {
       transform: [{ rotate: '-90deg' }],
     },
+    flex1: {
+      flex:1
+    }
   })
 }

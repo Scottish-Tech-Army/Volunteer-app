@@ -1,9 +1,6 @@
 /**
  * @file Project Attachments
  */
-/**
- * Displays the attachment button
- */
 import { navigate } from '@/Navigators/utils'
 import React, { FC } from 'react'
 import styled from 'styled-components/native'
@@ -24,7 +21,11 @@ const AttachmentDetails = styled.Text`
   font-size: 16px;
   margin-left: 12px;
 `
-
+/**
+ * Displays the attachment button
+ * @param {url} url of project scope pdf
+ * @returns {AttachmentButton} project attachment button and text
+ */
 const ProjectAttachments: FC<ProjectAttachmentsProps> = ({
   icon,
   details,

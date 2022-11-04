@@ -22,7 +22,10 @@ import ProjectScope from '@/Components/Project/ProjectScope'
 
 const Stack = createStackNavigator()
 
-// @refresh reset
+/**
+ * Safe area and Stack Navigator for the app
+ * @returns {SafeAreaView} safe area and navigator container
+ */
 const ApplicationNavigator = () => {
   const { Layout, darkMode, NavigationTheme } = useTheme()
   const { colors } = NavigationTheme

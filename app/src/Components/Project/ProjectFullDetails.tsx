@@ -1,10 +1,7 @@
 /**
  * @file Project Full Details
  */
-/**
- * Displays a list of available project roles
- * @param {project} project object
- */
+
 import React, { FC } from 'react'
 import styled from 'styled-components/native'
 import ProjectHeading from './ProjectHeading'
@@ -70,6 +67,11 @@ const ProjectRelatedRoles = styled.Text`
   border: ${props => `2px solid ${props.theme.colors.staBlack}`};
   padding: 17px 27px 11px 27px;
 `
+/**
+ * Displays a list of available project roles
+ * @param {project} project object
+ * @returns {project} list of projects
+ */
 const ProjectFullDetails: FC<ProjectFullDetailsProps> = ({ project }) => {
   return (
     <ScrollView>
