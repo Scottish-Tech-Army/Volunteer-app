@@ -1,10 +1,13 @@
+/**
+ * @file Layout
+ */
 import { StyleSheet } from 'react-native'
 import { ThemeLayout, ThemeVariables } from '@/Theme/theme.type'
 
 /**
  *
- * @param Theme can be spread like {Colors, NavigationColors, Gutters, Layout, Common, ...args}
- * @return {*}
+ * @param {ThemeVariables} ThemeVariables can be spread like {Colors, NavigationColors, Gutters, Layout, Common, ...args}
+ * @returns {ThemeVariables} Different theme layouts
  */
 export default function ({}: ThemeVariables): ThemeLayout {
   return StyleSheet.create({
@@ -107,7 +110,7 @@ export default function ({}: ThemeVariables): ThemeLayout {
       transform: [{ rotate: '-90deg' }],
     },
     flex1: {
-      flex:1
-    }
+      flex: 1,
+    },
   })
 }
