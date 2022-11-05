@@ -4,7 +4,7 @@ import React, { FC, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components/native'
 import SafeArea from '@/Components/SafeArea'
-import { EventSearchInterface } from './EventSearchContainer'
+import { EventSearch } from './EventSearchContainer'
 import TopOfApp from '@/Components/TopOfApp'
 import EventOptions from '@/Components/Event/EventOptions'
 import EventReturnedList from '@/Components/Event/EventReturnedList'
@@ -48,7 +48,7 @@ const EventsContainer = (props: {
   route: {
     params: {
       selectedOption?: EventsRange
-      search?: EventSearchInterface
+      search?: EventSearch
     }
   }
 }) => {
@@ -59,9 +59,7 @@ const EventsContainer = (props: {
     useLazyFetchAllPastEventsQuery()
 
   const dispatch = useDispatch()
-  const [eventsSearch, setEventsSearch] = useState<
-    EventSearchInterface | undefined
-  >()
+  const [eventsSearch, setEventsSearch] = useState<EventSearch | undefined>()
   const [selectedOption, setSelectedOption] = useState<EventsRange>(
     EventsRange.Upcoming,
   )

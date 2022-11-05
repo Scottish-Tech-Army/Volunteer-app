@@ -5,7 +5,7 @@ import dayjs from 'dayjs'
 import { Alert } from 'react-native'
 import { useSelector } from 'react-redux'
 import CalendarPicker from 'react-native-calendar-picker' // Note: this package also requires 'moment' package to be installed
-import { EventSearchInterface } from '@/Containers/EventSearchContainer'
+import { EventSearch } from '@/Containers/EventSearchContainer'
 import SubmitButton from '@/Components/Forms/SubmitButton'
 import { filterEventsByDate } from '@/Containers/EventSearchContainer'
 import { ListRouteParams, ListType } from '@/Containers/ListContainer'

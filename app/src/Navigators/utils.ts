@@ -11,7 +11,7 @@ import {
 
 export type RootStackParamList = {
   Startup: undefined
-  Home: undefined
+  Projects: undefined
   ProjectDetail: undefined
   ProjectRegisterInterest: undefined
   ProjectSearch: undefined

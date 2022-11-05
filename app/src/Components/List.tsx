@@ -12,7 +12,6 @@ export interface ListOptions {
   events?: {
     range: EventsRange
   }
-  projects?: {}
 }
 
 interface ListProps {
@@ -80,7 +79,7 @@ const List: FC<ListProps> = ({ data, mode, options, type }) => {
                   navigate('ProjectDetail', { item, key: item.res_id })
                 }}
               >
-                <ProjectSummary project={item}></ProjectSummary>
+                <ProjectSummary project={item} />
               </ProjectDetails>
             )
           }}

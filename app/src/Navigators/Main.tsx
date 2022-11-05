@@ -1,11 +1,6 @@
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import {
-  HomeContainer,
-  EventsContainer,
-  ExampleContainer,
-  ListContainer,
-} from '@/Containers'
+import { ExampleContainer, ListContainer } from '@/Containers'
 import Entypo from 'react-native-vector-icons/Entypo'
 import { ListType } from '@/Containers/ListContainer'
 import { useTheme } from '@/Hooks'
@@ -18,7 +13,7 @@ const MainNavigator = () => {
   return (
     <Tab.Navigator>
       <Tab.Screen
-        name="Home"
+        name="Projects"
         component={ListContainer}
         initialParams={{ type: ListType.Projects }}
         options={{

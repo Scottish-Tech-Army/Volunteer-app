@@ -6,6 +6,7 @@ import styled from 'styled-components/native'
 import { ScrollView, SafeAreaView } from 'react-native'
 import TopOfApp from '@/Components/TopOfApp'
 import FreeSearchBar from '@/Components/FreeSearchBar'
+import { ListRouteParams, ListType } from '@/Containers/ListContainer'
 import { navigate } from '@/Navigators/utils'
 import {
   useLazyFetchAllProjectsQuery,
@@ -66,6 +67,11 @@ const QuickSearchTitle = styled.Text`
   display: flex;
   text-align: center;
 `
+
+export interface ProjectSearch {
+  results: Projects // the projects results for this search
+  description?: string // some text to tell the user what the search was for, e.g. the search text they entered
+}
 
 const ProjectSearchContainer = () => {
   const [freeTextSearchQuery, setFreeTextSearchQuery] = useState('')
@@ -137,6 +143,20 @@ const ProjectSearchContainer = () => {
       searchField,
       searchQuery: searchQueryChoice,
     })
+
+    const description = `${
+      searchField === 'sector' ? 'cause' : searchField
+    } "${searchQueryChoice}"`
+
+    navigate('Projects', {
+      type: ListType.Projects,
+      projects: {
+        search: {
+          results,
+          description,
+        },
+      },
+    } as ListRouteParams)
   }
 
   const handleFreeTextSubmit = () => {

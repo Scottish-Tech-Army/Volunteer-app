@@ -3,13 +3,15 @@ import React, { FC, useEffect, useState } from 'react'
 import { Text } from 'react-native'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components/native'
-import { EventSearchInterface } from './EventSearchContainer'
+import { EventSearch } from './EventSearchContainer'
+import { ProjectSearch } from './ProjectSearchContainer'
 import EventOptions from '@/Components/Event/EventOptions'
 import EventReturnedList from '@/Components/Event/EventReturnedList'
 import EventSearchUpcomingQuickSearch from '@/Components/Event/EventSearchQuickSearchUpcoming'
 import HorizontalLine from '@/Components/HorizontalLine'
 import SafeArea from '@/Components/SafeArea'
 import TopOfApp from '@/Components/TopOfApp'
+import ProjectFilterSort from '@/Components/Project/ProjectFilterSort'
 import ProjectOptions from '@/Components/Project/ProjectOptions'
 import ProjectReturnedList from '@/Components/Project/ProjectReturnedList'
 import List, { ListOptions } from '@/Components/List'
@@ -40,7 +42,10 @@ export interface ListRouteParams {
   type: ListType
   events?: {
     selectedOption?: EventsRange
-    search?: EventSearchInterface
+    search?: EventSearch
+  }
+  projects?: {
+    search?: ProjectSearch
   }
 }
 
@@ -78,9 +83,7 @@ const ListContainer = (props: {
     useLazyFetchAllUpcomingEventsQuery()
   const [fetchAllPastEvents, { data: allPastEvents }] =
     useLazyFetchAllPastEventsQuery()
-  const [eventsSearch, setEventsSearch] = useState<
-    EventSearchInterface | undefined
-  >()
+  const [eventsSearch, setEventsSearch] = useState<EventSearch | undefined>()
   const [eventsSelectedOption, setEventsSelectedOption] = useState<EventsRange>(
     EventsRange.Upcoming,
   )
@@ -260,7 +263,8 @@ const ListContainer = (props: {
           quick search buttons so they can amend their quick search if they want,
           without having to go back to the search screen
           TODO: update to include projects search */}
-            {eventsSelectedOption === EventsRange.Upcoming &&
+            {params.type === ListType.Events &&
+              eventsSelectedOption === EventsRange.Upcoming &&
               eventsSearch?.range === EventsRange.Upcoming &&
               eventsSearch?.quickSearchUpcomingChoice && (
                 <SearchResultsView>
@@ -279,6 +283,10 @@ const ListContainer = (props: {
                 </SearchResultsLabel>
               </SearchResultsView>
             )}
+
+            {/* Projects filter & sort */}
+            {params.type === ListType.Projects &&
+              Boolean(listItemsToShow.length) && <ProjectFilterSort />}
 
             <HorizontalLine />
 

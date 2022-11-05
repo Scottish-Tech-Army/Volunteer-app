@@ -29,7 +29,7 @@ const SectionView = styled.View`
   margin: 10px 0;
 `
 
-export interface EventSearchInterface {
+export interface EventSearch {
   type: 'date' | 'text' // what type of search is it
   range: EventsRange // which range of events are being searched (past/upcoming/all)
   results: Events // the events results for this search
