@@ -138,12 +138,6 @@ const ProjectSearchContainer = () => {
       results = searchByArray(projects, searchField, searchQueries) as Projects // here we do not want to use fuzzy search as it would include unwanted results
     }
 
-    navigate('ProjectSearchResults', {
-      results,
-      searchField,
-      searchQuery: searchQueryChoice,
-    })
-
     const description = `${
       searchField === 'sector' ? 'cause' : searchField
     } "${searchQueryChoice}"`
@@ -184,11 +178,19 @@ const ProjectSearchContainer = () => {
       searchQueries,
     )
 
-    navigate('ProjectSearchResults', {
-      results,
-      searchField: undefined,
-      searchQuery: freeTextSearchQuery,
-    })
+    const description = `"${freeTextSearchQuery}"`
+
+    console.log('Projects search results', results.length)
+
+    navigate('Projects', {
+      type: ListType.Projects,
+      projects: {
+        search: {
+          results,
+          description,
+        },
+      },
+    } as ListRouteParams)
   }
 
   return (

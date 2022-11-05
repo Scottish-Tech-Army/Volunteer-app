@@ -63,6 +63,13 @@ const SearchResultsLabel = styled.Text`
   width: 100%;
 `
 
+const ClearSearchLabel = styled.Text`
+  color: ${props => props.theme.colors.staBlack};
+  text-align: center;
+  text-decoration: underline;
+  width: 100%;
+`
+
 const ListContainer = (props: {
   route: {
     params: ListRouteParams
@@ -75,6 +82,9 @@ const ListContainer = (props: {
   const [isSearchResults, setIsSearchResults] = useState(false)
   const [listItemsToShow, setListItemsToShow] = useState<Events | Projects>()
   const [listOptions, setListOptions] = useState<ListOptions>()
+  const [searchDescription, setSearchDescription] = useState<
+    string | undefined
+  >()
   const [searchDestination, setSearchDestination] =
     useState<keyof RootStackParamList>()
 
@@ -91,6 +101,9 @@ const ListContainer = (props: {
   // Projects variables
   const [fetchAllProjects, { data: allProjects }] =
     useLazyFetchAllProjectsQuery()
+  const [projectsSearch, setProjectsSearch] = useState<
+    ProjectSearch | undefined
+  >()
 
   /*
    *
@@ -154,6 +167,7 @@ const ListContainer = (props: {
       case ListType.Events:
         if (eventsSearch) {
           setListItemsToShow(eventsSearch.results)
+          setSearchDescription(eventsSearch.description)
         } else if (
           allUpcomingEvents &&
           eventsSelectedOption === EventsRange.Upcoming
@@ -165,7 +179,12 @@ const ListContainer = (props: {
         break
 
       case ListType.Projects:
-        setListItemsToShow(allProjects)
+        if (projectsSearch) {
+          setListItemsToShow(projectsSearch.results)
+          setSearchDescription(projectsSearch?.description)
+        } else {
+          setListItemsToShow(allProjects)
+        }
         break
     }
   }, [
@@ -175,6 +194,7 @@ const ListContainer = (props: {
     allPastEvents,
     eventsSelectedOption,
     allProjects,
+    projectsSearch,
   ])
 
   // Determine whether the user's seeing everything, or search results
@@ -211,6 +231,29 @@ const ListContainer = (props: {
     }
   }, [params.type, eventsSelectedOption])
 
+  // Clear the search so the user's seeing all data instead
+  const clearSearch = () => {
+    setSearchDescription(undefined)
+
+    switch (params.type) {
+      case ListType.Events:
+        setEventsSearch(undefined)
+        navigate('Events', {
+          type: ListType.Events,
+          events: { search: undefined },
+        })
+        break
+
+      case ListType.Projects:
+        setProjectsSearch(undefined)
+        navigate('Projects', {
+          type: ListType.Projects,
+          projects: { search: undefined },
+        })
+        break
+    }
+  }
+
   /*
    *
    * Events logic
@@ -238,7 +281,15 @@ const ListContainer = (props: {
    *
    */
 
-  // TODO
+  // When the user changes search options or they tap Past/Upcoming/My events navigation occurs,
+  // this changes the route parameters - we use this to update EventOptions and to work out
+  // whether to show events search results or all events in the list
+  useEffect(() => {
+    console.log('params?.projects changed')
+    console.log(params?.projects)
+
+    setProjectsSearch(params?.projects?.search)
+  }, [params?.projects])
 
   return (
     <Theme>
@@ -274,13 +325,15 @@ const ListContainer = (props: {
                 </SearchResultsView>
               )}
 
-            {/* If the user has searched, show some text indicating what they searched for 
-            TODO: update to include projects search */}
-            {Boolean(eventsSearch?.description) && (
+            {/* If the user has searched, show some text indicating what they searched for */}
+            {Boolean(searchDescription) && (
               <SearchResultsView>
                 <SearchResultsLabel>
-                  Results for {eventsSearch?.description}
+                  Results for {searchDescription}
                 </SearchResultsLabel>
+                <ClearSearchLabel onPress={clearSearch}>
+                  Clear search
+                </ClearSearchLabel>
               </SearchResultsView>
             )}
 
