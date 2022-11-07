@@ -22,10 +22,9 @@ buildscript {
 allprojects {
     repositories {
         exclusiveContent {
-            // We get React Native's Android binaries exclusively through npm,
-            // from a local Maven repo inside node_modules/react-native/.
-            // (The use of exclusiveContent prevents looking elsewhere like Maven Central
-            // and potentially getting a wrong version.)
+            // Official recommended fix for Android build problem with React Native versions below 0.71
+            // https://github.com/facebook/react-native/issues/35210
+            // TODO: remove this exclusiveContent section when we upgrade to React Native 0.71 (or above)
             filter {
                 includeGroup "com.facebook.react"
             }
