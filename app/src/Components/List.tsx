@@ -1,3 +1,5 @@
+// Show a list of things, e.g. projects or events (can be extended in the future to show other kinds of things)
+
 import React, { FC } from 'react'
 import styled from 'styled-components/native'
 import { FlatList } from 'react-native'
@@ -7,12 +9,6 @@ import { ListType } from '@/Containers/ListContainer'
 import { navigate, RootStackParamList } from '@/Navigators/utils'
 import { Events, EventsRange } from '@/Services/modules/events'
 import { Projects } from '@/Services/modules/projects'
-
-export interface ListOptions {
-  events?: {
-    range: EventsRange
-  }
-}
 
 interface ListProps {
   data: Events | Projects
@@ -40,6 +36,12 @@ const TryAnotherSearch = styled.Text`
   margin: 15px 15px 0px 15px;
   text-decoration: underline;
 `
+
+export interface ListOptions {
+  events?: {
+    range: EventsRange
+  }
+}
 
 const List: FC<ListProps> = ({ data, mode, options, searchScreen, type }) => {
   let flatList

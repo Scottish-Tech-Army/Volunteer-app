@@ -15,7 +15,6 @@ export type RootStackParamList = {
   ProjectDetail: undefined
   ProjectRegisterInterest: undefined
   ProjectSearch: undefined
-  ProjectSearchResults: undefined
   Events: undefined
   EventDetail: undefined
   EventSearch: undefined

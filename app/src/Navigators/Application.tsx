@@ -69,14 +69,6 @@ const ApplicationNavigator = () => {
             }}
           />
           <Stack.Screen
-            name="ProjectSearchResults"
-            component={ListContainer}
-            options={{
-              headerBackTitleVisible: false,
-              title: 'Project Search Results',
-            }}
-          />
-          <Stack.Screen
             name="EventDetail"
             component={EventDetailContainer}
             options={{

@@ -1,3 +1,7 @@
+// Container for showing a list of things (e.g. projects or events -- can be extended to show other types of things in the future)
+// It can show everything (e.g. all projects), or just the results of a search
+// Pass in parameters by using navigate() -- see ListRouteParams below
+
 /* eslint-disable @typescript-eslint/no-shadow */
 import React, { useEffect, useState } from 'react'
 import { Text } from 'react-native'
