@@ -48,14 +48,12 @@ const EventSearchCalendarPicker: FC<EventSearchCalendarPickerProps> = ({
 
     navigate('Events', {
       type: ListType.Events,
-      events: {
-        search: {
-          type: 'date',
-          range: 'upcoming',
-          results: eventsSearchResults,
-          description,
-        },
-      },
+      search: {
+        type: 'date',
+        range: 'upcoming',
+        results: eventsSearchResults,
+        description,
+      } as EventSearch,
     } as ListRouteParams)
   }
 

@@ -34,7 +34,7 @@ export interface EventSearch {
   range: EventsRange // which range of events are being searched (past/upcoming/all)
   results: Events // the events results for this search
   description?: string // some text to tell the user what the search was, e.g. the date range
-  quickSearchUpcomingChoice?: EventQuickSearchUpcomingChoice // upcoming date quick search (if any)
+  quickSearchUpcomingChoice?: EventQuickSearchUpcomingChoice // upcoming date quick search (today / this week / this month), if any
 }
 
 export const filterEventsByDate = (
@@ -132,14 +132,12 @@ const EventSearchContainer = () => {
 
     navigate('Events', {
       type: ListType.Events,
-      events: {
-        search: {
-          type: 'text',
-          range: 'all',
-          results: resultsLatestFirst,
-          description: `"${freeTextSearchQuery}"`,
-        },
-      },
+      search: {
+        type: 'text',
+        range: 'all',
+        results: resultsLatestFirst,
+        description: `"${freeTextSearchQuery}"`,
+      } as EventSearch,
     } as ListRouteParams)
   }
 

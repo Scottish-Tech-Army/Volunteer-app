@@ -43,15 +43,12 @@ const EventSummary: FC<EventSummaryProps> = ({ event, hideDateTime }) => (
     />
     <RightColumn>
       <Title text={event.name} type="list" />
-      {
-        !hideDateTime && (
-          <>
-        <EventDate date={event.date} />
-        <EventTime time={event.time} />
-          </>
-        )
-      }
-
+      {!hideDateTime && (
+        <>
+          <EventDate date={event.date} />
+          <EventTime time={event.time} />
+        </>
+      )}
     </RightColumn>
   </EventInfo>
 )

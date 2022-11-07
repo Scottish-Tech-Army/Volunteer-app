@@ -66,6 +66,7 @@ const ApplicationNavigator = () => {
             options={{
               headerTitleAlign: 'center',
               headerBackTitleVisible: false,
+              title: 'Project Search',
             }}
           />
           <Stack.Screen

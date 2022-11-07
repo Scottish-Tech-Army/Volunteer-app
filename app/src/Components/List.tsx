@@ -4,7 +4,7 @@ import { FlatList } from 'react-native'
 import EventSummary from '@/Components/Event/EventSummary'
 import ProjectSummary from '@/Components/Project/ProjectSummary'
 import { ListType } from '@/Containers/ListContainer'
-import { goBack, navigate } from '@/Navigators/utils'
+import { navigate, RootStackParamList } from '@/Navigators/utils'
 import { Events, EventsRange } from '@/Services/modules/events'
 import { Projects } from '@/Services/modules/projects'
 
@@ -18,17 +18,13 @@ interface ListProps {
   data: Events | Projects
   mode: 'fullList' | 'search'
   options: ListOptions
+  searchScreen: keyof RootStackParamList
   type: ListType
 }
 
 const EventListItem = styled.TouchableOpacity`
   margin: 21px 21px 0px 21px;
   width: 150px;
-`
-const GoBack = styled.Text`
-  font-size: 18px;
-  margin: 15px 15px 0px 15px;
-  text-decoration: underline;
 `
 const NoneFound = styled.Text`
   font-size: 18px;
@@ -39,8 +35,13 @@ const ProjectDetails = styled.TouchableOpacity`
   border: ${props => `2px solid ${props.theme.colors.staBlack}`};
   padding: 17px 27px 11px 27px;
 `
+const TryAnotherSearch = styled.Text`
+  font-size: 18px;
+  margin: 15px 15px 0px 15px;
+  text-decoration: underline;
+`
 
-const List: FC<ListProps> = ({ data, mode, options, type }) => {
+const List: FC<ListProps> = ({ data, mode, options, searchScreen, type }) => {
   let flatList
 
   switch (type) {
@@ -58,7 +59,7 @@ const List: FC<ListProps> = ({ data, mode, options, type }) => {
               >
                 <EventSummary
                   event={item}
-                  hideDateTime={options.events?.range === EventsRange.Past}
+                  hideDateTime={options?.events?.range === EventsRange.Past}
                 />
               </EventListItem>
             )
@@ -102,7 +103,13 @@ const List: FC<ListProps> = ({ data, mode, options, type }) => {
       </NoneFound>
 
       {mode === 'search' && (
-        <GoBack onPress={goBack}>Try another search</GoBack>
+        <TryAnotherSearch
+          onPress={() => {
+            navigate(searchScreen, undefined)
+          }}
+        >
+          Try another search
+        </TryAnotherSearch>
       )}
     </>
   )

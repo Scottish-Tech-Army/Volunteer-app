@@ -29,8 +29,10 @@ const EventOptions: FC<EventOptionsProps> = ({ selected }) => {
   const handleSelectedOptionChange = (newSelectedOption: EventsRange) => {
     navigate('Events', {
       type: ListType.Events,
-      events: {
-        selectedOption: newSelectedOption,
+      options: {
+        events: {
+          range: newSelectedOption,
+        },
       },
     } as ListRouteParams)
   }

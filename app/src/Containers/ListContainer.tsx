@@ -7,7 +7,9 @@ import { EventSearch } from './EventSearchContainer'
 import { ProjectSearch } from './ProjectSearchContainer'
 import EventOptions from '@/Components/Event/EventOptions'
 import EventReturnedList from '@/Components/Event/EventReturnedList'
-import EventSearchUpcomingQuickSearch from '@/Components/Event/EventSearchQuickSearchUpcoming'
+import EventSearchUpcomingQuickSearch, {
+  EventQuickSearchUpcomingChoice,
+} from '@/Components/Event/EventSearchQuickSearchUpcoming'
 import HorizontalLine from '@/Components/HorizontalLine'
 import SafeArea from '@/Components/SafeArea'
 import TopOfApp from '@/Components/TopOfApp'
@@ -33,22 +35,6 @@ import { setEvents } from '@/Store/Events'
 import { setProjects } from '@/Store/Projects'
 import Theme from '@/Theme/OldTheme'
 
-export enum ListType {
-  Events = 'events',
-  Projects = 'projects',
-}
-
-export interface ListRouteParams {
-  type: ListType
-  events?: {
-    selectedOption?: EventsRange
-    search?: EventSearch
-  }
-  projects?: {
-    search?: ProjectSearch
-  }
-}
-
 const SearchResultsView = styled.View`
   display: flex;
   flex-direction: row;
@@ -70,63 +56,72 @@ const ClearSearchLabel = styled.Text`
   width: 100%;
 `
 
+export enum ListType {
+  Events = 'events',
+  Projects = 'projects',
+}
+
+export interface ListRouteParams {
+  type: ListType
+  search?: EventSearch | ProjectSearch
+  options: ListOptions
+}
+
+type Screens = {
+  [key in ListType]: keyof RootStackParamList
+}
+
 const ListContainer = (props: {
   route: {
     params: ListRouteParams
   }
 }) => {
-  const params = props.route.params
+  /*
+   *
+   * Declare variables
+   *
+   */
 
-  // Common variables
+  // General
   const dispatch = useDispatch()
-  const [isSearchResults, setIsSearchResults] = useState(false)
   const [listItemsToShow, setListItemsToShow] = useState<Events | Projects>()
-  const [listOptions, setListOptions] = useState<ListOptions>()
-  const [searchDescription, setSearchDescription] = useState<
-    string | undefined
-  >()
-  const [searchDestination, setSearchDestination] =
-    useState<keyof RootStackParamList>()
+  const params = props.route.params
+  const screens = {
+    list: {
+      [ListType.Events]: 'Events',
+      [ListType.Projects]: 'Projects',
+    } as Screens,
+    search: {
+      [ListType.Events]: 'EventSearch',
+      [ListType.Projects]: 'ProjectSearch',
+    } as Screens,
+  }
 
-  // Events variables
+  // Events-specific
   const [fetchAllUpcomingEvents, { data: allUpcomingEvents }] =
     useLazyFetchAllUpcomingEventsQuery()
   const [fetchAllPastEvents, { data: allPastEvents }] =
     useLazyFetchAllPastEventsQuery()
-  const [eventsSearch, setEventsSearch] = useState<EventSearch | undefined>()
   const [eventsSelectedOption, setEventsSelectedOption] = useState<EventsRange>(
     EventsRange.Upcoming,
   )
+  const [eventsShowUpcomingQuickSearch, setEventsShowUpcomingQuickSearch] =
+    useState(false)
+  const [eventsQuickSearchUpcomingChoice, setEventsQuickSearchUpcomingChoice] =
+    useState<EventQuickSearchUpcomingChoice | undefined>()
 
-  // Projects variables
+  // Projects-specific
   const [fetchAllProjects, { data: allProjects }] =
     useLazyFetchAllProjectsQuery()
-  const [projectsSearch, setProjectsSearch] = useState<
-    ProjectSearch | undefined
-  >()
 
   /*
    *
-   * General logic and functionality
+   * General logic
    *
    */
 
-  // Set options based on which type of data we're showing in the list
+  // What to do when container is first created, e.g. fetch data from the API
   useEffect(() => {
-    switch (params.type) {
-      case ListType.Events:
-        setSearchDestination('EventSearch')
-        break
-      case ListType.Projects:
-        setSearchDestination('ProjectSearch')
-        break
-    }
-  }, [params.type])
-
-  // When the container is first created, get data from the API
-  useEffect(() => {
-    console.log('ListContainer created', params.type)
-
     switch (params.type) {
       case ListType.Events:
         fetchAllUpcomingEvents('')
@@ -146,29 +141,27 @@ const ListContainer = (props: {
   // When data has loaded, store data in the Redux store so it can be used by other containers/components too e.g. search containers
   useEffect(() => {
     if (allUpcomingEvents) {
-      console.log('Data loaded - allUpcomingEvents')
       dispatch(setEvents({ upcoming: allUpcomingEvents }))
     }
     if (allPastEvents) {
-      console.log('Data loaded - allPastEvents')
       dispatch(setEvents({ past: allPastEvents }))
     }
     if (allProjects) {
-      console.log('Data loaded - allProjects')
       dispatch(setProjects(allProjects))
     }
   }, [allUpcomingEvents, allPastEvents, allProjects, dispatch])
 
-  // Set which data to show in the list
+  // What to do when the user navigates to this container
+  // e.g. set which data to show -- either search results or everything
   useEffect(() => {
-    console.log('Set which data to show')
+    if (params?.search) {
+      setListItemsToShow(params.search.results)
+    }
 
     switch (params.type) {
       case ListType.Events:
-        if (eventsSearch) {
-          setListItemsToShow(eventsSearch.results)
-          setSearchDescription(eventsSearch.description)
-        } else if (
+        if (
+          !params?.search &&
           allUpcomingEvents &&
           eventsSelectedOption === EventsRange.Upcoming
         ) {
@@ -179,158 +172,100 @@ const ListContainer = (props: {
         break
 
       case ListType.Projects:
-        if (projectsSearch) {
-          setListItemsToShow(projectsSearch.results)
-          setSearchDescription(projectsSearch?.description)
-        } else {
+        if (!params?.search) {
           setListItemsToShow(allProjects)
         }
         break
     }
   }, [
-    params.type,
-    eventsSearch,
+    params?.search,
+    params?.type,
     allUpcomingEvents,
     allPastEvents,
     eventsSelectedOption,
     allProjects,
-    projectsSearch,
   ])
-
-  // Determine whether the user's seeing everything, or search results
-  useEffect(() => {
-    console.log("Determine whether the user's seeing everything")
-
-    switch (params.type) {
-      case ListType.Events:
-        setIsSearchResults(Boolean(params.events?.search))
-        break
-
-      case ListType.Projects:
-        // setIsSearchResults(Boolean(params.projects?.search)) // TODO
-        break
-    }
-  }, [params.type, params.events?.search])
-
-  // Set options to send to List component
-  useEffect(() => {
-    console.log('Set options to send to List component')
-
-    switch (params.type) {
-      case ListType.Events:
-        setListOptions({
-          events: {
-            range: eventsSelectedOption,
-          },
-        })
-        break
-
-      case ListType.Projects:
-        setListOptions({}) // TODO
-        break
-    }
-  }, [params.type, eventsSelectedOption])
 
   // Clear the search so the user's seeing all data instead
   const clearSearch = () => {
-    setSearchDescription(undefined)
-
-    switch (params.type) {
-      case ListType.Events:
-        setEventsSearch(undefined)
-        navigate('Events', {
-          type: ListType.Events,
-          events: { search: undefined },
-        })
-        break
-
-      case ListType.Projects:
-        setProjectsSearch(undefined)
-        navigate('Projects', {
-          type: ListType.Projects,
-          projects: { search: undefined },
-        })
-        break
+    if (params?.type) {
+      navigate(screens.list[params.type], {
+        type: params.type,
+        search: undefined,
+      } as ListRouteParams)
     }
   }
 
   /*
    *
-   * Events logic
+   * Events-specific logic
    *
    */
 
-  // When the user changes search options or they tap Past/Upcoming/My events navigation occurs,
-  // this changes the route parameters - we use this to update EventOptions and to work out
-  // whether to show events search results or all events in the list
+  // What to do when the user changes search options or they tap Past/Upcoming/My events
   useEffect(() => {
-    console.log('params?.events changed')
-    console.log(params?.events)
+    if (params?.type === ListType.Events) {
+      const eventsSearch = params?.search as EventSearch
 
-    setEventsSelectedOption(
-      params?.events?.selectedOption ??
-        params?.events?.search?.range ??
-        EventsRange.Upcoming,
-    )
-    setEventsSearch(params?.events?.search)
-  }, [params?.events])
+      // Past/Upcoming/My events choice
+      const selectedOption =
+        params?.options?.events?.range ??
+        eventsSearch?.range ??
+        EventsRange.Upcoming
 
-  /*
-   *
-   * Projects logic
-   *
-   */
+      setEventsSelectedOption(selectedOption)
 
-  // When the user changes search options or they tap Past/Upcoming/My events navigation occurs,
-  // this changes the route parameters - we use this to update EventOptions and to work out
-  // whether to show events search results or all events in the list
-  useEffect(() => {
-    console.log('params?.projects changed')
-    console.log(params?.projects)
+      // If the user has done a quick search for upcoming events (Today / This week / This month)
+      // then show it here too so they can change to one of these other quick search options directly
+      // on the search results screen in if they want to
+      const showUpcomingQuickSearch =
+        selectedOption === EventsRange.Upcoming &&
+        eventsSearch?.range === EventsRange.Upcoming &&
+        Boolean(eventsSearch?.quickSearchUpcomingChoice)
+      setEventsShowUpcomingQuickSearch(showUpcomingQuickSearch)
 
-    setProjectsSearch(params?.projects?.search)
-  }, [params?.projects])
+      setEventsQuickSearchUpcomingChoice(
+        eventsSearch?.quickSearchUpcomingChoice,
+      )
+    }
+  }, [params?.options?.events, params?.search, params?.type])
 
   return (
     <Theme>
       <SafeArea>
         <TopOfApp />
 
-        {listItemsToShow !== undefined && listOptions ? (
+        {params?.type && listItemsToShow ? (
           <>
-            {/* Search icon/button */}
-            {searchDestination !== undefined && (
-              <SearchIconButton
-                onPress={() => navigate(searchDestination, '')}
-              />
-            )}
+            <SearchIconButton
+              onPress={() => navigate(screens.search[params.type], '')}
+            />
 
             {/* Past / Upcoming / My Events choice */}
             {params.type === ListType.Events && (
               <EventOptions selected={eventsSelectedOption} />
             )}
 
-            {/* If the user has done a quick search for upcoming events, show those
-          quick search buttons so they can amend their quick search if they want,
-          without having to go back to the search screen
-          TODO: update to include projects search */}
+            {/* Quick search for upcoming events (Today / This week / This month) */}
             {params.type === ListType.Events &&
-              eventsSelectedOption === EventsRange.Upcoming &&
-              eventsSearch?.range === EventsRange.Upcoming &&
-              eventsSearch?.quickSearchUpcomingChoice && (
+              eventsShowUpcomingQuickSearch &&
+              eventsQuickSearchUpcomingChoice && (
                 <SearchResultsView>
                   <EventSearchUpcomingQuickSearch
-                    selectedButton={eventsSearch?.quickSearchUpcomingChoice}
+                    selectedButton={eventsQuickSearchUpcomingChoice}
                   />
                 </SearchResultsView>
               )}
 
-            {/* If the user has searched, show some text indicating what they searched for */}
-            {Boolean(searchDescription) && (
+            {/* If the user has searched, show some text indicating what they searched for
+                and give them the option to clear the search */}
+            {params?.search && (
               <SearchResultsView>
-                <SearchResultsLabel>
-                  Results for {searchDescription}
-                </SearchResultsLabel>
+                {params?.search?.description && (
+                  <SearchResultsLabel>
+                    Results for {params.search.description}
+                  </SearchResultsLabel>
+                )}
                 <ClearSearchLabel onPress={clearSearch}>
                   Clear search
                 </ClearSearchLabel>
@@ -339,14 +274,16 @@ const ListContainer = (props: {
 
             {/* Projects filter & sort */}
             {params.type === ListType.Projects &&
+              Boolean(params?.search) &&
               Boolean(listItemsToShow.length) && <ProjectFilterSort />}
 
             <HorizontalLine />
 
             <List
               data={listItemsToShow}
-              mode={isSearchResults ? 'search' : 'fullList'}
-              options={listOptions}
+              mode={params?.search ? 'search' : 'fullList'}
+              options={params?.options}
+              searchScreen={screens.search[params.type]}
               type={params.type}
             />
           </>

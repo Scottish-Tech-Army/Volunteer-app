@@ -5,7 +5,10 @@ import dayjs from 'dayjs'
 import styled from 'styled-components/native'
 import { useSelector } from 'react-redux'
 import QuickSearchButton from '@/Components/Forms/QuickSearchButton'
-import { filterEventsByDate } from '@/Containers/EventSearchContainer'
+import {
+  EventSearch,
+  filterEventsByDate,
+} from '@/Containers/EventSearchContainer'
 import { ListRouteParams, ListType } from '@/Containers/ListContainer'
 import { navigate } from '@/Navigators/utils'
 import { EventsState } from '@/Store/Events'
@@ -34,7 +37,7 @@ const EventSearchQuickSearchUpcomingButtons: FC<
   )
 
   const handleSearch = (
-    quickSearchChoice: EventQuickSearchUpcomingChoice,
+    quickSearchUpcomingChoice: EventQuickSearchUpcomingChoice,
     startDate: Date,
     endDate: Date,
   ): void => {
@@ -46,14 +49,12 @@ const EventSearchQuickSearchUpcomingButtons: FC<
 
     navigate('Events', {
       type: ListType.Events,
-      events: {
-        search: {
-          type: 'date',
-          quickSearchChoice,
-          range: 'upcoming',
-          results: eventsSearchResults,
-        },
-      },
+      search: {
+        type: 'date',
+        quickSearchUpcomingChoice,
+        range: 'upcoming',
+        results: eventsSearchResults,
+      } as EventSearch,
     } as ListRouteParams)
   }
 

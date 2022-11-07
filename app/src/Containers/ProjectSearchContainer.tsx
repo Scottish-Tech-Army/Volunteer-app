@@ -144,12 +144,10 @@ const ProjectSearchContainer = () => {
 
     navigate('Projects', {
       type: ListType.Projects,
-      projects: {
-        search: {
-          results,
-          description,
-        },
-      },
+      search: {
+        results,
+        description,
+      } as ProjectSearch,
     } as ListRouteParams)
   }
 
@@ -180,16 +178,12 @@ const ProjectSearchContainer = () => {
 
     const description = `"${freeTextSearchQuery}"`
 
-    console.log('Projects search results', results.length)
-
     navigate('Projects', {
       type: ListType.Projects,
-      projects: {
-        search: {
-          results,
-          description,
-        },
-      },
+      search: {
+        results,
+        description,
+      } as ProjectSearch,
     } as ListRouteParams)
   }
 
