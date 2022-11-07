@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/no-shadow */
-import React, { FC, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Text } from 'react-native'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components/native'
 import { EventSearch } from './EventSearchContainer'
 import { ProjectSearch } from './ProjectSearchContainer'
 import EventOptions from '@/Components/Event/EventOptions'
-import EventReturnedList from '@/Components/Event/EventReturnedList'
 import EventSearchUpcomingQuickSearch, {
   EventQuickSearchUpcomingChoice,
 } from '@/Components/Event/EventSearchQuickSearchUpcoming'
@@ -14,20 +13,16 @@ import HorizontalLine from '@/Components/HorizontalLine'
 import SafeArea from '@/Components/SafeArea'
 import TopOfApp from '@/Components/TopOfApp'
 import ProjectFilterSort from '@/Components/Project/ProjectFilterSort'
-import ProjectOptions from '@/Components/Project/ProjectOptions'
-import ProjectReturnedList from '@/Components/Project/ProjectReturnedList'
 import List, { ListOptions } from '@/Components/List'
 import SearchIconButton from '@/Components/SearchIconButton'
 import { navigate, RootStackParamList } from '@/Navigators/utils'
 import {
-  Event,
   Events,
   EventsRange,
   useLazyFetchAllPastEventsQuery,
   useLazyFetchAllUpcomingEventsQuery,
 } from '@/Services/modules/events'
 import {
-  Project,
   Projects,
   useLazyFetchAllProjectsQuery,
 } from '@/Services/modules/projects'

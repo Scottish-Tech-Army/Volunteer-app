@@ -8,7 +8,6 @@ import {
   StartupContainer,
   ProjectDetailContainer,
   ProjectRegisterInterestContainer,
-  ProjectSearchResultsContainer,
   ProjectSearchContainer,
   EventSearchContainer,
   WelcomeContainer,
@@ -71,7 +70,7 @@ const ApplicationNavigator = () => {
           />
           <Stack.Screen
             name="ProjectSearchResults"
-            component={ProjectSearchResultsContainer}
+            component={ListContainer}
             options={{
               headerBackTitleVisible: false,
               title: 'Project Search Results',
