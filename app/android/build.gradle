@@ -21,6 +21,19 @@ buildscript {
 
 allprojects {
     repositories {
+        exclusiveContent {
+            // Official recommended fix for Android build problem with React Native versions below 0.71
+            // https://github.com/facebook/react-native/issues/35210
+            // TODO: remove this exclusiveContent section when we upgrade to React Native 0.71 (or above)
+            filter {
+                includeGroup "com.facebook.react"
+            }
+            forRepository {
+                maven {
+                    url "$rootDir/../node_modules/react-native/android"
+                }
+            }
+        }
         mavenCentral()
         mavenLocal()
         maven {
