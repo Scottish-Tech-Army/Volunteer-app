@@ -12,37 +12,40 @@ import { navigate, RootStackParamList } from '@/Navigators/utils'
 import { Events, EventsRange } from '@/Services/modules/events'
 import { Projects } from '@/Services/modules/projects'
 
-interface ListProps {
-  data: Events | Projects
-  mode: 'fullList' | 'search'
-  options: ListOptions
-  searchScreen: keyof RootStackParamList
-  type: ListType
-}
-
-const EventListItem = styled.TouchableOpacity`
-  margin: 21px 21px 0px 21px;
-  width: 150px;
-`
+// General styled components
 const NoneFound = styled.Text`
   font-size: 18px;
   margin: 15px 15px 0px 15px;
-`
-const ProjectDetails = styled.TouchableOpacity`
-  margin: 21px 21px 0px 21px;
-  border: ${props => `2px solid ${props.theme.colors.staBlack}`};
-  padding: 17px 27px 11px 27px;
 `
 const TryAnotherSearch = styled.Text`
   font-size: 18px;
   margin: 15px 15px 0px 15px;
   text-decoration: underline;
 `
+// Events-specific
+const EventListItem = styled.TouchableOpacity`
+  margin: 21px 21px 0px 21px;
+  width: 150px;
+`
+// Projects-specific
+const ProjectListItem = styled.TouchableOpacity`
+  margin: 21px 21px 0px 21px;
+  border: ${props => `2px solid ${props.theme.colors.staBlack}`};
+  padding: 17px 27px 11px 27px;
+`
 
 export interface ListOptions {
   events?: {
     range: EventsRange
   }
+}
+
+interface ListProps {
+  data: Events | Projects
+  mode: 'fullList' | 'search'
+  options: ListOptions
+  searchScreen: keyof RootStackParamList
+  type: ListType
 }
 
 const List: FC<ListProps> = ({ data, mode, options, searchScreen, type }) => {
@@ -79,13 +82,13 @@ const List: FC<ListProps> = ({ data, mode, options, searchScreen, type }) => {
           keyExtractor={project => project.res_id}
           renderItem={({ item }) => {
             return (
-              <ProjectDetails
+              <ProjectListItem
                 onPress={() => {
                   navigate('ProjectDetail', { item, key: item.res_id })
                 }}
               >
                 <ProjectSummary project={item} />
-              </ProjectDetails>
+              </ProjectListItem>
             )
           }}
         />

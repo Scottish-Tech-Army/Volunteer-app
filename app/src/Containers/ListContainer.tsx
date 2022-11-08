@@ -2,9 +2,11 @@
  * @file Container for showing a list of things (e.g. projects or events -- can be extended to show other types of things in the future).
  * It can show everything (e.g. all projects), or just the results of a search.
  * Pass in parameters by using navigate() -- see ListRouteParams below.
+ * To add a new type of thing, look for references to projects below and you can mostly copy and adapt the projects code.
  */
 
 /* eslint-disable @typescript-eslint/no-shadow */
+
 import React, { useEffect, useState } from 'react'
 import { Text } from 'react-native'
 import { useDispatch } from 'react-redux'
@@ -36,24 +38,22 @@ import { setEvents } from '@/Store/Events'
 import { setProjects } from '@/Store/Projects'
 import Theme from '@/Theme/OldTheme'
 
-const SearchResultsView = styled.View`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
+const ClearSearchLabel = styled.Text`
+  color: ${props => props.theme.colors.staBlack};
+  text-align: center;
+  text-decoration: underline;
   width: 100%;
 `
-
 const SearchResultsLabel = styled.Text`
   color: ${props => props.theme.colors.staBlack};
   text-align: center;
   width: 100%;
 `
-
-const ClearSearchLabel = styled.Text`
-  color: ${props => props.theme.colors.staBlack};
-  text-align: center;
-  text-decoration: underline;
+const SearchResultsView = styled.View`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
   width: 100%;
 `
 
@@ -83,7 +83,7 @@ const ListContainer = (props: {
    *
    */
 
-  // General
+  // Shared
   const dispatch = useDispatch()
   const [listItemsToShow, setListItemsToShow] = useState<Events | Projects>()
   const params = props.route.params
@@ -117,7 +117,7 @@ const ListContainer = (props: {
 
   /*
    *
-   * General logic
+   * Shared logic
    *
    */
 
@@ -217,8 +217,8 @@ const ListContainer = (props: {
       setEventsSelectedOption(selectedOption)
 
       // If the user has done a quick search for upcoming events (Today / This week / This month)
-      // then show it here too so they can change to one of these other quick search options directly
-      // on the search results screen in if they want to
+      // then show it here too above search results so they can change to one of these other
+      // quick search options directly rather than having to go back to the search screen
       const showUpcomingQuickSearch =
         selectedOption === EventsRange.Upcoming &&
         eventsSearch?.range === EventsRange.Upcoming &&
@@ -273,7 +273,7 @@ const ListContainer = (props: {
               </SearchResultsView>
             )}
 
-            {/* Projects filter & sort */}
+            {/* Projects filter & sort options */}
             {params.type === ListType.Projects &&
               Boolean(params?.search) &&
               Boolean(listItemsToShow.length) && <ProjectFilterSort />}
