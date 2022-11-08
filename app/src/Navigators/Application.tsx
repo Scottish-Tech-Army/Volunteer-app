@@ -1,10 +1,13 @@
+/**
+ * @file Defines the list of screens (apart from the main screens that have tabs at the bottom of the app e.g. Projects -- these are defined in Main.tsx).
+ */
+
 import React from 'react'
 import { SafeAreaView, StatusBar } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
 import {
   EventDetailContainer,
-  ListContainer,
   StartupContainer,
   ProjectDetailContainer,
   ProjectRegisterInterestContainer,

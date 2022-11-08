@@ -1,4 +1,6 @@
-// Events search screen container
+/**
+ * @file Events search screen container.
+ */
 
 import React, { useState } from 'react'
 import dayjs from 'dayjs'

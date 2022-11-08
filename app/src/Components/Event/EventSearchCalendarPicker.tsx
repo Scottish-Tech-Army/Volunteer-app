@@ -1,4 +1,6 @@
-// Calendar picker for events searching, the user can choose start and end dates
+/**
+ * @file Calendar picker for events searching, the user can choose start and end dates.
+ */
 
 import React, { FC, useState } from 'react'
 import dayjs from 'dayjs'
@@ -13,7 +15,7 @@ import { navigate } from '@/Navigators/utils'
 import { EventsState } from '@/Store/Events'
 
 interface EventSearchCalendarPickerProps {
-  width?: number
+  width?: number // The width this component should occupy in pixels
 }
 
 const EventSearchCalendarPicker: FC<EventSearchCalendarPickerProps> = ({

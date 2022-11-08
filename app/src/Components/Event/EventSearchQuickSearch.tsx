@@ -1,4 +1,6 @@
-// Reusable quick search buttons for events search
+/**
+ * @file A group of quick search buttons for events search, reusable for different fields/values
+ */
 
 import React, { FC } from 'react'
 import styled from 'styled-components/native'
@@ -11,17 +13,6 @@ import { EventsSearchField } from '@/Services/modules/events'
 import { navigate } from '@/Navigators/utils'
 import { EventsState } from '@/Store/Events'
 import { searchByArray } from '@/Utils/Search'
-
-export interface EventQuickSearchChoice {
-  text: string // this is what is shown on the quick search button
-  value: string // this is the value we actually search for -- in some cases it's the same as the text (e.g. series), in others it's different (e.g. related project)
-}
-
-interface EventSearchQuickSearchProps {
-  choices: EventQuickSearchChoice[]
-  field: EventsSearchField
-  heading: string
-}
 
 const ButtonsView = styled.View`
   display: flex;
@@ -42,6 +33,17 @@ const TitleView = styled.View`
   margin-left: 15px;
   width: 100%;
 `
+
+export interface EventQuickSearchChoice {
+  text: string // this is what is shown on the quick search button
+  value: string // this is the value we actually search for -- in some cases it's the same as the text (e.g. series), in others it's different (e.g. related project)
+}
+
+interface EventSearchQuickSearchProps {
+  choices: EventQuickSearchChoice[] // The choices which will be used for the buttons on the quick search
+  field: EventsSearchField // The field this quick search searches on
+  heading: string // Text for the heading that appears for this quick search group
+}
 
 const EventSearchQuickSearchButtons: FC<EventSearchQuickSearchProps> = ({
   choices,

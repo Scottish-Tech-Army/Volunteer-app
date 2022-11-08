@@ -1,4 +1,6 @@
-// Show a list of things, e.g. projects or events (can be extended in the future to show other kinds of things)
+/**
+ * @file Show a list of things, e.g. projects or events (can be extended in the future to show other kinds of things).
+ */
 
 import React, { FC } from 'react'
 import styled from 'styled-components/native'

@@ -1,4 +1,6 @@
-// The past/upcoming/my events tabs shown at the top of the events list screen
+/**
+ * @file The past/upcoming/my events tabs shown at the top of the events list screen.
+ */
 
 /* eslint-disable react-native/no-inline-styles */
 import React, { FC } from 'react'
@@ -22,7 +24,7 @@ const EventOptionsText = styled.Text`
 const EventOptionsTouch = styled.TouchableOpacity``
 
 interface EventOptionsProps {
-  selected: EventsRange
+  selected: EventsRange // which option is selected, e.g. past
 }
 
 const EventOptions: FC<EventOptionsProps> = ({ selected }) => {

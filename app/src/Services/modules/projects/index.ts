@@ -1,3 +1,8 @@
+/**
+ * @file Defines the Project type (and related types), and the lazy queries for fetching projects data from the API.
+ * Also defines related groups of project roles that are used for projects searches.
+ */
+
 import { api } from '../../api'
 import fetchAll from './fetchAll'
 import registerInterest from './registerInterest'

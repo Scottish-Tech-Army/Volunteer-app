@@ -1,4 +1,6 @@
-// A horizontal line, useful as a visual divider between elements
+/**
+ * @file A horizontal line, useful as a visual divider between elements.
+ */
 
 import React, { FC } from 'react'
 import styled from 'styled-components/native'

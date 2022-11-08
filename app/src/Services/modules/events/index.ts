@@ -1,3 +1,7 @@
+/**
+ * @file Defines the Event type (and related types), and the lazy queries for fetching events data from the API.
+ */
+
 import { api } from '../../api'
 import fetchAllEvents from './fetchAll'
 

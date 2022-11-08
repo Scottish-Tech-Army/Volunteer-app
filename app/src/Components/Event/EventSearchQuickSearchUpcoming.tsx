@@ -1,4 +1,6 @@
-// 'Today', 'This week' and 'This month' date quick search buttons for upcoming events
+/**
+ * @file 'Today', 'This week' and 'This month' date quick search buttons for upcoming events.
+ */
 
 import React, { FC } from 'react'
 import dayjs from 'dayjs'
@@ -13,6 +15,11 @@ import { ListRouteParams, ListType } from '@/Containers/ListContainer'
 import { navigate } from '@/Navigators/utils'
 import { EventsState } from '@/Store/Events'
 
+const ButtonTitle = styled.Text`
+  display: flex;
+  text-align: center;
+`
+
 export enum EventQuickSearchUpcomingChoice {
   Today = 'Today',
   ThisWeek = 'This week',
@@ -22,11 +29,6 @@ export enum EventQuickSearchUpcomingChoice {
 interface EventSearchQuickSearchUpcomingProps {
   selectedButton?: EventQuickSearchUpcomingChoice | undefined
 }
-
-const ButtonTitle = styled.Text`
-  display: flex;
-  text-align: center;
-`
 
 const EventSearchQuickSearchUpcomingButtons: FC<
   EventSearchQuickSearchUpcomingProps

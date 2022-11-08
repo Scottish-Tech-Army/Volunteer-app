@@ -1,3 +1,7 @@
+/**
+ * @file A form for the user to register interest in taking part in a volunteer project.
+ */
+
 import React, { FC, useEffect, useState } from 'react'
 import { Alert } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
