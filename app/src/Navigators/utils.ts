@@ -5,22 +5,43 @@
  *
  * You can add other navigation functions that you need and export them
  */
+import { EventSearchInterface } from '@/Containers/EventSearchContainer'
+import { EventsRange } from '@/Services/modules/events'
+import { Project, ProjectsSearchField } from '@/Services/modules/projects'
 import {
   CommonActions,
   createNavigationContainerRef,
 } from '@react-navigation/native'
 
+/**
+ * Defines the type of params expected when navigating to each screen
+ */
 type RootStackParamList = {
   Startup: undefined
   Home: undefined
-  ProjectDetail: undefined
-  ProjectRegisterInterest: undefined
-  ProjectSearch: undefined
-  ProjectSearchResults: undefined
-  Events: undefined
-  EventDetail: undefined
-  EventSearch: undefined
-  ProjectScope: undefined
+  ProjectDetail: {
+    item: Project
+    key: string
+  }
+  ProjectRegisterInterest: {
+    project: Project
+  }
+  ProjectSearch: string | undefined
+  ProjectSearchResults: {
+    results: (Project | Event)[]
+    searchField: ProjectsSearchField | undefined
+    searchQuery: string
+  }
+  Events: {
+    screen?: 'Events'
+    selectedOption?: EventsRange | 'myEvents'
+    search?: EventSearchInterface
+  }
+  EventDetail: {
+    event: Event
+    key: string
+  }
+  EventSearch: string | undefined
 }
 
 export const navigationRef = createNavigationContainerRef<RootStackParamList>()
@@ -36,10 +57,13 @@ export function goBack() {
 
 /**
  * Navigate to a route in current navigation tree
- * @param {name} name of the route to navigate to.
- * @param {params} params object for the route.
+ * @param {keyof RootStackParamList} name of the route to navigate to.
+ * @param {RootStackParamList[RouteName]} params object for the route.
  */
-export function navigate(name: keyof RootStackParamList, params: any) {
+export function navigate<RouteName extends keyof RootStackParamList>(
+  name: RouteName,
+  params: RootStackParamList[RouteName],
+) {
   if (navigationRef.isReady()) {
     navigationRef.navigate(name, params)
   }
