@@ -15,6 +15,7 @@ import ImageFullWidth from '../ImageFullWidth'
 import ImageSwiper from '../ImageSwiper'
 import Title from '../Title'
 import Video from '../Video'
+import EventSpeakers from './EventSpeakers'
 
 interface EventDetailsProps {
   event: Event
@@ -32,6 +33,10 @@ const EventDateTime = styled.View`
   flex-wrap: nowrap;
   margin-bottom: 10px;
 `
+const EventSpeaker = styled.View`
+  margin-top: 50px;
+`
+
 const EventDescription = styled.View`
   margin-top: 50px;
 `
@@ -81,6 +86,14 @@ const EventDetails: FC<EventDetailsProps> = ({ event }) => {
             {event.description}
           </Markdown>
         </EventDescription>
+        <EventSpeaker>
+          {/* MAYBE ADD SOMETHING THAT SAYS IF THERE IS A SPEAKER IN THE ARRAY, GET THE SPEAKER NAME AND URL */}
+          {/* <EventSpeakers>
+              : event.speakers?.length > 0 (
+                  {event.speakers}
+            )
+            </EventSpeakers> */}
+        </EventSpeaker>
       </EventDetailsView>
     </ScrollView>
   )

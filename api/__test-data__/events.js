@@ -56,6 +56,7 @@ function fakeEventObject(dateType) {
     video_file: faker.internet.url(),
     video_thumbnail: faker.internet.url(),
     images: fakeImages(),
+  //  speakers: fakeSpeakers() MAYBE ADD SOMETHING LIKE THIS TO EXTRACT DATA
   };
 }
 
@@ -95,6 +96,12 @@ function fakeEventAirTableRecord(dateType, includeVideo = false) {
 
   return event;
 }
+
+// function fakeSpeakers(){
+//   // initialise array of speakers 
+//   // do something that maybe tries to get the records by the id
+//   // airTable.getAllRecords().allRecordsRaw.speakers_name
+// }
 
 module.exports = {
   fakeDate,

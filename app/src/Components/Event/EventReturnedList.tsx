@@ -18,8 +18,12 @@ const NoneFound = styled.Text`
   font-size: 18px;
   margin: 15px 15px 0px 15px;
 `
-
-const EventReturnedList: FC<EventReturnedListProps> = ({ data, eventsRange }) => {
+// LOOK AT THIS **
+// no pk, airtable id is the unique identifier
+const EventReturnedList: FC<EventReturnedListProps> = ({
+  data,
+  eventsRange,
+}) => {
   return data.length ? (
     <FlatList
       data={data}
@@ -31,7 +35,10 @@ const EventReturnedList: FC<EventReturnedListProps> = ({ data, eventsRange }) =>
               navigate('EventDetail', { event: item, key: item.id })
             }
           >
-            <EventSummary event={item} hideDateTime={eventsRange === EventsRange.Past} />
+            <EventSummary
+              event={item}
+              hideDateTime={eventsRange === EventsRange.Past}
+            />
           </EventListItem>
         )
       }}
