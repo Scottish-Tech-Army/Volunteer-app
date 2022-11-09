@@ -1,13 +1,16 @@
-// Calendar picker for events searching, the user can choose start and end dates
+/**
+ * @file Calendar picker for events searching, the user can choose start and end dates.
+ */
 
 import React, { FC, useState } from 'react'
 import dayjs from 'dayjs'
 import { Alert } from 'react-native'
 import { useSelector } from 'react-redux'
 import CalendarPicker from 'react-native-calendar-picker' // Note: this package also requires 'moment' package to be installed
-import { EventSearchInterface } from '@/Containers/EventSearchContainer'
+import { EventSearch } from '@/Containers/EventSearchContainer'
 import SubmitButton from '@/Components/Forms/SubmitButton'
 import { filterEventsByDate } from '@/Containers/EventSearchContainer'
+import { ListRouteParams, ListType } from '@/Containers/ListContainer'
 import { navigate } from '@/Navigators/utils'
 import { EventsState } from '@/Store/Events'
 
@@ -15,6 +18,13 @@ interface EventSearchCalendarPickerProps {
   width?: number
 }
 
+/**
+ * Calendar picker component for events search
+ *
+ * @param {EventSearchCalendarPickerProps} props The component props
+ * @param {number} [props.width] The width this component should occupy in pixels
+ * @returns ReactElement Component
+ */
 const EventSearchCalendarPicker: FC<EventSearchCalendarPickerProps> = ({
   width,
 }) => {
@@ -46,13 +56,14 @@ const EventSearchCalendarPicker: FC<EventSearchCalendarPickerProps> = ({
         : `${startDateString} - ${endDateString}`
 
     navigate('Events', {
+      type: ListType.Events,
       search: {
         type: 'date',
         range: 'upcoming',
         results: eventsSearchResults,
         description,
-      } as EventSearchInterface,
-    })
+      } as EventSearch,
+    } as ListRouteParams)
   }
 
   const onDateChange = (date: Date, type: string) => {

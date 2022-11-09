@@ -1,3 +1,7 @@
+/**
+ * @file Defines the list of screens (apart from the main screens that have tabs at the bottom of the app e.g. Projects -- these are defined in Main.tsx).
+ */
+
 import React from 'react'
 import { SafeAreaView, StatusBar } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
@@ -7,7 +11,6 @@ import {
   StartupContainer,
   ProjectDetailContainer,
   ProjectRegisterInterestContainer,
-  ProjectSearchResultsContainer,
   ProjectSearchContainer,
   EventSearchContainer,
   WelcomeContainer,
@@ -65,14 +68,7 @@ const ApplicationNavigator = () => {
             options={{
               headerTitleAlign: 'center',
               headerBackTitleVisible: false,
-            }}
-          />
-          <Stack.Screen
-            name="ProjectSearchResults"
-            component={ProjectSearchResultsContainer}
-            options={{
-              headerBackTitleVisible: false,
-              title: 'Project Search Results',
+              title: 'Project Search',
             }}
           />
           <Stack.Screen

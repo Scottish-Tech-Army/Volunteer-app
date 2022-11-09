@@ -1,8 +1,11 @@
-// The past/upcoming/my events tabs shown at the top of the events list screen
+/**
+ * @file The past/upcoming/my events tabs shown at the top of the events list screen.
+ */
 
 /* eslint-disable react-native/no-inline-styles */
 import React, { FC } from 'react'
 import styled from 'styled-components/native'
+import { ListRouteParams, ListType } from '@/Containers/ListContainer'
 import { EventsRange } from '@/Services/modules/events'
 import underDevelopmentAlert from '../../Utils/UnderDevelopmentAlert'
 import { navigate } from '@/Navigators/utils'
@@ -21,23 +24,33 @@ const EventOptionsText = styled.Text`
 const EventOptionsTouch = styled.TouchableOpacity``
 
 interface EventOptionsProps {
-  selected: EventsRange | 'myEvents'
+  selected: EventsRange
 }
 
+/**
+ * Component for events past/upcoming/my events tabs
+ *
+ * @param {EventOptionsProps} props The component props
+ * @param {EventsRange} props.selected Which option is selected, e.g. past
+ * @returns ReactElement Component
+ */
 const EventOptions: FC<EventOptionsProps> = ({ selected }) => {
-  const handleSelectedOptionChange = (
-    newSelectedOption: EventsRange | 'myEvents',
-  ) => {
+  const handleSelectedOptionChange = (newSelectedOption: EventsRange) => {
     navigate('Events', {
-      screen: 'Events',
-      selectedOption: newSelectedOption,
-    })
+      type: ListType.Events,
+      options: {
+        events: {
+          range: newSelectedOption,
+        },
+      },
+    } as ListRouteParams)
   }
-
 
   return (
     <EventOptionsView>
-      <EventOptionsTouch onPress={() => handleSelectedOptionChange(EventsRange.Past)}>
+      <EventOptionsTouch
+        onPress={() => handleSelectedOptionChange(EventsRange.Past)}
+      >
         <EventOptionsText
           style={{
             fontWeight: selected === EventsRange.Past ? 'bold' : 'normal',

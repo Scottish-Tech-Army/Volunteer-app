@@ -1,4 +1,6 @@
-// Projects search screen container
+/**
+ * @file Projects search screen container.
+ */
 
 import React, { useState, useEffect } from 'react'
 import Fuse from 'fuse.js' // fuzzy text search - see docs at https://fusejs.io
@@ -6,9 +8,14 @@ import styled from 'styled-components/native'
 import { ScrollView, SafeAreaView } from 'react-native'
 import TopOfApp from '@/Components/TopOfApp'
 import FreeSearchBar from '@/Components/FreeSearchBar'
+import {
+  ListRouteParams,
+  ListSearch,
+  ListType,
+} from '@/Containers/ListContainer'
 import { navigate } from '@/Navigators/utils'
 import {
-  useLazyFetchAllQuery,
+  useLazyFetchAllProjectsQuery,
   Projects,
   ProjectsSearchField,
   RolesRelated,
@@ -67,6 +74,15 @@ const QuickSearchTitle = styled.Text`
   text-align: center;
 `
 
+export interface ProjectSearch extends ListSearch {
+  results: Projects // the projects results for this search
+}
+
+/**
+ * Container for the user to search projects e.g. by free text, category, skills
+ *
+ * @returns ReactElement Component
+ */
 const ProjectSearchContainer = () => {
   const [freeTextSearchQuery, setFreeTextSearchQuery] = useState('')
 
@@ -75,7 +91,7 @@ const ProjectSearchContainer = () => {
   }
 
   // fetch all projects
-  const [fetchAll, { data: projects }] = useLazyFetchAllQuery()
+  const [fetchAll, { data: projects }] = useLazyFetchAllProjectsQuery()
 
   useEffect(() => {
     fetchAll('')
@@ -132,11 +148,17 @@ const ProjectSearchContainer = () => {
       results = searchByArray(projects, searchField, searchQueries) as Projects // here we do not want to use fuzzy search as it would include unwanted results
     }
 
-    navigate('ProjectSearchResults', {
-      results,
-      searchField,
-      searchQuery: searchQueryChoice,
-    })
+    const description = `${
+      searchField === 'sector' ? 'cause' : searchField
+    } "${searchQueryChoice}"`
+
+    navigate('Projects', {
+      type: ListType.Projects,
+      search: {
+        results,
+        description,
+      } as ProjectSearch,
+    } as ListRouteParams)
   }
 
   const handleFreeTextSubmit = () => {
@@ -164,11 +186,15 @@ const ProjectSearchContainer = () => {
       searchQueries,
     )
 
-    navigate('ProjectSearchResults', {
-      results,
-      searchField: undefined,
-      searchQuery: freeTextSearchQuery,
-    })
+    const description = `"${freeTextSearchQuery}"`
+
+    navigate('Projects', {
+      type: ListType.Projects,
+      search: {
+        results,
+        description,
+      } as ProjectSearch,
+    } as ListRouteParams)
   }
 
   return (
