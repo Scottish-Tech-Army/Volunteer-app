@@ -65,11 +65,33 @@ interface ListProps {
  * @returns ReactElement Component
  */
 const List: FC<ListProps> = ({ data, mode, options, searchScreen, type }) => {
-  let flatList
+  if (!data.length)
+    return (
+      <>
+        <NoneFound>
+          Sorry, we couldn't find any {type}{' '}
+          {mode === ListDisplayMode.Full
+            ? 'at the moment.'
+            : mode === 'search'
+            ? 'matching your search.'
+            : ''}
+        </NoneFound>
+
+        {mode === ListDisplayMode.Search && (
+          <TryAnotherSearch
+            onPress={() => {
+              navigate(searchScreen, undefined)
+            }}
+          >
+            Try another search
+          </TryAnotherSearch>
+        )}
+      </>
+    )
 
   switch (type) {
     case ListType.Events:
-      flatList = (
+      return (
         <FlatList
           data={data as Events}
           keyExtractor={event => event.id}
@@ -89,10 +111,9 @@ const List: FC<ListProps> = ({ data, mode, options, searchScreen, type }) => {
           }}
         />
       )
-      break
 
     case ListType.Projects:
-      flatList = (
+      return (
         <FlatList
           data={data as Projects}
           keyExtractor={project => project.res_id}
@@ -109,33 +130,7 @@ const List: FC<ListProps> = ({ data, mode, options, searchScreen, type }) => {
           }}
         />
       )
-      break
   }
-
-  return data.length ? (
-    flatList
-  ) : (
-    <>
-      <NoneFound>
-        Sorry, we couldn't find any {type}{' '}
-        {mode === ListDisplayMode.Full
-          ? 'at the moment.'
-          : mode === 'search'
-          ? 'matching your search.'
-          : ''}
-      </NoneFound>
-
-      {mode === ListDisplayMode.Search && (
-        <TryAnotherSearch
-          onPress={() => {
-            navigate(searchScreen, undefined)
-          }}
-        >
-          Try another search
-        </TryAnotherSearch>
-      )}
-    </>
-  )
 }
 
 export default List
