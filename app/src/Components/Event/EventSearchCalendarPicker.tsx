@@ -15,9 +15,16 @@ import { navigate } from '@/Navigators/utils'
 import { EventsState } from '@/Store/Events'
 
 interface EventSearchCalendarPickerProps {
-  width?: number // The width this component should occupy in pixels
+  width?: number
 }
 
+/**
+ * Calendar picker component for events search
+ *
+ * @param {EventSearchCalendarPickerProps} props The component props
+ * @param {number} [props.width] The width this component should occupy in pixels
+ * @returns ReactElement Component
+ */
 const EventSearchCalendarPicker: FC<EventSearchCalendarPickerProps> = ({
   width,
 }) => {

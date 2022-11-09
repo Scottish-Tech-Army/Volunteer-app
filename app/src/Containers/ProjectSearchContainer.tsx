@@ -8,7 +8,11 @@ import styled from 'styled-components/native'
 import { ScrollView, SafeAreaView } from 'react-native'
 import TopOfApp from '@/Components/TopOfApp'
 import FreeSearchBar from '@/Components/FreeSearchBar'
-import { ListRouteParams, ListType } from '@/Containers/ListContainer'
+import {
+  ListRouteParams,
+  ListSearch,
+  ListType,
+} from '@/Containers/ListContainer'
 import { navigate } from '@/Navigators/utils'
 import {
   useLazyFetchAllProjectsQuery,
@@ -70,11 +74,15 @@ const QuickSearchTitle = styled.Text`
   text-align: center;
 `
 
-export interface ProjectSearch {
+export interface ProjectSearch extends ListSearch {
   results: Projects // the projects results for this search
-  description?: string // some text to tell the user what the search was for, e.g. the search text they entered
 }
 
+/**
+ * Container for the user to search projects e.g. by free text, category, skills
+ *
+ * @returns ReactElement Component
+ */
 const ProjectSearchContainer = () => {
   const [freeTextSearchQuery, setFreeTextSearchQuery] = useState('')
 

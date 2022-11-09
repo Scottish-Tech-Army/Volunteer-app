@@ -24,9 +24,16 @@ const EventOptionsText = styled.Text`
 const EventOptionsTouch = styled.TouchableOpacity``
 
 interface EventOptionsProps {
-  selected: EventsRange // which option is selected, e.g. past
+  selected: EventsRange
 }
 
+/**
+ * Component for events past/upcoming/my events tabs
+ *
+ * @param {EventOptionsProps} props The component props
+ * @param {EventsRange} props.selected Which option is selected, e.g. past
+ * @returns ReactElement Component
+ */
 const EventOptions: FC<EventOptionsProps> = ({ selected }) => {
   const handleSelectedOptionChange = (newSelectedOption: EventsRange) => {
     navigate('Events', {

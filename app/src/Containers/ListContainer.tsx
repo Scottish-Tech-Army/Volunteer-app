@@ -18,10 +18,10 @@ import EventSearchUpcomingQuickSearch, {
   EventQuickSearchUpcomingChoice,
 } from '@/Components/Event/EventSearchQuickSearchUpcoming'
 import HorizontalLine from '@/Components/HorizontalLine'
+import List, { ListDisplayMode, ListOptions } from '@/Components/List'
 import SafeArea from '@/Components/SafeArea'
 import TopOfApp from '@/Components/TopOfApp'
 import ProjectFilterSort from '@/Components/Project/ProjectFilterSort'
-import List, { ListOptions } from '@/Components/List'
 import SearchIconButton from '@/Components/SearchIconButton'
 import { navigate, RootStackParamList } from '@/Navigators/utils'
 import {
@@ -57,6 +57,10 @@ const SearchResultsView = styled.View`
   width: 100%;
 `
 
+export interface ListSearch {
+  description: string // some text to tell the user what the search was for, e.g. the search text they entered
+}
+
 export enum ListType {
   Events = 'events',
   Projects = 'projects',
@@ -72,6 +76,17 @@ type Screens = {
   [key in ListType]: keyof RootStackParamList
 }
 
+/**
+ * Container for showing a list of things
+ *
+ * @param {Object} props The container props
+ * @param {Object} props.route A route object containing params
+ * @param {ListRouteParams} props.route.params The parameters to send to this container when navigating, to set what it displays
+ * @param {ListType} props.route.params.type The type of data to show in the list, e.g. events or projects
+ * @param {EventSearch | ProjectSearch} [props.route.params.search] The search the user has performed - or not included if showing full list of data, not search results
+ * @param {ListOptions} props.route.params.options Any additional options for specific data types, that tell the container how to behave
+ * @returns ReactElement Container
+ */
 const ListContainer = (props: {
   route: {
     params: ListRouteParams
@@ -282,7 +297,9 @@ const ListContainer = (props: {
 
             <List
               data={listItemsToShow}
-              mode={params?.search ? 'search' : 'fullList'}
+              mode={
+                params?.search ? ListDisplayMode.Search : ListDisplayMode.Full
+              }
               options={params?.options}
               searchScreen={screens.search[params.type]}
               type={params.type}

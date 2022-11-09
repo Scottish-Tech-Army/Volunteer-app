@@ -16,7 +16,11 @@ import EventSearchQuickSearchUpcoming, {
   EventQuickSearchUpcomingChoice,
 } from '@/Components/Event/EventSearchQuickSearchUpcoming'
 import FreeSearchBar from '@/Components/FreeSearchBar'
-import { ListRouteParams, ListType } from '@/Containers/ListContainer'
+import {
+  ListRouteParams,
+  ListSearch,
+  ListType,
+} from '@/Containers/ListContainer'
 import { EventsSearchField } from '@/Services/modules/events'
 import { navigate } from '@/Navigators/utils'
 import { Event, Events, EventsRange } from '@/Services/modules/events'
@@ -31,14 +35,21 @@ const SectionView = styled.View`
   margin: 10px 0;
 `
 
-export interface EventSearch {
+export interface EventSearch extends ListSearch {
   type: 'date' | 'text' // what type of search is it
   range: EventsRange // which range of events are being searched (past/upcoming/all)
   results: Events // the events results for this search
-  description?: string // some text to tell the user what the search was, e.g. the date range
   quickSearchUpcomingChoice?: EventQuickSearchUpcomingChoice // upcoming date quick search (today / this week / this month), if any
 }
 
+/**
+ * Filter an array of events by start and end date
+ *
+ * @param {Events} events The array of events
+ * @param {Date} filterStartDate The start date to filter on
+ * @param {Date} filterEndDate The end date to filter on
+ * @returns Events An array containing any events found (or array could be empty)
+ */
 export const filterEventsByDate = (
   events: Events,
   filterStartDate: Date,
@@ -62,6 +73,11 @@ export const filterEventsByDate = (
     )
   })
 
+/**
+ * Container for the user to search events e.g. by date, free text, category
+ *
+ * @returns ReactElement Container
+ */
 const EventSearchContainer = () => {
   const [freeTextSearchQuery, setFreeTextSearchQuery] = useState('')
   const [calendarPickerWidth, setCalendarPickerWidth] = useState(0)

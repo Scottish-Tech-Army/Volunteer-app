@@ -34,6 +34,11 @@ const ProjectListItem = styled.TouchableOpacity`
   padding: 17px 27px 11px 27px;
 `
 
+export enum ListDisplayMode {
+  Full = 'full',
+  Search = 'search',
+}
+
 export interface ListOptions {
   events?: {
     range: EventsRange
@@ -42,12 +47,23 @@ export interface ListOptions {
 
 interface ListProps {
   data: Events | Projects
-  mode: 'fullList' | 'search'
+  mode: ListDisplayMode
   options: ListOptions
   searchScreen: keyof RootStackParamList
   type: ListType
 }
 
+/**
+ * Component to show a list of things
+ *
+ * @param {ListProps} props The component props
+ * @param {Events | Projects} props.data The actual list data
+ * @param {ListDisplayMode} props.mode Are we showing a full list of things, or some search results
+ * @param {ListOptions} props.options Some extra options for displaying particular kinds of list data
+ * @param {keyof RootStackParamList} props.searchScreen The name of the search screen for this kind of data - so we can take the user there if they want to do another search
+ * @param {ListType} props.type Which type of data is in the list, e.g. projects or events
+ * @returns ReactElement Component
+ */
 const List: FC<ListProps> = ({ data, mode, options, searchScreen, type }) => {
   let flatList
 
@@ -102,14 +118,14 @@ const List: FC<ListProps> = ({ data, mode, options, searchScreen, type }) => {
     <>
       <NoneFound>
         Sorry, we couldn't find any {type}{' '}
-        {mode === 'fullList'
+        {mode === ListDisplayMode.Full
           ? 'at the moment.'
           : mode === 'search'
           ? 'matching your search.'
           : ''}
       </NoneFound>
 
-      {mode === 'search' && (
+      {mode === ListDisplayMode.Search && (
         <TryAnotherSearch
           onPress={() => {
             navigate(searchScreen, undefined)

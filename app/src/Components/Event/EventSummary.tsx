@@ -11,11 +11,6 @@ import ImageThumbnail from '@/Components/ImageThumbnail'
 import Title from '@/Components/Title'
 import { Event } from '@/Services/modules/events'
 
-interface EventSummaryProps {
-  event: Event
-  hideDateTime?: boolean
-}
-
 const EventInfo = styled.View`
   border-bottom-color: ${props => props.theme.colors.greyFaint};
   border-bottom-width: 2px;
@@ -26,11 +21,23 @@ const EventInfo = styled.View`
   padding: 7px 0 27px;
   width: 100%;
 `
-
 const RightColumn = styled.View`
   display: flex;
 `
 
+interface EventSummaryProps {
+  event: Event
+  hideDateTime?: boolean
+}
+
+/**
+ * Component showing short summary of event (for use in lists)
+ *
+ * @param {EventSummaryProps} props The component props
+ * @param {Event} props.event The event to show
+ * @param {boolean} [props.hideDateTime] Should we hide the date and time
+ * @returns ReactElement Component
+ */
 const EventSummary: FC<EventSummaryProps> = ({ event, hideDateTime }) => (
   <EventInfo key={event.id}>
     <ImageThumbnail

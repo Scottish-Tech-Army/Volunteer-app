@@ -40,11 +40,20 @@ export interface EventQuickSearchChoice {
 }
 
 interface EventSearchQuickSearchProps {
-  choices: EventQuickSearchChoice[] // The choices which will be used for the buttons on the quick search
-  field: EventsSearchField // The field this quick search searches on
-  heading: string // Text for the heading that appears for this quick search group
+  choices: EventQuickSearchChoice[]
+  field: EventsSearchField
+  heading: string
 }
 
+/**
+ * Events quick search button group component
+ *
+ * @param {EventSearchQuickSearchProps} props The component props
+ * @param {EventQuickSearchChoice[]} props.choices The choices which will be used for the buttons on the quick search
+ * @param {EventsSearchField} props.field The field to search on
+ * @param {string} props.heading Text for the heading of this quick search group
+ * @returns ReactElement Component
+ */
 const EventSearchQuickSearchButtons: FC<EventSearchQuickSearchProps> = ({
   choices,
   field,
