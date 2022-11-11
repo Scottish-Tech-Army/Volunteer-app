@@ -8,6 +8,7 @@ import { ExampleContainer, ListContainer } from '@/Containers'
 import Entypo from 'react-native-vector-icons/Entypo'
 import { ListType } from '@/Containers/ListContainer'
 import { useTheme } from '@/Hooks'
+import ProfileContainer from '@/Containers/ProfileContainer'
 
 const Tab = createBottomTabNavigator()
 
@@ -42,6 +43,15 @@ const MainNavigator = () => {
         component={ExampleContainer}
         options={{
           tabBarIcon: () => <Entypo color={Colors.text} name="cog" size={24} />,
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={ProfileContainer}
+        options={{
+          tabBarIcon: () => (
+            <Entypo color={Colors.text} name="user" size={24} />
+          ),
         }}
       />
     </Tab.Navigator>
