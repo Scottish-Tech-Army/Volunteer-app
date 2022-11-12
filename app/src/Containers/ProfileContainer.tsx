@@ -1,3 +1,6 @@
+/**
+ * @file App configuration settings.
+ */
 import React from 'react'
 import {
   Heading,
