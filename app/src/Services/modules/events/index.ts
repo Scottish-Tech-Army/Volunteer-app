@@ -16,16 +16,15 @@ export interface Event {
   video_file: string
   video_thumbnail: string
   images: string[]
-  speakers?: string[]
-  // ERROR: Called injectEndpoints to override already existing endpointName fetchAllPastEvents without specifying `overrideExisting: true`
+  speakers?: EventSpeaker[]
 }
+
+export type Events = Event[]
 
 export interface EventSpeaker {
   speaker_name: string
   linkedin_url: string
 }
-
-export type Events = Event[]
 
 export enum EventsRange {
   All = 'all',

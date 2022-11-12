@@ -1,17 +1,12 @@
 import React, { FC } from 'react'
-
-// need to fetch data from somewhere here ie., import data from
+import { EventSpeaker } from '@/Services/modules/events'
 
 interface EventSpeakerProps {
-  speaker_name: string
-  linkedin_url: string
+  speakers: EventSpeaker[]
 }
 
-const EventSpeakers: FC<EventSpeakerProps> = ({
-  speaker_name,
-  linkedin_url,
-}) => {
-  // what goes here
+const EventSpeakers: FC<EventSpeakerProps> = ({ speakers }) => {
+  // work out how to add map feature like in Project Skills
 }
 
 export default EventSpeakers

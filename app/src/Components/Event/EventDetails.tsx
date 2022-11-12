@@ -86,14 +86,10 @@ const EventDetails: FC<EventDetailsProps> = ({ event }) => {
             {event.description}
           </Markdown>
         </EventDescription>
-        <EventSpeaker>
-          {/* MAYBE ADD SOMETHING THAT SAYS IF THERE IS A SPEAKER IN THE ARRAY, GET THE SPEAKER NAME AND URL */}
-          {/* <EventSpeakers>
-              : event.speakers?.length > 0 (
-                  {event.speakers}
-            )
-            </EventSpeakers> */}
-        </EventSpeaker>
+        <EventSpeakers>
+          {/* needs to pass event.speakers to <EventSpeakers /> and only show <EventSpeakers /> 
+             if there are actually any speakers for an event */}
+        </EventSpeakers>
       </EventDetailsView>
     </ScrollView>
   )
