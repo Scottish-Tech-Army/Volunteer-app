@@ -20,6 +20,7 @@ const SkillText = styled.Text`
   padding: 0px 1px 0px 2px;
 `
 
+// passed prop
 const ProjectSkills: FC<ProjectSkillsProps> = ({ skills }) => {
   return (
     <>

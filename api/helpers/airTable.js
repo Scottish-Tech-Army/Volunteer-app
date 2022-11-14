@@ -79,10 +79,22 @@ async function getAllRecords(tableName, includeId = false) {
   }
 }
 
+// TODO
+  // make more reusable, not specific to speakers only
+  // need to get it to work for multiple 
 async function getRecordById(tableName, recordId) {
   try {
     const recordsRaw = await module.exports.client().table(tableName).find(recordId);
-
+    console.log(recordsRaw);
+ //   const speakers = await getRecordById("STA Events Speakers", recordsRaw.fields.speakers[0]), didn't work because we were calling getRecordById twice 
+ // curly brackets more than 1 line
+    const speakers = await Promise.all(recordsRaw.fields.speakers.map(async speaker => {
+    const speakerRecord = await module.exports.client().table("STA Events Speakers").find(speaker)
+    return speakerRecord.fields
+  })); 
+    console.log(speakers)
+    // replace the speakers on recordsRaw.fields with the actual speakers data name and url
+    recordsRaw.fields.speakers = speakers // went to speakers array and replaced it with the is the speaker in 88
     return recordsRaw.fields;
   } catch (error) {
     console.error(error);
