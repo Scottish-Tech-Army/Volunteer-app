@@ -8,6 +8,7 @@ import RNCalendarEvents, {
   CalendarEventWritable,
   Options,
 } from 'react-native-calendar-events' // see docs at https://github.com/wmcmahan/react-native-calendar-events
+import RemoveMarkdown from 'remove-markdown'
 import IconAndLabel from '@/Components/IconAndLabel'
 import { Event } from '@/Services/modules/events'
 import { end } from '@/Utils/Events'
@@ -41,7 +42,7 @@ const EventAddToCalendar: FC<EventAddToCalendarProps> = ({ event }) => {
         const eventDetails = {
           startDate: `${event.date}T${event.time}:00.000Z`,
           endDate: `${eventEnd.date}T${eventEnd.time}:00.000Z`,
-          description: event.description,
+          description: RemoveMarkdown(event.description),
         } as CalendarEventWritable
 
         // Fix calendar syncing issue specific to Android
