@@ -90,7 +90,7 @@ const EventSearchContainer = () => {
     (state: { events: EventsState }) => state.events.upcoming,
   )
 
-  const allEvents = [...allUpcomingEvents, ...allPastEvents]
+  const allEvents = [...(allUpcomingEvents || []), ...(allPastEvents || [])]
 
   const getQuickSearchChoices = (
     eventSearchField: EventsSearchField,

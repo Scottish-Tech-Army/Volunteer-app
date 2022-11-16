@@ -9,7 +9,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { Text } from 'react-native'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components/native'
 import { EventSearch } from './EventSearchContainer'
 import { ProjectSearch } from './ProjectSearchContainer'
@@ -34,8 +34,8 @@ import {
   Projects,
   useLazyFetchAllProjectsQuery,
 } from '@/Services/modules/projects'
-import { setEvents } from '@/Store/Events'
-import { setProjects } from '@/Store/Projects'
+import { EventsState, setEvents } from '@/Store/Events'
+import { ProjectsState, setProjects } from '@/Store/Projects'
 import Theme from '@/Theme/OldTheme'
 
 const ClearSearchLabel = styled.Text`
@@ -114,10 +114,16 @@ const ListContainer = (props: {
   }
 
   // Events-specific
-  const [fetchAllUpcomingEvents, { data: allUpcomingEvents }] =
+  const [fetchAllUpcomingEvents, { data: allUpcomingEventsResult }] =
     useLazyFetchAllUpcomingEventsQuery()
-  const [fetchAllPastEvents, { data: allPastEvents }] =
+  const [fetchAllPastEvents, { data: allPastEventsResult }] =
     useLazyFetchAllPastEventsQuery()
+  const allUpcomingEvents = useSelector(
+    (state: { events: EventsState }) => state.events.upcoming,
+  )
+  const allPastEvents = useSelector(
+    (state: { events: EventsState }) => state.events.past,
+  )
   const [eventsSelectedOption, setEventsSelectedOption] = useState<EventsRange>(
     EventsRange.Upcoming,
   )
@@ -127,8 +133,11 @@ const ListContainer = (props: {
     useState<EventQuickSearchUpcomingChoice | undefined>()
 
   // Projects-specific
-  const [fetchAllProjects, { data: allProjects }] =
+  const [fetchAllProjects, { data: allProjectsResult }] =
     useLazyFetchAllProjectsQuery()
+  const allProjects = useSelector(
+    (state: { projects: ProjectsState }) => state.projects?.projects,
+  )
 
   /*
    *
@@ -156,16 +165,21 @@ const ListContainer = (props: {
 
   // When data has loaded, store data in the Redux store so it can be used by other containers/components too e.g. search containers
   useEffect(() => {
-    if (allUpcomingEvents) {
-      dispatch(setEvents({ upcoming: allUpcomingEvents }))
+    if (allUpcomingEventsResult) {
+      dispatch(setEvents({ upcoming: allUpcomingEventsResult }))
     }
-    if (allPastEvents) {
-      dispatch(setEvents({ past: allPastEvents }))
+    if (allPastEventsResult) {
+      dispatch(setEvents({ past: allPastEventsResult }))
     }
-    if (allProjects) {
-      dispatch(setProjects(allProjects))
+    if (allProjectsResult) {
+      dispatch(setProjects({ projects: allProjectsResult }))
     }
-  }, [allUpcomingEvents, allPastEvents, allProjects, dispatch])
+  }, [
+    allUpcomingEventsResult,
+    allPastEventsResult,
+    allProjectsResult,
+    dispatch,
+  ])
 
   // What to do when the user navigates to this container
   // e.g. set which data to show -- either search results or everything

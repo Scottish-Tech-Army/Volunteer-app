@@ -9,7 +9,7 @@ import styled from 'styled-components/native'
 import dayjs from 'dayjs'
 import ProjectHeading from './ProjectHeading'
 import DateTime from '../Forms/DateTime'
-import SubmitButton from '../Forms/SubmitButton'
+import Button from '../Forms/Button'
 import TextInputControl from '../Forms/TextInputControl'
 import YesNoChoice from '../Forms/YesNoChoice'
 import { goBack } from '@/Navigators/utils'
@@ -214,9 +214,10 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
           value={availableFromDate}
         />
 
-        <SubmitButton
+        <Button
           disabled={loading}
           onPress={submitForm}
+          primary
           text={loading ? 'Sending...' : 'Submit'}
         />
       </ProjectRegisterInterestView>

@@ -6,7 +6,7 @@ import { Events } from '@/Services/modules/events'
 
 const slice = createSlice({
   name: 'events',
-  initialState: { past: [], upcoming: [] } as EventsState,
+  initialState: { past: undefined, upcoming: undefined } as EventsState,
   reducers: {
     setEvents: (state, { payload: { past, upcoming } }: EventsPayload) => {
       if (typeof past !== 'undefined') {
@@ -24,8 +24,8 @@ export const { setEvents } = slice.actions
 export default slice.reducer
 
 export type EventsState = {
-  past: Events
-  upcoming: Events
+  past: Events | undefined
+  upcoming: Events | undefined
 }
 
 type EventsPayload = {

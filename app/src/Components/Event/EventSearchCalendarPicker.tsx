@@ -8,7 +8,7 @@ import { Alert } from 'react-native'
 import { useSelector } from 'react-redux'
 import CalendarPicker from 'react-native-calendar-picker' // Note: this package also requires 'moment' package to be installed
 import { EventSearch } from '@/Containers/EventSearchContainer'
-import SubmitButton from '@/Components/Forms/SubmitButton'
+import Button from '@/Components/Forms/Button'
 import { filterEventsByDate } from '@/Containers/EventSearchContainer'
 import { ListRouteParams, ListType } from '@/Containers/ListContainer'
 import { navigate } from '@/Navigators/utils'
@@ -102,9 +102,10 @@ const EventSearchCalendarPicker: FC<EventSearchCalendarPickerProps> = ({
         onDateChange={onDateChange}
         width={width}
       />
-      <SubmitButton
+      <Button
         disabled={false}
         onPress={handleSubmit}
+        primary
         text="Search dates"
       />
     </>
