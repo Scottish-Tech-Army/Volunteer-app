@@ -23,7 +23,7 @@ interface EventSearchCalendarPickerProps {
  *
  * @param {EventSearchCalendarPickerProps} props The component props
  * @param {number} [props.width] The width this component should occupy in pixels
- * @returns ReactElement Component
+ * @returns {ReactElement} Component
  */
 const EventSearchCalendarPicker: FC<EventSearchCalendarPickerProps> = ({
   width,

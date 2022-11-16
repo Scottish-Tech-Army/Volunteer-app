@@ -24,7 +24,7 @@ interface ButtonProps {
  * @param {function} props.onPress Function to run when button is pressed
  * @param {boolean} [props.primary] Is it a main (primary) button
  * @param {string} props.text The text to show on the button
- * @returns ReactElement Component
+ * @returns {ReactElement} Component
  */
 const Button: FC<ButtonProps> = ({
   disabled,

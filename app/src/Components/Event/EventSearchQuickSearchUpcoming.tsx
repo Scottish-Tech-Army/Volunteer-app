@@ -35,7 +35,7 @@ interface EventSearchQuickSearchUpcomingProps {
  *
  * @param {EventSearchQuickSearchUpcomingProps} props The component props
  * @param {EventQuickSearchUpcomingChoice | undefined} [props.selectedButton] Which button is selected, e.g. This week
- * @returns ReactElement Component
+ * @returns {ReactElement} Component
  */
 const EventSearchQuickSearchUpcomingButtons: FC<
   EventSearchQuickSearchUpcomingProps

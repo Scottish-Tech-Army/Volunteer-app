@@ -33,7 +33,7 @@ const IconAndLabelText = styled.Text`
  * @param {string} props.icon The name of the icon to use, from the React Native Vector Icons Feather library - see https://oblador.github.io/react-native-vector-icons/
  * @param {function} [props.onPress] A function to run when the user taps on this component
  * @param {string} props.text The text for the label
- * @returns ReactElement Component
+ * @returns {ReactElement} Component
  */
 const IconAndLabel: FC<IconAndLabelProps> = ({ icon, onPress, text }) => (
   <IconAndLabelView onPress={onPress}>

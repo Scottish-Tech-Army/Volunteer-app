@@ -36,7 +36,7 @@ interface EventSummaryProps {
  * @param {EventSummaryProps} props The component props
  * @param {Event} props.event The event to show
  * @param {boolean} [props.hideDateTime] Should we hide the date and time
- * @returns ReactElement Component
+ * @returns {ReactElement} Component
  */
 const EventSummary: FC<EventSummaryProps> = ({ event, hideDateTime }) => (
   <EventInfo key={event.id}>

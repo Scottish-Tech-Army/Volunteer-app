@@ -42,9 +42,9 @@ interface EventAddToCalendarProps {
 /**
  * Component for an event add to calendar button
  *
- * @param {EventDetailsProps} props The component props
+ * @param {EventAddToCalendarProps} props The component props
  * @param {Event} props.event The event
- * @returns ReactElement Component
+ * @returns {ReactElement} Component
  */
 const EventAddToCalendar: FC<EventAddToCalendarProps> = ({ event }) => {
   const allUpcomingEvents = useSelector(
@@ -87,7 +87,7 @@ const EventAddToCalendar: FC<EventAddToCalendarProps> = ({ event }) => {
    * Connects to the device's calendars
    * We need to do this first, to check we can get access, and in case the user needs to choose which calendar (if they have more than one)
    *
-   * @returns void
+   * @returns {void}
    */
   const checkCalendarAccess = async () => {
     try {
@@ -125,7 +125,7 @@ const EventAddToCalendar: FC<EventAddToCalendarProps> = ({ event }) => {
    * Actually adds the event to the device calendar, once we've got access to calendars and determined which one to use
    *
    * @param {string} [calendarId] The ID of the device calendar the user wants to add the event to -- if not specified, we add the event to the default calendar
-   * @returns void
+   * @returns {void}
    */
   const addToCalendar = async (calendarId?: string) => {
     try {

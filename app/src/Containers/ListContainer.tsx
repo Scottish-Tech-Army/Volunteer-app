@@ -79,8 +79,8 @@ type Screens = {
 /**
  * Container for showing a list of things
  *
- * @param {Object} props The container props
- * @param {Object} props.route A route object containing params
+ * @param {object} props The container props
+ * @param {object} props.route A route object containing params
  * @param {ListRouteParams} props.route.params The parameters to send to this container when navigating, to set what it displays
  * @param {ListType} props.route.params.type The type of data to show in the list, e.g. events or projects
  * @param {EventSearch | ProjectSearch} [props.route.params.search] The search the user has performed - or not included if showing full list of data, not search results
