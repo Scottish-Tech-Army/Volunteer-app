@@ -50,7 +50,6 @@ const EventAddToCalendar: FC<EventAddToCalendarProps> = ({ event }) => {
   const allUpcomingEvents = useSelector(
     (state: { events: EventsState }) => state.events.upcoming,
   )
-  // console.log('allUpcomingEvents', allUpcomingEvents)
   const dispatch = useDispatch()
   const [eventAdded, setEventAdded] = useState(Boolean(event.addedToCalendar))
   const [calendars, setCalendars] = useState<Calendar[] | undefined>()
@@ -75,6 +74,7 @@ const EventAddToCalendar: FC<EventAddToCalendarProps> = ({ event }) => {
           {
             text: 'OK',
             style: 'default',
+            onPress: () => checkCalendarAccess(),
           },
         ],
       )
@@ -124,7 +124,7 @@ const EventAddToCalendar: FC<EventAddToCalendarProps> = ({ event }) => {
   /**
    * Actually adds the event to the device calendar, once we've got access to calendars and determined which one to use
    *
-   * @param {string} [calendarId] The ID of the device calendar the user wants to add the event to
+   * @param {string} [calendarId] The ID of the device calendar the user wants to add the event to -- if not specified, we add the event to the default calendar
    * @returns void
    */
   const addToCalendar = async (calendarId?: string) => {
