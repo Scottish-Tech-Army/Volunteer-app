@@ -21,7 +21,7 @@ interface ButtonProps {
  * @param {boolean} props.disabled Should button be disabled
  * @param {boolean} [props.listItem] Is this one of a list of choices
  * @param {boolean} [props.listSelected] Is this selected in a list of choices
- * @param {function} props.onPress Function to run when button is pressed
+ * @param {Function} props.onPress Function to run when button is pressed
  * @param {boolean} [props.primary] Is it a main (primary) button
  * @param {string} props.text The text to show on the button
  * @returns {ReactElement} Component

@@ -85,7 +85,7 @@ type Screens = {
  * @param {ListType} props.route.params.type The type of data to show in the list, e.g. events or projects
  * @param {EventSearch | ProjectSearch} [props.route.params.search] The search the user has performed - or not included if showing full list of data, not search results
  * @param {ListOptions} props.route.params.options Any additional options for specific data types, that tell the container how to behave
- * @returns ReactElement Container
+ * @returns {ReactElement} Container
  */
 const ListContainer = (props: {
   route: {

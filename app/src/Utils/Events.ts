@@ -14,7 +14,7 @@ export interface EventEnd {
  * Work out the event's end date and time
  *
  * @param {Event} event An event
- * @returns {Object} An object with two properties -- date (YY-MM-DD format) and time (HH:MM)
+ * @returns {object} An object with two properties -- date (YY-MM-DD format) and time (HH:MM)
  */
 export const end = (event: Event): EventEnd => {
   const eventStart = dayjs(`${event.date} ${event.time}`)
@@ -30,7 +30,7 @@ export const end = (event: Event): EventEnd => {
  * Determine if an event has already started (either because it's happening right now, or it's started and finished)
  *
  * @param {Event} event An event
- * @returns boolean
+ * @returns {boolean}
  */
 export const hasStarted = (event: Event): boolean => {
   const eventStart = dayjs(`${event.date} ${event.time}`)
@@ -43,7 +43,7 @@ export const hasStarted = (event: Event): boolean => {
  * Determine if an event is upcoming
  *
  * @param {Event} event An event
- * @returns boolean
+ * @returns {boolean}
  */
 export const isUpcoming = (event: Event): boolean => {
   const eventStart = dayjs(`${event.date} ${event.time}`)
