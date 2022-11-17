@@ -21,9 +21,7 @@ const ProjectScope: FC<ProjectScopeProps> = ({ route }) => {
   const url = route.params.url
   return (
     <View style={Layout.flex1}>
-      <WebView
-      source={{ uri: url }}
-      />
+      <WebView source={{ uri: url }} />
     </View>
   )
 }
