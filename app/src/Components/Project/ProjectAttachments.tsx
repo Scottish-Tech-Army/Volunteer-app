@@ -24,8 +24,6 @@ const AttachmentDetails = styled.Text`
 /**
  * Displays the attachment button
  * @param {string} url of project scope url
- * @param {React.ReactNode} icon for the attachment button
- * @param {string} details text for the attachment button
  * @returns {ReactElement} project attachment button and text
  */
 const ProjectAttachments: FC<ProjectAttachmentsProps> = ({
@@ -36,7 +34,7 @@ const ProjectAttachments: FC<ProjectAttachmentsProps> = ({
   // Project Attachments will not be displayed if URL is null or not a validate format
   if (!url || !url.match('drive.google.com')) return null
   return (
-    <AttachmentButton onPress={() => navigate('ProjectScope', { pdf: url })}>
+    <AttachmentButton onPress={() => navigate('ProjectScope', { url: url })}>
       {icon}
       <AttachmentDetails>{details}</AttachmentDetails>
     </AttachmentButton>

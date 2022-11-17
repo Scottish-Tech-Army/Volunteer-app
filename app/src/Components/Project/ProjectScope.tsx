@@ -18,11 +18,11 @@ interface ProjectScopeProps {
  */
 const ProjectScope: FC<ProjectScopeProps> = ({ route }) => {
   const { Layout } = useTheme()
-  const pdf = route.params.pdf
+  const url = route.params.url
   return (
     <View style={Layout.flex1}>
       <WebView
-      source={{ uri: pdf}}
+      source={{ uri: url}}
       />
     </View>
   )
