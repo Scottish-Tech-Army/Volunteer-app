@@ -18,6 +18,7 @@ export type RootStackParamList = {
   Events: undefined
   EventDetail: undefined
   EventSearch: undefined
+  ProjectScope: undefined
 }
 
 export const navigationRef = createNavigationContainerRef<RootStackParamList>()

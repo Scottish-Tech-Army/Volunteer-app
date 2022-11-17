@@ -1,8 +1,8 @@
 /**
- * @file Project Full Details
+ * @file displays the list of availble projects in the projects tab
  */
 
-import React, { FC } from 'react'
+import React, { FC, ReactElement } from 'react'
 import styled from 'styled-components/native'
 import ProjectHeading from './ProjectHeading'
 import ProjectInterestButton from './ProjectInterestButton'
@@ -69,8 +69,8 @@ const ProjectRelatedRoles = styled.Text`
 `
 /**
  * Displays a list of available project roles
- * @param {project} project object
- * @returns {project} list of projects
+ * @param {Project} project object
+ * @returns {ReactElement} a list of projects
  */
 const ProjectFullDetails: FC<ProjectFullDetailsProps> = ({ project }) => {
   return (

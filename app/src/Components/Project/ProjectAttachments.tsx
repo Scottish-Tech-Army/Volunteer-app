@@ -1,8 +1,8 @@
 /**
- * @file Project Attachments
+ * @file displays the project attachment button
  */
 import { navigate } from '@/Navigators/utils'
-import React, { FC } from 'react'
+import React, { FC, ReactElement } from 'react'
 import styled from 'styled-components/native'
 
 interface ProjectAttachmentsProps {
@@ -23,16 +23,18 @@ const AttachmentDetails = styled.Text`
 `
 /**
  * Displays the attachment button
- * @param {url} url of project scope pdf
- * @returns {AttachmentButton} project attachment button and text
+ * @param {string} url of project scope url
+ * @param {React.ReactNode} icon for the attachment button
+ * @param {string} details text for the attachment button
+ * @returns {ReactElement} project attachment button and text
  */
 const ProjectAttachments: FC<ProjectAttachmentsProps> = ({
   icon,
   details,
   url,
 }) => {
-  // Project Attachments will not be displayed if URL is null or not a validate PDF format (.pdf)
-  if (!url || !url.match('.pdf')) return null
+  // Project Attachments will not be displayed if URL is null or not a validate format
+  if (!url || !url.match('drive.google.com')) return null
   return (
     <AttachmentButton onPress={() => navigate('ProjectScope', { pdf: url })}>
       {icon}

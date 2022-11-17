@@ -1,5 +1,5 @@
 /**
- * @file Layout
+ * @file reusable layouts for common components
  */
 import { StyleSheet } from 'react-native'
 import { ThemeLayout, ThemeVariables } from '@/Theme/theme.type'
