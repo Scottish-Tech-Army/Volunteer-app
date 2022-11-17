@@ -1,3 +1,7 @@
+/**
+ * @file A form for the user to register interest in taking part in a volunteer project.
+ */
+
 import React, { FC, useEffect, useState } from 'react'
 import { Alert } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
@@ -11,13 +15,9 @@ import YesNoChoice from '../Forms/YesNoChoice'
 import { goBack } from '@/Navigators/utils'
 import {
   Project,
-  useLazyRegisterInterestQuery,
+  useLazyProjectRegisterInterestQuery,
 } from '@/Services/modules/projects'
 import { validateEmail } from '@/Utils/Validation'
-
-interface ProjectRegisterInterestProps {
-  project: Project
-}
 
 const ProjectRegisterInterestView = styled.View`
   margin: 21px 27px 0px 27px;
@@ -35,6 +35,17 @@ const ProjectRole = styled.Text`
   margin-bottom: 9px;
 `
 
+interface ProjectRegisterInterestProps {
+  project: Project
+}
+
+/**
+ * Form for user to register interest in a project
+ *
+ * @param {ProjectRegisterInterestProps} props The component props
+ * @param {Project} props.project The project the user's registering interest in
+ * @returns ReactElement Component
+ */
 const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
   project,
 }) => {
@@ -52,7 +63,7 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
     new Date().setFullYear(today.getFullYear() + 1),
   )
   const [registerInterest, { data: responseData, error: responseError }] =
-    useLazyRegisterInterestQuery()
+    useLazyProjectRegisterInterestQuery()
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {

@@ -1,7 +1,12 @@
+/**
+ * @file Defines the main screens that have tabs at the bottom of the app, e.g. Projects, Events.
+ */
+
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { HomeContainer, EventsContainer, ExampleContainer } from '@/Containers'
+import { ExampleContainer, ListContainer } from '@/Containers'
 import Entypo from 'react-native-vector-icons/Entypo'
+import { ListType } from '@/Containers/ListContainer'
 import { useTheme } from '@/Hooks'
 
 const Tab = createBottomTabNavigator()
@@ -12,8 +17,9 @@ const MainNavigator = () => {
   return (
     <Tab.Navigator>
       <Tab.Screen
-        name="Home"
-        component={HomeContainer}
+        name="Projects"
+        component={ListContainer}
+        initialParams={{ type: ListType.Projects }}
         options={{
           headerShown: false,
           tabBarIcon: () => (
@@ -23,7 +29,8 @@ const MainNavigator = () => {
       />
       <Tab.Screen
         name="Events"
-        component={EventsContainer}
+        component={ListContainer}
+        initialParams={{ type: ListType.Events }}
         options={{
           tabBarIcon: () => (
             <Entypo color={Colors.text} name="megaphone" size={24} />

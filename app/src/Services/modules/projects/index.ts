@@ -1,6 +1,8 @@
 /**
- * @file projects/index
+ * @file Defines the Project type (and related types), and the lazy queries for fetching projects data from the API.
+ * Also defines related groups of project roles that are used for projects searches.
  */
+
 import { api } from '../../api'
 import fetchAll from './fetchAll'
 import registerInterest from './registerInterest'
@@ -36,14 +38,16 @@ export enum ProjectsSearchField {
 
 export const projectsApi = api.injectEndpoints({
   endpoints: build => ({
-    fetchAll: fetchAll(build),
-    registerInterest: registerInterest(build),
+    fetchAllProjects: fetchAll(build),
+    projectRegisterInterest: registerInterest(build),
   }),
   overrideExisting: true,
 })
 
-export const { useLazyFetchAllQuery, useLazyRegisterInterestQuery } =
-  projectsApi
+export const {
+  useLazyFetchAllProjectsQuery,
+  useLazyProjectRegisterInterestQuery,
+} = projectsApi
 
 // Groups of related job roles
 // These are used e.g. for searching projects

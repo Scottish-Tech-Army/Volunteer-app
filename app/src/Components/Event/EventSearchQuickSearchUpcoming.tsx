@@ -1,13 +1,24 @@
-// 'Today', 'This week' and 'This month' date quick search buttons for upcoming events
+/**
+ * @file 'Today', 'This week' and 'This month' date quick search buttons for upcoming events.
+ */
 
 import React, { FC } from 'react'
 import dayjs from 'dayjs'
 import styled from 'styled-components/native'
 import { useSelector } from 'react-redux'
 import QuickSearchButton from '@/Components/Forms/QuickSearchButton'
-import { filterEventsByDate } from '@/Containers/EventSearchContainer'
+import {
+  EventSearch,
+  filterEventsByDate,
+} from '@/Containers/EventSearchContainer'
+import { ListRouteParams, ListType } from '@/Containers/ListContainer'
 import { navigate } from '@/Navigators/utils'
 import { EventsState } from '@/Store/Events'
+
+const ButtonTitle = styled.Text`
+  display: flex;
+  text-align: center;
+`
 
 export enum EventQuickSearchUpcomingChoice {
   Today = 'Today',
@@ -19,11 +30,13 @@ interface EventSearchQuickSearchUpcomingProps {
   selectedButton?: EventQuickSearchUpcomingChoice | undefined
 }
 
-const ButtonTitle = styled.Text`
-  display: flex;
-  text-align: center;
-`
-
+/**
+ * Component for quick search buttons (today, this week, etc) for upcoming events
+ *
+ * @param {EventSearchQuickSearchUpcomingProps} props The component props
+ * @param {EventQuickSearchUpcomingChoice | undefined} [props.selectedButton] Which button is selected, e.g. This week
+ * @returns ReactElement Component
+ */
 const EventSearchQuickSearchUpcomingButtons: FC<
   EventSearchQuickSearchUpcomingProps
 > = ({ selectedButton }) => {
@@ -33,7 +46,7 @@ const EventSearchQuickSearchUpcomingButtons: FC<
   )
 
   const handleSearch = (
-    quickSearchChoice: EventQuickSearchUpcomingChoice,
+    quickSearchUpcomingChoice: EventQuickSearchUpcomingChoice,
     startDate: Date,
     endDate: Date,
   ): void => {
@@ -44,13 +57,14 @@ const EventSearchQuickSearchUpcomingButtons: FC<
     )
 
     navigate('Events', {
+      type: ListType.Events,
       search: {
         type: 'date',
-        quickSearchChoice,
+        quickSearchUpcomingChoice,
         range: 'upcoming',
         results: eventsSearchResults,
-      },
-    })
+      } as EventSearch,
+    } as ListRouteParams)
   }
 
   return (
