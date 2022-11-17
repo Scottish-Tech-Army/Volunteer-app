@@ -1,11 +1,11 @@
 /**
- * @file displays the project scope document 
+ * @file displays the project scope document
  */
 
 import React, { FC } from 'react'
 import { Route, View } from 'react-native'
 import { useTheme } from '@/Hooks'
-import { WebView } from 'react-native-webview';
+import { WebView } from 'react-native-webview'
 
 interface ProjectScopeProps {
   route: Route
@@ -22,7 +22,7 @@ const ProjectScope: FC<ProjectScopeProps> = ({ route }) => {
   return (
     <View style={Layout.flex1}>
       <WebView
-      source={{ uri: url}}
+      source={{ uri: url }}
       />
     </View>
   )
