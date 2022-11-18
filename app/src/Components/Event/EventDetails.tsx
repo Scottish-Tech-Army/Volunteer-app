@@ -15,6 +15,7 @@ import ImageFullWidth from '../ImageFullWidth'
 import ImageSwiper from '../ImageSwiper'
 import Title from '../Title'
 import Video from '../Video'
+import EventSpeakers from './EventSpeakers'
 
 interface EventDetailsProps {
   event: Event
@@ -81,6 +82,7 @@ const EventDetails: FC<EventDetailsProps> = ({ event }) => {
             {event.description}
           </Markdown>
         </EventDescription>
+        <EventSpeakers></EventSpeakers>
       </EventDetailsView>
     </ScrollView>
   )
