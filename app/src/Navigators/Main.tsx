@@ -8,7 +8,7 @@ import { ExampleContainer, ListContainer } from '@/Containers'
 import Entypo from 'react-native-vector-icons/Entypo'
 import { ListType } from '@/Containers/ListContainer'
 import { useTheme } from '@/Hooks'
-import ProfileContainer from '@/Containers/ProfileContainer'
+import ProfileContainer from '@/NativeBase/Containers/ProfileContainer'
 
 const Tab = createBottomTabNavigator()
 

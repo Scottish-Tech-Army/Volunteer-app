@@ -18,7 +18,7 @@ import {
 } from 'native-base'
 import { useDispatch, useSelector } from 'react-redux'
 import { changeWelcome, WelcomeState } from '@/Store/Welcome'
-import { version } from '../../package.json'
+import { version } from '../../../package.json'
 import { changeTheme, ThemeState } from '@/Store/Theme'
 import { Brand } from '@/Components'
 
