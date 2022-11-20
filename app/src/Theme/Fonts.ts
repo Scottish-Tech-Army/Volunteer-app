@@ -24,8 +24,8 @@ export default function ({ FontSize, Colors }: ThemeVariables): ThemeFonts {
       color: Colors.text,
     },
     textVLarge: {
-      fontSize: FontSize.large*1.5,
-      color: Colors.text
+      fontSize: FontSize.large * 1.5,
+      color: Colors.text,
     },
     titleSmall: {
       fontSize: FontSize.small * 2,
@@ -55,13 +55,16 @@ export default function ({ FontSize, Colors }: ThemeVariables): ThemeFonts {
       textAlign: 'right',
     },
     poppins: {
-      fontFamily:'Poppins-Medium'
+      fontFamily: 'Poppins-Medium',
+    },
+    poppinsBold: {
+      fontFamily: 'Poppins-Bold',
     },
     bebasNeue: {
-      fontFamily:'BebasNeue-Regular'
+      fontFamily: 'BebasNeue-Regular',
     },
-    upperCase:{
-      textTransform: 'uppercase'
-    }
+    upperCase: {
+      textTransform: 'uppercase',
+    },
   })
 }
