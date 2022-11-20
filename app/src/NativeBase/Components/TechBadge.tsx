@@ -11,7 +11,7 @@ import { ColorType } from 'native-base/lib/typescript/components/types'
 // https://kentcdodds.com/blog/how-to-write-a-react-component-in-typescript
 type TechBadgeProps = {
   caption: string
-  color?: ColorType
+  color: ColorType
 }
 interface TechBadgePropsArray {
   badges: TechBadgeProps[]
@@ -20,13 +20,14 @@ interface TechBadgePropsArray {
 const TechBadge = ({ badges }: TechBadgePropsArray) => {
   if (typeof badges !== 'undefined') {
     return (
-      <HStack>
-        {badges.map(({ caption, color = 'primary' }: TechBadgeProps) => (
+      <HStack paddingLeft="2" space="2" size="sm">
+        {badges.map(({ caption, color }: TechBadgeProps, index) => (
           <Badge
-            key={caption}
-            size={'sm'}
-            alignSelf={'flex-start'}
+            key={index}
+            size="sm"
+            alignSelf="flex-start"
             colorScheme={color}
+            variant="outline"
           >
             {caption}
           </Badge>
