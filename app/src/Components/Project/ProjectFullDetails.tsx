@@ -1,5 +1,5 @@
 /**
- * @file displays the list of availble projects in the projects tab
+ * @file displays the details of a project role
  */
 
 import React, { FC, ReactElement } from 'react'
@@ -68,9 +68,9 @@ const ProjectRelatedRoles = styled.Text`
   padding: 17px 27px 11px 27px;
 `
 /**
- * Displays a list of available project roles
+ * Displays the details of a project role
  * @param {Project} project object
- * @returns {ReactElement} a list of projects
+ * @returns {ReactElement} project details
  */
 const ProjectFullDetails: FC<ProjectFullDetailsProps> = ({ project }) => {
   return (

@@ -14,7 +14,7 @@ interface ProjectScopeProps {
 /**
  * Displays the project scope if a valid url is passed in
  * @param {Route} route object containing url
- * @returns {WebView} view of the scope pdf in url
+ * @returns {ReactElement} view of the scope pdf in url
  */
 const ProjectScope: FC<ProjectScopeProps> = ({ route }) => {
   const { Layout } = useTheme()

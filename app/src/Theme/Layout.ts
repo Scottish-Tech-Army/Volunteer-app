@@ -7,7 +7,7 @@ import { ThemeLayout, ThemeVariables } from '@/Theme/theme.type'
 /**
  *
  * @param {ThemeVariables} ThemeVariables can be spread like {Colors, NavigationColors, Gutters, Layout, Common, ...args}
- * @returns {ThemeVariables} Different theme layouts
+ * @returns {ThemeLayout} Different theme layouts
  */
 export default function ({}: ThemeVariables): ThemeLayout {
   return StyleSheet.create({

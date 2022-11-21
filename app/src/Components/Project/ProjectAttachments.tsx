@@ -34,7 +34,7 @@ const ProjectAttachments: FC<ProjectAttachmentsProps> = ({
   // Project Attachments will not be displayed if URL is null or not a validate format
   if (!url || !url.match('drive.google.com')) return null
   return (
-    <AttachmentButton onPress={() => navigate('ProjectScope', { url: url })}>
+    <AttachmentButton onPress={() => navigate('ProjectScope', { url })}>
       {icon}
       <AttachmentDetails>{details}</AttachmentDetails>
     </AttachmentButton>

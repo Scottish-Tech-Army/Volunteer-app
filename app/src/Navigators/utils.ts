@@ -1,30 +1,57 @@
 /**
- * @file Used to navigate without the navigation prop
+ * @file Navigators/utils
+ * Used to navigating without the navigation prop
  * @see https://reactnavigation.org/docs/navigating-without-navigation-prop/
  *
  * You can add other navigation functions that you need and export them
  */
+import { EventSearch } from '@/Containers/EventSearchContainer'
+import { EventsRange } from '@/Services/modules/events'
+import { Project, ProjectsSearchField } from '@/Services/modules/projects'
 import {
   CommonActions,
   createNavigationContainerRef,
 } from '@react-navigation/native'
 
-export type RootStackParamList = {
+/**
+ * Defines the type of params expected when navigating to each screen
+ */
+type RootStackParamList = {
   Startup: undefined
-  Projects: undefined
-  ProjectDetail: undefined
-  ProjectRegisterInterest: undefined
-  ProjectSearch: undefined
-  Events: undefined
-  EventDetail: undefined
-  EventSearch: undefined
-  ProjectScope: undefined
+  Home: undefined
+  ProjectDetail: {
+    item: Project
+    key: string
+  }
+  ProjectRegisterInterest: {
+    project: Project
+  }
+  ProjectSearch: string | undefined
+
+  ProjectSearchResults: {
+    results: (Project | Event)[]
+    searchField: ProjectsSearchField | undefined
+    searchQuery: string
+  }
+  ProjectScope: {
+    url: string
+  }
+  Events: {
+    screen?: 'Events'
+    selectedOption?: EventsRange | 'myEvents'
+    search?: EventSearch
+  }
+  EventDetail: {
+    event: Event
+    key: string
+  }
+  EventSearch: string | undefined
 }
 
 export const navigationRef = createNavigationContainerRef<RootStackParamList>()
 
 /**
- * Go back to the previous screen (like pressing the back button on your browser).
+ * Button to go back
  */
 export function goBack() {
   if (navigationRef.isReady()) {
@@ -33,12 +60,14 @@ export function goBack() {
 }
 
 /**
- * Navigate to another screen in the app.
- *
- * @param {keyof RootStackParamList} name A screen name -- these are defined above by RootStackParamList
- * @param {any} params Parameters to pass to the screen (check the relevant container for what these should be)
+ * Navigate to a route in current navigation tree
+ * @param {keyof RootStackParamList} name of the route to navigate to.
+ * @param {RootStackParamList[RouteName]} params object for the route.
  */
-export function navigate(name: keyof RootStackParamList, params: any) {
+export function navigate<RouteName extends keyof RootStackParamList>(
+  name: RouteName,
+  params: RootStackParamList[RouteName],
+) {
   if (navigationRef.isReady()) {
     navigationRef.navigate(name, params)
   }
@@ -46,8 +75,8 @@ export function navigate(name: keyof RootStackParamList, params: any) {
 
 /**
  * Reset the navigation state to the provided state.
- * @param {routes} routes of the navigation.
- * @param {index} index of the route to reset.
+ * @param {array} routes of the navigation.
+ * @param {int} index of the route to reset.
  */
 export function navigateAndReset(routes = [], index = 0) {
   if (navigationRef.isReady()) {
@@ -62,8 +91,8 @@ export function navigateAndReset(routes = [], index = 0) {
 
 /**
  * Reset the navigation state to the provided state.
- * @param {name} name of the route to navigate to.
- * @param {index} index of the route to reset.
+ * @param {string} name of the route to navigate to.
+ * @param {int} index of the route to reset.
  */
 export function navigateAndSimpleReset(name: string, index = 0) {
   if (navigationRef.isReady()) {
