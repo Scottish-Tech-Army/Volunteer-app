@@ -62,48 +62,73 @@ function formatTime(timeInSeconds) {
   return dayjs().hour(0).minute(0).second(0).add(timeInSeconds, 'second').format('HH:mm');
 }
 
-async function getAllRecords(tableName, includeId = false) {
+async function getAllRecords(tableName, includeId = false, linkedFields) {
   try {
     const allRecordsRaw = await module.exports.client().table(tableName).select().all();
 
-    return allRecordsRaw.map((record) =>
-      includeId // if records don't already have a unique identifier column (e.g. events), it's useful to include the record ID from AirTable
-        ? {
-            id: record.id,
-            ...record.fields,
-          }
-        : record.fields,
-    );
+    return await Promise.all(allRecordsRaw.map(async record => {
+ //     console.log('record ', record)
+ console.log('linked fields', linkedFields)
+      if(linkedFields?.length) {
+        record = await addLinkedFields(tableName, record, linkedFields)
+      }
+      console.log('record after', record)
+      return includeId // if records don't already have a unique identifier column (e.g. events), it's useful to include the record ID from AirTable
+      ? {
+          id: record.id,
+          ...record.fields,
+        }
+      : record.fields;
+    }
+     
+    ));
   } catch (error) {
     return error;
   }
 }
+
+// Adding linked fields to a record
+async function addLinkedFields(tableName, record, linkedFields){
+  for ( const linkedField of linkedFields) {
+    // if the property exists on the fields object
+    if(record.fields[linkedField.fieldName]){
+    record.fields[linkedField.fieldName] = await Promise.all( record.fields[linkedField.fieldName].map( async field => {
+  //    console.log('field', field);
+      const linkedRecord = await module.exports.client().table(linkedField.tableName).find(field)
+      delete linkedRecord.fields[tableName] // removing the extra column from STA Events Test ** MAKE GENERAL **
+    //  console.log('table name:', tableName)
+    //  console.log('linked record', linkedRecord);
+      return linkedRecord.fields
+  }));
+  }
+  }
+  return record;
+}
+
 /**
  * Returns the rows from a table based on the recordId
  * @param {string} tableName
  * @param {string} recordId
- * @param {string} linkedFields
+ * @param {Array} linkedFields
  * @returns
  */
 async function getRecordById(tableName, recordId, linkedFields) {
   try {
-    const recordsRaw = await module.exports.client().table(tableName).find(recordId);
-    console.log('recordsRaw', recordsRaw); // Array of strings 'recordRaw'
+    let record = await module.exports.client().table(tableName).find(recordId);
+    console.log('recordsRaw', record); // Array of strings 'recordRaw'
 
-    // curly brackets more than 1 line
-    for ( const linkedField of linkedFields) {
-      recordsRaw.fields[linkedField.fieldName] = await Promise.all( recordsRaw.fields[linkedField.fieldName].map( async field => {
-        console.log('field', field);
-        const record = await module.exports.client().table(linkedField.tableName).find(field)
-        console.log('record', record);
-        return record.fields
-    }));
-    }// prettier VScode
-    console.log('recordsRaw.fields', recordsRaw.fields);
+    // if linkedfields and linkedfields.length > 0
+    if(linkedFields?.length) {
+      record = await addLinkedFields(tableName, record, linkedFields)
+    }
+
+  
+   // prettier VScode
+    console.log('recordsRaw.fields', record.fields);
 
 // replace the speakers on recordsRaw.fields with the actual speakers data name and url
 // this will return the the name of speaker and url
-    return recordsRaw.fields; // we need to add speakers data here
+    return record.fields; // we need to add speakers data here
   } catch (error) {
     console.error(error);
     return error;

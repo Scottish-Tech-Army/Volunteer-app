@@ -9,8 +9,8 @@ router.get('/:id', async (req, res) => getEventHandler(req, res));
 
 const getEventHandler = async (req, res) => {
   const event = await airTable.getRecordById(airTable.eventsTable(), req.params.id, [ 
-    // name of the table (STA Events Speakers)
-    // field name (speakers) 
+    // TODO: remove hardcoding because it is used twice in this file to a function that returns an array
+    // TODO: tableName should go in the .env and .env.example files, look at airtable.events table, do something similar
     { fieldName: 'speakers',
       tableName: 'STA Events Speakers',
   }
@@ -33,8 +33,14 @@ const getEventHandler = async (req, res) => {
 // :schedule value can be 'past' or 'upcoming'
 router.get('/schedule/:schedule', async (req, res) => getScheduledEventsHandler(req, res));
 
+// TODO: pass in linkedFields param any time we use getAllRecords in this file
 const getScheduledEventsHandler = async (req, res) => {
-  let allEvents = await airTable.getAllRecords(airTable.eventsTable(), true);
+  let allEvents = await airTable.getAllRecords(airTable.eventsTable(), true,  [ 
+    { fieldName: 'speakers',
+      tableName: 'STA Events Speakers',
+  }
+  ]);
+  console.log(allEvents)
 
   allEvents = allEvents.map((event) => eventsHelper.formatEventFromAirTable(event));
 
