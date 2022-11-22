@@ -4,6 +4,7 @@ const eventsHelper = require('../helpers/events');
 const express = require('express');
 const router = express.Router();
 const routesHelper = require('../helpers/routes');
+const Airtable = require('airtable');
 
 router.get('/:id', async (req, res) => getEventHandler(req, res));
 
@@ -12,7 +13,7 @@ const getEventHandler = async (req, res) => {
     // TODO: remove hardcoding because it is used twice in this file to a function that returns an array
     // TODO: tableName should go in the .env and .env.example files, look at airtable.events table, do something similar
     { fieldName: 'speakers',
-      tableName: 'STA Events Speakers',
+      tableName: airTable.speakersTable(),
   }
   ]);
 
