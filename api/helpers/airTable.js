@@ -78,7 +78,13 @@ async function getAllRecords(tableName, includeId = false) {
     return error;
   }
 }
-// third param added linkedFields
+/**
+ * Returns the rows from a table based on the recordId
+ * @param {string} tableName
+ * @param {string} recordId
+ * @param {string} linkedFields
+ * @returns
+ */
 async function getRecordById(tableName, recordId, linkedFields) {
   try {
     const recordsRaw = await module.exports.client().table(tableName).find(recordId);
