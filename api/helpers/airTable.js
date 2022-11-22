@@ -78,15 +78,28 @@ async function getAllRecords(tableName, includeId = false) {
     return error;
   }
 }
-
-async function getRecordById(tableName, recordId) {
+// third param added linkedFields
+async function getRecordById(tableName, recordId, linkedFields) {
   try {
     const recordsRaw = await module.exports.client().table(tableName).find(recordId);
+    console.log('recordsRaw', recordsRaw); // Array of strings 'recordRaw'
 
-    return recordsRaw.fields;
+    // curly brackets more than 1 line
+    for ( const linkedField of linkedFields) {
+      recordsRaw.fields[linkedField.fieldName] = await Promise.all( recordsRaw.fields[linkedField.fieldName].map( async field => {
+        console.log('field', field);
+        const record = await module.exports.client().table(linkedField.tableName).find(field)
+        console.log('record', record);
+        return record.fields
+    }));
+    }// prettier VScode
+    console.log('recordsRaw.fields', recordsRaw.fields);
+
+// replace the speakers on recordsRaw.fields with the actual speakers data name and url
+// this will return the the name of speaker and url
+    return recordsRaw.fields; // we need to add speakers data here
   } catch (error) {
     console.error(error);
-
     return error;
   }
 }

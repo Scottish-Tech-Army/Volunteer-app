@@ -8,7 +8,13 @@ const routesHelper = require('../helpers/routes');
 router.get('/:id', async (req, res) => getEventHandler(req, res));
 
 const getEventHandler = async (req, res) => {
-  const event = await airTable.getRecordById(airTable.eventsTable(), req.params.id);
+  const event = await airTable.getRecordById(airTable.eventsTable(), req.params.id, [ 
+    // name of the table (STA Events Speakers)
+    // field name (speakers) 
+    { fieldName: 'speakers',
+      tableName: 'STA Events Speakers',
+  }
+  ]);
 
   if (!event || event.error) {
     routesHelper.sendError(

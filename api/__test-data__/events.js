@@ -56,6 +56,7 @@ function fakeEventObject(dateType) {
     video_file: faker.internet.url(),
     video_thumbnail: faker.internet.url(),
     images: fakeImages(),
+    //speaker: fakeSpeaker()
   };
 }
 

@@ -21,8 +21,9 @@ import { changeWelcome, WelcomeState } from '@/Store/Welcome'
 import { version } from '../../package.json'
 import styled from 'styled-components/native'
 
+// prettier-ignore
 const PolicyDiv = styled.View`
-  marginvertical: 20px;
+  marginVertical: 20px;
 `
 
 const ExampleContainer = () => {
