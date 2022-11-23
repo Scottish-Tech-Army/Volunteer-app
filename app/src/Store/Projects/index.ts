@@ -8,11 +8,11 @@ import { Projects } from '@/Services/modules/projects'
 
 const slice = createSlice({
   name: 'projects',
-  initialState: [] as Projects,
+  initialState: { projects: undefined } as ProjectsState,
   reducers: {
-    setProjects: (state, { payload }: ProjectsPayload) => {
-      if (typeof payload !== 'undefined') {
-        state = payload
+    setProjects: (state, { payload: { projects } }: ProjectsPayload) => {
+      if (typeof projects !== 'undefined') {
+        state.projects = projects
       }
     },
   },
@@ -22,6 +22,12 @@ export const { setProjects } = slice.actions
 
 export default slice.reducer
 
+export type ProjectsState = {
+  projects: Projects | undefined
+}
+
 type ProjectsPayload = {
-  payload: Projects
+  payload: {
+    projects?: Projects
+  }
 }
