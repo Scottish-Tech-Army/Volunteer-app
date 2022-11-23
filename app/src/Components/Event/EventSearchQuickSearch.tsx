@@ -67,7 +67,7 @@ const EventSearchQuickSearchButtons: FC<EventSearchQuickSearchProps> = ({
     (state: { events: EventsState }) => state.events.upcoming,
   )
 
-  const allEvents = [...allUpcomingEvents, ...allPastEvents]
+  const allEvents = [...(allUpcomingEvents || []), ...(allPastEvents || [])]
 
   const handleSearch = (quickSearchChoice: string): void => {
     const eventsSearchResults = searchByArray(allEvents, field, [

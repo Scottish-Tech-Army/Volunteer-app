@@ -50,8 +50,13 @@ const EventSearchQuickSearchUpcomingButtons: FC<
     startDate: Date,
     endDate: Date,
   ): void => {
+    if (!allUpcomingEvents)
+      console.error(
+        'Event search quick search upcoming - no upcoming events loaded to search through',
+      )
+
     const eventsSearchResults = filterEventsByDate(
-      allUpcomingEvents,
+      allUpcomingEvents || [],
       startDate,
       endDate,
     )

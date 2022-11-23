@@ -42,8 +42,13 @@ const EventSearchCalendarPicker: FC<EventSearchCalendarPickerProps> = ({
       return
     }
 
+    if (!allUpcomingEvents)
+      console.error(
+        'Event search calendar picker - no upcoming events loaded to search through',
+      )
+
     const eventsSearchResults = filterEventsByDate(
-      allUpcomingEvents,
+      allUpcomingEvents || [],
       startDate,
       endDate,
     )
