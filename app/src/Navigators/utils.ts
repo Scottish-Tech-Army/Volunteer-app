@@ -75,8 +75,8 @@ export function navigate<RouteName extends keyof RootStackParamList>(
 
 /**
  * Reset the navigation state to the provided state.
- * @param {array} routes of the navigation.
- * @param {int} index of the route to reset.
+ * @param {Array} routes of the navigation.
+ * @param {number} index of the route to reset.
  */
 export function navigateAndReset(routes = [], index = 0) {
   if (navigationRef.isReady()) {
@@ -92,7 +92,7 @@ export function navigateAndReset(routes = [], index = 0) {
 /**
  * Reset the navigation state to the provided state.
  * @param {string} name of the route to navigate to.
- * @param {int} index of the route to reset.
+ * @param {number} index of the route to reset.
  */
 export function navigateAndSimpleReset(name: string, index = 0) {
   if (navigationRef.isReady()) {

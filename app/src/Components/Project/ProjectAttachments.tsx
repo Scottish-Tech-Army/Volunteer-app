@@ -23,7 +23,10 @@ const AttachmentDetails = styled.Text`
 `
 /**
  * Displays the attachment button
- * @param {string} url of project scope url
+ * @param {ProjectAttachmentProps} props the component props
+ * @param {React.ReactNode} props.icon icon for the attachment button
+ * @param {string} props.details details text for the attachment button
+ * @param {string} props.url url of project scope url
  * @returns {ReactElement} project attachment button and text
  */
 const ProjectAttachments: FC<ProjectAttachmentsProps> = ({
