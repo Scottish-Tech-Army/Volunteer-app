@@ -18,10 +18,14 @@ import {
 import { useTheme } from '@/Hooks'
 import MainNavigator from './Main'
 import { navigationRef } from './utils'
+import ProjectScope from '@/Components/Project/ProjectScope'
 
 const Stack = createStackNavigator()
 
-// @refresh reset
+/**
+ * Safe area and Stack Navigator for the app
+ * @returns {SafeAreaView} safe area and navigator container
+ */
 const ApplicationNavigator = () => {
   const { Layout, darkMode, NavigationTheme } = useTheme()
   const { colors } = NavigationTheme
@@ -93,6 +97,15 @@ const ApplicationNavigator = () => {
             name="Welcome"
             component={WelcomeContainer}
             options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="ProjectScope"
+            component={ProjectScope}
+            options={{
+              title: 'Project Scope',
+              headerTitleAlign: 'center', //android defaults to left aligned (ios is always centered)
+              headerBackTitleVisible: false, //ios defaults to title of previous screen
+            }}
           />
         </Stack.Navigator>
       </NavigationContainer>

@@ -1,6 +1,6 @@
 {
   "name": "STA Volunteer app",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
@@ -37,6 +37,8 @@
     "react-native-swiper-flatlist": "^3.0.16",
     "react-native-vector-icons": "^9.0.0",
     "react-native-video": "^5.2.0",
+    "react-native-view-pdf": "^0.14.0",
+    "react-native-webview": "^11.23.1",
     "react-redux": "^7.2.5",
     "redux": "^4.1.1",
     "redux-flipper": "^2.0.1",
