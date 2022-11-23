@@ -44,7 +44,7 @@ interface EventAddToCalendarProps {
  *
  * @param {EventAddToCalendarProps} props The component props
  * @param {Event} props.event The event
- * @returns {ReactElement} Component
+ * @returns {React.ReactElement} Component
  */
 const EventAddToCalendar: FC<EventAddToCalendarProps> = ({ event }) => {
   const allUpcomingEvents = useSelector(

@@ -13,7 +13,7 @@ const HorizontalLineView = styled.View`
 /**
  * Component to show a horizontal dividing line
  *
- * @returns {ReactElement} Component
+ * @returns {React.ReactElement} Component
  */
 const HorizontalLine: FC = () => <HorizontalLineView />
 

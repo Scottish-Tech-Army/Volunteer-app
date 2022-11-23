@@ -82,7 +82,7 @@ export interface ProjectSearch extends ListSearch {
 /**
  * Container for the user to search projects e.g. by free text, category, skills
  *
- * @returns {ReactElement} Component
+ * @returns {React.ReactElement} Component
  */
 const ProjectSearchContainer = () => {
   const allProjects = useSelector(

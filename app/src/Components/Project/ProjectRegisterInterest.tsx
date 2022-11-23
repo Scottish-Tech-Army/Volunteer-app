@@ -44,7 +44,7 @@ interface ProjectRegisterInterestProps {
  *
  * @param {ProjectRegisterInterestProps} props The component props
  * @param {Project} props.project The project the user's registering interest in
- * @returns {ReactElement} Component
+ * @returns {React.ReactElement} Component
  */
 const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
   project,

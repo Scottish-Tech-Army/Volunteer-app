@@ -52,7 +52,7 @@ interface EventSearchQuickSearchProps {
  * @param {EventQuickSearchChoice[]} props.choices The choices which will be used for the buttons on the quick search
  * @param {EventsSearchField} props.field The field to search on
  * @param {string} props.heading Text for the heading of this quick search group
- * @returns {ReactElement} Component
+ * @returns {React.ReactElement} Component
  */
 const EventSearchQuickSearchButtons: FC<EventSearchQuickSearchProps> = ({
   choices,

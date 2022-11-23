@@ -32,7 +32,7 @@ interface EventOptionsProps {
  *
  * @param {EventOptionsProps} props The component props
  * @param {EventsRange} props.selected Which option is selected, e.g. past
- * @returns {ReactElement} Component
+ * @returns {React.ReactElement} Component
  */
 const EventOptions: FC<EventOptionsProps> = ({ selected }) => {
   const handleSelectedOptionChange = (newSelectedOption: EventsRange) => {

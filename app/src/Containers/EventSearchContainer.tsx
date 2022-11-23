@@ -76,7 +76,7 @@ export const filterEventsByDate = (
 /**
  * Container for the user to search events e.g. by date, free text, category
  *
- * @returns {ReactElement} Container
+ * @returns {React.ReactElement} Container
  */
 const EventSearchContainer = () => {
   const [freeTextSearchQuery, setFreeTextSearchQuery] = useState('')

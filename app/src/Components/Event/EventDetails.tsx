@@ -53,7 +53,7 @@ interface EventDetailsProps {
  *
  * @param {EventDetailsProps} props The component props
  * @param {Event} props.event The event
- * @returns {ReactElement} Component
+ * @returns {React.ReactElement} Component
  */
 const EventDetails: FC<EventDetailsProps> = ({ event }) => {
   return (
