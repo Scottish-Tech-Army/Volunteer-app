@@ -8,15 +8,19 @@ const Airtable = require('airtable');
 
 router.get('/:id', async (req, res) => getEventHandler(req, res));
 
-const getEventHandler = async (req, res) => {
-  const event = await airTable.getRecordById(airTable.eventsTable(), req.params.id, [ 
-    // TODO: remove hardcoding because it is used twice in this file to a function that returns an array
-    // TODO: tableName should go in the .env and .env.example files, look at airtable.events table, do something similar
-    { fieldName: 'speakers',
-      tableName: airTable.speakersTable(),
-  }
-  ]);
+// TODO: remove hardcoding because it is used twice in this file to a function that returns an array
+// TODO: tableName should go in the .env and .env.example files, look at airtable.events table, do something similar
 
+const getLinkedFields = (field, table) =>
+  [{
+    fieldName: field,
+    tableName: table,
+  }]
+
+const getEventHandler = async (req, res) => {
+  // need to find a way to not hard code the 'speakers'
+  const event = await airTable.getRecordById(airTable.eventsTable(), req.params.id, getLinkedFields('speakers', 'STA Events Test'));
+  
   if (!event || event.error) {
     routesHelper.sendError(
       res,
@@ -36,11 +40,7 @@ router.get('/schedule/:schedule', async (req, res) => getScheduledEventsHandler(
 
 // TODO: pass in linkedFields param any time we use getAllRecords in this file
 const getScheduledEventsHandler = async (req, res) => {
-  let allEvents = await airTable.getAllRecords(airTable.eventsTable(), true,  [ 
-    { fieldName: 'speakers',
-      tableName: 'STA Events Speakers',
-  }
-  ]);
+  let allEvents = await airTable.getAllRecords(airTable.eventsTable(), true, getLinkedFields('speakers', airTable.speakersTable()));
   console.log(allEvents)
 
   allEvents = allEvents.map((event) => eventsHelper.formatEventFromAirTable(event));
@@ -94,4 +94,5 @@ module.exports = {
   getEventHandler,
   getEventsHandler,
   getScheduledEventsHandler,
+  getLinkedFields,
 };

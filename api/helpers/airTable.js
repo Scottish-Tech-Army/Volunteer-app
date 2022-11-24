@@ -109,26 +109,22 @@ async function addLinkedFields(tableName, record, linkedFields) {
  * Returns the rows from a table based on the recordId
  * @param {string} tableName
  * @param {string} recordId
- * @param {Array} linkedFields
+ * @param {Array} linkedFields - a field that creates a relationship with another table 
  * @returns
  */
 async function getRecordById(tableName, recordId, linkedFields) {
   try {
     let record = await module.exports.client().table(tableName).find(recordId);
-    console.log('recordsRaw', record); // Array of strings 'recordRaw'
+    console.log('recordsRaw', record);
 
     // if linkedfields and linkedfields.length > 0
     if (linkedFields?.length) {
       record = await addLinkedFields(tableName, record, linkedFields)
     }
-
-
-    // prettier VScode
-    console.log('recordsRaw.fields', record.fields);
-
-    // replace the speakers on recordsRaw.fields with the actual speakers data name and url
+    console.log('record.fields', record.fields);
+    // replace the speakers on records.fields with the actual speakers data name and url
     // this will return the the name of speaker and url
-    return record.fields; // we need to add speakers data here
+    return record.fields;
   } catch (error) {
     console.error(error);
     return error;
@@ -199,6 +195,7 @@ function speakersTable() {
   return process.env.AIRTABLE_SPEAKERS_TABLE;
 }
 
+
 module.exports = {
   addEmptyFields,
   client,
@@ -212,4 +209,5 @@ module.exports = {
   projectsResourcesCacheTable,
   simplifyAttachmentsData,
   updateRecordById,
+  speakersTable,
 };
