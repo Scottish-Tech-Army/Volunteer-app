@@ -3,16 +3,16 @@
 // // need to fetch data from somewhere here ie., import data from
 
 // interface EventSpeakerProps {
-//     speaker_name: string
-//     linkedin_url: string
+//     name: string
+//     url: string
 // }
 
 // const EventSpeakers: FC<EventSpeakerProps> = ({
-//     speakers_name, linkedin_url
+//     speakers_name, url
 // }) => {
 //   // what goes here
-//     speaker_name,
-//     linkedin_url,
+//     name,
+//     url,
 // }
 
 // export default EventSpeakers

@@ -191,7 +191,7 @@ async function updateRecordById(tableName, recordId, fields) {
   }
 }
 
-function speakersTable() {
+function eventsSpeakersTable() {
   return process.env.AIRTABLE_SPEAKERS_TABLE;
 }
 
@@ -209,5 +209,5 @@ module.exports = {
   projectsResourcesCacheTable,
   simplifyAttachmentsData,
   updateRecordById,
-  speakersTable,
+  eventsSpeakersTable,
 };
