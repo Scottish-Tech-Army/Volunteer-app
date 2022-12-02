@@ -4,6 +4,13 @@ const dayjs = require('dayjs');
 const relativeTime = require('dayjs/plugin/relativeTime');
 dayjs.extend(relativeTime);
 
+
+const eventsTableLinkedFields = () =>
+  [{
+    fieldName: "speakers",
+    tableName: eventsTable(),
+  }]
+
 // AirTable doesn't include fields that it sees as empty (including its equivalent of boolean false) so we need to populate them
 function addEmptyFields(record, fieldDefinitions) {
   for (const [fieldName, fieldProperties] of Object.entries(fieldDefinitions)) {
@@ -68,11 +75,11 @@ async function getAllRecords(tableName, includeId = false, linkedFields) {
 
     return await Promise.all(allRecordsRaw.map(async record => {
       //     console.log('record ', record)
-      console.log('linked fields', linkedFields)
+      // console.log('linked fields', linkedFields) 
       if (linkedFields?.length) {
         record = await addLinkedFields(tableName, record, linkedFields)
       }
-      console.log('record after', record)
+      // console.log('record after', record)
       return includeId // if records don't already have a unique identifier column (e.g. events), it's useful to include the record ID from AirTable
         ? {
           id: record.id,
@@ -115,13 +122,13 @@ async function addLinkedFields(tableName, record, linkedFields) {
 async function getRecordById(tableName, recordId, linkedFields) {
   try {
     let record = await module.exports.client().table(tableName).find(recordId);
-    console.log('recordsRaw', record);
+    // console.log('recordsRaw', record);
 
     // if linkedfields and linkedfields.length > 0
     if (linkedFields?.length) {
       record = await addLinkedFields(tableName, record, linkedFields)
     }
-    console.log('record.fields', record.fields);
+    // console.log('record.fields', record.fields);
     // replace the speakers on records.fields with the actual speakers data name and url
     // this will return the the name of speaker and url
     return record.fields;
@@ -197,6 +204,7 @@ function eventsSpeakersTable() {
 
 
 module.exports = {
+  eventsTableLinkedFields,
   addEmptyFields,
   client,
   connectionErrorMessage,
@@ -210,4 +218,5 @@ module.exports = {
   simplifyAttachmentsData,
   updateRecordById,
   eventsSpeakersTable,
+
 };
