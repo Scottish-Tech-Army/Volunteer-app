@@ -98,6 +98,8 @@ E.g. `cp Volunteer-app/api/.env volunteer-app-aws-deployment/api/.env` (but this
 
    ### Google Play Store known issues
 
+   - If you encounter an error containing `Java heap space` during the deployment, you can try closing any unessential programs or tabs (or just restart your machine) and re-try the `fastland beta` command. If the error appears again, add this property `org.gradle.jvmargs=-Xmx4608M` to your android/gradle.properties file and run again.
+   
    - Near the end of the deployment process an AAB file is uploaded to the Google Play Store. This can take some time (e.g. 20 minutes on slow internet connections). It should be working, unless you get a `HTTPClient::SendTimeoutError: execution expired` error message in your terminal window. If the Fastlane process fails for this reason, you may need to run it again.
 
    ## TestFlight (iOS)
