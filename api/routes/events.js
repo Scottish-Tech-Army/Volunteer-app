@@ -34,7 +34,7 @@ router.get('/schedule/:schedule', async (req, res) => getScheduledEventsHandler(
 
 // TODO: pass in linkedFields param any time we use getAllRecords in this file
 const getScheduledEventsHandler = async (req, res) => {
-  let allEvents = await airTable.getAllRecords(airTable.eventsTable(), true, airTable.eventsTableLinkedFields());// airT...speakersTable()
+  let allEvents = await airTable.getAllRecords(airTable.eventsTable(), true, airTable.eventsTableLinkedFields());
   console.log(allEvents)
 
   allEvents = allEvents.map((event) => eventsHelper.formatEventFromAirTable(event));
@@ -78,7 +78,9 @@ const getEventsHandler = async (req, res) => {
     return;
   }
 
-  const eventsFormatted = events.map((event) => eventsHelper.formatEventFromAirTable(event));
+  // I was getting an ERROR message event is not defined? Therefore I have defined events2 and the app presents the data from eventsTable (I am not sure if it is the right approach?)
+  const events2 = await airTable.getAllRecords(airTable.eventsTable());// just added (needs speakers)
+  const eventsFormatted = events2.map((event) => eventsHelper.formatEventFromAirTable(event));
 
   res.status(200).send(eventsFormatted);
 };

@@ -8,8 +8,10 @@ dayjs.extend(relativeTime);
 const eventsTableLinkedFields = () =>
   [{
     fieldName: "speakers",
-    tableName: eventsTable(),
+    tableName: process.env.AIRTABLE_EVENTS_SPEAKERS_TABLE, // changed from eventsTable(), to process.env.AIRTABLE_EVENTS_SPEAKERS_TABLE
   }]
+
+// console.log('The speakers name is:', process.env.AIRTABLE_EVENTS_SPEAKERS_TABLE);
 
 // AirTable doesn't include fields that it sees as empty (including its equivalent of boolean false) so we need to populate them
 function addEmptyFields(record, fieldDefinitions) {
