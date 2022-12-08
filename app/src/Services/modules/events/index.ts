@@ -20,6 +20,12 @@ export interface Event {
   video_file: string
   video_thumbnail: string
   images: string[]
+  speakers: EventSpeaker[]
+}
+
+export interface EventSpeaker {
+  name: string
+  url: string
 }
 
 export type Events = Event[]
