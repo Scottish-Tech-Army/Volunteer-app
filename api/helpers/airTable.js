@@ -97,6 +97,7 @@ async function getAllRecords(tableName, includeId = false, linkedFields) {
 }
 
 // Adding linked fields to a record
+// TODO: this needs a JSDoc
 async function addLinkedFields(tableName, record, linkedFields) {
   for (const linkedField of linkedFields) {
     // if the property exists on the fields object
