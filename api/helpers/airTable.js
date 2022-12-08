@@ -4,12 +4,12 @@ const dayjs = require('dayjs');
 const relativeTime = require('dayjs/plugin/relativeTime');
 dayjs.extend(relativeTime);
 
-
-const eventsTableLinkedFields = () =>
-  [{
-    fieldName: "speakers",
+const eventsTableLinkedFields = () => [
+  {
+    fieldName: 'speakers',
     tableName: process.env.AIRTABLE_EVENTS_SPEAKERS_TABLE, // changed from eventsTable(), to process.env.AIRTABLE_EVENTS_SPEAKERS_TABLE
-  }]
+  },
+];
 
 // console.log('The speakers name is:', process.env.AIRTABLE_EVENTS_SPEAKERS_TABLE);
 
@@ -75,22 +75,22 @@ async function getAllRecords(tableName, includeId = false, linkedFields) {
   try {
     const allRecordsRaw = await module.exports.client().table(tableName).select().all();
 
-    return await Promise.all(allRecordsRaw.map(async record => {
-      //     console.log('record ', record)
-      // console.log('linked fields', linkedFields) 
-      if (linkedFields?.length) {
-        record = await addLinkedFields(tableName, record, linkedFields)
-      }
-      // console.log('record after', record)
-      return includeId // if records don't already have a unique identifier column (e.g. events), it's useful to include the record ID from AirTable
-        ? {
-          id: record.id,
-          ...record.fields,
+    return await Promise.all(
+      allRecordsRaw.map(async (record) => {
+        //     console.log('record ', record)
+        // console.log('linked fields', linkedFields)
+        if (linkedFields?.length) {
+          record = await addLinkedFields(tableName, record, linkedFields);
         }
-        : record.fields;
-    }
-
-    ));
+        // console.log('record after', record)
+        return includeId // if records don't already have a unique identifier column (e.g. events), it's useful to include the record ID from AirTable
+          ? {
+              id: record.id,
+              ...record.fields,
+            }
+          : record.fields;
+      }),
+    );
   } catch (error) {
     return error;
   }
@@ -101,14 +101,16 @@ async function addLinkedFields(tableName, record, linkedFields) {
   for (const linkedField of linkedFields) {
     // if the property exists on the fields object
     if (record.fields[linkedField.fieldName]) {
-      record.fields[linkedField.fieldName] = await Promise.all(record.fields[linkedField.fieldName].map(async field => {
-        //    console.log('field', field);
-        const linkedRecord = await module.exports.client().table(linkedField.tableName).find(field)
-        delete linkedRecord.fields[tableName] // removing the extra column from STA Events Test ** MAKE GENERAL **
-        //  console.log('table name:', tableName)
-        //  console.log('linked record', linkedRecord);
-        return linkedRecord.fields
-      }));
+      record.fields[linkedField.fieldName] = await Promise.all(
+        record.fields[linkedField.fieldName].map(async (field) => {
+          //    console.log('field', field);
+          const linkedRecord = await module.exports.client().table(linkedField.tableName).find(field);
+          delete linkedRecord.fields[tableName]; // removing the extra column from STA Events Test ** MAKE GENERAL **
+          //  console.log('table name:', tableName)
+          //  console.log('linked record', linkedRecord);
+          return linkedRecord.fields;
+        }),
+      );
     }
   }
   return record;
@@ -118,7 +120,7 @@ async function addLinkedFields(tableName, record, linkedFields) {
  * Returns the rows from a table based on the recordId
  * @param {string} tableName
  * @param {string} recordId
- * @param {Array} linkedFields - a field that creates a relationship with another table 
+ * @param {Array} linkedFields - a field that creates a relationship with another table
  * @returns
  */
 async function getRecordById(tableName, recordId, linkedFields) {
@@ -128,7 +130,7 @@ async function getRecordById(tableName, recordId, linkedFields) {
 
     // if linkedfields and linkedfields.length > 0
     if (linkedFields?.length) {
-      record = await addLinkedFields(tableName, record, linkedFields)
+      record = await addLinkedFields(tableName, record, linkedFields);
     }
     // console.log('record.fields', record.fields);
     // replace the speakers on records.fields with the actual speakers data name and url
@@ -200,11 +202,6 @@ async function updateRecordById(tableName, recordId, fields) {
   }
 }
 
-function eventsSpeakersTable() {
-  return process.env.AIRTABLE_SPEAKERS_TABLE;
-}
-
-
 module.exports = {
   eventsTableLinkedFields,
   addEmptyFields,
@@ -219,6 +216,4 @@ module.exports = {
   projectsResourcesCacheTable,
   simplifyAttachmentsData,
   updateRecordById,
-  eventsSpeakersTable,
-
 };

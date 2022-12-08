@@ -7,14 +7,9 @@ const routesHelper = require('../helpers/routes');
 
 router.get('/:id', async (req, res) => getEventHandler(req, res));
 
-// TODO: remove hardcoding because it is used twice in this file to a function that returns an array !!!DONE!!!
-// TODO: tableName should go in the .env and .env.example files, look at airtable.events table, do something similar
-
-
 const getEventHandler = async (req, res) => {
-  // need to find a way to not hard code the 'speakers'
-  const event = await airTable.getRecordById(airTable.eventsTable(), req.params.id, airTable.eventsTableLinkedFields());// changed from 'STA Events Test'
-  
+  const event = await airTable.getRecordById(airTable.eventsTable(), req.params.id, airTable.eventsTableLinkedFields());
+
   if (!event || event.error) {
     routesHelper.sendError(
       res,
@@ -32,12 +27,8 @@ const getEventHandler = async (req, res) => {
 // :schedule value can be 'past' or 'upcoming'
 router.get('/schedule/:schedule', async (req, res) => getScheduledEventsHandler(req, res));
 
-// TODO: pass in linkedFields param any time we use getAllRecords in this file
 const getScheduledEventsHandler = async (req, res) => {
-  let allEvents = await airTable.getAllRecords(airTable.eventsTable(), true, airTable.eventsTableLinkedFields());
-  console.log(allEvents)
-
-  allEvents = allEvents.map((event) => eventsHelper.formatEventFromAirTable(event));
+  const allEvents = await airTable.getAllRecords(airTable.eventsTable(), true, airTable.eventsTableLinkedFields());
 
   if (allEvents.error) {
     routesHelper.sendError(res, airTable.connectionErrorMessage());
@@ -45,16 +36,18 @@ const getScheduledEventsHandler = async (req, res) => {
     return;
   }
 
+  const allEventsFormatted = allEvents.map((event) => eventsHelper.formatEventFromAirTable(event));
+
   const now = dayjs();
 
   if (req.params.schedule === 'past') {
-    const pastEvents = allEvents
+    const pastEvents = allEventsFormatted
       .filter((event) => dayjs(`${event.date} ${event.time}`, 'YYYY-MM-DD HH:mm').isBefore(now))
       .sort((a, b) => (dayjs(a.date, 'YYYY-MM-DD').isAfter(b.date, 'YYYY-MM-DD') ? -1 : 1));
 
     res.status(200).send(pastEvents);
   } else if (req.params.schedule === 'upcoming') {
-    const upcomingEvents = allEvents
+    const upcomingEvents = allEventsFormatted
       .filter((event) => dayjs(`${event.date} ${event.time}`, 'YYYY-MM-DD HH:mm').isAfter(now))
       .sort((a, b) => (dayjs(a.date, 'YYYY-MM-DD').isBefore(b.date, 'YYYY-MM-DD') ? -1 : 1));
 
@@ -70,19 +63,17 @@ const getScheduledEventsHandler = async (req, res) => {
 router.get('/', async (req, res) => await getEventsHandler(req, res));
 
 const getEventsHandler = async (req, res) => {
-  const events = await airTable.getAllRecords(airTable.eventsTable());
+  const allEvents = await airTable.getAllRecords(airTable.eventsTable(), true, airTable.eventsTableLinkedFields());
 
-  if (events.error) {
+  if (allEvents.error) {
     routesHelper.sendError(res, airTable.connectionErrorMessage());
 
     return;
   }
 
-  // I was getting an ERROR message event is not defined? Therefore I have defined events2 and the app presents the data from eventsTable (I am not sure if it is the right approach?)
-  const events2 = await airTable.getAllRecords(airTable.eventsTable());// just added (needs speakers)
-  const eventsFormatted = events2.map((event) => eventsHelper.formatEventFromAirTable(event));
+  const allEventsFormatted = allEvents.map((event) => eventsHelper.formatEventFromAirTable(event));
 
-  res.status(200).send(eventsFormatted);
+  res.status(200).send(allEventsFormatted);
 };
 
 module.exports = {
