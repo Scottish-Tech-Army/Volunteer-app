@@ -25,7 +25,7 @@ const ProjectSkills: FC<ProjectSkillsProps> = ({ skills }) => {
     <>
       {skills.map(skill => (
         <SkillsView key={skill}>
-          <Entypo name="tools" size={16} />
+          <Entypo name="person-circle-outline" size={16} />
           <SkillText>{skill}</SkillText>
         </SkillsView>
       ))}

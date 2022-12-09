@@ -1,18 +1,36 @@
-// import React, { FC } from 'react'
+import React, { FC } from 'react'
+import styled from 'styled-components/native'
+import Entypo from 'react-native-vector-icons/Entypo'
 
-// // need to fetch data from somewhere here ie., import data from
+interface EventSpeakersProps {
+  speakers: string[]
+}
 
-// interface EventSpeakerProps {
-//     name: string
-//     url: string
-// }
+const SpeakersView = styled.View`
+  display: flex;
+  flex-direction: column;
+  color: ${props => props.theme.colors.staBlack};
+  `
 
-// const EventSpeakers: FC<EventSpeakerProps> = ({
-//     speakers_name, url
-// }) => {
-//   // what goes here
-//     name,
-//     url,
-// }
+const SpeakerText = styled.Text`
+  border: ${props => `1px solid ${props.theme.colors.staBlack}`};
+  font-size: 10px;
+  border-radius: 4px;
+  margin-left: 8.5px;
+  padding: 0px 1px 0px 2px;
+`
 
-// export default EventSpeakers
+const EventSpeakers: FC<EventSpeakersProps> = ({ speakers }) => {
+  return (
+    <>
+      {speakers.map(speaker => (
+        <SpeakersView key={speaker}>
+          <Entypo name="person-circle-outline" size={16} />
+          <SpeakerText>{speaker}</SpeakerText>
+        </SpeakersView>
+      ))}
+    </>
+  )
+}
+
+export default EventSpeakers
