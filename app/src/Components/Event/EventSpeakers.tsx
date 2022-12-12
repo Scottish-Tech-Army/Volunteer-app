@@ -1,9 +1,11 @@
 import React, { FC } from 'react'
 import styled from 'styled-components/native'
 import Entypo from 'react-native-vector-icons/Entypo'
+import IconAndLabel from '@/Components/IconAndLabel'
+import { EventSpeaker } from '@/Services/modules/events'
 
 interface EventSpeakersProps {
-  speakers: string[]
+  speakers: EventSpeaker[]
 }
 
 const SpeakersView = styled.View`
@@ -21,16 +23,20 @@ const SpeakerText = styled.Text`
 `
 
 const EventSpeakers: FC<EventSpeakersProps> = ({ speakers }) => {
+  if (!speakers) return <></>
+  console.log(speakers)
   return (
     <>
       {speakers.map(speaker => (
-        <SpeakersView key={speaker}>
-          <Entypo name="person-circle-outline" size={16} />
-          <SpeakerText>{speaker}</SpeakerText>
-        </SpeakersView>
+        <IconAndLabel icon="user" text={speaker.name} />
       ))}
     </>
   )
 }
 
 export default EventSpeakers
+
+// <SpeakersView key={speaker}>
+//   <Entypo name="person-circle-outline" size={16} />
+//   <SpeakerText>{speaker}</SpeakerText>
+// </SpeakersView>

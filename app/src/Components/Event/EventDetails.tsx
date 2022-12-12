@@ -82,7 +82,7 @@ const EventDetails: FC<EventDetailsProps> = ({ event }) => {
             {event.description}
           </Markdown>
         </EventDescription>
-        <EventSpeakers speakers={[]}>{event.speakers}</EventSpeakers>
+        <EventSpeakers speakers={event.speakers} />
       </EventDetailsView>
     </ScrollView>
   )
