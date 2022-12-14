@@ -82,6 +82,8 @@ const EventDetails: FC<EventDetailsProps> = ({ event }) => {
             {event.description}
           </Markdown>
         </EventDescription>
+        {/* if there is an event speaker show this. Otherwise nothing.
+         event.speakers ? <EventSpeakers speakers={event.speakers} /> : null */}
         <EventSpeakers speakers={event.speakers} />
       </EventDetailsView>
     </ScrollView>

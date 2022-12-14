@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { FC } from 'react'
 import styled from 'styled-components/native'
 import Entypo from 'react-native-vector-icons/Entypo'
