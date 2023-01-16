@@ -23,7 +23,7 @@ import { changeTheme, ThemeState } from '@/Store/Theme'
 import { Brand } from '@/Components'
 
 const ProfileContainer = () => {
-  const Aegon = extendTheme({
+  const StaTheme = extendTheme({
     components: {
       Text: {
         baseStyle: {
@@ -55,7 +55,7 @@ const ProfileContainer = () => {
   return (
     // NativeBase would normally wrap the top level component but
     // I've put it here to separate concerns while evaluating NativeBase.
-    <NativeBaseProvider theme={Aegon}>
+    <NativeBaseProvider theme={StaTheme}>
       <ScrollView>
         <VStack safeAreaTop space={4} padding={4}>
           <Center>

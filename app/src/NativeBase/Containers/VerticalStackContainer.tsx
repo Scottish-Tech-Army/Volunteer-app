@@ -13,7 +13,7 @@ import {
   FavouriteIcon,
   VStack,
 } from 'native-base'
-import Aegon from '@/NativeBase/Theme/Aegon'
+import StaTheme from '@/NativeBase/Theme/StaTheme'
 import TechBadge from '../Components/TechBadge'
 import { ColorType } from 'native-base/lib/typescript/components/types'
 
@@ -63,7 +63,7 @@ const data = [
 
 const VerticalStackContainer = () => {
   return (
-    <NativeBaseProvider theme={Aegon}>
+    <NativeBaseProvider theme={StaTheme}>
       <FlatList
         data={data}
         renderItem={({ item }) => (

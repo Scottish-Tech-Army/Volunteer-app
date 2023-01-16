@@ -1,11 +1,11 @@
 /**
- * @file Theme definition for NativeProvider taken from Aegon
+ * @file Theme definition for NativeProvider
  * https://www.figma.com/file/RgxknLjxmS2CqBEDEZWPCU/STA-Volunteer-App---New-Designs
  */
 
 import { extendTheme } from 'native-base'
 
-const Aegon = extendTheme({
+const StaTheme = extendTheme({
   colors: {
     primary: {
       100: '#d1338A',
@@ -68,4 +68,4 @@ const Aegon = extendTheme({
   },
 })
 
-export default Aegon
+export default StaTheme
