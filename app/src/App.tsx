@@ -10,6 +10,8 @@ import ApplicationNavigator from '@/Navigators/Application'
 import ThemeProvider from '@/Theme/OldTheme'
 import './Translations'
 import '@/Components/Icons/init'
+import { NativeBaseProvider } from 'native-base'
+import StaTheme from './NativeBase/Theme/StaTheme'
 
 const App = () => (
   <Provider store={store}>
@@ -21,9 +23,11 @@ const App = () => (
      * @see https://github.com/rt2zz/redux-persist/blob/master/docs/PersistGate.md
      */}
     <PersistGate loading={null} persistor={persistor}>
-      <ThemeProvider>
-        <ApplicationNavigator />
-      </ThemeProvider>
+      <NativeBaseProvider theme={StaTheme}>
+        <ThemeProvider>
+          <ApplicationNavigator />
+        </ThemeProvider>
+      </NativeBaseProvider>
     </PersistGate>
   </Provider>
 )
