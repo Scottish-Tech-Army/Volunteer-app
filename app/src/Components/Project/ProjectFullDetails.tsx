@@ -1,4 +1,8 @@
-import React, { FC } from 'react'
+/**
+ * @file displays the details of a project role
+ */
+
+import React, { FC, ReactElement } from 'react'
 import styled from 'styled-components/native'
 import ProjectHeading from './ProjectHeading'
 import ProjectInterestButton from './ProjectInterestButton'
@@ -63,6 +67,11 @@ const ProjectRelatedRoles = styled.Text`
   border: ${props => `2px solid ${props.theme.colors.staBlack}`};
   padding: 17px 27px 11px 27px;
 `
+/**
+ * Displays the details of a project role
+ * @param {Project} project object
+ * @returns {ReactElement} project details
+ */
 const ProjectFullDetails: FC<ProjectFullDetailsProps> = ({ project }) => {
   return (
     <ScrollView>
@@ -90,6 +99,7 @@ const ProjectFullDetails: FC<ProjectFullDetailsProps> = ({ project }) => {
         <ProjectAttachments
           icon={<Feather name="file" size={24} />}
           details={'A3 - Project Scope'}
+          url={project.scope}
         />
         <Video url={project.video_file} />
         <SectionHeader>Team</SectionHeader>

@@ -48,7 +48,7 @@ export interface EventSearch extends ListSearch {
  * @param {Events} events The array of events
  * @param {Date} filterStartDate The start date to filter on
  * @param {Date} filterEndDate The end date to filter on
- * @returns Events An array containing any events found (or array could be empty)
+ * @returns {Events} An array containing any events found (or array could be empty)
  */
 export const filterEventsByDate = (
   events: Events,
@@ -76,7 +76,7 @@ export const filterEventsByDate = (
 /**
  * Container for the user to search events e.g. by date, free text, category
  *
- * @returns ReactElement Container
+ * @returns {React.ReactElement} Container
  */
 const EventSearchContainer = () => {
   const [freeTextSearchQuery, setFreeTextSearchQuery] = useState('')
@@ -90,7 +90,7 @@ const EventSearchContainer = () => {
     (state: { events: EventsState }) => state.events.upcoming,
   )
 
-  const allEvents = [...allUpcomingEvents, ...allPastEvents]
+  const allEvents = [...(allUpcomingEvents || []), ...(allPastEvents || [])]
 
   const getQuickSearchChoices = (
     eventSearchField: EventsSearchField,

@@ -2,10 +2,11 @@
  * @file Projects search screen container.
  */
 
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import Fuse from 'fuse.js' // fuzzy text search - see docs at https://fusejs.io
 import styled from 'styled-components/native'
 import { ScrollView, SafeAreaView } from 'react-native'
+import { useSelector } from 'react-redux'
 import TopOfApp from '@/Components/TopOfApp'
 import FreeSearchBar from '@/Components/FreeSearchBar'
 import {
@@ -15,13 +16,13 @@ import {
 } from '@/Containers/ListContainer'
 import { navigate } from '@/Navigators/utils'
 import {
-  useLazyFetchAllProjectsQuery,
   Projects,
   ProjectsSearchField,
   RolesRelated,
 } from '@/Services/modules/projects'
 import { searchByArray, fuzzySearchByArray } from '@/Utils/Search'
 import QuickSearchButton from '@/Components/Forms/QuickSearchButton'
+import { ProjectsState } from '@/Store/Projects'
 
 // define titles for quick search buttons relating to job roles
 const Roles = [
@@ -81,21 +82,17 @@ export interface ProjectSearch extends ListSearch {
 /**
  * Container for the user to search projects e.g. by free text, category, skills
  *
- * @returns ReactElement Component
+ * @returns {React.ReactElement} Component
  */
 const ProjectSearchContainer = () => {
+  const allProjects = useSelector(
+    (state: { projects: ProjectsState }) => state.projects.projects,
+  )
   const [freeTextSearchQuery, setFreeTextSearchQuery] = useState('')
 
   const handleFreeTextChange = (input: React.SetStateAction<string>) => {
     setFreeTextSearchQuery(input)
   }
-
-  // fetch all projects
-  const [fetchAll, { data: projects }] = useLazyFetchAllProjectsQuery()
-
-  useEffect(() => {
-    fetchAll('')
-  }, [fetchAll])
 
   // ensure job title searches find related roles
   const getRelatedRoles = (
@@ -140,12 +137,16 @@ const ProjectSearchContainer = () => {
         searchQueries = searchQueries.concat(relatedRoles)
       }
       results = fuzzySearchByArray(
-        projects,
+        allProjects,
         [searchField],
         searchQueries,
       ) as Projects // we need to use fuzzy search as the roles names are not exact (charities use different ways of naming roles)
     } else {
-      results = searchByArray(projects, searchField, searchQueries) as Projects // here we do not want to use fuzzy search as it would include unwanted results
+      results = searchByArray(
+        allProjects,
+        searchField,
+        searchQueries,
+      ) as Projects // here we do not want to use fuzzy search as it would include unwanted results
     }
 
     const description = `${
@@ -172,7 +173,7 @@ const ProjectSearchContainer = () => {
     }
 
     const results = fuzzySearchByArray(
-      projects,
+      allProjects,
       [
         { name: 'client', weight: 1 },
         // We reduce the 'weight' (aka importance) put on the description field as it's more likely to return

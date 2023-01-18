@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [1.0.9(version code 10)] - 2022-11-21Z
+
+### Added
+
+- You can now view the project scope document from the project details page
+
 ## [1.0.8 (version code 9)] - 2022-10-02Z
 
 ### Added
@@ -29,7 +35,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
-- Vimeo MP4 video file is now part of the project cache 
+- Vimeo MP4 video file is now part of the project cache
 
 ### Added
 
