@@ -35,7 +35,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
-- Vimeo MP4 video file is now part of the project cache 
+- Vimeo MP4 video file is now part of the project cache
 
 ### Added
 
