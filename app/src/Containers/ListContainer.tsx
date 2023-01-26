@@ -20,7 +20,7 @@ import EventSearchUpcomingQuickSearch, {
 import HorizontalLine from '@/Components/HorizontalLine'
 import List, { ListDisplayMode, ListOptions } from '@/Components/List'
 import SafeArea from '@/Components/SafeArea'
-import TopOfApp from '@/Components/TopOfApp'
+import TopOfApp from '@/NativeBase/Components/TopOfApp'
 import ProjectFilterSort from '@/Components/Project/ProjectFilterSort'
 import SearchIconButton from '@/Components/SearchIconButton'
 import { navigate, RootStackParamList } from '@/Navigators/utils'
