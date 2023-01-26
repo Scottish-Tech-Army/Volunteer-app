@@ -1,17 +1,21 @@
 module.exports = {
-    project: {
-        ios:{},
-        android:{}
+  project: {
+    ios: {},
+    android: {},
+  },
+  assets: ['./src/Assets/Fonts/'],
+  dependencies: {
+    'react-native-vector-icons': {
+      platforms: {
+        ios: null,
+      },
     },
-    assets:['./src/Assets/Fonts/'],
-    dependencies: {
-      'react-native-video': {
-        platforms: {
-          android: {
-            sourceDir: '../node_modules/react-native-video/android-exoplayer',
-          },
+    'react-native-video': {
+      platforms: {
+        android: {
+          sourceDir: '../node_modules/react-native-video/android-exoplayer',
         },
       },
     },
+  },
 }
-
