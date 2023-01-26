@@ -1,3 +1,7 @@
+/**
+ * @file STA branding (logo).
+ */
+
 import { Center } from 'native-base'
 import React from 'react'
 import StaLogoWide from '@/NativeBase/Assets/Images/Logos/sta-logo-wide.svg'

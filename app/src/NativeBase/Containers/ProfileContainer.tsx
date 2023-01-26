@@ -11,7 +11,6 @@ import {
   Radio,
   Checkbox,
   Text,
-  Center,
   Spacer,
   ScrollView,
 } from 'native-base'
