@@ -142,6 +142,10 @@ Below are some commonly encountered issues and possible ways to resolve them. If
 
 # Development
 
+## App
+
+[Please see here](APP_DEVELOPMENT.md) for more info on developing the front-end app.
+
 ## API
 
 ### Cron jobs
