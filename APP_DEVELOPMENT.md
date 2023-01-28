@@ -3,7 +3,7 @@
 This file contains some tips and guidelines on building our front-end React Native app.
 
 - [NativeBase](#nativebase)
-  - [File locations and naming](#file-locations-and-naming)
+  - [File locations, naming, moving and deleting](#file-locations-naming-moving-and-deleting)
   - [Icons](#icons)
 - [Images](#images)
 
