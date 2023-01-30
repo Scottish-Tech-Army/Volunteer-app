@@ -19,7 +19,7 @@ This file contains some tips and guidelines on building our front-end React Nati
 - `/Components` -- custom components that make up different parts of an app screen, e.g. a date search that might belong inside an event search container
 - `/Config` -- overall app configuration settings, e.g. the URL of the API
 - `/Containers` -- screens content and logic
-- `/Hooks` -- [React hooks](https://reactjs.org/docs/hooks-custom.html)
+- `/Hooks` -- [React custom hooks](https://reactjs.org/docs/hooks-custom.html)
 - `/NativeBase` -- assets, components and containers for the new app designs, using the NativeBase component library ([see more below](#nativebase))
 - `/Navigators` -- defines the bottom tabs, which screens the user can navigate to within the app and which container to use for which screen
 - `/Services` -- external services like our API, which we get projects and events data from
