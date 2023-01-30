@@ -144,7 +144,7 @@ Below are some commonly encountered issues and possible ways to resolve them. If
 
 ## App
 
-[Please see here](APP_DEVELOPMENT.md) for more info on developing the front-end app.
+[Please see here](APP_DEVELOPMENT.md) for more info on developing the front-end app, including NativeBase.
 
 ## API
 

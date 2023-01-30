@@ -2,10 +2,31 @@
 
 This file contains some tips and guidelines on building our front-end React Native app.
 
+- [Overview of directories](#overview-of-directories)
 - [NativeBase](#nativebase)
   - [File locations, naming, moving and deleting](#file-locations-naming-moving-and-deleting)
   - [Icons](#icons)
 - [Images](#images)
+
+## Overview of directories
+
+**Below is a brief rundown of the different directories inside `/app/src` and what they're for.**
+
+(There are also some other files and folders inside `/app` but you mostly won't need to touch these, unless for instance you're installing new npm packages or changing settings affecting Android or iOS. Please see also the [NativeBase section](#nativebase) below -- some files are moving into the `NativeBase` directory.)
+
+- `/Assets` -- fonts, images and other static files that are core to the app
+- `/Components` -- custom components that make up different parts of an app screen, e.g. a date search that might belong inside an event search container
+- `/Config` -- overall app configuration settings, e.g. the URL of the API
+- `/Containers` -- screens content and logic
+- `/Hooks` -- [React hooks](https://reactjs.org/docs/hooks-custom.html)
+- `/NativeBase` -- assets, components and containers for the new app designs, using the NativeBase component library ([see more below](#nativebase))
+- `/Navigators` -- defines the bottom tabs, which screens the user can navigate to within the app and which container to use for which screen
+- `/Services` -- external services like our API, which we get projects and events data from
+- `/Store` -- the [Redux store](https://medium.com/swlh/state-management-with-redux-react-native-a6369fcfe835) we use for more complex data sharing between containers/components
+- `/Theme` -- existing (old) theme for controlling overall colours, fonts, spacing, etc - we are switching to handling this using NativeBase
+- `/Translations` -- app text in different languages, currently we largely don't use this
+- `/Types` -- some extra Typescript setup to enable different data types
+- `/Utils` -- useful reusable functions to work with e.g. lists, searches, event dates and times
 
 ## NativeBase
 
