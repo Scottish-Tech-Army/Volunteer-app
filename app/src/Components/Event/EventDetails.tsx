@@ -1,5 +1,6 @@
 // Event details screen to show a single event -- all details, video/images, etc
 
+import { Config } from '@/Config'
 import React, { FC } from 'react'
 import { ScrollView } from 'react-native-gesture-handler'
 import Markdown from 'react-native-simple-markdown'
@@ -46,6 +47,8 @@ const EventDetailsView = styled.View`
 `
 
 const EventDetails: FC<EventDetailsProps> = ({ event }) => {
+  console.log(Config)
+  console.log(event)
   return (
     <ScrollView>
       <EventDetailsView>
