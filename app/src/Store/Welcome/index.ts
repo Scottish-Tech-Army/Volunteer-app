@@ -7,7 +7,7 @@ const slice = createSlice({
   name: 'welcome',
   initialState: {
     welcome: null,
-    show: null,
+    show: true,
   } as WelcomeState,
   reducers: {
     changeWelcome: (state, { payload: { welcome, show } }: WelcomePayload) => {
@@ -36,12 +36,12 @@ export default slice.reducer
 
 export type WelcomeState = {
   welcome: 'default' | null | undefined
-  show: boolean | null | undefined
+  show: boolean | undefined
 }
 
 type WelcomePayload = {
   payload: {
     welcome: 'default' | null | undefined
-    show: boolean | null | undefined
+    show: boolean | undefined
   }
 }

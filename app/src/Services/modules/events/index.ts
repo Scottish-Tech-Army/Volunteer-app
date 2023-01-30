@@ -26,6 +26,7 @@ export interface Event {
 export interface EventSpeaker {
   name: string
   url: string
+  addedToCalendar?: boolean
 }
 
 export type Events = Event[]

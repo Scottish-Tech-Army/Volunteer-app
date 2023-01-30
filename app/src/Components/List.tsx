@@ -62,7 +62,7 @@ interface ListProps {
  * @param {ListOptions} props.options Some extra options for displaying particular kinds of list data
  * @param {keyof RootStackParamList} props.searchScreen The name of the search screen for this kind of data - so we can take the user there if they want to do another search
  * @param {ListType} props.type Which type of data is in the list, e.g. projects or events
- * @returns ReactElement Component
+ * @returns {React.ReactElement} Component
  */
 const List: FC<ListProps> = ({ data, mode, options, searchScreen, type }) => {
   if (!data.length)

@@ -1,4 +1,6 @@
-// Event details screen to show a single event -- all details, video/images, etc
+/**
+ * @file Event details screen to show a single event -- all details, video/images, etc.
+ */
 
 import { Config } from '@/Config'
 import React, { FC } from 'react'
@@ -8,6 +10,8 @@ import styled from 'styled-components/native'
 import comingSoonImg from '@/Assets/Images/ComingSoon.png'
 import { Event } from '@/Services/modules/events'
 import ThemeVariables from '@/Theme/Variables'
+import { hasStarted, isUpcoming } from '@/Utils/Events'
+import EventAddToCalendar from './EventAddToCalendar'
 import EventDate from './EventDate'
 import EventRelatedInitiative from './EventRelatedInitiative'
 import EventSeries from './EventSeries'
@@ -17,10 +21,6 @@ import ImageSwiper from '../ImageSwiper'
 import Title from '../Title'
 import Video from '../Video'
 import EventSpeakers from './EventSpeakers'
-
-interface EventDetailsProps {
-  event: Event
-}
 
 const EventTopInfo = styled.View`
   display: flex;
@@ -46,6 +46,17 @@ const EventDetailsView = styled.View`
   margin: 21px 27px 0px 27px;
 `
 
+interface EventDetailsProps {
+  event: Event
+}
+
+/**
+ * Component for event details screen, showing a single event
+ *
+ * @param {EventDetailsProps} props The component props
+ * @param {Event} props.event The event
+ * @returns {React.ReactElement} Component
+ */
 const EventDetails: FC<EventDetailsProps> = ({ event }) => {
   console.log(Config)
   console.log(event)
@@ -76,6 +87,10 @@ const EventDetails: FC<EventDetailsProps> = ({ event }) => {
           <ImageFullWidth
             image={event.images.length ? event.images[0] : comingSoonImg}
           />
+        )}
+
+        {isUpcoming(event) && !hasStarted(event) && (
+          <EventAddToCalendar event={event} />
         )}
 
         <EventDescription>
