@@ -28,6 +28,10 @@ This file contains some tips and guidelines on building our front-end React Nati
 - `/Types` -- some extra Typescript setup to enable different data types
 - `/Utils` -- useful reusable functions to work with e.g. lists, searches, event dates and times
 
+## Working with Figma
+
+The app designs are produced in Figma.  You can inspect different elements within a design by clicking on them (you might have to double-click to get to an element inside a group) -- and then on the right-hand side of the screen [you can inspect different properties](https://help.figma.com/hc/en-us/articles/360055203533-Use-the-Inspect-panel) e.g. the exact size in pixels, the spacing around it, colours, etc.
+
 ## NativeBase
 
 We are moving to the [NativeBase](https://nativebase.io/) component library as part of implementing new app designs.  [Find the official docs here.](https://docs.nativebase.io/)
