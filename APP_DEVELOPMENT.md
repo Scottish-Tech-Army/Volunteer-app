@@ -3,6 +3,7 @@
 This file contains some tips and guidelines on building our front-end React Native app.
 
 - [Overview of directories](#overview-of-directories)
+- [Working with Figma](#working-with-figma)
 - [NativeBase](#nativebase)
   - [File locations, naming, moving and deleting](#file-locations-naming-moving-and-deleting)
   - [Icons](#icons)
