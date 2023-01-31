@@ -9,7 +9,6 @@ module.exports = {
   },
   assets: ['./src/Assets/Fonts/'],
   dependencies: {
-    
     'react-native-video': {
       platforms: {
         android: {
