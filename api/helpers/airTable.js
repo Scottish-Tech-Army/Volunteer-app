@@ -100,20 +100,18 @@ async function getAllRecords(tableName, includeId = false, linkedFields) {
 // TODO: this needs a JSDoc
 async function addLinkedFields(tableName, record, linkedFields) {
   for (const linkedField of linkedFields) {
-    // if the property exists on the fields object
     if (record.fields[linkedField.fieldName]) {
       record.fields[linkedField.fieldName] = await Promise.all(
         record.fields[linkedField.fieldName].map(async (field) => {
-          //    console.log('field', field);
           const linkedRecord = await module.exports.client().table(linkedField.tableName).find(field);
           delete linkedRecord.fields[tableName]; // removing the extra column from STA Events Test ** MAKE GENERAL **
-          //  console.log('table name:', tableName)
-          //  console.log('linked record', linkedRecord);
+
           return linkedRecord.fields;
         }),
       );
     }
   }
+
   return record;
 }
 
@@ -204,11 +202,12 @@ async function updateRecordById(tableName, recordId, fields) {
 }
 
 module.exports = {
-  eventsTableLinkedFields,
   addEmptyFields,
+  addLinkedFields,
   client,
   connectionErrorMessage,
   eventsTable,
+  eventsTableLinkedFields,
   formatDuration,
   formatTime,
   getAllRecords,
