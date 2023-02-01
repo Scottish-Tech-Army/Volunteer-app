@@ -6,19 +6,20 @@ import {
   Heading,
   VStack,
   HStack,
+  Icon,
   Link,
   Radio,
   Checkbox,
   Text,
-  Center,
   Spacer,
   ScrollView,
 } from 'native-base'
 import { useDispatch, useSelector } from 'react-redux'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { changeWelcome, WelcomeState } from '@/Store/Welcome'
 import { version } from '../../../package.json'
 import { changeTheme, ThemeState } from '@/Store/Theme'
-import { Brand } from '@/Components'
+import Brand from '@/NativeBase/Components/Brand'
 
 const ProfileContainer = () => {
   const welcomeState = useSelector(
@@ -37,9 +38,7 @@ const ProfileContainer = () => {
   return (
     <ScrollView>
       <VStack safeAreaTop space={4} padding={4}>
-        <Center>
-          <Brand />
-        </Center>
+        <Brand />
         <Heading>Theme</Heading>
         <Radio.Group
           colorScheme={'pink'}
@@ -80,10 +79,17 @@ const ProfileContainer = () => {
           Show splash screen on app launch
         </Checkbox>
         <Spacer />
-        <Center>
-          <Text>Version</Text>
-          <Text>{version}</Text>
-        </Center>
+        <HStack justifyContent="center">
+          <Icon
+            size={8}
+            as={MaterialIcons}
+            name="info"
+            color="black"
+            mx={0}
+            px={0}
+          />
+          <Text>Version {version}</Text>
+        </HStack>
         <HStack safeAreaBottom space="4" justifyContent={'center'}>
           <Link href="https://www.scottishtecharmy.org/app-privacy-policy">
             Privacy policy
