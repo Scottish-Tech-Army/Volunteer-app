@@ -6,6 +6,8 @@ This file contains some tips and guidelines on building our front-end React Nati
 - [Working with Figma](#working-with-figma)
 - [NativeBase](#nativebase)
   - [File locations, naming, moving and deleting](#file-locations-naming-moving-and-deleting)
+  - [Theming & mindset](#theming--mindset)
+  - [Dark mode](#dark-mode)
   - [Icons](#icons)
 - [Images](#images)
 
@@ -48,6 +50,28 @@ Parts of the app like `Config`, `Hooks`, `Services`, `Store` don't need to move.
 If it makes sense to do so, you can a name new file the same as the old one it replaces (e.g. `app/src/Components/MyThing.tsx` can be `app/src/NativeBase/Components/MyThing.tsx`).
 
 If an old non-NativeBase file is no longer needed in the app, please delete it as part of the pull request you're working on, so we don't have old files hanging around that aren't used any more.
+
+### Theming & mindset
+
+NativeBase has [lots of handy out-of-the-box defaults](https://docs.nativebase.io/default-theme) set on the theme.
+
+When we need to override this, we can do that in our theme file `app/src/NativeBase/Theme/StaTheme.tsx`  [See here for the docs on theme customising.](https://docs.nativebase.io/customizing-theme)  To see the full rundown of all the different things you can set, check out the NativeBase `extendTheme` file referenced in our StaTheme file (Ctrl-click or Command-click on `extendTheme` in the `import` statement at the top of the file to open it).
+
+If you need to set something like colours, spacing, sizing, etc on a component or container you're working on, always think first **"could this be set as a theme default, rather than just setting it specifically on my component"**?  Think ahead to whether this would help others in the team (and you!) in the future and help keep the app as consistent as possible, using as little code as needed in each individual component file.
+
+### Dark mode
+
+We allow the user to set their dark mode preference in the `Profile Container`.
+
+When you're building (or changing) a component or container, or changing a theme setting, please always check it works in dark mode as well as light mode.
+
+NativeBase does some handling of dark mode straight out of the box, so you may not need to change anything.
+
+If you do need to set colours based on dark/light mode, [see the docs here](https://docs.nativebase.io/dark-mode) and wherever possible set `_light` and `_dark` properties in the `StaTheme` file (approach 1. in the docs) rather than setting them on your individual component -- i.e. try to make settings as universal and as easily reusable as possible.
+
+(In case you need it, you can also use `useColorMode` and `useColorModeValue` to detect dark/light mode -- [see here](https://docs.nativebase.io/color-mode#h2-usecolormode).  But in most cases you shouldn't need to access these.)
+
+To find which colours to use for dark mode in Figma, see **Design System** in the list of Pages on the left-hand side of the screen.  There are examples of some components using dark mode.
 
 ### Icons
 
