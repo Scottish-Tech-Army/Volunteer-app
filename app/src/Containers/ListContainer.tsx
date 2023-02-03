@@ -20,9 +20,9 @@ import EventSearchUpcomingQuickSearch, {
 import HorizontalLine from '@/Components/HorizontalLine'
 import List, { ListDisplayMode, ListOptions } from '@/Components/List'
 import SafeArea from '@/Components/SafeArea'
-import TopOfApp from '@/NativeBase/Components/TopOfApp'
 import ProjectFilterSort from '@/Components/Project/ProjectFilterSort'
 import SearchIconButton from '@/Components/SearchIconButton'
+import TopOfApp from '@/NativeBase/Components/TopOfApp'
 import { navigate, RootStackParamList } from '@/Navigators/utils'
 import {
   Events,
@@ -263,14 +263,13 @@ const ListContainer = (props: {
   return (
     <Theme>
       <SafeArea>
-        <TopOfApp />
+        <TopOfApp
+          showSearchButton
+          onSearchButtonPress={() => navigate(screens.search[params.type], '')}
+        />
 
         {params?.type && listItemsToShow ? (
           <>
-            <SearchIconButton
-              onPress={() => navigate(screens.search[params.type], '')}
-            />
-
             {/* Past / Upcoming / My Events choice */}
             {params.type === ListType.Events && (
               <EventOptions selected={eventsSelectedOption} />
@@ -306,8 +305,6 @@ const ListContainer = (props: {
             {params.type === ListType.Projects &&
               Boolean(params?.search) &&
               Boolean(listItemsToShow.length) && <ProjectFilterSort />}
-
-            <HorizontalLine />
 
             <List
               data={listItemsToShow}

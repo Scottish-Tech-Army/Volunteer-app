@@ -1,76 +1,84 @@
+/**
+ * @file This goes at the top of containers where you want to show the logo, a hamburger menu, and optionally a search button e.g. projects list, events list screens
+ *
+ * Follows example here https://docs.nativebase.io/building-app-bar
+ */
+
 import {
   Box,
   HStack,
   Icon,
   IconButton,
-  Image,
   StatusBar,
-  Text,
+  useColorMode,
 } from 'native-base'
-import React from 'react'
-import StaLogo from '@/Components/StaLogo'
-import styled from 'styled-components/native'
+import React, { FC } from 'react'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import StaLogoSquare from '@/NativeBase/Assets/Images/Logos/sta-logo-square.svg'
+import StaLogoSquareDarkMode from '@/NativeBase/Assets/Images/Logos/sta-logo-square-dark-mode.svg'
+import StaTheme from '../Theme/StaTheme'
 import underDevelopmentAlert from '@/Utils/UnderDevelopmentAlert'
 
-import MenuIcon from '@/NativeBase/Assets/Images/Icons/material-symbols_menu-rounded.svg'
-import SearchIcon from '@/NativeBase/Assets/Images/Icons/material-symbols_search-rounded.svg'
-import StaLogoSquare from '@/NativeBase/Assets/Images/Logos/sta-logo-square.svg'
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+interface TopOfAppProps {
+  showSearchButton: boolean
+  onSearchButtonPress?: () => void
+}
 
-const TopOfApp = () => {
+const TopOfApp: FC<TopOfAppProps> = ({
+  showSearchButton,
+  onSearchButtonPress,
+}) => {
+  const { colorMode } = useColorMode()
+  const logoWidthHeight = 42
+
   return (
     <>
-      <StatusBar barStyle="dark-content" />
-      <Box safeAreaTop bg="white" />
-      <HStack
-        borderColor="red.600"
-        borderWidth={1}
-        alignItems="center"
-        justifyContent="space-between"
-        marginY={2}
-        paddingX={2}
-        w="100%"
-      >
-        <StaLogoSquare width={42} height={42} />
+      <StatusBar />
 
+      <Box
+        backgroundColor={
+          colorMode === 'dark'
+            ? StaTheme.colors.text['100']
+            : StaTheme.colors.bg['100']
+        }
+        safeAreaTop
+      >
         <HStack
-          borderColor="red.600"
-          borderWidth="1"
           alignItems="center"
-          justifyContent="flex-end"
-          space={0}
-          paddingRight={0}
+          justifyContent="space-between"
+          marginY={2}
+          paddingX={4}
+          paddingY={2}
         >
-          <IconButton
-            icon={
-              <Icon
-                borderColor="red.600"
-                borderWidth="1"
-                size={8}
-                as={MaterialIcons}
-                name="search"
-                color="black"
-                mx={0}
-                px={0}
+          {colorMode === 'dark' ? (
+            <StaLogoSquareDarkMode
+              height={logoWidthHeight}
+              width={logoWidthHeight}
+            />
+          ) : (
+            <StaLogoSquare height={logoWidthHeight} width={logoWidthHeight} />
+          )}
+
+          <HStack
+            alignItems="center"
+            justifyContent="flex-end"
+            paddingRight={0}
+            space={4}
+          >
+            {showSearchButton && Boolean(onSearchButtonPress) && (
+              <IconButton
+                icon={<Icon as={MaterialIcons} name="search" />}
+                onPress={onSearchButtonPress}
               />
-            }
-          />
-          <IconButton
-            icon={
-              <Icon
-                borderColor="red.600"
-                borderWidth="1"
-                size={8}
-                as={MaterialIcons}
-                name="menu"
-                color="black"
-                mx={0}
-                px={0}
-              />
-            }
-          />
+            )}
+
+            <IconButton
+              icon={<Icon as={MaterialIcons} name="menu" />}
+              onPress={underDevelopmentAlert}
+            />
+          </HStack>
         </HStack>
-      </HStack>
+      </Box>
     </>
   )
 }
