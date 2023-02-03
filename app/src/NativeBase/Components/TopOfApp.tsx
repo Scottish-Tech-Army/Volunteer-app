@@ -10,7 +10,7 @@ import {
   Icon,
   IconButton,
   StatusBar,
-  useColorMode,
+  useColorModeValue,
 } from 'native-base'
 import React, { FC } from 'react'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
@@ -28,19 +28,19 @@ const TopOfApp: FC<TopOfAppProps> = ({
   showSearchButton,
   onSearchButtonPress,
 }) => {
-  const { colorMode } = useColorMode()
   const logoWidthHeight = 42
+  const logo = useColorModeValue(
+    <StaLogoSquare height={logoWidthHeight} width={logoWidthHeight} />,
+    <StaLogoSquareDarkMode height={logoWidthHeight} width={logoWidthHeight} />,
+  )
 
   return (
     <>
       <StatusBar />
 
       <Box
-        backgroundColor={
-          colorMode === 'dark'
-            ? StaTheme.colors.text['100']
-            : StaTheme.colors.bg['100']
-        }
+        _dark={{ backgroundColor: StaTheme.colors.text['100'] }}
+        _light={{ backgroundColor: StaTheme.colors.bg['100'] }}
         safeAreaTop
       >
         <HStack
@@ -50,14 +50,7 @@ const TopOfApp: FC<TopOfAppProps> = ({
           paddingX={4}
           paddingY={2}
         >
-          {colorMode === 'dark' ? (
-            <StaLogoSquareDarkMode
-              height={logoWidthHeight}
-              width={logoWidthHeight}
-            />
-          ) : (
-            <StaLogoSquare height={logoWidthHeight} width={logoWidthHeight} />
-          )}
+          {logo}
 
           <HStack
             alignItems="center"
