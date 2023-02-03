@@ -1,12 +1,9 @@
-import {
-  Box,
-  Heading,
-  HStack,
-  Icon,
-  IconButton,
-  StatusBar,
-  Text,
-} from 'native-base'
+/**
+ * @file This can be used to show a screen title and a back button, usually for detail / individual screens
+ * e.g. looking at a specific project or doing an events search
+ */
+
+import { Box, Heading, HStack, Icon, IconButton, StatusBar } from 'native-base'
 import React from 'react'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { StackHeaderProps } from '@react-navigation/stack'

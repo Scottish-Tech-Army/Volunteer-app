@@ -46,8 +46,8 @@ const ApplicationNavigator = () => {
       ? {
           colors: {
             primary: StaTheme.colors.primary['100'],
-            background: StaTheme.colors.text['100'],
-            card: StaTheme.colors.text['100'],
+            background: StaTheme.colors.bgDark['100'],
+            card: StaTheme.colors.bgDark['100'],
             text: StaTheme.colors.bg['100'],
             border: StaTheme.colors.bg['100'],
             notification: StaTheme.colors.primary['100'],

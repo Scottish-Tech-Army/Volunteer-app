@@ -51,7 +51,7 @@ If it makes sense to do so, you can a name new file the same as the old one it r
 
 If an old non-NativeBase file is no longer needed in the app, please delete it as part of the pull request you're working on, so we don't have old files hanging around that aren't used any more.
 
-### Theming & mindset
+### Theming & approach
 
 NativeBase has [lots of handy out-of-the-box defaults](https://docs.nativebase.io/default-theme) set on the theme.
 
