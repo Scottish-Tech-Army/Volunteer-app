@@ -8,6 +8,7 @@ import { AppState, SafeAreaView, StatusBar, useColorScheme } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import {
   createStackNavigator,
+  StackHeaderProps,
   StackNavigationOptions,
 } from '@react-navigation/stack'
 import { useSelector } from 'react-redux'
@@ -30,6 +31,10 @@ import { ThemeState } from '@/Store/Theme'
 
 const Stack = createStackNavigator()
 
+const renderNavigationHeader = (props: StackHeaderProps) => (
+  <NavigationHeader {...props} />
+)
+
 /**
  * Safe area and Stack Navigator for the app
  * @returns {SafeAreaView} safe area and navigator container
@@ -40,7 +45,7 @@ const ApplicationNavigator = () => {
   const { colorMode, toggleColorMode } = useColorMode()
   const { Layout } = useTheme()
   const stackScreenDefaultOptions = {
-    header: props => <NavigationHeader {...props} />,
+    header: props => renderNavigationHeader(props),
     headerTitleAlign: 'center', //android defaults to left aligned otherwise (iOS is always centred)
     headerBackTitleVisible: false, //iOS defaults to title of previous screen
   } as StackNavigationOptions
