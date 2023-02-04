@@ -21,7 +21,7 @@ import underDevelopmentAlert from '@/Utils/UnderDevelopmentAlert'
 
 interface TopOfAppProps {
   showSearchButton: boolean
-  onSearchButtonPress?: () => void
+  onSearchButtonPress?: () => void // only needed if showSearchButton is set to true
 }
 
 const TopOfApp: FC<TopOfAppProps> = ({
@@ -33,10 +33,11 @@ const TopOfApp: FC<TopOfAppProps> = ({
     <StaLogoSquare height={logoWidthHeight} width={logoWidthHeight} />,
     <StaLogoSquareDarkMode height={logoWidthHeight} width={logoWidthHeight} />,
   )
+  const statusBarStyle = useColorModeValue('dark-content', 'light-content')
 
   return (
     <>
-      <StatusBar />
+      <StatusBar barStyle={statusBarStyle} />
 
       <Box
         _dark={{ backgroundColor: StaTheme.colors.text['100'] }}

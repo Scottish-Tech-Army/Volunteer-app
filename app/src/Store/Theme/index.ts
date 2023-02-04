@@ -1,3 +1,9 @@
+/**
+ * @file Set up the Redux store to allow us to share theme settings across different components
+ *
+ * TODO: remove 'theme' and 'darkMode' settings when we have fully switched to NativeBase
+ */
+
 import { createSlice } from '@reduxjs/toolkit'
 
 const slice = createSlice({

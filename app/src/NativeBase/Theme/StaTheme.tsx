@@ -153,17 +153,6 @@ const StaTheme = extendTheme({
       }),
     },
 
-    StatusBar: {
-      baseStyle: () => ({
-        _light: {
-          barStyle: 'dark-content',
-        },
-        _dark: {
-          barStyle: 'light-content',
-        },
-      }),
-    },
-
     Text: {
       baseStyle: () => ({
         _light: {

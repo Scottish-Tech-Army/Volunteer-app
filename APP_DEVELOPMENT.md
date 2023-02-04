@@ -61,17 +61,17 @@ If you need to set something like colours, spacing, sizing, etc on a component o
 
 ### Dark mode
 
-We allow the user to set their dark mode preference in the `Profile Container`.
+We allow the user to set their dark mode preference in the `ProfileContainer`.
 
 When you're building (or changing) a component or container, or changing a theme setting, please always check it works in dark mode as well as light mode.
 
 NativeBase does some handling of dark mode straight out of the box, so you may not need to change anything.
 
-If you do need to set colours based on dark/light mode, [see the docs here](https://docs.nativebase.io/dark-mode) and wherever possible set `_light` and `_dark` properties in the `StaTheme` file (approach 1. in the docs) rather than setting them on your individual component -- i.e. try to make settings as universal and as easily reusable as possible.
+**If you need to set colours based on dark/light mode,** [see the docs here](https://docs.nativebase.io/dark-mode) and wherever possible set `_light` and `_dark` properties in the `StaTheme` file (approach 1. in the docs) rather than setting them on your individual component -- i.e. try to make settings as universal and as easily reusable as possible.
 
-(In case you need it, you can also use `useColorMode` and `useColorModeValue` to detect dark/light mode -- [see here](https://docs.nativebase.io/color-mode#h2-usecolormode).  But in most cases you shouldn't need to access these.)
+In case you need it, you can also use `useColorMode` or `useColorModeValue` to detect dark/light mode -- [see here](https://docs.nativebase.io/color-mode#h2-usecolormode).  But often you can do it using `_light` and `_dark` properties as described above.
 
-To find which colours to use for dark mode in Figma, see **Design System** in the list of Pages on the left-hand side of the screen.  There are examples of some components using dark mode.
+**To find which colours to use for dark mode in Figma,** see *Design System* in the list of Pages on the left-hand side of the screen.  There are examples of some components using dark mode.
 
 ### Icons
 

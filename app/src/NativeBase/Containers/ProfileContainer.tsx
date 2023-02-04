@@ -41,13 +41,6 @@ const ProfileContainer = () => {
   const onChangeSplash = ({ welcome, show }: Partial<WelcomeState>) => {
     dispatch(changeWelcome({ welcome, show }))
   }
-  const onChangeTheme = ({
-    theme,
-    darkMode,
-    useSystemColourMode,
-  }: Partial<ThemeState>) => {
-    dispatch(changeTheme({ theme, darkMode, useSystemColourMode }))
-  }
   const useSystemColourMode = useSelector(
     (state: { theme: ThemeState }) => state.theme.useSystemColourMode,
   )
@@ -61,7 +54,13 @@ const ProfileContainer = () => {
   const updateColourMode = (newColourMode: string) => {
     switch (newColourMode) {
       case 'system':
-        onChangeTheme({ useSystemColourMode: true })
+        dispatch(
+          changeTheme({
+            theme: undefined,
+            darkMode: undefined,
+            useSystemColourMode: true,
+          }),
+        )
 
         const systemColourMode = Appearance.getColorScheme()
 
@@ -72,7 +71,13 @@ const ProfileContainer = () => {
 
       case 'dark':
       case 'light':
-        onChangeTheme({ useSystemColourMode: false })
+        dispatch(
+          changeTheme({
+            theme: undefined,
+            darkMode: undefined,
+            useSystemColourMode: false,
+          }),
+        )
 
         if (colorMode !== newColourMode) {
           toggleColorMode()
