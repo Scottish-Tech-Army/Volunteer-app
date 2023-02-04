@@ -11,7 +11,7 @@ import ApplicationNavigator from '@/Navigators/Application'
 import ThemeProvider from '@/Theme/OldTheme'
 import './Translations'
 import '@/NativeBase/Components/Icons/init'
-import { colourModeManager } from './NativeBase/Theme/ColourModeManager'
+import ColourModeManager from './NativeBase/Theme/ColourModeManager'
 import StaTheme from './NativeBase/Theme/StaTheme'
 
 const App = () => (
@@ -24,7 +24,7 @@ const App = () => (
      * @see https://github.com/rt2zz/redux-persist/blob/master/docs/PersistGate.md
      */}
     <PersistGate loading={null} persistor={persistor}>
-      <NativeBaseProvider colorModeManager={colourModeManager} theme={StaTheme}>
+      <NativeBaseProvider colorModeManager={ColourModeManager} theme={StaTheme}>
         <ThemeProvider>
           <ApplicationNavigator />
         </ThemeProvider>

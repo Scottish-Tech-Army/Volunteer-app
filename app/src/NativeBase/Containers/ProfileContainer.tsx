@@ -5,7 +5,7 @@
  *
  * 1) 'System default' choice: we use the Redux store for our 'useSystemColourMode' flag -- this says whether or not the user's chosen 'Use system default'
  * (NativeBase doesn't seem to have an easy built-in way to handle this option that works.)
- * Then we use NativeBase's toggleColorMode to set the colour mode to reflect whether the OS is set to dark or light.
+ * Then we use NativeBase's toggleColorMode to set the colour mode to reflect whether the OS is set to dark or light -- this happens in Navigators/Application.
  *
  * 2) 'Dark'/'Light' choice: if they choose to manually set the colour to dark or light, we ignore the OS's setting and simply use NativeBase's toggleColorMode
  * to set the colour mode to dark or light based on the user's preference.
@@ -27,7 +27,6 @@ import {
   useColorMode,
 } from 'native-base'
 import React, { useState } from 'react'
-import { Appearance } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import Brand from '@/NativeBase/Components/Brand'
@@ -61,10 +60,6 @@ const ProfileContainer = () => {
             useSystemColourMode: true,
           }),
         )
-
-        const systemColourMode = Appearance.getColorScheme()
-
-        if (colorMode !== systemColourMode) toggleColorMode()
         break
 
       case 'dark':

@@ -8,7 +8,7 @@
 import { StorageManager, ColorMode } from 'native-base'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-export const colourModeManager: StorageManager = {
+const ColourModeManager: StorageManager = {
   get: async () => {
     try {
       const colourMode = await AsyncStorage.getItem('@color-mode')
@@ -28,3 +28,5 @@ export const colourModeManager: StorageManager = {
     }
   },
 }
+
+export default ColourModeManager

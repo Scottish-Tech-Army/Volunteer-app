@@ -62,7 +62,7 @@ If you need to set something like colours, spacing, sizing, etc on a component o
 
 ### Dark mode
 
-We allow the user to set their dark mode preference in the `ProfileContainer`.
+We allow the user to set their dark mode preference in the `ProfileContainer`.  Code there and in `Navigators/Application` and `ColourModeManager` handle dark/light mode (what React Native and NativeBase call colour mode).
 
 When you're building (or changing) a component or container, or changing a theme setting, please always check it works in dark mode as well as light mode.
 

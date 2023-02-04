@@ -3,13 +3,14 @@
  */
 
 import { useColorMode } from 'native-base'
-import React from 'react'
-import { SafeAreaView, StatusBar } from 'react-native'
+import React, { useEffect, useRef, useState } from 'react'
+import { AppState, SafeAreaView, StatusBar, useColorScheme } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import {
   createStackNavigator,
   StackNavigationOptions,
 } from '@react-navigation/stack'
+import { useSelector } from 'react-redux'
 import {
   EventDetailContainer,
   StartupContainer,
@@ -25,6 +26,7 @@ import { navigationRef } from './utils'
 import ProjectScope from '@/Components/Project/ProjectScope'
 import NavigationHeader from '@/NativeBase/Components/NavigationHeader'
 import StaTheme from '@/NativeBase/Theme/StaTheme'
+import { ThemeState } from '@/Store/Theme'
 
 const Stack = createStackNavigator()
 
@@ -33,13 +35,46 @@ const Stack = createStackNavigator()
  * @returns {SafeAreaView} safe area and navigator container
  */
 const ApplicationNavigator = () => {
-  const { colorMode } = useColorMode()
+  const appState = useRef(AppState.currentState)
+  const [appStateVisible, setAppStateVisible] = useState(appState.current)
+  const { colorMode, toggleColorMode } = useColorMode()
   const { Layout } = useTheme()
   const stackScreenDefaultOptions = {
     header: props => <NavigationHeader {...props} />,
     headerTitleAlign: 'center', //android defaults to left aligned otherwise (iOS is always centred)
     headerBackTitleVisible: false, //iOS defaults to title of previous screen
   } as StackNavigationOptions
+  const systemColourMode = useColorScheme()
+  const useSystemColourMode = useSelector(
+    (state: { theme: ThemeState }) => state.theme.useSystemColourMode,
+  )
+
+  // When the user sets the dark/light mode choice to 'Use system default',
+  // or when they've already done that and the system dark/light mode setting changes (e.g. the user changes their OS settings or the OS changes mode on a timer),
+  // then toggle NativeBase's colour mode to reflect it if necessary
+  useEffect(() => {
+    if (useSystemColourMode && colorMode !== systemColourMode) toggleColorMode()
+  }, [
+    appStateVisible,
+    colorMode,
+    systemColourMode,
+    toggleColorMode,
+    useSystemColourMode,
+  ])
+
+  // On Android, React Native's useColorScheme hook may not actually fire when the user updates their OS dark/light mode settings
+  // so here we add an extra check -- the event listener below is triggered when the user switches back to our app from another app
+  // and this in turn triggers the useEffect above which has appStateVisible as a dependency
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', nextAppState => {
+      appState.current = nextAppState
+      setAppStateVisible(appState.current)
+    })
+
+    return () => {
+      subscription.remove()
+    }
+  }, [])
 
   const navigationTheme =
     colorMode === 'dark'
