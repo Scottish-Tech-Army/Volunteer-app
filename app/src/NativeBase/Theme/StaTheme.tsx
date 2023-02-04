@@ -36,13 +36,13 @@ const StaTheme = extendTheme({
     text: {
       100: common.colours.darkGrey100,
     },
-    textDark: {
+    textDarkMode: {
       100: common.colours.offWhite100,
     },
     bg: {
       100: common.colours.offWhite100,
     },
-    bgDark: {
+    bgDarkMode: {
       100: common.colours.darkGrey100,
     },
     error: {
