@@ -170,8 +170,4 @@ const StaTheme = extendTheme({
   useSystemColorMode: false, // Couldn't get this to have any effect when testing -- also not sure if/how to set this dynamically, so instead handling this using useSystemColourMode with Store/Theme
 })
 
-export const NavigationTheme = {
-  hello: 1,
-}
-
 export default StaTheme

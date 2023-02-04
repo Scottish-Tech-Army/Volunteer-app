@@ -6,10 +6,11 @@ This file contains some tips and guidelines on building our front-end React Nati
 - [Working with Figma](#working-with-figma)
 - [NativeBase](#nativebase)
   - [File locations, naming, moving and deleting](#file-locations-naming-moving-and-deleting)
-  - [Theming & mindset](#theming--mindset)
+  - [Theming & approach](#theming--approach)
   - [Dark mode](#dark-mode)
   - [Icons](#icons)
 - [Images](#images)
+- [Performance issues](#performance-issues)
 
 ## Overview of directories
 
@@ -103,3 +104,9 @@ We have the [react-native-svg](https://github.com/software-mansion/react-native-
 - Import it at the top of your component file, e.g. `import StaLogoWide from '@/NativeBase/Assets/Images/Logos/sta-logo-wide.svg'`
 - Use it like you would a normal component, e.g. `<StaLogoWide />`
 - See `interface SvgProps` [in this file](https://github.com/software-mansion/react-native-svg/blob/main/src/elements/Svg.tsx) for common props you can use, and [here for touch events](https://github.com/software-mansion/react-native-svg/blob/main/USAGE.md#touch-events)
+
+## Performance issues
+
+Have noticed occasional performance issues in the app emulator e.g. warnings that `serializablestateinvariantmiddleware` took a long time.  We could change the `getDefaultMiddleware` call in `app/Store/index.ts` to set `immutableCheck` and `serializableCheck` to false like [this suggests](https://stackoverflow.com/a/70288486/15422951) (or you could do this when developing locally if needed) -- but this should be avoided if possible.
+
+NativeBase does also have [some documented performance issues](https://github.com/GeekyAnts/NativeBase/issues/4302) but hopefully these won't hold us back (our app is relatively simple after all) and it looks like there are ongoing efforts to address these.

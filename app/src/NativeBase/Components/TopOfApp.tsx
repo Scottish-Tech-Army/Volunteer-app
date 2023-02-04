@@ -40,7 +40,7 @@ const TopOfApp: FC<TopOfAppProps> = ({
       <StatusBar barStyle={statusBarStyle} />
 
       <Box
-        _dark={{ backgroundColor: StaTheme.colors.text['100'] }}
+        _dark={{ backgroundColor: StaTheme.colors.bgDarkMode['100'] }}
         _light={{ backgroundColor: StaTheme.colors.bg['100'] }}
         safeAreaTop
       >
