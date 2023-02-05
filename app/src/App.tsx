@@ -9,7 +9,7 @@ import { store, persistor } from '@/Store'
 import ApplicationNavigator from '@/Navigators/Application'
 import ThemeProvider from '@/Theme/OldTheme'
 import './Translations'
-import '@/Components/Icons/init'
+import '@/NativeBase/Components/Icons/init'
 import { NativeBaseProvider } from 'native-base'
 import StaTheme from './NativeBase/Theme/StaTheme'
 
