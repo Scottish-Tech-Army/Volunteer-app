@@ -10,16 +10,16 @@ import {
   EventDetailContainer,
   StartupContainer,
   ProjectDetailContainer,
-  ProjectRegisterInterestContainer,
   ProjectSearchContainer,
   EventSearchContainer,
   WelcomeContainer,
 } from '@/Containers'
+
 import { useTheme } from '@/Hooks'
 import MainNavigator from './Main'
 import { navigationRef } from './utils'
 import ProjectScope from '@/Components/Project/ProjectScope'
-
+import ProjectRegisterInterestContainer from '../NativeBase/Containers/ProjectRegisterInterestContainer'
 const Stack = createStackNavigator()
 
 /**
