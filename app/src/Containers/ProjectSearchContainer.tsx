@@ -7,7 +7,6 @@ import Fuse from 'fuse.js' // fuzzy text search - see docs at https://fusejs.io
 import styled from 'styled-components/native'
 import { ScrollView, SafeAreaView } from 'react-native'
 import { useSelector } from 'react-redux'
-import TopOfApp from '@/Components/TopOfApp'
 import FreeSearchBar from '@/Components/FreeSearchBar'
 import {
   ListRouteParams,
@@ -201,7 +200,6 @@ const ProjectSearchContainer = () => {
   return (
     <SafeAreaView>
       <ScrollView>
-        <TopOfApp />
         <FreeSearchBar
           handleChangeText={handleFreeTextChange}
           handleSubmit={handleFreeTextSubmit}
