@@ -79,7 +79,6 @@ const ApplicationNavigator = () => {
     }
   }, [])
 
-  const layoutFill = { flex: 1 }
   const navigationTheme =
     colorMode === 'dark'
       ? {
@@ -104,14 +103,12 @@ const ApplicationNavigator = () => {
           },
           dark: false,
         }
+  const safeAreaViewStyle = [
+    { backgroundColor: navigationTheme.colors.background, flex: 1 },
+  ]
 
   return (
-    <SafeAreaView
-      style={[
-        layoutFill,
-        { backgroundColor: navigationTheme.colors.background },
-      ]}
-    >
+    <SafeAreaView style={safeAreaViewStyle}>
       <NavigationContainer theme={navigationTheme} ref={navigationRef}>
         <StatusBar />
 
