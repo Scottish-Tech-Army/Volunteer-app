@@ -4,12 +4,12 @@
 
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { ExampleContainer, ListContainer } from '@/Containers'
-import Entypo from 'react-native-vector-icons/Entypo'
+import { ListContainer } from '@/Containers'
 import { ListType } from '@/Containers/ListContainer'
 import { useTheme } from '@/Hooks'
-import ProfileContainer from '@/NativeBase/Containers/ProfileContainer'
-import VerticalStackContainer from '@/NativeBase/Containers/VerticalStackContainer'
+import { ProfileContainer, VerticalStackContainer} from '@/NativeBase/Containers'
+import { EventTicket, Home, Projects, User } from '@/NativeBase/Assets/Icons'
+import { View } from 'react-native'
 
 const Tab = createBottomTabNavigator()
 
@@ -17,16 +17,58 @@ const Tab = createBottomTabNavigator()
 const MainNavigator = () => {
   const { Colors } = useTheme()
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      screenOptions={{
+        tabBarItemStyle: {
+          height: 56,
+        }
+      }}
+    >
+      <Tab.Screen
+        name="Example Container"
+        component={VerticalStackContainer}
+        options=
+        {{
+          tabBarIcon: ({ focused }) => (
+            <>
+            <View
+              style={{
+                width: 97,
+                borderTopWidth: 2, borderTopColor: focused ? Colors.primary : "transparent",
+              }}
+            >
+              </View>
+              <View style={{
+                padding: 10
+              }} >
+              <Home color={focused ? Colors.primary : Colors.text} />  
+              </View>
+            </>
+          )
+        }}
+      />
       <Tab.Screen
         name="Projects"
         component={ListContainer}
         initialParams={{ type: ListType.Projects }}
         options={{
           headerShown: false,
-          tabBarIcon: () => (
-            <Entypo color={Colors.text} name="home" size={24} />
-          ),
+          tabBarIcon: ({ focused }) => (
+            <>
+              <View
+                style={{
+                  width: 97,
+                  borderTopWidth: 2, borderTopColor: focused ? Colors.primary : "transparent",
+                }}
+              >
+              </View>
+              <View style={{
+                padding: 12.5
+              }} >
+                <Projects color={focused ? Colors.primary : Colors.text} />
+              </View>
+            </>
+          )
         }}
       />
       <Tab.Screen
@@ -34,27 +76,44 @@ const MainNavigator = () => {
         component={ListContainer}
         initialParams={{ type: ListType.Events }}
         options={{
-          tabBarIcon: () => (
-            <Entypo color={Colors.text} name="megaphone" size={24} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Container"
-        component={VerticalStackContainer}
-        options={{
-          tabBarIcon: () => (
-            <Entypo color={Colors.text} name="folder" size={24} />
-          ),
+          tabBarIcon: ({ focused }) => (
+            <>
+              <View
+                style={{
+                  width: 97,
+                  borderTopWidth: 2, borderTopColor: focused ? Colors.primary : "transparent",
+                }}
+              >
+              </View>
+              <View style={{
+                padding: 11
+              }} >
+                <EventTicket color={focused ? Colors.primary : Colors.text} />
+              </View>
+            </>
+          )
         }}
       />
       <Tab.Screen
         name="Profile"
         component={ProfileContainer}
         options={{
-          tabBarIcon: () => (
-            <Entypo color={Colors.text} name="user" size={24} />
-          ),
+          tabBarIcon: ({ focused }) => (
+            <>
+              <View
+                style={{
+                  width: 97,
+                  borderTopWidth: 2, borderTopColor: focused ? Colors.primary : "transparent",
+                }}
+              >
+              </View>
+              <View style={{
+                padding: 9
+              }} >
+                <User color={focused ? Colors.primary : Colors.text} />
+              </View>
+            </>
+          )
         }}
       />
     </Tab.Navigator>
