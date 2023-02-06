@@ -1,6 +1,6 @@
 # App development
 
-This file contains some tips and guidelines on building our front-end React Native app.
+This file contains some tips and guidelines on building our front-end React Native app.  Please add to it!
 
 - [Overview of directories](#overview-of-directories)
 - [Working with Figma](#working-with-figma)
@@ -40,6 +40,14 @@ The app designs are produced in Figma.  You can inspect different elements withi
 
 We are moving to the [NativeBase](https://nativebase.io/) component library as part of implementing new app designs.  [Find the official docs here.](https://docs.nativebase.io/)
 
+Changing a container/component to NativeBase involves (amongst other things):
+
+- Using a NativeBase approach (see e.g. the Core Concepts, Features and Theme sections of the [official docs](https://docs.nativebase.io/))
+- Using [the new StaTheme](#theming--approach) set up for NativeBase
+- Removing uses of the old theme
+- Replacing any uses of `styled` from `'styled-components/native'` with NativeBase components and theming
+- Using NativeBase readymade components wherever possible
+
 Please raise on the Slack channel any questions about how best we can use NativeBase, and how to keep coding approaches / ways of working consistent -- and add to this file updates that might help other people.  This is especially important while we're in the early stages of figuring it all out.
 
 ### File locations, naming, moving and deleting
@@ -68,11 +76,13 @@ When you're building (or changing) a component or container, or changing a theme
 
 NativeBase does some handling of dark mode straight out of the box, so you may not need to change anything.
 
-**If you need to set colours based on dark/light mode,** [see the docs here](https://docs.nativebase.io/dark-mode) and wherever possible set `_light` and `_dark` properties in the `StaTheme` file (approach 1. in the docs) rather than setting them on your individual component -- i.e. try to make settings as universal and as easily reusable as possible.
+**If you're switching a container to use NativeBase** check out `ProfileContainer` and `VerticalStackContainer` examples as they're already working reasonably well with dark mode.  One of the things you'll need to do in your container is switch from using the old theme and switch from using any `styled` components/views.
 
-In case you need it, you can also use `useColorMode` or `useColorModeValue` to detect dark/light mode -- [see here](https://docs.nativebase.io/color-mode#h2-usecolormode).  But often you can do it using `_light` and `_dark` properties as described above.
+**If you need to set colours based on dark/light mode** [see the docs here](https://docs.nativebase.io/dark-mode) and wherever possible set `_light` and `_dark` properties in the `StaTheme` file (approach 1. in the docs) rather than setting them on your individual component -- i.e. try to make settings as universal and as easily reusable as possible.
 
-**To find which colours to use for dark mode in Figma,** see *Design System* in the list of Pages on the left-hand side of the screen.  There are examples of some components using dark mode.
+In case you need it, you can also use `useColorMode` or `useColorModeValue` to detect dark/light mode -- [see docs here](https://docs.nativebase.io/color-mode#h2-usecolormode) and an example in `app/src/NativeBase/Components/Brand`.  But often you can do it using `_light` and `_dark` properties as described above.
+
+**To find which colours to use for dark mode in Figma** see *Design System* in the list of Pages on the left-hand side of the screen.  There are examples of some components using dark mode.
 
 ### Icons
 
@@ -107,6 +117,6 @@ We have the [react-native-svg](https://github.com/software-mansion/react-native-
 
 ## Performance issues
 
-Have noticed occasional performance issues in the app emulator e.g. warnings that `serializablestateinvariantmiddleware` took a long time.  We could change the `getDefaultMiddleware` call in `app/Store/index.ts` to set `immutableCheck` and `serializableCheck` to false like [this suggests](https://stackoverflow.com/a/70288486/15422951) (or you could do this when developing locally if needed) -- but this should be avoided if possible.
+Have noticed occasional performance issues in the app emulator e.g. warnings that `serializablestateinvariantmiddleware` took a long time.
 
 NativeBase does also have [some documented performance issues](https://github.com/GeekyAnts/NativeBase/issues/4302) but hopefully these won't hold us back (our app is relatively simple after all) and it looks like there are ongoing efforts to address these.
