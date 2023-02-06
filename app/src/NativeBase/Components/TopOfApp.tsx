@@ -14,10 +14,9 @@ import {
 } from 'native-base'
 import React, { FC } from 'react'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import StaLogoSquare from '@/NativeBase/Assets/Images/Logos/sta-logo-square.svg'
-import StaLogoSquareDarkMode from '@/NativeBase/Assets/Images/Logos/sta-logo-square-dark-mode.svg'
+import StaLogoWide from '@/NativeBase/Assets/Images/Logos/sta-logo-wide.svg'
+import StaLogoWideDarkMode from '@/NativeBase/Assets/Images/Logos/sta-logo-wide-dark-mode.svg'
 import StaTheme from '../Theme/StaTheme'
-import underDevelopmentAlert from '@/Utils/UnderDevelopmentAlert'
 
 interface TopOfAppProps {
   showSearchButton: boolean
@@ -28,10 +27,13 @@ const TopOfApp: FC<TopOfAppProps> = ({
   showSearchButton,
   onSearchButtonPress,
 }) => {
-  const logoWidthHeight = 42
+  const logoSize = {
+    height: 32,
+    width: 101,
+  }
   const logo = useColorModeValue(
-    <StaLogoSquare height={logoWidthHeight} width={logoWidthHeight} />,
-    <StaLogoSquareDarkMode height={logoWidthHeight} width={logoWidthHeight} />,
+    <StaLogoWide height={logoSize.height} width={logoSize.width} />,
+    <StaLogoWideDarkMode height={logoSize.height} width={logoSize.width} />,
   )
   const statusBarStyle = useColorModeValue('dark-content', 'light-content')
 
@@ -50,6 +52,7 @@ const TopOfApp: FC<TopOfAppProps> = ({
           marginY={2}
           paddingX={4}
           paddingY={2}
+          width="100%"
         >
           {logo}
 
@@ -65,11 +68,6 @@ const TopOfApp: FC<TopOfAppProps> = ({
                 onPress={onSearchButtonPress}
               />
             )}
-
-            <IconButton
-              icon={<Icon as={MaterialIcons} name="menu" />}
-              onPress={underDevelopmentAlert}
-            />
           </HStack>
         </HStack>
       </Box>
