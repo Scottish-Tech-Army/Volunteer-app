@@ -13,6 +13,7 @@ import {
   VStack,
 } from 'native-base'
 import TechBadge from '../Components/TechBadge'
+import TopOfApp from '../Components/TopOfApp'
 import { ColorType } from 'native-base/lib/typescript/components/types'
 
 type TechBadge = {
@@ -61,41 +62,45 @@ const data = [
 
 const VerticalStackContainer = () => {
   return (
-    <FlatList
-      data={data}
-      renderItem={({ item }) => (
-        <Box
-          rounded="md"
-          margin="2"
-          padding="2"
-          borderWidth="2"
-          borderColor="secondary.100"
-        >
-          <VStack padding="2" shadow="2">
-            <Heading paddingBottom="2">{item.title}</Heading>
-            <Text fontWeight="bold">{item.charity}</Text>
-            <Text>{item.role}</Text>
-            <Text>{item.description}</Text>
-            <TechBadge badges={item.badge} />
-            <Text>{item.hours}</Text>
-            <Text color="secondary.100">
-              {item.buddying
-                ? 'Suitable for buddying'
-                : 'Not suitable for buddiing'}
-            </Text>
-            <HStack space="4" justifyContent={'flex-end'}>
-              <Button size="sm" leftIcon={<FavouriteIcon size="sm" />}>
-                Favourite
-              </Button>
-              <Button size="sm" colorScheme="secondary" variant={'outline'}>
-                Secondary
-              </Button>
-            </HStack>
-          </VStack>
-        </Box>
-      )}
-      keyExtractor={item => item.id}
-    />
+    <>
+      <TopOfApp showSearchButton={false} />
+
+      <FlatList
+        data={data}
+        renderItem={({ item }) => (
+          <Box
+            rounded="md"
+            margin="2"
+            padding="2"
+            borderWidth="2"
+            borderColor="secondary.100"
+          >
+            <VStack padding="2" shadow="2">
+              <Heading paddingBottom="2">{item.title}</Heading>
+              <Text fontWeight="bold">{item.charity}</Text>
+              <Text>{item.role}</Text>
+              <Text>{item.description}</Text>
+              <TechBadge badges={item.badge} />
+              <Text>{item.hours}</Text>
+              <Text color="secondary.100">
+                {item.buddying
+                  ? 'Suitable for buddying'
+                  : 'Not suitable for buddiing'}
+              </Text>
+              <HStack space="4" justifyContent={'flex-end'}>
+                <Button size="sm" leftIcon={<FavouriteIcon size="sm" />}>
+                  Favourite
+                </Button>
+                <Button size="sm" colorScheme="secondary" variant={'outline'}>
+                  Secondary
+                </Button>
+              </HStack>
+            </VStack>
+          </Box>
+        )}
+        keyExtractor={item => item.id}
+      />
+    </>
   )
 }
 
