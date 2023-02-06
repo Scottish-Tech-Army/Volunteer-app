@@ -21,7 +21,6 @@ import {
   EventSearchContainer,
   WelcomeContainer,
 } from '@/Containers'
-import { useTheme } from '@/Hooks'
 import MainNavigator from './Main'
 import { navigationRef } from './utils'
 import ProjectScope from '@/Components/Project/ProjectScope'
@@ -43,7 +42,6 @@ const ApplicationNavigator = () => {
   const appState = useRef(AppState.currentState)
   const [appStateVisible, setAppStateVisible] = useState(appState.current)
   const { colorMode, toggleColorMode } = useColorMode()
-  const { Layout } = useTheme()
   const stackScreenDefaultOptions = {
     header: props => renderNavigationHeader(props),
     headerTitleAlign: 'center', //android defaults to left aligned otherwise (iOS is always centred)
@@ -81,6 +79,7 @@ const ApplicationNavigator = () => {
     }
   }, [])
 
+  const layoutFill = { flex: 1 }
   const navigationTheme =
     colorMode === 'dark'
       ? {
@@ -109,7 +108,7 @@ const ApplicationNavigator = () => {
   return (
     <SafeAreaView
       style={[
-        Layout.fill,
+        layoutFill,
         { backgroundColor: navigationTheme.colors.background },
       ]}
     >
