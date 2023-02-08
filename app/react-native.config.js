@@ -7,7 +7,7 @@ module.exports = {
     ios: {},
     android: {},
   },
-  assets: ['./src/Assets/Fonts/'],
+  assets: ['./src/NativeBase/Assets/Fonts/'],
   dependencies: {
     'react-native-video': {
       platforms: {

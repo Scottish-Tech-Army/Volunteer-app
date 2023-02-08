@@ -1,73 +1,111 @@
 /**
- * @file App configuration settings.
+ * @file Profile screen showing app configuration settings (and later probably the user's profile).
+ *
+ * The user's dark mode preference (which NativeBase calls colour mode) is handled in two ways:
+ *
+ * 1) 'System default' choice: we use the Redux store for our 'useSystemColourMode' flag -- this says whether or not the user's chosen 'Use system default'
+ * (NativeBase doesn't seem to have an easy built-in way to handle this option that works.)
+ * Then we use NativeBase's toggleColorMode to set the colour mode to reflect whether the OS is set to dark or light -- this happens in Navigators/Application.
+ *
+ * 2) 'Dark'/'Light' choice: if they choose to manually set the colour to dark or light, we ignore the OS's setting and simply use NativeBase's toggleColorMode
+ * to set the colour mode to dark or light based on the user's preference.
+ *
+ * See more about dark mode in APP_DEVELOPMENT.md
  */
-import React from 'react'
+
 import {
+  Button,
   Heading,
   VStack,
   HStack,
   Icon,
   Link,
-  Radio,
   Checkbox,
   Text,
   Spacer,
   ScrollView,
+  useColorMode,
 } from 'native-base'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import Brand from '@/NativeBase/Components/Brand'
+import { changeTheme, ThemeState } from '@/Store/Theme'
 import { changeWelcome, WelcomeState } from '@/Store/Welcome'
 import { version } from '../../../package.json'
-import { changeTheme, ThemeState } from '@/Store/Theme'
-import Brand from '@/NativeBase/Components/Brand'
 
 const ProfileContainer = () => {
-  const welcomeState = useSelector(
-    (state: { welcome: WelcomeState }) => state.welcome.show,
-  )
-  const themeState = useSelector((state: { theme: ThemeState }) => {
-    return String(state.theme.darkMode)
-  })
+  const { colorMode, toggleColorMode } = useColorMode()
   const dispatch = useDispatch()
-  const onChangeTheme = ({ theme, darkMode }: Partial<ThemeState>) => {
-    dispatch(changeTheme({ theme, darkMode }))
-  }
   const onChangeSplash = ({ welcome, show }: Partial<WelcomeState>) => {
     dispatch(changeWelcome({ welcome, show }))
   }
+  const useSystemColourMode = useSelector(
+    (state: { theme: ThemeState }) => state.theme.useSystemColourMode,
+  )
+  const welcomeState = useSelector(
+    (state: { welcome: WelcomeState }) => state.welcome.show,
+  )
+  const [colourModeChoice, setColourModeChoice] = useState<string>(
+    useSystemColourMode ? 'system' : colorMode ?? 'light',
+  )
+
+  const updateColourMode = (newColourMode: string) => {
+    switch (newColourMode) {
+      case 'system':
+        dispatch(
+          changeTheme({
+            theme: undefined,
+            darkMode: undefined,
+            useSystemColourMode: true,
+          }),
+        )
+        break
+
+      case 'dark':
+      case 'light':
+        dispatch(
+          changeTheme({
+            theme: undefined,
+            darkMode: undefined,
+            useSystemColourMode: false,
+          }),
+        )
+
+        if (colorMode !== newColourMode) toggleColorMode()
+        break
+    }
+
+    setColourModeChoice(newColourMode)
+  }
+
   return (
     <ScrollView>
       <VStack safeAreaTop space={4} padding={4}>
         <Brand />
-        <Heading>Theme</Heading>
-        <Radio.Group
-          colorScheme={'pink'}
-          name="themeRadioGroup"
-          accessibilityLabel="Application theme"
-          // This is hacky sorry. Depending on the theming system
-          // we employ this would be tidied up.
-          onChange={value => {
-            if (value === 'null') {
-              onChangeTheme({ darkMode: null })
-            }
-            if (value === 'true') {
-              onChangeTheme({ darkMode: true })
-            } else {
-              onChangeTheme({ darkMode: false })
-            }
-          }}
-          defaultValue={themeState}
-        >
-          <Radio value="null" my={1}>
-            Follow system setting
-          </Radio>
-          <Radio value="true" my={1}>
-            Dark mode
-          </Radio>
-          <Radio value="false" my={1}>
-            Light mode
-          </Radio>
-        </Radio.Group>
+
+        <Heading>Dark mode</Heading>
+        <HStack space={2}>
+          <Button
+            onPress={() => updateColourMode('system')}
+            variant={colourModeChoice === 'system' ? 'solid' : 'outline'}
+          >
+            Use system default
+          </Button>
+          <Button
+            onPress={() => updateColourMode('dark')}
+            variant={colourModeChoice === 'dark' ? 'solid' : 'outline'}
+          >
+            Dark
+          </Button>
+          <Button
+            onPress={() => updateColourMode('light')}
+            variant={colourModeChoice === 'light' ? 'solid' : 'outline'}
+          >
+            Light
+          </Button>
+        </HStack>
+
         <Heading>Welcome screen</Heading>
         <Checkbox
           colorScheme={'pink'}

@@ -4,7 +4,7 @@
 
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { ExampleContainer, ListContainer } from '@/Containers'
+import { ListContainer } from '@/Containers'
 import Entypo from 'react-native-vector-icons/Entypo'
 import { ListType } from '@/Containers/ListContainer'
 import { useTheme } from '@/Hooks'
@@ -34,6 +34,7 @@ const MainNavigator = () => {
         component={ListContainer}
         initialParams={{ type: ListType.Events }}
         options={{
+          headerShown: false,
           tabBarIcon: () => (
             <Entypo color={Colors.text} name="megaphone" size={24} />
           ),
@@ -43,6 +44,7 @@ const MainNavigator = () => {
         name="Container"
         component={VerticalStackContainer}
         options={{
+          headerShown: false,
           tabBarIcon: () => (
             <Entypo color={Colors.text} name="folder" size={24} />
           ),
@@ -52,6 +54,7 @@ const MainNavigator = () => {
         name="Profile"
         component={ProfileContainer}
         options={{
+          headerShown: false,
           tabBarIcon: () => (
             <Entypo color={Colors.text} name="user" size={24} />
           ),
