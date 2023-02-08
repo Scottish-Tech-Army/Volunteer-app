@@ -26,6 +26,7 @@ const StaTheme = extendTheme({
     },
     bg: {
       100: '#fbfbfb',
+      200: '#d1338A',
     },
     error: {
       100: '#e30613',
