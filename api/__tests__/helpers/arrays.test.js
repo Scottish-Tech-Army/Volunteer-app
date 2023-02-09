@@ -15,3 +15,13 @@ describe('Test the arrays helpers', () => {
     );
   });
 });
+
+// describe('test something in Array', () => {
+//   test('breaks array into sub-arrays', () => {
+//     const originalArrayLength1 = faker.database.number({ min: 1, max: 49 });
+//     const originalArray1 = faker.datatype.array(originalArrayLength1);
+//     const chunkLength1 = faker.faker.arrayHelper({ min: 100, max: 150 });
+
+//     expect(chunkArray.length).toBe(Math.ceil(originalArray1, chunkLength1));
+//   })
+// });
