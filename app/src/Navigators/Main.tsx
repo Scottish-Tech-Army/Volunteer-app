@@ -6,24 +6,20 @@ import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { ListContainer } from '@/Containers'
 import { ListType } from '@/Containers/ListContainer'
-import { useTheme } from '@/Hooks'
 import { ProfileContainer, VerticalStackContainer} from '@/NativeBase/Containers'
 import { EventTicket, Home, Projects, User } from '@/NativeBase/Assets/Icons'
-import { View } from 'react-native'
+import { View, useColorMode } from 'native-base'
+import StaTheme from '@/NativeBase/Theme/StaTheme'
+
 
 const Tab = createBottomTabNavigator()
 
 // @refresh reset
 const MainNavigator = () => {
-  const { Colors } = useTheme()
+  const {colorMode} = useColorMode()
+
   return (
-    <Tab.Navigator
-      screenOptions={{
-        tabBarItemStyle: {
-          height: 56,
-        }
-      }}
-    >
+    <Tab.Navigator>
       <Tab.Screen
         name="Example Container"
         component={VerticalStackContainer}
@@ -31,17 +27,28 @@ const MainNavigator = () => {
         {{
           tabBarIcon: ({ focused }) => (
             <>
-            <View
-              style={{
-                width: 97,
-                borderTopWidth: 2, borderTopColor: focused ? Colors.primary : "transparent",
-              }}
-            >
+              <View
+                borderTopColor={focused
+                  ? (colorMode === 'light'
+                    ? StaTheme.colors.primary['100']
+                    : StaTheme.colors.primary['40'])
+                  : 'transparent'
+                }
+                borderTopWidth={2}
+                style={{ width: 97 }}
+              >
               </View>
-              <View style={{
-                padding: 10
-              }} >
-              <Home color={focused ? Colors.primary : Colors.text} />  
+              <View style={{ padding: 4 }}>
+                <Home
+                  color={focused
+                    ? (colorMode === 'light'
+                      ? StaTheme.colors.primary['100']
+                      : StaTheme.colors.primary['40'])
+                    : (colorMode === 'light'
+                      ? StaTheme.colors.text['100']
+                      : StaTheme.colors.textDarkMode['100'])
+                  }
+                />  
               </View>
             </>
           )
@@ -56,16 +63,29 @@ const MainNavigator = () => {
           tabBarIcon: ({ focused }) => (
             <>
               <View
-                style={{
-                  width: 97,
-                  borderTopWidth: 2, borderTopColor: focused ? Colors.primary : "transparent",
-                }}
+                borderTopColor={focused
+                  ? (colorMode === 'light'
+                    ? StaTheme.colors.primary['100']
+                    : StaTheme.colors.primary['40'])
+                  : 'transparent'
+                }
+                borderTopWidth={2}
+                style={{ width: 97 }}
               >
               </View>
               <View style={{
-                padding: 12.5
+                padding: 9
               }} >
-                <Projects color={focused ? Colors.primary : Colors.text} />
+                <Projects
+                  color={focused
+                    ? (colorMode === 'light'
+                      ? StaTheme.colors.primary['100']
+                      : StaTheme.colors.primary['40'])
+                    : (colorMode === 'light'
+                      ? StaTheme.colors.text['100']
+                      : StaTheme.colors.textDarkMode['100'])
+                  }
+                />
               </View>
             </>
           )
@@ -79,16 +99,27 @@ const MainNavigator = () => {
           tabBarIcon: ({ focused }) => (
             <>
               <View
-                style={{
-                  width: 97,
-                  borderTopWidth: 2, borderTopColor: focused ? Colors.primary : "transparent",
-                }}
+                borderTopColor={focused
+                  ? (colorMode === 'light'
+                    ? StaTheme.colors.primary['100']
+                    : StaTheme.colors.primary['40'])
+                  : 'transparent'
+                }
+                borderTopWidth={2}
+                style={{ width: 97 }}
               >
               </View>
-              <View style={{
-                padding: 11
-              }} >
-                <EventTicket color={focused ? Colors.primary : Colors.text} />
+              <View style={{ padding: 7 }}>
+                <EventTicket
+                  color={focused
+                    ? (colorMode === 'light'
+                      ? StaTheme.colors.primary['100']
+                      : StaTheme.colors.primary['40'])
+                    : (colorMode === 'light'
+                      ? StaTheme.colors.text['100']
+                      : StaTheme.colors.textDarkMode['100'])
+                  }
+                />
               </View>
             </>
           )
@@ -101,22 +132,33 @@ const MainNavigator = () => {
           tabBarIcon: ({ focused }) => (
             <>
               <View
-                style={{
-                  width: 97,
-                  borderTopWidth: 2, borderTopColor: focused ? Colors.primary : "transparent",
-                }}
+                borderTopColor={ focused
+                  ? (colorMode === 'light'
+                    ? StaTheme.colors.primary['100']
+                    : StaTheme.colors.primary['40'])
+                  : 'transparent'
+                }
+                borderTopWidth={2}
+                style={{ width: 97 }}
               >
               </View>
-              <View style={{
-                padding: 9
-              }} >
-                <User color={focused ? Colors.primary : Colors.text} />
+              <View style={{ padding: 4 }}>
+                <User
+                  color={focused
+                    ? (colorMode === 'light'
+                      ? StaTheme.colors.primary['100']
+                      : StaTheme.colors.primary['40'])
+                    : (colorMode === 'light'
+                      ? StaTheme.colors.text['100']
+                      : StaTheme.colors.textDarkMode['100'])
+                  }
+                />
               </View>
             </>
           )
         }}
-      />
-    </Tab.Navigator>
+          />
+      </Tab.Navigator>
   )
 }
 
