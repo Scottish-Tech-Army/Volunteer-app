@@ -63,7 +63,7 @@ const ProjectsTabBarIcon = ({ focused, colorMode }: navBarProps) => (
     <TabBarIconWrapper focused={focused} colorMode={colorMode} />
     <View
       style={{
-        padding: 9
+        padding: 9,
       }}
     >
       <Projects color={iconColor({ focused, colorMode })} />
