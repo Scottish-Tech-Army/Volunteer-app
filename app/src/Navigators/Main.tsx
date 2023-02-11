@@ -14,16 +14,13 @@ import { View, useColorMode, ColorMode } from 'native-base'
 import StaTheme from '@/NativeBase/Theme/StaTheme'
 
 type navBarProps = {
-  focused: boolean,
-  colorMode: ColorMode,
+  focused: boolean
+  colorMode: ColorMode
 }
 
 const Tab = createBottomTabNavigator()
 
-const TabBarIconWrapper = ({
-  focused,
-  colorMode,
-}: navBarProps ) => (
+const TabBarIconWrapper = ({ focused, colorMode }: navBarProps) => (
   <View
     borderTopColor={
       focused
@@ -33,73 +30,74 @@ const TabBarIconWrapper = ({
         : 'transparent'
     }
     borderTopWidth={2}
-    style={{ width: 97 }}
+    style={{
+      width: 97,
+    }}
   />
 )
 
-const iconColor = ({
-  focused,
-  colorMode,
-}: navBarProps ) => {
+const iconColor = ({ focused, colorMode }: navBarProps) => {
   return focused
     ? colorMode === 'light'
       ? StaTheme.colors.primary['100']
       : StaTheme.colors.primary['40']
     : colorMode === 'light'
-     ? StaTheme.colors.text['100']
-      : StaTheme.colors.textDarkMode['100']
+    ? StaTheme.colors.text['100']
+    : StaTheme.colors.textDarkMode['100']
 }
 
-const HomeTabBarIcon = ({
-  focused,
-  colorMode,
-}: navBarProps ) => (
+const HomeTabBarIcon = ({ focused, colorMode }: navBarProps) => (
   <>
-    <TabBarIconWrapper focused={ focused } colorMode={ colorMode } />
-      <View style={{ padding: 4 }} >
-        <Home
-        color={ iconColor({ focused, colorMode }) } />
-      </View>
+    <TabBarIconWrapper focused={focused} colorMode={colorMode} />
+      <View
+        style={{
+          padding: 4
+      }}
+    >
+      <Home color={iconColor({ focused, colorMode }) } />
+    </View>
   </>
 )
-const ProjectsTabBarIcon = ({
-  focused,
-  colorMode,
-}: navBarProps) => (
+const ProjectsTabBarIcon = ({ focused, colorMode }: navBarProps) => (
   <>
-    <TabBarIconWrapper focused={ focused } colorMode={ colorMode } />
-      <View style={{ padding: 9 }} >
-        <Projects
-        color={ iconColor({ focused, colorMode }) } />
-      </View>
+    <TabBarIconWrapper focused={focused} colorMode={colorMode} />
+      <View
+        style={{
+          padding: 9
+        }}
+      >
+      <Projects color={iconColor({ focused, colorMode }) } />
+    </View>
   </>
 )
-const EventsTabBarIcon = ({ 
-  focused,
-  colorMode,
-}: navBarProps) => (
+const EventsTabBarIcon = ({ focused, colorMode }: navBarProps) => (
   <>
-    <TabBarIconWrapper focused={ focused } colorMode={ colorMode } />
-      <View style={{ padding: 7 }} >
-        <EventTicket
-        color={ iconColor({ focused, colorMode }) } />
-      </View>
+    <TabBarIconWrapper focused={focused} colorMode={colorMode} />
+    <View
+      style={{
+        padding: 7
+      }}
+    >
+      <EventTicket color={iconColor({ focused, colorMode }) } />
+    </View>
   </>
 )
-const ProfileTabBarIcon = ({ 
-  focused,
-  colorMode,
-}: navBarProps) => (
+const ProfileTabBarIcon = ({ focused, colorMode }: navBarProps) => (
   <>
-    <TabBarIconWrapper focused={ focused } colorMode={ colorMode } />
-      <View style={{ padding: 4 }} >
-        <User
-        color={ iconColor({ focused, colorMode }) } />
-      </View>
+    <TabBarIconWrapper focused={focused} colorMode={colorMode} />
+    <View
+      style={{
+        padding: 4
+      }}
+    >
+      <User color={iconColor({ focused, colorMode }) } />
+    </View>
   </>
 )
-  
-// @refresh reset
+
+/**
+ * @returns {import('@react-navigation/bottom-tabs').BottomTabNavigator} A bottom tab navigator component from the '@react-navigation/bottom-tabs' package
+ */
 const MainNavigator = () => {
   const { colorMode } = useColorMode()
 
@@ -108,10 +106,10 @@ const MainNavigator = () => {
       <Tab.Screen
         name="Example Container"
         component={VerticalStackContainer}
-        options= {{
+        options={{
           tabBarIcon: ({ focused }) => (
-            <HomeTabBarIcon focused={ focused } colorMode={ colorMode } />
-          )
+            <HomeTabBarIcon focused={focused} colorMode={colorMode} />
+          ),
         }}
       />
       <Tab.Screen
@@ -121,8 +119,8 @@ const MainNavigator = () => {
         options={{
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-              <ProjectsTabBarIcon focused={ focused } colorMode={ colorMode } />
-          )
+            <ProjectsTabBarIcon focused={focused} colorMode={colorMode} />
+          ),
         }}
       />
       <Tab.Screen
@@ -131,8 +129,8 @@ const MainNavigator = () => {
         initialParams={{ type: ListType.Events }}
         options={{
           tabBarIcon: ({ focused }) => (
-            <EventsTabBarIcon focused={ focused } colorMode={ colorMode } />
-          )
+            <EventsTabBarIcon focused={focused} colorMode={colorMode} />
+          ),
         }}
       />
       <Tab.Screen
@@ -140,8 +138,8 @@ const MainNavigator = () => {
         component={ProfileContainer}
         options={{
           tabBarIcon: ({ focused }) => (
-            <ProfileTabBarIcon focused={ focused } colorMode={ colorMode } />
-          )
+            <ProfileTabBarIcon focused={focused} colorMode={colorMode} />
+          ),
         }}
       />
     </Tab.Navigator>
