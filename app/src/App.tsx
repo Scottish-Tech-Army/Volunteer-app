@@ -14,6 +14,9 @@ import '@/NativeBase/Assets/Icons/init'
 import ColourModeManager from './NativeBase/Theme/ColourModeManager'
 import StaTheme from './NativeBase/Theme/StaTheme'
 
+/**
+ * @returns the app
+ */
 const App = () => (
   <Provider store={store}>
     {/**
