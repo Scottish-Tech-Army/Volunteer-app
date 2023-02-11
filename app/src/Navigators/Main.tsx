@@ -1,7 +1,6 @@
 /**
  * @file Defines the main screens that have tabs at the bottom of the app, e.g. Projects, Events.
  */
-
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { ListContainer } from '@/Containers'
