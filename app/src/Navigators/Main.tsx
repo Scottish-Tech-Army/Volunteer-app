@@ -49,24 +49,24 @@ const iconColor = ({ focused, colorMode }: navBarProps) => {
 const HomeTabBarIcon = ({ focused, colorMode }: navBarProps) => (
   <>
     <TabBarIconWrapper focused={focused} colorMode={colorMode} />
-      <View
-        style={{
-          padding: 4
+    <View
+      style={{
+        padding: 4,
       }}
     >
-      <Home color={iconColor({ focused, colorMode }) } />
+      <Home color={iconColor({ focused, colorMode })} />
     </View>
   </>
 )
 const ProjectsTabBarIcon = ({ focused, colorMode }: navBarProps) => (
   <>
     <TabBarIconWrapper focused={focused} colorMode={colorMode} />
-      <View
-        style={{
-          padding: 9
-        }}
-      >
-      <Projects color={iconColor({ focused, colorMode }) } />
+    <View
+      style={{
+        padding: 9
+      }}
+    >
+      <Projects color={iconColor({ focused, colorMode })} />
     </View>
   </>
 )
@@ -75,10 +75,10 @@ const EventsTabBarIcon = ({ focused, colorMode }: navBarProps) => (
     <TabBarIconWrapper focused={focused} colorMode={colorMode} />
     <View
       style={{
-        padding: 7
+        padding: 7,
       }}
     >
-      <EventTicket color={iconColor({ focused, colorMode }) } />
+      <EventTicket color={iconColor({ focused, colorMode })} />
     </View>
   </>
 )
@@ -87,10 +87,10 @@ const ProfileTabBarIcon = ({ focused, colorMode }: navBarProps) => (
     <TabBarIconWrapper focused={focused} colorMode={colorMode} />
     <View
       style={{
-        padding: 4
+        padding: 4,
       }}
     >
-      <User color={iconColor({ focused, colorMode }) } />
+      <User color={iconColor({ focused, colorMode })} />
     </View>
   </>
 )
