@@ -17,7 +17,6 @@ import StaTheme from './NativeBase/Theme/StaTheme'
 /**
  * @returns {React.FunctionComponent} A React functional component that returns the app
  */
-
 const App = () => (
   <Provider store={store}>
     {/**
