@@ -1,3 +1,7 @@
+/**
+ * @file ErrorMessage.
+ */
+
 import React, { FC } from 'react'
 import { Text } from 'native-base'
 

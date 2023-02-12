@@ -1,7 +1,10 @@
+/**
+ * @file A form for the user to register interest in taking part in a volunteer project.
+ */
+
 import React, { FC, useEffect, useState } from 'react'
-import { ScrollView, Box, Text, VStack, useColorModeValue } from 'native-base'
+import { ScrollView, VStack, useColorModeValue } from 'native-base'
 import dayjs from 'dayjs'
-import { Alert } from 'react-native'
 import ButtonComponent from '../Forms/Button'
 import YesNoChoice from '../Forms/YesNoChoice'
 import TextInputControl from '../Forms/TextInputControl'
@@ -36,7 +39,6 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
   }>({})
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
-  const [happyToMentor, setHappyToMentor] = useState(false)
   const [lookingForBuddy, setLookingForBuddy] = useState(false)
   const today = new Date()
   const oneYearInTheFuture = new Date(
@@ -48,7 +50,7 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
 
   //modal states
   const [success, setSuccess] = useState(false)
-  const [error, setError] = useState(false)
+
   const [responseHeader, setResponseHeader] = useState('')
   const [responseMessage, setResponseMessage] = useState('')
   const [modalVisible, setModalVisible] = useState(false)
@@ -71,7 +73,7 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
       }
       if (responseError) {
         // console.error(responseError)
-        setError(true)
+
         setResponseHeader('Something went wrong')
         setResponseMessage(
           "Sorry, we couldn't send your message - please try again. If this keeps happening, please contact the STA Volunteer App team.",
@@ -146,8 +148,8 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
           firstName,
           lastName,
           email,
-          happyToMentor,
           lookingForBuddy,
+          happyToMentor: false,
           availableFrom: dayjs(availableFromDate).format('YYYY-MM-DD'),
         },
       })
@@ -163,7 +165,6 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
         header={responseHeader}
         message={responseMessage}
         success={success}
-        error={error}
         onClose={onClose}
       />
       <ScrollView>

@@ -1,3 +1,7 @@
+/**
+ * @file Form input.
+ */
+
 import React, { FC } from 'react'
 import { Input, Box, Text } from 'native-base'
 import ErrorMessage from './ErrorMessage'

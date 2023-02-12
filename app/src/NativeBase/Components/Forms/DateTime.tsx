@@ -1,3 +1,7 @@
+/**
+ * @file DatePicker.
+ */
+
 import React, { FC } from 'react'
 import DatePicker from 'react-native-date-picker'
 import { VStack, Box, Flex, Text } from 'native-base'

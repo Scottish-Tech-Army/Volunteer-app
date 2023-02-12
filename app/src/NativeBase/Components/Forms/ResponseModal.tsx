@@ -1,5 +1,9 @@
+/**
+ * @file Modal shows response when a form is submitted.
+ */
+
 import React, { FC } from 'react'
-import { Text, Modal, Icon, Box } from 'native-base'
+import { Text, Modal, Icon } from 'native-base'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import StaTheme from '../../Theme/StaTheme'
 
@@ -7,7 +11,6 @@ interface ResponseModalProps {
   message: string
   header: string
   success: boolean
-  error: boolean
   isOpen: boolean
   onClose: (value: boolean) => void
 }
@@ -16,7 +19,6 @@ const ResponseModal: FC<ResponseModalProps> = ({
   message,
   header,
   success,
-  error,
   isOpen,
   onClose,
 }) => {

@@ -1,4 +1,6 @@
-//Nativebase
+/**
+ * @file This is a reusable primary button component.
+ */
 
 import React, { FC } from 'react'
 import { Button, Text } from 'native-base'
@@ -14,7 +16,7 @@ interface ButtonComponentProps {
 /**
  * Tappable button component
  *
- *@param {ButtonProps} props The component props
+ *@param {ButtonComponentProps} props The component props
  * @param {boolean} props.disabled Should button be disabled
  * @param {boolean} [props.listItem] Is this one of a list of choices
  * @param {boolean} [props.listSelected] Is this selected in a list of choices
