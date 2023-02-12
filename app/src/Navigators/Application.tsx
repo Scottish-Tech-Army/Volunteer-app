@@ -17,7 +17,6 @@ import {
   StartupContainer,
   ProjectDetailContainer,
   ProjectRegisterInterestContainer,
-  ProjectSearchContainer,
   EventSearchContainer,
   WelcomeContainer,
 } from '@/Containers'
@@ -25,6 +24,7 @@ import MainNavigator from './Main'
 import { navigationRef } from './utils'
 import ProjectScope from '@/Components/Project/ProjectScope'
 import NavigationHeader from '@/NativeBase/Components/NavigationHeader'
+import ProjectSearchContainer from '@/NativeBase/Containers/ProjectSearchContainer'
 import StaTheme from '@/NativeBase/Theme/StaTheme'
 import { ThemeState } from '@/Store/Theme'
 

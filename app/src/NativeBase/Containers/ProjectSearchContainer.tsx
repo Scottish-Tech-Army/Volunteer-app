@@ -7,51 +7,43 @@ import Fuse from 'fuse.js' // fuzzy text search - see docs at https://fusejs.io
 import styled from 'styled-components/native'
 import { ScrollView, SafeAreaView } from 'react-native'
 import { useSelector } from 'react-redux'
-import FreeSearchBar from '@/Components/FreeSearchBar'
 import {
   ListRouteParams,
   ListSearch,
   ListType,
 } from '@/Containers/ListContainer'
+import FreeSearchBar from '@/NativeBase/Components/FreeSearchBar'
 import { navigate } from '@/Navigators/utils'
 import {
   Projects,
   ProjectsSearchField,
-  RolesRelated,
+  ProjectSector,
+  ProjectTechnology,
 } from '@/Services/modules/projects'
+import {
+  roleGroups,
+  RoleGroup,
+  RoleGroupName,
+} from '@/Services/modules/projects/roleGroups'
 import { searchByArray, fuzzySearchByArray } from '@/Utils/Search'
 import QuickSearchButton from '@/Components/Forms/QuickSearchButton'
 import { ProjectsState } from '@/Store/Projects'
 
 // define titles for quick search buttons relating to job roles
-const Roles = [
-  'Web Developer',
-  'Tech Support',
-  'UI/UX',
-  'Researcher',
-  'Scrum Master',
-  'BA/PM',
-]
-
-// define titles for quick search buttons relating to charity sectors
-const Causes = [
-  'Health & Social Care',
-  'Education & Youth',
-  'Arts & Culture',
-  'Environment & Conservation',
-  'Community Projects',
-  'Internal STA Project',
+const topRoleGroups: RoleGroupName[] = [
+  RoleGroupName.WebDeveloper,
+  RoleGroupName.TechSupport,
+  RoleGroupName.UIUX,
+  RoleGroupName.Researcher,
+  RoleGroupName.BAPM,
+  RoleGroupName.ScrumMaster,
 ]
 
 // define titles for quick search buttons relating to tech stack
-const TechStack = [
-  'Java',
-  'JavaScript',
-  'Python',
-  'AWS',
-  'React Native',
-  'React',
-]
+const technologies = Object.values(ProjectTechnology)
+
+// define titles for quick search buttons relating to charity sectors
+const Causes = Object.values(ProjectSector)
 
 const Heading = styled.Text`
   font-weight: bold;
@@ -97,8 +89,8 @@ const ProjectSearchContainer = () => {
   const getRelatedRoles = (
     possibleRoleSearchQuery: string,
   ): string[] | undefined => {
-    const fuse = new Fuse(RolesRelated, {
-      keys: ['roles'],
+    const fuse = new Fuse(roleGroups, {
+      keys: ['roleNames'],
       minMatchCharLength: 2,
       threshold: 0.1,
     })
@@ -109,7 +101,7 @@ const ProjectSearchContainer = () => {
       const roles = []
 
       for (const fuseResult of fuseResults) {
-        for (const role of fuseResult.item.roles) {
+        for (const role of fuseResult.item.roleNames) {
           roles.push(role)
         }
       }
@@ -204,17 +196,16 @@ const ProjectSearchContainer = () => {
           handleChangeText={handleFreeTextChange}
           handleSubmit={handleFreeTextSubmit}
         />
-        <Heading>Popular Searches</Heading>
         <SubHeading>Roles</SubHeading>
         <SectionView>
-          {Roles.map((role, index) => (
+          {topRoleGroups.map((roleGroupName, index) => (
             <QuickSearchButton
               onPress={() =>
-                handleQuickSearchSubmit(ProjectsSearchField.Role, role)
+                handleQuickSearchSubmit(ProjectsSearchField.Role, roleGroupName)
               }
               key={index}
             >
-              <QuickSearchTitle>{role}</QuickSearchTitle>
+              <QuickSearchTitle>{roleGroupName}</QuickSearchTitle>
             </QuickSearchButton>
           ))}
         </SectionView>
@@ -233,14 +224,14 @@ const ProjectSearchContainer = () => {
         </SectionView>
         <SubHeading>Tech Stack / Languages</SubHeading>
         <SectionView>
-          {TechStack.map((tech, index) => (
+          {technologies.map((technology, index) => (
             <QuickSearchButton
               onPress={() =>
-                handleQuickSearchSubmit(ProjectsSearchField.Skills, tech)
+                handleQuickSearchSubmit(ProjectsSearchField.Skills, technology)
               }
               key={index}
             >
-              <QuickSearchTitle>{tech}</QuickSearchTitle>
+              <QuickSearchTitle>{technology}</QuickSearchTitle>
             </QuickSearchButton>
           ))}
         </SectionView>
