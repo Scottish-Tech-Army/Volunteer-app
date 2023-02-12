@@ -1,3 +1,7 @@
+/**
+ * @file Switch input.
+ */
+
 import React, { FC } from 'react'
 import { HStack, Text, Switch } from 'native-base'
 
