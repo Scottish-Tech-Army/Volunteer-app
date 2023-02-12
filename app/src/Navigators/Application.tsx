@@ -20,7 +20,7 @@ import {
   EventSearchContainer,
   WelcomeContainer,
 } from '@/Containers'
-import ProjectRegisterInterestContainer from '../NativeBase/Containers/ProjectRegisterInterestContainer'
+import ProjectRegisterInterestContainer from '@/NativeBase/Containers/ProjectRegisterInterestContainer'
 import MainNavigator from './Main'
 import { navigationRef } from './utils'
 import ProjectScope from '@/Components/Project/ProjectScope'

@@ -155,6 +155,7 @@ const StaTheme = extendTheme({
 
     Text: {
       baseStyle: () => ({
+        fontFamily: 'primary',
         _light: {
           color: common.colours.darkGrey100,
           padding: '2',

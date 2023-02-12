@@ -1,7 +1,7 @@
 //Nativebase
 
 import React, { FC } from 'react'
-import { Button, NativeBaseProvider, Text } from 'native-base'
+import { Button, Text } from 'native-base'
 interface ButtonComponentProps {
   disabled: boolean
   listItem?: boolean
@@ -33,20 +33,27 @@ const ButtonComponent: FC<ButtonComponentProps> = ({
   text,
 }) => {
   return (
-    <NativeBaseProvider>
-      <Button
-        rounded="full"
-        marginX="5"
-        marginY="2"
-        padding="5px 10px 5px 10px"
-        disabled={disabled}
-        colorScheme="secondary"
+    <Button
+      rounded="full"
+      marginX="1"
+      paddingY="0px"
+      marginBottom="20px"
+      height="48px"
+      disabled={disabled}
+      bg="primary.100"
+      onPress={onPress}
+      _pressed={{ bg: 'primary.60' }}
+    >
+      <Text
+        fontSize="20px"
+        color="white"
+        margin="0px"
+        padding="0px"
+        fontWeight="600"
       >
-        <Text fontSize="20px" color="white" fontWeight="bold">
-          {text}
-        </Text>
-      </Button>
-    </NativeBaseProvider>
+        {text}
+      </Text>
+    </Button>
   )
 }
 export default ButtonComponent

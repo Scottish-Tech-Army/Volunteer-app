@@ -1,11 +1,12 @@
 import React, { FC, useEffect, useState } from 'react'
-import { ScrollView, Box, Text } from 'native-base'
+import { ScrollView, Box, Text, VStack, useColorModeValue } from 'native-base'
 import dayjs from 'dayjs'
-
+import { Alert } from 'react-native'
 import ButtonComponent from '../Forms/Button'
 import YesNoChoice from '../Forms/YesNoChoice'
 import TextInputControl from '../Forms/TextInputControl'
 import DateTime from '../Forms/DateTime'
+import ResponseModal from '../Forms/ResponseModal'
 import { goBack } from '@/Navigators/utils'
 import {
   Project,
@@ -45,26 +46,44 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
     useLazyProjectRegisterInterestQuery()
   const [loading, setLoading] = useState(false)
 
-  // useEffect(() => {
-  //     if (responseData || responseError) {
-  //       setLoading(false)
+  //modal states
+  const [success, setSuccess] = useState(false)
+  const [error, setError] = useState(false)
+  const [responseHeader, setResponseHeader] = useState('')
+  const [responseMessage, setResponseMessage] = useState('')
+  const [modalVisible, setModalVisible] = useState(false)
 
-  //       if (responseData) {
-  //         Alert.alert(
-  //           'Thanks! One of the STA team will be in touch with you soon on Slack',
-  //         )
-  //         goBack()
-  //       }
+  useEffect(() => {
+    if (responseData || responseError) {
+      setLoading(false)
+      setModalVisible(true)
 
-  //       if (responseError) {
-  //         console.error(responseError)
-  //         Alert.alert(
-  //           "Sorry, we couldn't send your message - please try again. If this keeps happening, please contact the STA Volunteer App team.",
-  //         )
-  //       }
-  //     }
-  //   }, [responseData, responseError])
+      if (responseData) {
+        // Alert.alert(
+        //   'Thanks! One of the STA team will be in touch with you soon on Slack',
+        // )
+        // goBack()
+        setSuccess(true)
+        setResponseHeader('Application Received')
+        setResponseMessage(
+          'Your request has been received. The STA team will respond shortly.',
+        )
+      }
+      if (responseError) {
+        // console.error(responseError)
+        setError(true)
+        setResponseHeader('Something went wrong')
+        setResponseMessage(
+          "Sorry, we couldn't send your message - please try again. If this keeps happening, please contact the STA Volunteer App team.",
+        )
+      }
+    }
+  }, [responseData, responseError])
 
+  const onClose = () => {
+    setModalVisible(false)
+    goBack()
+  }
   const validateField = (fieldName: string, value: string): boolean => {
     let valid = true
     let errorType = 'missing' as 'invalid' | 'missing'
@@ -135,73 +154,73 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
     }
   }
 
+  const colorScheme = useColorModeValue('#3c3c3b', '#fbfbfb')
+
   return (
-    <ScrollView>
-      <Box margin="21px 27px 0px 27px">
-        <Text fontWeight="400" fontSize="16px">
-          {project.client}
-        </Text>
+    <>
+      <ResponseModal
+        isOpen={modalVisible}
+        header={responseHeader}
+        message={responseMessage}
+        success={success}
+        error={error}
+        onClose={onClose}
+      />
+      <ScrollView>
+        <VStack margin="9px">
+          <TextInputControl
+            error={errors.hasOwnProperty('firstName')}
+            errorType={errors.firstName?.type}
+            label="First Name"
+            onBlur={() => validateField('firstName', firstName)}
+            onChange={setFirstName}
+            type="firstName"
+            value={firstName}
+          />
+          <TextInputControl
+            error={errors.hasOwnProperty('lastName')}
+            errorType={errors.lastName?.type}
+            label="Last Name"
+            onBlur={() => validateField('lastName', lastName)}
+            onChange={setLastName}
+            type="lastName"
+            value={lastName}
+          />
+          <TextInputControl
+            error={errors.hasOwnProperty('email')}
+            errorType={errors.email?.type}
+            label="Email"
+            onBlur={() => validateField('email', email)}
+            onChange={setEmail}
+            type="email"
+            value={email}
+          />
 
-        <Text fontWeight="600" fontSize="16px" marginY="9px">
-          {project.role}
-        </Text>
+          <YesNoChoice
+            description="Looking for peer support"
+            onChange={value => setLookingForBuddy(value)}
+            value={lookingForBuddy}
+          />
 
-        <TextInputControl
-          error={errors.hasOwnProperty('firstName')}
-          errorType={errors.firstName?.type}
-          label="First name"
-          onBlur={() => validateField('firstName', firstName)}
-          onChange={setFirstName}
-          type="firstName"
-          value={firstName}
-        />
-        <TextInputControl
-          error={errors.hasOwnProperty('lastName')}
-          errorType={errors.lastName?.type}
-          label="Last name"
-          onBlur={() => validateField('lastName', lastName)}
-          onChange={setLastName}
-          type="lastName"
-          value={lastName}
-        />
-        <TextInputControl
-          error={errors.hasOwnProperty('email')}
-          errorType={errors.email?.type}
-          label="Email"
-          onBlur={() => validateField('email', email)}
-          onChange={setEmail}
-          type="email"
-          value={email}
-        />
+          <DateTime
+            description="I'm available from"
+            maximumDate={oneYearInTheFuture}
+            minimumDate={today}
+            mode="date"
+            onChange={value => setAvailableFromDate(value)}
+            value={availableFromDate}
+            color={colorScheme}
+          />
 
-        <YesNoChoice
-          description="Happy to mentor"
-          onChange={value => setHappyToMentor(value)}
-          value={happyToMentor}
-        />
-        <YesNoChoice
-          description="Looking for a buddy"
-          onChange={value => setLookingForBuddy(value)}
-          value={lookingForBuddy}
-        />
-
-        <DateTime
-          description="Available from..."
-          maximumDate={oneYearInTheFuture}
-          minimumDate={today}
-          mode="date"
-          onChange={value => setAvailableFromDate(value)}
-          value={availableFromDate}
-        />
-
-        <ButtonComponent
-          disabled={loading}
-          onPress={submitForm}
-          primary
-          text={loading ? 'Sending...' : 'Submit'}
-        />
-      </Box>
-    </ScrollView>
+          <ButtonComponent
+            disabled={loading}
+            onPress={submitForm}
+            primary
+            text={loading ? 'Sending...' : 'Volunteer Now'}
+          />
+        </VStack>
+      </ScrollView>
+    </>
   )
 }
 

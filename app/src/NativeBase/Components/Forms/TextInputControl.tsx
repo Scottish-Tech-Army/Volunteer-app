@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { Input, Box } from 'native-base'
+import { Input, Box, Text } from 'native-base'
 import ErrorMessage from './ErrorMessage'
 
 interface TextInputControlProps {
@@ -117,14 +117,19 @@ const TextInputControl: FC<TextInputControlProps> = ({
 
   return (
     <Box>
+      <Text fontWeight="600" fontSize="18px" fontFamily="primary">
+        {label}
+      </Text>
       <Input
         borderColor="#604696"
+        borderWidth="1px"
+        _focus={{ borderColor: '#604696', borderWidth: '2px' }}
+        variant="unstyled"
         marginX="10px"
         autoCapitalize={autoCapitalize}
         autoComplete={autoComplete}
         onBlur={onBlur}
         onChangeText={onChange}
-        placeholder={label}
         style={textInputStyle}
         textContentType={textContentType}
         value={value}

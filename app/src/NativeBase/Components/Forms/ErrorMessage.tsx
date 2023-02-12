@@ -19,7 +19,7 @@ const ErrorMessage: FC<ErrorMessageProps> = ({ errorType }) => {
   }
 
   return (
-    <Text color="red" font-size="14px" margin-bottom="12px">
+    <Text color="error.100" font-size="14px" margin-bottom="12px">
       {text}
     </Text>
   )
