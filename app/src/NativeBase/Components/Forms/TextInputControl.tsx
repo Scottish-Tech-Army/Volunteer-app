@@ -121,15 +121,10 @@ const TextInputControl: FC<TextInputControlProps> = ({
 
   return (
     <Box>
-      <Text fontWeight="600" fontSize="18px" fontFamily="primary">
+      <Text fontWeight="600" fontSize="lg">
         {label}
       </Text>
       <Input
-        borderColor="#604696"
-        borderWidth="1px"
-        _focus={{ borderColor: '#604696', borderWidth: '2px' }}
-        variant="unstyled"
-        marginX="10px"
         autoCapitalize={autoCapitalize}
         autoComplete={autoComplete}
         onBlur={onBlur}

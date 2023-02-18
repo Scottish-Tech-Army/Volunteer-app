@@ -5,6 +5,7 @@
 import React, { FC } from 'react'
 import DatePicker from 'react-native-date-picker'
 import { VStack, Box, Flex, Text } from 'native-base'
+import dayjs from 'dayjs'
 
 interface DateTimeProps {
   description: string
@@ -27,31 +28,27 @@ const DateTime: FC<DateTimeProps> = ({
 }) => {
   return (
     <VStack>
-      <Box marginTop="24px" paddingLeft="24px">
+      <Box marginTop="6" paddingLeft="6">
         <Text
-          fontSize="12px"
-          margin="0px"
-          lineHeight="7px"
-          color="#939799"
-          paddingY="0px"
+          fontSize="sm"
+          margin="0"
+          lineHeight="7"
+          color="primary.60"
+          paddingY="0"
         >
           {description}
         </Text>
-        <Text margin="0px" lineHeight="9px" fontSize="md">
-          {value.toLocaleString('en-GB', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-          })}
+        <Text margin="0" lineHeight="9" fontSize="md">
+          {dayjs(value).format('DD MMMM, YYYY')}
         </Text>
       </Box>
       <Flex
-        height="100px"
+        height="100"
         overflow="hidden"
         align="center"
         justify="center"
-        marginTop="40px"
-        marginBottom="60px"
+        marginTop="10"
+        marginBottom="60"
       >
         <DatePicker
           textColor={color}

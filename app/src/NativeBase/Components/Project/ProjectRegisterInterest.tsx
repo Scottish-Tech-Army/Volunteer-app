@@ -3,7 +3,7 @@
  */
 
 import React, { FC, useEffect, useState } from 'react'
-import { ScrollView, VStack, useColorModeValue } from 'native-base'
+import { ScrollView, VStack, useColorModeValue, Button } from 'native-base'
 import dayjs from 'dayjs'
 import ButtonComponent from '../Forms/Button'
 import YesNoChoice from '../Forms/YesNoChoice'
@@ -61,20 +61,16 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
       setModalVisible(true)
 
       if (responseData) {
-        // Alert.alert(
-        //   'Thanks! One of the STA team will be in touch with you soon on Slack',
-        // )
-        // goBack()
         setSuccess(true)
         setResponseHeader('Application Received')
+        // console.log(responseData)
         setResponseMessage(
           'Your request has been received. The STA team will respond shortly.',
         )
       }
       if (responseError) {
-        // console.error(responseError)
-
         setResponseHeader('Something went wrong')
+        // console.log(responseError)
         setResponseMessage(
           "Sorry, we couldn't send your message - please try again. If this keeps happening, please contact the STA Volunteer App team.",
         )
@@ -213,12 +209,9 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
             color={colorScheme}
           />
 
-          <ButtonComponent
-            disabled={loading}
-            onPress={submitForm}
-            primary
-            text={loading ? 'Sending...' : 'Volunteer Now'}
-          />
+          <Button disabled={loading} onPress={submitForm}>
+            {loading ? 'Sending...' : 'Volunteer Now'}
+          </Button>
         </VStack>
       </ScrollView>
     </>

@@ -17,15 +17,15 @@ const YesNoChoice: FC<YesNoChoiceProps> = ({
   value,
 }) => {
   return (
-    <HStack marginTop="20px" paddingX="8px" justifyContent="space-between">
-      <Text fontWeight="500" fontSize="18px">
+    <HStack marginTop="5" paddingX="2" justifyContent="space-between">
+      <Text fontWeight="500" fontSize="lg">
         {description}
       </Text>
       <Switch
         offTrackColor="primary.20"
         onTrackColor="primary.60"
-        onThumbColor="white"
-        offThumbColor="white"
+        onThumbColor="bg.100"
+        offThumbColor="bg.100"
         size="lg"
         onToggle={onChange}
         value={value}

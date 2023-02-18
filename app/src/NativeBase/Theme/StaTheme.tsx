@@ -35,6 +35,7 @@ const StaTheme = extendTheme({
     },
     text: {
       100: common.colours.darkGrey100,
+      20: '#939799',
     },
     textDarkMode: {
       100: common.colours.offWhite100,
@@ -44,6 +45,9 @@ const StaTheme = extendTheme({
     },
     bgDarkMode: {
       100: common.colours.darkGrey100,
+    },
+    responseModalIconLightMode: {
+      100: '#737373',
     },
     error: {
       100: '#e30613',
@@ -115,7 +119,27 @@ const StaTheme = extendTheme({
         fontWeight: '600',
       },
     },
-
+    Button: {
+      baseStyle: {
+        rounded: 'full',
+        marginX: '1',
+        paddingY: '0',
+        marginBottom: '5',
+        height: '12',
+      },
+      defaultProps: {
+        bg: 'primary.100',
+        _pressed: {
+          bg: 'primary.60',
+        },
+        _text: {
+          fontWeight: '600',
+          fontSize: 'xl',
+          padding: '0',
+          color: common.colours.offWhite100,
+        },
+      },
+    },
     Icon: {
       baseStyle: () => ({
         color: 'black',
@@ -127,7 +151,6 @@ const StaTheme = extendTheme({
         size: common.icons.size,
       },
     },
-
     IconButton: {
       defaultProps: {
         size: common.icons.size,
@@ -151,6 +174,16 @@ const StaTheme = extendTheme({
           },
         }),
       }),
+    },
+    Input: {
+      baseStyle: {},
+      defaultProps: {
+        borderWidth: '1',
+        borderColor: '#939799',
+        marginX: '2.5',
+        variant: 'unstyled',
+        _focus: { borderColor: '#604696', borderWidth: '2' },
+      },
     },
 
     Text: {

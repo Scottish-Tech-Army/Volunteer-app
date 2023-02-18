@@ -22,7 +22,7 @@ const ResponseModal: FC<ResponseModalProps> = ({
   isOpen,
   onClose,
 }) => {
-  if (success === true) {
+  if (success) {
     return (
       <Modal
         isOpen={isOpen}
@@ -31,18 +31,20 @@ const ResponseModal: FC<ResponseModalProps> = ({
         size="xl"
       >
         <Modal.Content
-          _dark={{ backgroundColor: '#3c3c3b' }}
+          _dark={{ color: StaTheme.colors.bgDarkMode['100'] }}
           _light={{ backgroundColor: StaTheme.colors.bg['100'] }}
         >
           <Modal.Header
             alignItems="center"
-            _dark={{ backgroundColor: '#3c3c3b' }}
+            _dark={{ color: StaTheme.colors.bgDarkMode['100'] }}
             _light={{ backgroundColor: StaTheme.colors.bg['100'] }}
           >
             <Icon
               as={MaterialIcons}
-              _dark={{ color: '#fbfbfb' }}
-              _light={{ color: '#737373' }}
+              _dark={{ color: StaTheme.colors.textDarkMode['100'] }}
+              _light={{
+                color: StaTheme.colors.responseModalIconLightMode['100'],
+              }}
               name="check-circle"
             />
             {header}
@@ -57,19 +59,20 @@ const ResponseModal: FC<ResponseModalProps> = ({
     return (
       <Modal isOpen={isOpen} onClose={onClose}>
         <Modal.Content
-          _dark={{ backgroundColor: '#3c3c3b' }}
+          _dark={{ color: StaTheme.colors.bgDarkMode['100'] }}
           _light={{ backgroundColor: StaTheme.colors.bg['100'] }}
         >
           <Modal.Header
             alignItems="center"
-            _dark={{ backgroundColor: '#3c3c3b' }}
+            _dark={{ color: StaTheme.colors.bgDarkMode['100'] }}
             _light={{ backgroundColor: StaTheme.colors.bg['100'] }}
           >
             <Icon
               as={MaterialIcons}
-              _dark={{ color: '#fbfbfb' }}
-              _light={{ color: '#737373' }}
-              color="#737373"
+              _dark={{ color: StaTheme.colors.textDarkMode['100'] }}
+              _light={{
+                color: StaTheme.colors.responseModalIconLightMode['100'],
+              }}
               name="error"
             />
             {header}
