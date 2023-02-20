@@ -28,6 +28,8 @@ describe('Test the strings helpers', () => {
     expect(stringFormatted).toEqual(arrayOfLinesTrimmed);
   });
 
+
+  // My test
   test('checkIfString works and test for the content for it type - string ', () => {
     const checkTypeIfString = 'Content is a string';
     const stringCheck = ('Content is a string');
