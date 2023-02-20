@@ -37,5 +37,7 @@ describe('Test the strings helpers', () => {
     const stringChecked = stringsHelper.checkIfString(checkTypeIfString);
 
     expect(stringChecked).toEqual(stringCheck);
+    console.log(stringChecked + 'stringChecked');
+    console.log(stringCheck + 'stringCheck');
   });
 });
