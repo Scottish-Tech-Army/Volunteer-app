@@ -15,7 +15,6 @@ import {
 } from '@/NativeBase/Containers'
 
 import SelectionIcons from '@/NativeBase/Assets/Icons/SelectionIcons'
-import { Icon as IconifyIcon } from '@iconify/react'
 
 import { View, useColorMode } from 'native-base'
 import StaTheme from '@/NativeBase/Theme/StaTheme'
@@ -57,7 +56,6 @@ const NavBarIcon = ({ focused }: CustomNavBarIconProps) => {
       }
       borderTopWidth={2}
       style={{
-        flexDirection: 'row-reverse',
         width: 97,
         height: 38,
         alignItems: 'center',
