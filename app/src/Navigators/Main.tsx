@@ -13,22 +13,21 @@ import {
   ProfileContainer,
   VerticalStackContainer,
 } from '@/NativeBase/Containers'
-
-import SelectionIcons from '@/NativeBase/Assets/Icons/SelectionIcons'
-
-import { View, useColorMode } from 'native-base'
+import SelectionIcons from '@/NativeBase/Assets/Icons/Icomoon/SelectionIcons'
+import { View, useColorMode, Text } from 'native-base'
 import StaTheme from '@/NativeBase/Theme/StaTheme'
+import { Platform } from 'react-native'
 
 const Tab = createBottomTabNavigator()
 
-interface CustomNavBarIconProps extends BottomTabNavigationOptions {
+interface BottomTabOptionsProps extends BottomTabNavigationOptions {
   focused?: boolean
 }
 
-const NavBarIcon = ({ focused }: CustomNavBarIconProps) => {
+const BottomTabIcon = ({ focused }: BottomTabOptionsProps) => {
   const { colorMode } = useColorMode()
   const route = useRoute()
-  let iconName = route.name
+  let iconName = ''
 
   switch (route.name) {
     case 'Home':
@@ -47,6 +46,7 @@ const NavBarIcon = ({ focused }: CustomNavBarIconProps) => {
 
   return (
     <View
+      borderTopWidth={2}
       borderTopColor={
         focused
           ? colorMode === 'light'
@@ -54,13 +54,10 @@ const NavBarIcon = ({ focused }: CustomNavBarIconProps) => {
             : StaTheme.colors.primary['40']
           : 'transparent'
       }
-      borderTopWidth={2}
-      style={{
-        width: 97,
-        height: 38,
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
+      width={97}
+      paddingTop={1}
+      alignItems="center"
+      justifyContent="flex-end"
     >
       <SelectionIcons
         name={iconName}
@@ -79,12 +76,41 @@ const NavBarIcon = ({ focused }: CustomNavBarIconProps) => {
   )
 }
 
+const BottomTabLabel = ({ focused }: BottomTabOptionsProps) => {
+  const { colorMode } = useColorMode()
+  const route = useRoute()
+
+  return (
+    <Text
+      fontFamily={StaTheme.fonts.primary}
+      fontSize={StaTheme.fontSizes.regular}
+      paddingTop={1}
+      color={
+        focused
+          ? colorMode === 'light'
+            ? StaTheme.colors.primary['100']
+            : StaTheme.colors.primary['40']
+          : colorMode === 'light'
+          ? StaTheme.colors.text['100']
+          : StaTheme.colors.textDarkMode['100']
+      }
+    >
+      {route.name}
+    </Text>
+  )
+}
+
 /**
  * @returns {import('@react-navigation/bottom-tabs').BottomTabNavigator} A bottom tab navigator component from the '@react-navigation/bottom-tabs' package
  */
 const MainNavigator = () => {
-  const tabScreenOptions = {
-    tabBarIcon: props => NavBarIcon(props),
+  const bottomTabOptions = {
+    tabBarIcon: props => BottomTabIcon(props),
+    tabBarLabel: props => BottomTabLabel(props),
+    tabBarStyle: {
+      borderTopWidth: 0,
+      height: Platform.OS === 'android' ? 56 : 85,
+    },
   } as BottomTabNavigationOptions
 
   return (
@@ -93,7 +119,7 @@ const MainNavigator = () => {
         name="Home"
         component={VerticalStackContainer}
         options={{
-          ...tabScreenOptions,
+          ...bottomTabOptions,
         }}
       />
       <Tab.Screen
@@ -102,7 +128,7 @@ const MainNavigator = () => {
         initialParams={{ type: ListType.Projects }}
         options={{
           headerShown: false,
-          ...tabScreenOptions,
+          ...bottomTabOptions,
         }}
       />
       <Tab.Screen
@@ -110,14 +136,14 @@ const MainNavigator = () => {
         component={ListContainer}
         initialParams={{ type: ListType.Events }}
         options={{
-          ...tabScreenOptions,
+          ...bottomTabOptions,
         }}
       />
       <Tab.Screen
         name="Profile"
         component={ProfileContainer}
         options={{
-          ...tabScreenOptions,
+          ...bottomTabOptions,
         }}
       />
     </Tab.Navigator>
