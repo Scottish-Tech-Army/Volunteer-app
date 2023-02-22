@@ -3,12 +3,12 @@
  */
 
 import React, { FC, useEffect, useState } from 'react'
-import { ScrollView, VStack, useColorModeValue, Button } from 'native-base'
+import { ScrollView, VStack, Box, useColorModeValue, Button } from 'native-base'
 import dayjs from 'dayjs'
-import ButtonComponent from '../Forms/Button'
 import YesNoChoice from '../Forms/YesNoChoice'
 import TextInputControl from '../Forms/TextInputControl'
-import DateTime from '../Forms/DateTime'
+// import DateTime from '../Forms/DateTime'
+import DateTimeAlt from '../Forms/DateTimeAlt'
 import ResponseModal from '../Forms/ResponseModal'
 import { goBack } from '@/Navigators/utils'
 import {
@@ -152,7 +152,7 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
     }
   }
 
-  const colorScheme = useColorModeValue('#3c3c3b', '#fbfbfb')
+  // const colorScheme = useColorModeValue('#3c3c3b', '#fbfbfb')
 
   return (
     <>
@@ -173,6 +173,7 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
             onChange={setFirstName}
             type="firstName"
             value={firstName}
+            required={true}
           />
           <TextInputControl
             error={errors.hasOwnProperty('lastName')}
@@ -182,6 +183,7 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
             onChange={setLastName}
             type="lastName"
             value={lastName}
+            required={true}
           />
           <TextInputControl
             error={errors.hasOwnProperty('email')}
@@ -191,6 +193,7 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
             onChange={setEmail}
             type="email"
             value={email}
+            required={true}
           />
 
           <YesNoChoice
@@ -199,7 +202,7 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
             value={lookingForBuddy}
           />
 
-          <DateTime
+          {/* <DateTime
             description="I'm available from"
             maximumDate={oneYearInTheFuture}
             minimumDate={today}
@@ -207,11 +210,20 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
             onChange={value => setAvailableFromDate(value)}
             value={availableFromDate}
             color={colorScheme}
-          />
+          /> */}
 
-          <Button disabled={loading} onPress={submitForm}>
-            {loading ? 'Sending...' : 'Volunteer Now'}
-          </Button>
+          <DateTimeAlt
+            description="I'm available from"
+            maximumDate={oneYearInTheFuture}
+            minimumDate={today}
+            onChange={value => setAvailableFromDate(value)}
+            value={availableFromDate}
+          />
+          <Box marginTop="70">
+            <Button disabled={loading} onPress={submitForm}>
+              {loading ? 'Sending...' : 'Volunteer Now'}
+            </Button>
+          </Box>
         </VStack>
       </ScrollView>
     </>

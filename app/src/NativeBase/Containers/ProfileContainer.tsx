@@ -88,19 +88,46 @@ const ProfileContainer = () => {
         <HStack space={2}>
           <Button
             onPress={() => updateColourMode('system')}
-            variant={colourModeChoice === 'system' ? 'solid' : 'outline'}
+            // variant={colourModeChoice === 'system' ? 'solid' : 'outline'}
+            _text={{
+              fontWeight: '300',
+              fontSize: 'sm',
+              padding: '0',
+              color: 'text.100',
+            }}
+            borderWidth="1"
+            bg={colourModeChoice === 'system' ? 'primary.80' : 'primary.20'}
+            rounded="md"
           >
             Use system default
           </Button>
           <Button
             onPress={() => updateColourMode('dark')}
-            variant={colourModeChoice === 'dark' ? 'solid' : 'outline'}
+            _text={{
+              fontWeight: '300',
+              fontSize: 'sm',
+              padding: '0',
+              color: 'text.100',
+            }}
+            borderWidth="1"
+            bg={colourModeChoice === 'dark' ? 'primary.80' : 'primary.20'}
+            rounded="md"
+            // variant={ colourModeChoice === 'dark' ? 'solid' : 'outline'}
           >
             Dark
           </Button>
           <Button
             onPress={() => updateColourMode('light')}
-            variant={colourModeChoice === 'light' ? 'solid' : 'outline'}
+            // variant={colourModeChoice === 'light' ? 'solid' : 'outline'}
+            _text={{
+              fontWeight: '300',
+              fontSize: 'sm',
+              padding: '0',
+              color: 'text.100',
+            }}
+            borderWidth="1"
+            bg={colourModeChoice === 'light' ? 'primary.80' : 'primary.20'}
+            rounded="md"
           >
             Light
           </Button>

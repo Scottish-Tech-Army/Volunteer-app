@@ -8,6 +8,7 @@ import ErrorMessage from './ErrorMessage'
 
 interface TextInputControlProps {
   error: boolean
+  required: boolean
   errorType?: 'invalid' | 'missing'
   label: string
   onBlur?: () => void
@@ -22,6 +23,7 @@ const TextInputControl: FC<TextInputControlProps> = ({
   label,
   onBlur,
   onChange,
+  required,
   type,
   value,
 }) => {
@@ -123,6 +125,7 @@ const TextInputControl: FC<TextInputControlProps> = ({
     <Box>
       <Text fontWeight="600" fontSize="lg">
         {label}
+        {required ? <Text color="error.100">*</Text> : ''}
       </Text>
       <Input
         autoCapitalize={autoCapitalize}

@@ -128,7 +128,8 @@ const StaTheme = extendTheme({
         height: '12',
       },
       defaultProps: {
-        bg: 'primary.100',
+        bg: 'primary.80',
+
         _pressed: {
           bg: 'primary.60',
         },
@@ -176,7 +177,7 @@ const StaTheme = extendTheme({
       }),
     },
     Input: {
-      baseStyle: {},
+      baseStyle: { fontFamily: 'primary' },
       defaultProps: {
         borderWidth: '1',
         borderColor: '#939799',
