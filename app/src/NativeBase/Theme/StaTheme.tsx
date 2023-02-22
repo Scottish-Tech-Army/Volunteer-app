@@ -104,6 +104,12 @@ const StaTheme = extendTheme({
     primary: 'Poppins',
   },
 
+  fontSizes: {
+    small: 10,
+    regular: 12,
+    large: 14,
+  },
+
   components: {
     Heading: {
       baseStyle: {
