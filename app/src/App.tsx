@@ -1,6 +1,7 @@
 /**
  * @file Runs the app!
  */
+import { NativeBaseProvider } from 'native-base'
 import 'react-native-gesture-handler'
 import React from 'react'
 import { Provider } from 'react-redux'
@@ -9,8 +10,8 @@ import { store, persistor } from '@/Store'
 import ApplicationNavigator from '@/Navigators/Application'
 import ThemeProvider from '@/Theme/OldTheme'
 import './Translations'
-import '@/Components/Icons/init'
-import { NativeBaseProvider } from 'native-base'
+import '@/NativeBase/Components/Icons/init'
+import ColourModeManager from './NativeBase/Theme/ColourModeManager'
 import StaTheme from './NativeBase/Theme/StaTheme'
 
 const App = () => (
@@ -23,7 +24,7 @@ const App = () => (
      * @see https://github.com/rt2zz/redux-persist/blob/master/docs/PersistGate.md
      */}
     <PersistGate loading={null} persistor={persistor}>
-      <NativeBaseProvider theme={StaTheme}>
+      <NativeBaseProvider colorModeManager={ColourModeManager} theme={StaTheme}>
         <ThemeProvider>
           <ApplicationNavigator />
         </ThemeProvider>

@@ -7,7 +7,6 @@ import dayjs from 'dayjs'
 import styled from 'styled-components/native'
 import { ScrollView, SafeAreaView } from 'react-native'
 import { useSelector } from 'react-redux'
-import TopOfApp from '@/Components/TopOfApp'
 import EventSearchCalendarPicker from '@/Components/Event/EventSearchCalendarPicker'
 import EventSearchQuickSearch, {
   EventQuickSearchChoice,
@@ -173,8 +172,6 @@ const EventSearchContainer = () => {
           setCalendarPickerWidth(width)
         }}
       >
-        <TopOfApp />
-
         <FreeSearchBar
           handleChangeText={handleFreeTextChange}
           handleSubmit={handleFreeTextSubmit}
