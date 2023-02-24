@@ -20,9 +20,20 @@ const common = {
       primary: 'Poppins',
     },
     size: {
-      small: 12,
-      regular: 20,
-      large: 24,
+      '2xs': 10,
+      xs: 12,
+      sm: 18,
+      md: 20,
+      lg: 24,
+      xl: 28,
+      '2xl': 32,
+      '3xl': 36,
+      '4xl': 40,
+      '5xl': 48,
+      '6xl': 60,
+      '7xl': 72,
+      '8xl': 96,
+      '9xl': 128,
     },
   },
   icons: {
@@ -75,6 +86,9 @@ const StaTheme = extendTheme({
     },
     accentPurple: {
       100: common.colours.purple100,
+    },
+    darkGrey: {
+      100: common.colours.darkGrey100,
     },
     secondaryGrey: {
       100: common.colours.secondaryGrey100,
@@ -198,10 +212,10 @@ const StaTheme = extendTheme({
       }),
       sizes: {
         md: {
-          fontSize: common.fonts.size.regular,
+          fontSize: common.fonts.size.md,
         },
         sm: {
-          fontSize: common.fonts.size.regular,
+          fontSize: common.fonts.size.md,
         },
       },
     },
@@ -215,16 +229,16 @@ const StaTheme = extendTheme({
     Text: {
       baseStyle: () => ({
         _light: {
-          color: common.colours.darkGrey100,
+          color: 'darkGrey.100',
           padding: '2',
         },
         _dark: {
-          color: common.colours.offWhite100,
+          color: 'textDarkMode.100',
           padding: '2',
         },
       }),
       defaultProps: {
-        fontSize: common.fonts.size.regular,
+        fontSize: common.fonts.size.md,
       },
     },
   },

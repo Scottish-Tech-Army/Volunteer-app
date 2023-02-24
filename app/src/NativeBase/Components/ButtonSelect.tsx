@@ -60,14 +60,16 @@ const ButtonSelect: FC<ButtonSelectProps> = ({
             // borderWidth={1}
             borderRadius={7}
             color="black"
-            height="7"
+            height="8"
             shadow={option.isSelected ? '1' : 'none'}
             width="100%"
           >
             <Text
               borderColor="border.100"
               borderWidth="0"
-              fontSize="lg"
+              color="black"
+              fontSize="sm"
+              fontWeight="400"
               lineHeight="sm"
               padding="1"
               textAlign="center"

@@ -45,7 +45,7 @@ const NavigationHeader: React.FC<StackHeaderProps> = ({
             />
           )}
 
-          <Heading size="md">{options.title}</Heading>
+          <Heading size="sm">{options.title}</Heading>
 
           {/* Empty Box is here to ensure layout of title and back button */}
           {Boolean(back) && <Box width={8} />}

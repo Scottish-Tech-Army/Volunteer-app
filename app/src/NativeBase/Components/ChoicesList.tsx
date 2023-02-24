@@ -30,7 +30,7 @@ const ChoicesList: FC<ChoicesListProps> = ({ choices }) => (
           borderBottomWidth="1"
           justifyContent="space-between"
         >
-          <Text>{choice.text}</Text>
+          <Text fontWeight="300">{choice.text}</Text>
           <Icon
             as={MaterialIcons}
             color="primary.100"

@@ -82,7 +82,7 @@ const BottomTabLabel = ({ focused }: BottomTabOptionsProps) => {
 
   return (
     <Text
-      fontSize={StaTheme.fontSizes.small}
+      fontSize={StaTheme.fontSizes.xs}
       paddingTop={1}
       color={
         focused
