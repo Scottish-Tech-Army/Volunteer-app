@@ -9,8 +9,21 @@ import { extendTheme } from 'native-base'
 const common = {
   colours: {
     pink100: '#d1338A',
+    purple100: '#604696',
+    lightGrey100: '#a9a9a9',
+    secondaryGrey100: '#e6e6e6',
     darkGrey100: '#3c3c3b',
     offWhite100: '#fbfbfb',
+  },
+  fonts: {
+    family: {
+      primary: 'Poppins',
+    },
+    size: {
+      small: 12,
+      regular: 20,
+      large: 24,
+    },
   },
   icons: {
     size: 8,
@@ -45,6 +58,9 @@ const StaTheme = extendTheme({
     bgDarkMode: {
       100: common.colours.darkGrey100,
     },
+    border: {
+      100: common.colours.lightGrey100,
+    },
     error: {
       100: '#e30613',
     },
@@ -56,6 +72,12 @@ const StaTheme = extendTheme({
     },
     accentOrange: {
       100: '#ec6730',
+    },
+    accentPurple: {
+      100: common.colours.purple100,
+    },
+    secondaryGrey: {
+      100: common.colours.secondaryGrey100,
     },
   },
 
@@ -101,16 +123,24 @@ const StaTheme = extendTheme({
   },
 
   fonts: {
-    primary: 'Poppins',
+    body: common.fonts.family.primary,
+    heading: common.fonts.family.primary,
+    primary: common.fonts.family.primary,
   },
 
-  fontSizes: {
-    small: 10,
-    regular: 12,
-    large: 14,
-  },
+  fontSizes: common.fonts.size,
 
+  // Open the extendTheme files referenced above to see all the components and default properties you can set
   components: {
+    Divider: {
+      baseStyle: {
+        bg: common.colours.lightGrey100,
+        _dark: {
+          bg: common.colours.lightGrey100,
+        },
+      },
+    },
+
     Heading: {
       baseStyle: {
         color: common.colours.darkGrey100,
@@ -159,6 +189,29 @@ const StaTheme = extendTheme({
       }),
     },
 
+    Input: {
+      baseStyle: () => ({
+        placeholderTextColor: 'text.100',
+        _dark: {
+          color: 'textDarkMode.100',
+        },
+      }),
+      sizes: {
+        md: {
+          fontSize: common.fonts.size.regular,
+        },
+        sm: {
+          fontSize: common.fonts.size.regular,
+        },
+      },
+    },
+
+    ScrollView: {
+      defaultProps: {
+        padding: '4',
+      },
+    },
+
     Text: {
       baseStyle: () => ({
         _light: {
@@ -170,6 +223,9 @@ const StaTheme = extendTheme({
           padding: '2',
         },
       }),
+      defaultProps: {
+        fontSize: common.fonts.size.regular,
+      },
     },
   },
 

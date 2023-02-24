@@ -1,38 +1,52 @@
 import { Box, Icon, Input } from 'native-base'
-import React, { useState } from 'react'
+import React, { FC, useState } from 'react'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
-const FreeSearchBar = ({
+export interface FreeSearchBarProps {
+  handleChangeText?: (updatedText: string) => void
+  handleSubmit: (submitText: string) => void
+  marginBottom?: string
+  marginTop?: string
+}
+
+const FreeSearchBar: FC<FreeSearchBarProps> = ({
   handleChangeText,
   handleSubmit,
-}: {
-  handleChangeText: (updatedText: string) => void
-  handleSubmit: () => void
+  marginBottom,
+  marginTop,
 }) => {
   const [text, setText] = useState('')
 
   const onChangeText = (updatedText: string) => {
     setText(updatedText)
-    handleChangeText(updatedText)
+
+    if (handleChangeText) handleChangeText(updatedText)
   }
+
+  const onSubmitEditing = () => handleSubmit(text)
 
   return (
     <Box alignItems="center">
       <Input
+        height="12"
         InputLeftElement={
           <Icon
             as={MaterialIcons}
-            name="search"
-            size={5}
+            color="accentPurple.100"
             ml="2"
-            color="muted.400"
+            name="search"
+            size={6}
           />
         }
-        // onBlur={() => console.log('Blur')}
-        // onChangeText={updatedText => onChangeText(updatedText)}
-        // onFocus={() => console.log('Focus')}
-        // onSubmitEditing={handleSubmit}
+        lineHeight="lg"
+        marginBottom={marginBottom ?? '4'}
+        marginTop={marginTop ?? '0'}
+        onChangeText={updatedText => onChangeText(updatedText)}
+        onSubmitEditing={onSubmitEditing}
+        paddingLeft="2"
+        paddingTop="2"
         placeholder="Search..."
+        textAlignVertical="center"
         value={text}
       />
     </Box>

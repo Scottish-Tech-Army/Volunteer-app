@@ -4,16 +4,18 @@
 
 import React, { useState } from 'react'
 import Fuse from 'fuse.js' // fuzzy text search - see docs at https://fusejs.io
-import styled from 'styled-components/native'
-import { ScrollView, SafeAreaView } from 'react-native'
+import { ScrollView, Text, VStack } from 'native-base'
 import { useSelector } from 'react-redux'
 import {
   ListRouteParams,
   ListSearch,
   ListType,
 } from '@/Containers/ListContainer'
+import ChoicesList, {
+  ChoicesListChoice,
+} from '@/NativeBase/Components/ChoicesList'
 import FreeSearchBar from '@/NativeBase/Components/FreeSearchBar'
-import { navigate } from '@/Navigators/utils'
+import { navigate, RootStackParamList } from '@/Navigators/utils'
 import {
   Projects,
   ProjectsSearchField,
@@ -28,43 +30,13 @@ import {
 import { searchByArray, fuzzySearchByArray } from '@/Utils/Search'
 import QuickSearchButton from '@/Components/Forms/QuickSearchButton'
 import { ProjectsState } from '@/Store/Projects'
+import ButtonSelect, { ButtonSelectOption } from '../Components/ButtonSelect'
 
-// define titles for quick search buttons relating to job roles
-const topRoleGroups: RoleGroupName[] = [
-  RoleGroupName.WebDeveloper,
-  RoleGroupName.TechSupport,
-  RoleGroupName.UIUX,
-  RoleGroupName.Researcher,
-  RoleGroupName.BAPM,
-  RoleGroupName.ScrumMaster,
-]
-
-// define titles for quick search buttons relating to tech stack
-const technologies = Object.values(ProjectTechnology)
-
-// define titles for quick search buttons relating to charity sectors
-const Causes = Object.values(ProjectSector)
-
-const Heading = styled.Text`
-  font-weight: bold;
-  font-size: 18px;
-  margin: 15px 15px 0px 15px;
-`
-const SubHeading = styled.Text`
-  font-weight: bold;
-  font-size: 16px;
-  margin: 10px 15px 0px 15px;
-`
-const SectionView = styled.View`
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  height: 180px;
-`
-const QuickSearchTitle = styled.Text`
-  display: flex;
-  text-align: center;
-`
+enum Tab {
+  Roles = 'Roles',
+  Tech = 'Tech',
+  Causes = 'Causes',
+}
 
 export interface ProjectSearch extends ListSearch {
   results: Projects // the projects results for this search
@@ -79,11 +51,54 @@ const ProjectSearchContainer = () => {
   const allProjects = useSelector(
     (state: { projects: ProjectsState }) => state.projects.projects,
   )
-  const [freeTextSearchQuery, setFreeTextSearchQuery] = useState('')
+  const [selectedTab, setSelectedTab] = useState<Tab>(Tab.Roles)
+  const tabs = Object.values(Tab).map(
+    tab =>
+      ({
+        text: tab,
+        onPress: () => setSelectedTab(tab),
+        isSelected: tab === selectedTab,
+      } as ButtonSelectOption),
+  )
 
-  const handleFreeTextChange = (input: React.SetStateAction<string>) => {
-    setFreeTextSearchQuery(input)
-  }
+  // Define which quick search options to use
+
+  const quickSearchRoleGroupNames: RoleGroupName[] = [
+    RoleGroupName.WebDeveloper,
+    RoleGroupName.TechSupport,
+    RoleGroupName.UIUX,
+    RoleGroupName.Researcher,
+    RoleGroupName.BAPM,
+    RoleGroupName.ScrumMaster,
+  ]
+  const quickSearchRoleChoices = quickSearchRoleGroupNames.map(
+    roleGroupName =>
+      ({
+        text: roleGroupName,
+        onPress: () =>
+          handleQuickSearchSubmit(ProjectsSearchField.Role, roleGroupName),
+      } as ChoicesListChoice),
+  )
+
+  // Tech - which quick search options to use
+  const quickSearchTechnologies = Object.values(ProjectTechnology).map(
+    technology =>
+      ({
+        text: technology,
+        onPress: () =>
+          handleQuickSearchSubmit(ProjectsSearchField.Skills, technology),
+      } as ChoicesListChoice),
+  )
+
+  // Causes - define titles for quick search buttons relating to charity sectors
+  const quickSearchCauses = Object.values(ProjectSector).map(
+    cause =>
+      ({
+        text: cause,
+        onPress: () =>
+          handleQuickSearchSubmit(ProjectsSearchField.Sector, cause),
+      } as ChoicesListChoice),
+  )
 
   // ensure job title searches find related roles
   const getRelatedRoles = (
@@ -144,16 +159,19 @@ const ProjectSearchContainer = () => {
       searchField === 'sector' ? 'cause' : searchField
     } "${searchQueryChoice}"`
 
-    navigate('Projects', {
-      type: ListType.Projects,
-      search: {
-        results,
-        description,
-      } as ProjectSearch,
-    } as ListRouteParams)
+    navigate(
+      'Projects' as keyof RootStackParamList,
+      {
+        type: ListType.Projects,
+        search: {
+          results,
+          description,
+        } as ProjectSearch,
+      } as ListRouteParams,
+    )
   }
 
-  const handleFreeTextSubmit = () => {
+  const handleFreeTextSubmit = (freeTextSearchQuery: string) => {
     // Add free text to list of search queries
     const searchQueries = [freeTextSearchQuery]
 
@@ -180,63 +198,36 @@ const ProjectSearchContainer = () => {
 
     const description = `"${freeTextSearchQuery}"`
 
-    navigate('Projects', {
-      type: ListType.Projects,
-      search: {
-        results,
-        description,
-      } as ProjectSearch,
-    } as ListRouteParams)
+    navigate(
+      'Projects' as keyof RootStackParamList,
+      {
+        type: ListType.Projects,
+        search: {
+          results,
+          description,
+        } as ProjectSearch,
+      } as ListRouteParams,
+    )
   }
 
   return (
-    <SafeAreaView>
-      <ScrollView>
-        <FreeSearchBar
-          handleChangeText={handleFreeTextChange}
-          handleSubmit={handleFreeTextSubmit}
-        />
-        <SubHeading>Roles</SubHeading>
-        <SectionView>
-          {topRoleGroups.map((roleGroupName, index) => (
-            <QuickSearchButton
-              onPress={() =>
-                handleQuickSearchSubmit(ProjectsSearchField.Role, roleGroupName)
-              }
-              key={index}
-            >
-              <QuickSearchTitle>{roleGroupName}</QuickSearchTitle>
-            </QuickSearchButton>
-          ))}
-        </SectionView>
-        <SubHeading>Causes</SubHeading>
-        <SectionView>
-          {Causes.map((cause, index) => (
-            <QuickSearchButton
-              onPress={() =>
-                handleQuickSearchSubmit(ProjectsSearchField.Sector, cause)
-              }
-              key={index}
-            >
-              <QuickSearchTitle>{cause}</QuickSearchTitle>
-            </QuickSearchButton>
-          ))}
-        </SectionView>
-        <SubHeading>Tech Stack / Languages</SubHeading>
-        <SectionView>
-          {technologies.map((technology, index) => (
-            <QuickSearchButton
-              onPress={() =>
-                handleQuickSearchSubmit(ProjectsSearchField.Skills, technology)
-              }
-              key={index}
-            >
-              <QuickSearchTitle>{technology}</QuickSearchTitle>
-            </QuickSearchButton>
-          ))}
-        </SectionView>
-      </ScrollView>
-    </SafeAreaView>
+    <ScrollView>
+      <FreeSearchBar handleSubmit={handleFreeTextSubmit} marginBottom="10" />
+
+      <ButtonSelect marginBottom="5" options={tabs} />
+
+      {selectedTab === Tab.Roles && (
+        <ChoicesList choices={quickSearchRoleChoices} />
+      )}
+
+      {selectedTab === Tab.Tech && (
+        <ChoicesList choices={quickSearchTechnologies} />
+      )}
+
+      {selectedTab === Tab.Causes && (
+        <ChoicesList choices={quickSearchCauses} />
+      )}
+    </ScrollView>
   )
 }
 
