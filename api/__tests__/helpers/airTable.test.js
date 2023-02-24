@@ -57,14 +57,16 @@ describe('Test the AirTable helpers', () => {
 
     // Data for mocks
     const fakeSpeakersTableName = faker.lorem.words();
+    const fakeSpeakerName = faker.name.fullName();
+    const fakeSpeakerUrl = faker.internet.url();
     const fakeSpeakerRecord = {
       _table: {
         name: fakeSpeakersTableName,
       },
       id: faker.datatype.uuid(),
       fields: {
-        name: 'bob',
-        url: 'https://www.linkedin.com/feed/\n',
+        name: fakeSpeakerName,
+        url: fakeSpeakerUrl,
       },
     };
 
@@ -74,7 +76,7 @@ describe('Test the AirTable helpers', () => {
       fields: {
         ...fakeEventRecord.fields,
         speakers: [
-          { name: 'bob', url: 'https://www.linkedin.com/feed/\n' }
+          { name: fakeSpeakerName, url: fakeSpeakerUrl }
         ],
       },
     };

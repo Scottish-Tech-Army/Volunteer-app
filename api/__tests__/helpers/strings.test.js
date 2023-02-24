@@ -27,17 +27,4 @@ describe('Test the strings helpers', () => {
 
     expect(stringFormatted).toEqual(arrayOfLinesTrimmed);
   });
-
-
-  // My test
-  test('checkIfString works and test for the content for it type - string ', () => {
-    const checkTypeIfString = 'Content is a string';
-    const stringCheck = ('Content is a string');
-
-    const stringChecked = stringsHelper.checkIfString(checkTypeIfString);
-
-    expect(stringChecked).toEqual(stringCheck);
-    console.log(stringChecked + 'stringChecked');
-    console.log(stringCheck + 'stringCheck');
-  });
 });
