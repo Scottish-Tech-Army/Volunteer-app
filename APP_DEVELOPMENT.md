@@ -8,6 +8,7 @@ This file contains some tips and guidelines on building our front-end React Nati
   - [File locations, naming, moving and deleting](#file-locations-naming-moving-and-deleting)
   - [Theming & approach](#theming--approach)
   - [Dark mode](#dark-mode)
+  - [Custom components](#custom-components)
   - [Icons](#icons)
 - [Images](#images)
 - [Performance issues](#performance-issues)
@@ -83,6 +84,46 @@ NativeBase does some handling of dark mode straight out of the box, so you may n
 In case you need it, you can also use `useColorMode` or `useColorModeValue` to detect dark/light mode -- [see docs here](https://docs.nativebase.io/color-mode#h2-usecolormode) and an example in `app/src/NativeBase/Components/Brand`.  But often you can do it using `_light` and `_dark` properties as described above.
 
 **To find which colours to use for dark mode in Figma** see *Design System* in the list of Pages on the left-hand side of the screen.  There are examples of some components using dark mode.
+
+### Custom components
+
+These are custom components we've developed, in addition to NativeBase readymade components:
+
+#### Brand
+
+![Brand component](screenshots/components/Brand.png)
+
+Displays the wide version of the STA logo
+
+#### ButtonSelect
+
+![ButtonSelect component](screenshots/components/ButtonSelect.png)
+
+Useful for choosing between 2-3 choices, text must be kept very short (probably one word) for each
+
+#### ChoicesList
+
+![ChoicesList component](screenshots/components/ChoicesList.png)
+
+Tappable list of options to choose from, with arrows
+
+#### FreeSearchBar
+
+![FreeSearchBar component](screenshots/components/FreeSearchBar.png)
+
+Text input for searching
+
+#### NavigationHeader
+
+![NavigationHeader component](screenshots/components/NavigationHeader.png)
+
+Shown at the top of some screens - a screen title and (optionally) a back button
+
+#### TopOfApp
+
+![TopOfApp component](screenshots/components/TopOfApp.png)
+
+Shown at the top of some screens - a small STA logo and (optionally) a search icon button
 
 ### Icons
 

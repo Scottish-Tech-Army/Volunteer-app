@@ -38,11 +38,12 @@ const FreeSearchBar: FC<FreeSearchBarProps> = ({
             size={6}
           />
         }
-        lineHeight="lg"
+        lineHeight="xl"
         marginBottom={marginBottom ?? '4'}
         marginTop={marginTop ?? '0'}
         onChangeText={updatedText => onChangeText(updatedText)}
         onSubmitEditing={onSubmitEditing}
+        paddingBottom="1"
         paddingLeft="2"
         paddingTop="2"
         placeholder="Search..."
