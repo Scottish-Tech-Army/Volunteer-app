@@ -110,6 +110,8 @@ Below are some commonly encountered issues and possible ways to resolve them. If
   > Sometimes this happens when one or more of the project dependencies gets updated and is out of step with the others. Try running `npm install --legacy-peer-deps` or `npm install --force`.
 - When I run `npm run android`, it fails and says that `ANDROID_HOME` is not set
   > Go to the [React Native setup guide](https://reactnative.dev/docs/environment-setup), choose the 'React Native CLI Quickstart' tab, choose your platform, and make sure that you've set the ANDROID_HOME environment variable as described there. You may need to restart your terminal window in order for the change to take effect.
+- When I run `npm run android`, it fails with `java.lang.OutOfMemoryError` somewhere in the error messages
+  > Find the `.gradle` directory on your computer -- it may be a hidden directory, it will be outside of your Volunteer app directory, maybe in your home directory at e.g. `~/.gradle`  In that directory, create a new file `gradle.properties`, add this line to it `org.gradle.jvmargs=-Xmx2048m -XX:MaxPermSize=512m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8` and save the file.  This tells the Android Java build process how much memory to use.  Try running `npm run android` again.  If you still get the same error, try increasing `2048` to a higher number (normally multiples of 1024 or 2048, e.g. `4096`).
 
 ## The app builds, but crashes when I run it
 
