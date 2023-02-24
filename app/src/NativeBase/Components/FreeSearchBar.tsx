@@ -1,3 +1,7 @@
+/**
+ * @file Text input for searching.
+ */
+
 import { Box, Icon, Input } from 'native-base'
 import React, { FC, useState } from 'react'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
@@ -9,6 +13,16 @@ export interface FreeSearchBarProps {
   marginTop?: string
 }
 
+/**
+ * Component showing text input for searching.
+ *
+ * @param {FreeSearchBarProps} props The component props
+ * @param {function} [props.handleChangeText] Function to fire when the user changes the text in the input
+ * @param {function} props.handleSubmit Function to fire when the user submits the search (presses return/enter on their keyboard)
+ * @param {string} [props.marginBottom] Bottom margin
+ * @param {string} [props.marginTop] Top margin
+ * @returns {React.ReactElement} Component
+ */
 const FreeSearchBar: FC<FreeSearchBarProps> = ({
   handleChangeText,
   handleSubmit,

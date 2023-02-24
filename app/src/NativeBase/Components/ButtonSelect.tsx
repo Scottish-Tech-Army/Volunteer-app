@@ -1,3 +1,7 @@
+/**
+ * @file Horizontal buttons for user to choose between 2-3 choices.
+ */
+
 import { Box, Divider, HStack, Pressable, Text } from 'native-base'
 import React, { FC } from 'react'
 
@@ -13,6 +17,15 @@ interface ButtonSelectProps {
   options: ButtonSelectOption[]
 }
 
+/**
+ * Component showing horizontal buttons for user to choose between 2-3 choices.
+ *
+ * @param {ButtonSelectProps} props The component props
+ * @param {string} [props.marginBottom] Bottom margin
+ * @param {string} [props.marginTop] Top margin
+ * @param {ButtonSelectOption[]} props.options The options to show
+ * @returns {React.ReactElement} Component
+ */
 const ButtonSelect: FC<ButtonSelectProps> = ({
   marginBottom,
   marginTop,
@@ -27,25 +40,11 @@ const ButtonSelect: FC<ButtonSelectProps> = ({
     padding="1"
   >
     {options.map((option, index) => (
-      <HStack
-        alignItems="center"
-        // borderColor="primary.100"
-        // borderWidth="1"
-        flexGrow="1"
-        key={option.text}
-      >
-        <Pressable
-          // borderColor="blue.100"
-          // borderWidth="1"
-          flexGrow="1"
-          onPress={option.onPress}
-          // width="33%"
-        >
+      <HStack alignItems="center" flexGrow="1" key={option.text}>
+        <Pressable flexGrow="1" onPress={option.onPress}>
           <Box
             alignItems="center"
             backgroundColor={option.isSelected ? 'white' : 'transparent'}
-            // borderColor="secondary.100"
-            // borderWidth={1}
             borderRadius={7}
             color="black"
             height="8"
@@ -67,6 +66,7 @@ const ButtonSelect: FC<ButtonSelectProps> = ({
             </Text>
           </Box>
         </Pressable>
+
         {index !== options.length - 1 && // don't show divider to right of this option if it's the last option
           !options[index + 1].isSelected && // don't show divider to right of this option if the next option is selected (doesn't look good next to white selected button)
           !option.isSelected && (
