@@ -1,17 +1,5 @@
-import {
-  Box,
-  Button,
-  Divider,
-  HStack,
-  Icon,
-  IconButton,
-  Input,
-  Pressable,
-  Text,
-  VStack,
-} from 'native-base'
+import { Box, Divider, HStack, Pressable, Text } from 'native-base'
 import React, { FC } from 'react'
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
 export interface ButtonSelectOption {
   isSelected: boolean

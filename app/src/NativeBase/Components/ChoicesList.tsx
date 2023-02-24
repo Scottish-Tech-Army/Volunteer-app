@@ -1,14 +1,5 @@
-import {
-  Box,
-  HStack,
-  Icon,
-  IconButton,
-  Input,
-  Pressable,
-  Text,
-  VStack,
-} from 'native-base'
-import React, { FC, useState } from 'react'
+import { HStack, Icon, Pressable, Text, VStack } from 'native-base'
+import React, { FC } from 'react'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
 export interface ChoicesListChoice {

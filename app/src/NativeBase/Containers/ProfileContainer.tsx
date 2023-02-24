@@ -14,7 +14,6 @@
  */
 
 import {
-  Button,
   Heading,
   VStack,
   HStack,

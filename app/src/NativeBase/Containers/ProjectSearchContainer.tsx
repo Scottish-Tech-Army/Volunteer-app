@@ -4,17 +4,16 @@
 
 import React, { useState } from 'react'
 import Fuse from 'fuse.js' // fuzzy text search - see docs at https://fusejs.io
-import { ScrollView, Text, VStack } from 'native-base'
+import { ScrollView } from 'native-base'
 import { useSelector } from 'react-redux'
 import {
   ListRouteParams,
   ListSearch,
   ListType,
 } from '@/Containers/ListContainer'
-import ChoicesList, {
-  ChoicesListChoice,
-} from '@/NativeBase/Components/ChoicesList'
-import FreeSearchBar from '@/NativeBase/Components/FreeSearchBar'
+import ChoicesList, { ChoicesListChoice } from '../Components/ChoicesList'
+import FreeSearchBar from '../Components/FreeSearchBar'
+import ButtonSelect, { ButtonSelectOption } from '../Components/ButtonSelect'
 import { navigate, RootStackParamList } from '@/Navigators/utils'
 import {
   Projects,
@@ -24,13 +23,10 @@ import {
 } from '@/Services/modules/projects'
 import {
   roleGroups,
-  RoleGroup,
   RoleGroupName,
 } from '@/Services/modules/projects/roleGroups'
-import { searchByArray, fuzzySearchByArray } from '@/Utils/Search'
-import QuickSearchButton from '@/Components/Forms/QuickSearchButton'
 import { ProjectsState } from '@/Store/Projects'
-import ButtonSelect, { ButtonSelectOption } from '../Components/ButtonSelect'
+import { searchByArray, fuzzySearchByArray } from '@/Utils/Search'
 
 enum Tab {
   Roles = 'Roles',
@@ -80,7 +76,6 @@ const ProjectSearchContainer = () => {
       } as ChoicesListChoice),
   )
 
-  // Tech - which quick search options to use
   const quickSearchTechnologies = Object.values(ProjectTechnology).map(
     technology =>
       ({
@@ -90,7 +85,6 @@ const ProjectSearchContainer = () => {
       } as ChoicesListChoice),
   )
 
-  // Causes - define titles for quick search buttons relating to charity sectors
   const quickSearchCauses = Object.values(ProjectSector).map(
     cause =>
       ({
@@ -100,7 +94,7 @@ const ProjectSearchContainer = () => {
       } as ChoicesListChoice),
   )
 
-  // ensure job title searches find related roles
+  // Ensure job title searches find related roles
   const getRelatedRoles = (
     possibleRoleSearchQuery: string,
   ): string[] | undefined => {
