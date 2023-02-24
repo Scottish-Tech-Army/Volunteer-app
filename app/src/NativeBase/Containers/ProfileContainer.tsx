@@ -25,7 +25,6 @@ import {
   Spacer,
   ScrollView,
   useColorMode,
-  Input,
 } from 'native-base'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -84,14 +83,6 @@ const ProfileContainer = () => {
     <ScrollView>
       <VStack safeAreaTop space={4} padding={4}>
         <Brand />
-
-        <Input
-          // onBlur={() => console.log('Blur')}
-          // onChangeText={updatedText => onChangeText(updatedText)}
-          // onFocus={() => console.log('Focus')}
-          // onSubmitEditing={handleSubmit}
-          placeholder="Search..."
-        />
 
         <Heading>Dark mode</Heading>
         <HStack space={2}>
