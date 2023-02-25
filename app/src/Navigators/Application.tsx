@@ -151,7 +151,7 @@ const ApplicationNavigator = () => {
             component={ProjectSearchContainer}
             options={{
               ...stackScreenDefaultOptions,
-              title: 'Project Search',
+              title: 'Search',
             }}
           />
 
