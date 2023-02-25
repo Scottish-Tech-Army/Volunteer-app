@@ -10,7 +10,7 @@ const common = {
   colours: {
     pink100: '#d1338A',
     purple100: '#604696',
-    lightGrey100: '#a9a9a9',
+    mediumGrey100: '#a9a9a9',
     secondaryGrey100: '#e6e6e6',
     darkGrey100: '#3c3c3b',
     offWhite100: '#fbfbfb',
@@ -70,13 +70,19 @@ const StaTheme = extendTheme({
       100: common.colours.darkGrey100,
     },
     border: {
-      100: common.colours.lightGrey100,
+      100: common.colours.mediumGrey100,
     },
     error: {
       100: '#e30613',
     },
     focus: {
       100: common.colours.darkGrey100,
+    },
+    placeholder: {
+      100: common.colours.darkGrey100,
+    },
+    placeholderDarkMode: {
+      100: common.colours.offWhite100,
     },
     accentGreen: {
       100: '#1d781d',
@@ -148,9 +154,9 @@ const StaTheme = extendTheme({
   components: {
     Divider: {
       baseStyle: {
-        bg: common.colours.lightGrey100,
+        bg: common.colours.mediumGrey100,
         _dark: {
-          bg: common.colours.lightGrey100,
+          bg: common.colours.mediumGrey100,
         },
       },
     },
@@ -207,7 +213,9 @@ const StaTheme = extendTheme({
       baseStyle: () => ({
         placeholderTextColor: 'text.100',
         _dark: {
+          borderColor: 'white',
           color: 'textDarkMode.100',
+          placeholderTextColor: 'placeholderDarkMode.100',
         },
       }),
       sizes: {
