@@ -4,7 +4,7 @@
 
 import React, { FC, useState } from 'react'
 import CalendarPicker from 'react-native-calendar-picker'
-import { Pressable } from 'react-native'
+import { Pressable, Dimensions } from 'react-native'
 import { VStack, Box, Text, Input, useColorMode } from 'native-base'
 import dayjs from 'dayjs'
 
@@ -25,7 +25,7 @@ const DateTimeAlt: FC<DateTimeAltProps> = ({
 }) => {
   const [pickerActive, setPickerActive] = useState(false)
   const { colorMode } = useColorMode()
-
+  const windowWidth = Dimensions.get('window').width
   return (
     <VStack>
       <Box marginY="5" marginX="2" borderColor="grey.60" shadow="2">
@@ -40,7 +40,6 @@ const DateTimeAlt: FC<DateTimeAltProps> = ({
             <Text
               paddingTop="6"
               fontSize="sm"
-              margin="0"
               lineHeight="7"
               color={
                 !pickerActive && colorMode === 'light'
@@ -56,7 +55,6 @@ const DateTimeAlt: FC<DateTimeAltProps> = ({
             paddingTop="6"
             fontSize="sm"
             fontWeight="600"
-            margin="0"
             lineHeight="7"
             paddingLeft="6"
             color={
@@ -86,7 +84,7 @@ const DateTimeAlt: FC<DateTimeAltProps> = ({
         </VStack>
 
         {pickerActive ? (
-          <Box paddingY="2">
+          <Box paddingTop="2">
             <CalendarPicker
               startFromMonday={true}
               minDate={minimumDate}
@@ -99,7 +97,7 @@ const DateTimeAlt: FC<DateTimeAltProps> = ({
               selectedDayColor="#d659a0"
               dayTextColor={colorMode === 'light' ? '#3c3c3b' : '#FFFFFF'}
               selectedDayTextColor="#FFFFFF"
-              width={350}
+              width={windowWidth - 22}
               textStyle={
                 colorMode === 'light'
                   ? {
