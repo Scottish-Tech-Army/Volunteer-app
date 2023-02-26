@@ -35,7 +35,6 @@ const StaTheme = extendTheme({
     },
     text: {
       100: common.colours.darkGrey100,
-      20: '#939799',
     },
     textDarkMode: {
       100: common.colours.offWhite100,
@@ -47,10 +46,14 @@ const StaTheme = extendTheme({
       100: common.colours.darkGrey100,
     },
     responseModalIconLightMode: {
-      100: '#737373',
+      100: '#737373', //medium-gray
+    },
+    inputBorder: {
+      100: '#604696', //dark purple
+      20: '#939799', //grey
     },
     error: {
-      100: '#e30613',
+      100: '#e30613', //red
     },
     focus: {
       100: common.colours.darkGrey100,
@@ -60,6 +63,11 @@ const StaTheme = extendTheme({
     },
     accentOrange: {
       100: '#ec6730',
+    },
+    grey: {
+      100: '#3c3c3b', //dark-grey
+      60: '#737373', //medium-grey
+      20: '#e9e9e9',
     },
   },
 
@@ -128,7 +136,7 @@ const StaTheme = extendTheme({
         height: '12',
       },
       defaultProps: {
-        bg: 'primary.80',
+        bg: 'primary.100',
 
         _pressed: {
           bg: 'primary.60',
@@ -180,10 +188,10 @@ const StaTheme = extendTheme({
       baseStyle: { fontFamily: 'primary' },
       defaultProps: {
         borderWidth: '1',
-        borderColor: '#939799',
+        borderColor: 'inputBorder.20',
         marginX: '2.5',
         variant: 'unstyled',
-        _focus: { borderColor: '#604696', borderWidth: '2' },
+        _focus: { borderColor: 'inputBorder.100', borderWidth: '2' },
       },
     },
 

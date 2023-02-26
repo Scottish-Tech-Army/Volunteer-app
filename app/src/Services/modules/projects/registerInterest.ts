@@ -10,8 +10,7 @@ interface ProjectRegisterInterestQuery {
     firstName: string
     lastName: string
     email: string
-    happyToMentor: boolean
-    lookingForBuddy: boolean
+    lookingForPeerSupport: boolean
     availableFrom: string
   }
 }

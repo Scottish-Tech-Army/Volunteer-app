@@ -2,65 +2,125 @@
  * @file DatePicker.
  */
 
-import React, { FC } from 'react'
-import DatePicker from 'react-native-date-picker'
-import { VStack, Box, Flex, Text } from 'native-base'
+import React, { FC, useState } from 'react'
+import CalendarPicker from 'react-native-calendar-picker'
+import { Pressable } from 'react-native'
+import { VStack, Box, Text, Input, useColorMode } from 'native-base'
 import dayjs from 'dayjs'
 
-interface DateTimeProps {
+interface DateTimeAltProps {
   description: string
   maximumDate?: Date
   minimumDate?: Date
-  mode: 'date' | 'datetime' | 'time'
   onChange: (date: Date) => void
   value: Date
-  color: string
 }
 
-const DateTime: FC<DateTimeProps> = ({
+const DateTimeAlt: FC<DateTimeAltProps> = ({
   description,
   maximumDate,
   minimumDate,
-  mode,
   onChange,
   value,
-  color,
 }) => {
+  const [pickerActive, setPickerActive] = useState(false)
+  const { colorMode } = useColorMode()
+
   return (
     <VStack>
-      <Box marginTop="6" paddingLeft="6">
-        <Text
-          fontSize="sm"
-          margin="0"
-          lineHeight="7"
-          color="primary.60"
-          paddingY="0"
-        >
-          {description}
-        </Text>
-        <Text margin="0" lineHeight="9" fontSize="md">
-          {dayjs(value).format('DD MMMM, YYYY')}
-        </Text>
+      <Box marginY="5" marginX="2" borderColor="grey.60" shadow="2">
+        <VStack>
+          <Box
+            marginTop="1"
+            marginX="0.5"
+            bg={
+              !pickerActive && colorMode === 'light' ? 'grey.20' : 'primary.80'
+            }
+          >
+            <Text
+              paddingTop="6"
+              fontSize="sm"
+              margin="0"
+              lineHeight="7"
+              color={
+                !pickerActive && colorMode === 'light'
+                  ? 'text.100'
+                  : 'textDarkMode.100'
+              }
+              paddingLeft="6"
+            >
+              {description}
+            </Text>
+          </Box>
+          <Text
+            paddingTop="6"
+            fontSize="sm"
+            fontWeight="600"
+            margin="0"
+            lineHeight="7"
+            paddingLeft="6"
+            color={
+              !pickerActive && colorMode === 'light'
+                ? 'text.100'
+                : 'primary.100'
+            }
+          >
+            Enter Date
+          </Text>
+          <Pressable onPress={() => setPickerActive(!pickerActive)}>
+            <Input
+              marginX="6"
+              value={dayjs(value).format('DD/MM/YY')}
+              showSoftInputOnFocus={false}
+              onFocus={() => setPickerActive(true)}
+              borderColor="inputBorder.100"
+              isReadOnly={true}
+              bg={colorMode === 'light' ? 'grey.20' : 'grey.60'}
+              borderWidth={pickerActive ? '0' : '1'}
+              borderBottomWidth="1"
+              borderBottomColor={
+                pickerActive ? 'primary.100' : 'inputBorder.100'
+              }
+            />
+          </Pressable>
+        </VStack>
+
+        {pickerActive ? (
+          <Box paddingY="2">
+            <CalendarPicker
+              startFromMonday={true}
+              minDate={minimumDate}
+              maxDate={maximumDate}
+              weekdays={['M', 'T', 'W', 'T', 'F', 'S', 'S']}
+              restrictMonthNavigation={true}
+              onDateChange={onChange}
+              scrollable={false}
+              date={value}
+              selectedDayColor="#d659a0"
+              dayTextColor={colorMode === 'light' ? '#3c3c3b' : '#FFFFFF'}
+              selectedDayTextColor="#FFFFFF"
+              width={350}
+              textStyle={
+                colorMode === 'light'
+                  ? {
+                      fontFamily: 'Poppins-Medium',
+                      color: '#3c3c3b',
+                    }
+                  : {
+                      fontFamily: 'Poppins-Medium',
+                      color: 'white',
+                    }
+              }
+              nextTitle=">"
+              previousTitle="<"
+            />{' '}
+          </Box>
+        ) : (
+          ''
+        )}
       </Box>
-      <Flex
-        height="100"
-        overflow="hidden"
-        align="center"
-        justify="center"
-        marginTop="10"
-        marginBottom="60"
-      >
-        <DatePicker
-          textColor={color}
-          date={value}
-          maximumDate={maximumDate}
-          minimumDate={minimumDate}
-          mode={mode}
-          onDateChange={onChange}
-        />
-      </Flex>
     </VStack>
   )
 }
 
-export default DateTime
+export default DateTimeAlt

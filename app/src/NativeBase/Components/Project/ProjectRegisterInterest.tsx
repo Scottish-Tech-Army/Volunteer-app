@@ -3,12 +3,11 @@
  */
 
 import React, { FC, useEffect, useState } from 'react'
-import { ScrollView, VStack, Box, useColorModeValue, Button } from 'native-base'
+import { ScrollView, VStack, Box, Button } from 'native-base'
 import dayjs from 'dayjs'
 import YesNoChoice from '../Forms/YesNoChoice'
 import TextInputControl from '../Forms/TextInputControl'
-// import DateTime from '../Forms/DateTime'
-import DateTimeAlt from '../Forms/DateTimeAlt'
+import DateTime from '../Forms/DateTime'
 import ResponseModal from '../Forms/ResponseModal'
 import { goBack } from '@/Navigators/utils'
 import {
@@ -39,7 +38,7 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
   }>({})
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
-  const [lookingForBuddy, setLookingForBuddy] = useState(false)
+  const [lookingForPeerSupport, setLookingForPeerSupport] = useState(false)
   const today = new Date()
   const oneYearInTheFuture = new Date(
     new Date().setFullYear(today.getFullYear() + 1),
@@ -63,14 +62,14 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
       if (responseData) {
         setSuccess(true)
         setResponseHeader('Application Received')
-        // console.log(responseData)
+        console.log(responseData)
         setResponseMessage(
           'Your request has been received. The STA team will respond shortly.',
         )
       }
       if (responseError) {
         setResponseHeader('Something went wrong')
-        // console.log(responseError)
+        console.log(responseError)
         setResponseMessage(
           "Sorry, we couldn't send your message - please try again. If this keeps happening, please contact the STA Volunteer App team.",
         )
@@ -144,15 +143,12 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
           firstName,
           lastName,
           email,
-          lookingForBuddy,
-          happyToMentor: false,
+          lookingForPeerSupport,
           availableFrom: dayjs(availableFromDate).format('YYYY-MM-DD'),
         },
       })
     }
   }
-
-  // const colorScheme = useColorModeValue('#3c3c3b', '#fbfbfb')
 
   return (
     <>
@@ -198,21 +194,11 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
 
           <YesNoChoice
             description="Looking for peer support"
-            onChange={value => setLookingForBuddy(value)}
-            value={lookingForBuddy}
+            onChange={value => setLookingForPeerSupport(value)}
+            value={lookingForPeerSupport}
           />
 
-          {/* <DateTime
-            description="I'm available from"
-            maximumDate={oneYearInTheFuture}
-            minimumDate={today}
-            mode="date"
-            onChange={value => setAvailableFromDate(value)}
-            value={availableFromDate}
-            color={colorScheme}
-          /> */}
-
-          <DateTimeAlt
+          <DateTime
             description="I'm available from"
             maximumDate={oneYearInTheFuture}
             minimumDate={today}
