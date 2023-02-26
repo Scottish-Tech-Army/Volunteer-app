@@ -4,7 +4,8 @@
 
 import { useColorMode } from 'native-base'
 import React, { useEffect, useRef, useState } from 'react'
-import { AppState, SafeAreaView, StatusBar, useColorScheme } from 'react-native'
+import { AppState, View, StatusBar, useColorScheme } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { NavigationContainer } from '@react-navigation/native'
 import {
   createStackNavigator,
@@ -15,7 +16,6 @@ import { useSelector } from 'react-redux'
 import {
   EventDetailContainer,
   StartupContainer,
-  ProjectDetailContainer,
   ProjectRegisterInterestContainer,
   ProjectSearchContainer,
   EventSearchContainer,
@@ -25,6 +25,7 @@ import MainNavigator from './Main'
 import { navigationRef } from './utils'
 import ProjectScope from '@/Components/Project/ProjectScope'
 import NavigationHeader from '@/NativeBase/Components/NavigationHeader'
+import { ProjectDetailContainer } from '@/NativeBase/Containers'
 import StaTheme from '@/NativeBase/Theme/StaTheme'
 import { ThemeState } from '@/Store/Theme'
 
@@ -36,7 +37,7 @@ const renderNavigationHeader = (props: StackHeaderProps) => (
 
 /**
  * Safe area and Stack Navigator for the app
- * @returns {SafeAreaView} safe area and navigator container
+ * @returns {JSX.Element} Renders safe area and stack navigator
  */
 const ApplicationNavigator = () => {
   const appState = useRef(AppState.currentState)
@@ -51,6 +52,7 @@ const ApplicationNavigator = () => {
   const useSystemColourMode = useSelector(
     (state: { theme: ThemeState }) => state.theme.useSystemColourMode,
   )
+  const insets = useSafeAreaInsets()
 
   // When the user sets the dark/light mode choice to 'Use system default',
   // or when they've already done that and the system dark/light mode setting changes (e.g. the user changes their OS settings or the OS changes mode on a timer),
@@ -103,15 +105,19 @@ const ApplicationNavigator = () => {
           },
           dark: false,
         }
+
   const safeAreaViewStyle = [
-    { backgroundColor: navigationTheme.colors.background, flex: 1 },
+    {
+      paddingTop: insets.top,
+      backgroundColor: navigationTheme.colors.background,
+      flex: 1,
+    },
   ]
 
   return (
-    <SafeAreaView style={safeAreaViewStyle}>
+    <View style={safeAreaViewStyle}>
       <NavigationContainer theme={navigationTheme} ref={navigationRef}>
         <StatusBar />
-
         <Stack.Navigator>
           <Stack.Screen
             name="Startup"
@@ -133,7 +139,7 @@ const ApplicationNavigator = () => {
             component={ProjectDetailContainer}
             options={{
               ...stackScreenDefaultOptions,
-              title: 'Projects',
+              title: 'Project Details',
             }}
           />
 
@@ -189,7 +195,7 @@ const ApplicationNavigator = () => {
           />
         </Stack.Navigator>
       </NavigationContainer>
-    </SafeAreaView>
+    </View>
   )
 }
 
