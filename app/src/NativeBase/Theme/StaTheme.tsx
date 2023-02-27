@@ -45,12 +45,8 @@ const StaTheme = extendTheme({
     bgDarkMode: {
       100: common.colours.darkGrey100,
     },
-    responseModalIconLightMode: {
-      100: '#737373', //medium-gray
-    },
     inputBorder: {
       100: '#604696', //dark purple
-      20: '#939799', //grey
     },
     error: {
       100: '#e30613', //red
@@ -65,9 +61,9 @@ const StaTheme = extendTheme({
       100: '#ec6730',
     },
     grey: {
-      100: '#3c3c3b', //dark-grey
-      60: '#737373', //medium-grey
-      20: '#e9e9e9',
+      100: '#3c3c3b', //dark grey
+      60: '#737373', //medium grey
+      20: '#e9e9e9', //light grey
     },
   },
 
@@ -114,6 +110,12 @@ const StaTheme = extendTheme({
 
   fonts: {
     primary: 'Poppins',
+  },
+
+  fontSizes: {
+    small: 10,
+    regular: 12,
+    large: 14,
   },
 
   components: {
@@ -188,7 +190,7 @@ const StaTheme = extendTheme({
       baseStyle: { fontFamily: 'primary' },
       defaultProps: {
         borderWidth: '1',
-        borderColor: 'inputBorder.20',
+        borderColor: 'grey.60',
         marginX: '2.5',
         variant: 'unstyled',
         _focus: { borderColor: 'inputBorder.100', borderWidth: '2' },

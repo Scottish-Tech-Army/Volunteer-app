@@ -1,5 +1,5 @@
 /**
- * @file Initialise the icons
+ * @file Initialise the external icon libraries
  */
 
 import FontAwesome from 'react-native-vector-icons/FontAwesome'

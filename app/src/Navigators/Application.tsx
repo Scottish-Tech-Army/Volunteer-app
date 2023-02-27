@@ -83,7 +83,7 @@ const ApplicationNavigator = () => {
     colorMode === 'dark'
       ? {
           colors: {
-            primary: StaTheme.colors.primary['100'],
+            primary: StaTheme.colors.primary['40'],
             background: StaTheme.colors.bgDarkMode['100'],
             card: StaTheme.colors.bgDarkMode['100'],
             text: StaTheme.colors.textDarkMode['100'],
