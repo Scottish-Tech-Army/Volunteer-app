@@ -62,14 +62,12 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
       if (responseData) {
         setSuccess(true)
         setResponseHeader('Application Received')
-        console.log(responseData)
         setResponseMessage(
           'Your request has been received. The STA team will respond shortly.',
         )
       }
       if (responseError) {
         setResponseHeader('Something went wrong')
-        console.log(responseError)
         setResponseMessage(
           "Sorry, we couldn't send your message - please try again. If this keeps happening, please contact the STA Volunteer App team.",
         )
