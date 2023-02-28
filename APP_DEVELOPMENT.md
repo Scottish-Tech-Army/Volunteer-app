@@ -95,12 +95,6 @@ These are custom components we've developed, in addition to NativeBase readymade
 
 Displays the wide version of the STA logo
 
-#### ButtonSelect
-
-![ButtonSelect component](screenshots/components/ButtonSelect.png)
-
-Useful for choosing between 2-3 choices, text must be kept very short (probably one word) for each
-
 #### ChoicesList
 
 ![ChoicesList component](screenshots/components/ChoicesList.png)
@@ -118,6 +112,12 @@ Text input for searching
 ![NavigationHeader component](screenshots/components/NavigationHeader.png)
 
 Shown at the top of some screens - a screen title and (optionally) a back button
+
+#### SegmentedPicker
+
+![SegmentedPicker component](screenshots/components/SegmentedPicker.png)
+
+Useful for choosing between 2-3 choices, text must be kept very short (probably one word) for each
 
 #### TopOfApp
 

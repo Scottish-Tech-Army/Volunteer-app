@@ -5,28 +5,28 @@
 import { Box, Divider, HStack, Pressable, Text } from 'native-base'
 import React, { FC } from 'react'
 
-export interface ButtonSelectOption {
+export interface SegmentedPickerOption {
   isSelected: boolean
   onPress: () => void
   text: string
 }
 
-interface ButtonSelectProps {
+interface SegmentedPickerProps {
   marginBottom?: string
   marginTop?: string
-  options: ButtonSelectOption[]
+  options: SegmentedPickerOption[]
 }
 
 /**
  * Component showing horizontal buttons for user to choose between 2-3 choices.
  *
- * @param {ButtonSelectProps} props The component props
+ * @param {SegmentedPickerProps} props The component props
  * @param {string} [props.marginBottom] Bottom margin
  * @param {string} [props.marginTop] Top margin
- * @param {ButtonSelectOption[]} props.options The options to show
+ * @param {SegmentedPickerOption[]} props.options The options to show
  * @returns {React.ReactElement} Component
  */
-const ButtonSelect: FC<ButtonSelectProps> = ({
+const SegmentedPicker: FC<SegmentedPickerProps> = ({
   marginBottom,
   marginTop,
   options,
@@ -77,4 +77,4 @@ const ButtonSelect: FC<ButtonSelectProps> = ({
   </HStack>
 )
 
-export default ButtonSelect
+export default SegmentedPicker

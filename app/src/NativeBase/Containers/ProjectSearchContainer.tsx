@@ -13,7 +13,9 @@ import {
 } from '@/Containers/ListContainer'
 import ChoicesList, { ChoicesListChoice } from '../Components/ChoicesList'
 import FreeSearchBar from '../Components/FreeSearchBar'
-import ButtonSelect, { ButtonSelectOption } from '../Components/ButtonSelect'
+import SegmentedPicker, {
+  SegmentedPickerOption,
+} from '../Components/SegmentedPicker'
 import { navigate, RootStackParamList } from '@/Navigators/utils'
 import {
   Projects,
@@ -54,7 +56,7 @@ const ProjectSearchContainer = () => {
         text: tab,
         onPress: () => setSelectedTab(tab),
         isSelected: tab === selectedTab,
-      } as ButtonSelectOption),
+      } as SegmentedPickerOption),
   )
 
   // Define which quick search options to use
@@ -208,7 +210,7 @@ const ProjectSearchContainer = () => {
     <ScrollView>
       <FreeSearchBar handleSubmit={handleFreeTextSubmit} marginBottom="10" />
 
-      <ButtonSelect marginBottom="5" options={tabs} />
+      <SegmentedPicker marginBottom="5" options={tabs} />
 
       {selectedTab === Tab.Roles && (
         <ChoicesList choices={quickSearchRoleChoices} />

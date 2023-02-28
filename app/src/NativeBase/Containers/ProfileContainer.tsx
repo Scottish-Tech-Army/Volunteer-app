@@ -32,7 +32,9 @@ import Brand from '@/NativeBase/Components/Brand'
 import { changeTheme, ThemeState } from '@/Store/Theme'
 import { changeWelcome, WelcomeState } from '@/Store/Welcome'
 import { version } from '../../../package.json'
-import ButtonSelect, { ButtonSelectOption } from '../Components/ButtonSelect'
+import SegmentedPicker, {
+  SegmentedPickerOption,
+} from '../Components/SegmentedPicker'
 import { capitaliseFirstLetter } from '@/Utils/Text'
 
 const ProfileContainer = () => {
@@ -56,7 +58,7 @@ const ProfileContainer = () => {
         text: capitaliseFirstLetter(option),
         onPress: () => updateColourMode(option),
         isSelected: colourModeChoice === option,
-      } as ButtonSelectOption),
+      } as SegmentedPickerOption),
   )
 
   const updateColourMode = (newColourMode: string) => {
@@ -95,7 +97,7 @@ const ProfileContainer = () => {
 
         <Heading>Dark mode</Heading>
 
-        <ButtonSelect options={colourModeOptions} />
+        <SegmentedPicker options={colourModeOptions} />
 
         <Heading>Welcome screen</Heading>
         <Checkbox
