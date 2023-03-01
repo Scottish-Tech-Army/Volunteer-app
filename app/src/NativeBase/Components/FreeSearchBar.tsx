@@ -2,7 +2,7 @@
  * @file Text input for searching.
  */
 
-import { Box, FormControl, Icon, Input } from 'native-base'
+import { Box, Icon, Input } from 'native-base'
 import React, { FC, useState } from 'react'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
@@ -41,31 +41,30 @@ const FreeSearchBar: FC<FreeSearchBarProps> = ({
 
   return (
     <Box alignItems="center">
-      <FormControl accessibilityLabel="Search for text">
-        <Input
-          height="12"
-          InputLeftElement={
-            <Icon
-              as={MaterialIcons}
-              color="accentPurple.100"
-              ml="2"
-              name="search"
-              size={6}
-            />
-          }
-          lineHeight="xl"
-          marginBottom={marginBottom ?? '4'}
-          marginTop={marginTop ?? '0'}
-          onChangeText={updatedText => onChangeText(updatedText)}
-          onSubmitEditing={onSubmitEditing}
-          paddingBottom="1"
-          paddingLeft="2"
-          paddingTop="2"
-          placeholder="Search..."
-          textAlignVertical="center"
-          value={text}
-        />
-      </FormControl>
+      <Input
+        accessibilityLabel="Search for text"
+        height="12"
+        InputLeftElement={
+          <Icon
+            as={MaterialIcons}
+            color="accentPurple.100"
+            ml="2"
+            name="search"
+            size={6}
+          />
+        }
+        lineHeight="md"
+        marginBottom={marginBottom ?? '4'}
+        marginTop={marginTop ?? '0'}
+        onChangeText={updatedText => onChangeText(updatedText)}
+        onSubmitEditing={onSubmitEditing}
+        paddingBottom="1"
+        paddingLeft="2"
+        paddingTop="2"
+        placeholder="Search..."
+        textAlignVertical="center"
+        value={text}
+      />
     </Box>
   )
 }

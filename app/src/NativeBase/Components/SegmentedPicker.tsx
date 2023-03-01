@@ -52,12 +52,8 @@ const SegmentedPicker: FC<SegmentedPickerProps> = ({
             width="100%"
           >
             <Text
-              borderColor="border.100"
-              borderWidth="0"
               color="black"
               fontSize="sm"
-              fontWeight="400"
-              lineHeight="sm"
               padding="1"
               textAlign="center"
               width="100%"

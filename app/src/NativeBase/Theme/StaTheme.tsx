@@ -20,16 +20,16 @@ const common = {
       primary: 'Poppins',
     },
     size: {
-      '2xs': 10,
-      xs: 12,
+      '2xs': 12,
+      xs: 16,
       sm: 18,
       md: 20,
-      lg: 24,
-      xl: 28,
-      '2xl': 32,
-      '3xl': 36,
-      '4xl': 40,
-      '5xl': 48,
+      lg: 32,
+      xl: 36,
+      '2xl': 40,
+      '3xl': 44,
+      '4xl': 48,
+      '5xl': 52,
       '6xl': 60,
       '7xl': 72,
       '8xl': 96,
@@ -71,6 +71,9 @@ const StaTheme = extendTheme({
     },
     border: {
       100: common.colours.mediumGrey100,
+    },
+    inputBorder: {
+      100: common.colours.purple100,
     },
     error: {
       100: '#e30613',
@@ -218,6 +221,9 @@ const StaTheme = extendTheme({
           placeholderTextColor: 'placeholderDarkMode.100',
         },
       }),
+      defaultProps: {
+        _focus: { borderColor: 'inputBorder.100' },
+      },
       sizes: {
         md: {
           fontSize: common.fonts.size.md,

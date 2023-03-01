@@ -37,7 +37,7 @@ const ChoicesList: FC<ChoicesListProps> = ({ choices }) => (
             as={MaterialIcons}
             color="primary.100"
             name="arrow-forward-ios"
-            size="5"
+            size="md"
           />
         </HStack>
       </Pressable>

@@ -119,7 +119,7 @@ const ProfileContainer = () => {
             mx={0}
             px={0}
           />
-          <Text fontSize="xs">Version {version}</Text>
+          <Text fontSize="2xs">Version {version}</Text>
         </HStack>
         <HStack safeAreaBottom space="4" justifyContent={'center'}>
           <Text fontSize="sm">
