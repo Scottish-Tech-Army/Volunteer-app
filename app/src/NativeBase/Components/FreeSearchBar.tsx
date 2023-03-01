@@ -47,7 +47,8 @@ const FreeSearchBar: FC<FreeSearchBarProps> = ({
         InputLeftElement={
           <Icon
             as={MaterialIcons}
-            color="accentPurple.100"
+            _light={{ color: 'accentPurple.100' }}
+            _dark={{ color: 'white' }}
             ml="2"
             name="search"
             size={6}

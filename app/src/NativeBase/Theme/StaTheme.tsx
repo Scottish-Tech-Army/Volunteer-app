@@ -222,7 +222,10 @@ const StaTheme = extendTheme({
         },
       }),
       defaultProps: {
-        _focus: { borderColor: 'inputBorder.100' },
+        _focus: {
+          borderColor: 'inputBorder.100',
+          borderWidth: '2',
+        },
       },
       sizes: {
         md: {
