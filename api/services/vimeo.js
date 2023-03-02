@@ -12,16 +12,23 @@ async function getVideoFileFromVimeo(videoWebpageUrl) {
   const vimeoId = module.exports.getVimeoVideoIdFromUrl(videoWebpageUrl);
   if (!vimeoId) return;
 
-  const vimeoResponse = await axios.get(`https://player.vimeo.com/video/${vimeoId}/config`);
+  try {
+    const vimeoResponse = await axios.get(`https://player.vimeo.com/video/${vimeoId}/config`);
 
-  if (vimeoResponse.status === 200) {
-    const videoFile = vimeoResponse.data.request.files.progressive[0].url;
+    if (vimeoResponse.status === 200) {
+      const videoFile = vimeoResponse.data.request.files.progressive[0]?.url;
 
-    return videoFile;
-  } else {
+      return videoFile;
+    } else {
+      console.error(
+        `❌ Could not get Vimeo video file for video ID ${vimeoId} -- error connecting to Vimeo API`,
+        vimeoResponse.statusText,
+      );
+    }
+  } catch (error) {
     console.error(
-      `❌ Could not get Vimeo video file for video ID ${vimeoId} -- error connecting to Vimeo API`,
-      vimeoResponse.statusText,
+      `⚠️ Could not get Vimeo video file for video ID ${vimeoId} -- error connecting to Vimeo API, maybe because video creator restricted video embedding`,
+      `${error.toString().substring(0, 50)}...`,
     );
   }
 }
@@ -57,26 +64,32 @@ async function getVideoThumbnailFromVimeo(videoWebpageUrl) {
       );
     }
   } catch (error) {
-    console.error(`❌ Could not get Vimeo thumbnail for video ID ${vimeoId} -- error connecting to Vimeo API`, error);
+    console.error(
+      `⚠️ Could not get Vimeo thumbnail for video ID ${vimeoId} -- error connecting to Vimeo API, maybe because video creator restricted video embedding`,
+      `${error.toString().substring(0, 50)}...`,
+    );
   }
 
   return;
 }
 
 // Gets the ID of a Vimeo video from the URL of a Vimeo video page
-// E.g. pass in 'https://vimeo.com/583815096' and you get back '583815096'
+// E.g. pass in 'https://vimeo.com/583815096' or 'https://vimeo.com/manage/videos/583815096' and you get back '583815096'
 function getVimeoVideoIdFromUrl(videoWebpageUrl) {
   if (!videoWebpageUrl.includes('vimeo.com')) return;
 
   const urlObject = new URL(videoWebpageUrl);
 
-  const vimeoId = urlObject.pathname.split('/').pop();
+  // We ideally want a URL like https://vimeo.com/796237419 but some people are entering URLs like https://vimeo.com/manage/videos/796237419 so we need to force the format we want
+  const pathnameCleaned = urlObject.pathname.replace('manage/videos/', '');
+
+  const vimeoId = pathnameCleaned.split('/')[1]; // get the part after the first forward slash in the pathname
 
   // Verify if the vimeoId contains only digits
   if (vimeoId.match(/^[0-9]+$/)) {
     return vimeoId;
   } else {
-    console.error(`❌ Could not get Vimeo video file for video ID ${vimeoId} -- not a valid Vimeo video ID`);
+    return;
   }
 }
 

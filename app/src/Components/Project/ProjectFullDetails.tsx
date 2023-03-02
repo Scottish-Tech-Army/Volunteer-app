@@ -6,11 +6,11 @@ import React, { FC, ReactElement } from 'react'
 import styled from 'styled-components/native'
 import ProjectHeading from './ProjectHeading'
 import ProjectInterestButton from './ProjectInterestButton'
-import Video from '../Video'
 import ProjectSkills from './ProjectSkills'
 import ProjectRequirements from './ProjectRequirements'
 import ProjectAttachments from './ProjectAttachments'
 import Feather from 'react-native-vector-icons/Feather'
+import Video from '@/NativeBase/Components/Video'
 import { Project } from '@/Services/modules/projects'
 import { ScrollView } from 'react-native-gesture-handler'
 
@@ -101,7 +101,10 @@ const ProjectFullDetails: FC<ProjectFullDetailsProps> = ({ project }) => {
           details={'A3 - Project Scope'}
           url={project.scope}
         />
-        <Video url={project.video_file} />
+        <Video
+          video_file={project.video_file}
+          video_webpage={'project.video_webpage'}
+        />
         <SectionHeader>Team</SectionHeader>
         <ProjectTeam>Placeholder text</ProjectTeam>
         <HorizontalLine />
