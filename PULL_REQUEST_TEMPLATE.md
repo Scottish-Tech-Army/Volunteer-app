@@ -27,12 +27,13 @@ Please delete options that are not relevant
 # Checklist
 
 - [] My code follows the style guidelines of this project
-- [] I have addressed accessibility, if needed
-- [] I have followed best practices, e.g. NativeBase approaches and theming
 - [] I have performed a self-review of my own code
 - [] I have commented my code, particularly in hard-to-understand areas
 - [] I have removed any unnecessary comments or console logging
 - [] I have made corresponding changes to the documentation (if required)
+- [] I have addressed accessibility, if needed
+- [] I have followed best practices, e.g. NativeBase approaches and theming
+- [] I have checked the app in dark mode, if making front-end design changes
 - [] My changes generate no new warnings
 - [] I have added tests that prove my fix is effective or that my feature works
 - [] New and existing unit tests pass locally with my changes
