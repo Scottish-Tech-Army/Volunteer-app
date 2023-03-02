@@ -7,11 +7,10 @@ dayjs.extend(relativeTime);
 const eventsTableLinkedFields = () => [
   {
     fieldName: 'speakers',
-    tableName: process.env.AIRTABLE_EVENTS_SPEAKERS_TABLE, // changed from eventsTable(), to process.env.AIRTABLE_EVENTS_SPEAKERS_TABLE
+    tableName: process.env.AIRTABLE_EVENTS_SPEAKERS_TABLE,
   },
 ];
 
-// console.log('The speakers name is:', process.env.AIRTABLE_EVENTS_SPEAKERS_TABLE);
 
 // AirTable doesn't include fields that it sees as empty (including its equivalent of boolean false) so we need to populate them
 function addEmptyFields(record, fieldDefinitions) {
@@ -77,12 +76,9 @@ async function getAllRecords(tableName, includeId = false, linkedFields) {
 
     return await Promise.all(
       allRecordsRaw.map(async (record) => {
-        //     console.log('record ', record)
-        // console.log('linked fields', linkedFields)
         if (linkedFields?.length) {
           record = await addLinkedFields(tableName, record, linkedFields);
         }
-        // console.log('record after', record)
         return includeId // if records don't already have a unique identifier column (e.g. events), it's useful to include the record ID from AirTable
           ? {
               id: record.id,
@@ -125,13 +121,10 @@ async function addLinkedFields(tableName, record, linkedFields) {
 async function getRecordById(tableName, recordId, linkedFields) {
   try {
     let record = await module.exports.client().table(tableName).find(recordId);
-    // console.log('recordsRaw', record);
 
-    // if linkedfields and linkedfields.length > 0
     if (linkedFields?.length) {
       record = await addLinkedFields(tableName, record, linkedFields);
     }
-    // console.log('record.fields', record.fields);
     // replace the speakers on records.fields with the actual speakers data name and url
     // this will return the the name of speaker and url
     return record.fields;
