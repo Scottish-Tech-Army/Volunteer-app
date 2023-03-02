@@ -14,7 +14,6 @@
  */
 
 import {
-  Button,
   Heading,
   VStack,
   HStack,
@@ -33,6 +32,10 @@ import Brand from '@/NativeBase/Components/Brand'
 import { changeTheme, ThemeState } from '@/Store/Theme'
 import { changeWelcome, WelcomeState } from '@/Store/Welcome'
 import { version } from '../../../package.json'
+import SegmentedPicker, {
+  SegmentedPickerOption,
+} from '../Components/SegmentedPicker'
+import { capitaliseFirstLetter } from '@/Utils/Text'
 
 const ProfileContainer = () => {
   const { colorMode, toggleColorMode } = useColorMode()
@@ -48,6 +51,14 @@ const ProfileContainer = () => {
   )
   const [colourModeChoice, setColourModeChoice] = useState<string>(
     useSystemColourMode ? 'system' : colorMode ?? 'light',
+  )
+  const colourModeOptions = ['system', 'dark', 'light'].map(
+    option =>
+      ({
+        text: capitaliseFirstLetter(option),
+        onPress: () => updateColourMode(option),
+        isSelected: colourModeChoice === option,
+      } as SegmentedPickerOption),
   )
 
   const updateColourMode = (newColourMode: string) => {
@@ -84,29 +95,11 @@ const ProfileContainer = () => {
       <VStack safeAreaTop space={4} padding={4}>
         <Brand />
 
-        <Heading>Dark mode</Heading>
-        <HStack space={2}>
-          <Button
-            onPress={() => updateColourMode('system')}
-            variant={colourModeChoice === 'system' ? 'solid' : 'outline'}
-          >
-            Use system default
-          </Button>
-          <Button
-            onPress={() => updateColourMode('dark')}
-            variant={colourModeChoice === 'dark' ? 'solid' : 'outline'}
-          >
-            Dark
-          </Button>
-          <Button
-            onPress={() => updateColourMode('light')}
-            variant={colourModeChoice === 'light' ? 'solid' : 'outline'}
-          >
-            Light
-          </Button>
-        </HStack>
+        <Heading size="sm">Dark mode</Heading>
 
-        <Heading>Welcome screen</Heading>
+        <SegmentedPicker options={colourModeOptions} />
+
+        <Heading size="sm">Welcome screen</Heading>
         <Checkbox
           colorScheme={'pink'}
           value="welcome"
@@ -114,7 +107,7 @@ const ProfileContainer = () => {
           isChecked={welcomeState}
           onChange={() => onChangeSplash({ show: !welcomeState })}
         >
-          Show splash screen on app launch
+          <Text fontSize="sm">Show splash screen on app launch</Text>
         </Checkbox>
         <Spacer />
         <HStack justifyContent="center">
@@ -126,15 +119,19 @@ const ProfileContainer = () => {
             mx={0}
             px={0}
           />
-          <Text>Version {version}</Text>
+          <Text fontSize="2xs">Version {version}</Text>
         </HStack>
         <HStack safeAreaBottom space="4" justifyContent={'center'}>
-          <Link href="https://www.scottishtecharmy.org/app-privacy-policy">
-            Privacy policy
-          </Link>
-          <Link href="https://www.scottishtecharmy.org/app-terms-conditions">
-            Terms and conditions
-          </Link>
+          <Text fontSize="sm">
+            <Link href="https://www.scottishtecharmy.org/app-privacy-policy">
+              Privacy policy
+            </Link>
+          </Text>
+          <Text fontSize="sm">
+            <Link href="https://www.scottishtecharmy.org/app-terms-conditions">
+              Terms & conditions
+            </Link>
+          </Text>
         </HStack>
       </VStack>
     </ScrollView>

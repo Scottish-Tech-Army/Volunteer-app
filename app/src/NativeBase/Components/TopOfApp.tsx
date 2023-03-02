@@ -10,6 +10,7 @@ import {
   Icon,
   IconButton,
   StatusBar,
+  useColorMode,
   useColorModeValue,
 } from 'native-base'
 import React, { FC } from 'react'
@@ -27,6 +28,7 @@ const TopOfApp: FC<TopOfAppProps> = ({
   showSearchButton,
   onSearchButtonPress,
 }) => {
+  const { colorMode } = useColorMode()
   const logoSize = {
     height: 32,
     width: 101,
@@ -39,7 +41,14 @@ const TopOfApp: FC<TopOfAppProps> = ({
 
   return (
     <>
-      <StatusBar barStyle={statusBarStyle} />
+      <StatusBar
+        backgroundColor={
+          colorMode === 'light'
+            ? StaTheme.colors.bg['100']
+            : StaTheme.colors.bgDarkMode['100']
+        }
+        barStyle={statusBarStyle}
+      />
 
       <Box
         _dark={{ backgroundColor: StaTheme.colors.bgDarkMode['100'] }}
@@ -49,9 +58,9 @@ const TopOfApp: FC<TopOfAppProps> = ({
         <HStack
           alignItems="center"
           justifyContent="space-between"
-          marginY={2}
+          marginBottom={2}
           paddingX={4}
-          paddingY={2}
+          paddingBottom={2}
           width="100%"
         >
           {logo}

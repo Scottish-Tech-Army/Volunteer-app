@@ -9,8 +9,32 @@ import { extendTheme } from 'native-base'
 const common = {
   colours: {
     pink100: '#d1338A',
+    purple100: '#604696',
+    mediumGrey100: '#a9a9a9',
+    secondaryGrey100: '#e6e6e6',
     darkGrey100: '#3c3c3b',
     offWhite100: '#fbfbfb',
+  },
+  fonts: {
+    family: {
+      primary: 'Poppins',
+    },
+    size: {
+      '2xs': 12,
+      xs: 16,
+      sm: 18,
+      md: 20,
+      lg: 32,
+      xl: 36,
+      '2xl': 40,
+      '3xl': 44,
+      '4xl': 48,
+      '5xl': 52,
+      '6xl': 60,
+      '7xl': 72,
+      '8xl': 96,
+      '9xl': 128,
+    },
   },
   icons: {
     size: 8,
@@ -45,17 +69,38 @@ const StaTheme = extendTheme({
     bgDarkMode: {
       100: common.colours.darkGrey100,
     },
+    border: {
+      100: common.colours.mediumGrey100,
+    },
+    inputBorder: {
+      100: common.colours.purple100,
+    },
     error: {
       100: '#e30613',
     },
     focus: {
       100: common.colours.darkGrey100,
     },
+    placeholder: {
+      100: common.colours.darkGrey100,
+    },
+    placeholderDarkMode: {
+      100: common.colours.offWhite100,
+    },
     accentGreen: {
       100: '#1d781d',
     },
     accentOrange: {
       100: '#ec6730',
+    },
+    accentPurple: {
+      100: common.colours.purple100,
+    },
+    darkGrey: {
+      100: common.colours.darkGrey100,
+    },
+    secondaryGrey: {
+      100: common.colours.secondaryGrey100,
     },
   },
 
@@ -101,16 +146,24 @@ const StaTheme = extendTheme({
   },
 
   fonts: {
-    primary: 'Poppins',
+    body: common.fonts.family.primary,
+    heading: common.fonts.family.primary,
+    primary: common.fonts.family.primary,
   },
 
-  fontSizes: {
-    small: 10,
-    regular: 12,
-    large: 14,
-  },
+  fontSizes: common.fonts.size,
 
+  // Open the extendTheme files referenced above to see all the components and default properties you can set
   components: {
+    Divider: {
+      baseStyle: {
+        bg: common.colours.mediumGrey100,
+        _dark: {
+          bg: common.colours.mediumGrey100,
+        },
+      },
+    },
+
     Heading: {
       baseStyle: {
         color: common.colours.darkGrey100,
@@ -159,17 +212,69 @@ const StaTheme = extendTheme({
       }),
     },
 
+    Input: {
+      baseStyle: () => ({
+        placeholderTextColor: 'text.100',
+        _dark: {
+          borderColor: 'white',
+          color: 'textDarkMode.100',
+          placeholderTextColor: 'placeholderDarkMode.100',
+        },
+      }),
+      defaultProps: {
+        _dark: {
+          _focus: {
+            bg: 'bgDarkMode.100',
+            _ios: {
+              selectionColor: 'textDarkMode.100',
+            },
+            _android: {
+              selectionColor: 'textDarkMode.100',
+            },
+          },
+        },
+        _focus: {
+          bg: 'bg.100',
+          borderColor: 'inputBorder.100',
+          borderWidth: '2',
+          _ios: {
+            selectionColor: 'text.100',
+          },
+          _android: {
+            selectionColor: 'text.100',
+          },
+        },
+      },
+      sizes: {
+        md: {
+          fontSize: common.fonts.size.md,
+        },
+        sm: {
+          fontSize: common.fonts.size.md,
+        },
+      },
+    },
+
+    ScrollView: {
+      defaultProps: {
+        padding: '4',
+      },
+    },
+
     Text: {
       baseStyle: () => ({
         _light: {
-          color: common.colours.darkGrey100,
+          color: 'darkGrey.100',
           padding: '2',
         },
         _dark: {
-          color: common.colours.offWhite100,
+          color: 'textDarkMode.100',
           padding: '2',
         },
       }),
+      defaultProps: {
+        fontSize: common.fonts.size.md,
+      },
     },
   },
 
