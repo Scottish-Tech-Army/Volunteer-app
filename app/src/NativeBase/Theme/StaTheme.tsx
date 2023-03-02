@@ -222,9 +222,27 @@ const StaTheme = extendTheme({
         },
       }),
       defaultProps: {
+        _dark: {
+          _focus: {
+            bg: 'bgDarkMode.100',
+            _ios: {
+              selectionColor: 'textDarkMode.100',
+            },
+            _android: {
+              selectionColor: 'textDarkMode.100',
+            },
+          },
+        },
         _focus: {
+          bg: 'bg.100',
           borderColor: 'inputBorder.100',
           borderWidth: '2',
+          _ios: {
+            selectionColor: 'text.100',
+          },
+          _android: {
+            selectionColor: 'text.100',
+          },
         },
       },
       sizes: {

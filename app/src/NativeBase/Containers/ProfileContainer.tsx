@@ -95,11 +95,11 @@ const ProfileContainer = () => {
       <VStack safeAreaTop space={4} padding={4}>
         <Brand />
 
-        <Heading>Dark mode</Heading>
+        <Heading size="sm">Dark mode</Heading>
 
         <SegmentedPicker options={colourModeOptions} />
 
-        <Heading>Welcome screen</Heading>
+        <Heading size="sm">Welcome screen</Heading>
         <Checkbox
           colorScheme={'pink'}
           value="welcome"
