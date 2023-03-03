@@ -122,8 +122,8 @@ const TextInputControl: FC<TextInputControlProps> = ({
   }
 
   return (
-    <Box>
-      <Text fontWeight="600" fontSize="lg">
+    <Box marginBottom="6">
+      <Text fontWeight="600" fontSize="sm" paddingLeft="0" paddingBottom="1">
         {label}
         {required ? <Text color="error.100">*</Text> : ''}
       </Text>
@@ -135,9 +135,14 @@ const TextInputControl: FC<TextInputControlProps> = ({
         style={textInputStyle}
         textContentType={textContentType}
         value={value}
+        borderColor={error ? 'error.100' : 'inputBorder.100'}
       />
 
-      {error && <ErrorMessage errorType={errorType} />}
+      {error && (
+        <Box position="absolute" bottom="-35">
+          <ErrorMessage errorType={errorType} />
+        </Box>
+      )}
     </Box>
   )
 }

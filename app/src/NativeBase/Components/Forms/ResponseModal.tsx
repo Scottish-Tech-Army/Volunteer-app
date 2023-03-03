@@ -1,5 +1,5 @@
 /**
- * @file Modal shows response when a form is submitted.
+ * @file Modal shows response from api.
  */
 
 import React, { FC } from 'react'
@@ -38,13 +38,13 @@ const ResponseModal: FC<ResponseModalProps> = ({
             <Modal.Header
               alignItems="center"
               _dark={{ color: 'bgDarkMode.100' }}
-              _light={{ color: 'grey.60' }}
+              _light={{ color: 'grey.80' }}
             >
               <Icon
                 as={MaterialIcons}
                 _dark={{ color: 'textDarkMode.100' }}
                 _light={{
-                  color: 'grey.60',
+                  color: 'grey.80',
                 }}
                 name="check-circle"
               />
@@ -67,13 +67,13 @@ const ResponseModal: FC<ResponseModalProps> = ({
           <Modal.Header
             alignItems="center"
             _dark={{ color: 'bgDarkMode.100' }}
-            _light={{ color: 'grey.60' }}
+            _light={{ color: 'grey.80' }}
           >
             <Icon
               as={MaterialIcons}
               _dark={{ color: 'textDarkMode.100' }}
               _light={{
-                color: 'grey.60',
+                color: 'grey.80',
               }}
               name="error"
             />

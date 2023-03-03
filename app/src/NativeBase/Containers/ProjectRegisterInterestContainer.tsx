@@ -12,13 +12,13 @@ const ProjectRegisterInterestContainer = (props: {
   route: { params: { project: Project } }
 }) => {
   const { project } = props.route.params
-  const navigation = useNavigation()
+  // const navigation = useNavigation()
 
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      title: project.name,
-    })
-  }, [navigation, project.name])
+  // useLayoutEffect(() => {
+  //   navigation.setOptions({
+  //     title: project.name,
+  //   })
+  // }, [navigation, project.name])
 
   return (
     <ScrollView>

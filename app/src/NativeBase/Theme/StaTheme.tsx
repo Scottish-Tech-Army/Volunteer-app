@@ -11,9 +11,31 @@ const common = {
     pink100: '#d1338A',
     darkGrey100: '#3c3c3b',
     offWhite100: '#fbfbfb',
+    darkPurple100: '#604696',
   },
   icons: {
     size: 8,
+  },
+  fonts: {
+    family: {
+      primary: 'Poppins',
+    },
+    size: {
+      '2xs': 12,
+      xs: 16,
+      sm: 18,
+      md: 20,
+      lg: 32,
+      xl: 36,
+      '2xl': 40,
+      '3xl': 44,
+      '4xl': 48,
+      '5xl': 52,
+      '6xl': 60,
+      '7xl': 72,
+      '8xl': 96,
+      '9xl': 128,
+    },
   },
 }
 
@@ -46,10 +68,10 @@ const StaTheme = extendTheme({
       100: common.colours.darkGrey100,
     },
     inputBorder: {
-      100: '#604696', //dark purple
+      100: common.colours.darkPurple100,
     },
     error: {
-      100: '#e30613', //red
+      100: '#e30613',
     },
     focus: {
       100: common.colours.darkGrey100,
@@ -61,9 +83,11 @@ const StaTheme = extendTheme({
       100: '#ec6730',
     },
     grey: {
-      100: '#3c3c3b', //dark grey
-      60: '#737373', //medium grey
-      20: '#e9e9e9', //light grey
+      100: common.colours.darkGrey100,
+      80: '#737373',
+      60: '#a9a9a9',
+      40: '#f1f1f1',
+      20: '#F6F6F6',
     },
   },
 
@@ -109,14 +133,16 @@ const StaTheme = extendTheme({
   },
 
   fonts: {
-    primary: 'Poppins',
+    primary: common.fonts.family.primary,
+    heading: common.fonts.family.primary,
+    body: common.fonts.family.primary,
   },
 
-  fontSizes: {
-    small: 10,
-    regular: 12,
-    large: 14,
-  },
+  // fontSizes: {
+  //   small: 10,
+  //   regular: 12,
+  //   large: 14,
+  // },
 
   components: {
     Heading: {
@@ -132,22 +158,20 @@ const StaTheme = extendTheme({
     Button: {
       baseStyle: {
         rounded: 'full',
-        marginX: '1',
         paddingY: '0',
         marginBottom: '5',
         height: '12',
       },
       defaultProps: {
         bg: 'primary.100',
-
         _pressed: {
           bg: 'primary.60',
         },
         _text: {
           fontWeight: '600',
-          fontSize: 'xl',
+          fontSize: 'md',
           padding: '0',
-          color: common.colours.offWhite100,
+          color: 'white',
         },
       },
     },
@@ -190,8 +214,9 @@ const StaTheme = extendTheme({
       baseStyle: { fontFamily: 'primary' },
       defaultProps: {
         borderWidth: '1',
-        borderColor: 'grey.60',
-        marginX: '2.5',
+        padding: '1',
+        paddingLeft: '2',
+        borderColor: 'inputBorder.100',
         variant: 'unstyled',
         _focus: { borderColor: 'inputBorder.100', borderWidth: '2' },
       },

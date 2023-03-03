@@ -4,6 +4,7 @@
 
 import React, { FC, useEffect, useState } from 'react'
 import { ScrollView, VStack, Box, Button } from 'native-base'
+import { Dimensions } from 'react-native'
 import dayjs from 'dayjs'
 import YesNoChoice from '../Forms/YesNoChoice'
 import TextInputControl from '../Forms/TextInputControl'
@@ -147,6 +148,7 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
       })
     }
   }
+  const windowHeight = Dimensions.get('window').height
 
   return (
     <>
@@ -157,8 +159,8 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
         success={success}
         onClose={onClose}
       />
-      <ScrollView>
-        <VStack margin="9px">
+      <ScrollView paddingX="3">
+        <VStack minHeight={windowHeight - 125} marginBottom="10">
           <TextInputControl
             error={errors.hasOwnProperty('firstName')}
             errorType={errors.firstName?.type}
@@ -203,12 +205,12 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
             onChange={value => setAvailableFromDate(value)}
             value={availableFromDate}
           />
-          <Box marginTop="70">
-            <Button disabled={loading} onPress={submitForm}>
-              {loading ? 'Sending...' : 'Volunteer Now'}
-            </Button>
-          </Box>
         </VStack>
+        <Box position="absolute" bottom="0" width="full" paddingTop="10">
+          <Button disabled={loading} onPress={submitForm}>
+            {loading ? 'Sending...' : 'Volunteer Now'}
+          </Button>
+        </Box>
       </ScrollView>
     </>
   )

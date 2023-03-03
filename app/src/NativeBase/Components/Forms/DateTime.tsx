@@ -7,6 +7,7 @@ import CalendarPicker from 'react-native-calendar-picker'
 import { Pressable, Dimensions } from 'react-native'
 import { VStack, Box, Text, Input, useColorMode } from 'native-base'
 import dayjs from 'dayjs'
+import StaTheme from '../../Theme/StaTheme'
 
 interface DateTimeAltProps {
   description: string
@@ -28,18 +29,19 @@ const DateTimeAlt: FC<DateTimeAltProps> = ({
   const windowWidth = Dimensions.get('window').width
   return (
     <VStack>
-      <Box marginY="5" marginX="2" borderColor="grey.60" shadow="2">
+      <Box marginTop="5" marginBottom="10" borderColor="grey.60" shadow="2">
         <VStack>
           <Box
             marginTop="1"
             marginX="0.5"
+            shadow="1"
             bg={
               !pickerActive && colorMode === 'light' ? 'grey.20' : 'primary.80'
             }
           >
             <Text
               paddingTop="6"
-              fontSize="sm"
+              fontSize="xs"
               lineHeight="7"
               color={
                 !pickerActive && colorMode === 'light'
@@ -69,11 +71,9 @@ const DateTimeAlt: FC<DateTimeAltProps> = ({
             <Input
               marginX="6"
               value={dayjs(value).format('DD/MM/YY')}
-              showSoftInputOnFocus={false}
-              onFocus={() => setPickerActive(true)}
               borderColor="inputBorder.100"
               isReadOnly={true}
-              bg={colorMode === 'light' ? 'grey.20' : 'grey.60'}
+              bg={colorMode === 'light' ? 'grey.40' : 'grey.80'}
               borderWidth={pickerActive ? '0' : '1'}
               borderBottomWidth="1"
               borderBottomColor={
@@ -92,7 +92,6 @@ const DateTimeAlt: FC<DateTimeAltProps> = ({
               weekdays={['M', 'T', 'W', 'T', 'F', 'S', 'S']}
               restrictMonthNavigation={true}
               onDateChange={onChange}
-              scrollable={false}
               date={value}
               selectedDayColor="#d659a0"
               dayTextColor={colorMode === 'light' ? '#3c3c3b' : '#FFFFFF'}
