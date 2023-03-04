@@ -10,28 +10,38 @@ import {
   Icon,
   IconButton,
   StatusBar,
+  useColorMode,
   useColorModeValue,
 } from 'native-base'
 import React from 'react'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { StackHeaderProps } from '@react-navigation/stack'
+import StaTheme from '../Theme/StaTheme'
 
 const NavigationHeader: React.FC<StackHeaderProps> = ({
   back,
   navigation,
   options,
 }) => {
+  const { colorMode } = useColorMode()
   const statusBarStyle = useColorModeValue('dark-content', 'light-content')
 
   return (
     <>
-      <StatusBar barStyle={statusBarStyle} />
+      <StatusBar
+        backgroundColor={
+          colorMode === 'light'
+            ? StaTheme.colors.bg['100']
+            : StaTheme.colors.bgDarkMode['100']
+        }
+        barStyle={statusBarStyle}
+      />
 
       <Box safeAreaTop>
         <HStack
           alignItems="center"
           justifyContent={back ? 'space-between' : 'center'}
-          marginY={2}
+          marginBottom={2}
           paddingX={2}
           width="100%"
         >
@@ -45,7 +55,7 @@ const NavigationHeader: React.FC<StackHeaderProps> = ({
             />
           )}
 
-          <Heading size="md">{options.title}</Heading>
+          <Heading size="sm">{options.title}</Heading>
 
           {/* Empty Box is here to ensure layout of title and back button */}
           {Boolean(back) && <Box width={8} />}

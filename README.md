@@ -110,6 +110,10 @@ Below are some commonly encountered issues and possible ways to resolve them. If
   > Sometimes this happens when one or more of the project dependencies gets updated and is out of step with the others. Try running `npm install --legacy-peer-deps` or `npm install --force`.
 - When I run `npm run android`, it fails and says that `ANDROID_HOME` is not set
   > Go to the [React Native setup guide](https://reactnative.dev/docs/environment-setup), choose the 'React Native CLI Quickstart' tab, choose your platform, and make sure that you've set the ANDROID_HOME environment variable as described there. You may need to restart your terminal window in order for the change to take effect.
+- When I run `npm run android`, it fails with `java.lang.OutOfMemoryError` somewhere in the error messages
+  > Find the `.gradle` directory on your computer -- it may be a hidden directory, it will be outside of your Volunteer app directory, maybe in your home directory at e.g. `~/.gradle`  In that directory, create a new file `gradle.properties`, add this line to it `org.gradle.jvmargs=-Xmx2048m -XX:MaxPermSize=512m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8` and save the file.  This tells the Android Java build process how much memory to use.  Try running `npm run android` again.  If you still get the same error, try increasing `2048` to a higher number (normally multiples of 1024 or 2048, e.g. `4096`).
+- When I run `npm run android`, it fails and says `com.android.ddmlib.InstallException: INSTALL_FAILED_VERSION_DOWNGRADE`
+  > This happens when you have installed a newer version of the app (in terms of Android version numbers) on your emulator and then you switch back to an older version.  (For example, maybe you were preparing to [deploy](DEPLOYMENT.md) a new version of the app on one branch, then you switched to another branch and tried to run that older version.)  With your Android emulator open, run the command `adb uninstall org.scottishtecharmy.volunteerapp` to uninstall the app from your emulator.  Then run `npm run android` again and it should work.
 
 ## The app builds, but crashes when I run it
 
@@ -117,7 +121,8 @@ Below are some commonly encountered issues and possible ways to resolve them. If
   > Make sure the API is running on your local machine, and that your **api/.env** and **app/Config/index.ts** files are configured correctly (see [Setup and first run](#setup-and-first-run) above)
 - The app crashes with an error that says 'Metro has encountered an error: Cannot read properties of undefined (reading 'transformFile')'
   > Make sure you are using the LTS version of Node (currently v16); see [suggested solutions on StackOverflow](https://stackoverflow.com/questions/69647332/cannot-read-properties-of-undefined-reading-transformfile-at-bundler-transfo). If you want to keep your current version of Node as well, you can use tools such as [nvm (MacOS/Linux)](https://github.com/nvm-sh/nvm) or [nvm-windows](https://github.com/coreybutler/nvm-windows) to manage your Node installations.
-
+- The app crashes with an opensslErrorStack: (error: 03000086)
+  > Make sure you are using Node v16 LTS due to known conflicts on some devices between OpenSSL and Node v17+; see [suggested solutions on StackOverflow](https://stackoverflow.com/questions/74726224/opensslerrorstack-error03000086digital-envelope-routinesinitialization-e). 
 # Subsequent run
 
 1. Open Command terminal.

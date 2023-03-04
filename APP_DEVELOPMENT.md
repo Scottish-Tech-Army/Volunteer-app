@@ -88,6 +88,44 @@ In case you need it, you can also use `useColorMode` or `useColorModeValue` to d
 
 ### Custom components
 
+These are custom components we've developed, in addition to NativeBase readymade components:
+
+#### Brand
+
+![Brand component](screenshots/components/Brand.png)
+
+Displays the wide version of the STA logo
+
+#### ChoicesList
+
+![ChoicesList component](screenshots/components/ChoicesList.png)
+
+Tappable list of options to choose from, with arrows
+
+#### FreeSearchBar
+
+![FreeSearchBar component](screenshots/components/FreeSearchBar.png)
+
+Text input for searching
+
+#### NavigationHeader
+
+![NavigationHeader component](screenshots/components/NavigationHeader.png)
+
+Shown at the top of some screens - a screen title and (optionally) a back button
+
+#### SegmentedPicker
+
+![SegmentedPicker component](screenshots/components/SegmentedPicker.png)
+
+Useful for choosing between 2-3 choices, text must be kept very short (probably one word) for each
+
+#### TopOfApp
+
+![TopOfApp component](screenshots/components/TopOfApp.png)
+
+Shown at the top of some screens - a small STA logo and (optionally) a search icon button
+
 #### TextInputControl
 
 ![TextInputControl component](screenshots/components/TextInputControl.png)

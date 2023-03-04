@@ -16,7 +16,7 @@ import {
 /**
  * Defines the type of params expected when navigating to each screen
  */
-type RootStackParamList = {
+export type RootStackParamList = {
   Startup: undefined
   Home: undefined
   ProjectDetail: {

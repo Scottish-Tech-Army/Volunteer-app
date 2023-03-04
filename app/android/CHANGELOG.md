@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [1.0.10 (version code 11)] - 2023-02-24Z
+
+- Updated the design of the project search screen
+
 ## [1.0.9(version code 10)] - 2022-11-21Z
 
 ### Added
