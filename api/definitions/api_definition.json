@@ -27,8 +27,8 @@
                     "notes": "",
                     "series": "STA Project Showcase",
                     "related_initiative": "Volunteer app",
-                    "video_webpage": "https://vimeo.com/583815096",
                     "video_file": "https://vod-progressive.akamaized.net/exp=1657227176~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F678%2F28%2F703391800%2F3256486964.mp4~hmac=e76bbd7e698f0d46c373bce069f936a24182694a1b0d140a63fcf240a2e8b65c/vimeo-prod-skyfire-std-us/01/678/28/703391800/3256486964.mp4",
+                    "video_webpage": "https://vimeo.com/583815096",
                     "video_thumbnail": "https://dl.airtable.com/.attachments/02b4bf4e52db4d9d85575186c487c635/c05231f4/1218826759-b3cef7ddaf08fa26e375d87a2fc78e7fc0ca49ffb2809197dcf3ea6bec5e09ec-d_1280?ts=1653904352&userId=usrrNJEU7hToH1AMK&cs=ee8f353da772f926",
                     "images": []
                   },
@@ -220,13 +220,14 @@
                     "client": "PKAVS",
                     "role": "QA Tester",
                     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-                    "video_webpage": "https://youtube.com/a1B2c3D4e5",
                     "skills": ["Acceptance Testing"],
                     "hours": "5-10 hours per week",
                     "required": "One person",
                     "buddying": false,
                     "scope": "https://drive.google.com/file/d/1j469c-xp8HPYLocTgz5lMYHnnz7TsRVP/view?usp=sharing",
                     "sector": "Arts & Culture",
+                    "video_webpage": "https://youtube.com/a1B2c3D4e5",
+                    "video_webpage_player_only": "https://www.youtube.com/embed/a1B2c3D4e5",
                     "video_file": ""
                   },
                   {
@@ -237,13 +238,14 @@
                     "client": "PKAVS",
                     "role": "Web designer",
                     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-                    "video_webpage": "https://vimeo.com/123456",
                     "skills": ["HTML", "CSS"],
                     "hours": "1-2 days per week",
                     "required": "One person",
                     "buddying": false,
                     "scope": "https://drive.google.com/file/d/1j469c-xp8HPYLocTgz5lMYHnnz7TsRVP/view?usp=sharing",
                     "sector": "Arts & Culture",
+                    "video_webpage": "https://vimeo.com/123456",
+                    "video_webpage_player_only": "https://player.vimeo.com/video/123456",
                     "video_file": "https://vod-progressive.akamaized.net/exp=1657227176~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F678%2F28%2F703391800%2F3256486964.mp4~hmac=e76bbd7e698f0d46c373bce069f936a24182694a1b0d140a63fcf240a2e8b65c/vimeo-prod-skyfire-std-us/01/678/28/703391800/3256486964.mp4"
                   },
                   {
@@ -254,14 +256,15 @@
                     "client": "Scottish Tech Army",
                     "role": "Lead developer",
                     "description": "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                    "video_webpage": "",
                     "skills": ["React Native", "Node.js"],
                     "hours": "2-3 days per week",
                     "required": "One person",
                     "buddying": true,
                     "scope": "https://drive.google.com/file/d/1j469c-xp8HPYLocTgz5lMYHnnz7TsRVP/view?usp=sharing",
                     "sector": "Education & Youth",
-                    "video_file": "https://vod-progressive.akamaized.net/exp=1657227176~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F678%2F28%2F703391800%2F3256486964.mp4~hmac=e76bbd7e698f0d46c373bce069f936a24182694a1b0d140a63fcf240a2e8b65c/vimeo-prod-skyfire-std-us/01/678/28/703391800/3256486964.mp4"
+                    "video_webpage": "",
+                    "video_webpage_player_only": "",
+                    "video_file": ""
                   }
                 ],
                 "schema": {
@@ -290,13 +293,14 @@
                   "client": "PKAVS",
                   "role": "QA Tester",
                   "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-                  "video_webpage": "https://vimeo.com/123456",
                   "skills": ["Acceptance Testing"],
                   "hours": "5-10 hours per week",
                   "required": "One person",
                   "buddying": false,
                   "scope": "https://drive.google.com/file/d/1j469c-xp8HPYLocTgz5lMYHnnz7TsRVP/view?usp=sharing",
                   "sector": "Arts & Culture",
+                  "video_webpage": "https://vimeo.com/123456",
+                  "video_webpage_player_only": "https://player.vimeo.com/video/123456",
                   "video_file": "https://vod-progressive.akamaized.net/exp=1657227176~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F678%2F28%2F703391800%2F3256486964.mp4~hmac=e76bbd7e698f0d46c373bce069f936a24182694a1b0d140a63fcf240a2e8b65c/vimeo-prod-skyfire-std-us/01/678/28/703391800/3256486964.mp4"
                 },
                 "schema": {
@@ -432,10 +436,6 @@
               "type": "string",
               "description": "Description of what the project work involves"
             },
-            "video_webpage": {
-              "type": "string",
-              "description": "URL of the charity introducing the project. Expected to be a Vimeo or YouTube video web page"
-            },
             "skills": {
               "type": "array",
               "description": "List of skills required for the project",
@@ -463,9 +463,17 @@
               "type": "string",
               "description": "Project charity sector"
             },
+            "video_webpage": {
+              "type": "string",
+              "description": "URL of a video where the charity introduces the project. Usually a Vimeo or YouTube video web page, but occasionally any other website.  Web page will have branding, text, other videos, etc."
+            },
+            "video_webpage_player_only": {
+              "type": "string",
+              "description": "URL of a video where the charity introduces the project -- sourced using video_webpage. Will be a Vimeo or YouTube video web page.  Web page will only have the video player itself (no branding, text, other videos, etc)."
+            },
             "video_file": {
               "type": "string",
-              "description": "URL of MP4 file of the video introducing the project from video_webpage, if the video is on Vimeo. These URLs expire every hour"
+              "description": "URL of MP4 video file where the charity introduces the project -- sourced using video_webpage, if the video is on Vimeo. These URLs expire every hour"
             }
           }
         }

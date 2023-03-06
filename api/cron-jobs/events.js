@@ -14,7 +14,7 @@ async function addEventsVideoFiles(events) {
   console.log(`🛈 ${eventsThatHaveVideos.length} of ${events.length} events have a video`);
 
   for (const event of eventsThatHaveVideos) {
-    const video_file = await vimeoService.getVideoFileFromVimeo(event.video_webpage);
+    const video_file = await vimeoService.getVideoFile(event.video_webpage);
 
     if (video_file) {
       const updateRecordResult = await airTable.updateRecordById(airTable.eventsTable(), event.id, {
@@ -44,7 +44,7 @@ async function addEventsVideoThumbnails(events) {
   );
 
   for (const event of eventsNeedingVideoThumbnailAdded) {
-    const video_thumbnail = await vimeoService.getVideoThumbnailFromVimeo(event.video_webpage);
+    const video_thumbnail = await vimeoService.getVideoThumbnail(event.video_webpage);
 
     if (video_thumbnail) {
       const updateRecordResult = await airTable.updateRecordById(airTable.eventsTable(), event.id, {

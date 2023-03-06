@@ -6,10 +6,10 @@ const axios = require('axios').default;
 
 // Returns the URL of an MP4 video file
 // This URL is only valid for an hour
-async function getVideoFileFromVimeo(videoWebpageUrl) {
+async function getVideoFile(videoWebpageUrl) {
   if (!videoWebpageUrl) return;
 
-  const vimeoId = module.exports.getVimeoVideoIdFromUrl(videoWebpageUrl);
+  const vimeoId = module.exports.getVideoIdFromUrl(videoWebpageUrl);
   if (!vimeoId) return;
 
   try {
@@ -34,10 +34,10 @@ async function getVideoFileFromVimeo(videoWebpageUrl) {
 }
 
 // Returns the URL of a thumbnail image for the video
-async function getVideoThumbnailFromVimeo(videoWebpageUrl) {
+async function getVideoThumbnail(videoWebpageUrl) {
   if (!videoWebpageUrl) return;
 
-  const vimeoId = module.exports.getVimeoVideoIdFromUrl(videoWebpageUrl);
+  const vimeoId = module.exports.getVideoIdFromUrl(videoWebpageUrl);
   if (!vimeoId) return;
 
   try {
@@ -73,28 +73,43 @@ async function getVideoThumbnailFromVimeo(videoWebpageUrl) {
   return;
 }
 
+// Returns the URL of a webpage which contains only a video player (no branding, text, other videos, etc)
+function getVideoWebpagePlayerOnly(videoWebpageUrl) {
+  const vimeoId = module.exports.getVideoIdFromUrl(videoWebpageUrl);
+  if (!vimeoId) return;
+
+  return `https://player.vimeo.com/video/${vimeoId}`;
+}
+
 // Gets the ID of a Vimeo video from the URL of a Vimeo video page
 // E.g. pass in 'https://vimeo.com/583815096' or 'https://vimeo.com/manage/videos/583815096' and you get back '583815096'
-function getVimeoVideoIdFromUrl(videoWebpageUrl) {
-  if (!videoWebpageUrl.includes('vimeo.com')) return;
+function getVideoIdFromUrl(videoWebpageUrl) {
+  try {
+    if (!videoWebpageUrl.includes('vimeo.com')) return;
 
-  const urlObject = new URL(videoWebpageUrl);
+    const urlObject = new URL(videoWebpageUrl);
 
-  // We ideally want a URL like https://vimeo.com/796237419 but some people are entering URLs like https://vimeo.com/manage/videos/796237419 so we need to force the format we want
-  const pathnameCleaned = urlObject.pathname.replace('manage/videos/', '');
+    // We ideally want a URL like https://vimeo.com/796237419 but URLs like https://vimeo.com/manage/videos/796237419 may also be used
+    const pathnameCleaned = urlObject.pathname.replace('manage/videos/', '');
 
-  const vimeoId = pathnameCleaned.split('/')[1]; // get the part after the first forward slash in the pathname
+    const vimeoId = pathnameCleaned.split('/')[1]; // get the part after the first forward slash in the pathname
 
-  // Verify if the vimeoId contains only digits
-  if (vimeoId.match(/^[0-9]+$/)) {
-    return vimeoId;
-  } else {
+    // Verify if the vimeoId contains only digits
+    if (vimeoId.match(/^[0-9]+$/)) {
+      return vimeoId;
+    } else {
+      return;
+    }
+  } catch (error) {
+    console.error(error);
+
     return;
   }
 }
 
 module.exports = {
-  getVideoFileFromVimeo,
-  getVideoThumbnailFromVimeo,
-  getVimeoVideoIdFromUrl,
+  getVideoFile,
+  getVideoThumbnail,
+  getVideoWebpagePlayerOnly,
+  getVideoIdFromUrl,
 };
