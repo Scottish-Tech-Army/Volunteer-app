@@ -36,6 +36,9 @@ export type RootStackParamList = {
   ProjectScope: {
     url: string
   }
+  ProjectVideo: {
+    url: string
+  }
   Events: {
     screen?: 'Events'
     selectedOption?: EventsRange | 'myEvents'

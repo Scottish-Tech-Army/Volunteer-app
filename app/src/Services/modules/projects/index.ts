@@ -14,14 +14,15 @@ export interface Project {
   client: string
   role: string
   description: string
-  video_webpage: string
   skills: string[]
   hours: string
   required: string
   buddying: boolean
   sector: ProjectSector
-  video_file: string
   scope: string
+  video_file?: string // URL of an MP4 video file
+  video_webpage?: string // URL of a page with the video player + also branding, text, other videos, etc, usually on Vimeo or YouTube -- of the three video fields this is most likely to be populated
+  video_webpage_player_only?: string // URL of a page with only the video player - no branding, text, other videos, etc, usually on Vimeo or YouTube
 }
 
 export type Projects = Project[]

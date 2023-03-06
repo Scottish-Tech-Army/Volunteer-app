@@ -24,7 +24,10 @@ import MainNavigator from './Main'
 import { navigationRef } from './utils'
 import ProjectScope from '@/Components/Project/ProjectScope'
 import NavigationHeader from '@/NativeBase/Components/NavigationHeader'
-import ProjectSearchContainer from '@/NativeBase/Containers/ProjectSearchContainer'
+import {
+  ProjectSearchContainer,
+  ProjectVideoContainer,
+} from '@/NativeBase/Containers'
 import StaTheme from '@/NativeBase/Theme/StaTheme'
 import { ThemeState } from '@/Store/Theme'
 
@@ -147,11 +150,29 @@ const ApplicationNavigator = () => {
           />
 
           <Stack.Screen
+            name="ProjectScope"
+            component={ProjectScope}
+            options={{
+              ...stackScreenDefaultOptions,
+              title: 'Project Scope',
+            }}
+          />
+
+          <Stack.Screen
             name="ProjectSearch"
             component={ProjectSearchContainer}
             options={{
               ...stackScreenDefaultOptions,
               title: 'Search',
+            }}
+          />
+
+          <Stack.Screen
+            name="ProjectVideo"
+            component={ProjectVideoContainer}
+            options={{
+              ...stackScreenDefaultOptions,
+              title: 'Project Video',
             }}
           />
 
@@ -177,15 +198,6 @@ const ApplicationNavigator = () => {
             name="Welcome"
             component={WelcomeContainer}
             options={{ headerShown: false }}
-          />
-
-          <Stack.Screen
-            name="ProjectScope"
-            component={ProjectScope}
-            options={{
-              ...stackScreenDefaultOptions,
-              title: 'Project Scope',
-            }}
           />
         </Stack.Navigator>
       </NavigationContainer>
