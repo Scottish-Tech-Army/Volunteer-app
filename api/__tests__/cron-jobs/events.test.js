@@ -38,8 +38,8 @@ describe('Test the events cron jobs', () => {
     const fakeEventsCountWithVideoWebpage = fakeEvents.length - fakeEventsCountWithoutVideoWebpage; // how many events with a video
 
     // Mock dependencies
-    const getVideoFileFromVimeoSpy = jest
-      .spyOn(vimeoService, 'getVideoFileFromVimeo')
+    const getVideoFileSpy = jest
+      .spyOn(vimeoService, 'getVideoFile')
       .mockImplementation(() => Promise.resolve(faker.internet.url()));
     const airTableUpdateRecordByIdSpy = jest
       .spyOn(airTable, 'updateRecordById')
@@ -52,13 +52,13 @@ describe('Test the events cron jobs', () => {
     await eventsCronJobs.addEventsVideoFiles(fakeEvents);
 
     // Check our test expectations are met
-    expect(getVideoFileFromVimeoSpy).toHaveBeenCalledTimes(fakeEventsCountWithVideoWebpage);
+    expect(getVideoFileSpy).toHaveBeenCalledTimes(fakeEventsCountWithVideoWebpage);
     expect(airTableUpdateRecordByIdSpy).toHaveBeenCalledTimes(fakeEventsCountWithVideoWebpage);
     expect(airTableEventsTableSpy).toHaveBeenCalledTimes(fakeEventsCountWithVideoWebpage);
     expect(timingDelaySpy).toHaveBeenCalledTimes(fakeEventsCountWithVideoWebpage);
 
     // Clean up
-    getVideoFileFromVimeoSpy.mockRestore();
+    getVideoFileSpy.mockRestore();
     airTableUpdateRecordByIdSpy.mockRestore();
     airTableEventsTableSpy.mockRestore();
     timingDelaySpy.mockRestore();
@@ -87,8 +87,8 @@ describe('Test the events cron jobs', () => {
       });
 
     // Mock dependencies
-    const getVideoThumbnailFromVimeoSpy = jest
-      .spyOn(vimeoService, 'getVideoThumbnailFromVimeo')
+    const getVideoThumbnailSpy = jest
+      .spyOn(vimeoService, 'getVideoThumbnail')
       .mockImplementation(() => Promise.resolve(faker.internet.url()));
     const airTableUpdateRecordByIdSpy = jest
       .spyOn(airTable, 'updateRecordById')
@@ -101,13 +101,13 @@ describe('Test the events cron jobs', () => {
     await eventsCronJobs.addEventsVideoThumbnails(fakeEvents);
 
     // Check our test expectations are met
-    expect(getVideoThumbnailFromVimeoSpy).toHaveBeenCalledTimes(fakeEventsCountWithoutVideoThumbnail);
+    expect(getVideoThumbnailSpy).toHaveBeenCalledTimes(fakeEventsCountWithoutVideoThumbnail);
     expect(airTableUpdateRecordByIdSpy).toHaveBeenCalledTimes(fakeEventsCountWithoutVideoThumbnail);
     expect(airTableEventsTableSpy).toHaveBeenCalledTimes(fakeEventsCountWithoutVideoThumbnail);
     expect(timingDelaySpy).toHaveBeenCalledTimes(fakeEventsCountWithoutVideoThumbnail);
 
     // Clean up
-    getVideoThumbnailFromVimeoSpy.mockRestore();
+    getVideoThumbnailSpy.mockRestore();
     airTableUpdateRecordByIdSpy.mockRestore();
     airTableEventsTableSpy.mockRestore();
     timingDelaySpy.mockRestore();

@@ -3,7 +3,7 @@ const axios = require('axios');
 const vimeoService = require('../../services/vimeo');
 
 describe('Test the Vimeo service', () => {
-  test('getVideoFileFromVimeo', async () => {
+  test('getVideoFile', async () => {
     // Set up fake test data
     const fakeVimeoId = faker.datatype.number({ min: 100000000, max: 999999999 });
     const fakeVideoWebPage = `https://vimeo.com/${fakeVimeoId}`;
@@ -25,26 +25,26 @@ describe('Test the Vimeo service', () => {
     };
 
     // Mock dependencies
-    const getVimeoVideoIdFromUrlSpy = jest
-      .spyOn(vimeoService, 'getVimeoVideoIdFromUrl')
+    const getVideoIdFromUrlSpy = jest
+      .spyOn(vimeoService, 'getVideoIdFromUrl')
       .mockImplementation(() => fakeVimeoId);
     const axiosSpy = jest.spyOn(axios, 'get').mockImplementation(() => Promise.resolve(fakeVimeoData));
 
     // Run the function we're testing
-    const response = await vimeoService.getVideoFileFromVimeo(fakeVideoWebPage);
+    const response = await vimeoService.getVideoFile(fakeVideoWebPage);
 
     // Check our test expectations are met
-    expect(getVimeoVideoIdFromUrlSpy).toHaveBeenCalledTimes(1);
+    expect(getVideoIdFromUrlSpy).toHaveBeenCalledTimes(1);
     expect(axiosSpy).toHaveBeenCalledTimes(1);
     expect(axiosSpy).toHaveBeenCalledWith(fakeApiVimeoCall);
     expect(response).toEqual(fakeVideoFile);
 
     // Clean up
-    getVimeoVideoIdFromUrlSpy.mockRestore();
+    getVideoIdFromUrlSpy.mockRestore();
     axiosSpy.mockRestore();
   });
 
-  test('getVideoThumbnailFromVimeo', async () => {
+  test('getVideoThumbnail', async () => {
     // Set up fake test data
     const fakeVimeoId = faker.datatype.number({ min: 100000000, max: 999999999 });
     const fakeVideoWebPage = `https://vimeo.com/${fakeVimeoId}`;
@@ -69,38 +69,66 @@ describe('Test the Vimeo service', () => {
     };
 
     // Mock dependencies
-    const getVimeoVideoIdFromUrlSpy = jest
-      .spyOn(vimeoService, 'getVimeoVideoIdFromUrl')
+    const getVideoIdFromUrlSpy = jest
+      .spyOn(vimeoService, 'getVideoIdFromUrl')
       .mockImplementation(() => fakeVimeoId);
     const axiosSpy = jest.spyOn(axios, 'get').mockImplementation(() => Promise.resolve(fakeVimeoData));
 
     // Run the function we're testing
-    const response = await vimeoService.getVideoThumbnailFromVimeo(fakeVideoWebPage);
+    const response = await vimeoService.getVideoThumbnail(fakeVideoWebPage);
 
     // Check our test expectations are met
-    expect(getVimeoVideoIdFromUrlSpy).toHaveBeenCalledTimes(1);
+    expect(getVideoIdFromUrlSpy).toHaveBeenCalledTimes(1);
     expect(axiosSpy).toHaveBeenCalledTimes(1);
     expect(axiosSpy).toHaveBeenCalledWith(fakeApiVimeoCall);
     expect(response).toEqual(`${fakeThumbnail1280}.jpg`);
 
     // Clean up
-    getVimeoVideoIdFromUrlSpy.mockRestore();
+    getVideoIdFromUrlSpy.mockRestore();
     axiosSpy.mockRestore();
   });
 
-  test('getVimeoVideoIdFromUrl correctly gets the video ID from a Vimeo video page URL', async () => {
+  test('getVideoWebpagePlayerOnly', async () => {
     // Set up fake test data
     const fakeVimeoId = faker.datatype.number({ min: 100000000, max: 999999999 });
     const fakeVideoWebPage = `https://vimeo.com/${fakeVimeoId}`;
+    const fakeVideoWebPagePlayerOnly = `https://player.vimeo.com/video/${fakeVimeoId}`;
+
+    // Mock dependencies
+    const getVideoIdFromUrlSpy = jest
+      .spyOn(vimeoService, 'getVideoIdFromUrl')
+      .mockImplementation(() => fakeVimeoId);
 
     // Run the function we're testing
-    const response = vimeoService.getVimeoVideoIdFromUrl(fakeVideoWebPage);
+    const response = vimeoService.getVideoWebpagePlayerOnly(fakeVideoWebPage);
 
     // Check our test expectations are met
-    expect(response).toEqual(fakeVimeoId.toString());
+    expect(getVideoIdFromUrlSpy).toHaveBeenCalledTimes(1);
+    expect(getVideoIdFromUrlSpy).toHaveBeenCalledWith(fakeVideoWebPage);
+    expect(response).toEqual(fakeVideoWebPagePlayerOnly);
+
+    // Clean up
+    getVideoIdFromUrlSpy.mockRestore();
   });
 
-  test('getVimeoVideoIdFromUrl checks it is a Vimeo URL', async () => {
+  test('getVideoIdFromUrl correctly gets the video ID from a Vimeo video page URL', async () => {
+    // Set up fake test data
+    const fakeVimeoId = faker.datatype.number({ min: 100000000, max: 999999999 });
+    const fakeVideoWebPages = [
+      `https://vimeo.com/${fakeVimeoId}`,
+      `https://vimeo.com/manage/videos/${fakeVimeoId}`,
+    ];
+
+    for (const fakeVideoWebPage of fakeVideoWebPages) {
+      // Run the function we're testing
+      const response = vimeoService.getVideoIdFromUrl(fakeVideoWebPage);
+
+      // Check our test expectations are met
+      expect(response).toEqual(fakeVimeoId.toString());
+    }
+  });
+
+  test('getVideoIdFromUrl checks it is a Vimeo URL', async () => {
     // Set up fake test data
     const nonVimeoWebPage = faker.internet.url();
 
@@ -108,7 +136,7 @@ describe('Test the Vimeo service', () => {
     const consoleErrorSpy = jest.spyOn(global.console, 'error').mockImplementation(() => {});
 
     // Run the function we're testing
-    const response = vimeoService.getVimeoVideoIdFromUrl(nonVimeoWebPage);
+    const response = vimeoService.getVideoIdFromUrl(nonVimeoWebPage);
 
     // Check our test expectations are met
     expect(response).toEqual(undefined);
@@ -117,7 +145,7 @@ describe('Test the Vimeo service', () => {
     consoleErrorSpy.mockRestore();
   });
 
-  test('getVimeoVideoIdFromUrl checks video ID is a number', async () => {
+  test('getVideoIdFromUrl checks video ID is a number', async () => {
     // Set up fake test data
     const incorrectVimeoWebPage = `https://vimeo.com/${faker.datatype.string(10)}`;
 
@@ -125,7 +153,7 @@ describe('Test the Vimeo service', () => {
     const consoleErrorSpy = jest.spyOn(global.console, 'error').mockImplementation(() => {});
 
     // Run the function we're testing
-    const response = vimeoService.getVimeoVideoIdFromUrl(incorrectVimeoWebPage);
+    const response = vimeoService.getVideoIdFromUrl(incorrectVimeoWebPage);
 
     // Check our test expectations are met
     expect(response).toEqual(undefined);

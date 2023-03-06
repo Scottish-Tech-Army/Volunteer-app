@@ -303,7 +303,7 @@ describe('Test the projects/resources caching cron job', () => {
     // Mock dependencies
     const axiosSpy = jest.spyOn(axios, 'get').mockImplementationOnce(() => Promise.resolve(fakeJiraItApiResults));
     const vimeoSpy = jest
-      .spyOn(vimeo, 'getVideoFileFromVimeo')
+      .spyOn(vimeo, 'getVideoFile')
       .mockImplementation(() => Promise.resolve(fakeVideoFile));
 
     // Run test
