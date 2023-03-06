@@ -29,12 +29,22 @@ const Video: FC<VideoProps> = ({
   const aspectRatio = 9 / 16
   const [boxWidth, setBoxWidth] = useState(0)
   const height = boxWidth * aspectRatio
+  const [useVideoFileIfAvailable, setUseVideoFileIfAvailable] = useState(true)
+  const [
+    useVideoWebpagePlayerIfAvailable,
+    setUseVideoWebpagePlayerIfAvailable,
+  ] = useState(true)
   const webViewStyle = {
     minHeight: height,
     width: boxWidth,
   }
 
-  if (!videoFile && !videoWebpagePlayerOnly && !videoWebpage) return null
+  if (
+    (!videoFile || !useVideoFileIfAvailable) &&
+    (!videoWebpagePlayerOnly || !useVideoWebpagePlayerIfAvailable) &&
+    !videoWebpage
+  )
+    return null
 
   return (
     <Box
@@ -49,18 +59,26 @@ const Video: FC<VideoProps> = ({
        * As a fallback we use video_webpage_player_only to show the video inside a small webview (it should look like just a normal video player, not a web page) on the screen they're already on
        * As a second fallback if there is a video_webpage we give the user a link to watch the video in a web view on another screen
        */}
-      {videoFile ? (
+      {videoFile && useVideoFileIfAvailable ? (
         <VideoComponent
-          source={{ uri: videoFile }}
-          paused
-          style={{ width: boxWidth, height }}
           controls
+          onError={error => {
+            setUseVideoFileIfAvailable(false)
+            console.error('Error loading video file', error)
+          }}
+          paused
+          source={{ uri: videoFile }}
+          style={{ width: boxWidth, height }}
         />
-      ) : videoWebpagePlayerOnly ? (
+      ) : videoWebpagePlayerOnly && useVideoWebpagePlayerIfAvailable ? (
         <WebView
           allowsFullscreenVideo
           allowsInlineMediaPlayback
           mediaPlaybackRequiresUserAction={false}
+          onError={error => {
+            setUseVideoWebpagePlayerIfAvailable(false)
+            console.error('Error loading video webpage - player only', error)
+          }}
           source={{ uri: videoWebpagePlayerOnly as string }}
           style={webViewStyle}
         />
