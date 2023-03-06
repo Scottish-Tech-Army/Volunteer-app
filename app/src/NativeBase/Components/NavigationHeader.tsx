@@ -18,6 +18,12 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { StackHeaderProps } from '@react-navigation/stack'
 import StaTheme from '../Theme/StaTheme'
 
+/**
+ * Component showing screen title and a back button at top of screen.
+ *
+ * @param {StackHeaderProps} props The component props
+ * @returns {React.ReactElement} Component
+ */
 const NavigationHeader: React.FC<StackHeaderProps> = ({
   back,
   navigation,

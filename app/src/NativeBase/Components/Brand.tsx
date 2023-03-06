@@ -11,6 +11,12 @@ interface Props {
   width?: number | string
 }
 
+/**
+ * Component showing STA branding (logo).
+ *
+ * @param {Props} props The component props
+ * @returns {React.ReactElement} Component
+ */
 const Brand = ({ width }: Props) => {
   const logo = useColorModeValue(
     <StaLogoWide width={width} />,

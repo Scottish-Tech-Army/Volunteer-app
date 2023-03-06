@@ -1,4 +1,6 @@
-// Show a video
+/**
+ * @file Show a video.
+ */
 
 import { navigate } from '@/Navigators/utils'
 import { Box } from 'native-base'
@@ -13,6 +15,12 @@ interface VideoProps {
   videoWebpagePlayerOnly?: string
 }
 
+/**
+ * Component showing tappable list of options in a vertical list with horizontal arrows.
+ *
+ * @param {VideoProps} props The component props
+ * @returns {React.ReactElement} Component
+ */
 const Video: FC<VideoProps> = ({
   videoFile,
   videoWebpage,

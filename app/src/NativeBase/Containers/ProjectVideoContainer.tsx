@@ -13,8 +13,11 @@ export interface ProjectVideoRouteParams {
 }
 
 /**
- * Container for the user to search projects e.g. by free text, category, skills
- *
+ * Container for showing a video web page
+ * @param {object} props The container props
+ * @param {object} props.route A route object containing params
+ * @param {ProjectVideoRouteParams} props.route.params The parameters to send to this container when navigating, to set what it displays
+ * @param {string} props.route.params.url The URL of the video web page to show
  * @returns {React.ReactElement} Component
  */
 const ProjectVideoContainer = (props: {

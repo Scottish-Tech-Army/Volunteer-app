@@ -1,5 +1,5 @@
 /**
- * @file Tappable list of options to choose from, with arrows.
+ * @file Pressable text and an arrow on the right.
  */
 
 import { HStack, Icon, Pressable, Text } from 'native-base'
@@ -13,10 +13,12 @@ interface LinkAndArrowProps {
 }
 
 /**
- * Component showing tappable list of options in a vertical list with horizontal arrows.
+ * Component showing pressable text and an arrow on the right.
  *
  * @param {LinkAndArrowProps} props The component props
- * @param {LinkAndArrowChoice[]} props.choices The choices to show in the list
+ * @param {boolean} [props.bottomBorder] Whether to show a bottom border
+ * @param {function} props.onPress Event handler for when the component is pressed
+ * @param {string} props.text Text to show
  * @returns {React.ReactElement} Component
  */
 const LinkAndArrow: FC<LinkAndArrowProps> = ({
