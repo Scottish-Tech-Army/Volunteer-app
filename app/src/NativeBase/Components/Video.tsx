@@ -24,7 +24,7 @@ interface VideoProps {
  * @param {string} [props.videoWebpage] URL of a webpage containing a video player plus probably other branding, text, other videos, etc
  * @param {string} [props.videoWebpagePlayerOnly] URL of a webpage containing simply a video player only (no branding, text, other videos, etc)
  * @param {keyof RootStackParamList} [props.videoWebpageScreen] The screen to navigate to in order to show videoWebpage
- * @returns {React.ReactElement} Component
+ * @returns {JSX.Element} Component
  */
 const Video: FC<VideoProps> = ({
   videoFile,
