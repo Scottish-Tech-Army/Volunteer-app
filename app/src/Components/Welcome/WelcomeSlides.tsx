@@ -1,7 +1,8 @@
-//Data to be rendered in the flatlist 'WelcomeSlider'
+/**
+ * @file Data to be rendered in the flatlist 'WelcomeSlider'
+ */
 
 import React from 'react'
-import { Image, View } from 'react-native'
 import Welcome from '@/Assets/Images/Welcome.png'
 import Volunteer from '@/Assets/Images/Volunteer.png'
 import MakeAnImpact from '@/Assets/Images/MakeAnImpact.png'
