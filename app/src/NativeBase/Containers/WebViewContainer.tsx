@@ -17,7 +17,7 @@ export interface WebViewRouteParams {
  * @param {object} props.route A route object containing params
  * @param {WebViewRouteParams} props.route.params The parameters to send to this container when navigating, to set what it displays
  * @param {string} props.route.params.url The URL of the web page to show
- * @returns {JSX.Element} Component
+ * @returns {React.ReactElement} Component
  */
 const WebViewContainer = (props: {
   route: {
