@@ -4,7 +4,7 @@
 
 import { VStack } from 'native-base'
 import React, { FC } from 'react'
-import LinkAndArrow from './LinkAndArrow'
+import TextAndArrow from './TextAndArrow'
 
 export interface ChoicesListChoice {
   text: string
@@ -25,10 +25,11 @@ interface ChoicesListProps {
 const ChoicesList: FC<ChoicesListProps> = ({ choices }) => (
   <VStack>
     {choices.map(choice => (
-      <LinkAndArrow
-        bottomBorder
+      <TextAndArrow
+        fontWeight="300"
         key={choice.text}
         onPress={choice.onPress}
+        showBottomBorder
         text={choice.text}
       />
     ))}

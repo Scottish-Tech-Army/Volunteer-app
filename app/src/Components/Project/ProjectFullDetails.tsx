@@ -105,6 +105,7 @@ const ProjectFullDetails: FC<ProjectFullDetailsProps> = ({ project }) => {
           videoFile={project.video_file}
           videoWebpage={project.video_webpage}
           videoWebpagePlayerOnly={project.video_webpage_player_only}
+          videoWebpageScreen="ProjectVideo"
         />
         <SectionHeader>Team</SectionHeader>
         <ProjectTeam>Placeholder text</ProjectTeam>

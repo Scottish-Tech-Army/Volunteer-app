@@ -107,9 +107,9 @@ Tappable list of options to choose from, with arrows
 
 Text input for searching
 
-#### LinkAndArrow
+#### TextAndArrow
 
-![LinkAndArrow component](screenshots/components/LinkAndArrow.png)
+![TextAndArrow component](screenshots/components/TextAndArrow.png)
 
 Pressable text and an arrow on the right, can be used alone - also used in ChoicesList
 

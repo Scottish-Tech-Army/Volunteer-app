@@ -6,34 +6,42 @@ import { HStack, Icon, Pressable, Text } from 'native-base'
 import React, { FC } from 'react'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
-interface LinkAndArrowProps {
-  bottomBorder?: boolean
+interface TextAndArrowProps {
+  fontSize?: string
+  fontWeight?: string
   onPress: () => void
+  showBottomBorder?: boolean
   text: string
 }
 
 /**
  * Component showing pressable text and an arrow on the right.
  *
- * @param {LinkAndArrowProps} props The component props
- * @param {boolean} [props.bottomBorder] Whether to show a bottom border
+ * @param {TextAndArrowProps} props The component props
+ * @param {string} [props.fontSize] Font size
+ * @param {string} [props.fontWeight] Font weight
  * @param {function} props.onPress Event handler for when the component is pressed
+ * @param {boolean} [props.showBottomBorder] Whether to show a bottom border
  * @param {string} props.text Text to show
  * @returns {React.ReactElement} Component
  */
-const LinkAndArrow: FC<LinkAndArrowProps> = ({
-  bottomBorder,
-  text,
+const TextAndArrow: FC<TextAndArrowProps> = ({
+  fontSize,
+  fontWeight,
   onPress,
+  showBottomBorder,
+  text,
 }) => (
   <Pressable onPress={onPress}>
     <HStack
       alignItems="center"
       borderBottomColor="border.100"
-      borderBottomWidth={bottomBorder ? '1' : '0'}
+      borderBottomWidth={showBottomBorder ? '1' : '0'}
       justifyContent="space-between"
     >
-      <Text fontWeight="300">{text}</Text>
+      <Text fontSize={fontSize ?? 'md'} fontWeight={fontWeight ?? '400'}>
+        {text}
+      </Text>
       <Icon
         as={MaterialIcons}
         color="primary.100"
@@ -44,4 +52,4 @@ const LinkAndArrow: FC<LinkAndArrowProps> = ({
   </Pressable>
 )
 
-export default LinkAndArrow
+export default TextAndArrow
