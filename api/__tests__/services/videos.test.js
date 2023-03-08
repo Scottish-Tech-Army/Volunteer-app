@@ -5,7 +5,7 @@ const vimeoService = require('../../services/vimeo');
 const youTubeService = require('../../services/youTube');
 
 describe('Test the videos service', () => {
-  test('getVideoWebpagePlayerOnly gets Vimeo URL', () => {
+  test('getVideoWebpagePlayerOnly gets Vimeo URL', async () => {
     // Set up fake test data
     const fakeVideoWebPage = `https://vimeo.com/${faker.datatype.number({ min: 100000000, max: 999999999 })}`;
     const fakeVideoWebPagePlayerOnly = faker.internet.url();
@@ -18,7 +18,7 @@ describe('Test the videos service', () => {
       .spyOn(youTubeService, 'getVideoWebpagePlayerOnly');
 
     // Run the function we're testing
-    const response = videosService.getVideoWebpagePlayerOnly(fakeVideoWebPage);
+    const response = await videosService.getVideoWebpagePlayerOnly(fakeVideoWebPage);
 
     // Check our test expectations are met
     expect(vimeoGetVideoWebpagePlayerOnlySpy).toHaveBeenCalledTimes(1);
@@ -31,7 +31,7 @@ describe('Test the videos service', () => {
     youTubeGetVideoWebpagePlayerOnlySpy.mockRestore();
   });
 
-  test('getVideoWebpagePlayerOnly gets YouTube URL', () => {
+  test('getVideoWebpagePlayerOnly gets YouTube URL', async () => {
     // Set up fake test data
     const fakeVideoWebPage = `https://youtube.com/watch?v=${faker.lorem.word(11)}`;
     const fakeVideoWebPagePlayerOnly = faker.internet.url();
@@ -45,7 +45,7 @@ describe('Test the videos service', () => {
       .mockImplementation(() => fakeVideoWebPagePlayerOnly);
 
     // Run the function we're testing
-    const response = videosService.getVideoWebpagePlayerOnly(fakeVideoWebPage);
+    const response = await videosService.getVideoWebpagePlayerOnly(fakeVideoWebPage);
 
     // Check our test expectations are met
     expect(vimeoGetVideoWebpagePlayerOnlySpy).toHaveBeenCalledTimes(1);
@@ -59,7 +59,7 @@ describe('Test the videos service', () => {
     youTubeGetVideoWebpagePlayerOnlySpy.mockRestore();
   });
 
-  test('getVideoWebpagePlayerOnly returns nothing if video webpage is not Vimeo or YouTube', () => {
+  test('getVideoWebpagePlayerOnly returns nothing if video webpage is not Vimeo or YouTube', async () => {
     // Set up fake test data
     const fakeVideoWebPage = faker.internet.url();
 
@@ -72,7 +72,7 @@ describe('Test the videos service', () => {
       .mockImplementation(() => undefined);
 
     // Run the function we're testing
-    const response = videosService.getVideoWebpagePlayerOnly(fakeVideoWebPage);
+    const response = await videosService.getVideoWebpagePlayerOnly(fakeVideoWebPage);
 
     // Check our test expectations are met
     expect(vimeoGetVideoWebpagePlayerOnlySpy).toHaveBeenCalledTimes(1);

@@ -102,7 +102,6 @@ const ProjectFullDetails: FC<ProjectFullDetailsProps> = ({ project }) => {
           url={project.scope}
         />
         <Video
-          videoFile={project.video_file}
           videoWebpage={project.video_webpage}
           videoWebpagePlayerOnly={project.video_webpage_player_only}
           videoWebpageScreen="ProjectVideo"

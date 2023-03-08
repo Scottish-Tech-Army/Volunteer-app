@@ -14,57 +14,6 @@ describe('Test the events cron jobs', () => {
     jest.resetModules();
   });
 
-  test('addEventsVideoFiles adds video files to events that have a video', async () => {
-    // Set up fake test data
-    const fakeTableName = faker.lorem.word();
-    const fakeEventsCountMin = 10;
-    const fakeEventsCountMax = 20;
-    const fakeEventsCountWithoutVideoWebpage = faker.datatype.number({ min: 2, max: 5 }); // how many events with no video
-
-    let videoWebpagesRemoved = 0;
-    const fakeEvents = eventsTestData
-      .fakeEventObjects(faker.datatype.number({ min: fakeEventsCountMin, max: fakeEventsCountMax }))
-      // Remove video_webpage from some events, so that we have a mix of events with and without videos,
-      // so we can be sure we're only trying to get a video_file when we need to
-      .map((event) => {
-        if (videoWebpagesRemoved < fakeEventsCountWithoutVideoWebpage) {
-          delete event.video_webpage;
-          videoWebpagesRemoved++;
-        }
-
-        return event;
-      });
-
-    const fakeEventsCountWithVideoWebpage = fakeEvents.length - fakeEventsCountWithoutVideoWebpage; // how many events with a video
-
-    // Mock dependencies
-    const getVideoFileSpy = jest
-      .spyOn(vimeoService, 'getVideoFile')
-      .mockImplementation(() => Promise.resolve(faker.internet.url()));
-    const airTableUpdateRecordByIdSpy = jest
-      .spyOn(airTable, 'updateRecordById')
-      .mockImplementation(() => Promise.resolve({}));
-    const airTableEventsTableSpy = jest.spyOn(airTable, 'eventsTable').mockImplementation(() => fakeTableName);
-    const timingDelaySpy = jest.spyOn(timing, 'delay').mockImplementation(() => Promise.resolve());
-    const consoleLogSpy = jest.spyOn(global.console, 'log').mockImplementation(() => {});
-
-    // Run the function we're testing
-    await eventsCronJobs.addEventsVideoFiles(fakeEvents);
-
-    // Check our test expectations are met
-    expect(getVideoFileSpy).toHaveBeenCalledTimes(fakeEventsCountWithVideoWebpage);
-    expect(airTableUpdateRecordByIdSpy).toHaveBeenCalledTimes(fakeEventsCountWithVideoWebpage);
-    expect(airTableEventsTableSpy).toHaveBeenCalledTimes(fakeEventsCountWithVideoWebpage);
-    expect(timingDelaySpy).toHaveBeenCalledTimes(fakeEventsCountWithVideoWebpage);
-
-    // Clean up
-    getVideoFileSpy.mockRestore();
-    airTableUpdateRecordByIdSpy.mockRestore();
-    airTableEventsTableSpy.mockRestore();
-    timingDelaySpy.mockRestore();
-    consoleLogSpy.mockRestore();
-  });
-
   test('addEventsVideoThumbnails adds video thumbnails for events that have a video but no thumbnail', async () => {
     // Set up fake test data
     const fakeTableName = faker.lorem.word();
@@ -163,32 +112,6 @@ describe('Test the events cron jobs', () => {
     // Clean up
     getAllEventsSpy.mockRestore();
     addEventsVideoThumbnailsSpy.mockRestore();
-    consoleLogSpy.mockRestore();
-  });
-
-  test('startGettingVideoFiles gets all events then attempts to add video files', async () => {
-    // Set up fake test data
-    const fakeEvents = eventsTestData.fakeEventObjects(20);
-
-    // Mock dependencies
-    const getAllEventsSpy = jest
-      .spyOn(eventsCronJobs, 'getAllEvents')
-      .mockImplementationOnce(() => Promise.resolve(fakeEvents));
-    const addEventsVideoFilesSpy = jest
-      .spyOn(eventsCronJobs, 'addEventsVideoFiles')
-      .mockImplementationOnce(() => Promise.resolve());
-    const consoleLogSpy = jest.spyOn(global.console, 'log').mockImplementation(() => {});
-
-    // Run test
-    await eventsCronJobs.startGettingVideoFiles();
-
-    expect(getAllEventsSpy).toHaveBeenCalledTimes(1);
-    expect(addEventsVideoFilesSpy).toHaveBeenCalledTimes(1);
-    expect(addEventsVideoFilesSpy).toHaveBeenCalledWith(fakeEvents);
-
-    // Clean up
-    getAllEventsSpy.mockRestore();
-    addEventsVideoFilesSpy.mockRestore();
     consoleLogSpy.mockRestore();
   });
 });

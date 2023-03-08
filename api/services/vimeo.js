@@ -3,34 +3,10 @@
  */
 
 const axios = require('axios').default;
+const Vimeo = require('vimeo').Vimeo;
 
-// Returns the URL of an MP4 video file
-// This URL is only valid for an hour
-async function getVideoFile(videoWebpageUrl) {
-  if (!videoWebpageUrl) return;
-
-  const vimeoId = module.exports.getVideoIdFromUrl(videoWebpageUrl);
-  if (!vimeoId) return;
-
-  try {
-    const vimeoResponse = await axios.get(`https://player.vimeo.com/video/${vimeoId}/config`);
-
-    if (vimeoResponse.status === 200) {
-      const videoFile = vimeoResponse.data.request.files.progressive[0]?.url;
-
-      return videoFile;
-    } else {
-      console.error(
-        `❌ Could not get Vimeo video file for video ID ${vimeoId} -- error connecting to Vimeo API`,
-        vimeoResponse.statusText,
-      );
-    }
-  } catch (error) {
-    console.error(
-      `⚠️ Could not get Vimeo video file for video ID ${vimeoId} -- error connecting to Vimeo API, maybe because video creator restricted video embedding`,
-      `${error.toString().substring(0, 50)}...`,
-    );
-  }
+function client() {
+  return new Vimeo(process.env.VIMEO_CLIENT_ID, process.env.VIMEO_CLIENT_SECRET, process.env.VIMEO_ACCESS_TOKEN);
 }
 
 // Returns the URL of a thumbnail image for the video
@@ -64,20 +40,48 @@ async function getVideoThumbnail(videoWebpageUrl) {
       );
     }
   } catch (error) {
-    console.error(
-      `⚠️ Could not get Vimeo thumbnail for video ID ${vimeoId} -- error connecting to Vimeo API, maybe because video creator restricted video embedding`,
-      `${error.toString().substring(0, 50)}...`,
-    );
+    console.error(`❌ Could not get Vimeo thumbnail for video ID ${vimeoId} -- error connecting to Vimeo API`, error);
   }
 
   return;
 }
 
 // Returns the URL of a webpage which contains only a video player (no branding, text, other videos, etc)
-function getVideoWebpagePlayerOnly(videoWebpageUrl) {
+async function getVideoWebpagePlayerOnly(videoWebpageUrl) {
+  if (!videoWebpageUrl) return;
+
   const vimeoId = module.exports.getVideoIdFromUrl(videoWebpageUrl);
   if (!vimeoId) return;
 
+  const vimeoClient = module.exports.client();
+
+  return new Promise ((resolve, reject) => {
+    try {
+      vimeoClient.request({
+        method: 'GET',
+        path: `/videos/${vimeoId}`
+      }, function (error, body) {
+        if (error) {
+          console.error('Error getting video info from Vimeo', error);
+          resolve(getVideoWebpagePlayerOnlyDefault(vimeoId));
+        } else if (body.player_embed_url) {
+          // This is the ideal player-only URL to use -- returned by the Vimeo API from our Vimeo account
+          resolve(body.player_embed_url);
+        }
+
+        resolve(getVideoWebpagePlayerOnlyDefault(vimeoId));
+      });
+    } catch (error) {
+      console.error(error);
+
+      resolve(getVideoWebpagePlayerOnlyDefault(vimeoId));
+    }
+  });
+}
+
+// Sometimes we can't get the player-only URL from the API, e.g. if it's a Vimeo video not uploaded to the STA account
+// In those cases use this default player-only URL which should work
+function getVideoWebpagePlayerOnlyDefault(vimeoId) {
   return `https://player.vimeo.com/video/${vimeoId}`;
 }
 
@@ -108,7 +112,7 @@ function getVideoIdFromUrl(videoWebpageUrl) {
 }
 
 module.exports = {
-  getVideoFile,
+  client,
   getVideoThumbnail,
   getVideoWebpagePlayerOnly,
   getVideoIdFromUrl,

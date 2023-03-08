@@ -19,7 +19,8 @@
     "i": "^0.3.7",
     "node-cron": "^3.0.0",
     "node-fetch": "^3.0.0",
-    "nodemon": "^2.0.12"
+    "nodemon": "^2.0.12",
+    "vimeo": "^2.1.1"
   },
   "devDependencies": {
     "@faker-js/faker": "^6.0.0-alpha.6",

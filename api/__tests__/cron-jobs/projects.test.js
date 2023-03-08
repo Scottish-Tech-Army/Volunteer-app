@@ -5,7 +5,7 @@ const cacheProjects = require('../../cron-jobs/projects');
 const { faker } = require('@faker-js/faker');
 const projectsHelpers = require('../../helpers/projects');
 const projectsTestData = require('../../__test-data__/projects');
-const vimeo = require('../../services/vimeo');
+const videosService = require('../../services/videos');
 
 axios.defaults.adapter = require('axios/lib/adapters/http');
 
@@ -292,25 +292,25 @@ describe('Test the projects/resources caching cron job', () => {
     consoleLogSpy.mockRestore();
   });
 
-  test('getInitialTriageProjectsFromJira calls Jira API', async () => {
+  test('getInitialTriageProjectsFromJira calls Jira API and videos service', async () => {
     // Set up fake test data
     const fakeProjectsCountMinimum = 10;
     const fakeProjectsCountMaximum = 50;
     const fakeProjectsCount = faker.datatype.number({ min: fakeProjectsCountMinimum, max: fakeProjectsCountMaximum });
     const fakeJiraItApiResults = projectsTestData.fakeJiraItApiResults(fakeProjectsCount);
-    const fakeVideoFile = faker.internet.url();
+    const fakeVideoWebpagePlayerOnly = faker.internet.url();
 
     // Mock dependencies
     const axiosSpy = jest.spyOn(axios, 'get').mockImplementationOnce(() => Promise.resolve(fakeJiraItApiResults));
-    const vimeoSpy = jest
-      .spyOn(vimeo, 'getVideoFile')
-      .mockImplementation(() => Promise.resolve(fakeVideoFile));
+    const videosServiceSpy = jest
+      .spyOn(videosService, 'getVideoWebpagePlayerOnly')
+      .mockImplementation(() => Promise.resolve(fakeVideoWebpagePlayerOnly));
 
     // Run test
     const jiraItArray = await cacheProjects.getInitialTriageProjectsFromJira(0, []);
 
     expect(axiosSpy).toHaveBeenCalledTimes(1);
-    expect(vimeoSpy).toHaveBeenCalledTimes(fakeProjectsCount);
+    expect(videosServiceSpy).toHaveBeenCalledTimes(fakeProjectsCount);
     const randomItemIndex = faker.datatype.number({ min: fakeProjectsCountMinimum - 1, max: fakeProjectsCount - 1 });
     expect(jiraItArray[randomItemIndex]).toEqual({
       it_key: fakeJiraItApiResults.data.issues[randomItemIndex].key,
@@ -318,14 +318,14 @@ describe('Test the projects/resources caching cron job', () => {
       description: fakeJiraItApiResults.data.issues[randomItemIndex].fields.description,
       client: fakeJiraItApiResults.data.issues[randomItemIndex].fields.customfield_10027,
       video_webpage: fakeJiraItApiResults.data.issues[randomItemIndex].fields.customfield_10159,
+      video_webpage_player_only: fakeVideoWebpagePlayerOnly,
       scope: fakeJiraItApiResults.data.issues[randomItemIndex].fields.customfield_10090,
       sector: fakeJiraItApiResults.data.issues[randomItemIndex].fields.customfield_10148.value,
-      video_file: fakeVideoFile,
     });
 
     // Clean up
     axiosSpy.mockRestore();
-    vimeoSpy.mockRestore();
+    videosServiceSpy.mockRestore();
   });
 
   test('getResourcesFromJira calls Jira API', async () => {

@@ -3,47 +3,6 @@ const axios = require('axios');
 const vimeoService = require('../../services/vimeo');
 
 describe('Test the Vimeo service', () => {
-  test('getVideoFile', async () => {
-    // Set up fake test data
-    const fakeVimeoId = faker.datatype.number({ min: 100000000, max: 999999999 });
-    const fakeVideoWebPage = `https://vimeo.com/${fakeVimeoId}`;
-    const fakeApiVimeoCall = `https://player.vimeo.com/video/${fakeVimeoId}/config`;
-    const fakeVideoFile = faker.internet.url();
-    const fakeVimeoData = {
-      data: {
-        request: {
-          files: {
-            progressive: [
-              {
-                url: fakeVideoFile,
-              },
-            ],
-          },
-        },
-      },
-      status: 200,
-    };
-
-    // Mock dependencies
-    const getVideoIdFromUrlSpy = jest
-      .spyOn(vimeoService, 'getVideoIdFromUrl')
-      .mockImplementation(() => fakeVimeoId);
-    const axiosSpy = jest.spyOn(axios, 'get').mockImplementation(() => Promise.resolve(fakeVimeoData));
-
-    // Run the function we're testing
-    const response = await vimeoService.getVideoFile(fakeVideoWebPage);
-
-    // Check our test expectations are met
-    expect(getVideoIdFromUrlSpy).toHaveBeenCalledTimes(1);
-    expect(axiosSpy).toHaveBeenCalledTimes(1);
-    expect(axiosSpy).toHaveBeenCalledWith(fakeApiVimeoCall);
-    expect(response).toEqual(fakeVideoFile);
-
-    // Clean up
-    getVideoIdFromUrlSpy.mockRestore();
-    axiosSpy.mockRestore();
-  });
-
   test('getVideoThumbnail', async () => {
     // Set up fake test data
     const fakeVimeoId = faker.datatype.number({ min: 100000000, max: 999999999 });
@@ -98,9 +57,18 @@ describe('Test the Vimeo service', () => {
     const getVideoIdFromUrlSpy = jest
       .spyOn(vimeoService, 'getVideoIdFromUrl')
       .mockImplementation(() => fakeVimeoId);
+    const clientSpy = jest
+      .spyOn(vimeoService, 'client')
+      .mockImplementation(() => ({
+        request: (options, callback) => {
+          callback(undefined, {
+            player_embed_url: fakeVideoWebPagePlayerOnly,
+          });
+        },
+      }));
 
     // Run the function we're testing
-    const response = vimeoService.getVideoWebpagePlayerOnly(fakeVideoWebPage);
+    const response = await vimeoService.getVideoWebpagePlayerOnly(fakeVideoWebPage);
 
     // Check our test expectations are met
     expect(getVideoIdFromUrlSpy).toHaveBeenCalledTimes(1);
@@ -109,6 +77,7 @@ describe('Test the Vimeo service', () => {
 
     // Clean up
     getVideoIdFromUrlSpy.mockRestore();
+    clientSpy.mockRestore();
   });
 
   test('getVideoIdFromUrl correctly gets the video ID from a Vimeo video page URL', async () => {
