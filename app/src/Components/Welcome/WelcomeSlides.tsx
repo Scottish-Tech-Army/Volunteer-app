@@ -11,7 +11,10 @@ import styled from 'styled-components/native'
 const WelcomeImage = styled.Image`
     height:55%;
 `
-
+/**
+ * Returns array of data objects with three properties: WelcomeImage component, title, and text
+ * @returns{React.ReactElement} Component
+ */
 export function WelcomeSlides() {
   return [
     {
