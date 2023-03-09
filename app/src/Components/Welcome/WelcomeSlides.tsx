@@ -13,7 +13,7 @@ const WelcomeImage = styled.Image`
 `
 /**
  * Returns array of data objects with three properties: WelcomeImage component, title, and text
- * @returns{React.ReactElement} Component
+ * @returns {React.ReactElement} Component
  */
 export function WelcomeSlides() {
   return [
