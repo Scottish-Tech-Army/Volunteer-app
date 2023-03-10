@@ -19,7 +19,7 @@ interface ProjectRegisterInterestQuery {
 export default (build: EndpointBuilder<any, any, any>) =>
   build.query<{ data?: string; error?: string }, ProjectRegisterInterestQuery>({
     query: (query: ProjectRegisterInterestQuery) => ({
-      url: `${Config.STA_BASE_URL}/projects/single/register-interest?it=${query.project.it_key}&res=${query.project.res_id}`,
+      url: `${Config.STA_BASE_URL}${Config.STA_API_VERSION}/projects/single/register-interest?it=${query.project.it_key}&res=${query.project.res_id}`,
       method: 'POST',
       body: query.user,
     }),

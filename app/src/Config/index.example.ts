@@ -7,4 +7,6 @@ export const Config = {
   // STA Base API URL (localhost may not work on Android as it points to
   // the local device, you can try using your local IP address instead)
   STA_BASE_URL: 'http://localhost:5000',
+  // Prefix that specifies current API version.
+  STA_API_VERSION: '/v1',
 }
