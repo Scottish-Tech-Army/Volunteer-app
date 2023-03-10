@@ -2,9 +2,9 @@
  * @file Defines the list of screens (apart from the main screens that have tabs at the bottom of the app e.g. Projects -- these are defined in Main.tsx).
  */
 
-import { useColorMode } from 'native-base'
+import { useColorMode, View } from 'native-base'
 import React, { useEffect, useRef, useState } from 'react'
-import { AppState, View, StatusBar, useColorScheme } from 'react-native'
+import { AppState, StatusBar, useColorScheme } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { NavigationContainer } from '@react-navigation/native'
 import {
@@ -159,7 +159,7 @@ const ApplicationNavigator = () => {
             component={ProjectSearchContainer}
             options={{
               ...stackScreenDefaultOptions,
-              title: 'Project Search',
+              title: 'Search',
             }}
           />
 

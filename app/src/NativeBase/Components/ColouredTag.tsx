@@ -1,39 +1,39 @@
 /**
- * @file shows the project role title in a coloured box for use in projects
+ * @file shows text in a coloured box, randomly choosing one of four colours
  */
 
 import React from 'react'
 import { Box } from 'native-base'
 
-type ProjectRoleProps = {
-  role: string
+type ColouredTagProps = {
+  title: string
 }
 
 /**
  * A functional component to display the project role title in a coloured tag
- * @param {ProjectRoleProps} props - the props for this component
+ * @param {ColuredTagProps} props - the props for this component
  * @param {string} props.role - the role title
  * @returns {JSX.Element|null} Renders the project role in a coloured tag, or null if no role
  */
-const ProjectRoleTitle = ({ role }: ProjectRoleProps) => {
+const ColouredTag = ({ title }: ColouredTagProps) => {
   const colours = ['blue.20', 'purple.40', 'primary.60', 'primary.40']
   const randomColour = colours[Math.floor(Math.random() * colours.length)]
 
-  if (role) {
+  if (title) {
     return (
       <Box
         bgColor={randomColour}
         rounded="md"
         style={{ alignSelf: 'flex-start' }}
         marginLeft={2}
-        maxHeight="sm"
-        _text={{ fontSize: '2xs' }}
+        maxHeight="xs"
+        _text={{ fontSize: 'xs' }}
       >
-        {role}
+        {title}
       </Box>
     )
   }
   return null
 }
 
-export default ProjectRoleTitle
+export default ColouredTag

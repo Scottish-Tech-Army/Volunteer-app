@@ -3,7 +3,6 @@
  */
 
 import React from 'react'
-import { ScrollView } from 'react-native-gesture-handler'
 import { navigate } from '@/Navigators/utils'
 import { Project } from '@/Services/modules/projects'
 import underDevelopmentAlert from '@/Utils/UnderDevelopmentAlert'
@@ -13,13 +12,14 @@ import {
   FavouriteIcon,
   Heading,
   HStack,
+  ScrollView,
   ShareIcon,
   Text,
   VStack,
 } from 'native-base'
 import VideoComponent from '../Video'
 import ProjectAttachments from './ProjectAttachments'
-import ProjectRoleTitle from './ProjectRoleTitle'
+import ColouredTag from '../ColouredTag'
 
 interface ProjectFullDetailsProps {
   project: Project
@@ -35,8 +35,8 @@ const ProjectFullDetails = ({
   project,
 }: ProjectFullDetailsProps): JSX.Element => {
   return (
-    <ScrollView>
-      <VStack paddingX="2" bgColor="bg.secondary" space={4}>
+    <ScrollView bgColor="bg.secondary">
+      <VStack space={4}>
         <HStack
           justifyContent="space-between"
           alignItems="center"
@@ -65,13 +65,15 @@ const ProjectFullDetails = ({
           borderColor="secondaryGrey.80"
           rounded="xl"
         >
-          <Text fontSize="md">{project.client}</Text>
-          <ProjectRoleTitle role={project.role} />
+          <Text>{project.client}</Text>
+          <ColouredTag title={project.role} />
           <Text fontSize="xs">{project.hours}</Text>
           <Text fontSize="xs" fontWeight="300">
             {project.description}
           </Text>
-          {project.buddying ? <Text>Suitable for pairing</Text> : null}
+          {project.buddying ? (
+            <Text fontSize="xs">Suitable for pairing</Text>
+          ) : null}
           <ProjectAttachments details={'Project Scope'} url={project.scope} />
         </Box>
 

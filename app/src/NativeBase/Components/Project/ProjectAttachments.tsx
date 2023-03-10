@@ -22,8 +22,7 @@ const ProjectAttachments = ({ details, url }: ProjectAttachmentsProps) => {
   if (!url || !url.match('drive.google.com')) return null
   return (
     <Link
-      alignSelf="flex-start"
-      margin="0"
+      _text={{ fontSize: 'xs' }}
       onPress={() => navigate('ProjectScope', { url })}
     >
       {details}
