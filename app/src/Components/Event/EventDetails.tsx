@@ -18,7 +18,7 @@ import EventTime from './EventTime'
 import ImageFullWidth from '../ImageFullWidth'
 import ImageSwiper from '../ImageSwiper'
 import Title from '../Title'
-import Video from '../Video'
+import VideoComponent from '../../NativeBase/Components/Video'
 
 const EventTopInfo = styled.View`
   display: flex;
@@ -76,7 +76,7 @@ const EventDetails: FC<EventDetailsProps> = ({ event }) => {
 
         {/* If there's a video, show this.  Otherwise, show event image(s) if there are any, or the 'coming soon' image. */}
         {event.video_file ? (
-          <Video url={event.video_file} />
+          <VideoComponent url={event.video_file} />
         ) : event.images.length > 1 ? (
           <ImageSwiper images={event.images} />
         ) : (

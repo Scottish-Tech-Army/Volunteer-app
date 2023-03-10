@@ -10,10 +10,14 @@ const common = {
   colours: {
     pink100: '#d1338A',
     purple100: '#604696',
+    darkGrey100: '#3c3c3b',
     mediumGrey100: '#a9a9a9',
     secondaryGrey100: '#e6e6e6',
-    darkGrey100: '#3c3c3b',
     offWhite100: '#fbfbfb',
+    white: '#ffffff',
+  },
+  icons: {
+    size: 8,
   },
   fonts: {
     family: {
@@ -64,7 +68,8 @@ const StaTheme = extendTheme({
       100: common.colours.offWhite100,
     },
     bg: {
-      100: common.colours.offWhite100,
+      100: common.colours.white,
+      secondary: common.colours.offWhite100,
     },
     bgDarkMode: {
       100: common.colours.darkGrey100,
@@ -93,14 +98,35 @@ const StaTheme = extendTheme({
     accentOrange: {
       100: '#ec6730',
     },
+    accentGrey: {
+      100: '#a9a9a9',
+    },
+    blue: {
+      100: '#31729b',
+      80: '#3583af',
+      60: '#44a3cf',
+      40: '#67bddb',
+      20: '#b6e3f0',
+    },
+    purple: {
+      100: '#604696',
+      80: '#775FA5',
+      60: '#8E7BB5',
+      40: '#AEA0CA',
+      20: '#CDC6DF',
+    },
+    secondaryGrey: {
+      100: common.colours.secondaryGrey100,
+      80: '#F1F1F1',
+      60: '#F6F6F6',
+      40: common.colours.offWhite100,
+      20: common.colours.white,
+    },
     accentPurple: {
       100: common.colours.purple100,
     },
     darkGrey: {
       100: common.colours.darkGrey100,
-    },
-    secondaryGrey: {
-      100: common.colours.secondaryGrey100,
     },
   },
 
@@ -172,6 +198,28 @@ const StaTheme = extendTheme({
         },
         fontFamily: 'primary',
         fontWeight: '600',
+      },
+    },
+
+    Button: {
+      baseStyle: {
+        rounded: 'full',
+        marginX: '2',
+        paddingY: '0',
+        marginBottom: '5',
+        height: '12',
+      },
+      defaultProps: {
+        bg: 'primary.100',
+        _pressed: {
+          bg: 'primary.60',
+        },
+        _text: {
+          fontWeight: '600',
+          fontSize: 'md',
+          padding: '0',
+          color: common.colours.white,
+        },
       },
     },
 
