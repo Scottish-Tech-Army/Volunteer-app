@@ -16,9 +16,6 @@ const common = {
     offWhite100: '#fbfbfb',
     white: '#ffffff',
   },
-  icons: {
-    size: 8,
-  },
   fonts: {
     family: {
       primary: 'Poppins',
@@ -109,7 +106,7 @@ const StaTheme = extendTheme({
       20: '#b6e3f0',
     },
     purple: {
-      100: '#604696',
+      100: common.colours.purple100,
       80: '#775FA5',
       60: '#8E7BB5',
       40: '#AEA0CA',

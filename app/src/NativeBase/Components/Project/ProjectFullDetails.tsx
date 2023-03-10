@@ -9,6 +9,7 @@ import underDevelopmentAlert from '@/Utils/UnderDevelopmentAlert'
 import {
   Box,
   Button,
+  Card,
   FavouriteIcon,
   Heading,
   HStack,
@@ -17,8 +18,8 @@ import {
   Text,
   VStack,
 } from 'native-base'
-import VideoComponent from '../Video'
-import ProjectAttachments from './ProjectAttachments'
+import Video from '../Video'
+import ProjectAttachments from '../ProjectAttachments'
 import ColouredTag from '../ColouredTag'
 
 interface ProjectFullDetailsProps {
@@ -29,7 +30,7 @@ interface ProjectFullDetailsProps {
  * Displays the details of a project role
  * @param {ProjectFullDetailsProps} props - the props for this component
  * @param {Project} props.project - the project object
- * @returns {JSX.Element} - renders the project details
+ * @returns {JSX.Element} React element that renders the project details
  */
 const ProjectFullDetails = ({
   project,
@@ -42,12 +43,12 @@ const ProjectFullDetails = ({
           alignItems="center"
           paddingRight="4"
         >
-          <Heading maxWidth={246} fontSize="md">
+          <Heading width="70%" fontSize="md">
             {project.name}
           </Heading>
           <ShareIcon
             size="lg"
-            color="accentGrey"
+            color="accentGrey.100"
             onPress={underDevelopmentAlert}
           />
           <FavouriteIcon
@@ -57,7 +58,7 @@ const ProjectFullDetails = ({
           />
         </HStack>
 
-        <VideoComponent url={project.video_file} />
+        <Video url={project.video_file} />
 
         <Box
           backgroundColor="bg.100"
@@ -78,6 +79,7 @@ const ProjectFullDetails = ({
         </Box>
 
         <Button
+          marginBottom="12"
           onPress={() => {
             navigate('ProjectRegisterInterest', { project })
           }}
