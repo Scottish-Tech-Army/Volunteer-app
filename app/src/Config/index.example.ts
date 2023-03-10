@@ -1,3 +1,6 @@
+/**
+ * @file URL configuration variables
+ */
 export const Config = {
   // This will eventually be what the STA_BASE_URL is. The API_URL
   // it is set to an empty string so we can use both for now.
