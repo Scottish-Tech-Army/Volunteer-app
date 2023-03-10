@@ -36,7 +36,10 @@ const ProjectFullDetails = ({
   project,
 }: ProjectFullDetailsProps): JSX.Element => {
   return (
-    <ScrollView bgColor="bg.secondary">
+    <ScrollView
+      _dark={{ backgroundColor: 'bgDarkMode.100' }}
+      _light={{ backgroundColor: 'bg.secondary' }}
+    >
       <VStack space={4}>
         <HStack
           justifyContent="space-between"
@@ -61,7 +64,8 @@ const ProjectFullDetails = ({
         <Video url={project.video_file} />
 
         <Box
-          backgroundColor="bg.100"
+          _dark={{ backgroundColor: 'bgDarkMode.100' }}
+          _light={{ backgroundColor: 'bg.100' }}
           borderWidth={1}
           borderColor="secondaryGrey.80"
           rounded="xl"

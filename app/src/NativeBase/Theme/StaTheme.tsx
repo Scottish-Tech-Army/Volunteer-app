@@ -4,6 +4,7 @@
  */
 
 import { extendTheme } from 'native-base'
+import colors from 'native-base/lib/typescript/theme/v33x-theme/base/colors'
 
 // Common values that are repeated should go here
 const common = {
@@ -301,6 +302,12 @@ const StaTheme = extendTheme({
     },
 
     ScrollView: {
+      _light: {
+        backgroundColor: common.colours.offWhite100,
+      },
+      _dark: {
+        backgroundColor: 'bgDarkMode.100',
+      },
       defaultProps: {
         padding: '4',
       },
