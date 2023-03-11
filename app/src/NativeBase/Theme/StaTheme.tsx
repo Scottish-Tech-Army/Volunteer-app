@@ -4,7 +4,6 @@
  */
 
 import { extendTheme } from 'native-base'
-import colors from 'native-base/lib/typescript/theme/v33x-theme/base/colors'
 
 // Common values that are repeated should go here
 const common = {

@@ -1,5 +1,5 @@
 /**
- * @file the project list screen
+ * @file the project detail screen
  */
 import React from 'react'
 import ProjectFullDetails from '@/NativeBase/Components/Project/ProjectFullDetails'

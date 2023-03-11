@@ -10,10 +10,10 @@ type ColouredTagProps = {
 }
 
 /**
- * A functional component to display the project role title in a coloured tag
+ * A functional component to display text in a coloured tag
  * @param {ColouredTagProps} props - the props for this component
- * @param {string} props.role - the role title
- * @returns {JSX.Element|null} component Renders the project role in a coloured tag, or null if no role
+ * @param {string} props.title - the text
+ * @returns {JSX.Element|null} React element - renders the text in a coloured tag, or null if there is none
  */
 const ColouredTag = ({ title }: ColouredTagProps) => {
   const colours = ['blue.20', 'purple.40', 'primary.60', 'primary.40']
