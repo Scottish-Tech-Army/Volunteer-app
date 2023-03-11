@@ -327,6 +327,19 @@ const StaTheme = extendTheme({
         fontSize: common.fonts.size.md,
       },
     },
+
+    Card: {
+      baseStyle: () => ({
+        _dark: { backgroundColor: 'bgDarkMode.100' },
+        _light: { backgroundColor: 'bg.100' },
+      }),
+      defaultProps: {
+        borderWidth: 1,
+        borderColor: 'secondaryGrey.80',
+        rounded: 'xl',
+        paddingLeft: '2',
+      },
+    },
   },
 
   useSystemColorMode: false, // Couldn't get this to have any effect when testing -- also not sure if/how to set this dynamically, so instead handling this using useSystemColourMode with Store/Theme

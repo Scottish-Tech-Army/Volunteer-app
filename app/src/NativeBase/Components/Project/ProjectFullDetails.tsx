@@ -63,24 +63,18 @@ const ProjectFullDetails = ({
 
         <Video url={project.video_file} />
 
-        <Box
-          _dark={{ backgroundColor: 'bgDarkMode.100' }}
-          _light={{ backgroundColor: 'bg.100' }}
-          borderWidth={1}
-          borderColor="secondaryGrey.80"
-          rounded="xl"
-        >
+        <Card>
           <Text>{project.client}</Text>
           <ColouredTag title={project.role} />
           <Text fontSize="xs">{project.hours}</Text>
           <Text fontSize="xs" fontWeight="300">
             {project.description}
           </Text>
-          {project.buddying ? (
+          {Boolean(project.buddying) && (
             <Text fontSize="xs">Suitable for pairing</Text>
-          ) : null}
+          )}
           <ProjectAttachments details={'Project Scope'} url={project.scope} />
-        </Box>
+        </Card>
 
         <Button
           marginBottom="12"
