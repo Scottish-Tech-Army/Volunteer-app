@@ -26,25 +26,24 @@ const DatePicker: FC<DatePickerProps> = ({
   value,
 }) => {
   const [pickerActive, setPickerActive] = useState(false)
-  const [selectedStartDate, setSelectedStartDate] = useState('')
+  const [selectedStartDate, setSelectedStartDate] = useState(null)
   const [todaySelected, setTodaySelected] = useState(false)
   const { colorMode } = useColorMode()
   const { width } = Dimensions.get('window')
 
-  const handleChange = value => {
-    console.log(value)
+  const handleChange = (value: Date) => {
     onChange(value)
     setSelectedStartDate(value)
     setPickerActive(false)
-    if (value.format('DD/MM/YY') === dayjs().format('DD/MM/YY')) {
+    if (dayjs(value).format('DD/MM/YY') === dayjs().format('DD/MM/YY')) {
       setTodaySelected(true)
     } else {
       setTodaySelected(false)
     }
   }
 
-  const customDatesStylesCallback = date => {
-    if (date.format('DD/MM/YY') === dayjs().format('DD/MM/YY')) {
+  const customDatesStylesCallback = (date: Date) => {
+    if (dayjs(date).format('DD/MM/YY') === dayjs().format('DD/MM/YY')) {
       if (colorMode === 'light') {
         return {
           style: {
