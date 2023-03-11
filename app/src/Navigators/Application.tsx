@@ -142,7 +142,7 @@ const ApplicationNavigator = () => {
             component={ProjectRegisterInterestContainer}
             options={{
               ...stackScreenDefaultOptions,
-              title: 'Register Interest',
+              title: 'Register project',
             }}
           />
 

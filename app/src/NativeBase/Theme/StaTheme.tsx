@@ -10,11 +10,11 @@ const common = {
   colours: {
     pink100: '#d1338A',
     purple100: '#604696',
+    lightGrey100: '#f6f6f6',
     mediumGrey100: '#a9a9a9',
     secondaryGrey100: '#e6e6e6',
     darkGrey100: '#3c3c3b',
     offWhite100: '#fbfbfb',
-    darkPurple100: '#604696',
   },
   fonts: {
     family: {
@@ -94,21 +94,23 @@ const StaTheme = extendTheme({
     accentOrange: {
       100: '#ec6730',
     },
-    grey: {
+    accentPurple: {
+      100: common.colours.purple100,
+    },
+    darkGrey: {
       100: common.colours.darkGrey100,
-      80: '#737373',
-      60: '#a9a9a9',
-      40: '#f1f1f1',
-      20: '#F6F6F6',
-      accentPurple: {
-        100: common.colours.purple100,
-      },
-      darkGrey: {
-        100: common.colours.darkGrey100,
-      },
-      secondaryGrey: {
-        100: common.colours.secondaryGrey100,
-      },
+    },
+    secondaryGrey: {
+      100: common.colours.secondaryGrey100,
+    },
+    lighterGrey: {
+      100: '#f1f1f1',
+    },
+    darkerGrey: {
+      100: '#737373',
+    },
+    lightGrey: {
+      100: common.colours.lightGrey100,
     },
   },
 
@@ -154,8 +156,8 @@ const StaTheme = extendTheme({
   },
 
   fonts: {
-    body: common.fonts.family.primary,
-    heading: common.fonts.family.primary,
+    // body: common.fonts.family.primary,
+    // heading: common.fonts.family.primary,
     primary: common.fonts.family.primary,
   },
 
@@ -192,7 +194,7 @@ const StaTheme = extendTheme({
       defaultProps: {
         bg: 'primary.100',
         _pressed: {
-          bg: 'primary.60',
+          bg: 'primary.80',
         },
         _text: {
           fontWeight: '600',
@@ -237,18 +239,50 @@ const StaTheme = extendTheme({
         }),
       }),
     },
-    // Input: {
-    //   baseStyle: { fontFamily: 'primary' },
-    //   defaultProps: {
-    //     borderWidth: '1',
-    //     padding: '1',
-    //     paddingLeft: '2',
-    //     borderColor: 'inputBorder.100',
-    //     variant: 'unstyled',
-    //     _focus: { borderColor: 'inputBorder.100', borderWidth: '2' },
-    //   },
-    // },
-
+    FormControlLabel: {
+      baseStyle: () => {
+        return {
+          flexDirection: 'row',
+          justifyContent: 'flex-start',
+          my: '0',
+          _text: {
+            px: '0',
+            fontSize: 'sm',
+            fontWeight: '600',
+            color: 'text.100',
+          },
+          _astrick: {
+            color: 'error.100',
+          },
+          _dark: {
+            _text: {
+              color: 'textDarkMode.100',
+            },
+            _astrick: {
+              color: 'error.100',
+            },
+          },
+        }
+      },
+    },
+    FormControlErrorMessage: {
+      baseStyle: () => {
+        return {
+          position: 'absolute',
+          bottom: '-35',
+          _text: {
+            fontSize: 'xs',
+            color: 'error.100',
+          },
+          _stack: { space: 0, alignItems: 'center' },
+          _dark: {
+            _text: {
+              color: 'error.100',
+            },
+          },
+        }
+      },
+    },
     Input: {
       baseStyle: () => ({
         placeholderTextColor: 'text.100',
@@ -287,17 +321,15 @@ const StaTheme = extendTheme({
           fontSize: common.fonts.size.md,
         },
         sm: {
-          fontSize: common.fonts.size.md,
+          fontSize: common.fonts.size.sm,
         },
       },
     },
-
     ScrollView: {
       defaultProps: {
         padding: '4',
       },
     },
-
     Text: {
       baseStyle: () => ({
         fontFamily: 'primary',

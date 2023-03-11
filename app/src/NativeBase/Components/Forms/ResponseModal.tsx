@@ -31,27 +31,30 @@ const ResponseModal: FC<ResponseModalProps> = ({
         size="xl"
       >
         <Modal.Content
-          _dark={{ color: 'bgDarkMode.100' }}
+          _dark={{ color: 'textDarkMode.100' }}
           _light={{ backgroundColor: 'bg.100' }}
         >
           <Pressable onPress={() => onClose(true)}>
             <Modal.Header
               alignItems="center"
-              _dark={{ color: 'bgDarkMode.100' }}
-              _light={{ color: 'grey.80' }}
+              borderBottomWidth="0"
+              pb="0"
+              _dark={{ color: 'textDarkMode.100' }}
+              _light={{ color: 'darkerGrey.100' }}
             >
               <Icon
                 as={MaterialIcons}
-                _dark={{ color: 'textDarkMode.100' }}
-                _light={{
-                  color: 'grey.80',
-                }}
+                mb="4"
+                mt="4"
+                color="darkerGrey.100"
                 name="check-circle"
               />
               {header}
             </Modal.Header>
-            <Modal.Body>
-              <Text textAlign="center">{message}</Text>
+            <Modal.Body p="0">
+              <Text textAlign="center" fontSize="sm" p="0">
+                {message}
+              </Text>
             </Modal.Body>
           </Pressable>
         </Modal.Content>
@@ -59,29 +62,34 @@ const ResponseModal: FC<ResponseModalProps> = ({
     )
   } else {
     return (
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose} size="xl">
         <Modal.Content
-          _dark={{ color: 'bgDarkMode.100' }}
+          _dark={{ color: 'textDarkMode.100' }}
           _light={{ backgroundColor: 'bg.100' }}
         >
-          <Modal.Header
-            alignItems="center"
-            _dark={{ color: 'bgDarkMode.100' }}
-            _light={{ color: 'grey.80' }}
-          >
-            <Icon
-              as={MaterialIcons}
+          <Pressable onPress={() => onClose(true)}>
+            <Modal.Header
+              alignItems="center"
+              borderBottomWidth="0"
+              pb="0"
               _dark={{ color: 'textDarkMode.100' }}
-              _light={{
-                color: 'grey.80',
-              }}
-              name="error"
-            />
-            {header}
-          </Modal.Header>
-          <Modal.Body>
-            <Text textAlign="center">{message}</Text>
-          </Modal.Body>
+              _light={{ color: 'text.100' }}
+            >
+              <Icon
+                as={MaterialIcons}
+                mb="4"
+                mt="4"
+                color="darkerGrey.100"
+                name="error"
+              />
+              {header}
+            </Modal.Header>
+            <Modal.Body p="0">
+              <Text textAlign="center" fontSize="sm" p="0">
+                {message}
+              </Text>
+            </Modal.Body>
+          </Pressable>
         </Modal.Content>
       </Modal>
     )

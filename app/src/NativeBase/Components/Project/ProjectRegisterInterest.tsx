@@ -3,12 +3,12 @@
  */
 
 import React, { FC, useEffect, useState } from 'react'
-import { ScrollView, VStack, Box, Button } from 'native-base'
+import { VStack, Box, Button } from 'native-base'
 import { Dimensions } from 'react-native'
 import dayjs from 'dayjs'
 import YesNoChoice from '../Forms/YesNoChoice'
 import TextInputControl from '../Forms/TextInputControl'
-import DateTime from '../Forms/DateTime'
+import DatePicker from '../Forms/DatePicker'
 import ResponseModal from '../Forms/ResponseModal'
 import { goBack } from '@/Navigators/utils'
 import {
@@ -16,6 +16,8 @@ import {
   useLazyProjectRegisterInterestQuery,
 } from '@/Services/modules/projects'
 import { validateEmail } from '@/Utils/Validation'
+
+import { useNavigation } from '@react-navigation/native'
 
 interface ProjectRegisterInterestProps {
   project: Project
@@ -54,6 +56,7 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
   const [responseHeader, setResponseHeader] = useState('')
   const [responseMessage, setResponseMessage] = useState('')
   const [modalVisible, setModalVisible] = useState(false)
+  const navigation = useNavigation()
 
   useEffect(() => {
     if (responseData || responseError) {
@@ -66,6 +69,9 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
         setResponseMessage(
           'Your request has been received. The STA team will respond shortly.',
         )
+        navigation.setOptions({
+          title: 'Registration confirmed',
+        })
       }
       if (responseError) {
         setResponseHeader('Something went wrong')
@@ -74,7 +80,7 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
         )
       }
     }
-  }, [responseData, responseError])
+  }, [responseData, responseError, navigation])
 
   const onClose = () => {
     setModalVisible(false)
@@ -148,7 +154,7 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
       })
     }
   }
-  const windowHeight = Dimensions.get('window').height
+  const { height } = Dimensions.get('window')
 
   return (
     <>
@@ -159,59 +165,58 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
         success={success}
         onClose={onClose}
       />
-      <ScrollView paddingX="3">
-        <VStack minHeight={windowHeight - 125} marginBottom="10">
-          <TextInputControl
-            error={errors.hasOwnProperty('firstName')}
-            errorType={errors.firstName?.type}
-            label="First Name"
-            onBlur={() => validateField('firstName', firstName)}
-            onChange={setFirstName}
-            type="firstName"
-            value={firstName}
-            required={true}
-          />
-          <TextInputControl
-            error={errors.hasOwnProperty('lastName')}
-            errorType={errors.lastName?.type}
-            label="Last Name"
-            onBlur={() => validateField('lastName', lastName)}
-            onChange={setLastName}
-            type="lastName"
-            value={lastName}
-            required={true}
-          />
-          <TextInputControl
-            error={errors.hasOwnProperty('email')}
-            errorType={errors.email?.type}
-            label="Email"
-            onBlur={() => validateField('email', email)}
-            onChange={setEmail}
-            type="email"
-            value={email}
-            required={true}
-          />
 
-          <YesNoChoice
-            description="Looking for peer support"
-            onChange={value => setLookingForPeerSupport(value)}
-            value={lookingForPeerSupport}
-          />
+      <VStack minHeight={height - 130} marginBottom="10">
+        <TextInputControl
+          error={errors.hasOwnProperty('firstName')}
+          errorType={errors.firstName?.type}
+          label="First Name"
+          onBlur={() => validateField('firstName', firstName)}
+          onChange={setFirstName}
+          type="firstName"
+          value={firstName}
+          required={true}
+        />
+        <TextInputControl
+          error={errors.hasOwnProperty('lastName')}
+          errorType={errors.lastName?.type}
+          label="Last Name"
+          onBlur={() => validateField('lastName', lastName)}
+          onChange={setLastName}
+          type="lastName"
+          value={lastName}
+          required={true}
+        />
+        <TextInputControl
+          error={errors.hasOwnProperty('email')}
+          errorType={errors.email?.type}
+          label="Email"
+          onBlur={() => validateField('email', email)}
+          onChange={setEmail}
+          type="email"
+          value={email}
+          required={true}
+        />
 
-          <DateTime
-            description="I'm available from"
-            maximumDate={oneYearInTheFuture}
-            minimumDate={today}
-            onChange={value => setAvailableFromDate(value)}
-            value={availableFromDate}
-          />
-        </VStack>
-        <Box position="absolute" bottom="0" width="full" paddingTop="10">
-          <Button disabled={loading} onPress={submitForm}>
-            {loading ? 'Sending...' : 'Volunteer Now'}
-          </Button>
-        </Box>
-      </ScrollView>
+        <YesNoChoice
+          description="Looking for peer support"
+          onChange={value => setLookingForPeerSupport(value)}
+          value={lookingForPeerSupport}
+        />
+
+        <DatePicker
+          description="I'm available from"
+          maximumDate={oneYearInTheFuture}
+          minimumDate={today}
+          onChange={value => setAvailableFromDate(value)}
+          value={availableFromDate}
+        />
+      </VStack>
+      <Box position="absolute" bottom="0" width="full">
+        <Button disabled={loading} onPress={submitForm}>
+          {loading ? 'Sending...' : 'Volunteer Now'}
+        </Button>
+      </Box>
     </>
   )
 }

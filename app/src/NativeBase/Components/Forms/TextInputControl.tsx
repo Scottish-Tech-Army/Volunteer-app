@@ -3,8 +3,8 @@
  */
 
 import React, { FC } from 'react'
-import { Input, Box, Text } from 'native-base'
-import ErrorMessage from './ErrorMessage'
+import { Input, FormControl, Icon } from 'native-base'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
 interface TextInputControlProps {
   error: boolean
@@ -102,7 +102,6 @@ const TextInputControl: FC<TextInputControlProps> = ({
     | 'newPassword'
     | 'oneTimeCode'
     | undefined
-  const textInputStyle = { fontSize: 16 }
 
   switch (type) {
     case 'email':
@@ -121,29 +120,38 @@ const TextInputControl: FC<TextInputControlProps> = ({
       break
   }
 
+  let text = ''
+
+  switch (errorType) {
+    case 'invalid':
+      text = "Please check - this doesn't look right"
+      break
+    case 'missing':
+    default:
+      text = 'Please complete this'
+      break
+  }
+
   return (
-    <Box marginBottom="6">
-      <Text fontWeight="600" fontSize="sm" paddingLeft="0" paddingBottom="1">
-        {label}
-        {required ? <Text color="error.100">*</Text> : ''}
-      </Text>
+    <FormControl marginBottom="6" isRequired={required} isInvalid={error}>
+      <FormControl.Label>{label.toString()}</FormControl.Label>
       <Input
+        accessibilityLabel={`${label} text`}
         autoCapitalize={autoCapitalize}
         autoComplete={autoComplete}
         onBlur={onBlur}
+        size="sm"
         onChangeText={onChange}
-        style={textInputStyle}
         textContentType={textContentType}
         value={value}
-        borderColor={error ? 'error.100' : 'inputBorder.100'}
       />
 
-      {error && (
-        <Box position="absolute" bottom="-35">
-          <ErrorMessage errorType={errorType} />
-        </Box>
-      )}
-    </Box>
+      <FormControl.ErrorMessage
+        leftIcon={<Icon as={MaterialIcons} name={'close'} size="lg" />}
+      >
+        {text}
+      </FormControl.ErrorMessage>
+    </FormControl>
   )
 }
 export default TextInputControl
