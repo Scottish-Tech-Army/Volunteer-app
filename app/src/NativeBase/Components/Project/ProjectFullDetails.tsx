@@ -7,7 +7,6 @@ import { navigate } from '@/Navigators/utils'
 import { Project } from '@/Services/modules/projects'
 import underDevelopmentAlert from '@/Utils/UnderDevelopmentAlert'
 import {
-  Box,
   Button,
   Card,
   FavouriteIcon,
