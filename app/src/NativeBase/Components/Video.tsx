@@ -17,7 +17,7 @@ interface VideoProps {
 }
 
 /**
- * Component showing tappable list of options in a vertical list with horizontal arrows.
+ * Component showing a video.
  *
  * @param {VideoProps} props The component props
  * @param {string} [props.marginBottom] Bottom margin
@@ -34,20 +34,17 @@ const Video: FC<VideoProps> = ({
   videoWebpagePlayerOnly,
   videoWebpageScreen,
 }) => {
-  const aspectRatio = 9 / 16
+  const aspectRatio = 9 / 16 // 16:9 aspect ratio, which is typical for videos
   const [boxWidth, setBoxWidth] = useState(0)
   const videoHeight = boxWidth * aspectRatio
-  const [
-    useVideoWebpagePlayerIfAvailable,
-    setUseVideoWebpagePlayerIfAvailable,
-  ] = useState(true)
+  const [useVideoWebpagePlayer, setUseVideoWebpagePlayer] = useState(true)
   const webViewStyle = {
     minHeight: videoHeight,
     width: boxWidth,
   }
 
   if (
-    (!videoWebpagePlayerOnly || !useVideoWebpagePlayerIfAvailable) &&
+    (!videoWebpagePlayerOnly || !useVideoWebpagePlayer) &&
     (!videoWebpage || !videoWebpageScreen)
   )
     return null
@@ -66,13 +63,13 @@ const Video: FC<VideoProps> = ({
        * Use videoWebpagePlayerOnly to show the video inside a small webview (it should look like just a normal video player, not a web page) on the screen they're already on
        * As a fallback if there is a videoWebpage we show the user a placeholder that links to the video in a web view on another screen
        */}
-      {videoWebpagePlayerOnly && useVideoWebpagePlayerIfAvailable ? (
+      {videoWebpagePlayerOnly && useVideoWebpagePlayer ? (
         <WebView
           allowsFullscreenVideo
           allowsInlineMediaPlayback
           mediaPlaybackRequiresUserAction={false}
           onError={error => {
-            setUseVideoWebpagePlayerIfAvailable(false)
+            setUseVideoWebpagePlayer(false)
             console.error('Error loading video webpage - player only', error)
           }}
           source={{ uri: videoWebpagePlayerOnly as string }}
