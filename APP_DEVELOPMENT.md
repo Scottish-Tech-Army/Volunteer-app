@@ -118,12 +118,6 @@ Tappable list of options to choose from, with arrows
 
 Text input for searching
 
-#### TextAndArrow
-
-![TextAndArrow component](screenshots/components/TextAndArrow.png)
-
-Pressable text and an arrow on the right, can be used alone - also used in ChoicesList
-
 #### NavigationHeader
 
 ![NavigationHeader component](screenshots/components/NavigationHeader.png)
