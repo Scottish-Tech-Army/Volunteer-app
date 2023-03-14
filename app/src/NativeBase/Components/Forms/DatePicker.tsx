@@ -74,7 +74,9 @@ const DatePicker: FC<DatePickerProps> = ({
             marginX="0.5"
             shadow="1"
             bg={
-              !pickerActive && colorMode === 'light' ? 'grey.60' : 'primary.80'
+              !pickerActive && colorMode === 'light'
+                ? 'secondaryGrey.60'
+                : 'primary.80'
             }
           >
             <Text
@@ -118,7 +120,7 @@ const DatePicker: FC<DatePickerProps> = ({
               borderBottomColor={
                 pickerActive ? 'primary.100' : 'inputBorder.100'
               }
-              _light={{ bg: 'grey.80' }}
+              _light={{ bg: 'secondaryGrey.80' }}
               _dark={{ bg: 'bgDarkMode.100' }}
             />
           </Pressable>
