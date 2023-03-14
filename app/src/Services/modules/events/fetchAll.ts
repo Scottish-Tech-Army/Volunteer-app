@@ -7,6 +7,11 @@ import { Events } from '.'
 import { EventsRange } from '.'
 import { ApiBaseQueryFunctionType } from '@/Services/api'
 
+/**
+ * @function fetchAllEvents Fetches all events
+ * @param {EndpointBuilder<ApiBaseQueryFunctionType, never, 'api'>} build - endpoint builder from api created with RTK Query
+ * @param {EventsRange} range - specifies whether past or upcoming events are required
+ */
 export default (
   build: EndpointBuilder<ApiBaseQueryFunctionType, never, 'api'>,
   range: EventsRange,

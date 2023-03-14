@@ -1,3 +1,6 @@
+/**
+ * @file defines API endpoints, and how to fetch and transform data using RTK Query's createApi.
+ */
 import { Config } from '@/Config'
 import {
   BaseQueryFn,
