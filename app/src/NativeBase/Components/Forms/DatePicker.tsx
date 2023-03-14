@@ -26,7 +26,7 @@ const DatePicker: FC<DatePickerProps> = ({
   value,
 }) => {
   const [pickerActive, setPickerActive] = useState(false)
-  const [selectedStartDate, setSelectedStartDate] = useState(null)
+  const [selectedStartDate, setSelectedStartDate] = useState<Date | null>(null)
   const [todaySelected, setTodaySelected] = useState(false)
   const { colorMode } = useColorMode()
   const { width } = Dimensions.get('window')
@@ -35,15 +35,17 @@ const DatePicker: FC<DatePickerProps> = ({
     onChange(value)
     setSelectedStartDate(value)
     setPickerActive(false)
-    if (dayjs(value).format('DD/MM/YY') === dayjs().format('DD/MM/YY')) {
+    //set selected state to use on line 139 to override today text color default
+    if (dayjs(value).isSame(dayjs(), 'day')) {
       setTodaySelected(true)
     } else {
       setTodaySelected(false)
     }
   }
 
+  //override calendarpicker todayStyle default to set border and bg on today's date
   const customDatesStylesCallback = (date: Date) => {
-    if (dayjs(date).format('DD/MM/YY') === dayjs().format('DD/MM/YY')) {
+    if (dayjs(date).isSame(dayjs(), 'day')) {
       if (colorMode === 'light') {
         return {
           style: {
@@ -72,9 +74,7 @@ const DatePicker: FC<DatePickerProps> = ({
             marginX="0.5"
             shadow="1"
             bg={
-              !pickerActive && colorMode === 'light'
-                ? 'lightGrey.100'
-                : 'primary.80'
+              !pickerActive && colorMode === 'light' ? 'grey.60' : 'primary.80'
             }
           >
             <Text
@@ -109,7 +109,7 @@ const DatePicker: FC<DatePickerProps> = ({
             <Input
               marginX="6"
               value={dayjs(value).format('DD/MM/YY')}
-              accessibilityLabel="picker for available from date"
+              accessibilityLabel="picker for date"
               borderColor="inputBorder.100"
               isReadOnly={true}
               size="sm"
@@ -118,7 +118,7 @@ const DatePicker: FC<DatePickerProps> = ({
               borderBottomColor={
                 pickerActive ? 'primary.100' : 'inputBorder.100'
               }
-              _light={{ bg: 'lighterGrey.100' }}
+              _light={{ bg: 'grey.80' }}
               _dark={{ bg: 'bgDarkMode.100' }}
             />
           </Pressable>
@@ -134,17 +134,13 @@ const DatePicker: FC<DatePickerProps> = ({
               restrictMonthNavigation={true}
               onDateChange={handleChange}
               date={value}
-              todayTextStyle={
-                colorMode === 'light' && !todaySelected
-                  ? {
-                      fontFamily: StaTheme.fontConfig.Poppins['500'].normal,
-                      color: StaTheme.colors.darkGrey['100'],
-                    }
-                  : {
-                      fontFamily: StaTheme.fontConfig.Poppins['500'].normal,
-                      color: 'white',
-                    }
-              }
+              todayTextStyle={{
+                fontFamily: StaTheme.fontConfig.Poppins['500'].normal,
+                color:
+                  colorMode === 'light' && !todaySelected
+                    ? StaTheme.colors.darkGrey['100']
+                    : 'white',
+              }}
               selectedStartDate={selectedStartDate ? selectedStartDate : null}
               selectedDayColor={StaTheme.colors.primary['80']}
               dayTextColor={
@@ -154,17 +150,13 @@ const DatePicker: FC<DatePickerProps> = ({
               }
               selectedDayTextColor="white"
               width={width - 22}
-              textStyle={
-                colorMode === 'light'
-                  ? {
-                      fontFamily: StaTheme.fontConfig.Poppins['500'].normal,
-                      color: StaTheme.colors.darkGrey['100'],
-                    }
-                  : {
-                      fontFamily: StaTheme.fontConfig.Poppins['500'].normal,
-                      color: 'white',
-                    }
-              }
+              textStyle={{
+                fontFamily: StaTheme.fontConfig.Poppins['500'].normal,
+                color:
+                  colorMode === 'light'
+                    ? StaTheme.colors.darkGrey['100']
+                    : 'white',
+              }}
               customDatesStyles={customDatesStylesCallback}
               nextComponent={
                 <Icon

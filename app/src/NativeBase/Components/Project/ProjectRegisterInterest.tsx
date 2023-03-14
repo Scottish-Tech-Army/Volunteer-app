@@ -34,6 +34,7 @@ interface ProjectRegisterInterestProps {
 const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
   project,
 }) => {
+  const heightOfTopOfAppAndButton = 130
   const [availableFromDate, setAvailableFromDate] = useState(new Date())
   const [email, setEmail] = useState('')
   const [errors, setErrors] = useState<{
@@ -155,7 +156,7 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
     }
   }
   const { height } = Dimensions.get('window')
-
+  console.log(height)
   return (
     <>
       <ResponseModal
@@ -166,7 +167,7 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
         onClose={onClose}
       />
 
-      <VStack minHeight={height - 130} marginBottom="10">
+      <VStack minHeight={height - heightOfTopOfAppAndButton} marginBottom="10">
         <TextInputControl
           error={errors.hasOwnProperty('firstName')}
           errorType={errors.firstName?.type}

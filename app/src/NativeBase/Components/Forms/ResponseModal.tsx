@@ -30,10 +30,7 @@ const ResponseModal: FC<ResponseModalProps> = ({
         justifyContent="center"
         size="xl"
       >
-        <Modal.Content
-          _dark={{ color: 'textDarkMode.100' }}
-          _light={{ backgroundColor: 'bg.100' }}
-        >
+        <Modal.Content>
           <Pressable onPress={() => onClose(true)}>
             <Modal.Header
               alignItems="center"
@@ -63,10 +60,7 @@ const ResponseModal: FC<ResponseModalProps> = ({
   } else {
     return (
       <Modal isOpen={isOpen} onClose={onClose} size="xl">
-        <Modal.Content
-          _dark={{ color: 'textDarkMode.100' }}
-          _light={{ backgroundColor: 'bg.100' }}
-        >
+        <Modal.Content>
           <Pressable onPress={() => onClose(true)}>
             <Modal.Header
               alignItems="center"

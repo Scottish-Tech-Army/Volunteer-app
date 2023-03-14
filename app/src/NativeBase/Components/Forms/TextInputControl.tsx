@@ -1,5 +1,5 @@
 /**
- * @file Form input.
+ * @file Text input with error message, label and required asterix(optional).
  */
 
 import React, { FC } from 'react'
@@ -136,7 +136,6 @@ const TextInputControl: FC<TextInputControlProps> = ({
     <FormControl marginBottom="6" isRequired={required} isInvalid={error}>
       <FormControl.Label>{label.toString()}</FormControl.Label>
       <Input
-        accessibilityLabel={`${label} text`}
         autoCapitalize={autoCapitalize}
         autoComplete={autoComplete}
         onBlur={onBlur}

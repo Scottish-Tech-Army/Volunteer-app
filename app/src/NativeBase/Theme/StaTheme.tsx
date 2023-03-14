@@ -10,7 +10,6 @@ const common = {
   colours: {
     pink100: '#d1338A',
     purple100: '#604696',
-    lightGrey100: '#f6f6f6',
     mediumGrey100: '#a9a9a9',
     secondaryGrey100: '#e6e6e6',
     darkGrey100: '#3c3c3b',
@@ -103,14 +102,12 @@ const StaTheme = extendTheme({
     secondaryGrey: {
       100: common.colours.secondaryGrey100,
     },
-    lighterGrey: {
-      100: '#f1f1f1',
-    },
     darkerGrey: {
       100: '#737373',
     },
-    lightGrey: {
-      100: common.colours.lightGrey100,
+    grey: {
+      80: '#f1f1f1',
+      60: 'f6f6f6',
     },
   },
 
@@ -156,8 +153,8 @@ const StaTheme = extendTheme({
   },
 
   fonts: {
-    // body: common.fonts.family.primary,
-    // heading: common.fonts.family.primary,
+    body: common.fonts.family.primary,
+    heading: common.fonts.family.primary,
     primary: common.fonts.family.primary,
   },
 
