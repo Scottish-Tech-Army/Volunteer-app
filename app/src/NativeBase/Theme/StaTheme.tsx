@@ -122,6 +122,9 @@ const StaTheme = extendTheme({
     accentPurple: {
       100: common.colours.purple100,
     },
+    mediumGrey: {
+      100: common.colours.mediumGrey100,
+    },
     darkGrey: {
       100: common.colours.darkGrey100,
     },

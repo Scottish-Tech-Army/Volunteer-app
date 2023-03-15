@@ -37,13 +37,13 @@ const ResponseModal: FC<ResponseModalProps> = ({
               borderBottomWidth="0"
               pb="0"
               _dark={{ color: 'textDarkMode.100' }}
-              _light={{ color: 'darkerGrey.100' }}
+              _light={{ color: 'text.100' }}
             >
               <Icon
                 as={MaterialIcons}
                 mb="4"
                 mt="4"
-                color="darkerGrey.100"
+                color="mediumGrey.100"
                 name="check-circle"
               />
               {header}
@@ -73,7 +73,7 @@ const ResponseModal: FC<ResponseModalProps> = ({
                 as={MaterialIcons}
                 mb="4"
                 mt="4"
-                color="darkerGrey.100"
+                color="mediumGrey.100"
                 name="error"
               />
               {header}
