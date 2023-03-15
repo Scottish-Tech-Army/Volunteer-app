@@ -27,6 +27,7 @@ import NavigationHeader from '@/NativeBase/Components/NavigationHeader'
 import {
   ProjectDetailContainer,
   ProjectSearchContainer,
+  SearchResultsContainer,
 } from '@/NativeBase/Containers'
 import StaTheme from '@/NativeBase/Theme/StaTheme'
 import { ThemeState } from '@/Store/Theme'
@@ -160,6 +161,15 @@ const ApplicationNavigator = () => {
             options={{
               ...stackScreenDefaultOptions,
               title: 'Search',
+            }}
+          />
+
+          <Stack.Screen
+            name="SearchResults"
+            component={SearchResultsContainer}
+            options={{
+              ...stackScreenDefaultOptions,
+              title: 'Search Results',
             }}
           />
 

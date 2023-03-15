@@ -72,7 +72,7 @@ export interface ListRouteParams {
   options: ListOptions
 }
 
-type Screens = {
+export type ListScreens = {
   [key in ListType]: keyof RootStackParamList
 }
 
@@ -106,11 +106,11 @@ const ListContainer = (props: {
     list: {
       [ListType.Events]: 'Events',
       [ListType.Projects]: 'Projects',
-    } as Screens,
+    } as ListScreens,
     search: {
       [ListType.Events]: 'EventSearch',
       [ListType.Projects]: 'ProjectSearch',
-    } as Screens,
+    } as ListScreens,
   }
 
   // Events-specific

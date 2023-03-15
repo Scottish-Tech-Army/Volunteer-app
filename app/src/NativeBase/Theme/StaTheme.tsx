@@ -8,7 +8,7 @@ import { extendTheme } from 'native-base'
 // Common values that are repeated should go here
 const common = {
   colours: {
-    pink100: '#d1338A',
+    magenta100: '#d1338A',
     purple100: '#604696',
     darkGrey100: '#3c3c3b',
     mediumGrey100: '#a9a9a9',
@@ -45,7 +45,7 @@ const common = {
 const StaTheme = extendTheme({
   colors: {
     primary: {
-      100: common.colours.pink100,
+      100: common.colours.magenta100,
       80: '#d659a0',
       60: '#df88bb',
       40: '#eab7d6',
@@ -229,6 +229,10 @@ const StaTheme = extendTheme({
       }),
       defaultProps: {
         size: common.icons.size,
+      },
+      sizes: {
+        '2xs': 2,
+        xs: 4,
       },
     },
 

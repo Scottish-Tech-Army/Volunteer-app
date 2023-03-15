@@ -5,6 +5,7 @@
 import { Box, Icon, Input } from 'native-base'
 import React, { FC, useState } from 'react'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import SearchIcon from './SearchIcon'
 
 export interface FreeSearchBarProps {
   handleChangeText?: (updatedText: string) => void
@@ -44,16 +45,7 @@ const FreeSearchBar: FC<FreeSearchBarProps> = ({
       <Input
         accessibilityLabel="Search for text"
         height="12"
-        InputLeftElement={
-          <Icon
-            as={MaterialIcons}
-            _light={{ color: 'accentPurple.100' }}
-            _dark={{ color: 'white' }}
-            ml="2"
-            name="search"
-            size={6}
-          />
-        }
+        InputLeftElement={<SearchIcon />}
         lineHeight="md"
         marginBottom={marginBottom ?? '4'}
         marginTop={marginTop ?? '0'}

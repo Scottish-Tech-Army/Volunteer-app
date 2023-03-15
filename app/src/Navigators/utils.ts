@@ -28,7 +28,7 @@ export type RootStackParamList = {
   }
   ProjectSearch: string | undefined
 
-  ProjectSearchResults: {
+  SearchResults: {
     results: (Project | Event)[]
     searchField: ProjectsSearchField | undefined
     searchQuery: string
