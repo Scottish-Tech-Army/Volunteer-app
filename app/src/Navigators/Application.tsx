@@ -16,10 +16,10 @@ import { useSelector } from 'react-redux'
 import {
   EventDetailContainer,
   StartupContainer,
-  ProjectRegisterInterestContainer,
   EventSearchContainer,
   WelcomeContainer,
 } from '@/Containers'
+import ProjectRegisterInterestContainer from '@/NativeBase/Containers/ProjectRegisterInterestContainer'
 import MainNavigator from './Main'
 import { navigationRef } from './utils'
 import ProjectScope from '@/Components/Project/ProjectScope'
@@ -150,7 +150,7 @@ const ApplicationNavigator = () => {
             component={ProjectRegisterInterestContainer}
             options={{
               ...stackScreenDefaultOptions,
-              title: 'Register Interest',
+              title: 'Register project',
             }}
           />
 
