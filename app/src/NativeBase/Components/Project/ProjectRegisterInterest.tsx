@@ -156,7 +156,7 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
     }
   }
   const { height } = Dimensions.get('window')
-  console.log(height)
+
   return (
     <>
       <ResponseModal
@@ -176,7 +176,7 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
           onChange={setFirstName}
           type="firstName"
           value={firstName}
-          required={true}
+          required
         />
         <TextInputControl
           error={errors.hasOwnProperty('lastName')}
@@ -186,7 +186,7 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
           onChange={setLastName}
           type="lastName"
           value={lastName}
-          required={true}
+          required
         />
         <TextInputControl
           error={errors.hasOwnProperty('email')}
@@ -196,7 +196,7 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
           onChange={setEmail}
           type="email"
           value={email}
-          required={true}
+          required
         />
 
         <YesNoChoice

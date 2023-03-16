@@ -129,11 +129,11 @@ const DatePicker: FC<DatePickerProps> = ({
         {pickerActive ? (
           <Box paddingTop="2">
             <CalendarPicker
-              startFromMonday={true}
+              startFromMonday
               minDate={minimumDate}
               maxDate={maximumDate}
               weekdays={['M', 'T', 'W', 'T', 'F', 'S', 'S']}
-              restrictMonthNavigation={true}
+              restrictMonthNavigation
               onDateChange={handleChange}
               date={value}
               todayTextStyle={{

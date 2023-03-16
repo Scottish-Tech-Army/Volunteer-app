@@ -71,8 +71,7 @@ const ResponseModal: FC<ResponseModalProps> = ({
             >
               <Icon
                 as={MaterialIcons}
-                mb="4"
-                mt="4"
+                my="4"
                 color="mediumGrey.100"
                 name="error"
               />
