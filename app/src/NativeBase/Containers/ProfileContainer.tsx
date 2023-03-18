@@ -30,7 +30,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import Brand from '@/NativeBase/Components/Brand'
 import { changeTheme, ThemeState } from '@/Store/Theme'
-import { changeWelcome, WelcomeState } from '@/Store/Welcome'
+// import { changeWelcome, WelcomeState } from '@/Store/Welcome'     currently not being used due to cleanup for MVP
 import { version } from '../../../package.json'
 import SegmentedPicker, {
   SegmentedPickerOption,
