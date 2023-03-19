@@ -136,6 +136,18 @@ Useful for choosing between 2-3 choices, text must be kept very short (probably 
 
 Shown at the top of some screens - a small STA logo and (optionally) a search icon button
 
+#### TextInputControl
+
+![TextInputControl component](screenshots/components/TextInputControl.png)
+
+Default text input, label, required indicator and validation/error message.
+
+#### ResponseModal
+
+![ResponseModal component](screenshots/components/ResponseModal.png)
+
+Shows the result of server interaction (e.g submitting a form) to the user.  Handles success/error.
+
 ### Icons
 
 Icons we use in the app are normally from the Material Icons library, implemented using the [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons) package.

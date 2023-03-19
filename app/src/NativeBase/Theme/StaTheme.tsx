@@ -122,6 +122,9 @@ const StaTheme = extendTheme({
     accentPurple: {
       100: common.colours.purple100,
     },
+    mediumGrey: {
+      100: common.colours.mediumGrey100,
+    },
     darkGrey: {
       100: common.colours.darkGrey100,
     },
@@ -197,11 +200,9 @@ const StaTheme = extendTheme({
         fontWeight: '600',
       },
     },
-
     Button: {
       baseStyle: {
         rounded: 'full',
-        marginX: '2',
         paddingY: '0',
         marginBottom: '5',
         height: '12',
@@ -209,7 +210,7 @@ const StaTheme = extendTheme({
       defaultProps: {
         bg: 'primary.100',
         _pressed: {
-          bg: 'primary.60',
+          bg: 'primary.80',
         },
         _text: {
           fontWeight: '600',
@@ -231,7 +232,6 @@ const StaTheme = extendTheme({
         size: common.icons.size,
       },
     },
-
     IconButton: {
       defaultProps: {
         size: common.icons.size,
@@ -256,7 +256,50 @@ const StaTheme = extendTheme({
         }),
       }),
     },
-
+    FormControlLabel: {
+      baseStyle: () => {
+        return {
+          flexDirection: 'row',
+          justifyContent: 'flex-start',
+          my: '0',
+          _text: {
+            px: '0',
+            fontSize: 'sm',
+            fontWeight: '600',
+            color: 'text.100',
+          },
+          _astrick: {
+            color: 'error.100',
+          },
+          _dark: {
+            _text: {
+              color: 'textDarkMode.100',
+            },
+            _astrick: {
+              color: 'error.100',
+            },
+          },
+        }
+      },
+    },
+    FormControlErrorMessage: {
+      baseStyle: () => {
+        return {
+          position: 'absolute',
+          bottom: '-35',
+          _text: {
+            fontSize: 'xs',
+            color: 'error.100',
+          },
+          _stack: { space: 0, alignItems: 'center' },
+          _dark: {
+            _text: {
+              color: 'error.100',
+            },
+          },
+        }
+      },
+    },
     Input: {
       baseStyle: () => ({
         placeholderTextColor: 'text.100',
@@ -295,11 +338,10 @@ const StaTheme = extendTheme({
           fontSize: common.fonts.size.md,
         },
         sm: {
-          fontSize: common.fonts.size.md,
+          fontSize: common.fonts.size.sm,
         },
       },
     },
-
     ScrollView: {
       _light: {
         backgroundColor: common.colours.offWhite100,
@@ -311,9 +353,9 @@ const StaTheme = extendTheme({
         padding: '4',
       },
     },
-
     Text: {
       baseStyle: () => ({
+        fontFamily: 'primary',
         _light: {
           color: 'darkGrey.100',
           padding: '2',
