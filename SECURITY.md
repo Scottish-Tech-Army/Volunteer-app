@@ -1,0 +1,1 @@
+Security vulnerabilities can be reported to info@scottishtecharmy.org

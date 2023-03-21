@@ -40,7 +40,7 @@ In the volapp-dev-test account, an [Elastic Beanstalk](https://eu-west-2.console
 
 You can connect your app to this environment by changing STA_BASE_URL to the load balancer address in `Volunteer-app/app/src/Config/index.ts`:
 
-` STA_BASE_URL: 'http://volunteerapp-env.eba-ivfm2tgp.eu-west-2.elasticbeanstalk.com',`
+` STA_BASE_URL: 'https://the-sta.com',`
 
 Note - as we move this into IaC and set up some build pipelines, things like env names, app names, domain names, IP Addresses will probably change.
 
@@ -65,11 +65,6 @@ E.g. `cp Volunteer-app/api/.env volunteer-app-aws-deployment/api/.env` (but this
 12. Go to the environment dashboard and check the version label has updated and the Health is OK. If not, check the Logs (menu on the left hand side) or ask someone else in the team for help.
 13. Also check one of the API endpoints to make sure it's working, e.g. `http://volunteerapp-env.eba-ivfm2tgp.eu-west-2.elasticbeanstalk.com/projects` or `http://18.134.220.155/projects` -- at least one of these should work.
 14. Delete the new directory containing copy of the repo you made in step 2 and everything in it, e.g. `rm -rf volunteer-app-aws-deployment/`
-
-## Known issues
-
-- The iOS simulator only works with the IP Address of the Load Balancer as the value of STA_BASE_URL:
-  - ` STA_BASE_URL: 'http://18.134.220.155',`
 
 # App deployment
 
