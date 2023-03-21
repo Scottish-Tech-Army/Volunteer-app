@@ -133,10 +133,6 @@ Below are some commonly encountered issues and possible ways to resolve them. If
 
    > **On Android,** if you get an error message that includes `INSTALL_FAILED_UPDATE_INCOMPATIBLE` this may be because you previously installed a newer version of the app for your emulator (e.g. on a new branch or testing someone else's pull request) then you switched back to an earlier version. Uninstall the app from your emulator with the command `adb shell pm uninstall org.scottishtecharmy.volunteerapp` then run `npm run android` again.
 
-4. Optional: Add event video thumbnail images and update event video files whose URLs expire after an hour. Open another command terminal window, go to the `api` folder inside the project.
-   - If you want to manually add event video thumbnails, enter this command: `node cron-jobs/run-events.js`
-   - See the previous step above on how to run all cron jobs automatically.
-
 # Development
 
 ## App
