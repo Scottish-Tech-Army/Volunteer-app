@@ -8,7 +8,7 @@ import {
 } from '@react-navigation/bottom-tabs'
 import { useRoute } from '@react-navigation/native'
 import { ListContainer } from '@/Containers'
-import { ListType } from '@/Containers/ListContainer'
+import { ListType } from '@/NativeBase/Containers/ListContainer'
 import {
   ProfileContainer,
   VerticalStackContainer,

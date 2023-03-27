@@ -5,7 +5,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { FC } from 'react'
 import styled from 'styled-components/native'
-import { ListRouteParams, ListType } from '@/Containers/ListContainer'
+import { ListRouteParams, ListType } from '@/NativeBase/Containers/ListContainer'
 import { EventsRange } from '@/Services/modules/events'
 import underDevelopmentAlert from '../../Utils/UnderDevelopmentAlert'
 import { navigate } from '@/Navigators/utils'

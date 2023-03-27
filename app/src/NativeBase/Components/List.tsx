@@ -4,13 +4,28 @@
 
 import React, { FC } from 'react'
 import styled from 'styled-components/native'
-import { FlatList } from 'react-native'
 import EventSummary from '@/Components/Event/EventSummary'
 import ProjectSummary from '@/Components/Project/ProjectSummary'
-import { ListType } from '@/Containers/ListContainer'
+import { ListType } from '@/NativeBase/Containers/ListContainer'
 import { navigate, RootStackParamList } from '@/Navigators/utils'
 import { Events, EventsRange } from '@/Services/modules/events'
 import { Projects } from '@/Services/modules/projects'
+import underDevelopmentAlert from '../../Utils/UnderDevelopmentAlert'
+import ProjectRoleTitle from '../Components/Project/ProjectRoleTitle'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+
+import {
+  Box,
+  FavouriteIcon,
+  FlatList,
+  Heading,
+  HStack,
+  Pressable,
+  ShareIcon,
+  Text,
+  VStack,
+  Icon,
+} from 'native-base'
 
 // General styled components
 const NoneFound = styled.Text`
@@ -26,12 +41,6 @@ const TryAnotherSearch = styled.Text`
 const EventListItem = styled.TouchableOpacity`
   margin: 21px 21px 0px 21px;
   width: 150px;
-`
-// Projects-specific
-const ProjectListItem = styled.TouchableOpacity`
-  margin: 21px 21px 0px 21px;
-  border: ${props => `2px solid ${props.theme.colors.staBlack}`};
-  padding: 17px 27px 11px 27px;
 `
 
 export enum ListDisplayMode {
@@ -116,18 +125,58 @@ const List: FC<ListProps> = ({ data, mode, options, searchScreen, type }) => {
       return (
         <FlatList
           data={data as Projects}
-          keyExtractor={project => project.res_id}
           renderItem={({ item }) => {
             return (
-              <ProjectListItem
-                onPress={() => {
-                  navigate('ProjectDetail', { item, key: item.res_id })
-                }}
+              <Box
+                borderWidth={1}
+                borderColor="grey.80"
+                rounded="xl"
+                backgroundColor="bg.100"
+                margin="2"
               >
-                <ProjectSummary project={item} />
-              </ProjectListItem>
+                <Pressable
+                  onPress={() => {
+                    navigate('ProjectDetail', { item, key: item.res_id })
+                  }}
+                  overflow="hidden"
+                >
+                  <VStack paddingX="2" bgColor="bg.secondary" space={1}>
+                    <HStack justifyContent="space-between" alignItems="center">
+                      <Heading maxWidth={246} fontSize="lg">
+                        {item.name}
+                      </Heading>
+                      <ShareIcon
+                        size="md"
+                        color="accentGrey"
+                        onPress={underDevelopmentAlert}
+                      />
+                      <FavouriteIcon
+                        size="md"
+                        color="primary.100"
+                        onPress={underDevelopmentAlert}
+                      />
+                    </HStack>
+                    <Text fontSize="lg">{item.client}</Text>
+                    <ProjectRoleTitle role={item.role} />
+                    <Text>{item.hours}</Text>
+                    <Text>{item.description}</Text>
+                    <Text>
+                      {item.buddying
+                        ? 'Suitable for pairing'
+                        : 'Not suitable for pairing'}
+                    </Text>
+                    <Icon
+                      as={MaterialIcons}
+                      color="primary.100"
+                      name="Handshake"
+                      size="sm"
+                    />
+                  </VStack>
+                </Pressable>
+              </Box>
             )
           }}
+          keyExtractor={project => project.res_id}
         />
       )
   }

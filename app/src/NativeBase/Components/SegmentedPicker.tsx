@@ -32,7 +32,7 @@ const SegmentedPicker: FC<SegmentedPickerProps> = ({
   options,
 }) => (
   <HStack
-    backgroundColor="secondaryGrey.100"
+    backgroundColor="bg.100" // app crashes with current format - will revert back once I figure out why! 
     borderRadius="8"
     justifyContent="space-between"
     marginBottom={marginBottom ?? '4'}

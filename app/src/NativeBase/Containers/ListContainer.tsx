@@ -7,23 +7,30 @@
 
 /* eslint-disable @typescript-eslint/no-shadow */
 
+import { Box, Text, Heading, VStack, HStack, useColorMode } from 'native-base'
+
 import React, { useEffect, useState } from 'react'
-import { Text } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components/native'
-import { EventSearch } from './EventSearchContainer'
+import { EventSearch } from '../EventSearchContainer'
 import { ProjectSearch } from './ProjectSearchContainer'
 import EventOptions from '@/Components/Event/EventOptions'
 import EventSearchUpcomingQuickSearch, {
   EventQuickSearchUpcomingChoice,
 } from '@/Components/Event/EventSearchQuickSearchUpcoming'
-import HorizontalLine from '@/Components/HorizontalLine'
-import List, { ListDisplayMode, ListOptions } from '@/Components/List'
-import SafeArea from '@/Components/SafeArea'
+import List, {
+  ListDisplayMode,
+  ListOptions,
+} from '@/NativeBase/Components/List'
 import ProjectFilterSort from '@/Components/Project/ProjectFilterSort'
-import SearchIconButton from '@/Components/SearchIconButton'
 import TopOfApp from '@/NativeBase/Components/TopOfApp'
 import { navigate, RootStackParamList } from '@/Navigators/utils'
+import { capitaliseFirstLetter } from '@/Utils/Text'
+
+import SegmentedPicker, {
+  SegmentedPickerOption,
+} from '../Components/SegmentedPicker'
+
 import {
   Events,
   EventsRange,
@@ -36,25 +43,16 @@ import {
 } from '@/Services/modules/projects'
 import { EventsState, setEvents } from '@/Store/Events'
 import { ProjectsState, setProjects } from '@/Store/Projects'
-import Theme from '@/Theme/OldTheme'
+import StaTheme from '../Theme/StaTheme'
 
 const ClearSearchLabel = styled.Text`
-  color: ${props => props.theme.colors.staBlack};
-  text-align: center;
-  text-decoration: underline;
-  width: 100%;
+
 `
 const SearchResultsLabel = styled.Text`
-  color: ${props => props.theme.colors.staBlack};
-  text-align: center;
-  width: 100%;
+  
 `
 const SearchResultsView = styled.View`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
-  width: 100%;
+ 
 `
 
 export interface ListSearch {
@@ -112,6 +110,13 @@ const ListContainer = (props: {
       [ListType.Projects]: 'ProjectSearch',
     } as Screens,
   }
+
+  const projectListOptions = ['all', 'saved', 'my'].map(
+    option =>
+      ({
+        text: capitaliseFirstLetter(option),
+      } as SegmentedPickerOption),
+  )
 
   // Events-specific
   const [fetchAllUpcomingEvents, { data: allUpcomingEventsResult }] =
@@ -261,66 +266,75 @@ const ListContainer = (props: {
   }, [params?.options?.events, params?.search, params?.type])
 
   return (
-    <Theme>
-      <SafeArea>
-        <TopOfApp
-          showSearchButton
-          onSearchButtonPress={() => navigate(screens.search[params.type], '')}
-        />
+    <>
+      <TopOfApp
+        showSearchButton
+        onSearchButtonPress={() => navigate(screens.search[params.type], '')}
+      />
 
-        {params?.type && listItemsToShow ? (
-          <>
-            {/* Past / Upcoming / My Events choice */}
-            {params.type === ListType.Events && (
-              <EventOptions selected={eventsSelectedOption} />
-            )}
+      <Box
+        _dark={{ backgroundColor: StaTheme.colors.bgDarkMode['100'] }}
+        _light={{ backgroundColor: StaTheme.colors.bg['100'] }}
+        safeAreaTop
+      >
+        <VStack paddingBottom="2" alignItems="center">
+          <Heading paddingBottom="2">Projects List</Heading>
+          <SegmentedPicker options={projectListOptions} />
 
-            {/* Quick search for upcoming events (Today / This week / This month) */}
-            {params.type === ListType.Events &&
-              eventsShowUpcomingQuickSearch &&
-              eventsQuickSearchUpcomingChoice && (
+          {params?.type && listItemsToShow ? (
+            <>
+              {/* Past / Upcoming / My Events choice */}
+              {params.type === ListType.Events && (
+                <EventOptions selected={eventsSelectedOption} />
+              )}
+
+              {/* Quick search for upcoming events (Today / This week / This month) */}
+              {params.type === ListType.Events &&
+                eventsShowUpcomingQuickSearch &&
+                eventsQuickSearchUpcomingChoice && (
+                  <SearchResultsView>
+                    <EventSearchUpcomingQuickSearch
+                      selectedButton={eventsQuickSearchUpcomingChoice}
+                    />
+                  </SearchResultsView>
+                )}
+
+              {/* If the user has searched, show some text indicating what they searched for
+                and give them the option to clear the search */}
+              {params?.search && (
                 <SearchResultsView>
-                  <EventSearchUpcomingQuickSearch
-                    selectedButton={eventsQuickSearchUpcomingChoice}
-                  />
+                  {params?.search?.description && (
+                    <SearchResultsLabel>
+                      Results for {params.search.description}
+                    </SearchResultsLabel>
+                  )}
+                  <ClearSearchLabel onPress={clearSearch}>
+                    Clear search
+                  </ClearSearchLabel>
                 </SearchResultsView>
               )}
 
-            {/* If the user has searched, show some text indicating what they searched for
-                and give them the option to clear the search */}
-            {params?.search && (
-              <SearchResultsView>
-                {params?.search?.description && (
-                  <SearchResultsLabel>
-                    Results for {params.search.description}
-                  </SearchResultsLabel>
-                )}
-                <ClearSearchLabel onPress={clearSearch}>
-                  Clear search
-                </ClearSearchLabel>
-              </SearchResultsView>
-            )}
+              {/* Projects filter & sort options */}
+              {params.type === ListType.Projects &&
+                Boolean(params?.search) &&
+                Boolean(listItemsToShow.length) && <ProjectFilterSort />}
 
-            {/* Projects filter & sort options */}
-            {params.type === ListType.Projects &&
-              Boolean(params?.search) &&
-              Boolean(listItemsToShow.length) && <ProjectFilterSort />}
-
-            <List
-              data={listItemsToShow}
-              mode={
-                params?.search ? ListDisplayMode.Search : ListDisplayMode.Full
-              }
-              options={params?.options}
-              searchScreen={screens.search[params.type]}
-              type={params.type}
-            />
-          </>
-        ) : (
-          <Text>Loading...</Text>
-        )}
-      </SafeArea>
-    </Theme>
+              <List
+                data={listItemsToShow}
+                mode={
+                  params?.search ? ListDisplayMode.Search : ListDisplayMode.Full
+                }
+                options={params?.options}
+                searchScreen={screens.search[params.type]}
+                type={params.type}
+              />
+            </>
+          ) : (
+            <Text>Loading...</Text>
+          )}
+        </VStack>
+      </Box>
+    </>
   )
 }
 
