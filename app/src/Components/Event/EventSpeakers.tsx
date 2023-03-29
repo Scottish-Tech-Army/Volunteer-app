@@ -30,6 +30,7 @@ const EventSpeakers: FC<EventSpeakersProps> = ({ speakers }) => {
     <>
       {speakers.map(speaker => (
         <IconAndLabel
+          key={speaker.name}
           icon="user"
           text={speaker.name}
           onPress={() => Linking.openURL(speaker.url)}
