@@ -1,6 +1,7 @@
 /**
- * @file Posts new case of registered interest
+ * @file defined the project, user and query for a user to register interest in a project.  Called in ProjectRegisterInterest.tsx
  */
+
 import { Config } from '@/Config'
 import { EndpointBuilder } from '@reduxjs/toolkit/dist/query/endpointDefinitions'
 import { ApiBaseQueryFunctionType } from '@/Services/api'
@@ -13,8 +14,7 @@ interface ProjectRegisterInterestQuery {
     firstName: string
     lastName: string
     email: string
-    happyToMentor: boolean
-    lookingForBuddy: boolean
+    lookingForPeerSupport: boolean
     availableFrom: string
   }
 }

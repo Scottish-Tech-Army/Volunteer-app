@@ -1,6 +1,7 @@
 /**
- * @file URL configuration variables
+* @file Example config settings -- duplicate this file and create an index.ts file in the same directory.
  */
+
 export const Config = {
   // This will eventually be what the STA_BASE_URL is. The API_URL
   // it is set to an empty string so we can use both for now.
@@ -9,7 +10,8 @@ export const Config = {
   EXAMPLE_USER_URL: 'https://jsonplaceholder.typicode.com',
   // STA Base API URL (localhost may not work on Android as it points to
   // the local device, you can try using your local IP address instead)
-  STA_BASE_URL: 'http://localhost:5000',
+  STA_BASE_URL: 'http://localhost:3000',
+  // STA_BASE_URL: 'https://the-sta.com', // use this instead of your local API URL when you want to access the production API
   // Prefix that specifies current API version.
   STA_API_VERSION: '/v1',
 }

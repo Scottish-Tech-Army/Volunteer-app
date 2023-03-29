@@ -37,7 +37,7 @@ const NavigationHeader: React.FC<StackHeaderProps> = ({
         barStyle={statusBarStyle}
       />
 
-      <Box safeAreaTop>
+      <Box>
         <HStack
           alignItems="center"
           justifyContent={back ? 'space-between' : 'center'}

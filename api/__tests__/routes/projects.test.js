@@ -102,8 +102,7 @@ describe('Test the projects api', () => {
         firstName: faker.name.firstName(),
         lastName: faker.name.lastName(),
         email: faker.internet.email(),
-        happyToMentor: faker.datatype.boolean(),
-        lookingForBuddy: faker.datatype.boolean(),
+        lookingForPeerSupport: faker.datatype.boolean(),
         availableFrom: '2022-12-31',
       },
     };
@@ -162,8 +161,7 @@ describe('Test the projects api', () => {
         firstName: faker.name.firstName(),
         lastName: faker.name.lastName(),
         email: faker.internet.email(),
-        happyToMentor: faker.datatype.boolean(),
-        lookingForBuddy: faker.datatype.boolean(),
+        lookingForPeerSupport: faker.datatype.boolean(),
         availableFrom: '2022-12-31',
       },
     };
@@ -279,8 +277,7 @@ describe('Test the projects api', () => {
         firstName: faker.name.firstName(),
         lastName: faker.name.lastName(),
         email: faker.internet.email(),
-        happyToMentor: faker.datatype.boolean(),
-        lookingForBuddy: faker.datatype.boolean(),
+        lookingForPeerSupport: faker.datatype.boolean(),
         availableFrom: '2022-12-31',
       },
     };
