@@ -4,6 +4,7 @@ import styled from 'styled-components/native'
 import Entypo from 'react-native-vector-icons/Entypo'
 import IconAndLabel from '@/Components/IconAndLabel'
 import { EventSpeaker } from '@/Services/modules/events'
+import { Linking } from 'react-native'
 
 interface EventSpeakersProps {
   speakers: EventSpeaker[]
@@ -25,19 +26,17 @@ const SpeakerText = styled.Text`
 
 const EventSpeakers: FC<EventSpeakersProps> = ({ speakers }) => {
   if (!speakers) return <></>
-  console.log(speakers)
   return (
     <>
       {speakers.map(speaker => (
-        <IconAndLabel icon="user" text={speaker.name} />
+        <IconAndLabel
+          icon="user"
+          text={speaker.name}
+          onPress={() => Linking.openURL(speaker.url)}
+        />
       ))}
     </>
   )
 }
 
 export default EventSpeakers
-
-// <SpeakersView key={speaker}>
-//   <Entypo name="person-circle-outline" size={16} />
-//   <SpeakerText>{speaker}</SpeakerText>
-// </SpeakersView>
