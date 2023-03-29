@@ -85,6 +85,7 @@ In case you need it, you can also use `useColorMode` or `useColorModeValue` to d
 
 **To find which colours to use for dark mode in Figma** see *Design System* in the list of Pages on the left-hand side of the screen.  There are examples of some components using dark mode.
 
+
 ### Custom components
 
 These are custom components we've developed, in addition to NativeBase readymade components:
@@ -124,6 +125,18 @@ Useful for choosing between 2-3 choices, text must be kept very short (probably 
 ![TopOfApp component](screenshots/components/TopOfApp.png)
 
 Shown at the top of some screens - a small STA logo and (optionally) a search icon button
+
+#### TextInputControl
+
+![TextInputControl component](screenshots/components/TextInputControl.png)
+
+Default text input, label, required indicator and validation/error message.
+
+#### ResponseModal
+
+![ResponseModal component](screenshots/components/ResponseModal.png)
+
+Shows the result of server interaction (e.g submitting a form) to the user.  Handles success/error.
 
 ### Icons
 
