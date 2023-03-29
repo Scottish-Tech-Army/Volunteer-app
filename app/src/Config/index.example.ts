@@ -1,5 +1,5 @@
 /**
-* @file Example config settings -- duplicate this file and create an index.ts file in the same directory.
+ * @file Example config settings -- duplicate this file and create an index.ts file in the same directory
  */
 
 export const Config = {

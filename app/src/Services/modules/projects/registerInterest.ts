@@ -24,6 +24,7 @@ export type RegisterInterestResponseType = { data?: string; error?: string }
 /**
  * @function registerInterest posts new case of registered interest
  * @param {EndpointBuilder<ApiBaseQueryFunctionType, never, 'api'>} build - endpoint builder from api created with RTK Query
+ * @returns {void} no return.
  */
 export default (
   build: EndpointBuilder<ApiBaseQueryFunctionType, never, 'api'>,

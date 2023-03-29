@@ -1,5 +1,5 @@
 /**
- * @file Fetches all projects data
+ * @file Fetches all projects data.
  */
 import { Config } from '@/Config'
 import { EndpointBuilder } from '@reduxjs/toolkit/dist/query/endpointDefinitions'
@@ -9,6 +9,7 @@ import { ApiBaseQueryFunctionType } from '@/Services/api'
 /**
  * @function fetchAllProjects Fetches all projects
  * @param {EndpointBuilder<ApiBaseQueryFunctionType, never, 'api'>} build - endpoint builder from api created with RTK Query
+ * @returns {void} no return.
  */
 export default (
   build: EndpointBuilder<ApiBaseQueryFunctionType, never, 'api'>,
