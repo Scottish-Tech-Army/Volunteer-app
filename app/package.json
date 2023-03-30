@@ -19,6 +19,7 @@
     "@react-navigation/native": "^6.0.2",
     "@react-navigation/stack": "^6.x",
     "@reduxjs/toolkit": "^1.6.1",
+    "aws-amplify": "^5.0.22",
     "dayjs": "^1.11.1",
     "expo": "^1.0.0",
     "fuse.js": "^6.6.2",
