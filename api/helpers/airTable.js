@@ -92,15 +92,16 @@ async function getAllRecords(tableName, includeId = false, linkedFields) {
   }
 }
 
-// Adding linked fields to a record
-// TODO: this needs a JSDoc
 async function addLinkedFields(tableName, record, linkedFields) {
   for (const linkedField of linkedFields) {
     if (record.fields[linkedField.fieldName]) {
       record.fields[linkedField.fieldName] = await Promise.all(
         record.fields[linkedField.fieldName].map(async (field) => {
           const linkedRecord = await module.exports.client().table(linkedField.tableName).find(field);
-          delete linkedRecord.fields[tableName]; // removing the extra column from STA Events Test ** MAKE GENERAL **
+          // In a linked table, AirTable adds an extra column pointing back to the 
+          // original table it was linked from.  We don't need this, so remove the
+          // extra column here.
+          delete linkedRecord.fields[tableName];
 
           return linkedRecord.fields;
         }),
@@ -125,8 +126,7 @@ async function getRecordById(tableName, recordId, linkedFields) {
     if (linkedFields?.length) {
       record = await addLinkedFields(tableName, record, linkedFields);
     }
-    // replace the speakers on records.fields with the actual speakers data name and url
-    // this will return the the name of speaker and url
+    
     return record.fields;
   } catch (error) {
     console.error(error);

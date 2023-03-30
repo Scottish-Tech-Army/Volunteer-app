@@ -2,7 +2,6 @@
  * @file Event details screen to show a single event -- all details, video/images, etc.
  */
 
-import { Config } from '@/Config'
 import React, { FC } from 'react'
 import { ScrollView } from 'react-native-gesture-handler'
 import Markdown from 'react-native-simple-markdown'
@@ -58,8 +57,6 @@ interface EventDetailsProps {
  * @returns {React.ReactElement} Component
  */
 const EventDetails: FC<EventDetailsProps> = ({ event }) => {
-  console.log(Config)
-  console.log(event)
   return (
     <ScrollView>
       <EventDetailsView>
@@ -100,8 +97,6 @@ const EventDetails: FC<EventDetailsProps> = ({ event }) => {
             {event.description}
           </Markdown>
         </EventDescription>
-        {/* if there is an event speaker show this. Otherwise nothing.
-         event.speakers ? <EventSpeakers speakers={event.speakers} /> : null */}
         <EventSpeakers speakers={event.speakers} />
       </EventDetailsView>
     </ScrollView>

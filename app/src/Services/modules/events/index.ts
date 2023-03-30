@@ -21,12 +21,12 @@ export interface Event {
   video_thumbnail: string
   images: string[]
   speakers: EventSpeaker[]
+  addedToCalendar?: boolean
 }
 
 export interface EventSpeaker {
   name: string
   url: string
-  addedToCalendar?: boolean
 }
 
 export type Events = Event[]
