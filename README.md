@@ -155,11 +155,13 @@ Projects data comes originally from Jira. We have found the Jira API can be too 
 
 So instead we store a cached copy of projects data, in the format we use it in our API, in our own database (currently AirTable) so that we can deliver a fast response when someone calls our API. There are projects scripts that can be run as a cron job to regularly update our database from the Jira API.
 
+The projects cron jobs also grab video thumbnail images from Vimeo and save them in AirTable, and updates AirTable with Vimeo/YouTube/other video webpage URLs.
+
 #### Events
 
 There is also a cron job for events that have videos (these are usually past events - the videos are event recordings).
 
-This job grabs video thumbnail images from Vimeo and saves them in AirTable, and updates AirTable with video file URLs which expire after an hour.
+This job grabs video thumbnail images from Vimeo and saves them in AirTable.
 
 ### Services
 
