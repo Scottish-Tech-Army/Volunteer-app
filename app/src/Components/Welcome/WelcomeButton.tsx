@@ -45,4 +45,4 @@ const WelcomeButton = () => {
     )
 }
 
-export default WelcomeButton;
+export default WelcomeButton
