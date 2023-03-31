@@ -2,7 +2,7 @@
  * @file Main container scaffold used on startup.
  */
 import React, { useEffect } from 'react'
-import { ActivityIndicator, View, Text } from 'react-native'
+import { ActivityIndicator, View } from 'react-native'
 import { useTranslation } from 'react-i18next'
 import { useTheme } from '@/Hooks'
 import Brand from '@/NativeBase/Components/Brand'
@@ -10,6 +10,7 @@ import { setDefaultTheme } from '@/Store/Theme'
 import { setDefaultWelcome, WelcomeState } from '@/Store/Welcome'
 import { navigateAndSimpleReset } from '@/Navigators/utils'
 import { useSelector } from 'react-redux'
+import { Text } from 'native-base'
 
 const StartupContainer = () => {
   const { Layout, Gutters, Fonts } = useTheme()
@@ -43,7 +44,13 @@ const StartupContainer = () => {
     <View style={[Layout.fill, Layout.colCenter]}>
       <Brand />
       <ActivityIndicator size={'large'} style={[Gutters.largeVMargin]} />
-      <Text style={[Fonts.textCenter, Fonts.textSmall]}>{t('welcome')}</Text>
+      <Text
+        numberOfLines={1}
+        fontFamily="Poppins-medium"
+        fontSize="18"
+        padding="0"
+        textAlign="center"
+        adjustsFontSizeToFit>{t('welcome')}</Text>
     </View>
   )
 }

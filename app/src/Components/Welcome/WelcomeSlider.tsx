@@ -58,7 +58,7 @@ const WelcomeSlider: FC<SliderProps> = ({
         {item.image}
         <TextContainer>
           <Heading
-            mt="7%"
+            mt="4%"
             mb="3%"
             fontFamily="BebasNeue-Regular"
             fontSize="60"
