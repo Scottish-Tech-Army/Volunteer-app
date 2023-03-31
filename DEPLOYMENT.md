@@ -40,7 +40,7 @@ In the volapp-dev-test account, an [Elastic Beanstalk](https://eu-west-2.console
 
 You can connect your app to this environment by changing STA_BASE_URL to the load balancer address in `Volunteer-app/app/src/Config/index.ts`:
 
-` STA_BASE_URL: 'http://volunteerapp-env.eba-ivfm2tgp.eu-west-2.elasticbeanstalk.com',`
+` STA_BASE_URL: 'https://the-sta.com',`
 
 Note - as we move this into IaC and set up some build pipelines, things like env names, app names, domain names, IP Addresses will probably change.
 
@@ -52,23 +52,19 @@ We've had some issues with the API breaking when we've tried to deploy changes t
 
 1. If you're completing a pull request, once it's approved merge in your latest changes to the `main` branch like you normally would.
 2. Then, clone a **new, clean copy of the repo** into a new directory on your computer.  E.g. `git clone git@github.com:Scottish-Tech-Army/Volunteer-app.git volunteer-app-aws-deployment` will clone it into a directory called `volunteer-app-aws-deployment`.  You can call this directory whatever you want, the important thing is to clone a new copy separate from the directory you normally use when working on the app/API code -- this new directory is what we're going to use to deploy to AWS.
-3. Copy your `api/.env` file from your normal working directory into this new directory.
+3. Set `AIRTABLE_PROJECTS_RESOURCES_CACHE_TABLE` to the name of the production table (instead of the test table) in `api/.env`.
+4. Copy your `api/.env` file from your normal working directory into this new directory.
 E.g. `cp Volunteer-app/api/.env volunteer-app-aws-deployment/api/.env` (but this command depends what directory you're in and what you've named these directories).  Check that the `.env` file now exists in the `api` directory of your new copy of the repo -- it's vital for the API to work.
-4. **Don't do anything else in your new directory** (e.g. `volunteer-app-aws-deployment`).  Don't do `npm install` or `npm start` or anything else.
-5. Go into the `api` directory of your new copy of the repo, e.g. `cd volunteer-app-aws-deployment/api`
-6. In that `api` directory, zip it up into a file: `zip ../../myapp.zip -r * .[^.]*`  This `myapp.zip` file will be created in the directory above `volunteer-app-aws-deployment`
-7. If you haven't already, [log into the STA AWS account here](https://scottishtecharmy.awsapps.com/start#/).
-8. In the AWS Management Console navigate to [Elastic Beanstalk](https://eu-west-2.console.aws.amazon.com/elasticbeanstalk/home?region=eu-west-2#/environments).
-9. In the [Volunteer App Application versions](https://eu-west-2.console.aws.amazon.com/elasticbeanstalk/home?region=eu-west-2#/application/versions?applicationName=volunteer-app), Upload the myapp.zip that you created in step 6.
-10. Now select the version label you've just created and then select Action > Deploy
-11. Go to the environment dashboard and check the version label has updated and the Health is OK. If not, check the Logs (menu on the left hand side) or ask someone else in the team for help.
-12. Also check one of the API endpoints to make sure it's working, e.g. `http://volunteerapp-env.eba-ivfm2tgp.eu-west-2.elasticbeanstalk.com/projects` or `http://18.134.220.155/projects` -- at least one of these should work.
-13. Delete the new directory containing copy of the repo you made in step 2 and everything in it, e.g. `rm -rf volunteer-app-aws-deployment/`
-
-## Known issues
-
-- The iOS simulator only works with the IP Address of the Load Balancer as the value of STA_BASE_URL:
-  - ` STA_BASE_URL: 'http://18.134.220.155',`
+5. **Don't do anything else in your new directory** (e.g. `volunteer-app-aws-deployment`).  Don't do `npm install` or `npm start` or anything else.
+6. Go into the `api` directory of your new copy of the repo, e.g. `cd volunteer-app-aws-deployment/api`
+7. In that `api` directory, zip it up into a file: `zip ../../myapp.zip -r * .[^.]*`  This `myapp.zip` file will be created in the directory above `volunteer-app-aws-deployment`
+8. If you haven't already, [log into the STA AWS account here](https://scottishtecharmy.awsapps.com/start#/).
+9. In the AWS Management Console navigate to [Elastic Beanstalk](https://eu-west-2.console.aws.amazon.com/elasticbeanstalk/home?region=eu-west-2#/environments).
+10. In the [Volunteer App Application versions](https://eu-west-2.console.aws.amazon.com/elasticbeanstalk/home?region=eu-west-2#/application/versions?applicationName=volunteer-app), Upload the myapp.zip that you created in step 6.
+11. Now select the version label you've just created and then select Action > Deploy
+12. Go to the environment dashboard and check the version label has updated and the Health is OK. If not, check the Logs (menu on the left hand side) or ask someone else in the team for help.
+13. Also check one of the API endpoints to make sure it's working, e.g. `http://volunteerapp-env.eba-ivfm2tgp.eu-west-2.elasticbeanstalk.com/projects` or `http://18.134.220.155/projects` -- at least one of these should work.
+14. Delete the new directory containing copy of the repo you made in step 2 and everything in it, e.g. `rm -rf volunteer-app-aws-deployment/`
 
 # App deployment
 

@@ -5,6 +5,11 @@
     "description": "API to list and query available STA volunteer projects",
     "version": "1.0"
   },
+  "servers": [
+    {
+      "url": "/v1"
+    }
+  ],
   "paths": {
     "/events": {
       "get": {
