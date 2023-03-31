@@ -1,3 +1,7 @@
+/**
+ * @file Speakers name and LinkedIn link will be accessed in the EventSpeakers component
+ */
+
 import React, { FC } from 'react'
 import styled from 'styled-components/native'
 import IconAndLabel from '@/Components/IconAndLabel'
