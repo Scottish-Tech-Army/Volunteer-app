@@ -5,9 +5,15 @@ import {TouchableOpacity, Text} from 'react-native'
 import styled from 'styled-components/native'
 import { navigateAndSimpleReset } from '@/Navigators/utils'
 import { useTheme } from '@/Hooks'
+import { useDispatch } from 'react-redux'
+import { changeWelcome, WelcomeState } from '@/Store/Welcome'
 
 const WelcomeButton = () => {
     const { Colors, Fonts } = useTheme()
+    const dispatch = useDispatch()
+    const onChangeSplash = ({ welcome, show }: Partial<WelcomeState>) => {
+        dispatch(changeWelcome({ welcome, show }))
+    }
 
     const WelcomeButton = styled.TouchableOpacity`
         width:244px;
@@ -28,6 +34,7 @@ const WelcomeButton = () => {
     `
 
     const handlePress = () => {
+        onChangeSplash({ show: false })
         navigateAndSimpleReset('Main')
     }
 
@@ -38,4 +45,4 @@ const WelcomeButton = () => {
     )
 }
 
-export default WelcomeButton
+export default WelcomeButton;
