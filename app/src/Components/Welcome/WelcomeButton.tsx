@@ -2,7 +2,6 @@
  * @file 'Get Started' button allows user to go to main part of app from any slide
  */
 import React from 'react'
-// import { TouchableOpacity, Text } from 'react-native'
 import styled from 'styled-components/native'
 import { navigateAndSimpleReset } from '@/Navigators/utils'
 import { useTheme } from '@/Hooks'
