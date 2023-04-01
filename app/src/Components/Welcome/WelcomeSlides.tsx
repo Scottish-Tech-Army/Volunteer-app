@@ -1,4 +1,6 @@
-//Data to be rendered in the flatlist 'WelcomeSlider'
+/**
+ * @file Data to be rendered in the flatlist 'WelcomeSlider'
+ */
 
 import React from 'react'
 import { Image, View } from 'react-native'
@@ -29,10 +31,7 @@ export function WelcomeSlides() {
     },
     {
       image: (
-        <WelcomeImage
-          source={MakeAnImpact}
-          resizeMode={'contain'}
-        ></WelcomeImage>
+        <WelcomeImage source={MakeAnImpact} resizeMode={'contain'}></WelcomeImage>
       ),
       title: 'MAKE AN IMPACT',
       text: 'In the first year of the STA our volunteers saved the third sector in Scotland over £1m',
