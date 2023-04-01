@@ -113,7 +113,7 @@ async function addLinkedFields(tableName, record, linkedFields) {
 }
 
 /**
- * Returns the rows from a table based on the recordId
+ * Returns the record from a table based on the recordId
  * @param {string} tableName
  * @param {string} recordId
  * @param {Array} linkedFields - a field that creates a relationship with another table
