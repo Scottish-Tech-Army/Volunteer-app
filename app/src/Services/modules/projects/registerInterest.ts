@@ -4,7 +4,7 @@
 
 import { Config } from '@/Config'
 import { EndpointBuilder } from '@reduxjs/toolkit/dist/query/endpointDefinitions'
-
+import { ApiBaseQueryFunctionType } from '@/Services/api'
 interface ProjectRegisterInterestQuery {
   project: {
     it_key: string
@@ -19,12 +19,21 @@ interface ProjectRegisterInterestQuery {
   }
 }
 
-export default (build: EndpointBuilder<any, any, any>) =>
+export type RegisterInterestResponseType = { data?: string; error?: string }
+
+/**
+ * @function registerInterest posts new case of registered interest
+ * @param {EndpointBuilder<ApiBaseQueryFunctionType, never, 'api'>} build - endpoint builder from api created with RTK Query
+ * @returns {void} no return.
+ */
+export default (
+  build: EndpointBuilder<ApiBaseQueryFunctionType, never, 'api'>,
+) =>
   build.query<{ data?: string; error?: string }, ProjectRegisterInterestQuery>({
     query: (query: ProjectRegisterInterestQuery) => ({
-      url: `${Config.STA_BASE_URL}/projects/single/register-interest?it=${query.project.it_key}&res=${query.project.res_id}`,
+      url: `${Config.STA_BASE_URL}${Config.STA_API_VERSION}/projects/single/register-interest?it=${query.project.it_key}&res=${query.project.res_id}`,
       method: 'POST',
       body: query.user,
     }),
-    transformResponse: data => data,
+    transformResponse: (data: RegisterInterestResponseType) => data,
   })

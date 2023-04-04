@@ -84,10 +84,10 @@ function fakeProjectObject() {
     name: faker.lorem.sentence(),
     description: faker.lorem.sentences(4),
     client: faker.company.companyName(),
-    video_webpage: faker.internet.url(),
     scope: faker.internet.url(),
     sector: faker.lorem.sentence(),
-    video_file: faker.internet.url(),
+    video_webpage: faker.internet.url(),
+    video_webpage_player_only: faker.internet.url(),
   };
 }
 
@@ -168,14 +168,14 @@ function fakeAirTableProjectResource(includeBuddying) {
     client: faker.company.companyName(),
     role: faker.name.jobTitle(),
     description: faker.lorem.sentences(4),
-    video_webpage: faker.internet.url(),
     scope: faker.internet.url(),
     sector: faker.lorem.sentence(),
-    video_file: faker.internet.url(),
     skills: `${faker.lorem.words(5)}
     ${faker.lorem.words(5)}`,
     hours: fakeHours(),
     required: 1,
+    video_webpage: faker.internet.url(),
+    video_webpage_player_only: faker.internet.url(),
   };
 
   if (includeBuddying) projectResource.buddying = true;

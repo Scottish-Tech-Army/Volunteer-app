@@ -1,5 +1,5 @@
 /**
- * @file Example config settings -- duplicate this file and create an index.ts file in the same directory.
+ * @file Example config settings -- duplicate this file and create an index.ts file in the same directory
  */
 
 export const Config = {
@@ -12,4 +12,6 @@ export const Config = {
   // the local device, you can try using your local IP address instead)
   STA_BASE_URL: 'http://localhost:3000',
   // STA_BASE_URL: 'https://the-sta.com', // use this instead of your local API URL when you want to access the production API
+  // Prefix that specifies current API version.
+  STA_API_VERSION: '/v1',
 }
