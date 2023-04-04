@@ -52,7 +52,6 @@ const WelcomeSlider: FC<SliderProps> = ({
   slides,
   isAndroidRTL,
 }) => {
-  // const { Fonts } = useTheme() // warning 'Fonts' assigned but never used
   const rtlSafeIndex = (i: number) => (isAndroidRTL ? slides.length - 1 - i : i)
   const renderItem = ({ item }) => {
     return (
