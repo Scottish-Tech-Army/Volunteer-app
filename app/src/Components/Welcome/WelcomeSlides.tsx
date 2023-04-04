@@ -17,22 +17,34 @@ export function WelcomeSlides() {
   return [
     {
       image: (
-        <WelcomeImage source={Welcome} resizeMode={'contain'}></WelcomeImage>
+        <WelcomeImage 
+          source={Welcome}
+          resizeMode={'contain'}
+        >
+        </WelcomeImage>
       ),
       title: 'WELCOME',
       text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eu nisl vitae nisl lobortis rutrum.',
-    },
+    }
     {
       image: (
-        <WelcomeImage source={Volunteer} resizeMode={'contain'}></WelcomeImage>
+        <WelcomeImage
+          source={Volunteer}
+          resizeMode={'contain'}
+        >
+        </WelcomeImage>
       ),
       title: 'VOLUNTEER',
       text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eu nisl vitae nisl lobortis rutrum.',
-    },
+    }
     {
       image: (
-        <WelcomeImage source={MakeAnImpact} resizeMode={'contain'}></WelcomeImage>
-      ),
+        <WelcomeImage
+          source={MakeAnImpact}
+          resizeMode={'contain'}
+        >
+        </WelcomeImage>
+      )
       title: 'MAKE AN IMPACT',
       text: 'In the first year of the STA our volunteers saved the third sector in Scotland over £1m',
     },

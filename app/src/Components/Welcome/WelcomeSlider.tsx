@@ -1,4 +1,6 @@
-//Horizontal flatlist contains welcome, volunteer and make an impact screens
+/**
+ * @file Horizontal flatlist contains welcome, volunteer and make an impact screens
+ */
 
 import React, { FC, Ref } from 'react'
 import { useTheme } from '@/Hooks'
@@ -50,7 +52,7 @@ const WelcomeSlider: FC<SliderProps> = ({
   slides,
   isAndroidRTL,
 }) => {
-  const { Fonts } = useTheme()
+  // const { Fonts } = useTheme() // warning 'Fonts' assigned but never used
   const rtlSafeIndex = (i: number) => (isAndroidRTL ? slides.length - 1 - i : i)
   const renderItem = ({ item }) => {
     return (

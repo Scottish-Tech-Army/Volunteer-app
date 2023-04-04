@@ -1,3 +1,7 @@
+/**
+ * @file Welcome container, includes welcome button and three slides Welcome, Volunteer and Make an Impact
+ */
+
 import React, { useState, useRef } from 'react'
 import { useTheme } from '@/Hooks'
 import { Dimensions, I18nManager, Platform, SafeAreaView } from 'react-native'
@@ -18,7 +22,7 @@ const PageBottom = styled.View`
 
 const WelcomeContainer = () => {
   const [activeIndex, setActiveIndex] = useState(0)
-  const { Layout, Colors } = useTheme()
+  const { Layout } = useTheme() // Colors removed
   const slideRef = useRef(null)
   const rtlSafeIndex = (i: number) => (isAndroidRTL ? slides.length - 1 - i : i)
   const slides = WelcomeSlides()
