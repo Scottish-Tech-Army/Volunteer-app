@@ -4,13 +4,16 @@
 
 import React, { FC, useState } from 'react'
 import dayjs from 'dayjs'
-import { Alert } from 'react-native'
+import { Alert } from 'react- native'
 import { useSelector } from 'react-redux'
 import CalendarPicker from 'react-native-calendar-picker' // Note: this package also requires 'moment' package to be installed
 import { EventSearch } from '@/Containers/EventSearchContainer'
 import Button from '@/Components/Forms/Button'
 import { filterEventsByDate } from '@/Containers/EventSearchContainer'
-import { ListRouteParams, ListType } from '@/NativeBase/Containers/ListContainer'
+import {
+  ListRouteParams,
+  ListType,
+} from '@/NativeBase/Containers/ListContainer'
 import { navigate } from '@/Navigators/utils'
 import { EventsState } from '@/Store/Events'
 
