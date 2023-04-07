@@ -14,6 +14,7 @@
     "lint-app": "lint-staged --quiet"
   },
   "dependencies": {
+    "@bugsnag/react-native": "^7.19.0",
     "@react-native-async-storage/async-storage": "^1.15.7",
     "@react-native/normalize-color": "^2.0.0",
     "@react-navigation/bottom-tabs": "^6.0.5",
@@ -30,6 +31,7 @@
     "react-native": "0.65.1",
     "react-native-calendar-events": "^2.2.0",
     "react-native-calendar-picker": "^7.1.2",
+    "react-native-config": "^1.5.0",
     "react-native-date-picker": "^4.2.1",
     "react-native-flipper": "^0.113.0",
     "react-native-gesture-handler": "^1.10.3",
@@ -51,6 +53,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
+    "@bugsnag/source-maps": "^2.3.1",
     "@react-native-community/eslint-config": "^3.0.0",
     "@types/react": "^17.0.34",
     "@types/react-native": "^0.66.4",

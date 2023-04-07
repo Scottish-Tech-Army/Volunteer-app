@@ -71,4 +71,9 @@
 	<key>NSCalendarsUsageDescription</key>
 	<string>This app requires access to the calendar in order to add events</string>
 </dict>
+<key>bugsnag</key>
+<dict>
+	<key>apiKey</key>
+	<string>$(BUGSNAG_API_KEY)</string>
+</dict>
 </plist>

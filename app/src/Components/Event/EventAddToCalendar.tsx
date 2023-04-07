@@ -15,6 +15,7 @@ import Button from '../Forms/Button'
 import IconAndLabel from '../IconAndLabel'
 import Title from '../Title'
 import { Event } from '@/Services/modules/events'
+import { logError } from '@/Services/modules/logging'
 import { EventsState, setEvents } from '@/Store/Events'
 import { end } from '@/Utils/Events'
 
@@ -115,8 +116,12 @@ const EventAddToCalendar: FC<EventAddToCalendarProps> = ({ event }) => {
       } else {
         Alert.alert('Sorry, we ran into a problem accessing your calendar')
       }
-    } catch (error) {
-      console.error('Error accessing device calendar', error)
+    } catch (exception) {
+      logError('Error accessing device calendar', {
+        location: 'EventAddToCalendar - checkCalendarAccess',
+        exception,
+      })
+
       Alert.alert('Sorry, we ran into a problem accessing your calendar')
     }
   }
@@ -155,8 +160,12 @@ const EventAddToCalendar: FC<EventAddToCalendarProps> = ({ event }) => {
         )
         dispatch(setEvents({ upcoming: allUpcomingEventsUpdated }))
       }
-    } catch (error) {
-      console.error('Error accessing device calendar', error)
+    } catch (exception) {
+      logError('Error accessing device calendar', {
+        location: 'EventAddToCalendar - addToCalendar',
+        exception,
+      })
+
       Alert.alert('Sorry, we ran into a problem adding this to your calendar')
     }
 

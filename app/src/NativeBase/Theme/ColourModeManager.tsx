@@ -7,6 +7,7 @@
 
 import { StorageManager, ColorMode } from 'native-base'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { logError } from '@/Services/modules/logging'
 
 const ColourModeManager: StorageManager = {
   get: async () => {
@@ -14,8 +15,11 @@ const ColourModeManager: StorageManager = {
       const colourMode = await AsyncStorage.getItem('@color-mode')
 
       return colourMode === 'dark' ? 'dark' : 'light'
-    } catch (error) {
-      console.error('Error getting colour mode in ColourModeManager', error)
+    } catch (exception) {
+      logError('Error getting colour mode', {
+        location: 'ColourModeManager - get',
+        exception,
+      })
 
       return 'light'
     }
@@ -23,8 +27,11 @@ const ColourModeManager: StorageManager = {
   set: async (colourMode: ColorMode) => {
     try {
       await AsyncStorage.setItem('@color-mode', colourMode ?? 'light')
-    } catch (error) {
-      console.error('Error setting colour mode in ColourModeManager', error)
+    } catch (exception) {
+      logError('Error setting colour mode', {
+        location: 'ColourModeManager - set',
+        exception,
+      })
     }
   },
 }
