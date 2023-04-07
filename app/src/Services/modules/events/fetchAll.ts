@@ -20,6 +20,6 @@ export default (
 ) =>
   build.query<Events, string>({
     query: () =>
-      `${Config.STA_BASE_URL}${Config.STA_API_VERSION}/events/schedule/${range}`,
+      `${Config.STA_BASE_URL}/${Config.STA_API_VERSION}/events/schedule/${range}`,
     transformResponse: (data: Events) => data,
   })

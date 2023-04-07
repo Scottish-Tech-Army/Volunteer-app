@@ -15,6 +15,6 @@ export default (
   build: EndpointBuilder<ApiBaseQueryFunctionType, never, 'api'>,
 ) =>
   build.query<Projects, string>({
-    query: () => `${Config.STA_BASE_URL}${Config.STA_API_VERSION}/projects`,
+    query: () => `${Config.STA_BASE_URL}/${Config.STA_API_VERSION}/projects`,
     transformResponse: (data: Projects) => data,
   })
