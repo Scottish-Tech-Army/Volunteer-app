@@ -12,7 +12,7 @@ import { Box, Text, Heading, VStack, HStack, useColorMode } from 'native-base'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components/native'
-import { EventSearch } from '../EventSearchContainer'
+import { EventSearch } from '../../Containers/EventSearchContainer'
 import { ProjectSearch } from './ProjectSearchContainer'
 import EventOptions from '@/Components/Event/EventOptions'
 import EventSearchUpcomingQuickSearch, {
@@ -43,7 +43,7 @@ import {
 } from '@/Services/modules/projects'
 import { EventsState, setEvents } from '@/Store/Events'
 import { ProjectsState, setProjects } from '@/Store/Projects'
-import StaTheme from '../Theme/StaTheme'
+import underDevelopmentAlert from '@/Utils/UnderDevelopmentAlert'
 
 const ClearSearchLabel = styled.Text`
 
@@ -115,6 +115,9 @@ const ListContainer = (props: {
     option =>
       ({
         text: capitaliseFirstLetter(option),
+        onPress: () => {
+          underDevelopmentAlert
+        },
       } as SegmentedPickerOption),
   )
 
@@ -271,69 +274,69 @@ const ListContainer = (props: {
         showSearchButton
         onSearchButtonPress={() => navigate(screens.search[params.type], '')}
       />
-
-      <Box
-        _dark={{ backgroundColor: StaTheme.colors.bgDarkMode['100'] }}
-        _light={{ backgroundColor: StaTheme.colors.bg['100'] }}
-        safeAreaTop
+      <VStack
+        _dark={{ backgroundColor: 'bgDarkMode.100' }}
+        _light={{ backgroundColor: 'bg.secondary' }}
+        paddingBottom="2"
+        alignItems="center"
+        space={4}
+        padding={4}
       >
-        <VStack paddingBottom="2" alignItems="center">
-          <Heading paddingBottom="2">Projects List</Heading>
-          <SegmentedPicker options={projectListOptions} />
+        <Heading fontSize="md">Projects List</Heading>
+        <SegmentedPicker options={projectListOptions} />
 
-          {params?.type && listItemsToShow ? (
-            <>
-              {/* Past / Upcoming / My Events choice */}
-              {params.type === ListType.Events && (
-                <EventOptions selected={eventsSelectedOption} />
-              )}
+        {params?.type && listItemsToShow ? (
+          <>
+            {/* Past / Upcoming / My Events choice */}
+            {params.type === ListType.Events && (
+              <EventOptions selected={eventsSelectedOption} />
+            )}
 
-              {/* Quick search for upcoming events (Today / This week / This month) */}
-              {params.type === ListType.Events &&
-                eventsShowUpcomingQuickSearch &&
-                eventsQuickSearchUpcomingChoice && (
-                  <SearchResultsView>
-                    <EventSearchUpcomingQuickSearch
-                      selectedButton={eventsQuickSearchUpcomingChoice}
-                    />
-                  </SearchResultsView>
-                )}
-
-              {/* If the user has searched, show some text indicating what they searched for
-                and give them the option to clear the search */}
-              {params?.search && (
+            {/* Quick search for upcoming events (Today / This week / This month) */}
+            {params.type === ListType.Events &&
+              eventsShowUpcomingQuickSearch &&
+              eventsQuickSearchUpcomingChoice && (
                 <SearchResultsView>
-                  {params?.search?.description && (
-                    <SearchResultsLabel>
-                      Results for {params.search.description}
-                    </SearchResultsLabel>
-                  )}
-                  <ClearSearchLabel onPress={clearSearch}>
-                    Clear search
-                  </ClearSearchLabel>
+                  <EventSearchUpcomingQuickSearch
+                    selectedButton={eventsQuickSearchUpcomingChoice}
+                  />
                 </SearchResultsView>
               )}
 
-              {/* Projects filter & sort options */}
-              {params.type === ListType.Projects &&
-                Boolean(params?.search) &&
-                Boolean(listItemsToShow.length) && <ProjectFilterSort />}
+            {/* If the user has searched, show some text indicating what they searched for
+                and give them the option to clear the search */}
+            {params?.search && (
+              <SearchResultsView>
+                {params?.search?.description && (
+                  <SearchResultsLabel>
+                    Results for {params.search.description}
+                  </SearchResultsLabel>
+                )}
+                <ClearSearchLabel onPress={clearSearch}>
+                  Clear search
+                </ClearSearchLabel>
+              </SearchResultsView>
+            )}
 
-              <List
-                data={listItemsToShow}
-                mode={
-                  params?.search ? ListDisplayMode.Search : ListDisplayMode.Full
-                }
-                options={params?.options}
-                searchScreen={screens.search[params.type]}
-                type={params.type}
-              />
-            </>
-          ) : (
-            <Text>Loading...</Text>
-          )}
-        </VStack>
-      </Box>
+            {/* Projects filter & sort options */}
+            {params.type === ListType.Projects &&
+              Boolean(params?.search) &&
+              Boolean(listItemsToShow.length) && <ProjectFilterSort />}
+
+            <List
+              data={listItemsToShow}
+              mode={
+                params?.search ? ListDisplayMode.Search : ListDisplayMode.Full
+              }
+              options={params?.options}
+              searchScreen={screens.search[params.type]}
+              type={params.type}
+            />
+          </>
+        ) : (
+          <Text>Loading...</Text>
+        )}
+      </VStack>
     </>
   )
 }

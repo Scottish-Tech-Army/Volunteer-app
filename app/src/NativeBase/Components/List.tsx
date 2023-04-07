@@ -5,17 +5,15 @@
 import React, { FC } from 'react'
 import styled from 'styled-components/native'
 import EventSummary from '@/Components/Event/EventSummary'
-import ProjectSummary from '@/Components/Project/ProjectSummary'
 import { ListType } from '@/NativeBase/Containers/ListContainer'
 import { navigate, RootStackParamList } from '@/Navigators/utils'
 import { Events, EventsRange } from '@/Services/modules/events'
 import { Projects } from '@/Services/modules/projects'
 import underDevelopmentAlert from '../../Utils/UnderDevelopmentAlert'
-import ProjectRoleTitle from '../Components/Project/ProjectRoleTitle'
+import ColouredTag from '../Components/ColouredTag'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
 import {
-  Box,
   FavouriteIcon,
   FlatList,
   Heading,
@@ -24,6 +22,7 @@ import {
   ShareIcon,
   Text,
   VStack,
+  Card,
   Icon,
 } from 'native-base'
 
@@ -73,7 +72,13 @@ interface ListProps {
  * @param {ListType} props.type Which type of data is in the list, e.g. projects or events
  * @returns {React.ReactElement} Component
  */
-const List: FC<ListProps> = ({ data, mode, options, searchScreen, type }) => {
+const List: FC<ListProps> = ({
+  data,
+  mode,
+  options,
+  searchScreen,
+  type,
+}): JSX.Element => {
   if (!data.length)
     return (
       <>
@@ -127,53 +132,60 @@ const List: FC<ListProps> = ({ data, mode, options, searchScreen, type }) => {
           data={data as Projects}
           renderItem={({ item }) => {
             return (
-              <Box
-                borderWidth={1}
-                borderColor="grey.80"
-                rounded="xl"
-                backgroundColor="bg.100"
-                margin="2"
-              >
+              <Card margin="2">
                 <Pressable
                   onPress={() => {
                     navigate('ProjectDetail', { item, key: item.res_id })
                   }}
                   overflow="hidden"
                 >
-                  <VStack paddingX="2" bgColor="bg.secondary" space={1}>
-                    <HStack justifyContent="space-between" alignItems="center">
-                      <Heading maxWidth={246} fontSize="lg">
+                  <VStack space={4}>
+                    <HStack
+                      justifyContent="space-between"
+                      alignItems="center"
+                      paddingRight="4"
+                    >
+                      <Heading width="70%" fontSize="sm">
                         {item.name}
                       </Heading>
                       <ShareIcon
                         size="md"
-                        color="accentGrey"
+                        color="accentGrey.100"
                         onPress={underDevelopmentAlert}
                       />
                       <FavouriteIcon
                         size="md"
-                        color="primary.100"
+                        color="accentGrey.100"
                         onPress={underDevelopmentAlert}
                       />
                     </HStack>
-                    <Text fontSize="lg">{item.client}</Text>
-                    <ProjectRoleTitle role={item.role} />
-                    <Text>{item.hours}</Text>
-                    <Text>{item.description}</Text>
-                    <Text>
-                      {item.buddying
-                        ? 'Suitable for pairing'
-                        : 'Not suitable for pairing'}
-                    </Text>
-                    <Icon
-                      as={MaterialIcons}
-                      color="primary.100"
-                      name="Handshake"
-                      size="sm"
-                    />
+
+                    <Text fontSize="xs">{item.client}</Text>
+                    <ColouredTag title={item.role} />
+                    {Boolean(item.buddying) && (
+                      <>
+                        <HStack
+                          justifyContent="space-between"
+                          alignItems="center"
+                          paddingRight="4"
+                        >
+                          <Text fontSize="xs">Suitable for pairing</Text>
+                          <Icon
+                            size={7}
+                            as={MaterialIcons}
+                            name="group"
+                            color="grey"
+                            mx={0}
+                            px={0}
+                          />
+                        </HStack>
+                      </>
+                    )}
+
+                    <Text fontSize="xs">{item.description}</Text>
                   </VStack>
                 </Pressable>
-              </Box>
+              </Card>
             )
           }}
           keyExtractor={project => project.res_id}
