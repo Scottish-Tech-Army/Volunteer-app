@@ -118,7 +118,6 @@ const EventAddToCalendar: FC<EventAddToCalendarProps> = ({ event }) => {
       }
     } catch (exception) {
       logError('Error accessing device calendar', {
-        location: 'EventAddToCalendar - checkCalendarAccess',
         exception,
       })
 
@@ -162,7 +161,6 @@ const EventAddToCalendar: FC<EventAddToCalendarProps> = ({ event }) => {
       }
     } catch (exception) {
       logError('Error accessing device calendar', {
-        location: 'EventAddToCalendar - addToCalendar',
         exception,
       })
 
