@@ -1,14 +1,19 @@
 import Bugsnag from '@bugsnag/react-native'
+import { isEmulator } from 'react-native-device-info'
 
 export interface EventInfo {
-  exception?: unknown
+  extraInfo?: unknown
 }
 
 export const logError = (errorMessage: string, eventInfo?: EventInfo) => {
   console.error(errorMessage)
+  if (eventInfo) console.error(eventInfo)
 
-  Bugsnag.notify(new Error(errorMessage), event => {
-    if (eventInfo?.exception)
-      event.addMetadata('exception', eventInfo.exception)
+  isEmulator().then(appIsEmulator => {
+    if (!appIsEmulator)
+      Bugsnag.notify(new Error(errorMessage), event => {
+        if (eventInfo?.extraInfo)
+          event.addMetadata('extraInfo', eventInfo.extraInfo)
+      })
   })
 }

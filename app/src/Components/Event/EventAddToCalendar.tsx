@@ -116,9 +116,9 @@ const EventAddToCalendar: FC<EventAddToCalendarProps> = ({ event }) => {
       } else {
         Alert.alert('Sorry, we ran into a problem accessing your calendar')
       }
-    } catch (exception) {
+    } catch (error) {
       logError('Error accessing device calendar', {
-        exception,
+        extraInfo: error,
       })
 
       Alert.alert('Sorry, we ran into a problem accessing your calendar')
@@ -159,9 +159,9 @@ const EventAddToCalendar: FC<EventAddToCalendarProps> = ({ event }) => {
         )
         dispatch(setEvents({ upcoming: allUpcomingEventsUpdated }))
       }
-    } catch (exception) {
+    } catch (error) {
       logError('Error accessing device calendar', {
-        exception,
+        extraInfo: error,
       })
 
       Alert.alert('Sorry, we ran into a problem adding this to your calendar')
