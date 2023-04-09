@@ -50,8 +50,8 @@ allprojects {
         maven { url 'https://www.jitpack.io' }
 
         /**
-         Jcenter is currently required in order for the video component to work on Andriod.
-         This will be updated to a non-deprecated service in the future
+         Jcenter is currently required in order for the react-native-view-pdf component to work on Android.
+         This will be need to be updated to a non-deprecated service in the future
         */
         jcenter()
     }
