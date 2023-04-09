@@ -4,6 +4,7 @@
 
 const axios = require('axios').default;
 const Vimeo = require('vimeo').Vimeo;
+const logging = require('../services/logging');
 
 function client() {
   return new Vimeo(process.env.VIMEO_CLIENT_ID, process.env.VIMEO_CLIENT_SECRET, process.env.VIMEO_ACCESS_TOKEN);
@@ -31,16 +32,17 @@ async function getVideoThumbnail(videoWebpageUrl) {
         // Add a file extension in order to make sure the image shows in the front-end app -- on some emulators had problems where the image did not include an extension
         return `${thumbnailUrl}.jpg`;
       } else {
-        console.error(`❌ Could not get Vimeo thumbnail for video ID ${vimeoId} -- no thumbnail returned from Vimeo`);
+        logging.logError(`❌ Could not get Vimeo thumbnail for video ID ${vimeoId} -- no thumbnail returned from Vimeo`);
       }
     } else {
-      console.error(
-        `❌ Could not get Vimeo thumbnail for video ID ${vimeoId} -- error connecting to Vimeo API`,
-        vimeoResponse.statusText,
-      );
+      logging.logError(`❌ Could not get Vimeo thumbnail for video ID ${vimeoId} -- error connecting to Vimeo API`, {
+        extraInfo: vimeoResponse.statusText,
+      });
     }
   } catch (error) {
-    console.error(`❌ Could not get Vimeo thumbnail for video ID ${vimeoId} -- error connecting to Vimeo API`, error);
+    logging.logError(`❌ Could not get Vimeo thumbnail for video ID ${vimeoId} -- error connecting to Vimeo API`, {
+      extraInfo: error,
+    });
   }
 
   return;
@@ -62,7 +64,9 @@ async function getVideoWebpagePlayerOnly(videoWebpageUrl) {
         path: `/videos/${vimeoId}`
       }, function (error, body) {
         if (error) {
-          console.error('Error getting video info from Vimeo', error);
+          logging.logError('Error getting video info from Vimeo', {
+            extraInfo: error,
+          });
           resolve(getVideoWebpagePlayerOnlyDefault(vimeoId));
         } else if (body.player_embed_url) {
           // This is the ideal player-only URL to use -- returned by the Vimeo API from our Vimeo account
@@ -72,7 +76,9 @@ async function getVideoWebpagePlayerOnly(videoWebpageUrl) {
         resolve(getVideoWebpagePlayerOnlyDefault(vimeoId));
       });
     } catch (error) {
-      console.error(error);
+      logging.logError('Error getting video info from Vimeo', {
+        extraInfo: error,
+      });
 
       resolve(getVideoWebpagePlayerOnlyDefault(vimeoId));
     }
@@ -105,7 +111,9 @@ function getVideoIdFromUrl(videoWebpageUrl) {
       return;
     }
   } catch (error) {
-    console.error(error);
+    logging.logError(`Error getting Vimeo video ID from video webpage URL ${videoWebpageUrl}`, {
+      extraInfo: error,
+    });
 
     return;
   }

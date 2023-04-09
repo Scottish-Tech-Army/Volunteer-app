@@ -3,6 +3,7 @@ const AirTable = require('airtable');
 const dayjs = require('dayjs');
 const relativeTime = require('dayjs/plugin/relativeTime');
 dayjs.extend(relativeTime);
+const logging = require('../services/logging');
 
 // AirTable doesn't include fields that it sees as empty (including its equivalent of boolean false) so we need to populate them
 function addEmptyFields(record, fieldDefinitions) {
@@ -85,7 +86,9 @@ async function getRecordById(tableName, recordId) {
 
     return recordsRaw.fields;
   } catch (error) {
-    console.error(error);
+    logging.logError(`Could not get record ID ${recordId} from table ${tableName}`, {
+      extraInfo: error,
+    });
 
     return error;
   }
@@ -111,7 +114,9 @@ async function getRecordByQuery(tableName, filterQuery) {
 
     return recordsRaw.length ? recordsRaw[0].fields : undefined;
   } catch (error) {
-    console.error(error);
+    logging.logError(`Could not get record using query ${JSON.stringify(filterQuery)} from table ${tableName}`, {
+      extraInfo: error,
+    });
 
     return error;
   }
@@ -145,7 +150,9 @@ async function updateRecordById(tableName, recordId, fields) {
 
     return result;
   } catch (error) {
-    console.error(error);
+    logging.logError(`Could not update record with ID ${recordId} with fields ${JSON.stringify(fields)} from table ${tableName}`, {
+      extraInfo: error,
+    });
 
     return error;
   }

@@ -1,4 +1,4 @@
-const app = require("./app");
+const app = require('./app');
 const cron = require('./cron-jobs/run-cron-jobs');
 
 app.listen(3000, () => {

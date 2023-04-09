@@ -1,11 +1,29 @@
+const Bugsnag = require('@bugsnag/js')
+const BugsnagPluginExpress = require('@bugsnag/plugin-express')
 const express = require('express');
-const app = express();
 const routes = require('./routes/index');
 const cors = require('cors');
+
+Bugsnag.start({
+  apiKey: process.env.BUGSNAG_API_KEY,
+  plugins: [BugsnagPluginExpress],
+  otherOptions: { appType: 'api_server' },
+})
+const bugsnagMiddleware = Bugsnag.getPlugin('express')
+
+const app = express();
+
+// This must be the first piece of middleware in the stack.
+// It can only capture errors in downstream middleware
+app.use(bugsnagMiddleware.requestHandler)
 
 app.use(cors());
 app.use(express.json());
 app.use('/v1', routes);
+
+// This handles any errors that Express catches. This needs to go before other
+// error handlers. BugSnag will call the `next` error handler if it exists.
+app.use(bugsnagMiddleware.errorHandler)
 
 app.use((req, res, next) => {
   const err = new Error("Something went wrong. Please try again.");
