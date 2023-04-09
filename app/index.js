@@ -8,6 +8,6 @@ import { AppRegistry } from 'react-native'
 import App from './src/App'
 import { name as appName } from './app.json'
 
-Bugsnag.start({ appType: 'app' })
+Bugsnag.start({ appType: 'native_app' })
 
 AppRegistry.registerComponent(appName, () => App)
