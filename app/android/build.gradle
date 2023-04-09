@@ -49,11 +49,5 @@ allprojects {
 
         google()
         maven { url 'https://www.jitpack.io' }
-
-        /**
-         Jcenter is currently required in order for the react-native-view-pdf component to work on Android.
-         This will be need to be updated to a non-deprecated service in the future
-        */
-        jcenter()
     }
 }
