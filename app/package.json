@@ -33,6 +33,7 @@
     "react-native-calendar-picker": "^7.1.2",
     "react-native-config": "^1.5.0",
     "react-native-date-picker": "^4.2.1",
+    "react-native-device-info": "^10.6.0",
     "react-native-flipper": "^0.113.0",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-safe-area-context": "^3.3.2",
