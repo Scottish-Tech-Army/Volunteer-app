@@ -6,14 +6,15 @@ export interface EventInfo {
 }
 
 export const logError = (errorMessage: string, eventInfo?: EventInfo) => {
-  console.error(errorMessage)
-  if (eventInfo) console.error(eventInfo)
-
   isEmulator().then(appIsEmulator => {
-    if (!appIsEmulator)
+    if (appIsEmulator) {
+      console.error(errorMessage)
+      if (eventInfo) console.error(eventInfo)
+    } else {
       Bugsnag.notify(new Error(errorMessage), event => {
         if (eventInfo?.extraInfo)
           event.addMetadata('extraInfo', eventInfo.extraInfo)
       })
+    }
   })
 }
