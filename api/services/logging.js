@@ -4,10 +4,11 @@ function logError(errorMessage, eventInfo) {
   console.error(errorMessage);
   if (eventInfo) console.error(eventInfo);
 
-  Bugsnag.notify(new Error(errorMessage), event => {
-    if (eventInfo?.extraInfo)
-      event.addMetadata('extraInfo', eventInfo.extraInfo);
-  })
+  if (process.env.NODE_ENV === 'production')
+    Bugsnag.notify(new Error(errorMessage), event => {
+      if (eventInfo?.extraInfo)
+        event.addMetadata('extraInfo', eventInfo.extraInfo);
+    })
 }
 
 module.exports = {
