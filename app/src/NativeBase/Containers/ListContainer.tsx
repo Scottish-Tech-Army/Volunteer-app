@@ -7,7 +7,7 @@
 
 /* eslint-disable @typescript-eslint/no-shadow */
 
-import { Box, Text, Heading, VStack, HStack, useColorMode } from 'native-base'
+import { Text, Heading, VStack } from 'native-base'
 
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
