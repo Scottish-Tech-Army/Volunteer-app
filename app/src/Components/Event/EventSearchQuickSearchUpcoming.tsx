@@ -2,7 +2,6 @@
  * @file 'Today', 'This week' and 'This month' date quick search buttons for upcoming events.
  */
 
-/* eslint-disable react-native/no-inline-styles */
 import React, { FC } from 'react'
 import dayjs from 'dayjs'
 import styled from 'styled-components/native'
