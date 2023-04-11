@@ -12,6 +12,7 @@ This file contains some tips and guidelines on building our front-end React Nati
   - [Custom components](#custom-components)
   - [Icons](#icons)
 - [Images](#images)
+- [Logging errors and crashes](#logging-errors-and-crashes)
 - [Performance issues](#performance-issues)
 
 ## Overview of directories
@@ -178,6 +179,14 @@ We have the [react-native-svg](https://github.com/software-mansion/react-native-
 - Import it at the top of your component file, e.g. `import StaLogoWide from '@/NativeBase/Assets/Images/Logos/sta-logo-wide.svg'`
 - Use it like you would a normal component, e.g. `<StaLogoWide />`
 - See `interface SvgProps` [in this file](https://github.com/software-mansion/react-native-svg/blob/main/src/elements/Svg.tsx) for common props you can use, and [here for touch events](https://github.com/software-mansion/react-native-svg/blob/main/USAGE.md#touch-events)
+
+## Logging errors and crashes
+
+We use Bugsnag to log errors and crashes in the front-end app when it's running on people's phones.
+
+Normally, this only works when the app is installed on an actual device, rather than running in an emulator.  This is so that we don't get flooded by lots of errors that occur during development, and because we're on a free tier package that only allows a limited number of error reports per month so we want to minimise the errors reported to Bugsnag to only include issues in production.
+
+You can force the app to report errors and crashes to Bugsnag from the emulator.  To do this, create (or update) an `app/.env` file and include the line `BUGSNAG_ALWAYS_SEND_BUGS="true"` -- then you must restart your emulator.  **You should only use this when normal error detection is insufficient** -- e.g. because you want to figure out why the app is crashing due to a lack of memory.  **Don't** use this in place of normal code tools like `console.error` and `console.log`  If you do use it, please remove this line from your .env file as soon as possible or set it to `BUGSNAG_ALWAYS_SEND_BUGS="false"`
 
 ## Performance issues
 
