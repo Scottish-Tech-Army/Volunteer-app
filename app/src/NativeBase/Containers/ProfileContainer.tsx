@@ -48,7 +48,6 @@ const ProfileContainer = () => {
   const dataPermissionsState = useSelector(
     (state: { permissions: PermissionsState }) => state.permissions.data,
   )
-  console.log('dataPermissionsState', dataPermissionsState)
   const onChangeErrorLogsPermission = (errorLogs: boolean) => {
     dispatch(setPermissions({ data: { ...dataPermissionsState, errorLogs } }))
   }
@@ -104,17 +103,21 @@ const ProfileContainer = () => {
       <VStack safeAreaTop space={4} padding={4}>
         <Brand />
 
-        <Heading size="sm">Dark mode</Heading>
+        <VStack>
+          <Heading size="xs">Dark mode</Heading>
+          <SegmentedPicker options={colourModeOptions} />
+        </VStack>
 
-        <SegmentedPicker options={colourModeOptions} />
-
-        <YesNoChoice
-          description="Send error reports?"
-          onChange={() =>
-            onChangeErrorLogsPermission(!dataPermissionsState.errorLogs)
-          }
-          value={dataPermissionsState.errorLogs}
-        />
+        <VStack>
+          <YesNoChoice
+            description="Send error reports?"
+            onChange={() =>
+              onChangeErrorLogsPermission(!dataPermissionsState.errorLogs)
+            }
+            value={dataPermissionsState.errorLogs}
+          />
+          <Text fontSize="xs">This helps us fix any bugs in the app</Text>
+        </VStack>
 
         {/* <Heading size="sm">Welcome screen</Heading>
         <Checkbox
@@ -135,6 +138,7 @@ const ProfileContainer = () => {
             as={MaterialIcons}
             name="info"
             color="black"
+            _dark={{ color: 'white' }}
             mx={0}
             px={0}
           />
@@ -143,12 +147,24 @@ const ProfileContainer = () => {
 
         <HStack safeAreaBottom space="4" justifyContent={'center'}>
           <Text fontSize="sm">
-            <Link href="https://www.scottishtecharmy.org/app-privacy-policy">
+            <Link
+              _text={{
+                color: 'darkGrey.100',
+                _dark: { color: 'textDarkMode.100' },
+              }}
+              href="https://www.scottishtecharmy.org/app-privacy-policy"
+            >
               Privacy policy
             </Link>
           </Text>
-          <Text fontSize="sm">
-            <Link href="https://www.scottishtecharmy.org/app-terms-conditions">
+          <Text>
+            <Link
+              _text={{
+                color: 'darkGrey.100',
+                _dark: { color: 'textDarkMode.100' },
+              }}
+              href="https://www.scottishtecharmy.org/app-terms-conditions"
+            >
               Terms & conditions
             </Link>
           </Text>
