@@ -9,17 +9,21 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: api
     steps:
 
     - name: Checkout source code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: 'Create env file'
       run: |
         echo "${{ secrets.DEPLOY_ENV_FILE }}" > .env
 
     - name: Generate deployment package
-      run: zip -r deployable.zip * .[^.]* -x '*.git*'
+      run: |
+        zip -r deployable.zip * .[^.]*
 
     - name: Deploy to EB
       uses: einaregilsson/beanstalk-deploy@v21
@@ -28,7 +32,7 @@ jobs:
         aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         application_name: volunteer-app
         environment_name: Volunteerapp-env
-        version_label: 1
+        version_label: GitHub-Actions
         Version_description: ${{github.SHA}}
         region: eu-west-2
-        deployment_package: deployable.zip
+        deployment_package: ./api/deployable.zip
