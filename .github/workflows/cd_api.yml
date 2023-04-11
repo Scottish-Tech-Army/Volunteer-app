@@ -15,8 +15,8 @@ jobs:
       uses: actions/checkout@v2
 
     - name: 'Create env file'
-        run: |
-          echo "${{ secrets.DEPLOY_ENV_FILE }}" > .env
+      run: |
+        echo "${{ secrets.DEPLOY_ENV_FILE }}" > .env
 
     - name: Generate deployment package
       run: zip -r deployable.zip * .[^.]* -x '*.git*'
