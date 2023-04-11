@@ -29,6 +29,8 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import Brand from '@/NativeBase/Components/Brand'
+import YesNoChoice from '@/NativeBase/Components/Forms/YesNoChoice'
+import { setPermissions, PermissionsState } from '@/Store/Permissions'
 import { changeTheme, ThemeState } from '@/Store/Theme'
 // import { changeWelcome, WelcomeState } from '@/Store/Welcome'     currently not being used due to cleanup for MVP
 import { version } from '../../../package.json'
@@ -43,6 +45,13 @@ const ProfileContainer = () => {
   // const onChangeSplash = ({ welcome, show }: Partial<WelcomeState>) => {
   //   dispatch(changeWelcome({ welcome, show }))
   // }
+  const dataPermissionsState = useSelector(
+    (state: { permissions: PermissionsState }) => state.permissions.data,
+  )
+  console.log('dataPermissionsState', dataPermissionsState)
+  const onChangeErrorLogsPermission = (errorLogs: boolean) => {
+    dispatch(setPermissions({ data: { ...dataPermissionsState, errorLogs } }))
+  }
   const useSystemColourMode = useSelector(
     (state: { theme: ThemeState }) => state.theme.useSystemColourMode,
   )
@@ -95,9 +104,17 @@ const ProfileContainer = () => {
       <VStack safeAreaTop space={4} padding={4}>
         <Brand />
 
-        <Heading size="sm">Settings</Heading>
+        <Heading size="sm">Dark mode</Heading>
 
         <SegmentedPicker options={colourModeOptions} />
+
+        <YesNoChoice
+          description="Send error reports?"
+          onChange={() =>
+            onChangeErrorLogsPermission(!dataPermissionsState.errorLogs)
+          }
+          value={dataPermissionsState.errorLogs}
+        />
 
         {/* <Heading size="sm">Welcome screen</Heading>
         <Checkbox
@@ -109,7 +126,9 @@ const ProfileContainer = () => {
         >
           <Text fontSize="sm">Show splash screen on app launch</Text>
         </Checkbox> */}
+
         <Spacer />
+
         <HStack justifyContent="center">
           <Icon
             size={8}
@@ -121,6 +140,7 @@ const ProfileContainer = () => {
           />
           <Text fontSize="2xs">Version {version}</Text>
         </HStack>
+
         <HStack safeAreaBottom space="4" justifyContent={'center'}>
           <Text fontSize="sm">
             <Link href="https://www.scottishtecharmy.org/app-privacy-policy">
