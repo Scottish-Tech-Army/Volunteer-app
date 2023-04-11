@@ -16,9 +16,7 @@ const ColourModeManager: StorageManager = {
 
       return colourMode === 'dark' ? 'dark' : 'light'
     } catch (error) {
-      logError('Error getting colour mode', {
-        extraInfo: error,
-      })
+      logError('Error getting colour mode', error)
 
       return 'light'
     }
@@ -27,9 +25,7 @@ const ColourModeManager: StorageManager = {
     try {
       await AsyncStorage.setItem('@color-mode', colourMode ?? 'light')
     } catch (error) {
-      logError('Error setting colour mode', {
-        extraInfo: error,
-      })
+      logError('Error setting colour mode', error)
     }
   },
 }
