@@ -11,7 +11,7 @@ export interface DataPermissions {
 
 const slice = createSlice({
   name: 'permissions',
-  initialState: { data: { errorLogs: false } } as PermissionsState,
+  initialState: { data: { errorLogs: true } } as PermissionsState,
   reducers: {
     setPermissions: (state, { payload: { data } }: PermissionsPayload) => {
       if (typeof data !== 'undefined') {
