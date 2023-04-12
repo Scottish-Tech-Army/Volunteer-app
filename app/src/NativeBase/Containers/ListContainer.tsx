@@ -115,9 +115,7 @@ const ListContainer = (props: {
     option =>
       ({
         text: capitaliseFirstLetter(option),
-        onPress: () => {
-          underDevelopmentAlert
-        },
+        onPress: option === 'all' ? () => undefined : underDevelopmentAlert,
       } as SegmentedPickerOption),
   )
 
