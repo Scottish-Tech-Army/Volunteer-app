@@ -166,26 +166,42 @@ async function getAllProjectsAndResourcesFromJira() {
     );
 
     Promise.all([callAllItData, callAllResData]).then((data) => {
-      const itArray = data[0];
-      const resArray = data[1];
+      try {
+        const itArray = data[0];
+        const resArray = data[1];
 
-      const projectsFiltered =
-        module.exports.filterProjectsConnectedWithResources(itArray, resArray);
-      const resourcesFiltered =
-        module.exports.filterResourcesConnectedWithProjects(itArray, resArray);
-      const projectsFilteredAndFormatted = module.exports.formatProjects(
-        projectsFiltered,
-        resourcesFiltered
-      );
+        if (data[0] === undefined || data[1] === undefined)
+          throw new Error(
+            'Initial triage data or resource data returned as undefined'
+          );
 
-      console.log(
-        `🛈 Found ${projectsFilteredAndFormatted.length} projects matching resources, ${resourcesFiltered.length} resources matching projects`
-      );
+        const projectsFiltered =
+          module.exports.filterProjectsConnectedWithResources(
+            itArray,
+            resArray
+          );
+        const resourcesFiltered =
+          module.exports.filterResourcesConnectedWithProjects(
+            itArray,
+            resArray
+          );
+        const projectsFilteredAndFormatted = module.exports.formatProjects(
+          projectsFiltered,
+          resourcesFiltered
+        );
 
-      resolve({
-        projects: projectsFilteredAndFormatted,
-        resources: resourcesFiltered,
-      });
+        console.log(
+          `🛈 Found ${projectsFilteredAndFormatted.length} projects matching resources, ${resourcesFiltered.length} resources matching projects`
+        );
+
+        resolve({
+          projects: projectsFilteredAndFormatted,
+          resources: resourcesFiltered,
+        });
+      } catch (e) {
+        console.log(e);
+        return;
+      }
     });
   });
 }
