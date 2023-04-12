@@ -283,7 +283,7 @@ async function getResourcesFromJira(startAt, resArray) {
       }
     );
     if (jiraRes?.data?.issues?.length)
-      throw new Error("Jira returned no initial triage projects");
+      throw new Error("Jira returned no project resources.");
   } catch (error) {
     console.error(error);
     return;
