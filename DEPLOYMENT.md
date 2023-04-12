@@ -48,6 +48,8 @@ If you need access to update secrets or make changes on AWS, reach out on [volun
 
 ## Manual deployment to AWS
 
+**This section is only for information, should there be an issue with GitHub Actions**
+
 Ask David Calder in the [volunteer-app](https://scottishtecharmy.slack.com/archives/C01SUL6K5E1) Slack channel to give you AWS access. Once that's set up, you can log in to AWS here: https://scottishtecharmy.awsapps.com/start#/ You'll need to navigate to the management console for the volapp-dev-test account, change your region to London (eu-west-2), and navigate to Elastic Beanstalk.
 
 In the volapp-dev-test account, an [Elastic Beanstalk](https://eu-west-2.console.aws.amazon.com/elasticbeanstalk/home?region=eu-west-2#/environments) environment called Volunteerapp-env has been created (manually for now).
