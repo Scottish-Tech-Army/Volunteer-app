@@ -46,7 +46,6 @@ async function cacheProjectsAndResources(projects, resources) {
     console.error(
       '❌ No projects/resources returned from Jira API, so aborted updating cache'
     );
-
     return;
   }
 
@@ -210,7 +209,7 @@ async function getInitialTriageProjectsFromJira(startAt, itArray) {
         },
       }
     );
-    if (jiraIt?.data?.issues?.length)
+    if (!jiraIt?.data?.issues?.length)
       throw new Error('Jira returned no initial triage projects');
   } catch (error) {
     console.error(error);
@@ -266,7 +265,7 @@ async function getResourcesFromJira(startAt, resArray) {
         },
       }
     );
-    if (jiraRes?.data?.issues?.length)
+    if (!jiraRes?.data?.issues?.length)
       throw new Error('Jira returned no initial triage projects');
   } catch (error) {
     console.error(error);
