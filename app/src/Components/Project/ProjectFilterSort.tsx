@@ -15,20 +15,16 @@ const FilterSortText = styled.Text`
 const FilterSortTouch = styled.TouchableOpacity``
 
 const ProjectFilterSort = () => {
-    return (
-        <FilterSortView>
-            <FilterSortTouch>
-                <FilterSortText onPress={underDevelopmentAlert}>
-                    Filter
-                </FilterSortText>
-            </FilterSortTouch>
-            <FilterSortTouch>
-                <FilterSortText onPress={underDevelopmentAlert}>
-                    Sort
-                </FilterSortText>
-            </FilterSortTouch>
-        </FilterSortView>
-    )
+  return (
+    <FilterSortView>
+      <FilterSortTouch>
+        <FilterSortText onPress={underDevelopmentAlert}>Filter</FilterSortText>
+      </FilterSortTouch>
+      <FilterSortTouch>
+        <FilterSortText onPress={underDevelopmentAlert}>Sort</FilterSortText>
+      </FilterSortTouch>
+    </FilterSortView>
+  )
 }
 
 export default ProjectFilterSort

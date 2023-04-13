@@ -106,7 +106,7 @@ const ListContainer = (props: {
     list: {
       [ListType.Events]: 'Events',
       [ListType.Projects]: 'Projects',
-    } as Screens,
+    } as unknown as Screens,
     search: {
       [ListType.Events]: 'EventSearch',
       [ListType.Projects]: 'ProjectSearch',
