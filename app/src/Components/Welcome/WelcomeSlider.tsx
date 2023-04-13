@@ -35,51 +35,67 @@ const FList = styled.FlatList`
 `
 
 interface SliderProps {
-    setActiveIndex:Function
-    windowWidth:number
-    slideRef:Ref<null>
-    slides:Array<Object>
-    isAndroidRTL:boolean
+  setActiveIndex: Function
+  windowWidth: number
+  slideRef: Ref<null>
+  slides: Array<Object>
+  isAndroidRTL: boolean
 }
 
-const WelcomeSlider: FC<SliderProps> = ({setActiveIndex, windowWidth, slideRef, slides, isAndroidRTL}) => {
-    
-    const { Fonts } = useTheme()
-    const rtlSafeIndex = (i:number) => (isAndroidRTL ? slides.length - 1 - i : i);
-    const renderItem = ({item}) => {
-        return(
-        <SlideContainer >
-            {item.image}
-            <TextContainer>
-            <TitleText numberOfLines={1} adjustsFontSizeToFit style={[Fonts.bebasNeue, Fonts.textVLarge]}>{item.title}</TitleText>
-            <SlideText numberOfLines={3} adjustsFontSizeToFit style={[Fonts.textRegular, Fonts.poppins]}>{item.text}</SlideText>
-            </TextContainer>
-        </SlideContainer>
-        )
-    }
-
-    const handleMomentumScrollEnd = (e) => {
-        const offset = e.nativeEvent.contentOffset.x;
-        const newIndex = rtlSafeIndex(Math.round(offset / windowWidth));
-        setActiveIndex(newIndex)
-    }
-    
-
+const WelcomeSlider: FC<SliderProps> = ({
+  setActiveIndex,
+  windowWidth,
+  slideRef,
+  slides,
+  isAndroidRTL,
+}) => {
+  const { Fonts } = useTheme()
+  const rtlSafeIndex = (i: number) => (isAndroidRTL ? slides.length - 1 - i : i)
+  const renderItem = ({ item }) => {
     return (
-        <FList
-            ref = {slideRef}
-            data={slides} 
-            horizontal 
-            pagingEnabled 
-            showsHorizontalScrollIndicator={false}
-            bounces={false}
-            renderItem={renderItem}
-            keyExtractor = {(item, index:number) => index.toString()}
-            onMomentumScrollEnd={handleMomentumScrollEnd}
-            extraData={windowWidth} 
-            initialNumToRender={3}
-            /> 
+      <SlideContainer>
+        {item.image}
+        <TextContainer>
+          <TitleText
+            numberOfLines={1}
+            adjustsFontSizeToFit
+            style={[Fonts.bebasNeue, Fonts.textVLarge]}
+          >
+            {item.title}
+          </TitleText>
+          <SlideText
+            numberOfLines={3}
+            adjustsFontSizeToFit
+            style={[Fonts.textRegular, Fonts.poppins]}
+          >
+            {item.text}
+          </SlideText>
+        </TextContainer>
+      </SlideContainer>
     )
+  }
+
+  const handleMomentumScrollEnd = e => {
+    const offset = e.nativeEvent.contentOffset.x
+    const newIndex = rtlSafeIndex(Math.round(offset / windowWidth))
+    setActiveIndex(newIndex)
+  }
+
+  return (
+    <FList
+      ref={slideRef}
+      data={slides}
+      horizontal
+      pagingEnabled
+      showsHorizontalScrollIndicator={false}
+      bounces={false}
+      renderItem={renderItem}
+      keyExtractor={(item, index: number) => index.toString()}
+      onMomentumScrollEnd={handleMomentumScrollEnd}
+      extraData={windowWidth}
+      initialNumToRender={3}
+    />
+  )
 }
 
 export default WelcomeSlider
