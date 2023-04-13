@@ -14,9 +14,10 @@ import {
   VerticalStackContainer,
 } from '@/NativeBase/Containers'
 import SelectionIcons from '@/NativeBase/Assets/Icons/Icomoon/SelectionIcons'
-import { View, useColorMode, Text } from 'native-base'
+import { View, useColorMode, Text, Icon } from 'native-base'
 import StaTheme from '@/NativeBase/Theme/StaTheme'
 import { Platform } from 'react-native'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
 const Tab = createBottomTabNavigator()
 
@@ -42,6 +43,9 @@ const BottomTabIcon = ({ focused }: BottomTabOptionsProps) => {
     case 'Profile':
       iconName = 'user'
       break
+    case 'Settings':
+      iconName = 'cogs'
+      break
   }
 
   return (
@@ -59,19 +63,36 @@ const BottomTabIcon = ({ focused }: BottomTabOptionsProps) => {
       alignItems="center"
       justifyContent="flex-end"
     >
-      <SelectionIcons
-        name={iconName}
-        color={
-          focused
-            ? colorMode === 'light'
-              ? StaTheme.colors.primary['100']
-              : StaTheme.colors.primary['40']
-            : colorMode === 'light'
-            ? StaTheme.colors.text['100']
-            : StaTheme.colors.textDarkMode['100']
-        }
-        size={18}
-      />
+      {iconName === 'cogs' ? (
+        <Icon
+          as={MaterialIcons}
+          color={
+            focused
+              ? colorMode === 'light'
+                ? StaTheme.colors.primary['100']
+                : StaTheme.colors.primary['40']
+              : colorMode === 'light'
+              ? StaTheme.colors.text['100']
+              : StaTheme.colors.textDarkMode['100']
+          }
+          name="settings"
+          size={6}
+        />
+      ) : (
+        <SelectionIcons
+          name={iconName}
+          color={
+            focused
+              ? colorMode === 'light'
+                ? StaTheme.colors.primary['100']
+                : StaTheme.colors.primary['40']
+              : colorMode === 'light'
+              ? StaTheme.colors.text['100']
+              : StaTheme.colors.textDarkMode['100']
+          }
+          size={18}
+        />
+      )}
     </View>
   )
 }
@@ -114,13 +135,13 @@ const MainNavigator = () => {
 
   return (
     <Tab.Navigator>
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Home"
         component={VerticalStackContainer}
         options={{
           ...bottomTabOptions,
         }}
-      />
+      /> */}
       <Tab.Screen
         name="Projects"
         component={ListContainer}
@@ -130,16 +151,16 @@ const MainNavigator = () => {
           ...bottomTabOptions,
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Events"
         component={ListContainer}
         initialParams={{ type: ListType.Events }}
         options={{
           ...bottomTabOptions,
         }}
-      />
+      /> */}
       <Tab.Screen
-        name="Profile"
+        name="Settings"
         component={ProfileContainer}
         options={{
           ...bottomTabOptions,
