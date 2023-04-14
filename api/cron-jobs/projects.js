@@ -234,7 +234,6 @@ async function getInitialTriageProjectsFromJira(startAt, itArray) {
 
   const itTotalData = parseInt(jiraIt.data.total);
 
-  // Does this need an if statement or similar to check if jiraIt is undefined?
   await Promise.all(
     jiraIt.data.issues.map(async (x) => {
       const project = {
