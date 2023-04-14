@@ -198,8 +198,8 @@ async function getAllProjectsAndResourcesFromJira() {
           projects: projectsFilteredAndFormatted,
           resources: resourcesFiltered,
         });
-      } catch (e) {
-        console.log(e);
+      } catch (error) {
+        console.log(error);
         return;
       }
     });
