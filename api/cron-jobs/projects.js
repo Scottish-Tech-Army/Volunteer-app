@@ -170,7 +170,7 @@ async function getAllProjectsAndResourcesFromJira() {
         const itArray = data[0];
         const resArray = data[1];
 
-        if (data[0] === undefined || data[1] === undefined)
+        if (!itArray || !resArray)
           throw new Error(
             'Initial triage data or resource data returned as undefined'
           );
