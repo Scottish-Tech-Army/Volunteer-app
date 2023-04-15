@@ -1,5 +1,5 @@
 /**
- * @file This goes at the top of containers where you want to show the logo, a hamburger menu, and optionally a search button e.g. projects list, events list screens
+ * @file This goes at the top of containers where you want to show the logo, and optionally a search button e.g. projects list, events list screens
  *
  * Follows example here https://docs.nativebase.io/building-app-bar
  */
@@ -10,6 +10,7 @@ import {
   Icon,
   IconButton,
   StatusBar,
+  useColorMode,
   useColorModeValue,
 } from 'native-base'
 import React, { FC } from 'react'
@@ -23,10 +24,19 @@ interface TopOfAppProps {
   onSearchButtonPress?: () => void // only needed if showSearchButton is set to true
 }
 
+/**
+ * Component showing logo and optional search button at top of screen.
+ *
+ * @param {TopOfAppProps} props The component props
+ * @param {boolean} props.showSearchButton Whether to show the search button
+ * @param {function} [props.onSearchButtonPress] Event handler for when the search button is pressed
+ * @returns {React.ReactElement} Component
+ */
 const TopOfApp: FC<TopOfAppProps> = ({
   showSearchButton,
   onSearchButtonPress,
 }) => {
+  const { colorMode } = useColorMode()
   const logoSize = {
     height: 32,
     width: 101,
@@ -39,7 +49,14 @@ const TopOfApp: FC<TopOfAppProps> = ({
 
   return (
     <>
-      <StatusBar barStyle={statusBarStyle} />
+      <StatusBar
+        backgroundColor={
+          colorMode === 'light'
+            ? StaTheme.colors.bg['100']
+            : StaTheme.colors.bgDarkMode['100']
+        }
+        barStyle={statusBarStyle}
+      />
 
       <Box
         _dark={{ backgroundColor: StaTheme.colors.bgDarkMode['100'] }}
@@ -49,9 +66,9 @@ const TopOfApp: FC<TopOfAppProps> = ({
         <HStack
           alignItems="center"
           justifyContent="space-between"
-          marginY={2}
+          marginBottom={2}
           paddingX={4}
-          paddingY={2}
+          paddingBottom={2}
           width="100%"
         >
           {logo}

@@ -20,6 +20,8 @@ import ImageSwiper from '../ImageSwiper'
 import Title from '../Title'
 import Video from '../Video'
 import EventSpeakers from './EventSpeakers'
+import Video from '@/NativeBase/Components/Video'
+import EventSpeakers from './EventSpeakers'
 
 const EventTopInfo = styled.View`
   display: flex;
@@ -76,8 +78,8 @@ const EventDetails: FC<EventDetailsProps> = ({ event }) => {
         </EventTopInfo>
 
         {/* If there's a video, show this.  Otherwise, show event image(s) if there are any, or the 'coming soon' image. */}
-        {event.video_file ? (
-          <Video url={event.video_file} />
+        {event.video_webpage ? (
+          <Video videoWebpage={event.video_webpage} />
         ) : event.images.length > 1 ? (
           <ImageSwiper images={event.images} />
         ) : (
