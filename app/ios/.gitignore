@@ -13,3 +13,6 @@ fastlane/test_output
 # fastlane builds
 builds/*
 *.xcarchive
+
+# react-native-config codegen
+tmp.xcconfig

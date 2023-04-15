@@ -186,6 +186,8 @@ We use Bugsnag to log errors and crashes in the front-end app when it's running 
 
 Normally, this only works when the app is installed on an actual device, rather than running in an emulator.  This is so that we don't get flooded by lots of errors that occur during development, and because we're on a free tier package that only allows a limited number of error reports per month so we want to minimise the errors reported to Bugsnag to only include issues in production.
 
+To send errors, you must have an `app/.env` file with this set `BUGSNAG_API_KEY="insert_key_here"` (replacing `insert_key_here` with the actual API key from Bugsnag).
+
 You can force the app to report errors and crashes to Bugsnag from the emulator (if you have the permissions setting to not send error reports, this is also overridden).  To do this, create (or update) an `app/.env` file and include the line `BUGSNAG_ALWAYS_SEND_BUGS="true"` -- then you must restart your emulator.  **You should only use this when normal error detection is insufficient** -- e.g. because you want to figure out why the app is crashing due to a lack of memory.  **Don't** use this in place of normal code tools like `console.error` and `console.log`  If you do use it, please remove this line from your .env file as soon as possible or set it to `BUGSNAG_ALWAYS_SEND_BUGS="false"`
 
 ## Performance issues

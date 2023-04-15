@@ -52,4 +52,6 @@ We use Bugsnag to log errors in the API when it's running on the production serv
 
 Normally, we don't use this when we're running a local version of the API on a development server.  This is so that we don't get flooded by lots of errors that occur during development, and because we're on a free tier package that only allows a limited number of error reports per month so we want to minimise the errors reported to Bugsnag to only include issues in production.
 
+To send errors, you must have an `api/.env` file with this set `BUGSNAG_API_KEY="insert_key_here"` (replacing `insert_key_here` with the actual API key from Bugsnag).
+
 You can force the API to report errors to Bugsnag from your local development server if needed.  To do this, update your `api/.env` file to include the line `BUGSNAG_ALWAYS_SEND_BUGS="true"` -- then stop and restart your API.  **It is very rare you would need to use this** -- don't use this in place of normal code tools like `console.error` and `console.log`  If you do use it, please remove this line from your .env file as soon as possible or set it to `BUGSNAG_ALWAYS_SEND_BUGS="false"`
