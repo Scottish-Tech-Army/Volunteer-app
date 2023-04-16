@@ -1,4 +1,6 @@
-//Horizontal flatlist contains welcome, volunteer and make an impact screens
+/**
+ * @file Horizontal flatlist contains welcome, volunteer and make an impact screens
+ */
 
 import React, { FC, Ref } from 'react'
 import { useTheme } from '@/Hooks'

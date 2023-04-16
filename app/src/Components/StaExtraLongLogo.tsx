@@ -1,3 +1,7 @@
+/**
+ * @file Sta logo
+ */
+
 import React from 'react'
 import { View, Image } from 'react-native'
 import styled from 'styled-components/native'

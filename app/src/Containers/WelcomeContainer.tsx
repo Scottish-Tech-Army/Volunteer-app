@@ -1,3 +1,7 @@
+/**
+ * @file Welcome container
+ */
+
 import React, { useState, useRef } from 'react'
 import { useTheme } from '@/Hooks'
 import { Dimensions, I18nManager, Platform, SafeAreaView } from 'react-native'

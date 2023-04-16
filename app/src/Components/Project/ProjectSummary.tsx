@@ -1,3 +1,7 @@
+/**
+ * @file Info about the projects
+ */
+
 import React, { FC } from 'react'
 import styled from 'styled-components/native'
 import ProjectHeading from './ProjectHeading'
