@@ -188,7 +188,25 @@ Normally, this only works when the app is installed on an actual device, rather 
 
 To send errors, you must have an `app/.env` file with this set `BUGSNAG_API_KEY="insert_key_here"` (replacing `insert_key_here` with the actual API key from Bugsnag).
 
-You can force the app to report errors and crashes to Bugsnag from the emulator (if you have the permissions setting to not send error reports, this is also overridden).  To do this, create (or update) an `app/.env` file and include the line `BUGSNAG_ALWAYS_SEND_BUGS="true"` -- then you must restart your emulator.  **You should only use this when normal error detection is insufficient** -- e.g. because you want to figure out why the app is crashing due to a lack of memory.  **Don't** use this in place of normal code tools like `console.error` and `console.log`  If you do use it, please remove this line from your .env file as soon as possible or set it to `BUGSNAG_ALWAYS_SEND_BUGS="false"`
+### Logging to Bugsnag from your emulator
+
+**You don't normally need to do this -- and you should only use this when normal error detection is insufficient** e.g. because you want to figure out why the app is crashing due to a lack of memory.  **Don't** use this in place of normal code tools like `console.error` and `console.log` and other normal testing approaches.
+
+You can force the app to report all errors and crashes to Bugsnag from the emulator (this also overrides the user permissions setting which normally determines whether or not send error reports).  To do this:
+
+- Change the `version` number in `app/package.json` to one that isn't in use yet
+  > You must do this or it'll screw up error reporting for the current version of the app in production
+- Change the `versionCode` number in `app/android/app/build.grade` (**not** `app/android/build.grade`) to one that isn't in use yet
+  > You must do this or it'll screw up error reporting for the current version of the app in production
+- Run this command in your terminal to [upload source maps to Bugsnag](https://docs.bugsnag.com/build-integrations/js/source-maps-react-native/) so that it can detect where in the code a problem occurred: `npx bugsnag-source-maps upload-react-native --api-key YOUR_API_KEY_HERE --fetch --dev --platform android --app-version YOUR_APP_VERSION --app-version-code YOUR_APP_VERSION_CODE` ...replacing `YOUR_API_KEY_HERE` with our Bugsnag API key, `YOUR_APP_VERSION` with the version set in `app/package.json`, `YOUR_APP_VERSION_CODE` with the version code set in `app/android/app/build.grade` ...and if you are using the iOS emulator also replace `android` with `ios`
+- Create an `app/.env` file or update your existing file and include the line `BUGSNAG_ALWAYS_SEND_BUGS="true"`
+- Start/restart your emulator
+
+**After you've finished testing you must:**
+- Change back the `version` number in `app/package.json` to what it was before
+- Change back the `versionCode` number in `app/android/app/build.grade` to what it was before
+- Remove the `BUGSNAG_ALWAYS_SEND_BUGS` line from your `app/.env` file or set it to `BUGSNAG_ALWAYS_SEND_BUGS="false"`
+- Restart your emulator
 
 ## Performance issues
 

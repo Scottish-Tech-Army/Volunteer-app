@@ -54,4 +54,16 @@ Normally, we don't use this when we're running a local version of the API on a d
 
 To send errors, you must have an `api/.env` file with this set `BUGSNAG_API_KEY="insert_key_here"` (replacing `insert_key_here` with the actual API key from Bugsnag).
 
-You can force the API to report errors to Bugsnag from your local development server if needed.  To do this, update your `api/.env` file to include the line `BUGSNAG_ALWAYS_SEND_BUGS="true"` -- then stop and restart your API.  **It is very rare you would need to use this** -- don't use this in place of normal code tools like `console.error` and `console.log`  If you do use it, please remove this line from your .env file as soon as possible or set it to `BUGSNAG_ALWAYS_SEND_BUGS="false"`
+### Logging to Bugsnag from your local API
+
+**It is very rare you would need to use this** but you can force the API to report errors to Bugsnag from your local development server if needed. **Don't** use this in place of normal code tools like `console.error` and `console.log` and other normal testing approaches.
+
+To do this:
+
+- Update your `api/.env` file to include the line `BUGSNAG_ALWAYS_SEND_BUGS="true"`
+- Stop and restart your API (we have to do this to get Node to pick up changes in a `.env` file)
+
+**After you've finished testing you must:**
+
+- Remove the `BUGSNAG_ALWAYS_SEND_BUGS` line from your .env file or set it to `BUGSNAG_ALWAYS_SEND_BUGS="false"`
+- Stop and restart your API (we have to do this to get Node to pick up changes in a `.env` file)
