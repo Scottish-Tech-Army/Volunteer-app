@@ -57,7 +57,7 @@ describe('Test the AirTable helpers', () => {
 
     // Data for mocks
     const fakeSpeakersTableName = faker.lorem.words();
-    const fakeSpeakerName = faker.name.fullName();
+    const fakeSpeakerName = faker.name.firstName() + " " + faker.name.lastName();
     const fakeSpeakerUrl = faker.internet.url();
     const fakeSpeakerRecord = {
       _table: {
