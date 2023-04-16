@@ -18,8 +18,6 @@ import EventTime from './EventTime'
 import ImageFullWidth from '../ImageFullWidth'
 import ImageSwiper from '../ImageSwiper'
 import Title from '../Title'
-import Video from '../Video'
-import EventSpeakers from './EventSpeakers'
 import Video from '@/NativeBase/Components/Video'
 import EventSpeakers from './EventSpeakers'
 
