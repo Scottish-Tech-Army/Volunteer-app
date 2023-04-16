@@ -3,7 +3,7 @@
  */
 
 import React, { FC, useEffect, useState } from 'react'
-import { VStack, Box, Button } from 'native-base'
+import { VStack, Box, Button, ScrollView } from 'native-base'
 import { Dimensions } from 'react-native'
 import dayjs from 'dayjs'
 import YesNoChoice from '../Forms/YesNoChoice'
@@ -166,58 +166,61 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
         success={success}
         onClose={onClose}
       />
+      <ScrollView>
+        <VStack
+          minHeight={height - heightOfTopOfAppAndButton}
+          marginBottom="10"
+        >
+          <TextInputControl
+            error={errors.hasOwnProperty('firstName')}
+            errorType={errors.firstName?.type}
+            label="First Name"
+            onBlur={() => validateField('firstName', firstName)}
+            onChange={setFirstName}
+            type="firstName"
+            value={firstName}
+            required
+          />
+          <TextInputControl
+            error={errors.hasOwnProperty('lastName')}
+            errorType={errors.lastName?.type}
+            label="Last Name"
+            onBlur={() => validateField('lastName', lastName)}
+            onChange={setLastName}
+            type="lastName"
+            value={lastName}
+            required
+          />
+          <TextInputControl
+            error={errors.hasOwnProperty('email')}
+            errorType={errors.email?.type}
+            label="Email"
+            onBlur={() => validateField('email', email)}
+            onChange={setEmail}
+            type="email"
+            value={email}
+            required
+          />
 
-      <VStack minHeight={height - heightOfTopOfAppAndButton} marginBottom="10">
-        <TextInputControl
-          error={errors.hasOwnProperty('firstName')}
-          errorType={errors.firstName?.type}
-          label="First Name"
-          onBlur={() => validateField('firstName', firstName)}
-          onChange={setFirstName}
-          type="firstName"
-          value={firstName}
-          required
-        />
-        <TextInputControl
-          error={errors.hasOwnProperty('lastName')}
-          errorType={errors.lastName?.type}
-          label="Last Name"
-          onBlur={() => validateField('lastName', lastName)}
-          onChange={setLastName}
-          type="lastName"
-          value={lastName}
-          required
-        />
-        <TextInputControl
-          error={errors.hasOwnProperty('email')}
-          errorType={errors.email?.type}
-          label="Email"
-          onBlur={() => validateField('email', email)}
-          onChange={setEmail}
-          type="email"
-          value={email}
-          required
-        />
+          <YesNoChoice
+            description="Looking for peer support"
+            onChange={value => setLookingForPeerSupport(value)}
+            value={lookingForPeerSupport}
+          />
 
-        <YesNoChoice
-          description="Looking for peer support"
-          onChange={value => setLookingForPeerSupport(value)}
-          value={lookingForPeerSupport}
-        />
+          <DatePicker
+            description="I'm available from"
+            maximumDate={oneYearInTheFuture}
+            minimumDate={today}
+            onChange={value => setAvailableFromDate(value)}
+            value={availableFromDate}
+          />
+        </VStack>
+      </ScrollView>
 
-        <DatePicker
-          description="I'm available from"
-          maximumDate={oneYearInTheFuture}
-          minimumDate={today}
-          onChange={value => setAvailableFromDate(value)}
-          value={availableFromDate}
-        />
-      </VStack>
-      <Box position="absolute" bottom="0" width="full">
-        <Button disabled={loading} onPress={submitForm}>
-          {loading ? 'Sending...' : 'Volunteer Now'}
-        </Button>
-      </Box>
+      <Button margin={5} disabled={loading} onPress={submitForm}>
+        {loading ? 'Sending...' : 'Volunteer Now'}
+      </Button>
     </>
   )
 }
