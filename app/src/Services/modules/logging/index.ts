@@ -28,6 +28,7 @@ export const logError = (errorMessage: string, extraInfo?: unknown) => {
       Config.BUGSNAG_ALWAYS_SEND_BUGS === 'true'
     ) {
       Bugsnag.notify(new Error(errorMessage), event => {
+        event.addMetadata('emulator', { isEmulator: appIsEmulator })
         if (extraInfo) event.addMetadata('extraInfo', extraInfo)
       })
     }
