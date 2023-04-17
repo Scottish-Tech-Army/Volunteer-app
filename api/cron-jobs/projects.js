@@ -228,7 +228,7 @@ async function getInitialTriageProjectsFromJira(startAt, itArray) {
     if (!jiraIt?.data?.issues?.length)
       throw new Error('Jira returned no initial triage projects');
   } catch (error) {
-    console.error(`While accessing Axios API '${error}' was caught`);
+    console.error('While getting initial triage projects from Jira: ', error);
     return;
   }
 
@@ -281,9 +281,9 @@ async function getResourcesFromJira(startAt, resArray) {
       }
     );
     if (!jiraRes?.data?.issues?.length)
-      throw new Error('Jira returned no initial triage projects');
+      throw new Error('Jira returned no resources');
   } catch (error) {
-    console.error(`While accessing Axios API '${error}' was caught`);
+    console.error('While getting resources from Jira: ', error);
     return;
   }
 
