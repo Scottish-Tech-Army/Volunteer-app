@@ -42,8 +42,6 @@ You can connect your app to this environment by changing STA_BASE_URL to the loa
 
 ` STA_BASE_URL: 'https://the-sta.com',`
 
-Note - as we move this into IaC and set up some build pipelines, things like env names, app names, domain names, IP Addresses will probably change.
-
 For support, please @ David Calder in the [volunteer-app](https://scottishtecharmy.slack.com/archives/C01SUL6K5E1) Slack channel
 
 ## Updating the API
@@ -63,7 +61,7 @@ E.g. `cp Volunteer-app/api/.env volunteer-app-aws-deployment/api/.env` (but this
 10. In the [Volunteer App Application versions](https://eu-west-2.console.aws.amazon.com/elasticbeanstalk/home?region=eu-west-2#/application/versions?applicationName=volunteer-app), Upload the myapp.zip that you created in step 6.
 11. Now select the version label you've just created and then select Action > Deploy
 12. Go to the environment dashboard and check the version label has updated and the Health is OK. If not, check the Logs (menu on the left hand side) or ask someone else in the team for help.
-13. Also check one of the API endpoints to make sure it's working, e.g. `http://volunteerapp-env.eba-ivfm2tgp.eu-west-2.elasticbeanstalk.com/projects` or `http://18.134.220.155/projects` -- at least one of these should work.
+13. Also check one of the API endpoints to make sure it's working, e.g. `https://the-sta.com/v1/projects` or `https://the-sta.com/v1/events` -- at least one of these should work.
 14. Delete the new directory containing copy of the repo you made in step 2 and everything in it, e.g. `rm -rf volunteer-app-aws-deployment/`
 
 # App deployment
@@ -80,7 +78,7 @@ E.g. `cp Volunteer-app/api/.env volunteer-app-aws-deployment/api/.env` (but this
 
 4. Get your pull request approved as you normally would. When you're ready to merge your code into the `main` branch and deploy the updated app, double-check your version numbers in the previous steps are still right compared to what's in `main` (somebody else could have merged in code recently and changed the version numbers since you last checked - if you need to, update the version numbers before merging).
 
-5. In `/app/src/Config/index.ts` set `STA_BASE_URL` to point to the external URL for [the API endpoint on AWS](#api-deployment-on-aws) -- not to your localhost or its IP address, otherwise the app won't be able to connect to the API when it's installed on someone's phone.
+5. In `/app/src/Config/index.ts` set `STA_BASE_URL` to point to the external URL `'https://the-sta.com'` -- not to your localhost or its IP address, otherwise the app won't be able to connect to the API when it's installed on someone's phone.
 
    ## Google Play Store (Android)
 
@@ -108,4 +106,3 @@ E.g. `cp Volunteer-app/api/.env volunteer-app-aws-deployment/api/.env` (but this
 11. If you have access, check in the [App Store Connect](https://appstoreconnect.apple.com/apps) that the new version of the app has successfully been uploaded and processed (STA Volunteer app > TestFlight) -- you should see the new build number below the latest version.
 
 12. If you are part of the iOS beta test group, you should get a notification on your phone from TestFlight that a new version is available to test. Download the updated version of the app to your iPhone ([see download instructions](#download-the-app) near the top of this README).
-
