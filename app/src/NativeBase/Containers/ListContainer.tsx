@@ -12,7 +12,7 @@ import { Text, Heading, VStack } from 'native-base'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components/native'
-import { EventSearch } from '../../Containers/EventSearchContainer'
+import { EventSearch } from '@/Containers/EventSearchContainer'
 import { ProjectSearch } from './ProjectSearchContainer'
 import EventOptions from '@/Components/Event/EventOptions'
 import EventSearchUpcomingQuickSearch, {
@@ -102,8 +102,8 @@ const ListContainer = (props: {
   const params = props.route.params
   const screens = {
     list: {
-      [ListType.Events]: 'Events',
-      [ListType.Projects]: 'Projects',
+      [ListType.Events]: 'Events' as keyof RootStackParamList,
+      [ListType.Projects]: 'Projects' as keyof RootStackParamList,
     } as Screens,
     search: {
       [ListType.Events]: 'EventSearch',
@@ -272,15 +272,8 @@ const ListContainer = (props: {
         showSearchButton
         onSearchButtonPress={() => navigate(screens.search[params.type], '')}
       />
-      <VStack
-        _dark={{ backgroundColor: 'bgDarkMode.100' }}
-        _light={{ backgroundColor: 'bg.secondary' }}
-        paddingBottom="2"
-        alignItems="center"
-        space={4}
-        padding={4}
-      >
-        <Heading fontSize="md">Projects List</Heading>
+      <VStack paddingBottom="2" alignItems="center" space={4} padding={4}>
+        <Heading size="sm">Projects List</Heading>
         <SegmentedPicker options={projectListOptions} />
 
         {params?.type && listItemsToShow ? (

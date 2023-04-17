@@ -132,14 +132,14 @@ const List: FC<ListProps> = ({
           data={data as Projects}
           renderItem={({ item }) => {
             return (
-              <Card margin="2">
+              <Card marginY="2">
                 <Pressable
                   onPress={() => {
                     navigate('ProjectDetail', { item, key: item.res_id })
                   }}
                   overflow="hidden"
                 >
-                  <VStack space={4}>
+                  <VStack>
                     <HStack
                       justifyContent="space-between"
                       alignItems="center"
@@ -159,30 +159,27 @@ const List: FC<ListProps> = ({
                         onPress={underDevelopmentAlert}
                       />
                     </HStack>
-
                     <Text fontSize="xs">{item.client}</Text>
                     <ColouredTag title={item.role} />
-                    {Boolean(item.buddying) && (
-                      <>
-                        <HStack
-                          justifyContent="space-between"
-                          alignItems="center"
-                          paddingRight="4"
-                        >
-                          <Text fontSize="xs">Suitable for pairing</Text>
-                          <Icon
-                            size={7}
-                            as={MaterialIcons}
-                            name="group"
-                            color="grey"
-                            mx={0}
-                            px={0}
-                          />
-                        </HStack>
-                      </>
-                    )}
-
+                    <Text fontSize="xs">{item.hours}</Text>
                     <Text fontSize="xs">{item.description}</Text>
+                    {Boolean(item.buddying) && (
+                      <HStack
+                        justifyContent="space-between"
+                        alignItems="center"
+                        paddingRight="4"
+                      >
+                        <Text fontSize="xs">Suitable for pairing</Text>
+                        <Icon
+                          size={7}
+                          as={MaterialIcons}
+                          name="group"
+                          color="grey"
+                          mx={0}
+                          px={0}
+                        />
+                      </HStack>
+                    )}
                   </VStack>
                 </Pressable>
               </Card>
