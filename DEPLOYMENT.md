@@ -34,6 +34,22 @@ You don't need to worry about doing this section until you've gone through all t
 
 # API deployment on AWS
 
+## Automatic deployment with GitHub Actions
+
+API deployment is automatic whenever a Pull Request is merged into Main on GitHub.
+
+The relevant GitHub Action is cd_api.yml and relies on three GitHub Actions Repository secrets:
+- AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY for user eb-dev in volapp-dev-test.
+- DEPLOY_ENV_FILE contains a copy of the .env file.
+
+Note: If environment variables have changed, the entire .env file should be pasted into DEPLOY_ENV_FILE
+
+If you need access to update secrets or make changes on AWS, reach out on [volunteer-app](https://scottishtecharmy.slack.com/archives/C01SUL6K5E1) Slack channel.
+
+## Manual deployment to AWS
+
+**This section is only for information, should there be an issue with GitHub Actions**
+
 Ask David Calder in the [volunteer-app](https://scottishtecharmy.slack.com/archives/C01SUL6K5E1) Slack channel to give you AWS access. Once that's set up, you can log in to AWS here: https://scottishtecharmy.awsapps.com/start#/ You'll need to navigate to the management console for the volapp-dev-test account, change your region to London (eu-west-2), and navigate to Elastic Beanstalk.
 
 In the volapp-dev-test account, an [Elastic Beanstalk](https://eu-west-2.console.aws.amazon.com/elasticbeanstalk/home?region=eu-west-2#/environments) environment called Volunteerapp-env has been created (manually for now).
@@ -44,7 +60,7 @@ You can connect your app to this environment by changing STA_BASE_URL to the loa
 
 For support, please @ David Calder in the [volunteer-app](https://scottishtecharmy.slack.com/archives/C01SUL6K5E1) Slack channel
 
-## Updating the API
+### Issues when updating manually
 
 We've had some issues with the API breaking when we've tried to deploy changes to AWS.  For now, this is the recommended way to make sure you can deploy without worrying about breaking it, while we work on a better longer-term solution.
 
@@ -63,6 +79,8 @@ E.g. `cp Volunteer-app/api/.env volunteer-app-aws-deployment/api/.env` (but this
 12. Go to the environment dashboard and check the version label has updated and the Health is OK. If not, check the Logs (menu on the left hand side) or ask someone else in the team for help.
 13. Also check one of the API endpoints to make sure it's working, e.g. `https://the-sta.com/v1/projects` or `https://the-sta.com/v1/events` -- at least one of these should work.
 14. Delete the new directory containing copy of the repo you made in step 2 and everything in it, e.g. `rm -rf volunteer-app-aws-deployment/`
+
+**Note: If you end up with 502 errors it is almost certain that the .env file is missing or incorrect.**
 
 # App deployment
 
