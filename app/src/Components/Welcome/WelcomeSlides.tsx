@@ -38,5 +38,5 @@ export function WelcomeSlides() {
       title: 'MAKE AN IMPACT',
       text: 'In the first year of the STA our volunteers saved the third sector in Scotland over £1m',
     },
-  ]
+  ] as WelcomeSlide[]
 }
