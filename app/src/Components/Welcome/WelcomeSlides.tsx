@@ -15,6 +15,12 @@ const WelcomeImage = styled.Image`
  * Returns array of data objects with three properties: WelcomeImage component, title, and text
  * @returns {React.ReactElement} Component
  */
+export interface WelcomeSlide {
+  image: JSX.Element
+  title: string
+  text: string
+}
+
 export function WelcomeSlides() {
   return [
     {

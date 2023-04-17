@@ -2,7 +2,8 @@
  * @file Horizontal flatlist contains welcome, volunteer and make an impact screens
  */
 
-import React, { FC, Ref } from 'react'
+import React, { Dispatch, FC, Ref, SetStateAction } from 'react'
+import { WelcomeSlide } from './WelcomeSlides'
 import { useTheme } from '@/Hooks'
 import styled from 'styled-components/native'
 import { Text, Heading } from 'native-base'
@@ -38,10 +39,10 @@ const FList = styled.FlatList`
 `
 
 interface SliderProps {
-  setActiveIndex: Function
+  setActiveIndex: Dispatch<SetStateAction<number>>
   windowWidth: number
   slideRef: Ref<null>
-  slides: Array<Object>
+  slides: WelcomeSlide
   isAndroidRTL: boolean
 }
 
