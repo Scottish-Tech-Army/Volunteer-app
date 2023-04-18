@@ -56,6 +56,8 @@ Alternatively, you can go to the link in the instructions above for installing t
 
    > **Note** You can skip the sections of the React Native docs that describe setting up and running a new project, since we already have one.
 
+   > **Note** The instructions specify recommended Ruby version as v2.7.6. Please note the Volunteer app runs successfully on Ruby v2.7.3.
+
 # Setup and first run
 
 1. Ensure that you've gone through the setup instructions at the following link for your particular platform: https://reactnative.dev/docs/environment-setup (see notes [above](#requirements-to-run-the-project))
