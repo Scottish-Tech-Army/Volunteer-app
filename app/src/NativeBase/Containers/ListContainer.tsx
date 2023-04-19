@@ -44,7 +44,6 @@ import {
 import { EventsState, setEvents } from '@/Store/Events'
 import { ProjectsState, setProjects } from '@/Store/Projects'
 import underDevelopmentAlert from '@/Utils/UnderDevelopmentAlert'
-import { Dimensions } from 'react-native'
 
 const ClearSearchLabel = styled.Text`
 
@@ -267,23 +266,13 @@ const ListContainer = (props: {
     }
   }, [params?.options?.events, params?.search, params?.type])
 
-  const heightOfList = 270
-
-  const { height } = Dimensions.get('window')
-
   return (
     <>
       <TopOfApp
         showSearchButton
         onSearchButtonPress={() => navigate(screens.search[params.type], '')}
       />
-      <VStack
-        maxHeight={height - heightOfList}
-        paddingBottom="2"
-        alignItems="center"
-        space={4}
-        padding={4}
-      >
+      <VStack paddingBottom="2" alignItems="center" space={4} padding={4}>
         <Heading size="sm">Projects List</Heading>
         <SegmentedPicker options={projectListOptions} />
 
