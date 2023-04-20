@@ -15,7 +15,6 @@ import {
   Project,
   useLazyProjectRegisterInterestQuery,
 } from '@/Services/modules/projects'
-import { heightOfTopOfAppPlusBottomNav } from '@/Utils/Layout'
 import { validateEmail } from '@/Utils/Validation'
 
 import { useNavigation } from '@react-navigation/native'
@@ -35,6 +34,7 @@ interface ProjectRegisterInterestProps {
 const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
   project,
 }) => {
+  const heightOfTopOfAppAndButton = 130
   const [availableFromDate, setAvailableFromDate] = useState(new Date())
   const [email, setEmail] = useState('')
   const [errors, setErrors] = useState<{
@@ -168,7 +168,7 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
       />
       <ScrollView>
         <VStack
-          minHeight={height - heightOfTopOfAppPlusBottomNav}
+          minHeight={height - heightOfTopOfAppAndButton}
           marginBottom="10"
         >
           <TextInputControl
