@@ -8,7 +8,10 @@ import { useSelector } from 'react-redux'
 import QuickSearchButton from '@/Components/Forms/QuickSearchButton'
 import Title from '@/Components/Title'
 import { EventSearch } from '@/Containers/EventSearchContainer'
-import { ListRouteParams, ListType } from '@/Containers/ListContainer'
+import {
+  ListRouteParams,
+  ListType,
+} from '@/NativeBase/Containers/ListContainer'
 import { EventsSearchField } from '@/Services/modules/events'
 import { navigate } from '@/Navigators/utils'
 import { EventsState } from '@/Store/Events'
