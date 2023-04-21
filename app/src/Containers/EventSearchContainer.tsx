@@ -19,7 +19,7 @@ import {
   ListRouteParams,
   ListSearch,
   ListType,
-} from '@/Containers/ListContainer'
+} from '@/NativeBase/Containers/ListContainer'
 import { EventsSearchField } from '@/Services/modules/events'
 import { navigate } from '@/Navigators/utils'
 import { Event, Events, EventsRange } from '@/Services/modules/events'
