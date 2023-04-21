@@ -4,7 +4,7 @@
 
 import React, { FC, useState } from 'react'
 import CalendarPicker from 'react-native-calendar-picker'
-import { Pressable, Dimensions } from 'react-native'
+import { Pressable, Dimensions, View } from 'react-native'
 import { VStack, Box, Text, Input, useColorMode, Icon } from 'native-base'
 import dayjs from 'dayjs'
 import StaTheme from '../../Theme/StaTheme'
@@ -31,10 +31,14 @@ const DatePicker: FC<DatePickerProps> = ({
   const { colorMode } = useColorMode()
   const { width } = Dimensions.get('window')
 
+  const showDatePicker = () => {
+    setPickerActive(!pickerActive)
+  }
+
   const handleChange = (value: Date) => {
     onChange(value)
-    setSelectedStartDate(value)
-    setPickerActive(false)
+    setSelectedStartDate(selectedStartDate)
+    showDatePicker()
     //set selected state to use on line 139 to override today text color default
     if (dayjs(value).isSame(dayjs(), 'day')) {
       setTodaySelected(true)
@@ -107,22 +111,24 @@ const DatePicker: FC<DatePickerProps> = ({
           >
             Enter Date
           </Text>
-          <Pressable onPress={() => setPickerActive(!pickerActive)}>
-            <Input
-              marginX="6"
-              value={dayjs(value).format('DD/MM/YY')}
-              accessibilityLabel="picker for date"
-              borderColor="inputBorder.100"
-              isReadOnly={true}
-              size="sm"
-              borderWidth={pickerActive ? '0' : '1'}
-              borderBottomWidth="1"
-              borderBottomColor={
-                pickerActive ? 'primary.100' : 'inputBorder.100'
-              }
-              _light={{ bg: 'secondaryGrey.80' }}
-              _dark={{ bg: 'bgDarkMode.100' }}
-            />
+          <Pressable onPress={showDatePicker}>
+            <View pointerEvents="none">
+              <Input
+                marginX="6"
+                value={dayjs(value).format('DD/MM/YY')}
+                accessibilityLabel="picker for date"
+                borderColor="inputBorder.100"
+                isReadOnly={true}
+                size="sm"
+                borderWidth={pickerActive ? '0' : '1'}
+                borderBottomWidth="1"
+                borderBottomColor={
+                  pickerActive ? 'primary.100' : 'inputBorder.100'
+                }
+                _light={{ bg: 'secondaryGrey.80' }}
+                _dark={{ bg: 'bgDarkMode.100' }}
+              />
+            </View>
           </Pressable>
         </VStack>
 
@@ -176,7 +182,7 @@ const DatePicker: FC<DatePickerProps> = ({
                   size="sm"
                 />
               }
-            />{' '}
+            />
           </Box>
         ) : (
           <Box p="2" />
