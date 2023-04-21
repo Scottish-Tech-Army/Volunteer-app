@@ -50,7 +50,10 @@ const StartupContainer = () => {
         fontSize="18"
         padding="0"
         textAlign="center"
-        adjustsFontSizeToFit>{t('welcome')}</Text>
+        adjustsFontSizeToFit
+      >
+        {t('welcome')}
+      </Text>
     </View>
   )
 }

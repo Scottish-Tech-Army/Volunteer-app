@@ -1,3 +1,7 @@
+/**
+ * @file Defines images for use in the old app theme (pre-NativeBase)
+ */
+
 import { ThemeImages, ThemeVariables } from '@/Theme/theme.type'
 
 /**
