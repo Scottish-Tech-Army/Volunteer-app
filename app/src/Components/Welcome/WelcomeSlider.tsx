@@ -42,7 +42,7 @@ interface SliderProps {
   setActiveIndex: Dispatch<SetStateAction<number>>
   windowWidth: number
   slideRef: Ref<null>
-  slides: WelcomeSlide
+  slides: WelcomeSlide[]
   isAndroidRTL: boolean
 }
 

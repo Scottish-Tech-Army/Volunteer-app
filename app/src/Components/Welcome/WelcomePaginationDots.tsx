@@ -1,8 +1,9 @@
 //Dots that indicate which slide user is on.  Clickable to navigate to next slide.
 
-import React, { FC, Ref } from 'react'
+import React, { Dispatch, FC, Ref, SetStateAction } from 'react'
 import styled from 'styled-components/native'
 import { useTheme } from '@/Hooks'
+import { WelcomeSlide } from './WelcomeSlides'
 
 const PaginationContainer = styled.View`
     justifyContent: center;
@@ -29,10 +30,10 @@ const Dot = styled.TouchableOpacity`
 `
 interface PaginationProps {
   activeIndex: number
-  setActiveIndex: Function
+  setActiveIndex: Dispatch<SetStateAction<number>>
   slideRef: Ref<null>
-  rtlSafeIndex: Function
-  slides: Array<Object>
+  rtlSafeIndex: (i: number) => number
+  slides: WelcomeSlide[]
 }
 
 const PaginationDots: FC<PaginationProps> = ({
