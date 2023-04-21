@@ -1,4 +1,6 @@
-//Dots that indicate which slide user is on.  Clickable to navigate to next slide.
+/**
+ * @file Dots that indicate which slide user is on.  Clickable to navigate to next slide.
+ */
 
 import React, { Dispatch, FC, Ref, SetStateAction } from 'react'
 import styled from 'styled-components/native'
