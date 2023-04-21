@@ -3,7 +3,6 @@
  */
 
 import React from 'react'
-import { Image, View } from 'react-native'
 import Welcome from '@/Assets/Images/Welcome.png'
 import Volunteer from '@/Assets/Images/Volunteer.png'
 import MakeAnImpact from '@/Assets/Images/MakeAnImpact.png'
@@ -16,13 +15,6 @@ const WelcomeImage = styled.Image`
  * Returns array of data objects with three properties: WelcomeImage component, title, and text
  * @returns {React.ReactElement} Component
  */
-
-export interface WelcomeSlide {
-  image: JSX.Element
-  title: string
-  text: string
-}
-
 export function WelcomeSlides() {
   return [
     {
