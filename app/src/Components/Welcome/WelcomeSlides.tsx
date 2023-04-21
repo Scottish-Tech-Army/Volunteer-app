@@ -15,22 +15,28 @@ const WelcomeImage = styled.Image`
  * Returns array of data objects with three properties: WelcomeImage component, title, and text
  * @returns {React.ReactElement} Component
  */
+export interface WelcomeSlide {
+  image: JSX.Element
+  title: string
+  text: string
+}
+
 export function WelcomeSlides() {
   return [
     {
       image: <WelcomeImage source={Welcome} resizeMode={'contain'} />,
-      title: 'Welcome',
-      text: "Mobilising the UK's tech talent for good...",
+      title: 'WELCOME',
+      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eu nisl vitae nisl lobortis rutrum.',
     },
     {
       image: <WelcomeImage source={Volunteer} resizeMode={'contain'} />,
-      title: 'Volunteer',
-      text: "We work in partnership with the UK's technology ecosystem to deliver scalable, impactful solutions.",
+      title: 'VOLUNTEER',
+      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eu nisl vitae nisl lobortis rutrum.',
     },
     {
       image: <WelcomeImage source={MakeAnImpact} resizeMode={'contain'} />,
-      title: 'Make an Impact',
-      text: 'In the first year of the STA our volunteers saved the third sector in the UK over £1m.',
+      title: 'MAKE AN IMPACT',
+      text: 'In the first year of the STA our volunteers saved the third sector in Scotland over £1m',
     },
-  ]
+  ] as WelcomeSlide[]
 }

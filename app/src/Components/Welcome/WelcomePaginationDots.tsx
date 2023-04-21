@@ -1,8 +1,11 @@
-//Dots that indicate which slide user is on.  Clickable to navigate to next slide.
+/**
+ * @file Dots that indicate which slide user is on.  Clickable to navigate to next slide.
+ */
 
-import React, {FC, Ref} from "react";
+import React, { Dispatch, FC, Ref, SetStateAction } from 'react'
 import styled from 'styled-components/native'
 import { useTheme } from '@/Hooks'
+import { WelcomeSlide } from './WelcomeSlides'
 
 const PaginationContainer = styled.View`
     justifyContent: center;
@@ -28,43 +31,48 @@ const Dot = styled.TouchableOpacity`
     overflow:hidden;
 `
 interface PaginationProps {
-    activeIndex:number
-    setActiveIndex: Function
-    slideRef: Ref<null>
-    rtlSafeIndex: Function
-    slides:Array<Object>
-
+  activeIndex: number
+  setActiveIndex: Dispatch<SetStateAction<number>>
+  slideRef: Ref<null>
+  rtlSafeIndex: (i: number) => number
+  slides: WelcomeSlide[]
 }
 
-const PaginationDots:FC<PaginationProps> = ({activeIndex, setActiveIndex, slideRef, rtlSafeIndex, slides,}) => {
+const PaginationDots: FC<PaginationProps> = ({
+  activeIndex,
+  setActiveIndex,
+  slideRef,
+  rtlSafeIndex,
+  slides,
+}) => {
+  const { Colors } = useTheme()
 
-    const {Colors} = useTheme()
-    
-    const goToSlide = (slideNum:number) => () => {
-        setActiveIndex(slideNum)
-        slideRef.current?.scrollToOffset({
-            offset: rtlSafeIndex(slideNum) * 378
-        });
-        };
+  const goToSlide = (slideNum: number) => () => {
+    setActiveIndex(slideNum)
+    slideRef.current?.scrollToOffset({
+      offset: rtlSafeIndex(slideNum) * 378,
+    })
+  }
 
-    return (
-        <PaginationContainer >
-            <DotsContainer >
-            {slides.length > 1 &&
-                slides.map((_, i:number) => (
-                <Dot
-                    hitSlop={{ left: 15, right: 15, top: 15, bottom: 15 }}
-                    key={i}
-                    style={[
-                    rtlSafeIndex(i) === activeIndex ? {backgroundColor:Colors.dotActive} : {backgroundColor:Colors.dot},
-                    ]}
-                    onPress={goToSlide(i)}
-                />
-                ))}
-            </DotsContainer>
-        </PaginationContainer>
-    );
-                }
+  return (
+    <PaginationContainer>
+      <DotsContainer>
+        {slides.length > 1 &&
+          slides.map((_, i: number) => (
+            <Dot
+              hitSlop={{ left: 15, right: 15, top: 15, bottom: 15 }}
+              key={i}
+              style={[
+                rtlSafeIndex(i) === activeIndex
+                  ? { backgroundColor: Colors.dotActive }
+                  : { backgroundColor: Colors.dot },
+              ]}
+              onPress={goToSlide(i)}
+            />
+          ))}
+      </DotsContainer>
+    </PaginationContainer>
+  )
+}
 
-    export default PaginationDots
-   
+export default PaginationDots
