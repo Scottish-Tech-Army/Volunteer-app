@@ -1,9 +1,13 @@
-import { useColorMode } from 'native-base'
 import React from 'react'
+import {View, Image} from 'react-native'
 import styled from 'styled-components/native'
+
 import { useTheme } from '@/Hooks'
 
-const StaHeaderLogoImage = styled.Image``
+const StaHeaderLogoImage = styled.Image` 
+ 
+  
+`
 
 const HeaderView = styled.View`
   height:58px;
@@ -12,20 +16,10 @@ const HeaderView = styled.View`
 `
 
 const StaExtraLongLogo = () => {
-  const { colorMode } = useColorMode()
   const { Images, Layout } = useTheme()
+    return  <HeaderView>
+              <StaHeaderLogoImage style={Layout.fullSize} resizeMode={'contain'} source={Images.extraLongLogo} />
+            </HeaderView>
+  }
 
-  return (
-    <HeaderView>
-      <StaHeaderLogoImage
-        style={Layout.fullSize}
-        resizeMode={'contain'}
-        source={
-          colorMode === 'dark' ? Images.extraLongLogoDark : Images.extraLongLogo
-        }
-      />
-    </HeaderView>
-  )
-}
-
-export default StaExtraLongLogo
+  export default StaExtraLongLogo

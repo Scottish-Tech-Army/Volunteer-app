@@ -29,28 +29,28 @@ const ProjectDescription = styled.Text`
   margin-bottom: 12px;
 `
 
-const ProjectSummary: FC<ProjectSummaryProps> = ({ project }) => {
-  return (
-    <>
-      <ProjectHeading title={project.name} />
-      <ProjectSubTitle>{project.client}</ProjectSubTitle>
-      <ProjectRole>{project.role}</ProjectRole>
-      <ProjectDescription>{project.description}</ProjectDescription>
-      <ProjectSkills skills={project.skills} />
-      <ProjectRequirements
-        icon={<Feather name="clock" size={16} />}
-        details={project.hours}
-      />
-      <ProjectRequirements
-        icon={<Feather name="users" size={16} />}
-        details={
-          project.buddying
-            ? 'Suitable for buddying'
-            : 'Not suitable for buddying'
-        }
-      />
-    </>
-  )
-}
+const ProjectSummary: FC<ProjectSummaryProps> = ({ project }) => {  
+    return (
+      <>
+        <ProjectHeading title={project.name} />
+        <ProjectSubTitle>{project.client}</ProjectSubTitle>
+        <ProjectRole>{project.role}</ProjectRole>
+        <ProjectDescription>{project.description}</ProjectDescription>
+        <ProjectSkills skills={project.skills} />
+        <ProjectRequirements
+          icon={<Feather name="clock" size={16} />}
+          details={project.hours}
+        />
+        <ProjectRequirements
+          icon={<Feather name="users" size={16} />}
+          details={
+            project.buddying
+              ? 'Suitable for buddying'
+              : 'Not suitable for buddying'
+          }
+        />
+      </>
+    )
+  }
 
 export default ProjectSummary
