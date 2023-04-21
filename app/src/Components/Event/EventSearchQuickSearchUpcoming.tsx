@@ -11,7 +11,10 @@ import {
   EventSearch,
   filterEventsByDate,
 } from '@/Containers/EventSearchContainer'
-import { ListRouteParams, ListType } from '@/Containers/ListContainer'
+import {
+  ListRouteParams,
+  ListType,
+} from '@/NativeBase/Containers/ListContainer'
 import { navigate } from '@/Navigators/utils'
 import { EventsState } from '@/Store/Events'
 
