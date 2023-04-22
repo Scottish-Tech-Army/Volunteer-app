@@ -4,8 +4,17 @@
 
 import React, { FC, useState } from 'react'
 import CalendarPicker from 'react-native-calendar-picker'
-import { Pressable, Dimensions, View } from 'react-native'
-import { VStack, Box, Text, Input, useColorMode, Icon } from 'native-base'
+import { Dimensions } from 'react-native'
+import {
+  VStack,
+  Box,
+  Text,
+  Input,
+  useColorMode,
+  Icon,
+  Pressable,
+  View,
+} from 'native-base'
 import dayjs from 'dayjs'
 import StaTheme from '../../Theme/StaTheme'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
@@ -31,14 +40,14 @@ const DatePicker: FC<DatePickerProps> = ({
   const { colorMode } = useColorMode()
   const { width } = Dimensions.get('window')
 
-  const showDatePicker = () => {
+  const toggleShowDatePicker = () => {
     setPickerActive(!pickerActive)
   }
 
   const handleChange = (value: Date) => {
     onChange(value)
-    setSelectedStartDate(selectedStartDate)
-    showDatePicker()
+    setSelectedStartDate(value)
+    toggleShowDatePicker()
     //set selected state to use on line 139 to override today text color default
     if (dayjs(value).isSame(dayjs(), 'day')) {
       setTodaySelected(true)
@@ -111,7 +120,7 @@ const DatePicker: FC<DatePickerProps> = ({
           >
             Enter Date
           </Text>
-          <Pressable onPress={showDatePicker}>
+          <Pressable onPress={toggleShowDatePicker}>
             <View pointerEvents="none">
               <Input
                 marginX="6"
