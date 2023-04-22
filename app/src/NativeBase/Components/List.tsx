@@ -4,13 +4,27 @@
 
 import React, { FC } from 'react'
 import styled from 'styled-components/native'
-import { FlatList } from 'react-native'
 import EventSummary from '@/Components/Event/EventSummary'
-import ProjectSummary from '@/Components/Project/ProjectSummary'
-import { ListType } from '@/Containers/ListContainer'
+import { ListType } from '@/NativeBase/Containers/ListContainer'
 import { navigate, RootStackParamList } from '@/Navigators/utils'
 import { Events, EventsRange } from '@/Services/modules/events'
 import { Projects } from '@/Services/modules/projects'
+import underDevelopmentAlert from '../../Utils/UnderDevelopmentAlert'
+import ColouredTag from '../Components/ColouredTag'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+
+import {
+  FavouriteIcon,
+  FlatList,
+  Heading,
+  HStack,
+  Pressable,
+  ShareIcon,
+  Text,
+  VStack,
+  Card,
+  Icon,
+} from 'native-base'
 
 // General styled components
 const NoneFound = styled.Text`
@@ -26,12 +40,6 @@ const TryAnotherSearch = styled.Text`
 const EventListItem = styled.TouchableOpacity`
   margin: 21px 21px 0px 21px;
   width: 150px;
-`
-// Projects-specific
-const ProjectListItem = styled.TouchableOpacity`
-  margin: 21px 21px 0px 21px;
-  border: ${props => `2px solid ${props.theme.colors.staBlack}`};
-  padding: 17px 27px 11px 27px;
 `
 
 export enum ListDisplayMode {
@@ -64,7 +72,13 @@ interface ListProps {
  * @param {ListType} props.type Which type of data is in the list, e.g. projects or events
  * @returns {React.ReactElement} Component
  */
-const List: FC<ListProps> = ({ data, mode, options, searchScreen, type }) => {
+const List: FC<ListProps> = ({
+  data,
+  mode,
+  options,
+  searchScreen,
+  type,
+}): JSX.Element => {
   if (!data.length)
     return (
       <>
@@ -116,18 +130,62 @@ const List: FC<ListProps> = ({ data, mode, options, searchScreen, type }) => {
       return (
         <FlatList
           data={data as Projects}
-          keyExtractor={project => project.res_id}
           renderItem={({ item }) => {
             return (
-              <ProjectListItem
-                onPress={() => {
-                  navigate('ProjectDetail', { item, key: item.res_id })
-                }}
-              >
-                <ProjectSummary project={item} />
-              </ProjectListItem>
+              <Card marginY="2">
+                <Pressable
+                  onPress={() => {
+                    navigate('ProjectDetail', { item, key: item.res_id })
+                  }}
+                  overflow="hidden"
+                >
+                  <VStack>
+                    <HStack
+                      justifyContent="space-between"
+                      alignItems="center"
+                      paddingRight="4"
+                    >
+                      <Heading width="70%" fontSize="sm">
+                        {item.name}
+                      </Heading>
+                      <ShareIcon
+                        size="md"
+                        color="accentGrey.100"
+                        onPress={underDevelopmentAlert}
+                      />
+                      <FavouriteIcon
+                        size="md"
+                        color="accentGrey.100"
+                        onPress={underDevelopmentAlert}
+                      />
+                    </HStack>
+                    <Text fontSize="xs">{item.client}</Text>
+                    <ColouredTag title={item.role} />
+                    <Text fontSize="xs">{item.hours}</Text>
+                    <Text fontSize="xs">{item.description}</Text>
+                    {Boolean(item.buddying) && (
+                      <HStack
+                        justifyContent="space-between"
+                        alignItems="center"
+                        paddingRight="4"
+                      >
+                        <Text fontSize="xs">Suitable for pairing</Text>
+                        <Icon
+                          size={7}
+                          as={MaterialIcons}
+                          name="group"
+                          color="grey"
+                          mx={0}
+                          px={0}
+                        />
+                      </HStack>
+                    )}
+                  </VStack>
+                </Pressable>
+              </Card>
             )
           }}
+          keyExtractor={project => project.res_id}
         />
       )
   }

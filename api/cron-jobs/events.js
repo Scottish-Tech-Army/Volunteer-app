@@ -1,7 +1,6 @@
 // Get video thumbnails and MP4 video files for event videos
 
 require('dotenv').config();
-const axios = require('axios').default;
 const airTable = require('../helpers/airTable');
 const eventsHelper = require('../helpers/events');
 const logging = require('../services/logging');

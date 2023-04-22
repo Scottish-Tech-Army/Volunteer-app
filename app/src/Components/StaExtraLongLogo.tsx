@@ -1,5 +1,9 @@
+/**
+ * @file Sta logo
+ */
+
 import React from 'react'
-import {View, Image} from 'react-native'
+import { View, Image } from 'react-native'
 import styled from 'styled-components/native'
 
 import { useTheme } from '@/Hooks'
@@ -17,9 +21,15 @@ const HeaderView = styled.View`
 
 const StaExtraLongLogo = () => {
   const { Images, Layout } = useTheme()
-    return  <HeaderView>
-              <StaHeaderLogoImage style={Layout.fullSize} resizeMode={'contain'} source={Images.extraLongLogo} />
-            </HeaderView>
-  }
+  return (
+    <HeaderView>
+      <StaHeaderLogoImage
+        style={Layout.fullSize}
+        resizeMode={'contain'}
+        source={Images.extraLongLogo}
+      />
+    </HeaderView>
+  )
+}
 
-  export default StaExtraLongLogo
+export default StaExtraLongLogo

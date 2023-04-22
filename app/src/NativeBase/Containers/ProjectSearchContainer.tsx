@@ -10,7 +10,7 @@ import {
   ListRouteParams,
   ListSearch,
   ListType,
-} from '@/Containers/ListContainer'
+} from '../../NativeBase/Containers/ListContainer'
 import ChoicesList, { ChoicesListChoice } from '../Components/ChoicesList'
 import FreeSearchBar from '../Components/FreeSearchBar'
 import SegmentedPicker, {

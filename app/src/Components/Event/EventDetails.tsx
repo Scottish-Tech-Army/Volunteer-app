@@ -19,6 +19,7 @@ import ImageFullWidth from '../ImageFullWidth'
 import ImageSwiper from '../ImageSwiper'
 import Title from '../Title'
 import Video from '@/NativeBase/Components/Video'
+import EventSpeakers from './EventSpeakers'
 
 const EventTopInfo = styled.View`
   display: flex;
@@ -96,6 +97,7 @@ const EventDetails: FC<EventDetailsProps> = ({ event }) => {
             {event.description}
           </Markdown>
         </EventDescription>
+        <EventSpeakers speakers={event.speakers} />
       </EventDetailsView>
     </ScrollView>
   )

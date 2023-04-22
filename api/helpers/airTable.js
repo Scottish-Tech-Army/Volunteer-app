@@ -5,6 +5,14 @@ const relativeTime = require('dayjs/plugin/relativeTime');
 dayjs.extend(relativeTime);
 const logging = require('../services/logging');
 
+const eventsTableLinkedFields = () => [
+  {
+    fieldName: 'speakers',
+    tableName: process.env.AIRTABLE_EVENTS_SPEAKERS_TABLE,
+  },
+];
+
+
 // AirTable doesn't include fields that it sees as empty (including its equivalent of boolean false) so we need to populate them
 function addEmptyFields(record, fieldDefinitions) {
   for (const [fieldName, fieldProperties] of Object.entries(fieldDefinitions)) {
@@ -63,28 +71,64 @@ function formatTime(timeInSeconds) {
   return dayjs().hour(0).minute(0).second(0).add(timeInSeconds, 'second').format('HH:mm');
 }
 
-async function getAllRecords(tableName, includeId = false) {
+async function getAllRecords(tableName, includeId = false, linkedFields) {
   try {
     const allRecordsRaw = await module.exports.client().table(tableName).select().all();
 
-    return allRecordsRaw.map((record) =>
-      includeId // if records don't already have a unique identifier column (e.g. events), it's useful to include the record ID from AirTable
-        ? {
-            id: record.id,
-            ...record.fields,
-          }
-        : record.fields,
+    return await Promise.all(
+      allRecordsRaw.map(async (record) => {
+        if (linkedFields?.length) {
+          record = await addLinkedFields(tableName, record, linkedFields);
+        }
+        return includeId // if records don't already have a unique identifier column (e.g. events), it's useful to include the record ID from AirTable
+          ? {
+              id: record.id,
+              ...record.fields,
+            }
+          : record.fields;
+      }),
     );
   } catch (error) {
     return error;
   }
 }
 
-async function getRecordById(tableName, recordId) {
-  try {
-    const recordsRaw = await module.exports.client().table(tableName).find(recordId);
+async function addLinkedFields(tableName, record, linkedFields) {
+  for (const linkedField of linkedFields) {
+    if (record.fields[linkedField.fieldName]) {
+      record.fields[linkedField.fieldName] = await Promise.all(
+        record.fields[linkedField.fieldName].map(async (field) => {
+          const linkedRecord = await module.exports.client().table(linkedField.tableName).find(field);
+          // In a linked table, AirTable adds an extra column pointing back to the 
+          // original table it was linked from.  We don't need this, so remove the
+          // extra column here.
+          delete linkedRecord.fields[tableName];
 
-    return recordsRaw.fields;
+          return linkedRecord.fields;
+        }),
+      );
+    }
+  }
+
+  return record;
+}
+
+/**
+ * Returns the record from a table based on the recordId
+ * @param {string} tableName
+ * @param {string} recordId
+ * @param {Array} linkedFields - a field that creates a relationship with another table
+ * @returns
+ */
+async function getRecordById(tableName, recordId, linkedFields) {
+  try {
+    let record = await module.exports.client().table(tableName).find(recordId);
+
+    if (linkedFields?.length) {
+      record = await addLinkedFields(tableName, record, linkedFields);
+    }
+    
+    return record.fields;
   } catch (error) {
     logging.logError(`Could not get record ID ${recordId} from table ${tableName}`, {
       extraInfo: error,
@@ -160,9 +204,11 @@ async function updateRecordById(tableName, recordId, fields) {
 
 module.exports = {
   addEmptyFields,
+  addLinkedFields,
   client,
   connectionErrorMessage,
   eventsTable,
+  eventsTableLinkedFields,
   formatDuration,
   formatTime,
   getAllRecords,
