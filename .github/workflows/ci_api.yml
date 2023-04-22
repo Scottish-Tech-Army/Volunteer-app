@@ -23,6 +23,8 @@ jobs:
           AIRTABLE_ID: ${{ secrets.AIRTABLE_ID }}
           AIRTABLE_PROJECTS_RESOURCES_CACHE_TABLE: ${{ secrets.AIRTABLE_PROJECTS_RESOURCES_CACHE_TABLE }}
           AIRTABLE_EVENTS_TABLE: ${{ secrets.AIRTABLE_EVENTS_TABLE }}
+          AIRTABLE_EVENTS_SPEAKERS_TABLE: ${{ secrets.AIRTABLE_EVENTS_SPEAKERS_TABLE }}
+          BUGSNAG_API_KEY: ${{ secrets.BUGSNAG_API_KEY }}
           JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
           JIRA_API_KEY: ${{ secrets.JIRA_API_KEY }}
           VIMEO_CLIENT_ID: ${{ secrets.VIMEO_CLIENT_ID }}
