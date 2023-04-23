@@ -182,27 +182,34 @@ We have the [react-native-svg](https://github.com/software-mansion/react-native-
 
 ## Logging errors and crashes
 
-We use Bugsnag to log errors and crashes in the front-end app when it's running on people's phones.  The user can opt in/out of sending most errors, although crashes outside of the React Native code (e.g. if the app runs out of memory) cannot be switched off.
+We use Bugsnag to log errors and crashes in the front-end app when it's running on people's phones. There are broadly two kinds of things that can go wrong on the front-end app:
 
-Normally, this only works when the app is installed on an actual device, rather than running in an emulator.  This is so that we don't get flooded by lots of errors that occur during development, and because we're on a free tier package that only allows a limited number of error reports per month so we want to minimise the errors reported to Bugsnag to only include issues in production.
+- **Errors** Errors that happen in our React code, either unforeseen or (ideally) caught in a `try...catch` statement. The user can opt in/out of sending these kinds of errors. Normally, these are only logged when the app is installed on an actual device, rather than running in an emulator. This is so that we don't get flooded by lots of errors that occur during development, and because we're on a free tier package that only allows a limited number of error reports per month so we want to minimise the errors reported to Bugsnag to only include issues in production.
+- **Native crashes** The app can crash for other reasons e.g. if there's a problem with a native library or the app runs out of memory. Logging these cannot be switched off, because of the way these are triggered within the guts of the Android and iOS setup. These **will** still be logged if you're on an emulator because we can't control them.
 
-To send errors, you must have an `app/.env` file with this set `BUGSNAG_API_KEY="insert_key_here"` (replacing `insert_key_here` with the actual API key from Bugsnag).
+To send errors and crash logs, you must have an `app/.env` file with this set `BUGSNAG_API_KEY="insert_key_here"` (replacing `insert_key_here` with the actual API key from Bugsnag).
 
-### Logging to Bugsnag from your emulator
+### Logging errors to Bugsnag from your emulator
 
-**You don't normally need to do this -- and you should only use this when normal error detection is insufficient** e.g. because you want to figure out why the app is crashing due to a lack of memory.  **Don't** use this in place of normal code tools like `console.error` and `console.log` and other normal testing approaches.
+You can log errors to Bugnsag from your emulator if you really need to. **You don't normally need to do this -- Bugsnag error logging is usually to monitor native crashes, and errors in the production app.  You should only use this when normal error detection is insufficient** e.g. because you want to figure out why the app is crashing due to a lack of memory.  **Don't** use this in place of normal code tools like `console.error` and `console.log` and other normal testing approaches.
 
-You can force the app to report all errors and crashes to Bugsnag from the emulator (this also overrides the user permissions setting which normally determines whether or not send error reports).  To do this:
+You can force the app to report errors (first bullet point above) to Bugsnag from the emulator (this also overrides the user permissions setting which normally determines whether or not send error reports).  To do this:
 
-- Change the `version` number in `app/package.json` to one that isn't in use yet
+- Change the `version` number in `app/package.json` to one that isn't in use yet (if other developers are also doing the same thing, you'll need to coordinate with them so as not to overlap with using the same version number)
   > You must do this or it'll screw up error reporting for the current version of the app in production
-- Change the `versionCode` number in `app/android/app/build.grade` (**not** `app/android/build.grade`) to one that isn't in use yet
+- Change the `versionCode` number in `app/android/app/build.grade` (**not** `app/android/build.grade`) to one that isn't in use yet (if other developers are also doing the same thing, you'll need to coordinate with them so as not to overlap with using the same version code)
   > You must do this or it'll screw up error reporting for the current version of the app in production
-- Run this command in your terminal to [upload source maps to Bugsnag](https://docs.bugsnag.com/build-integrations/js/source-maps-react-native/) so that it can detect where in the code a problem occurred: `npx bugsnag-source-maps upload-react-native --api-key YOUR_API_KEY_HERE --fetch --dev --platform android --app-version YOUR_APP_VERSION --app-version-code YOUR_APP_VERSION_CODE` ...replacing `YOUR_API_KEY_HERE` with our Bugsnag API key, `YOUR_APP_VERSION` with the version set in `app/package.json`, `YOUR_APP_VERSION_CODE` with the version code set in `app/android/app/build.grade` ...and if you are using the iOS emulator also replace `android` with `ios`
+- Run this command in your terminal to [manually upload source maps to Bugsnag](https://docs.bugsnag.com/build-integrations/js/source-maps-react-native/) so that it can detect where in the code a problem occurred: `npx bugsnag-source-maps upload-react-native --api-key YOUR_API_KEY_HERE --fetch --dev --platform android --app-version YOUR_APP_VERSION --app-version-code YOUR_APP_VERSION_CODE`
+  - ...replacing `YOUR_API_KEY_HERE` with our Bugsnag API key
+  - ...replacing `YOUR_APP_VERSION` with the version set in `app/package.json`
+  - ...replacing `YOUR_APP_VERSION_CODE` with the version code set in `app/android/app/build.grade`
+  - ...and if you are using the iOS emulator, also replace `android` with `ios`
+  > You must re-run this command every time you change your code or Bugsnag may not correctly match an error to the right place in your React code
 - Create an `app/.env` file or update your existing file and include the line `BUGSNAG_ALWAYS_SEND_BUGS="true"`
 - Start/restart your emulator
 
 **After you've finished testing you must:**
+
 - Change back the `version` number in `app/package.json` to what it was before
 - Change back the `versionCode` number in `app/android/app/build.grade` to what it was before
 - Remove the `BUGSNAG_ALWAYS_SEND_BUGS` line from your `app/.env` file or set it to `BUGSNAG_ALWAYS_SEND_BUGS="false"`
