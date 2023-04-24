@@ -13,7 +13,7 @@ This file contains some tips and guidelines on building our back-end Node JS API
 
 [Cron jobs](https://en.wikipedia.org/wiki/Cron) are bits of code that can run regularly in the background to carry out things that need to be done repeatedly on a schedule (rather than code that's triggered by a user request, like most of our API).
 
-These are stored in the `/api/cron-jobs` directory. Please see instructions at the end of the [Subsequent run](#subsequent-run) section above on how to run these scripts.
+These are stored in the `/api/cron-jobs` directory. Please see instructions at the end of the [Subsequent run](README.md#subsequent-run) section of the README on how to run these scripts.
 
 We make use of cron jobs on the API server for a couple of things:
 
@@ -48,15 +48,17 @@ This file `/api/services/slack.js` allows you to post messages to Slack. If you 
 
 ## Logging errors
 
-We use Bugsnag to log errors in the API when it's running on the production server.
+We use Bugsnag to log errors in the API when it's running on the production server. To log errors to Bugsnag from the API production server, use the `logError` function in `api/services/logging.js` instead of `console.error` (it calls `console.error` anyway).
 
-Normally, we don't use this when we're running a local version of the API on a development server.  This is so that we don't get flooded by lots of errors that occur during development, and because we're on a free tier package that only allows a limited number of error reports per month so we want to minimise the errors reported to Bugsnag to only include issues in production.
+(While you're developing and testing out your code, you can still use `console.log` and `console.error` to see errors in your terminal.)
+
+Normally, we don't log errors to Bugsnag when we're running a local version of the API on a development server.  This is so that Bugsnag doesn't get flooded by lots of errors that occur during development (which don't actually need the team to fix - they're just part of one dev's work on a ticket), and because we're on a free tier package that only allows a limited number of error reports per day/month so we want to minimise the errors reported to Bugsnag to only include issues in production.
 
 To send errors, you must have an `api/.env` file with this set `BUGSNAG_API_KEY="insert_key_here"` (replacing `insert_key_here` with the actual API key from Bugsnag).
 
 ### Logging to Bugsnag from your local API
 
-**It is very rare you would need to use this** but you can force the API to report errors to Bugsnag from your local development server if needed. **Don't** use this in place of normal code tools like `console.error` and `console.log` and other normal testing approaches.
+**It is very rare you would need to use this** but you can force the API to report errors to Bugsnag from your local development server if needed. (You would normally only use this on your local dev server if you need to check Bugsnag is working.) **Don't** use this in place of normal code tools like `console.error` and `console.log` and other normal testing approaches.
 
 To do this:
 

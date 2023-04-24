@@ -182,16 +182,20 @@ We have the [react-native-svg](https://github.com/software-mansion/react-native-
 
 ## Logging errors and crashes
 
-We use Bugsnag to log errors and crashes in the front-end app when it's running on people's phones. There are broadly two kinds of things that can go wrong on the front-end app:
+We use Bugsnag to log errors and crashes in the front-end app when it's running on people's phones. To log errors to Bugsnag in the app in production, use the `logError` function in `app/src/Service/modules/logging/index.ts` instead of `console.error` (it calls `console.error` anyway).
 
-- **Errors** Errors that happen in our React code, either unforeseen or (ideally) caught in a `try...catch` statement. The user can opt in/out of sending these kinds of errors. Normally, these are only logged when the app is installed on an actual device, rather than running in an emulator. This is so that we don't get flooded by lots of errors that occur during development, and because we're on a free tier package that only allows a limited number of error reports per month so we want to minimise the errors reported to Bugsnag to only include issues in production.
-- **Native crashes** The app can crash for other reasons e.g. if there's a problem with a native library or the app runs out of memory. Logging these cannot be switched off, because of the way these are triggered within the guts of the Android and iOS setup. These **will** still be logged if you're on an emulator because we can't control them.
+(While you're developing and testing out your code, you can still use `console.log` and `console.error` to see errors in your terminal.)
+
+There are broadly two kinds of things that can go wrong on the front-end app:
+
+- **Errors** Errors that happen in our React code, either unforeseen or (ideally) caught in a `try...catch` statement. The user can opt in/out of sending these kinds of errors, which are more likely to contain personal data. Normally, these are only logged to Bugsnag when the app is installed on an actual device, rather than running in an emulator. This is so that we don't get flooded by lots of errors that occur during development, and because we're on a free tier package that only allows a limited number of error reports per day/month so we want to minimise the errors reported to Bugsnag to only include issues in production.
+- **Crashes** The app can crash entirely e.g. if something goes wrong in a native library or the app runs out of memory. Logging these cannot be switched off, because of the way these are triggered within the guts of the Android and iOS setup. From an initial look, it appears these crash reports don't contain personal data. These **will** still be logged if you're on an emulator because we can't switch them on/off using code, they happen outside of our React code. (If we're getting 'false positive' crashes from emulators that are distracting / not useful, we could ask devs to remove the `BUGSNAG_API_KEY` from their `app/.env` file.)
 
 To send errors and crash logs, you must have an `app/.env` file with this set `BUGSNAG_API_KEY="insert_key_here"` (replacing `insert_key_here` with the actual API key from Bugsnag).
 
 ### Logging errors to Bugsnag from your emulator
 
-You can log errors to Bugnsag from your emulator if you really need to. **You don't normally need to do this -- Bugsnag error logging is usually to monitor native crashes, and errors in the production app.  You should only use this when normal error detection is insufficient** e.g. because you want to figure out why the app is crashing due to a lack of memory.  **Don't** use this in place of normal code tools like `console.error` and `console.log` and other normal testing approaches.
+You can log errors to Bugnsag from your emulator if you really need to. **You don't normally need to do this -- Bugsnag error logging is usually to monitor crashes, and errors in the production app.  You should only use this when normal error detection is insufficient** e.g. because you want to figure out why the app is crashing due to a lack of memory.  **Don't** use this in place of normal code tools like `console.error` and `console.log` and other normal testing approaches.
 
 You can force the app to report errors (first bullet point above) to Bugsnag from the emulator (this also overrides the user permissions setting which normally determines whether or not send error reports).  To do this:
 
