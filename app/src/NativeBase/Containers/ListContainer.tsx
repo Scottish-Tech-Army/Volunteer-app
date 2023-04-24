@@ -43,6 +43,7 @@ import {
 import { EventsState, setEvents } from '@/Store/Events'
 import { ProjectsState, setProjects } from '@/Store/Projects'
 import underDevelopmentAlert from '@/Utils/UnderDevelopmentAlert'
+import SkeletonLoading from '../Components/SkeletonLoading'
 
 const ClearSearchLabel = styled.Text`
 
@@ -324,7 +325,11 @@ const ListContainer = (props: {
             />
           </>
         ) : (
-          <Text>Loading...</Text>
+          <>
+            <SkeletonLoading />
+            <SkeletonLoading />
+            <SkeletonLoading />
+          </>
         )}
       </VStack>
     </>
