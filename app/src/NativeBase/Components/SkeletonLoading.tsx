@@ -11,7 +11,6 @@ const SkeletonLoading = () => {
       w="100%"
       borderWidth="1"
       space={4}
-      overflow="hidden"
       rounded="md"
       py="4"
       px="2"
