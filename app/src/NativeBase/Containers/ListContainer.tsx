@@ -7,7 +7,7 @@
 
 /* eslint-disable @typescript-eslint/no-shadow */
 
-import { Text, Heading, VStack } from 'native-base'
+import { Heading, VStack } from 'native-base'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components/native'
