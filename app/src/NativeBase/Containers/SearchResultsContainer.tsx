@@ -32,12 +32,12 @@ import {
 import { ProjectSearch } from './ProjectSearchContainer'
 
 export interface SearchResults extends ListSearch {
-  results: Projects // the projects results for this search
+  results: Events | Projects
 }
 
 export interface SearchResultsRouteParams {
   type: ListType
-  search?: EventSearch | ProjectSearch
+  search: EventSearch | ProjectSearch
   options: ListOptions
 }
 
@@ -48,7 +48,7 @@ export interface SearchResultsRouteParams {
  * @param {object} props.route A route object containing params
  * @param {SearchResultsRouteParams} props.route.params The parameters to send to this container when navigating, to set what it displays
  * @param {ListType} props.route.params.type The type of data to show in the list, e.g. events or projects
- * @param {EventSearch | ProjectSearch} [props.route.params.search] The search the user has performed - or not included if showing full list of data, not search results
+ * @param {EventSearch | ProjectSearch} props.route.params.search The search the user has performed
  * @param {ListOptions} props.route.params.options Any additional options for specific data types, that tell the container how to behave
  * @returns {React.ReactElement} Container
  */
@@ -97,16 +97,12 @@ const SearchResultsContainer = (props: {
                   boxWidth === '100%'
                     ? boxWidth
                     : (boxWidth as number) - clearButtonWidth
-                } // prevent text spilling over and overlapping the close button
+                } // prevent longer text from spilling over and overlapping the close button
               >
                 <SearchIcon />
 
-                {params?.search?.description && (
-                  <Text
-                    _light={{ color: 'text.100' }}
-                    _dark={{ color: 'text.100' }}
-                    fontSize="sm"
-                  >
+                {Boolean(params?.search.description) && (
+                  <Text color="text.100" fontSize="sm">
                     Results for {params.search.description}
                   </Text>
                 )}
