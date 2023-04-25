@@ -77,7 +77,7 @@ const projectRegisterInterestHandler = async (req, res) => {
 
   const projectResourceFormatted = projectsHelper.formatProjectResourceFromAirTable(projectResource);
 
-  const dataExpected = ['availableFrom', 'email', 'firstName', 'lastName', 'happyToMentor', 'lookingForBuddy'];
+  const dataExpected = ['availableFrom', 'email', 'firstName', 'lastName', 'lookingForPeerSupport'];
 
   const dataNotProvided = [];
 
@@ -100,8 +100,7 @@ const projectRegisterInterestHandler = async (req, res) => {
     ➡️ *Role*  ${projectResourceFormatted.role}
     👤 *Volunteer*  ${req.body.firstName} ${req.body.lastName}
     ✉️ *Email*  ${req.body.email}
-    🎓 *Happy to mentor?*  ${req.body.happyToMentor ? 'Yes' : 'No'}
-    🧑‍🤝‍🧑 *Looking for a buddy?*  ${req.body.lookingForBuddy ? 'Yes' : 'No'}
+    🧑‍🤝‍🧑 *Looking for peer support?*  ${req.body.lookingForPeerSupport ? 'Yes' : 'No'}
     📅 *Available from*  ${dayjs(req.body.availableFrom, 'YYYY-MM-DD').format('D MMMM YYYY')}
 
     Please get in touch with them to follow up`,

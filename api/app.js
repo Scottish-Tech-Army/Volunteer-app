@@ -5,7 +5,7 @@ const cors = require('cors');
 
 app.use(cors());
 app.use(express.json());
-app.use('/', routes);
+app.use('/v1', routes);
 
 app.use((req, res, next) => {
   const err = new Error("Something went wrong. Please try again.");

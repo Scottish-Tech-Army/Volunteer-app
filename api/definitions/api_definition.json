@@ -5,6 +5,11 @@
     "description": "API to list and query available STA volunteer projects",
     "version": "1.0"
   },
+  "servers": [
+    {
+      "url": "/v1"
+    }
+  ],
   "paths": {
     "/events": {
       "get": {
@@ -28,9 +33,9 @@
                     "series": "STA Project Showcase",
                     "related_initiative": "Volunteer app",
                     "video_webpage": "https://vimeo.com/583815096",
-                    "video_file": "https://vod-progressive.akamaized.net/exp=1657227176~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F678%2F28%2F703391800%2F3256486964.mp4~hmac=e76bbd7e698f0d46c373bce069f936a24182694a1b0d140a63fcf240a2e8b65c/vimeo-prod-skyfire-std-us/01/678/28/703391800/3256486964.mp4",
                     "video_thumbnail": "https://dl.airtable.com/.attachments/02b4bf4e52db4d9d85575186c487c635/c05231f4/1218826759-b3cef7ddaf08fa26e375d87a2fc78e7fc0ca49ffb2809197dcf3ea6bec5e09ec-d_1280?ts=1653904352&userId=usrrNJEU7hToH1AMK&cs=ee8f353da772f926",
-                    "images": []
+                    "images": [],
+                    "speakers": []
                   },
                   {
                     "id": "rec44Y3rVY6hqACD5",
@@ -44,11 +49,37 @@
                     "series": "Microsoft",
                     "related_initiative": "",
                     "video_webpage": "",
-                    "video_file": "",
                     "video_thumbnail": "",
                     "images": [
                       "https://dl.airtable.com/.attachments/6a55ab19223701f38cc61d0b1c127748/cfcd129b/power-bi.jpg?ts=1652968234&userId=usrrNJEU7hToH1AMK&cs=a8456be5328462cd"
-                    ]
+                    ],
+                    "speakers": []
+                  },
+                  {
+                    "id": "recHDSkZLA9tJPmvq",
+                    "name": "Test event for speakers",
+                    "date": "2023-02-25",
+                    "time": "15:00",
+                    "duration": 120,
+                    "description": "",
+                    "type": "Internal",
+                    "notes": "",
+                    "series": "",
+                    "related_initiative": "",
+                    "video_webpage": "",
+                    "video_file": "",
+                    "video_thumbnail": "",
+                    "images": [],
+                    "speakers": [
+                      {
+                        "name": "bob", 
+                        "url": "https://www.linkedin.com/feed/"
+                      },
+                      {
+                        "name": "sarah", 
+                        "url": "https://www.linkedin.com/feed/"
+                      }
+                    ]    
                   }
                 ],
                 "schema": {
@@ -71,19 +102,18 @@
               "application/json": {
                 "example": {
                   "id": "rec8VDT5j4Q67WRHv",
-                    "name": "Showcase - Volunteer app",
-                    "date": "2023-01-19",
-                    "time": "11:00",
-                    "duration": 60,
-                    "description": "**We are proud to showcase our volunteer projects.** Come and have a look at the story so far, if you are curious & want to volunteer- join us!",
-                    "type": "Internal",
-                    "notes": "",
-                    "series": "STA Project Showcase",
-                    "related_initiative": "Volunteer app",
-                    "video_webpage": "https://vimeo.com/583815096",
-                    "video_file": "https://vod-progressive.akamaized.net/exp=1657227176~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F678%2F28%2F703391800%2F3256486964.mp4~hmac=e76bbd7e698f0d46c373bce069f936a24182694a1b0d140a63fcf240a2e8b65c/vimeo-prod-skyfire-std-us/01/678/28/703391800/3256486964.mp4",
-                    "video_thumbnail": "https://dl.airtable.com/.attachments/02b4bf4e52db4d9d85575186c487c635/c05231f4/1218826759-b3cef7ddaf08fa26e375d87a2fc78e7fc0ca49ffb2809197dcf3ea6bec5e09ec-d_1280?ts=1653904352&userId=usrrNJEU7hToH1AMK&cs=ee8f353da772f926",
-                    "images": []
+                  "name": "Showcase - Volunteer app",
+                  "date": "2023-01-19",
+                  "time": "11:00",
+                  "duration": 60,
+                  "description": "**We are proud to showcase our volunteer projects.** Come and have a look at the story so far, if you are curious & want to volunteer- join us!",
+                  "type": "Internal",
+                  "notes": "",
+                  "series": "STA Project Showcase",
+                  "related_initiative": "Volunteer app",
+                  "video_webpage": "https://vimeo.com/583815096",
+                  "video_thumbnail": "https://dl.airtable.com/.attachments/02b4bf4e52db4d9d85575186c487c635/c05231f4/1218826759-b3cef7ddaf08fa26e375d87a2fc78e7fc0ca49ffb2809197dcf3ea6bec5e09ec-d_1280?ts=1653904352&userId=usrrNJEU7hToH1AMK&cs=ee8f353da772f926",
+                  "images": []
                 },
                 "schema": {
                   "$ref": "#/components/schemas/event"
@@ -116,9 +146,9 @@
                     "series": "STA Project Showcase",
                     "related_initiative": "Volunteer app",
                     "video_webpage": "https://vimeo.com/583815096",
-                    "video_file": "https://vod-progressive.akamaized.net/exp=1657227176~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F678%2F28%2F703391800%2F3256486964.mp4~hmac=e76bbd7e698f0d46c373bce069f936a24182694a1b0d140a63fcf240a2e8b65c/vimeo-prod-skyfire-std-us/01/678/28/703391800/3256486964.mp4",
                     "video_thumbnail": "https://dl.airtable.com/.attachments/02b4bf4e52db4d9d85575186c487c635/c05231f4/1218826759-b3cef7ddaf08fa26e375d87a2fc78e7fc0ca49ffb2809197dcf3ea6bec5e09ec-d_1280?ts=1653904352&userId=usrrNJEU7hToH1AMK&cs=ee8f353da772f926",
-                    "images": []
+                    "images": [],
+                    "speakers": []
                   },
                   {
                     "id": "rec44Y3rVY6hqACD5",
@@ -132,11 +162,37 @@
                     "series": "Microsoft",
                     "related_initiative": "",
                     "video_webpage": "",
-                    "video_file": "",
                     "video_thumbnail": "",
                     "images": [
                       "https://dl.airtable.com/.attachments/6a55ab19223701f38cc61d0b1c127748/cfcd129b/power-bi.jpg?ts=1652968234&userId=usrrNJEU7hToH1AMK&cs=a8456be5328462cd"
-                    ]
+                    ],
+                    "speakers": []
+                  },
+                  {
+                    "id": "recHDSkZLA9tJPmvq",
+                    "name": "Test event for speakers",
+                    "date": "2023-02-25",
+                    "time": "15:00",
+                    "duration": 120,
+                    "description": "",
+                    "type": "Internal",
+                    "notes": "",
+                    "series": "",
+                    "related_initiative": "",
+                    "video_webpage": "",
+                    "video_file": "",
+                    "video_thumbnail": "",
+                    "images": [],
+                    "speakers": [
+                      {
+                        "name": "bob", 
+                        "url": "https://www.linkedin.com/feed/"
+                      },
+                      {
+                        "name": "sarah", 
+                        "url": "https://www.linkedin.com/feed/"
+                      }
+                    ]    
                   }
                 ],
                 "schema": {
@@ -170,9 +226,9 @@
                     "series": "STA Project Showcase",
                     "related_initiative": "Volunteer app",
                     "video_webpage": "https://vimeo.com/583815096",
-                    "video_file": "https://vod-progressive.akamaized.net/exp=1657227176~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F678%2F28%2F703391800%2F3256486964.mp4~hmac=e76bbd7e698f0d46c373bce069f936a24182694a1b0d140a63fcf240a2e8b65c/vimeo-prod-skyfire-std-us/01/678/28/703391800/3256486964.mp4",
                     "video_thumbnail": "https://dl.airtable.com/.attachments/02b4bf4e52db4d9d85575186c487c635/c05231f4/1218826759-b3cef7ddaf08fa26e375d87a2fc78e7fc0ca49ffb2809197dcf3ea6bec5e09ec-d_1280?ts=1653904352&userId=usrrNJEU7hToH1AMK&cs=ee8f353da772f926",
-                    "images": []
+                    "images": [],
+                    "speakers": []
                   },
                   {
                     "id": "rec44Y3rVY6hqACD5",
@@ -186,11 +242,37 @@
                     "series": "Microsoft",
                     "related_initiative": "",
                     "video_webpage": "",
-                    "video_file": "",
                     "video_thumbnail": "",
                     "images": [
                       "https://dl.airtable.com/.attachments/6a55ab19223701f38cc61d0b1c127748/cfcd129b/power-bi.jpg?ts=1652968234&userId=usrrNJEU7hToH1AMK&cs=a8456be5328462cd"
-                    ]
+                    ],
+                    "speakers": []
+                  },
+                  {
+                    "id": "recHDSkZLA9tJPmvq",
+                    "name": "Test event for speakers",
+                    "date": "2023-02-25",
+                    "time": "15:00",
+                    "duration": 120,
+                    "description": "",
+                    "type": "Internal",
+                    "notes": "",
+                    "series": "",
+                    "related_initiative": "",
+                    "video_webpage": "",
+                    "video_file": "",
+                    "video_thumbnail": "",
+                    "images": [],
+                    "speakers": [
+                      {
+                        "name": "bob", 
+                        "url": "https://www.linkedin.com/feed/"
+                      },
+                      {
+                        "name": "sarah", 
+                        "url": "https://www.linkedin.com/feed/"
+                      }
+                    ]    
                   }
                 ],
                 "schema": {
@@ -220,14 +302,14 @@
                     "client": "PKAVS",
                     "role": "QA Tester",
                     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-                    "video_webpage": "https://vimeo.com/123456",
                     "skills": ["Acceptance Testing"],
                     "hours": "5-10 hours per week",
                     "required": "One person",
                     "buddying": false,
                     "scope": "https://drive.google.com/file/d/1j469c-xp8HPYLocTgz5lMYHnnz7TsRVP/view?usp=sharing",
                     "sector": "Arts & Culture",
-                    "video_file": "https://vod-progressive.akamaized.net/exp=1657227176~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F678%2F28%2F703391800%2F3256486964.mp4~hmac=e76bbd7e698f0d46c373bce069f936a24182694a1b0d140a63fcf240a2e8b65c/vimeo-prod-skyfire-std-us/01/678/28/703391800/3256486964.mp4"
+                    "video_webpage": "https://youtube.com/a1B2c3D4e5",
+                    "video_webpage_player_only": "https://www.youtube.com/embed/a1B2c3D4e5"
                   },
                   {
                     "it_key": "IT-123",
@@ -237,14 +319,14 @@
                     "client": "PKAVS",
                     "role": "Web designer",
                     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-                    "video_webpage": "https://vimeo.com/123456",
                     "skills": ["HTML", "CSS"],
                     "hours": "1-2 days per week",
                     "required": "One person",
                     "buddying": false,
                     "scope": "https://drive.google.com/file/d/1j469c-xp8HPYLocTgz5lMYHnnz7TsRVP/view?usp=sharing",
                     "sector": "Arts & Culture",
-                    "video_file": "https://vod-progressive.akamaized.net/exp=1657227176~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F678%2F28%2F703391800%2F3256486964.mp4~hmac=e76bbd7e698f0d46c373bce069f936a24182694a1b0d140a63fcf240a2e8b65c/vimeo-prod-skyfire-std-us/01/678/28/703391800/3256486964.mp4"
+                    "video_webpage": "https://vimeo.com/123456",
+                    "video_webpage_player_only": "https://player.vimeo.com/video/123456"
                   },
                   {
                     "it_key": "SVA",
@@ -254,14 +336,14 @@
                     "client": "Scottish Tech Army",
                     "role": "Lead developer",
                     "description": "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                    "video_webpage": "",
                     "skills": ["React Native", "Node.js"],
                     "hours": "2-3 days per week",
                     "required": "One person",
                     "buddying": true,
                     "scope": "https://drive.google.com/file/d/1j469c-xp8HPYLocTgz5lMYHnnz7TsRVP/view?usp=sharing",
                     "sector": "Education & Youth",
-                    "video_file": "https://vod-progressive.akamaized.net/exp=1657227176~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F678%2F28%2F703391800%2F3256486964.mp4~hmac=e76bbd7e698f0d46c373bce069f936a24182694a1b0d140a63fcf240a2e8b65c/vimeo-prod-skyfire-std-us/01/678/28/703391800/3256486964.mp4"
+                    "video_webpage": "",
+                    "video_webpage_player_only": ""
                   }
                 ],
                 "schema": {
@@ -290,14 +372,14 @@
                   "client": "PKAVS",
                   "role": "QA Tester",
                   "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-                  "video_webpage": "https://vimeo.com/123456",
                   "skills": ["Acceptance Testing"],
                   "hours": "5-10 hours per week",
                   "required": "One person",
                   "buddying": false,
                   "scope": "https://drive.google.com/file/d/1j469c-xp8HPYLocTgz5lMYHnnz7TsRVP/view?usp=sharing",
                   "sector": "Arts & Culture",
-                  "video_file": "https://vod-progressive.akamaized.net/exp=1657227176~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F678%2F28%2F703391800%2F3256486964.mp4~hmac=e76bbd7e698f0d46c373bce069f936a24182694a1b0d140a63fcf240a2e8b65c/vimeo-prod-skyfire-std-us/01/678/28/703391800/3256486964.mp4"
+                  "video_webpage": "https://vimeo.com/123456",
+                  "video_webpage_player_only": "https://player.vimeo.com/video/123456"
                 },
                 "schema": {
                   "$ref": "#/components/schemas/project"
@@ -375,10 +457,6 @@
               "type": "string",
               "description": "URL of the event video (if any). Expected to be a Vimeo page. Normally used to watch a past event"
             },
-            "video_file": {
-              "type": "string",
-              "description": "URL of MP4 file of the event video (if any), returned from the Vimeo API. These URLs expire every hour"
-            },
             "video_thumbnail": {
               "type": "string",
               "description": "URL of a thumbnail image of the event video (if any)"
@@ -393,6 +471,20 @@
               "items": {
                 "type": "string",
                 "description": "URL of the image"
+              }
+            },
+            "speakers": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "url": {
+                    "type": "string"
+                  }
+                }
               }
             }
           }
@@ -432,10 +524,6 @@
               "type": "string",
               "description": "Description of what the project work involves"
             },
-            "video_webpage": {
-              "type": "string",
-              "description": "URL of the charity introducing the project. Expected to be a Vimeo Webpage"
-            },
             "skills": {
               "type": "array",
               "description": "List of skills required for the project",
@@ -463,9 +551,13 @@
               "type": "string",
               "description": "Project charity sector"
             },
-            "video_file": {
+            "video_webpage": {
               "type": "string",
-              "description": "URL of MP4 file of the video introducing the project from the Vimeo webpage. These URLs expire every hour"
+              "description": "URL of a video where the charity introduces the project. Usually a Vimeo or YouTube video web page, but occasionally any other website.  Web page will have branding, text, other videos, etc."
+            },
+            "video_webpage_player_only": {
+              "type": "string",
+              "description": "URL of a video where the charity introduces the project -- sourced using video_webpage. Will be a Vimeo or YouTube video web page.  Web page will only have the video player itself (no branding, text, other videos, etc)."
             }
           }
         }

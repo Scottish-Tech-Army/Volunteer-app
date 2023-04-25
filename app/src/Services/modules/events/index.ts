@@ -20,7 +20,13 @@ export interface Event {
   video_file: string
   video_thumbnail: string
   images: string[]
+  speakers: EventSpeaker[]
   addedToCalendar?: boolean
+}
+
+export interface EventSpeaker {
+  name: string
+  url: string
 }
 
 export type Events = Event[]

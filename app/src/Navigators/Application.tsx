@@ -16,18 +16,18 @@ import { useSelector } from 'react-redux'
 import {
   EventDetailContainer,
   StartupContainer,
-  ProjectRegisterInterestContainer,
   EventSearchContainer,
   WelcomeContainer,
 } from '@/Containers'
+import ProjectRegisterInterestContainer from '@/NativeBase/Containers/ProjectRegisterInterestContainer'
 import MainNavigator from './Main'
 import { navigationRef } from './utils'
-import ProjectScope from '@/Components/Project/ProjectScope'
 import NavigationHeader from '@/NativeBase/Components/NavigationHeader'
 import {
   ProjectDetailContainer,
   ProjectSearchContainer,
   SearchResultsContainer,
+  WebViewContainer,
 } from '@/NativeBase/Containers'
 import StaTheme from '@/NativeBase/Theme/StaTheme'
 import { ThemeState } from '@/Store/Theme'
@@ -151,7 +151,16 @@ const ApplicationNavigator = () => {
             component={ProjectRegisterInterestContainer}
             options={{
               ...stackScreenDefaultOptions,
-              title: 'Register Interest',
+              title: 'Register project',
+            }}
+          />
+
+          <Stack.Screen
+            name="ProjectScope"
+            component={WebViewContainer}
+            options={{
+              ...stackScreenDefaultOptions,
+              title: 'Project Scope',
             }}
           />
 
@@ -170,6 +179,15 @@ const ApplicationNavigator = () => {
             options={{
               ...stackScreenDefaultOptions,
               title: 'Search Results',
+            }}
+          />
+
+          <Stack.Screen
+            name="ProjectVideo"
+            component={WebViewContainer}
+            options={{
+              ...stackScreenDefaultOptions,
+              title: 'Project Video',
             }}
           />
 
@@ -195,15 +213,6 @@ const ApplicationNavigator = () => {
             name="Welcome"
             component={WelcomeContainer}
             options={{ headerShown: false }}
-          />
-
-          <Stack.Screen
-            name="ProjectScope"
-            component={ProjectScope}
-            options={{
-              ...stackScreenDefaultOptions,
-              title: 'Project Scope',
-            }}
           />
         </Stack.Navigator>
       </NavigationContainer>

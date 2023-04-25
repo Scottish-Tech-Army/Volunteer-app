@@ -7,7 +7,6 @@ import { navigate } from '@/Navigators/utils'
 import { Project } from '@/Services/modules/projects'
 import underDevelopmentAlert from '@/Utils/UnderDevelopmentAlert'
 import {
-  Box,
   Button,
   Card,
   FavouriteIcon,
@@ -61,7 +60,11 @@ const ProjectFullDetails = ({
           />
         </HStack>
 
-        <Video url={project.video_file} />
+        <Video
+          videoWebpage={project.video_webpage}
+          videoWebpagePlayerOnly={project.video_webpage_player_only}
+          videoWebpageScreen="ProjectVideo"
+        />
 
         <Card>
           <Text>{project.client}</Text>

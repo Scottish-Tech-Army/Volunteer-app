@@ -53,7 +53,6 @@ function fakeEventObject(dateType) {
     series: faker.random.arrayElement(series),
     related_initiative: faker.random.arrayElement(relatedInitiatives),
     video_webpage: faker.internet.url(),
-    video_file: faker.internet.url(),
     video_thumbnail: faker.internet.url(),
     images: fakeImages(),
   };
@@ -89,7 +88,6 @@ function fakeEventAirTableRecord(dateType, includeVideo = false) {
 
   if (!includeVideo) {
     delete event.video_webpage;
-    delete event.video_file;
     delete event.video_thumbnail;
   }
 
