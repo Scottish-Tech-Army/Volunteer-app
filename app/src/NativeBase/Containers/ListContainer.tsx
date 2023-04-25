@@ -7,7 +7,7 @@
 
 /* eslint-disable @typescript-eslint/no-shadow */
 
-import { Text, Heading, VStack } from 'native-base'
+import { Heading, VStack } from 'native-base'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components/native'
@@ -43,6 +43,7 @@ import {
 import { EventsState, setEvents } from '@/Store/Events'
 import { ProjectsState, setProjects } from '@/Store/Projects'
 import underDevelopmentAlert from '@/Utils/UnderDevelopmentAlert'
+import SkeletonLoading from '../Components/SkeletonLoading'
 
 const ClearSearchLabel = styled.Text`
 
@@ -324,7 +325,11 @@ const ListContainer = (props: {
             />
           </>
         ) : (
-          <Text>Loading...</Text>
+          <>
+            <SkeletonLoading />
+            <SkeletonLoading />
+            <SkeletonLoading />
+          </>
         )}
       </VStack>
     </>
