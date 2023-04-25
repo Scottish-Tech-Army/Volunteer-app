@@ -26,17 +26,6 @@ import {
   Icon,
 } from 'native-base'
 
-// General styled components
-const NoneFound = styled.Text`
-  font-size: 18px;
-  margin: 15px 15px 0px 15px;
-`
-const TryAnotherSearch = styled.Text`
-  font-size: 18px;
-  margin: 15px 15px 0px 15px;
-  text-decoration: underline;
-`
-// Events-specific
 const EventListItem = styled.TouchableOpacity`
   margin: 21px 21px 0px 21px;
   width: 150px;
@@ -82,23 +71,24 @@ const List: FC<ListProps> = ({
   if (!data.length)
     return (
       <>
-        <NoneFound>
+        <Text>
           Sorry, we couldn't find any {type}{' '}
           {mode === ListDisplayMode.Full
             ? 'at the moment.'
             : mode === 'search'
             ? 'matching your search.'
             : ''}
-        </NoneFound>
+        </Text>
 
         {mode === ListDisplayMode.Search && (
-          <TryAnotherSearch
+          <Text
             onPress={() => {
               navigate(searchScreen, undefined)
             }}
+            underline
           >
             Try another search
-          </TryAnotherSearch>
+          </Text>
         )}
       </>
     )

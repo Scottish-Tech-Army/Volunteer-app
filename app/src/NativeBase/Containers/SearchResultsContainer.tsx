@@ -9,22 +9,26 @@ import {
   Icon,
   IconButton,
   Pressable,
-  ScrollView,
   Text,
+  View,
 } from 'native-base'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { EventSearch } from '@/Containers/EventSearchContainer'
+import List, {
+  ListDisplayMode,
+  ListOptions,
+} from '@/NativeBase/Components/List'
+import SearchIcon from '@/NativeBase/Components/SearchIcon'
+import { goBack, navigate, RootStackParamList } from '@/Navigators/utils'
+import { Events } from '@/Services/modules/events'
+import { Projects } from '@/Services/modules/projects'
 import {
   ListRouteParams,
   ListScreens,
   ListSearch,
   ListType,
-} from '@/Containers/ListContainer'
-import List, { ListDisplayMode, ListOptions } from '@/Components/List'
-import SearchIcon from '@/NativeBase/Components/SearchIcon'
-import { goBack, navigate, RootStackParamList } from '@/Navigators/utils'
-import { Events } from '@/Services/modules/events'
-import { Projects } from '@/Services/modules/projects'
+  searchScreens,
+} from './ListContainer'
 import { ProjectSearch } from './ProjectSearchContainer'
 
 export interface SearchResults extends ListSearch {
@@ -71,7 +75,7 @@ const SearchResultsContainer = (props: {
   return (
     <>
       <Box>
-        <ScrollView>
+        <View padding="4">
           <HStack
             alignItems="center"
             backgroundColor="secondaryGrey.100"
@@ -79,7 +83,6 @@ const SearchResultsContainer = (props: {
             borderBottomWidth="1"
             borderRadius="4"
             justifyContent="space-between"
-            marginBottom="6"
             onLayout={onLayoutEvent => {
               const { width } = onLayoutEvent.nativeEvent.layout
               setBoxWidth(width)
@@ -94,12 +97,16 @@ const SearchResultsContainer = (props: {
                   boxWidth === '100%'
                     ? boxWidth
                     : (boxWidth as number) - clearButtonWidth
-                } // prevent text spilling over and overlapping close button
+                } // prevent text spilling over and overlapping the close button
               >
                 <SearchIcon />
 
                 {params?.search?.description && (
-                  <Text fontSize="sm">
+                  <Text
+                    _light={{ color: 'text.100' }}
+                    _dark={{ color: 'text.100' }}
+                    fontSize="sm"
+                  >
                     Results for {params.search.description}
                   </Text>
                 )}
@@ -107,23 +114,29 @@ const SearchResultsContainer = (props: {
             </Pressable>
 
             <IconButton
-              _light={{ color: 'accentPurple.100' }}
-              _dark={{ color: 'white' }}
-              icon={<Icon as={MaterialIcons} name="close" />}
+              icon={
+                <Icon
+                  as={MaterialIcons}
+                  color="accentPurple.100"
+                  name="close"
+                />
+              }
               onPress={clearSearch}
               size="xs"
             />
           </HStack>
-        </ScrollView>
+        </View>
 
         {Boolean(params.search?.results) && (
-          <List
-            data={params.search?.results as Events | Projects}
-            mode={ListDisplayMode.Search}
-            options={params?.options}
-            searchScreen={screens[params.type]}
-            type={params.type}
-          />
+          <View padding="4">
+            <List
+              data={params.search?.results as Events | Projects}
+              mode={ListDisplayMode.Search}
+              options={params?.options}
+              searchScreen={searchScreens[params.type]}
+              type={params.type}
+            />
+          </View>
         )}
       </Box>
     </>

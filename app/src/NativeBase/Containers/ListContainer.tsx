@@ -74,6 +74,11 @@ export type ListScreens = {
   [key in ListType]: keyof RootStackParamList
 }
 
+export const searchScreens = {
+  [ListType.Events]: 'EventSearch',
+  [ListType.Projects]: 'ProjectSearch',
+} as ListScreens
+
 /**
  * Container for showing a list of things
  *
@@ -105,10 +110,7 @@ const ListContainer = (props: {
       [ListType.Events]: 'Events' as keyof RootStackParamList,
       [ListType.Projects]: 'Projects' as keyof RootStackParamList,
     } as ListScreens,
-    search: {
-      [ListType.Events]: 'EventSearch',
-      [ListType.Projects]: 'ProjectSearch',
-    } as ListScreens,
+    search: searchScreens,
   }
 
   const projectListOptions = ['all', 'saved', 'my'].map(
