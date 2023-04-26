@@ -18,7 +18,7 @@ import List, {
   ListDisplayMode,
   ListOptions,
 } from '@/NativeBase/Components/List'
-import SearchIcon from '@/NativeBase/Components/SearchIcon'
+import SearchIconHighlighted from '@/NativeBase/Components/SearchIconHighlighted'
 import { goBack, navigate, RootStackParamList } from '@/Navigators/utils'
 import { Events } from '@/Services/modules/events'
 import { Projects } from '@/Services/modules/projects'
@@ -98,7 +98,7 @@ const SearchResultsContainer = (props: {
                   : (boxWidth as number) - clearButtonWidth
               } // prevent longer text from spilling over and overlapping the close button
             >
-              <SearchIcon />
+              <SearchIconHighlighted />
 
               {Boolean(params?.search.description) && (
                 <Text color="text.100" fontSize="sm">
