@@ -77,9 +77,9 @@ const SearchResultsContainer = (props: {
       <View padding="4">
         <HStack
           alignItems="center"
-          backgroundColor="secondaryGrey.100"
+          borderColor="accentPurple.100"
           borderBottomColor="primary.80"
-          borderBottomWidth="1"
+          borderWidth="1"
           borderRadius="4"
           justifyContent="space-between"
           onLayout={onLayoutEvent => {
@@ -101,7 +101,7 @@ const SearchResultsContainer = (props: {
               <SearchIconHighlighted />
 
               {Boolean(params?.search.description) && (
-                <Text color="text.100" fontSize="sm">
+                <Text fontSize="sm">
                   Results for {params.search.description}
                 </Text>
               )}

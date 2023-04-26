@@ -14,10 +14,10 @@ import ColouredTag from '../Components/ColouredTag'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
 import {
-  FavouriteIcon,
   FlatList,
   Heading,
   HStack,
+  IconButton,
   Pressable,
   ShareIcon,
   Text,
@@ -134,20 +134,36 @@ const List: FC<ListProps> = ({
                       justifyContent="space-between"
                       alignItems="center"
                       paddingRight="4"
+                      space="0"
                     >
                       <Heading width="70%" fontSize="sm">
                         {item.name}
                       </Heading>
-                      <ShareIcon
-                        size="md"
-                        color="accentGrey.100"
-                        onPress={underDevelopmentAlert}
-                      />
-                      <FavouriteIcon
-                        size="md"
-                        color="accentGrey.100"
-                        onPress={underDevelopmentAlert}
-                      />
+
+                      <HStack
+                        justifyContent="space-between"
+                        alignItems="center"
+                        space="4"
+                      >
+                        <ShareIcon
+                          size="md"
+                          color="secondaryGrey.100"
+                          onPress={underDevelopmentAlert}
+                        />
+                        <IconButton
+                          icon={
+                            <Icon
+                              as={MaterialIcons}
+                              color="secondaryGrey.100"
+                              name="favorite-border"
+                            />
+                          }
+                          margin="0"
+                          onPress={underDevelopmentAlert}
+                          padding="0"
+                          size="lg"
+                        />
+                      </HStack>
                     </HStack>
                     <Text fontSize="xs">{item.client}</Text>
                     <ColouredTag title={item.role} />

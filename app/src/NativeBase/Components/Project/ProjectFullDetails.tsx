@@ -3,15 +3,17 @@
  */
 
 import React from 'react'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { navigate } from '@/Navigators/utils'
 import { Project } from '@/Services/modules/projects'
 import underDevelopmentAlert from '@/Utils/UnderDevelopmentAlert'
 import {
   Button,
   Card,
-  FavouriteIcon,
   Heading,
   HStack,
+  Icon,
+  IconButton,
   ScrollView,
   ShareIcon,
   Text,
@@ -48,16 +50,27 @@ const ProjectFullDetails = ({
           <Heading width="70%" fontSize="md">
             {project.name}
           </Heading>
-          <ShareIcon
-            size="lg"
-            color="accentGrey.100"
-            onPress={underDevelopmentAlert}
-          />
-          <FavouriteIcon
-            size="lg"
-            color="primary.100"
-            onPress={underDevelopmentAlert}
-          />
+
+          <HStack justifyContent="space-between" alignItems="center" space="4">
+            <ShareIcon
+              size="md"
+              color="secondaryGrey.100"
+              onPress={underDevelopmentAlert}
+            />
+            <IconButton
+              icon={
+                <Icon
+                  as={MaterialIcons}
+                  color="secondaryGrey.100"
+                  name="favorite-border"
+                />
+              }
+              margin="0"
+              onPress={underDevelopmentAlert}
+              padding="0"
+              size="lg"
+            />
+          </HStack>
         </HStack>
 
         <Video
