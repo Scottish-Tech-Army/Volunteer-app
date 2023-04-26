@@ -40,7 +40,7 @@ const ProjectFullDetails = ({
         _dark={{ backgroundColor: 'bgDarkMode.100' }}
         _light={{ backgroundColor: 'bg.secondary' }}
       >
-        <VStack space={4}>
+        <VStack space={4} marginBottom={5}>
           <HStack
             justifyContent="space-between"
             alignItems="center"
