@@ -4,3 +4,5 @@ build
 npm-debug.log
 .env
 .DS_Store
+# react-native-config codegen
+ios/tmp.xcconfig
