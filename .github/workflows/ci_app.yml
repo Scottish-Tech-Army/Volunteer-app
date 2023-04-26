@@ -9,7 +9,7 @@ on:
 jobs:
   test:
     name: Tests
-    runs-on: node-alpine
+    runs-on: ubuntu-20.04
     steps:
       - name: Checkout
         uses: actions/checkout@v2
