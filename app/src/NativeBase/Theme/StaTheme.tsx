@@ -8,7 +8,14 @@ import { extendTheme } from 'native-base'
 // Common values that are repeated should go here
 const common = {
   colours: {
-    pink100: '#d1338A',
+    blue: {
+      100: '#31729b',
+      80: '#3583af',
+      60: '#44a3cf',
+      40: '#67bddb',
+      20: '#b6e3f0',
+    },
+    magenta100: '#d1338A',
     purple100: '#604696',
     darkGrey100: '#3c3c3b',
     mediumGrey100: '#a9a9a9',
@@ -45,19 +52,13 @@ const common = {
 const StaTheme = extendTheme({
   colors: {
     primary: {
-      100: common.colours.pink100,
+      100: common.colours.magenta100,
       80: '#d659a0',
       60: '#df88bb',
       40: '#eab7d6',
       20: '#f6e2ee',
     },
-    secondary: {
-      100: '#31729b',
-      80: '#3583af',
-      60: '#44a3cf',
-      40: '#67bddb',
-      20: '#b6e3f0',
-    },
+    secondary: common.colours.blue,
     text: {
       100: common.colours.darkGrey100,
     },
@@ -98,13 +99,7 @@ const StaTheme = extendTheme({
     accentGrey: {
       100: '#a9a9a9',
     },
-    blue: {
-      100: '#31729b',
-      80: '#3583af',
-      60: '#44a3cf',
-      40: '#67bddb',
-      20: '#b6e3f0',
-    },
+    blue: common.colours.blue,
     purple: {
       100: common.colours.purple100,
       80: '#775FA5',
@@ -230,6 +225,10 @@ const StaTheme = extendTheme({
       }),
       defaultProps: {
         size: common.icons.size,
+      },
+      sizes: {
+        '2xs': 2,
+        xs: 4,
       },
     },
     IconButton: {

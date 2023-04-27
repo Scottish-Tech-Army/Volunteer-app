@@ -156,7 +156,7 @@ const ProjectSearchContainer = () => {
     } "${searchQueryChoice}"`
 
     navigate(
-      'Projects' as keyof RootStackParamList,
+      'SearchResults' as keyof RootStackParamList,
       {
         type: ListType.Projects,
         search: {
@@ -195,7 +195,7 @@ const ProjectSearchContainer = () => {
     const description = `"${freeTextSearchQuery}"`
 
     navigate(
-      'Projects' as keyof RootStackParamList,
+      'SearchResults' as keyof RootStackParamList,
       {
         type: ListType.Projects,
         search: {

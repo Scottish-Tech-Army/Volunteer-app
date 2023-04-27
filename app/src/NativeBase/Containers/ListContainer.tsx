@@ -7,7 +7,7 @@
 
 /* eslint-disable @typescript-eslint/no-shadow */
 
-import { Text, Heading, VStack } from 'native-base'
+import { Heading, VStack } from 'native-base'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components/native'
@@ -43,6 +43,7 @@ import {
 import { EventsState, setEvents } from '@/Store/Events'
 import { ProjectsState, setProjects } from '@/Store/Projects'
 import underDevelopmentAlert from '@/Utils/UnderDevelopmentAlert'
+import SkeletonLoading from '../Components/SkeletonLoading'
 
 const ClearSearchLabel = styled.Text`
 
@@ -69,9 +70,14 @@ export interface ListRouteParams {
   options: ListOptions
 }
 
-type Screens = {
+export type ListScreens = {
   [key in ListType]: keyof RootStackParamList
 }
+
+export const searchScreens = {
+  [ListType.Events]: 'EventSearch',
+  [ListType.Projects]: 'ProjectSearch',
+} as ListScreens
 
 /**
  * Container for showing a list of things
@@ -103,11 +109,8 @@ const ListContainer = (props: {
     list: {
       [ListType.Events]: 'Events' as keyof RootStackParamList,
       [ListType.Projects]: 'Projects' as keyof RootStackParamList,
-    } as Screens,
-    search: {
-      [ListType.Events]: 'EventSearch',
-      [ListType.Projects]: 'ProjectSearch',
-    } as Screens,
+    } as ListScreens,
+    search: searchScreens,
   }
 
   const projectListOptions = ['all', 'saved', 'my'].map(
@@ -324,7 +327,11 @@ const ListContainer = (props: {
             />
           </>
         ) : (
-          <Text>Loading...</Text>
+          <>
+            <SkeletonLoading />
+            <SkeletonLoading />
+            <SkeletonLoading />
+          </>
         )}
       </VStack>
     </>
