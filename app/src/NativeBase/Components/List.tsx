@@ -122,7 +122,7 @@ const List: FC<ListProps> = ({
           data={data as Projects}
           renderItem={({ item }) => {
             return (
-              <Card marginY="2">
+              <Card marginY="2" paddingY="3">
                 <Pressable
                   onPress={() => {
                     navigate('ProjectDetail', { item, key: item.res_id })

@@ -79,7 +79,7 @@ const ProjectFullDetails = ({
           videoWebpageScreen="ProjectVideo"
         />
 
-        <Card>
+        <Card paddingY="3">
           <Text>{project.client}</Text>
           <ColouredTag title={project.role} />
           <Text fontSize="xs">{project.hours}</Text>
