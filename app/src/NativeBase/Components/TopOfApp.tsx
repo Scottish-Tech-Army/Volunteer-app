@@ -66,9 +66,9 @@ const TopOfApp: FC<TopOfAppProps> = ({
         <HStack
           alignItems="center"
           justifyContent="space-between"
-          marginBottom={2}
-          paddingX={4}
-          paddingBottom={2}
+          mx="auto"
+          px={4}
+          py={3}
           width="100%"
         >
           {logo}
