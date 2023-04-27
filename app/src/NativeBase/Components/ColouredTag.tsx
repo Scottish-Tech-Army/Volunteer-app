@@ -3,7 +3,7 @@
  */
 
 import React from 'react'
-import { Box } from 'native-base'
+import { Box, Text, useColorMode } from 'native-base'
 
 type ColouredTagProps = {
   title: string
@@ -16,20 +16,29 @@ type ColouredTagProps = {
  * @returns {JSX.Element|null} React element - renders the text in a coloured tag, or null if there is none
  */
 const ColouredTag = ({ title }: ColouredTagProps) => {
-  const colours = ['blue.20', 'purple.40', 'primary.60', 'primary.40']
-  const randomColour = colours[Math.floor(Math.random() * colours.length)]
+  // Check accessibility at https://webaim.org/resources/contrastchecker/ if changing or adding to any of these colours or the box background colour
+  const colours = {
+    dark: ['blue.60', 'purple.100', 'primary.100'],
+    light: ['blue.20', 'purple.20', 'primary.20'],
+  }
+  const { colorMode } = useColorMode()
+  const coloursToUse = colours[colorMode ?? 'light']
+  const randomColour =
+    coloursToUse[Math.floor(Math.random() * coloursToUse.length)]
 
   if (title) {
     return (
       <Box
-        bgColor={randomColour}
+        alignSelf="flex-start"
+        _dark={{ backgroundColor: 'bg.100' }}
+        _light={{ backgroundColor: randomColour }}
         rounded="md"
-        style={{ alignSelf: 'flex-start' }}
         marginLeft={2}
         maxHeight="xs"
-        _text={{ fontSize: 'xs' }}
       >
-        {title}
+        <Text _dark={{ color: randomColour }} fontSize="xs">
+          {title}
+        </Text>
       </Box>
     )
   }
