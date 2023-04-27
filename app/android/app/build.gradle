@@ -144,7 +144,7 @@ android {
         applicationId "org.scottishtecharmy.volunteerapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 12
+        versionCode 13
         versionName getVersionFromPackageJson()
     }
     splits {

@@ -14,10 +14,10 @@ import ColouredTag from '../Components/ColouredTag'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
 import {
-  FavouriteIcon,
   FlatList,
   Heading,
   HStack,
+  IconButton,
   Pressable,
   ShareIcon,
   Text,
@@ -26,17 +26,6 @@ import {
   Icon,
 } from 'native-base'
 
-// General styled components
-const NoneFound = styled.Text`
-  font-size: 18px;
-  margin: 15px 15px 0px 15px;
-`
-const TryAnotherSearch = styled.Text`
-  font-size: 18px;
-  margin: 15px 15px 0px 15px;
-  text-decoration: underline;
-`
-// Events-specific
 const EventListItem = styled.TouchableOpacity`
   margin: 21px 21px 0px 21px;
   width: 150px;
@@ -82,23 +71,24 @@ const List: FC<ListProps> = ({
   if (!data.length)
     return (
       <>
-        <NoneFound>
+        <Text>
           Sorry, we couldn't find any {type}{' '}
           {mode === ListDisplayMode.Full
             ? 'at the moment.'
             : mode === 'search'
             ? 'matching your search.'
             : ''}
-        </NoneFound>
+        </Text>
 
         {mode === ListDisplayMode.Search && (
-          <TryAnotherSearch
+          <Text
             onPress={() => {
               navigate(searchScreen, undefined)
             }}
+            underline
           >
             Try another search
-          </TryAnotherSearch>
+          </Text>
         )}
       </>
     )
@@ -132,7 +122,7 @@ const List: FC<ListProps> = ({
           data={data as Projects}
           renderItem={({ item }) => {
             return (
-              <Card marginY="2">
+              <Card marginY="2" paddingY="3">
                 <Pressable
                   onPress={() => {
                     navigate('ProjectDetail', { item, key: item.res_id })
@@ -144,20 +134,36 @@ const List: FC<ListProps> = ({
                       justifyContent="space-between"
                       alignItems="center"
                       paddingRight="4"
+                      space="0"
                     >
                       <Heading width="70%" fontSize="sm">
                         {item.name}
                       </Heading>
-                      <ShareIcon
-                        size="md"
-                        color="accentGrey.100"
-                        onPress={underDevelopmentAlert}
-                      />
-                      <FavouriteIcon
-                        size="md"
-                        color="accentGrey.100"
-                        onPress={underDevelopmentAlert}
-                      />
+
+                      <HStack
+                        justifyContent="space-between"
+                        alignItems="center"
+                        space="4"
+                      >
+                        <ShareIcon
+                          size="md"
+                          color="secondaryGrey.100"
+                          onPress={underDevelopmentAlert}
+                        />
+                        <IconButton
+                          icon={
+                            <Icon
+                              as={MaterialIcons}
+                              color="secondaryGrey.100"
+                              name="favorite-border"
+                            />
+                          }
+                          margin="0"
+                          onPress={underDevelopmentAlert}
+                          padding="0"
+                          size="lg"
+                        />
+                      </HStack>
                     </HStack>
                     <Text fontSize="xs">{item.client}</Text>
                     <ColouredTag title={item.role} />

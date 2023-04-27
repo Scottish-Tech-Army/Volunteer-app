@@ -70,9 +70,14 @@ export interface ListRouteParams {
   options: ListOptions
 }
 
-type Screens = {
+export type ListScreens = {
   [key in ListType]: keyof RootStackParamList
 }
+
+export const searchScreens = {
+  [ListType.Events]: 'EventSearch',
+  [ListType.Projects]: 'ProjectSearch',
+} as ListScreens
 
 /**
  * Container for showing a list of things
@@ -104,11 +109,8 @@ const ListContainer = (props: {
     list: {
       [ListType.Events]: 'Events' as keyof RootStackParamList,
       [ListType.Projects]: 'Projects' as keyof RootStackParamList,
-    } as Screens,
-    search: {
-      [ListType.Events]: 'EventSearch',
-      [ListType.Projects]: 'ProjectSearch',
-    } as Screens,
+    } as ListScreens,
+    search: searchScreens,
   }
 
   const projectListOptions = ['all', 'saved', 'my'].map(

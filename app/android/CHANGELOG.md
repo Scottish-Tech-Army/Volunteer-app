@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [1.0.12 (version code 13)] - 2023-04-26Z
+
+- Updated the design of the projects list and search results
+- Bug fixes
+
 ## [1.0.11 (version code 12)] - 2023-03-06Z
 
 - Enable YouTube videos and fix bugs with Vimeo videos on project pages
