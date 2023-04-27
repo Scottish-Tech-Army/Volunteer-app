@@ -81,6 +81,7 @@ const SearchResultsContainer = (props: {
           borderBottomColor="primary.80"
           borderWidth="1"
           borderRadius="4"
+          _dark={{ backgroundColor: 'bg.100' }}
           justifyContent="space-between"
           onLayout={onLayoutEvent => {
             const { width } = onLayoutEvent.nativeEvent.layout
@@ -101,7 +102,7 @@ const SearchResultsContainer = (props: {
               <SearchIconHighlighted />
 
               {Boolean(params?.search.description) && (
-                <Text fontSize="sm">
+                <Text color="text.100" fontSize="sm">
                   Results for {params.search.description}
                 </Text>
               )}
