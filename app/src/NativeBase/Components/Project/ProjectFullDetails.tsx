@@ -37,71 +37,76 @@ const ProjectFullDetails = ({
   project,
 }: ProjectFullDetailsProps): JSX.Element => {
   return (
-    <ScrollView
-      _dark={{ backgroundColor: 'bgDarkMode.100' }}
-      _light={{ backgroundColor: 'bg.secondary' }}
-    >
-      <VStack space={4}>
-        <HStack
-          justifyContent="space-between"
-          alignItems="center"
-          paddingRight="4"
-        >
-          <Heading width="70%" fontSize="md">
-            {project.name}
-          </Heading>
+    <>
+      <ScrollView
+        _dark={{ backgroundColor: 'bgDarkMode.100' }}
+        _light={{ backgroundColor: 'bg.secondary' }}
+      >
+        <VStack space={4} marginBottom={5}>
+          <HStack
+            justifyContent="space-between"
+            alignItems="center"
+            paddingRight="4"
+          >
+            <Heading width="70%" fontSize="md">
+              {project.name}
+            </Heading>
 
-          <HStack justifyContent="space-between" alignItems="center" space="4">
-            <ShareIcon
-              size="md"
-              color="secondaryGrey.100"
-              onPress={underDevelopmentAlert}
-            />
-            <IconButton
-              icon={
-                <Icon
-                  as={MaterialIcons}
-                  color="secondaryGrey.100"
-                  name="favorite-border"
-                />
-              }
-              margin="0"
-              onPress={underDevelopmentAlert}
-              padding="0"
-              size="lg"
-            />
+            <HStack
+              justifyContent="space-between"
+              alignItems="center"
+              space="4"
+            >
+              <ShareIcon
+                size="md"
+                color="secondaryGrey.100"
+                onPress={underDevelopmentAlert}
+              />
+              <IconButton
+                icon={
+                  <Icon
+                    as={MaterialIcons}
+                    color="secondaryGrey.100"
+                    name="favorite-border"
+                  />
+                }
+                margin="0"
+                onPress={underDevelopmentAlert}
+                padding="0"
+                size="lg"
+              />
+            </HStack>
           </HStack>
-        </HStack>
 
-        <Video
-          videoWebpage={project.video_webpage}
-          videoWebpagePlayerOnly={project.video_webpage_player_only}
-          videoWebpageScreen="ProjectVideo"
-        />
+          <Video
+            videoWebpage={project.video_webpage}
+            videoWebpagePlayerOnly={project.video_webpage_player_only}
+            videoWebpageScreen="ProjectVideo"
+          />
 
-        <Card paddingY="3">
-          <Text>{project.client}</Text>
-          <ColouredTag title={project.role} />
-          <Text fontSize="xs">{project.hours}</Text>
-          <Text fontSize="xs" fontWeight="300">
-            {project.description}
-          </Text>
-          {Boolean(project.buddying) && (
-            <Text fontSize="xs">Suitable for pairing</Text>
-          )}
-          <ProjectAttachments details={'Project Scope'} url={project.scope} />
-        </Card>
-
-        <Button
-          marginBottom="12"
-          onPress={() => {
-            navigate('ProjectRegisterInterest', { project })
-          }}
-        >
-          Register
-        </Button>
-      </VStack>
-    </ScrollView>
+          <Card paddingY="3">
+            <Text>{project.client}</Text>
+            <ColouredTag title={project.role} />
+            <Text fontSize="xs">{project.hours}</Text>
+            <Text fontSize="xs" fontWeight="300">
+              {project.description}
+            </Text>
+            {Boolean(project.buddying) && (
+              <Text fontSize="xs">Suitable for pairing</Text>
+            )}
+            <ProjectAttachments details={'Project Scope'} url={project.scope} />
+          </Card>
+        </VStack>
+      </ScrollView>
+      <Button
+        margin={5}
+        onPress={() => {
+          navigate('ProjectRegisterInterest', { project })
+        }}
+      >
+        Register
+      </Button>
+    </>
   )
 }
 

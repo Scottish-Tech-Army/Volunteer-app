@@ -10,7 +10,7 @@ jobs:
   test:
     name: Tests
     # Specifically 20.04 due to an issue with npm in ubuntu-latest
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-20.04
     steps:
       - name: Checkout
         uses: actions/checkout@v2
