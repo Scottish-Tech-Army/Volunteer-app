@@ -3,8 +3,9 @@
  * Shows a web page containing a page from an external website filling the available height.
  */
 
-import React, { useState } from 'react'
 import { ScrollView } from 'native-base'
+import React, { useEffect, useState } from 'react'
+import { Platform } from 'react-native'
 import WebView from 'react-native-webview'
 
 export interface WebViewRouteParams {
@@ -25,6 +26,18 @@ const WebViewContainer = (props: {
   }
 }) => {
   const [containerHeight, setContainerHeight] = useState(0)
+  // Hide WebView component initially on Android and only show it just after the component has rendered, otherwise Android screen animations can cause it to crash the app
+  const [showWebView, setShowWebView] = useState(
+    Platform.OS === 'android' ? false : true,
+  )
+
+  useEffect(() => {
+    setTimeout(() => setShowWebView(true), 500)
+  }, [])
+  const webViewStyle = {
+    minHeight: containerHeight,
+    opacity: 0.99, // recommended setting to reduce crashes on Android https://github.com/react-native-webview/react-native-webview/issues/1915
+  }
 
   return (
     <ScrollView
@@ -33,15 +46,19 @@ const WebViewContainer = (props: {
         setContainerHeight(height)
       }}
     >
-      <WebView
-        allowsFullscreenVideo
-        allowsInlineMediaPlayback
-        mediaPlaybackRequiresUserAction={false}
-        nestedScrollEnabled
-        scrollEnabled
-        source={{ uri: props.route.params.url }}
-        style={{ minHeight: containerHeight }}
-      />
+      {showWebView && (
+        <WebView
+          allowsFullscreenVideo
+          allowsInlineMediaPlayback
+          mediaPlaybackRequiresUserAction={false}
+          nestedScrollEnabled
+          overScrollMode="never" // recommended setting to reduce crashes on Android https://github.com/react-native-webview/react-native-webview/issues/2364
+          removeClippedSubviews // recommended setting to reduce crashes on Android https://github.com/react-native-webview/react-native-webview/issues/2364
+          scrollEnabled
+          source={{ uri: props.route.params.url }}
+          style={webViewStyle}
+        />
+      )}
     </ScrollView>
   )
 }
