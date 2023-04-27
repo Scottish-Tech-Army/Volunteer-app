@@ -51,7 +51,7 @@ const Video: FC<VideoProps> = ({
   }
 
   useEffect(() => {
-    setTimeout(() => setShowVideo(true), 500)
+    setTimeout(() => setShowVideo(true), 1000)
   }, [])
 
   if (

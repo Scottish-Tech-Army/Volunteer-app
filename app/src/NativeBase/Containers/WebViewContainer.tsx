@@ -32,7 +32,7 @@ const WebViewContainer = (props: {
   )
 
   useEffect(() => {
-    setTimeout(() => setShowWebView(true), 500)
+    setTimeout(() => setShowWebView(true), 1000)
   }, [])
   const webViewStyle = {
     minHeight: containerHeight,
