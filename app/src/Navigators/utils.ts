@@ -5,8 +5,8 @@
  *
  * You can add other navigation functions that you need and export them
  */
-import { EventSearch } from '@/Containers/EventSearchContainer'
-import { EventsRange } from '@/Services/modules/events'
+import { ListRouteParams } from '@/NativeBase/Containers/ListContainer'
+import { Event } from '@/Services/modules/events'
 import { Project, ProjectsSearchField } from '@/Services/modules/projects'
 import {
   CommonActions,
@@ -18,7 +18,10 @@ import {
  */
 export type RootStackParamList = {
   Startup: undefined
+
   Home: undefined
+
+  Projects: ListRouteParams
   ProjectDetail: {
     item: Project
     key: string
@@ -26,21 +29,21 @@ export type RootStackParamList = {
   ProjectRegisterInterest: {
     project: Project
   }
+  ProjectScope: {
+    url: string
+  }
   ProjectSearch: string | undefined
+  ProjectVideo: {
+    url: string
+  }
 
-  ProjectSearchResults: {
+  SearchResults: {
     results: (Project | Event)[]
     searchField: ProjectsSearchField | undefined
     searchQuery: string
   }
-  ProjectScope: {
-    url: string
-  }
-  Events: {
-    screen?: 'Events'
-    selectedOption?: EventsRange | 'myEvents'
-    search?: EventSearch
-  }
+
+  Events: ListRouteParams
   EventDetail: {
     event: Event
     key: string

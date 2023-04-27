@@ -7,23 +7,29 @@
 
 /* eslint-disable @typescript-eslint/no-shadow */
 
+import { Heading, VStack } from 'native-base'
 import React, { useEffect, useState } from 'react'
-import { Text } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components/native'
-import { EventSearch } from './EventSearchContainer'
+import { EventSearch } from '@/Containers/EventSearchContainer'
 import { ProjectSearch } from './ProjectSearchContainer'
 import EventOptions from '@/Components/Event/EventOptions'
 import EventSearchUpcomingQuickSearch, {
   EventQuickSearchUpcomingChoice,
 } from '@/Components/Event/EventSearchQuickSearchUpcoming'
-import HorizontalLine from '@/Components/HorizontalLine'
-import List, { ListDisplayMode, ListOptions } from '@/Components/List'
-import SafeArea from '@/Components/SafeArea'
+import List, {
+  ListDisplayMode,
+  ListOptions,
+} from '@/NativeBase/Components/List'
 import ProjectFilterSort from '@/Components/Project/ProjectFilterSort'
-import SearchIconButton from '@/Components/SearchIconButton'
 import TopOfApp from '@/NativeBase/Components/TopOfApp'
 import { navigate, RootStackParamList } from '@/Navigators/utils'
+import { capitaliseFirstLetter } from '@/Utils/Text'
+
+import SegmentedPicker, {
+  SegmentedPickerOption,
+} from '../Components/SegmentedPicker'
+
 import {
   Events,
   EventsRange,
@@ -36,25 +42,17 @@ import {
 } from '@/Services/modules/projects'
 import { EventsState, setEvents } from '@/Store/Events'
 import { ProjectsState, setProjects } from '@/Store/Projects'
-import Theme from '@/Theme/OldTheme'
+import underDevelopmentAlert from '@/Utils/UnderDevelopmentAlert'
+import SkeletonLoading from '../Components/SkeletonLoading'
 
 const ClearSearchLabel = styled.Text`
-  color: ${props => props.theme.colors.staBlack};
-  text-align: center;
-  text-decoration: underline;
-  width: 100%;
+
 `
 const SearchResultsLabel = styled.Text`
-  color: ${props => props.theme.colors.staBlack};
-  text-align: center;
-  width: 100%;
+  
 `
 const SearchResultsView = styled.View`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
-  width: 100%;
+ 
 `
 
 export interface ListSearch {
@@ -72,9 +70,14 @@ export interface ListRouteParams {
   options: ListOptions
 }
 
-type Screens = {
+export type ListScreens = {
   [key in ListType]: keyof RootStackParamList
 }
+
+export const searchScreens = {
+  [ListType.Events]: 'EventSearch',
+  [ListType.Projects]: 'ProjectSearch',
+} as ListScreens
 
 /**
  * Container for showing a list of things
@@ -104,14 +107,19 @@ const ListContainer = (props: {
   const params = props.route.params
   const screens = {
     list: {
-      [ListType.Events]: 'Events',
-      [ListType.Projects]: 'Projects',
-    } as Screens,
-    search: {
-      [ListType.Events]: 'EventSearch',
-      [ListType.Projects]: 'ProjectSearch',
-    } as Screens,
+      [ListType.Events]: 'Events' as keyof RootStackParamList,
+      [ListType.Projects]: 'Projects' as keyof RootStackParamList,
+    } as ListScreens,
+    search: searchScreens,
   }
+
+  const projectListOptions = ['all', 'saved', 'my'].map(
+    option =>
+      ({
+        text: capitaliseFirstLetter(option),
+        onPress: option === 'all' ? () => undefined : underDevelopmentAlert,
+      } as SegmentedPickerOption),
+  )
 
   // Events-specific
   const [fetchAllUpcomingEvents, { data: allUpcomingEventsResult }] =
@@ -261,12 +269,14 @@ const ListContainer = (props: {
   }, [params?.options?.events, params?.search, params?.type])
 
   return (
-    <Theme>
-      <SafeArea>
-        <TopOfApp
-          showSearchButton
-          onSearchButtonPress={() => navigate(screens.search[params.type], '')}
-        />
+    <>
+      <TopOfApp
+        showSearchButton
+        onSearchButtonPress={() => navigate(screens.search[params.type], '')}
+      />
+      <VStack paddingBottom="2" alignItems="center" space={4} padding={4}>
+        <Heading size="sm">Projects List</Heading>
+        <SegmentedPicker options={projectListOptions} />
 
         {params?.type && listItemsToShow ? (
           <>
@@ -317,10 +327,14 @@ const ListContainer = (props: {
             />
           </>
         ) : (
-          <Text>Loading...</Text>
+          <>
+            <SkeletonLoading />
+            <SkeletonLoading />
+            <SkeletonLoading />
+          </>
         )}
-      </SafeArea>
-    </Theme>
+      </VStack>
+    </>
   )
 }
 

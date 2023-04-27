@@ -10,7 +10,7 @@ import {
   ListRouteParams,
   ListSearch,
   ListType,
-} from '@/Containers/ListContainer'
+} from '../../NativeBase/Containers/ListContainer'
 import ChoicesList, { ChoicesListChoice } from '../Components/ChoicesList'
 import FreeSearchBar from '../Components/FreeSearchBar'
 import SegmentedPicker, {
@@ -156,7 +156,7 @@ const ProjectSearchContainer = () => {
     } "${searchQueryChoice}"`
 
     navigate(
-      'Projects' as keyof RootStackParamList,
+      'SearchResults' as keyof RootStackParamList,
       {
         type: ListType.Projects,
         search: {
@@ -195,7 +195,7 @@ const ProjectSearchContainer = () => {
     const description = `"${freeTextSearchQuery}"`
 
     navigate(
-      'Projects' as keyof RootStackParamList,
+      'SearchResults' as keyof RootStackParamList,
       {
         type: ListType.Projects,
         search: {

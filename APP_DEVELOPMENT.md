@@ -8,6 +8,7 @@ This file contains some tips and guidelines on building our front-end React Nati
   - [File locations, naming, moving and deleting](#file-locations-naming-moving-and-deleting)
   - [Theming & approach](#theming--approach)
   - [Dark mode](#dark-mode)
+  - [Reusable containers](#reusable-containers)
   - [Custom components](#custom-components)
   - [Icons](#icons)
 - [Images](#images)
@@ -85,6 +86,16 @@ In case you need it, you can also use `useColorMode` or `useColorModeValue` to d
 
 **To find which colours to use for dark mode in Figma** see *Design System* in the list of Pages on the left-hand side of the screen.  There are examples of some components using dark mode.
 
+### Reusable containers
+
+Most containers are specific to a particular screen, but a few are reusable across multiple screens.
+
+#### WebViewContainer
+
+![WebViewContainer](screenshots/containers/WebViewContainer.png)
+
+Displays an external web page inside our app, filling the available height
+
 ### Custom components
 
 These are custom components we've developed, in addition to NativeBase readymade components:
@@ -124,6 +135,18 @@ Useful for choosing between 2-3 choices, text must be kept very short (probably 
 ![TopOfApp component](screenshots/components/TopOfApp.png)
 
 Shown at the top of some screens - a small STA logo and (optionally) a search icon button
+
+#### TextInputControl
+
+![TextInputControl component](screenshots/components/TextInputControl.png)
+
+Default text input, label, required indicator and validation/error message.
+
+#### ResponseModal
+
+![ResponseModal component](screenshots/components/ResponseModal.png)
+
+Shows the result of server interaction (e.g submitting a form) to the user.  Handles success/error.
 
 ### Icons
 

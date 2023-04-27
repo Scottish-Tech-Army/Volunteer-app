@@ -1,5 +1,5 @@
 /**
- * @file This goes at the top of containers where you want to show the logo, a hamburger menu, and optionally a search button e.g. projects list, events list screens
+ * @file This goes at the top of containers where you want to show the logo, and optionally a search button e.g. projects list, events list screens
  *
  * Follows example here https://docs.nativebase.io/building-app-bar
  */
@@ -24,6 +24,14 @@ interface TopOfAppProps {
   onSearchButtonPress?: () => void // only needed if showSearchButton is set to true
 }
 
+/**
+ * Component showing logo and optional search button at top of screen.
+ *
+ * @param {TopOfAppProps} props The component props
+ * @param {boolean} props.showSearchButton Whether to show the search button
+ * @param {function} [props.onSearchButtonPress] Event handler for when the search button is pressed
+ * @returns {React.ReactElement} Component
+ */
 const TopOfApp: FC<TopOfAppProps> = ({
   showSearchButton,
   onSearchButtonPress,
@@ -58,9 +66,9 @@ const TopOfApp: FC<TopOfAppProps> = ({
         <HStack
           alignItems="center"
           justifyContent="space-between"
-          marginBottom={2}
-          paddingX={4}
-          paddingBottom={2}
+          mx="auto"
+          px={4}
+          py={3}
           width="100%"
         >
           {logo}

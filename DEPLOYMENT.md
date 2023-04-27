@@ -34,41 +34,53 @@ You don't need to worry about doing this section until you've gone through all t
 
 # API deployment on AWS
 
+## Automatic deployment with GitHub Actions
+
+API deployment is automatic whenever a Pull Request is merged into Main on GitHub.
+
+The relevant GitHub Action is cd_api.yml and relies on three GitHub Actions Repository secrets:
+- AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY for user eb-dev in volapp-dev-test.
+- DEPLOY_ENV_FILE contains a copy of the .env file.
+
+Note: If environment variables have changed, the entire .env file should be pasted into DEPLOY_ENV_FILE
+
+If you need access to update secrets or make changes on AWS, reach out on [volunteer-app](https://scottishtecharmy.slack.com/archives/C01SUL6K5E1) Slack channel.
+
+## Manual deployment to AWS
+
+**This section is only for information, should there be an issue with GitHub Actions**
+
 Ask David Calder in the [volunteer-app](https://scottishtecharmy.slack.com/archives/C01SUL6K5E1) Slack channel to give you AWS access. Once that's set up, you can log in to AWS here: https://scottishtecharmy.awsapps.com/start#/ You'll need to navigate to the management console for the volapp-dev-test account, change your region to London (eu-west-2), and navigate to Elastic Beanstalk.
 
 In the volapp-dev-test account, an [Elastic Beanstalk](https://eu-west-2.console.aws.amazon.com/elasticbeanstalk/home?region=eu-west-2#/environments) environment called Volunteerapp-env has been created (manually for now).
 
 You can connect your app to this environment by changing STA_BASE_URL to the load balancer address in `Volunteer-app/app/src/Config/index.ts`:
 
-` STA_BASE_URL: 'http://volunteerapp-env.eba-ivfm2tgp.eu-west-2.elasticbeanstalk.com',`
-
-Note - as we move this into IaC and set up some build pipelines, things like env names, app names, domain names, IP Addresses will probably change.
+` STA_BASE_URL: 'https://the-sta.com',`
 
 For support, please @ David Calder in the [volunteer-app](https://scottishtecharmy.slack.com/archives/C01SUL6K5E1) Slack channel
 
-## Updating the API
+### Issues when updating manually
 
 We've had some issues with the API breaking when we've tried to deploy changes to AWS.  For now, this is the recommended way to make sure you can deploy without worrying about breaking it, while we work on a better longer-term solution.
 
 1. If you're completing a pull request, once it's approved merge in your latest changes to the `main` branch like you normally would.
 2. Then, clone a **new, clean copy of the repo** into a new directory on your computer.  E.g. `git clone git@github.com:Scottish-Tech-Army/Volunteer-app.git volunteer-app-aws-deployment` will clone it into a directory called `volunteer-app-aws-deployment`.  You can call this directory whatever you want, the important thing is to clone a new copy separate from the directory you normally use when working on the app/API code -- this new directory is what we're going to use to deploy to AWS.
-3. Copy your `api/.env` file from your normal working directory into this new directory.
+3. Set `AIRTABLE_PROJECTS_RESOURCES_CACHE_TABLE` to the name of the production table (instead of the test table) in `api/.env`.
+4. Copy your `api/.env` file from your normal working directory into this new directory.
 E.g. `cp Volunteer-app/api/.env volunteer-app-aws-deployment/api/.env` (but this command depends what directory you're in and what you've named these directories).  Check that the `.env` file now exists in the `api` directory of your new copy of the repo -- it's vital for the API to work.
-4. **Don't do anything else in your new directory** (e.g. `volunteer-app-aws-deployment`).  Don't do `npm install` or `npm start` or anything else.
-5. Go into the `api` directory of your new copy of the repo, e.g. `cd volunteer-app-aws-deployment/api`
-6. In that `api` directory, zip it up into a file: `zip ../../myapp.zip -r * .[^.]*`  This `myapp.zip` file will be created in the directory above `volunteer-app-aws-deployment`
-7. If you haven't already, [log into the STA AWS account here](https://scottishtecharmy.awsapps.com/start#/).
-8. In the AWS Management Console navigate to [Elastic Beanstalk](https://eu-west-2.console.aws.amazon.com/elasticbeanstalk/home?region=eu-west-2#/environments).
-9. In the [Volunteer App Application versions](https://eu-west-2.console.aws.amazon.com/elasticbeanstalk/home?region=eu-west-2#/application/versions?applicationName=volunteer-app), Upload the myapp.zip that you created in step 6.
-10. Now select the version label you've just created and then select Action > Deploy
-11. Go to the environment dashboard and check the version label has updated and the Health is OK. If not, check the Logs (menu on the left hand side) or ask someone else in the team for help.
-12. Also check one of the API endpoints to make sure it's working, e.g. `http://volunteerapp-env.eba-ivfm2tgp.eu-west-2.elasticbeanstalk.com/projects` or `http://18.134.220.155/projects` -- at least one of these should work.
-13. Delete the new directory containing copy of the repo you made in step 2 and everything in it, e.g. `rm -rf volunteer-app-aws-deployment/`
+5. **Don't do anything else in your new directory** (e.g. `volunteer-app-aws-deployment`).  Don't do `npm install` or `npm start` or anything else.
+6. Go into the `api` directory of your new copy of the repo, e.g. `cd volunteer-app-aws-deployment/api`
+7. In that `api` directory, zip it up into a file: `zip ../../myapp.zip -r * .[^.]*`  This `myapp.zip` file will be created in the directory above `volunteer-app-aws-deployment`
+8. If you haven't already, [log into the STA AWS account here](https://scottishtecharmy.awsapps.com/start#/).
+9. In the AWS Management Console navigate to [Elastic Beanstalk](https://eu-west-2.console.aws.amazon.com/elasticbeanstalk/home?region=eu-west-2#/environments).
+10. In the [Volunteer App Application versions](https://eu-west-2.console.aws.amazon.com/elasticbeanstalk/home?region=eu-west-2#/application/versions?applicationName=volunteer-app), Upload the myapp.zip that you created in step 6.
+11. Now select the version label you've just created and then select Action > Deploy
+12. Go to the environment dashboard and check the version label has updated and the Health is OK. If not, check the Logs (menu on the left hand side) or ask someone else in the team for help.
+13. Also check one of the API endpoints to make sure it's working, e.g. `https://the-sta.com/v1/projects` or `https://the-sta.com/v1/events` -- at least one of these should work.
+14. Delete the new directory containing copy of the repo you made in step 2 and everything in it, e.g. `rm -rf volunteer-app-aws-deployment/`
 
-## Known issues
-
-- The iOS simulator only works with the IP Address of the Load Balancer as the value of STA_BASE_URL:
-  - ` STA_BASE_URL: 'http://18.134.220.155',`
+**Note: If you end up with 502 errors it is almost certain that the .env file is missing or incorrect.**
 
 # App deployment
 
@@ -84,7 +96,7 @@ E.g. `cp Volunteer-app/api/.env volunteer-app-aws-deployment/api/.env` (but this
 
 4. Get your pull request approved as you normally would. When you're ready to merge your code into the `main` branch and deploy the updated app, double-check your version numbers in the previous steps are still right compared to what's in `main` (somebody else could have merged in code recently and changed the version numbers since you last checked - if you need to, update the version numbers before merging).
 
-5. In `/app/src/Config/index.ts` set `STA_BASE_URL` to point to the external URL for [the API endpoint on AWS](#api-deployment-on-aws) -- not to your localhost or its IP address, otherwise the app won't be able to connect to the API when it's installed on someone's phone.
+5. In `/app/src/Config/index.ts` set `STA_BASE_URL` to point to the external URL `'https://the-sta.com'` -- not to your localhost or its IP address, otherwise the app won't be able to connect to the API when it's installed on someone's phone.
 
    ## Google Play Store (Android)
 
@@ -112,4 +124,3 @@ E.g. `cp Volunteer-app/api/.env volunteer-app-aws-deployment/api/.env` (but this
 11. If you have access, check in the [App Store Connect](https://appstoreconnect.apple.com/apps) that the new version of the app has successfully been uploaded and processed (STA Volunteer app > TestFlight) -- you should see the new build number below the latest version.
 
 12. If you are part of the iOS beta test group, you should get a notification on your phone from TestFlight that a new version is available to test. Download the updated version of the app to your iPhone ([see download instructions](#download-the-app) near the top of this README).
-

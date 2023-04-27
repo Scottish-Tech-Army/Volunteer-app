@@ -8,12 +8,20 @@ import { extendTheme } from 'native-base'
 // Common values that are repeated should go here
 const common = {
   colours: {
-    pink100: '#d1338A',
+    blue: {
+      100: '#31729b',
+      80: '#3583af',
+      60: '#44a3cf',
+      40: '#67bddb',
+      20: '#b6e3f0',
+    },
+    magenta100: '#d1338A',
     purple100: '#604696',
+    darkGrey100: '#3c3c3b',
     mediumGrey100: '#a9a9a9',
     secondaryGrey100: '#e6e6e6',
-    darkGrey100: '#3c3c3b',
     offWhite100: '#fbfbfb',
+    white: '#ffffff',
   },
   fonts: {
     family: {
@@ -44,19 +52,13 @@ const common = {
 const StaTheme = extendTheme({
   colors: {
     primary: {
-      100: common.colours.pink100,
+      100: common.colours.magenta100,
       80: '#d659a0',
       60: '#df88bb',
       40: '#eab7d6',
       20: '#f6e2ee',
     },
-    secondary: {
-      100: '#31729b',
-      80: '#3583af',
-      60: '#44a3cf',
-      40: '#67bddb',
-      20: '#b6e3f0',
-    },
+    secondary: common.colours.blue,
     text: {
       100: common.colours.darkGrey100,
     },
@@ -64,7 +66,8 @@ const StaTheme = extendTheme({
       100: common.colours.offWhite100,
     },
     bg: {
-      100: common.colours.offWhite100,
+      100: common.colours.white,
+      secondary: common.colours.offWhite100,
     },
     bgDarkMode: {
       100: common.colours.darkGrey100,
@@ -93,14 +96,32 @@ const StaTheme = extendTheme({
     accentOrange: {
       100: '#ec6730',
     },
-    accentPurple: {
-      100: common.colours.purple100,
+    accentGrey: {
+      100: '#a9a9a9',
     },
-    darkGrey: {
-      100: common.colours.darkGrey100,
+    blue: common.colours.blue,
+    purple: {
+      100: common.colours.purple100,
+      80: '#775FA5',
+      60: '#8E7BB5',
+      40: '#AEA0CA',
+      20: '#CDC6DF',
     },
     secondaryGrey: {
       100: common.colours.secondaryGrey100,
+      80: '#F1F1F1',
+      60: '#F6F6F6',
+      40: common.colours.offWhite100,
+      20: common.colours.white,
+    },
+    accentPurple: {
+      100: common.colours.purple100,
+    },
+    mediumGrey: {
+      100: common.colours.mediumGrey100,
+    },
+    darkGrey: {
+      100: common.colours.darkGrey100,
     },
   },
 
@@ -174,6 +195,26 @@ const StaTheme = extendTheme({
         fontWeight: '600',
       },
     },
+    Button: {
+      baseStyle: {
+        rounded: 'full',
+        paddingY: '0',
+        marginBottom: '5',
+        height: '12',
+      },
+      defaultProps: {
+        bg: 'primary.100',
+        _pressed: {
+          bg: 'primary.80',
+        },
+        _text: {
+          fontWeight: '600',
+          fontSize: 'md',
+          padding: '0',
+          color: common.colours.white,
+        },
+      },
+    },
 
     Icon: {
       baseStyle: () => ({
@@ -185,8 +226,11 @@ const StaTheme = extendTheme({
       defaultProps: {
         size: common.icons.size,
       },
+      sizes: {
+        '2xs': 2,
+        xs: 4,
+      },
     },
-
     IconButton: {
       defaultProps: {
         size: common.icons.size,
@@ -211,7 +255,50 @@ const StaTheme = extendTheme({
         }),
       }),
     },
-
+    FormControlLabel: {
+      baseStyle: () => {
+        return {
+          flexDirection: 'row',
+          justifyContent: 'flex-start',
+          my: '0',
+          _text: {
+            px: '0',
+            fontSize: 'sm',
+            fontWeight: '600',
+            color: 'text.100',
+          },
+          _astrick: {
+            color: 'error.100',
+          },
+          _dark: {
+            _text: {
+              color: 'textDarkMode.100',
+            },
+            _astrick: {
+              color: 'error.100',
+            },
+          },
+        }
+      },
+    },
+    FormControlErrorMessage: {
+      baseStyle: () => {
+        return {
+          position: 'absolute',
+          bottom: '-35',
+          _text: {
+            fontSize: 'xs',
+            color: 'error.100',
+          },
+          _stack: { space: 0, alignItems: 'center' },
+          _dark: {
+            _text: {
+              color: 'error.100',
+            },
+          },
+        }
+      },
+    },
     Input: {
       baseStyle: () => ({
         placeholderTextColor: 'text.100',
@@ -250,19 +337,24 @@ const StaTheme = extendTheme({
           fontSize: common.fonts.size.md,
         },
         sm: {
-          fontSize: common.fonts.size.md,
+          fontSize: common.fonts.size.sm,
         },
       },
     },
-
     ScrollView: {
+      _light: {
+        backgroundColor: common.colours.offWhite100,
+      },
+      _dark: {
+        backgroundColor: 'bgDarkMode.100',
+      },
       defaultProps: {
         padding: '4',
       },
     },
-
     Text: {
       baseStyle: () => ({
+        fontFamily: 'primary',
         _light: {
           color: 'darkGrey.100',
           padding: '2',
@@ -274,6 +366,19 @@ const StaTheme = extendTheme({
       }),
       defaultProps: {
         fontSize: common.fonts.size.md,
+      },
+    },
+
+    Card: {
+      baseStyle: () => ({
+        _dark: { backgroundColor: 'bgDarkMode.100' },
+        _light: { backgroundColor: 'bg.100' },
+      }),
+      defaultProps: {
+        borderWidth: 1,
+        borderColor: 'secondaryGrey.80',
+        rounded: 'xl',
+        paddingLeft: '2',
       },
     },
   },

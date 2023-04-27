@@ -56,6 +56,8 @@ Alternatively, you can go to the link in the instructions above for installing t
 
    > **Note** You can skip the sections of the React Native docs that describe setting up and running a new project, since we already have one.
 
+   > **Note** The instructions specify recommended Ruby version as v2.7.6. Please note the Volunteer app runs successfully on Ruby v2.7.3.
+
 # Setup and first run
 
 1. Ensure that you've gone through the setup instructions at the following link for your particular platform: https://reactnative.dev/docs/environment-setup (see notes [above](#requirements-to-run-the-project))
@@ -84,17 +86,23 @@ Alternatively, you can go to the link in the instructions above for installing t
 
    > **Note** you may need to run `npm install --legacy-peer-deps` or `npm install --force`
 
-9. If you are on a Mac and want to run the iOS build of the app, go to the `app/ios` folder in a terminal window. At the command prompt type `pod install`
+9. If you are on a Mac and want to run the iOS build of the app, go to the `app/ios` folder in a terminal window. At the command prompt type `bundle install` followed by `pod install`.
+   > **Note** If the dependencies in `/api` or `/app` folders have been updated, the pods might need reinstalled as follows:
+
+       pod deintegrate
+       rm -rf Pods/
+       pod setup
+       pod install
+
 
 10. If you're using Visual Studio Code for development, it's recommended that you install the [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) extension and enable formatting on save. This takes care of some code style issues such as formatting, indentation and semicolon consistency for you automatically.
 
 11. Duplicate the example config file `app/src/Config/index.example.ts` and name your new file `app/src/Config/index.ts`
 
-**Note** If the app has difficulty connecting to the API, you may need to specify your private IP address and API port number in `app/src/Config/index.ts`. The IP address settings may vary depending on the setup of your dev machine and local network. There are various different IP settings that have worked for others, which include: `10.0.2.2` ([a special alias that the Android emulator uses for your dev machine](https://developer.android.com/studio/run/emulator-networking)); the private IP of the local dev machine; and the private IP of the default gateway for your network. You made a note of the API port number earlier. In the line `STA_BASE_URL: 'http://localhost:3000'`, replace `localhost` with your own IP, and if necessary, replace `3000` with the port number.
+    > **Note** If the app has difficulty connecting to the API, you may need to specify your private IP address and API port number in `app/src/Config/index.ts`. The IP address settings may vary depending on the setup of your dev machine and local network. There are various different IP settings that have worked for others, which include: `10.0.2.2` ([a special alias that the Android emulator uses for your dev machine](https://developer.android.com/studio/run/emulator-networking)); the private IP of the local dev machine; and the private IP of the default gateway for your network. You made a note of the API port number earlier. In the line `STA_BASE_URL: 'http://localhost:3000'`, replace `localhost` with your own IP, and if necessary, replace `3000` with the port number.
 
-**Help** You can find the IP addresses for your dev machine and default gateway by following the instructions for your platform [here](https://www.techbout.com/find-public-and-private-ip-address-44552/).
-
-**Example** If your computer's private IP is 192.168.1.50 and the API is listening on port 3000, the line should now read `STA_BASE_URL: 'http://192.168.1.50:3000'`.
+    > **Help** You can find the IP addresses for your dev machine and default gateway by following the instructions for your platform [here](https://www.techbout.com/find-public-and-private-ip-address-44552/).\
+    **Example** If your computer's private IP is 192.168.1.50 and the API is listening on port 3000, the line should now read `STA_BASE_URL: 'http://192.168.1.50:3000'`.
 
 12. Type in command terminal: `npm run ios` or `npm run android`
 
@@ -114,6 +122,10 @@ Below are some commonly encountered issues and possible ways to resolve them. If
   > Find the `.gradle` directory on your computer -- it may be a hidden directory, it will be outside of your Volunteer app directory, maybe in your home directory at e.g. `~/.gradle`  In that directory, create a new file `gradle.properties`, add this line to it `org.gradle.jvmargs=-Xmx2048m -XX:MaxPermSize=512m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8` and save the file.  This tells the Android Java build process how much memory to use.  Try running `npm run android` again.  If you still get the same error, try increasing `2048` to a higher number (normally multiples of 1024 or 2048, e.g. `4096`).
 - When I run `npm run android`, it fails and says `com.android.ddmlib.InstallException: INSTALL_FAILED_VERSION_DOWNGRADE`
   > This happens when you have installed a newer version of the app (in terms of Android version numbers) on your emulator and then you switch back to an older version.  (For example, maybe you were preparing to [deploy](DEPLOYMENT.md) a new version of the app on one branch, then you switched to another branch and tried to run that older version.)  With your Android emulator open, run the command `adb uninstall org.scottishtecharmy.volunteerapp` to uninstall the app from your emulator.  Then run `npm run android` again and it should work.
+- When I run `npm start` in `/api` folder, the server errors with code `EADDRINUSE`
+  > It is likely there is an instance of a server running already. To end the old instance, in terminal put in:
+  ``kill -9 `lsof -i:3000 -t` ``
+  and try running the server again.
 
 ## The app builds, but crashes when I run it
 
@@ -122,7 +134,7 @@ Below are some commonly encountered issues and possible ways to resolve them. If
 - The app crashes with an error that says 'Metro has encountered an error: Cannot read properties of undefined (reading 'transformFile')'
   > Make sure you are using the LTS version of Node (currently v16); see [suggested solutions on StackOverflow](https://stackoverflow.com/questions/69647332/cannot-read-properties-of-undefined-reading-transformfile-at-bundler-transfo). If you want to keep your current version of Node as well, you can use tools such as [nvm (MacOS/Linux)](https://github.com/nvm-sh/nvm) or [nvm-windows](https://github.com/coreybutler/nvm-windows) to manage your Node installations.
 - The app crashes with an opensslErrorStack: (error: 03000086)
-  > Make sure you are using Node v16 LTS due to known conflicts on some devices between OpenSSL and Node v17+; see [suggested solutions on StackOverflow](https://stackoverflow.com/questions/74726224/opensslerrorstack-error03000086digital-envelope-routinesinitialization-e). 
+  > Make sure you are using Node v16 LTS due to known conflicts on some devices between OpenSSL and Node v17+; see [suggested solutions on StackOverflow](https://stackoverflow.com/questions/74726224/opensslerrorstack-error03000086digital-envelope-routinesinitialization-e).
 # Subsequent run
 
 1. Open Command terminal.
@@ -132,18 +144,6 @@ Below are some commonly encountered issues and possible ways to resolve them. If
 3. Go to the `app` folder inside the project folder (e.g. **/path/to/Volunteer-app/app**) and enter `npm run ios` or `npm run android`.
 
    > **On Android,** if you get an error message that includes `INSTALL_FAILED_UPDATE_INCOMPATIBLE` this may be because you previously installed a newer version of the app for your emulator (e.g. on a new branch or testing someone else's pull request) then you switched back to an earlier version. Uninstall the app from your emulator with the command `adb shell pm uninstall org.scottishtecharmy.volunteerapp` then run `npm run android` again.
-
-4. Optional: Update the cached projects data from Jira _(during development, you probably only need to use this if you need the very latest data from Jira or to update project video files whose URLs expire after an hour)_. Open another command terminal window, go to the `api` folder inside the project.
-
-   - If you want to manually update cached projects data, enter this command: `node cron-jobs/run-projects.js`
-     > During development, it's preferable to do this than to run the scheduled cron job described below.
-   - If you want to automatically run all cron jobs regularly , enter this command instead: `node cron-jobs/run-cron-jobs.js` Leave this terminal window open as long as you want this to keep running.
-     > See more about [cron jobs](#cron-jobs) below
-     > Be careful if using this during development: if multiple developers are running this simultaneously, these could conflict if more than one person is updating the same AirTable tables at the same time.
-
-5. Optional: Add event video thumbnail images and update event video files whose URLs expire after an hour. Open another command terminal window, go to the `api` folder inside the project.
-   - If you want to manually add event video thumbnails, enter this command: `node cron-jobs/run-events.js`
-   - See the previous step above on how to run all cron jobs automatically.
 
 # Development
 
@@ -167,11 +167,13 @@ Projects data comes originally from Jira. We have found the Jira API can be too 
 
 So instead we store a cached copy of projects data, in the format we use it in our API, in our own database (currently AirTable) so that we can deliver a fast response when someone calls our API. There are projects scripts that can be run as a cron job to regularly update our database from the Jira API.
 
+The projects cron jobs also grab video thumbnail images from Vimeo and save them in AirTable, and updates AirTable with Vimeo/YouTube/other video webpage URLs.
+
 #### Events
 
 There is also a cron job for events that have videos (these are usually past events - the videos are event recordings).
 
-This job grabs video thumbnail images from Vimeo and saves them in AirTable, and updates AirTable with video file URLs which expire after an hour.
+This job grabs video thumbnail images from Vimeo and saves them in AirTable.
 
 ### Services
 

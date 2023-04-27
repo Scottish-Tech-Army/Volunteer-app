@@ -13,7 +13,6 @@ console.log(
 // Projects and events MP4 video file URLs must be updated at least hourly
 cron.schedule('*/15 * * * *', async () => {
   await projects.startCachingLatestFromJira();
-  await events.startGettingVideoFiles();
 });
 
 // Runs once every day at midnight when activated

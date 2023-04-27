@@ -32,6 +32,72 @@ describe('Test the AirTable helpers', () => {
     });
   });
 
+  test('addLinkedFields adds into a record the actual data from another AirTable table', async () => {
+    // 1. Set up fake test data
+
+    // Data we're putting into our function
+    const fakeEventsTableName = faker.lorem.words();
+    const fakeEventRecord = {
+      _table: {
+        name: fakeEventsTableName,
+      },
+      id: faker.datatype.uuid(),
+      fields: {
+        name: 'Microsoft AI',
+        date: '2023-02-28',
+        time: 50400,
+        duration: 3600,
+        description: 'What does the future hold\n',
+        type: 'Internal',
+        series: 'Microsoft',
+        speakers: [ 'recJ3qeK5GXidUYxW' ],
+      },
+    };
+    const fakeLinkedFields = [ { fieldName: 'speakers', tableName: 'STA Events Speakers' } ];
+
+    // Data for mocks
+    const fakeSpeakersTableName = faker.lorem.words();
+    const fakeSpeakerName = faker.name.firstName() + " " + faker.name.lastName();
+    const fakeSpeakerUrl = faker.internet.url();
+    const fakeSpeakerRecord = {
+      _table: {
+        name: fakeSpeakersTableName,
+      },
+      id: faker.datatype.uuid(),
+      fields: {
+        name: fakeSpeakerName,
+        url: fakeSpeakerUrl,
+      },
+    };
+
+    // Data we expect to get out of our function
+    const expectedResultEventRecord = {
+      ...fakeEventRecord,
+      fields: {
+        ...fakeEventRecord.fields,
+        speakers: [
+          { name: fakeSpeakerName, url: fakeSpeakerUrl }
+        ],
+      },
+    };
+
+    // 2. Mock dependencies
+    const airTableClientFindMock = jest.fn(() => fakeSpeakerRecord);
+    const airTableClientTableMock = jest.fn(() => ({ find: airTableClientFindMock }));
+    const airTableClientSpy = jest
+      .spyOn(airTable, 'client')
+      .mockImplementation(() => ({ table: airTableClientTableMock }));
+
+    // 3. Run our function with test data
+    const resultEventRecord = await airTable.addLinkedFields(fakeEventsTableName, fakeEventRecord, fakeLinkedFields);
+
+    // 4. Check expectations
+    expect(resultEventRecord).toEqual(expectedResultEventRecord);
+
+    // 5. Clean up mocked dependencies
+    airTableClientSpy.mockRestore();
+  });
+
   test('getAllRecords gets records from AirTable and returns relevant data', async () => {
     // Set up fake test data
     const fakeRecordsCount = faker.datatype.number({ min: 10, max: 30 });

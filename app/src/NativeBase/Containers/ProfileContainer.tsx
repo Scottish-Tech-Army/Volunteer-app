@@ -30,7 +30,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import Brand from '@/NativeBase/Components/Brand'
 import { changeTheme, ThemeState } from '@/Store/Theme'
-import { changeWelcome, WelcomeState } from '@/Store/Welcome'
+// import { changeWelcome, WelcomeState } from '@/Store/Welcome'     currently not being used due to cleanup for MVP
 import { version } from '../../../package.json'
 import SegmentedPicker, {
   SegmentedPickerOption,
@@ -40,15 +40,15 @@ import { capitaliseFirstLetter } from '@/Utils/Text'
 const ProfileContainer = () => {
   const { colorMode, toggleColorMode } = useColorMode()
   const dispatch = useDispatch()
-  const onChangeSplash = ({ welcome, show }: Partial<WelcomeState>) => {
-    dispatch(changeWelcome({ welcome, show }))
-  }
+  // const onChangeSplash = ({ welcome, show }: Partial<WelcomeState>) => {
+  //   dispatch(changeWelcome({ welcome, show }))
+  // }
   const useSystemColourMode = useSelector(
     (state: { theme: ThemeState }) => state.theme.useSystemColourMode,
   )
-  const welcomeState = useSelector(
-    (state: { welcome: WelcomeState }) => state.welcome.show,
-  )
+  // const welcomeState = useSelector(
+  //   (state: { welcome: WelcomeState }) => state.welcome.show,
+  // )
   const [colourModeChoice, setColourModeChoice] = useState<string>(
     useSystemColourMode ? 'system' : colorMode ?? 'light',
   )
@@ -95,11 +95,11 @@ const ProfileContainer = () => {
       <VStack safeAreaTop space={4} padding={4}>
         <Brand />
 
-        <Heading size="sm">Dark mode</Heading>
+        <Heading size="sm">Settings</Heading>
 
         <SegmentedPicker options={colourModeOptions} />
 
-        <Heading size="sm">Welcome screen</Heading>
+        {/* <Heading size="sm">Welcome screen</Heading>
         <Checkbox
           colorScheme={'pink'}
           value="welcome"
@@ -108,7 +108,7 @@ const ProfileContainer = () => {
           onChange={() => onChangeSplash({ show: !welcomeState })}
         >
           <Text fontSize="sm">Show splash screen on app launch</Text>
-        </Checkbox>
+        </Checkbox> */}
         <Spacer />
         <HStack justifyContent="center">
           <Icon
