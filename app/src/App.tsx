@@ -36,5 +36,4 @@ const App = () => (
   </Provider>
 )
 
-// Comment to trigger PR CI and another
 export default App
