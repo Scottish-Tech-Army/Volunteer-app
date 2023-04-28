@@ -67,8 +67,7 @@ const StaTheme = extendTheme({
       100: common.colours.offWhite100,
     },
     bg: {
-      100: common.colours.white,
-      secondary: common.colours.offWhite100,
+      100: common.colours.offWhite100,
     },
     bgDarkMode: {
       100: common.colours.darkGrey100,
