@@ -17,6 +17,7 @@ const common = {
     },
     magenta100: '#d1338A',
     purple100: '#604696',
+    darkGrey200: '#373735',
     darkGrey100: '#3c3c3b',
     mediumGrey100: '#a9a9a9',
     secondaryGrey100: '#e6e6e6',
@@ -66,11 +67,11 @@ const StaTheme = extendTheme({
       100: common.colours.offWhite100,
     },
     bg: {
-      100: common.colours.white,
-      secondary: common.colours.offWhite100,
+      100: common.colours.offWhite100,
     },
     bgDarkMode: {
       100: common.colours.darkGrey100,
+      200: common.colours.darkGrey200,
     },
     border: {
       100: common.colours.mediumGrey100,
@@ -342,12 +343,6 @@ const StaTheme = extendTheme({
       },
     },
     ScrollView: {
-      _light: {
-        backgroundColor: common.colours.offWhite100,
-      },
-      _dark: {
-        backgroundColor: 'bgDarkMode.100',
-      },
       defaultProps: {
         padding: '4',
       },
@@ -371,12 +366,16 @@ const StaTheme = extendTheme({
 
     Card: {
       baseStyle: () => ({
-        _dark: { backgroundColor: 'bgDarkMode.100' },
-        _light: { backgroundColor: 'bg.100' },
+        _dark: {
+          backgroundColor: 'bgDarkMode.100',
+        },
+        _light: {
+          backgroundColor: 'bg.100',
+          borderWidth: 1,
+          borderColor: 'secondaryGrey.80',
+        },
       }),
       defaultProps: {
-        borderWidth: 1,
-        borderColor: 'secondaryGrey.80',
         rounded: 'xl',
         paddingLeft: '2',
       },

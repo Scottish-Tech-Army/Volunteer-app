@@ -38,7 +38,7 @@ const NavigationHeader: React.FC<StackHeaderProps> = ({
         backgroundColor={
           colorMode === 'light'
             ? StaTheme.colors.bg['100']
-            : StaTheme.colors.bgDarkMode['100']
+            : StaTheme.colors.bgDarkMode['200']
         }
         barStyle={statusBarStyle}
       />

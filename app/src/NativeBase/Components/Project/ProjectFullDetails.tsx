@@ -38,10 +38,7 @@ const ProjectFullDetails = ({
 }: ProjectFullDetailsProps): JSX.Element => {
   return (
     <>
-      <ScrollView
-        _dark={{ backgroundColor: 'bgDarkMode.100' }}
-        _light={{ backgroundColor: 'bg.secondary' }}
-      >
+      <ScrollView>
         <VStack space={4} marginBottom={5}>
           <HStack
             justifyContent="space-between"
