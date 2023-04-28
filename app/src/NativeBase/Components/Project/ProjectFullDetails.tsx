@@ -39,7 +39,7 @@ const ProjectFullDetails = ({
   return (
     <>
       <ScrollView
-        _dark={{ backgroundColor: 'bgDarkMode.100' }}
+        _dark={{ backgroundColor: 'bgDarkMode.200' }}
         _light={{ backgroundColor: 'bg.secondary' }}
       >
         <VStack space={4} marginBottom={5}>

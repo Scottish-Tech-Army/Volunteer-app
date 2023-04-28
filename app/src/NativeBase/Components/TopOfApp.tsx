@@ -53,13 +53,13 @@ const TopOfApp: FC<TopOfAppProps> = ({
         backgroundColor={
           colorMode === 'light'
             ? StaTheme.colors.bg['100']
-            : StaTheme.colors.bgDarkMode['100']
+            : StaTheme.colors.bgDarkMode['200']
         }
         barStyle={statusBarStyle}
       />
 
       <Box
-        _dark={{ backgroundColor: StaTheme.colors.bgDarkMode['100'] }}
+        _dark={{ backgroundColor: StaTheme.colors.bgDarkMode['200'] }}
         _light={{ backgroundColor: StaTheme.colors.bg['100'] }}
         safeAreaTop
       >
