@@ -99,27 +99,33 @@ const ProfileContainer = () => {
   }
 
   return (
-    <ScrollView>
-      <VStack safeAreaTop space={4} padding={4}>
-        <Brand />
+    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+      <VStack
+        height="100%"
+        justifyContent="space-between"
+        safeAreaTop
+        space={4}
+        padding={4}
+      >
+        <VStack space="4">
+          <Brand />
 
-        <VStack>
-          <Heading size="xs">Dark mode</Heading>
-          <SegmentedPicker options={colourModeOptions} />
-        </VStack>
+          <VStack>
+            <Heading size="xs">Dark mode</Heading>
+            <SegmentedPicker options={colourModeOptions} />
+          </VStack>
 
-        <VStack>
-          <YesNoChoice
-            description="Send error reports?"
-            onChange={() =>
-              onChangeErrorLogsPermission(!dataPermissionsState.errorLogs)
-            }
-            value={dataPermissionsState.errorLogs}
-          />
-          <Text fontSize="xs">This helps us fix any bugs in the app</Text>
-        </VStack>
+          <VStack>
+            <YesNoChoice
+              description="Send error reports?"
+              onChange={() =>
+                onChangeErrorLogsPermission(!dataPermissionsState.errorLogs)
+              }
+              value={dataPermissionsState.errorLogs}
+            />
+          </VStack>
 
-        {/* <Heading size="sm">Welcome screen</Heading>
+          {/* <Heading size="sm">Welcome screen</Heading>
         <Checkbox
           colorScheme={'pink'}
           value="welcome"
@@ -129,46 +135,47 @@ const ProfileContainer = () => {
         >
           <Text fontSize="sm">Show splash screen on app launch</Text>
         </Checkbox> */}
+        </VStack>
 
-        <Spacer />
+        <VStack>
+          <HStack justifyContent="center">
+            <Icon
+              size={8}
+              as={MaterialIcons}
+              name="info"
+              color="black"
+              _dark={{ color: 'white' }}
+              mx={0}
+              px={0}
+            />
+            <Text fontSize="2xs">Version {version}</Text>
+          </HStack>
 
-        <HStack justifyContent="center">
-          <Icon
-            size={8}
-            as={MaterialIcons}
-            name="info"
-            color="black"
-            _dark={{ color: 'white' }}
-            mx={0}
-            px={0}
-          />
-          <Text fontSize="2xs">Version {version}</Text>
-        </HStack>
-
-        <HStack safeAreaBottom space="4" justifyContent={'center'}>
-          <Text fontSize="sm">
-            <Link
-              _text={{
-                color: 'darkGrey.100',
-                _dark: { color: 'textDarkMode.100' },
-              }}
-              href="https://www.scottishtecharmy.org/app-privacy-policy"
-            >
-              Privacy policy
-            </Link>
-          </Text>
-          <Text>
-            <Link
-              _text={{
-                color: 'darkGrey.100',
-                _dark: { color: 'textDarkMode.100' },
-              }}
-              href="https://www.scottishtecharmy.org/app-terms-conditions"
-            >
-              Terms & conditions
-            </Link>
-          </Text>
-        </HStack>
+          <HStack safeAreaBottom space="4" justifyContent={'center'}>
+            <Text fontSize="sm">
+              <Link
+                _text={{
+                  color: 'darkGrey.100',
+                  _dark: { color: 'textDarkMode.100' },
+                }}
+                href="https://www.scottishtecharmy.org/app-privacy-policy"
+              >
+                Privacy policy
+              </Link>
+            </Text>
+            <Text>
+              <Link
+                _text={{
+                  color: 'darkGrey.100',
+                  _dark: { color: 'textDarkMode.100' },
+                }}
+                href="https://www.scottishtecharmy.org/app-terms-conditions"
+              >
+                Terms & conditions
+              </Link>
+            </Text>
+          </HStack>
+        </VStack>
       </VStack>
     </ScrollView>
   )
