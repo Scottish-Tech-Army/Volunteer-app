@@ -344,12 +344,6 @@ const StaTheme = extendTheme({
       },
     },
     ScrollView: {
-      _light: {
-        backgroundColor: common.colours.offWhite100,
-      },
-      _dark: {
-        backgroundColor: 'bgDarkMode.100',
-      },
       defaultProps: {
         padding: '4',
       },
