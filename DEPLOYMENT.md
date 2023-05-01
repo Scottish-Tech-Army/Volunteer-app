@@ -98,15 +98,17 @@ E.g. `cp Volunteer-app/api/.env volunteer-app-aws-deployment/api/.env` (but this
 
 5. In `/app/src/Config/index.ts` set `STA_BASE_URL` to point to the external URL `'https://the-sta.com'` -- not to your localhost or its IP address, otherwise the app won't be able to connect to the API when it's installed on someone's phone.
 
+6. In `/app/.env` make sure you have set the value for `BUGSNAG_API_KEY` (or uncomment it)
+
    ## Google Play Store (Android)
 
-6. Go to the `/app/android` directory in a terminal window and run the command `fastlane beta`. You'll be prompted twice at the beginning for passwords -- both are the password you got for the `my-release-key.keystore` file in the [Setup to deploy the app section](#setup-to-deploy-the-app) above.
+7. Go to the `/app/android` directory in a terminal window and run the command `fastlane beta`. You'll be prompted twice at the beginning for passwords -- both are the password you got for the `my-release-key.keystore` file in the [Setup to deploy the app section](#setup-to-deploy-the-app) above.
 
    > The process can take a while (sometimes 30 minutes or more)! If it fails, try [the troubleshooting tips here](https://thecodingmachine.github.io/react-native-boilerplate/docs/BetaBuild/#troubleshooting), see [Google Play Store known issues](#google-play-store-known-issues) below or ask for help on the team Slack channel if you can't figure it out.
 
-7. If you have access, check in the [Google Play Console](https://play.google.com/console) that the new version of the app has successfully been added (Volunteer app > Release > Internal testing) -- you should see the new version number next to 'Latest release' under 'Track summary'.
+8. If you have access, check in the [Google Play Console](https://play.google.com/console) that the new version of the app has successfully been added (Volunteer app > Release > Internal testing) -- you should see the new version number next to 'Latest release' under 'Track summary'.
 
-8. Download the updated version of the app to your Android phone ([see download instructions](#download-the-app) near the top of this README). On the Google Play Store screen, there should be an 'Update' button to download the latest version of the app to your device.
+9. Download the updated version of the app to your Android phone ([see download instructions](#download-the-app) near the top of this README). On the Google Play Store screen, there should be an 'Update' button to download the latest version of the app to your device.
 
    ### Google Play Store known issues
 
@@ -114,13 +116,29 @@ E.g. `cp Volunteer-app/api/.env volunteer-app-aws-deployment/api/.env` (but this
    
    - Near the end of the deployment process an AAB file is uploaded to the Google Play Store. This can take some time (e.g. 20 minutes on slow internet connections). It should be working, unless you get a `HTTPClient::SendTimeoutError: execution expired` error message in your terminal window. If the Fastlane process fails for this reason, you may need to run it again.
 
+10. **Important** If you are not also doing the iOS deployment, remove the `BUGSNAG_API_KEY` entry from `/app/.env` or comment it out by adding `# ` at the beginning of the line -- this is so that you don't accidentally send Bugsnag crash reports from the app when you are developing on your emulator in the future.
+
    ## TestFlight (iOS)
 
-9. Make sure you have your email set in the  `APPLE_ID` variable in `app/.env`.
+11. Make sure you have your email set in the  `APPLE_ID` variable in `app/.env`.
 
-10. Go to the `/app/ios` directory in a terminal window and run the command `fastlane beta`.  You'll be prompted to login (maybe several times) with your App Store Connect login.
+12. Go to the `/app/ios` directory in a terminal window and run the command `fastlane beta`.  You'll be prompted to login (maybe several times) with your App Store Connect login.
     > The process can take a while (sometimes 30 minutes or more)!  If it fails, try [the troubleshooting tips here](https://thecodingmachine.github.io/react-native-boilerplate/docs/BetaBuild/#troubleshooting), or ask for help on the team Slack channel if you can't figure it out.
 
-11. If you have access, check in the [App Store Connect](https://appstoreconnect.apple.com/apps) that the new version of the app has successfully been uploaded and processed (STA Volunteer app > TestFlight) -- you should see the new build number below the latest version.
+13. If you have access, check in the [App Store Connect](https://appstoreconnect.apple.com/apps) that the new version of the app has successfully been uploaded and processed (STA Volunteer app > TestFlight) -- you should see the new build number below the latest version.
 
-12. If you are part of the iOS beta test group, you should get a notification on your phone from TestFlight that a new version is available to test. Download the updated version of the app to your iPhone ([see download instructions](#download-the-app) near the top of this README).
+14. If you are part of the iOS beta test group, you should get a notification on your phone from TestFlight that a new version is available to test. Download the updated version of the app to your iPhone ([see download instructions](#download-the-app) near the top of this README).
+
+15. Upload the sourcemap to Bugsnag -- this is needed so that Bugsnag can correctly match any errors to the right point in our React Native code:
+
+- In your terminal in the `app` directory run this command `xcodebuild -workspace ios/STA.xcworkspace -scheme STA -showBuildSettings | grep CONFIGURATION_BUILD_DIR`
+
+- Then do this command `export CONFIGURATION_BUILD_DIR='xxxxxxxxxxxxxxxxxx'` replacing `xxxxxxxxxxxxxxxxxx` with the full value of `CONFIGURATION_BUILD_DIR` you got in the previous step (and make sure not to accidentally remove the quote marks)
+
+- Now you can upload the sourcemap to Bugsnag with this command `npx bugsnag-source-maps upload-react-native --api-key BUGSNAG_API_KEY_HERE --app-version APP_VERSION_HERE --platform ios --source-map $TMPDIR/$(md5 -qs "$CONFIGURATION_BUILD_DIR")-main.jsbundle.map --bundle $CONFIGURATION_BUILD_DIR/main.jsbundle` replacing `YOUR_API_KEY_HERE`
+
+  - ...replacing `BUGSNAG_API_KEY_HERE` with our Bugsnag API key
+
+  - ...replacing `APP_VERSION_HERE` with the new iOS app version number, e.g. `1.0`
+
+16. **Important** Remove the `BUGSNAG_API_KEY` entry from `/app/.env` or comment it out by adding `# ` at the beginning of the line -- this is so that you don't accidentally send Bugsnag crash reports from the app when you are developing on your emulator in the future.
