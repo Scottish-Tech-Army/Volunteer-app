@@ -193,6 +193,9 @@ There are broadly two kinds of things that can go wrong on the front-end app:
 
 To send errors and crash logs, you must have an `app/.env` file with this set `BUGSNAG_API_KEY="insert_key_here"` (replacing `insert_key_here` with the actual API key from Bugsnag).
 
+Ordinarily, when you are in your emulator, you should **not** have `BUGSNAG_API_KEY` set to the real API key value, otherwise it will send crash logs to Bugsnag which we usually don't want (ordinarily we only want to use Bugsnag to track errors and crashes on real devices).
+  > You do need to set a value otherwise the app will not run in your emulator, so you can use e.g. `BUGSNAG_API_KEY="no_api_key"`
+
 ### Logging errors to Bugsnag from your emulator
 
 You can log errors to Bugnsag from your emulator if you really need to. **You don't normally need to do this -- Bugsnag error logging is usually to monitor crashes, and errors in the production app.  You should only use this when normal error detection is insufficient** e.g. because you want to figure out why the app is crashing due to a lack of memory.  **Don't** use this in place of normal code tools like `console.error` and `console.log` and other normal testing approaches.

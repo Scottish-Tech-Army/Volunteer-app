@@ -116,7 +116,8 @@ E.g. `cp Volunteer-app/api/.env volunteer-app-aws-deployment/api/.env` (but this
    
    - Near the end of the deployment process an AAB file is uploaded to the Google Play Store. This can take some time (e.g. 20 minutes on slow internet connections). It should be working, unless you get a `HTTPClient::SendTimeoutError: execution expired` error message in your terminal window. If the Fastlane process fails for this reason, you may need to run it again.
 
-10. **Important** If you are not also doing the iOS deployment, remove the `BUGSNAG_API_KEY` entry from `/app/.env` or comment it out by adding `# ` at the beginning of the line -- this is so that you don't accidentally send Bugsnag crash reports from the app when you are developing on your emulator in the future.
+10. **Important** If you are stopping here and not also doing the iOS deployment, change the `BUGSNAG_API_KEY` entry from `/app/.env` back to `no_api_key` (you can keep the entry with the actual API key by commenting it out by adding `# ` at the beginning of the line).
+  > You do need to do this is so that you don't accidentally send Bugsnag crash reports from the app when you are developing on your emulator in the future.
 
    ## TestFlight (iOS)
 
@@ -141,4 +142,5 @@ E.g. `cp Volunteer-app/api/.env volunteer-app-aws-deployment/api/.env` (but this
 
   - ...replacing `APP_VERSION_HERE` with the new iOS app version number, e.g. `1.0`
 
-16. **Important** Remove the `BUGSNAG_API_KEY` entry from `/app/.env` or comment it out by adding `# ` at the beginning of the line -- this is so that you don't accidentally send Bugsnag crash reports from the app when you are developing on your emulator in the future.
+16. **Important** Change the `BUGSNAG_API_KEY` entry from `/app/.env` back to `no_api_key` (you can keep the entry with the actual API key by commenting it out by adding `# ` at the beginning of the line)
+  > You do need to do this is so that you don't accidentally send Bugsnag crash reports from the app when you are developing on your emulator in the future.
