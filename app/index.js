@@ -12,6 +12,6 @@ import { name as appName } from './app.json'
 
 // Only report React Native code errors to Bugsnag on real devices, not emulators
 if (!isEmulatorSync() || Config.BUGSNAG_ALWAYS_SEND_BUGS === 'true')
-  Bugsnag.start({ appType: 'native_app' })
+  Bugsnag.start()
 
 AppRegistry.registerComponent(appName, () => App)
