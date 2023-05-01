@@ -5,19 +5,16 @@ import React, { useState } from 'react'
 import styled from 'styled-components/native'
 import { navigateAndSimpleReset } from '@/Navigators/utils'
 import { useTheme } from '@/Hooks'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import Modal from '@/NativeBase/Components/Modal'
 import PrivacyAndTermsLinks from '@/NativeBase/Components/PrivacyAndTermsLinks'
-import { setPermissions, PermissionsState } from '@/Store/Permissions'
+import { setPermissions } from '@/Store/Permissions'
 import { changeWelcome, WelcomeState } from '@/Store/Welcome'
 import { Text } from 'native-base'
 
 /** The welcome 'Get started' button is displayed in the welcome splash screen, regardless of which pagination slide it is on. */
 const WelcomeButton = () => {
   const { Colors, Fonts } = useTheme()
-  const dataPermissionsState = useSelector(
-    (state: { permissions: PermissionsState }) => state.permissions.data,
-  )
   const dispatch = useDispatch()
   const onChangeSplash = ({ welcome, show }: Partial<WelcomeState>) => {
     dispatch(changeWelcome({ welcome, show }))
@@ -43,8 +40,8 @@ const WelcomeButton = () => {
     `
 
   const handleClose = (errorLogs: boolean) => {
-    dispatch(setPermissions({ data: { ...dataPermissionsState, errorLogs } }))
     onChangeSplash({ show: false })
+    dispatch(setPermissions({ data: { errorLogs } }))
     navigateAndSimpleReset('Main')
   }
 
@@ -71,7 +68,6 @@ const WelcomeButton = () => {
         header="Send bug reports?"
         headerIcon="help"
         isOpen={showModal}
-        onClose={handleClose}
         buttons={[
           {
             onPress: () => handleClose(true),

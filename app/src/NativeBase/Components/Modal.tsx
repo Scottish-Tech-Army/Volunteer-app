@@ -25,7 +25,7 @@ interface ModalProps {
   header: string
   headerIcon: string // the name of a Material Icons icon
   isOpen: boolean
-  onClose: (value: boolean) => void
+  onClose?: () => void
   buttons?: ModalButton[]
   requiresButtonPress?: boolean // if true, the user has to press one of the buttons you specify -- if false, they can press on/outside the modal to simply close it
 }
@@ -47,11 +47,7 @@ const Modal: FC<ModalProps> = ({
     size="xl"
   >
     <NativeBaseModal.Content>
-      <Pressable
-        onPress={() => {
-          if (!requiresButtonPress) onClose(true)
-        }}
-      >
+      <Pressable onPress={onClose && !requiresButtonPress ? onClose : null}>
         <NativeBaseModal.Header
           alignItems="center"
           borderBottomWidth="0"

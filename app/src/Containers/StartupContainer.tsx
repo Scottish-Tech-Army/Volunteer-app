@@ -30,7 +30,7 @@ const StartupContainer = () => {
     await setDefaultTheme({ theme: 'default', darkMode: null })
     await setDefaultWelcome({ welcome: 'default', show: true })
 
-    // Don't show the welcome screen if it's deselcted in Example.
+    // Only show the welcome screen if it's the first time the user is using the app.
     showWelcome
       ? navigateAndSimpleReset('Welcome')
       : navigateAndSimpleReset('Main')

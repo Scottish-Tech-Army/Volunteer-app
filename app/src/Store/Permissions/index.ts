@@ -15,7 +15,10 @@ const slice = createSlice({
   reducers: {
     setPermissions: (state, { payload: { data } }: PermissionsPayload) => {
       if (typeof data !== 'undefined') {
-        state.data = data
+        state.data = {
+          ...state.data,
+          ...data,
+        }
       }
     },
   },
