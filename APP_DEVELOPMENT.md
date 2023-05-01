@@ -119,6 +119,12 @@ Tappable list of options to choose from, with arrows
 
 Text input for searching
 
+#### Modal
+
+![Modal component](screenshots/components/Modal.png)
+
+A modal used to show the user a message. Can optionally include buttons to get the user's response/choice.
+
 #### NavigationHeader
 
 ![NavigationHeader component](screenshots/components/NavigationHeader.png)
@@ -142,12 +148,6 @@ Shown at the top of some screens - a small STA logo and (optionally) a search ic
 ![TextInputControl component](screenshots/components/TextInputControl.png)
 
 Default text input, label, required indicator and validation/error message.
-
-#### ResponseModal
-
-![ResponseModal component](screenshots/components/ResponseModal.png)
-
-Shows the result of server interaction (e.g submitting a form) to the user.  Handles success/error.
 
 ### Icons
 
