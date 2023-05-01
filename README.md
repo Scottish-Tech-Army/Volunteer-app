@@ -147,6 +147,10 @@ Below are some commonly encountered issues and possible ways to resolve them. If
 
 # Development
 
+## Bugs
+
+Ask one of the team to add you to the **it470-volunteer-app-errors** Slack channel where you can see crash and error reports coming via [Bugsnag](https://www.bugsnag.com).  Find out more about Bugsnag on the app and API pages below.
+
 ## App
 
 [Please see here](APP_DEVELOPMENT.md) for more info on developing the front-end app, including NativeBase.

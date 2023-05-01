@@ -56,6 +56,12 @@ Normally, we don't log errors to Bugsnag when we're running a local version of t
 
 To send errors, you must have an `api/.env` file with this set `BUGSNAG_API_KEY="insert_key_here"` (replacing `insert_key_here` with the actual API key from Bugsnag).
 
+### Seeing Bugsnag reports
+
+Ask one of the team to add you to the **it470-volunteer-app-errors** Slack channel where you can see the latest bugs coming in from the production server and the app.
+
+To get more details on a bug you'll need to go to [our Bugsnag inbox here](https://app.bugsnag.com/scottish-tech-army/volunteer-app/errors) -- you'll need the login details from another team member.
+
 ### Logging to Bugsnag from your local API
 
 **It is very rare you would need to use this** but you can force the API to report errors to Bugsnag from your local development server if needed. (You would normally only use this on your local dev server if you need to check Bugsnag is working.) **Don't** use this in place of normal code tools like `console.error` and `console.log` and other normal testing approaches.

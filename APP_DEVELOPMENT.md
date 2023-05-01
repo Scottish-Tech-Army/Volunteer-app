@@ -196,6 +196,12 @@ To send errors and crash logs, you must have an `app/.env` file with this set `B
 Ordinarily, when you are in your emulator, you should **not** have `BUGSNAG_API_KEY` set to the real API key value, otherwise it will send crash logs to Bugsnag which we usually don't want (ordinarily we only want to use Bugsnag to track errors and crashes on real devices).
   > You do need to set a value otherwise the app will not run in your emulator, so you can use e.g. `BUGSNAG_API_KEY="no_api_key"`
 
+### Seeing Bugsnag reports
+
+Ask one of the team to add you to the **it470-volunteer-app-errors** Slack channel where you can see the latest bugs coming in from the app on real devices, and the API production server.
+
+To get more details on a bug you'll need to go to [our Bugsnag inbox here](https://app.bugsnag.com/scottish-tech-army/volunteer-app/errors) -- you'll need the login details from another team member.
+
 ### Logging errors to Bugsnag from your emulator
 
 You can log errors to Bugnsag from your emulator if you really need to. **You don't normally need to do this -- Bugsnag error logging is usually to monitor crashes, and errors in the production app.  You should only use this when normal error detection is insufficient** e.g. because you want to figure out why the app is crashing due to a lack of memory.  **Don't** use this in place of normal code tools like `console.error` and `console.log` and other normal testing approaches.
