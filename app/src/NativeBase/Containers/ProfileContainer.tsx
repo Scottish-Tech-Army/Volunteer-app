@@ -18,10 +18,8 @@ import {
   VStack,
   HStack,
   Icon,
-  Link,
-  Checkbox,
+  // Checkbox,
   Text,
-  Spacer,
   ScrollView,
   useColorMode,
 } from 'native-base'
@@ -32,8 +30,9 @@ import Brand from '@/NativeBase/Components/Brand'
 import YesNoChoice from '@/NativeBase/Components/Forms/YesNoChoice'
 import { setPermissions, PermissionsState } from '@/Store/Permissions'
 import { changeTheme, ThemeState } from '@/Store/Theme'
-// import { changeWelcome, WelcomeState } from '@/Store/Welcome'     currently not being used due to cleanup for MVP
+// import { changeWelcome, WelcomeState } from '@/Store/Welcome' // currently not being used due to cleanup for MVP
 import { version } from '../../../package.json'
+import PrivacyAndTermsLinks from '../Components/PrivacyAndTermsLinks'
 import SegmentedPicker, {
   SegmentedPickerOption,
 } from '../Components/SegmentedPicker'
@@ -117,24 +116,28 @@ const ProfileContainer = () => {
 
           <VStack>
             <YesNoChoice
-              description="Send error reports?"
+              description="Send bug reports?"
               onChange={() =>
                 onChangeErrorLogsPermission(!dataPermissionsState.errorLogs)
               }
               value={dataPermissionsState.errorLogs}
             />
+            <Text fontSize="xs">
+              Automatically send bug reports to the STA team? May include
+              personal data
+            </Text>
           </VStack>
 
           {/* <Heading size="sm">Welcome screen</Heading>
-        <Checkbox
-          colorScheme={'pink'}
-          value="welcome"
-          accessibilityLabel="Show a splash screen when the app starts"
-          isChecked={welcomeState}
-          onChange={() => onChangeSplash({ show: !welcomeState })}
-        >
-          <Text fontSize="sm">Show splash screen on app launch</Text>
-        </Checkbox> */}
+          <Checkbox
+            colorScheme={'pink'}
+            value="welcome"
+            accessibilityLabel="Show a splash screen when the app starts"
+            isChecked={welcomeState}
+            onChange={() => onChangeSplash({ show: !welcomeState })}
+          >
+            <Text fontSize="sm">Show splash screen on app launch</Text>
+          </Checkbox> */}
         </VStack>
 
         <VStack>
@@ -151,30 +154,7 @@ const ProfileContainer = () => {
             <Text fontSize="2xs">Version {version}</Text>
           </HStack>
 
-          <HStack safeAreaBottom space="4" justifyContent={'center'}>
-            <Text fontSize="sm">
-              <Link
-                _text={{
-                  color: 'darkGrey.100',
-                  _dark: { color: 'textDarkMode.100' },
-                }}
-                href="https://www.scottishtecharmy.org/app-privacy-policy"
-              >
-                Privacy policy
-              </Link>
-            </Text>
-            <Text>
-              <Link
-                _text={{
-                  color: 'darkGrey.100',
-                  _dark: { color: 'textDarkMode.100' },
-                }}
-                href="https://www.scottishtecharmy.org/app-terms-conditions"
-              >
-                Terms & conditions
-              </Link>
-            </Text>
-          </HStack>
+          <PrivacyAndTermsLinks />
         </VStack>
       </VStack>
     </ScrollView>
