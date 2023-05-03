@@ -46,7 +46,9 @@ const SegmentedPicker: FC<SegmentedPickerProps> = ({
           <Box
             alignItems="center"
             _dark={{
-              backgroundColor: option.isSelected ? '#636366' : 'transparent',
+              backgroundColor: option.isSelected
+                ? 'darkGrey.50'
+                : 'transparent',
             }}
             _light={{
               backgroundColor: option.isSelected ? 'white' : 'transparent',
@@ -82,10 +84,10 @@ const SegmentedPicker: FC<SegmentedPickerProps> = ({
               marginY="1"
               orientation="vertical"
               _dark={{
-                backgroundColor: '#545458A6',
+                backgroundColor: 'darkGrey.50',
               }}
               _light={{
-                backgroundColor: '#3C3C435C',
+                backgroundColor: 'mediumGrey.100',
               }}
             />
           )}

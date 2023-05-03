@@ -19,6 +19,8 @@ const common = {
     purple100: '#604696',
     darkGrey200: '#373735',
     darkGrey100: '#3c3c3b',
+    darkGrey050: '#515152',
+    mediumGrey200: '#636366',
     mediumGrey100: '#a9a9a9',
     secondaryGrey100: '#e6e6e6',
     offWhite100: '#fbfbfb',
@@ -119,10 +121,12 @@ const StaTheme = extendTheme({
       100: common.colours.purple100,
     },
     mediumGrey: {
+      200: common.colours.mediumGrey200,
       100: common.colours.mediumGrey100,
     },
     darkGrey: {
       100: common.colours.darkGrey100,
+      50: common.colours.darkGrey050,
     },
   },
 
