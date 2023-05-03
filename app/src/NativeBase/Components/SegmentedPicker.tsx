@@ -32,7 +32,8 @@ const SegmentedPicker: FC<SegmentedPickerProps> = ({
   options,
 }) => (
   <HStack
-    backgroundColor="secondaryGrey.100"
+    _dark={{ backgroundColor: 'bgDarkMode.100' }}
+    _light={{ backgroundColor: 'secondaryGrey.100' }}
     borderRadius="8"
     justifyContent="space-between"
     marginBottom={marginBottom ?? '4'}
@@ -44,7 +45,14 @@ const SegmentedPicker: FC<SegmentedPickerProps> = ({
         <Pressable flexGrow="1" onPress={option.onPress}>
           <Box
             alignItems="center"
-            backgroundColor={option.isSelected ? 'white' : 'transparent'}
+            _dark={{
+              backgroundColor: option.isSelected
+                ? 'darkGrey.50'
+                : 'transparent',
+            }}
+            _light={{
+              backgroundColor: option.isSelected ? 'white' : 'transparent',
+            }}
             borderRadius={7}
             color="black"
             height="8"
@@ -52,7 +60,12 @@ const SegmentedPicker: FC<SegmentedPickerProps> = ({
             width="100%"
           >
             <Text
-              color="black"
+              _dark={{
+                color: 'white',
+              }}
+              _light={{
+                color: 'black',
+              }}
               fontSize="sm"
               padding="1"
               textAlign="center"
@@ -66,7 +79,17 @@ const SegmentedPicker: FC<SegmentedPickerProps> = ({
         {index !== options.length - 1 && // don't show divider to right of this option if it's the last option
           !options[index + 1].isSelected && // don't show divider to right of this option if the next option is selected (doesn't look good next to white selected button)
           !option.isSelected && (
-            <Divider height="4" marginY="1" orientation="vertical" />
+            <Divider
+              height="4"
+              marginY="1"
+              orientation="vertical"
+              _dark={{
+                backgroundColor: 'darkGrey.50',
+              }}
+              _light={{
+                backgroundColor: 'mediumGrey.100',
+              }}
+            />
           )}
       </HStack>
     ))}
