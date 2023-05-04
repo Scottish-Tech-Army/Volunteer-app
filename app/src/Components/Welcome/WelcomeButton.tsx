@@ -56,14 +56,13 @@ const WelcomeButton = () => {
     >
       <Modal
         body={[
+          <Text>Can we automatically send bug reports to the STA team?</Text>,
           <Text>
-            Can we automatically send bug reports from the app to the STA team?
+            These might include some personally identifiable data. You can
+            switch them off at any time in settings.
           </Text>,
-          <Text>
-            These might include some personal data. You can switch them off at
-            any time in settings.
-          </Text>,
-          <PrivacyAndTermsLinks />,
+          <Text>For more info please see:</Text>,
+          <PrivacyAndTermsLinks fontSize="md" />,
         ]}
         header="Send bug reports?"
         headerIcon="help"

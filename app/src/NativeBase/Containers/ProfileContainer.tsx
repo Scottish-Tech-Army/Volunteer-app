@@ -18,7 +18,7 @@ import {
   VStack,
   HStack,
   Icon,
-  // Checkbox,
+  Checkbox,
   Text,
   ScrollView,
   useColorMode,
@@ -102,7 +102,7 @@ const ProfileContainer = () => {
       <VStack
         height="100%"
         justifyContent="space-between"
-        safeAreaTop
+        safeAreaY
         space={4}
         padding={4}
       >

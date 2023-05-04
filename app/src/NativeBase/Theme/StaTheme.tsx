@@ -341,6 +341,13 @@ const StaTheme = extendTheme({
         },
       },
     },
+
+    Link: {
+      baseStyle: () => ({
+        fontFamily: 'primary',
+      }),
+    },
+
     ScrollView: {
       _light: {
         backgroundColor: common.colours.offWhite100,
