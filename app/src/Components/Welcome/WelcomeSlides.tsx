@@ -26,12 +26,12 @@ export function WelcomeSlides() {
     {
       image: <WelcomeImage source={Welcome} resizeMode={'contain'} />,
       title: 'WELCOME',
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eu nisl vitae nisl lobortis rutrum.',
+      text: "Mobilising the UK's tech talent for good...",
     },
     {
       image: <WelcomeImage source={Volunteer} resizeMode={'contain'} />,
       title: 'VOLUNTEER',
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eu nisl vitae nisl lobortis rutrum.',
+      text: "We work in partnership with the UK's technology ecosystem to deliver scalable, impactful solutions",
     },
     {
       image: <WelcomeImage source={MakeAnImpact} resizeMode={'contain'} />,
