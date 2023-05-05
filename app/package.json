@@ -11,7 +11,9 @@
     "lint-ci": "eslint . -c .eslintrc.ci.js --ext .js,.jsx,.ts,.tsx",
     "type-check": "tsc",
     "prepare": "cd .. && husky install .husky",
-    "lint-app": "lint-staged --quiet"
+    "lint-app": "lint-staged --quiet",
+    "build:ios:bundle": "react-native bundle --entry-file='index.js' --bundle-output='./ios/main.jsbundle' --dev=false --platform='ios'",
+    "build:ios:sourcemap": "react-native bundle --platform ios --entry-file index.js --dev false --bundle-output ./ios/main.jsbundle --assets-dest ./ios --sourcemap-output ./ios/sourcemap.js"
   },
   "dependencies": {
     "@bugsnag/react-native": "^7.19.0",
