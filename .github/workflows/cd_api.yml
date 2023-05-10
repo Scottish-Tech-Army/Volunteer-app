@@ -30,9 +30,9 @@ jobs:
       with:
         aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        application_name: volunteer-app
-        environment_name: Volunteerapp-env
+        application_name: volunteerapp-api
+        environment_name: Volunteerapp-api-env
         version_label: GitHub-Actions-${{github.SHA}}
-        Version_description: Automated deployment from GitHub Action
+        version_description: Automated deployment from GitHub Action
         region: eu-west-2
         deployment_package: ./api/deployable.zip
