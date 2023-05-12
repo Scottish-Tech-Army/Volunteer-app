@@ -37,10 +37,16 @@ const share = () => {
     default: {
       title,
       subject: title,
-      message: `${message} ${url}`,
+      message: `${url}`,
     },
   })
 
   Share.open(options)
+    .then(res => {
+      console.log(res)
+    })
+    .catch(err => {
+      err && console.log(err)
+    })
 }
 export default share
