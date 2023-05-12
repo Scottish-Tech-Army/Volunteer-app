@@ -12,6 +12,7 @@ import { Projects } from '@/Services/modules/projects'
 import underDevelopmentAlert from '../../Utils/UnderDevelopmentAlert'
 import ColouredTag from '../Components/ColouredTag'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import share from '@/Utils/Share'
 
 import {
   FlatList,
@@ -148,7 +149,7 @@ const List: FC<ListProps> = ({
                         <ShareIcon
                           size="md"
                           color="secondaryGrey.100"
-                          onPress={underDevelopmentAlert}
+                          onPress={share}
                         />
                         <IconButton
                           icon={
