@@ -25,6 +25,7 @@ import {
   Card,
   Icon,
 } from 'native-base'
+import share from '@/Utils/Share'
 
 const EventListItem = styled.TouchableOpacity`
   margin: 21px 21px 0px 21px;
@@ -148,7 +149,7 @@ const List: FC<ListProps> = ({
                         <ShareIcon
                           size="md"
                           color="secondaryGrey.100"
-                          onPress={underDevelopmentAlert}
+                          onPress={share}
                         />
                         <IconButton
                           icon={
