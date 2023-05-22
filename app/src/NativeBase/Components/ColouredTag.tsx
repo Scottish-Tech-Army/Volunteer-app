@@ -28,7 +28,7 @@ const ColouredTag = ({ title }: ColouredTagProps) => {
   const roleIndex = getRoleGroupIndex(title)
   let selectedColour
   if (roleIndex) {
-    selectedColour = coloursToUse[roleIndex % 3]
+    selectedColour = coloursToUse[roleIndex % coloursToUse.length]
   }
 
   if (title) {
