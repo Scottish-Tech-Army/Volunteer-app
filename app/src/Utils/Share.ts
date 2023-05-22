@@ -4,7 +4,7 @@ import Share from 'react-native-share'
 const share = () => {
   const title = 'Example Title'
   const url = 'https://www.google.com/'
-  const message = 'Example Message'
+  const message = 'Example Message woohoo! 🎉'
 
   const options: ShareOptions = Platform.select({
     ios: {
@@ -37,7 +37,7 @@ const share = () => {
     default: {
       title,
       subject: title,
-      message: `${url}`,
+      message: `${message}`,
     },
   })
 
