@@ -3,6 +3,8 @@
  * These are used e.g. for searching projects
  */
 
+import Fuse from 'fuse.js'
+
 export interface RoleGroup {
   groupName: RoleGroupName
   roleNames: string[]
@@ -195,3 +197,17 @@ export const roleGroups: RoleGroup[] = [
     ],
   },
 ]
+
+const getRoleColour = (possibleRoleColour: string): Number | undefined => {
+  const fuse = new Fuse(roleGroups, {
+    keys: ['roleNames'],
+  })
+  const fuseResults = fuse.search(possibleRoleColour)
+
+  for (const fuseResult of fuseResults) {
+    for (const role of fuseResult.item.roleNames) {
+      return Number(role)
+    }
+  }
+  return undefined
+}
