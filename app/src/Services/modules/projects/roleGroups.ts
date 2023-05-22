@@ -198,6 +198,7 @@ export const roleGroups: RoleGroup[] = [
   },
 ]
 
+// Gets an index for NativeBase/Components/ColouredTag.tsx
 export const getRoleGroupIndex = (
   possibleRoleName: string,
 ): number | undefined => {
@@ -206,10 +207,9 @@ export const getRoleGroupIndex = (
   })
   const fuseResults = fuse.search(possibleRoleName)
 
-  for (const fuseResult of fuseResults) {
-    for (const role of fuseResult.item.roleNames) {
-      return Number(role)
-    }
+  if (!Array.isArray(fuseResults) || !fuseResults.length) {
+    return 0
+  } else {
+    return fuseResults[0].refIndex
   }
-  return undefined
 }

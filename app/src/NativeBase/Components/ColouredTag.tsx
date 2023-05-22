@@ -24,10 +24,12 @@ const ColouredTag = ({ title }: ColouredTagProps) => {
   }
   const { colorMode } = useColorMode()
   const coloursToUse = colours[colorMode ?? 'light']
-  // const randomColour = coloursToUse[Math.floor(Math.random() * coloursToUse.length)]
 
   const roleIndex = getRoleGroupIndex(title)
-  const selectedColour = coloursToUse[0]
+  let selectedColour
+  if (roleIndex) {
+    selectedColour = coloursToUse[roleIndex % 3]
+  }
 
   if (title) {
     return (
@@ -40,7 +42,7 @@ const ColouredTag = ({ title }: ColouredTagProps) => {
         maxHeight="xs"
       >
         <Text _dark={{ color: selectedColour }} fontSize="xs">
-          {title} {roleIndex}
+          {title}
         </Text>
       </Box>
     )
