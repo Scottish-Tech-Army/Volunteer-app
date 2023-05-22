@@ -198,11 +198,13 @@ export const roleGroups: RoleGroup[] = [
   },
 ]
 
-const getRoleColour = (possibleRoleColour: string): Number | undefined => {
+export const getRoleGroupIndex = (
+  possibleRoleName: string,
+): number | undefined => {
   const fuse = new Fuse(roleGroups, {
     keys: ['roleNames'],
   })
-  const fuseResults = fuse.search(possibleRoleColour)
+  const fuseResults = fuse.search(possibleRoleName)
 
   for (const fuseResult of fuseResults) {
     for (const role of fuseResult.item.roleNames) {

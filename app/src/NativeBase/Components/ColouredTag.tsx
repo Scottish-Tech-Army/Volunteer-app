@@ -4,6 +4,7 @@
 
 import React from 'react'
 import { Box, Text, useColorMode } from 'native-base'
+import { getRoleGroupIndex } from '../../Services/modules/projects/roleGroups'
 
 type ColouredTagProps = {
   title: string
@@ -23,21 +24,23 @@ const ColouredTag = ({ title }: ColouredTagProps) => {
   }
   const { colorMode } = useColorMode()
   const coloursToUse = colours[colorMode ?? 'light']
-  const randomColour =
-    coloursToUse[Math.floor(Math.random() * coloursToUse.length)]
+  // const randomColour = coloursToUse[Math.floor(Math.random() * coloursToUse.length)]
+
+  const roleIndex = getRoleGroupIndex(title)
+  const selectedColour = coloursToUse[0]
 
   if (title) {
     return (
       <Box
         alignSelf="flex-start"
         _dark={{ backgroundColor: 'bg.100' }}
-        _light={{ backgroundColor: randomColour }}
+        _light={{ backgroundColor: selectedColour }}
         rounded="md"
         marginLeft={2}
         maxHeight="xs"
       >
-        <Text _dark={{ color: randomColour }} fontSize="xs">
-          {title}
+        <Text _dark={{ color: selectedColour }} fontSize="xs">
+          {title} {roleIndex}
         </Text>
       </Box>
     )
