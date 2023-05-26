@@ -190,6 +190,12 @@ This file `/api/services/slack.js` allows you to post messages to Slack. If you 
 3. Add the webhook as a variable in your `/api/.env` file (and in `/api/.env.example` but without the webhook URL itself). This variable must be named `SLACK_SECRET_WEBHOOK_` and then the name of the Slack channel, all in capitals and with hyphens replaced by underscores.
    > For example, if the Slack channel is called `my-awesome-channel`, the .env variable should be called `SLACK_SECRET_WEBHOOK_MY_AWESOME_CHANNEL`
 
+4. Add this variable to the Volunteer-app/.github/workflows/ci_api.yml file, following the format of the variables already listed there. 
+   > For example, the above .env variable would require the following entry at the bottom of the yml file: 
+     SLACK_SECRET_WEBHOOK_MY_AWESOME_CHANNEL: ${{ secrets.SLACK_SECRET_WEBHOOK_MY_AWESOME_CHANNEL}}
+
+5. Add this variable as a new [GitHub Actions Secret](https://github.com/Scottish-Tech-Army/Volunteer-app/settings/secrets/actions).
+
 # Deploying the app and API
 
 The app is currently deployed for internal testing. We deploy the API to AWS, and for the app, we use [Fastlane](https://fastlane.tools/) to deploy to [TestFlight](https://developer.apple.com/testflight/) (iOS) and the [Google Play Store](https://play.google.com/) (Android). Deployment instructions can be found [here](DEPLOYMENT.md).
