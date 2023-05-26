@@ -194,6 +194,7 @@ This file `/api/services/slack.js` allows you to post messages to Slack. If you 
    > For example, the above .env variable would require the following entry at the bottom of the yml file: 
      SLACK_SECRET_WEBHOOK_MY_AWESOME_CHANNEL: ${{ secrets.SLACK_SECRET_WEBHOOK_MY_AWESOME_CHANNEL}}
 
+5. Add this variable as a new [GitHub Actions Secret](https://github.com/Scottish-Tech-Army/Volunteer-app/settings/secrets/actions).
 
 # Deploying the app and API
 
