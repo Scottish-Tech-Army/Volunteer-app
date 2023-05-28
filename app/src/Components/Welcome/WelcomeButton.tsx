@@ -3,6 +3,7 @@
  */
 import React from 'react'
 import styled from 'styled-components/native'
+import { Button, VStack } from 'native-base'
 import { navigateAndSimpleReset } from '@/Navigators/utils'
 import { useTheme } from '@/Hooks'
 import { useDispatch } from 'react-redux'
@@ -40,12 +41,9 @@ const WelcomeButton = () => {
   }
 
   return (
-    <WelcomeButtonContainer
-      style={{ backgroundColor: Colors.welcomeButton }}
-      onPress={handlePress}
-    >
-      <GetStartedText style={[Fonts.poppins]}>Get Started</GetStartedText>
-    </WelcomeButtonContainer>
+    <VStack marginTop="6" paddingX="4" width="100%">
+      <Button onPress={handlePress}>Get Started</Button>
+    </VStack>
   )
 }
 

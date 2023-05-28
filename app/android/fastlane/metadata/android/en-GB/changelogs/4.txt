@@ -1,1 +1,0 @@
-Change the welcome message on the loading screen
