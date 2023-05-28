@@ -4,7 +4,6 @@
 
 import React, { Dispatch, FC, Ref, SetStateAction } from 'react'
 import { WelcomeSlide } from './WelcomeSlides'
-import { useTheme } from '@/Hooks'
 import styled from 'styled-components/native'
 import { Text, Heading } from 'native-base'
 
@@ -18,19 +17,6 @@ const TextContainer = styled.View`
     width:358px;
     height:25%;
     paddingHorizontal:8px;
-`
-
-const TitleText = styled.Text`
-    textAlign:center;
-    marginTop:7%;
-    marginBottom:3%;
-`
-
-const SlideText = styled.Text`
-    textAlign:center;
-    fontSize:18px;
-    marginTop:1%;
-    marginBottom:1%;
 `
 
 const FList = styled.FlatList`
@@ -72,7 +58,7 @@ const WelcomeSlider: FC<SliderProps> = ({
           </Heading>
           <Text
             numberOfLines={3}
-            fontFamily="Poppins-medium"
+            fontFamily="Poppins-Medium"
             fontSize="20"
             padding="0"
             textAlign="center"

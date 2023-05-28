@@ -18,6 +18,7 @@ const isAndroidRTL = I18nManager.isRTL && Platform.OS === 'android'
 const PageBottom = styled.View`
     height:6%;
     marginTop:5px;
+    width: 100%;
 `
 
 const WelcomeContainer = () => {
