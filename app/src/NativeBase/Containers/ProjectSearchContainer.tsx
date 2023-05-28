@@ -6,11 +6,7 @@ import React, { useState } from 'react'
 import Fuse from 'fuse.js' // fuzzy text search - see docs at https://fusejs.io
 import { ScrollView } from 'native-base'
 import { useSelector } from 'react-redux'
-import {
-  ListRouteParams,
-  ListSearch,
-  ListType,
-} from '../../NativeBase/Containers/ListContainer'
+import { ListRouteParams, ListSearch, ListType } from './ListContainer'
 import ChoicesList, { ChoicesListChoice } from '../Components/ChoicesList'
 import FreeSearchBar from '../Components/FreeSearchBar'
 import SegmentedPicker, {
