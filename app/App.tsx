@@ -22,7 +22,7 @@ SplashScreen.preventAutoHideAsync()
 const App = () => {
   const [fontsLoaded] = useFonts({
     'BebasNeue-Regular': require('./src/Assets/Fonts/BebasNeue-Regular.ttf'),
-    IcoMoon: require('./src/Assets/Fonts/icomoon.ttf'),
+    IcoMoon: require('./assets/icomoon.ttf'), // could only get this to work with font file in this directory, following example at https://docs.expo.dev/guides/icons/#createiconsetfromicomoon
     'Poppins-Bold': require('./src/Assets/Fonts/Poppins-Bold.ttf'),
     'Poppins-Medium': require('./src/Assets/Fonts/Poppins-Medium.ttf'),
     'Poppins-Regular': require('./src/Assets/Fonts/Poppins-Medium.ttf'),
