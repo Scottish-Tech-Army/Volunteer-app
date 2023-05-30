@@ -86,6 +86,48 @@ Alternatively, you can go to the link in the instructions above for installing t
 
    > **Note** you may need to run `npm install --legacy-peer-deps` or `npm install --force`
 
+========================
+
+## Expo
+
+TODO:
+* Fonts
+* Resolve npm warnings
+* App config
+* GitHub workflows
+* Husky
+
+
+Download Expo Go app to your phone [add link]
+
+`npm start`  This will run some commands and then show you a QR code in your terminal
+
+! check Expo docs about start/tunnelling in case anything to add here
+
+Connect on your phone:
+- iPhone: open the camera and scan the QR code
+- Android: in the Expo Go app itself you can scan the QR code
+
+This should open a dev version of the app on your phone -- now any changes you make in your code should show instantly on your phone
+
+> If the app on your phone isn't showing the latest changes in your code, first you could try reloading it -- while viewing the app in Expo Go, shake your phone and it should show you some options include 'Reload'
+> Sometimes the dev server loses connection with your phone, in which case you can try restarting the dev server -- in your terminal, press Ctrl+C to stop the dev server, then run `npm start` again
+> If you're still having problems seeing changes, instead of `npm start` try `npx expo start --tunnel --clear` (this does the same thing but clears the Metro cache -- it'll be slower to load)
+
+...
+
+**To install new packages, always use** `npx expo install name-of-the-package-goes-here` instead of `npm install name-of-the-package-goes-here` -- this ensures the Expo CLI will install it properly if there is some specific Expo setup that needs to be included with the installation of your package (if not, it'll install it using `npm`)
+
+**For dev packages (for use in the development environment only), use** `npx expo install name-of-the-package-goes-here -- --save-dev`
+
+...
+
+Gotchas moving over:
+- Local API URL might change
+- Expo Go doesn't always automatically refresh with changes (any extra tips?)
+
+========================
+
 9. If you are on a Mac and want to run the iOS build of the app, go to the `app/ios` folder in a terminal window. At the command prompt type `bundle install` followed by `pod install`.
    > **Note** If the dependencies in `/api` or `/app` folders have been updated, the pods might need reinstalled as follows:
 
