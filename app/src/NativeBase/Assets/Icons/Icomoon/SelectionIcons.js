@@ -6,7 +6,11 @@
  * See https://icomoon.io/#docs for more info.
  */
 
-import { createIconSetFromIcoMoon } from 'react-native-vector-icons'
+import { createIconSetFromIcoMoon } from '@expo/vector-icons'
 import icoMoonConfig from './selection.json'
 
-export default createIconSetFromIcoMoon(icoMoonConfig)
+export default createIconSetFromIcoMoon(
+  icoMoonConfig,
+  'IcoMoon',
+  'icomoon.ttf',
+)

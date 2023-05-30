@@ -22,6 +22,7 @@ SplashScreen.preventAutoHideAsync()
 const App = () => {
   const [fontsLoaded] = useFonts({
     'BebasNeue-Regular': require('./src/Assets/Fonts/BebasNeue-Regular.ttf'),
+    IcoMoon: require('./src/Assets/Fonts/icomoon.ttf'),
     'Poppins-Bold': require('./src/Assets/Fonts/Poppins-Bold.ttf'),
     'Poppins-Medium': require('./src/Assets/Fonts/Poppins-Medium.ttf'),
     'Poppins-Regular': require('./src/Assets/Fonts/Poppins-Medium.ttf'),
