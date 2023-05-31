@@ -62,7 +62,7 @@ You can see [the full list of Expo SDK libraries here](https://docs.expo.dev/ver
 
 **To install new npm packages for the front-end app, always use** `npx expo install name-of-the-package-goes-here` instead of `npm install name-of-the-package-goes-here` -- this ensures the Expo CLI will install it properly if it's part of the Expo SDK library / needs some specific Expo setup that needs to be included with the installation of your package (if not, it'll simply install it using `npm`).
 
-**For dev packages (for use in the development environment only), use** `npx expo install name-of-the-package-goes-here -- --save-dev` (instead of `npm install name-of-the-package-goes-here --save-dev`)
+**For dev packages (for use in the development environment only), use** `npm install name-of-the-package-goes-here --save-dev`
 
 ### Expo known issues
 
