@@ -12,7 +12,7 @@ import { useSelector } from 'react-redux'
 import { Text } from 'native-base'
 
 const StartupContainer = () => {
-  const { Layout, Gutters, Fonts } = useTheme()
+  const { Layout, Gutters } = useTheme()
 
   const showWelcome = useSelector(
     (state: { welcome: WelcomeState }) => state.welcome.show,
