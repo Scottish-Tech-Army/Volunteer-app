@@ -145,6 +145,7 @@ Below are some commonly encountered issues and possible ways to resolve them. If
 
 - The app gets stuck on the 'loading' screen
   > Make sure the API is running on your local machine, and that your **api/.env** and **app/Config/index.ts** files are configured correctly (see [Setup and first run](#setup-and-first-run) above)
+  > Make sure you have two terminal windows open running the API: one running `npm start` and one running `npm run tunnel-linux` or `npm run tunnel-windows` (see above), both are needed in order for the app to be able to connect to the API
 - The app crashes with an error that says 'Metro has encountered an error: Cannot read properties of undefined (reading 'transformFile')'
   > Make sure you are using the LTS version of Node (currently v16); see [suggested solutions on StackOverflow](https://stackoverflow.com/questions/69647332/cannot-read-properties-of-undefined-reading-transformfile-at-bundler-transfo). If you want to keep your current version of Node as well, you can use tools such as [nvm (MacOS/Linux)](https://github.com/nvm-sh/nvm) or [nvm-windows](https://github.com/coreybutler/nvm-windows) to manage your Node installations.
 - The app crashes with an opensslErrorStack: (error: 03000086)
