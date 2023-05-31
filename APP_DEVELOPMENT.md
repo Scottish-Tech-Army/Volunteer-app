@@ -4,6 +4,10 @@ This file contains some tips and guidelines on building our front-end React Nati
 
 - [Overview of directories](#overview-of-directories)
 - [Working with Figma](#working-with-figma)
+- [React Native and Expo](#react-native-and-expo)
+  - [Expo trade-offs](#expo-trade-offs)
+  - [Installing new packages](#installing-new-packages)
+  - [Known issues](#known-issues)
 - [NativeBase](#nativebase)
   - [File locations, naming, moving and deleting](#file-locations-naming-moving-and-deleting)
   - [Theming & approach](#theming--approach)
@@ -16,9 +20,11 @@ This file contains some tips and guidelines on building our front-end React Nati
 
 ## Overview of directories
 
-**Below is a brief rundown of the different directories inside `/app/src` and what they're for.**
+**Within the `app` directory here is an `app/assets` directory** which is used by Expo for things like the app icon and splash screen.
 
-(There are also some other files and folders inside `/app` but you mostly won't need to touch these, unless for instance you're installing new npm packages or changing settings affecting Android or iOS. Please see also the [NativeBase section](#nativebase) below -- some files are moving into the `NativeBase` directory.)
+Most files live within the `app/src` directory.
+
+**Below is a brief rundown of the different directories inside `/app/src` and what they're for.**
 
 - `/Assets` -- fonts, images and other static files that are core to the app
 - `/Components` -- custom components that make up different parts of an app screen, e.g. a date search that might belong inside an event search container
@@ -37,6 +43,33 @@ This file contains some tips and guidelines on building our front-end React Nati
 ## Working with Figma
 
 The app designs are produced in Figma.  You can inspect different elements within a design by clicking on them (you might have to double-click to get to an element inside a group) -- and then on the right-hand side of the screen [you can inspect different properties](https://help.figma.com/hc/en-us/articles/360055203533-Use-the-Inspect-panel) e.g. the exact size in pixels, the spacing around it, colours, etc.
+
+## React Native and Expo
+
+Our app is built using React Native working with the [Expo CLI (command-line tool).](https://docs.expo.dev/more/expo-cli/) and [Expo Go.](https://expo.dev/client)
+
+It's easy to be confused about React Native and Expo, partly because they have changed over time as has the relationship between them (it's easy to find articles which are out of date) and because there are different ways to use them.  [This article](https://retool.com/blog/expo-cli-vs-react-native-cli/) has quite a good background.
+
+### Expo trade-offs
+
+We are use the Expo CLI and Expo Go because they make development and deployment of the app a lot easier.  The main trade-off is that we cannot use every npm package that works with React Native.
+
+There are many React Native packages we can use, but when it involves interacting with the device hardware (e.g. camera, GPS, etc) or the OS (e.g. the clipboard, file storage or sharing) or occasionally other areas (e.g. SVGs) then we are usually limited to packages that are supported as part of the Expo SDK library.
+
+You can see [the full list of Expo SDK libraries here](https://docs.expo.dev/versions/latest/sdk/accelerometer/) -- browse the menu to see all the different packages.
+
+### Installing new packages
+
+**To install new npm packages for the front-end app, always use** `npx expo install name-of-the-package-goes-here` instead of `npm install name-of-the-package-goes-here` -- this ensures the Expo CLI will install it properly if it's part of the Expo SDK library / needs some specific Expo setup that needs to be included with the installation of your package (if not, it'll simply install it using `npm`).
+
+**For dev packages (for use in the development environment only), use** `npx expo install name-of-the-package-goes-here -- --save-dev` (instead of `npm install name-of-the-package-goes-here --save-dev`)
+
+### Known issues
+
+- **If the app on your phone isn't showing the latest changes in your code** first you could try reloading it -- while viewing the app in Expo Go, shake your phone and it should show you some options include 'Reload'
+- **Sometimes the dev server loses connection with your phone** in which case you can try restarting the dev server -- in your terminal, press Ctrl+C to stop the dev server, then run `npm start` again
+- **If you're still having problems not seeing changes you have made on your phone** instead of `npm start` try `npm run start-clear-cache` (this does the same thing but also clears the Expo cache, so it'll be slower to load, but should force any changes to come through)
+- **Previewing the app in Expo Go, it doesn't pick up the colour mode set on your phone** (we need to check, but assume this shouldn't be an issue when the app is built and deployed) -- for testing purposes you can manually set dark/light mode on the Settings screen
 
 ## NativeBase
 

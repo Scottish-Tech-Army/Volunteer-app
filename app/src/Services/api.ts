@@ -10,7 +10,7 @@ import {
   FetchBaseQueryError,
 } from '@reduxjs/toolkit/query/react'
 
-const baseQuery = fetchBaseQuery({ baseUrl: Config.API_URL })
+const baseQuery = fetchBaseQuery({ baseUrl: '' })
 export type ApiBaseQueryFunctionType = BaseQueryFn<
   string | FetchArgs,
   unknown,
