@@ -2,14 +2,16 @@
  * @file Jest test for App.tsx
  * @format
  */
-import 'react-native'
-import React from 'react'
-import App from '../App'
+
+// TODO: Jest needs to be properly set up for this to work
+
+// import 'react-native'
+// import React from 'react'
+// import App from '../App'
 
 // Note: test renderer must be required after react-native.
-import renderer from 'react-test-renderer'
+// import renderer from 'react-test-renderer'
 
-// TODO: Jest needs to be properly set up
 // it('renders correctly', () => {
 //   renderer.create(<App />)
 // })
