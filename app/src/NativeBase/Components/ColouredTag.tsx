@@ -4,7 +4,7 @@
 
 import React from 'react'
 import { Box, Text, useColorMode } from 'native-base'
-import { getRoleGroupIndex } from '../../Services/modules/projects/roleGroups'
+import { getRoleGroupIndex } from '@/Services/modules/projects/roleGroups'
 
 type ColouredTagProps = {
   title: string
@@ -26,7 +26,7 @@ const ColouredTag = ({ title }: ColouredTagProps) => {
   const coloursToUse = colours[colorMode ?? 'light']
 
   const roleIndex = getRoleGroupIndex(title)
-  let selectedColour
+  let selectedColour = coloursToUse[0]
   if (roleIndex) {
     selectedColour = coloursToUse[roleIndex % coloursToUse.length]
   }

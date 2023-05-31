@@ -198,10 +198,8 @@ export const roleGroups: RoleGroup[] = [
   },
 ]
 
-// Gets an index for NativeBase/Components/ColouredTag.tsx
-export const getRoleGroupIndex = (
-  possibleRoleName: string,
-): number | undefined => {
+// Gets an index for of the Role Group (used for NativeBase/Components/ColouredTag.tsx)
+export const getRoleGroupIndex = (possibleRoleName: string): number => {
   const fuse = new Fuse(roleGroups, {
     keys: ['roleNames'],
   })
