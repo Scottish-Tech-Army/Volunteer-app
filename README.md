@@ -47,7 +47,7 @@ Alternatively, you can go to the link in the instructions above for installing t
 
 # Requirements to run the project:
 
-1. Node.js LTS release
+1. Node.js LTS release ([the 'ACTIVE' version here](https://nodejs.dev/en/about/releases/))
 2. npm
    > npm usually is installed when Node.js is installed. Run the command `npm --version` to check if it is installed after installing Node.js in Command Terminal
 3. npx
