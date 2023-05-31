@@ -48,9 +48,7 @@ const App = () => {
     if (fontsLoaded) SplashScreen.hideAsync().then(() => setDisplayApp(true))
   }, [fontsLoaded])
 
-  if (!displayApp) {
-    return null
-  }
+  if (!displayApp) return null
 
   return (
     <Provider store={store}>
