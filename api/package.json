@@ -4,8 +4,10 @@
   "description": "RESTful API to surface the data required for the Volunteer App.",
   "main": "app.js",
   "scripts": {
-    "test": "jest",
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "tunnel-linux": "export $(cat .env | xargs) && npx localtunnel  --port 3000 --subdomain $API_TUNNEL_SUBDOMAIN",
+    "tunnel-windows": "(for /F \"tokens=*\" %i in (.env) do set %i) && npx localtunnel  --port 3000 --subdomain $API_TUNNEL_SUBDOMAIN",
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
