@@ -23,10 +23,24 @@ const App = () => {
   const [fontsLoaded] = useFonts({
     'BebasNeue-Regular': require('./src/Assets/Fonts/BebasNeue-Regular.ttf'),
     IcoMoon: require('./assets/icomoon.ttf'), // could only get this to work with font file in this directory, following example at https://docs.expo.dev/guides/icons/#createiconsetfromicomoon
+    'Poppins-Black': require('./src/Assets/Fonts/Poppins-Black.ttf'),
+    'Poppins-BlackItalic': require('./src/Assets/Fonts/Poppins-BlackItalic.ttf'),
     'Poppins-Bold': require('./src/Assets/Fonts/Poppins-Bold.ttf'),
+    'Poppins-BoldItalic': require('./src/Assets/Fonts/Poppins-BoldItalic.ttf'),
+    'Poppins-ExtraBold': require('./src/Assets/Fonts/Poppins-ExtraBold.ttf'),
+    'Poppins-ExtraBoldItalic': require('./src/Assets/Fonts/Poppins-ExtraBoldItalic.ttf'),
+    'Poppins-ExtraLight': require('./src/Assets/Fonts/Poppins-ExtraLight.ttf'),
+    'Poppins-ExtraLightItalic': require('./src/Assets/Fonts/Poppins-ExtraLightItalic.ttf'),
+    'Poppins-Italic': require('./src/Assets/Fonts/Poppins-Italic.ttf'),
+    'Poppins-Light': require('./src/Assets/Fonts/Poppins-Light.ttf'),
+    'Poppins-LightItalic': require('./src/Assets/Fonts/Poppins-LightItalic.ttf'),
     'Poppins-Medium': require('./src/Assets/Fonts/Poppins-Medium.ttf'),
-    'Poppins-Regular': require('./src/Assets/Fonts/Poppins-Medium.ttf'),
-    'Poppins-SemiBold': require('./src/Assets/Fonts/Poppins-Medium.ttf'),
+    'Poppins-MediumItalic': require('./src/Assets/Fonts/Poppins-MediumItalic.ttf'),
+    'Poppins-Regular': require('./src/Assets/Fonts/Poppins-Regular.ttf'),
+    'Poppins-SemiBold': require('./src/Assets/Fonts/Poppins-SemiBold.ttf'),
+    'Poppins-SemiBoldItalic': require('./src/Assets/Fonts/Poppins-SemiBoldItalic.ttf'),
+    'Poppins-Thin': require('./src/Assets/Fonts/Poppins-Thin.ttf'),
+    'Poppins-ThinItalic': require('./src/Assets/Fonts/Poppins-ThinItalic.ttf'),
   })
   const [displayApp, setDisplayApp] = useState(false)
 
