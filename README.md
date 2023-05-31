@@ -52,9 +52,15 @@ Alternatively, you can go to the link in the instructions above for installing t
    > npm usually is installed when Node.js is installed. Run the command `npm --version` to check if it is installed after installing Node.js in Command Terminal
 3. npx
    > Once you have npm, run the command `npx --version` to check if npx is installed. If that doesn't work, you can install npx with the command `npm install -g npx`
-4. [Install the Expo Go app on your iOS or Android phone](https://expo.dev/client) -- when you're developing the app locally, you'll use Expo Go to test the app on your phone.
+4. [Install the Expo Go app on your iOS or Android phone](https://expo.dev/client) -- when you're developing the app locally, you'll use Expo Go to test the app on your phone.  As part of this you'll need to [set up an Expo account](https://expo.dev/signup) if you don't have one already.
 
 # Code editor
+
+You can develop on your local machine.
+
+Or if you want, you can use a cloud-based alternative like [GitHub Codespaces](https://github.com/features/codespaces) (this might be good if you have a very slow laptop for instance).  With a free GitHub plan you get up to 60 hours a month of development time in Codespaces (which is probably plenty to volunteer on this project!)  You can [start a codespace here](https://github.com/codespaces) -- use the Blank template.
+
+## Visual Studio Code
 
 If you're using Visual Studio Code for development, it's recommended that you:
 
@@ -108,12 +114,12 @@ If you're using Visual Studio Code for development, it's recommended that you:
 
 11. Duplicate the example config file `app/src/Config/index.example.ts` and name your new file `app/src/Config/index.ts`  Set the value of `STA_BASE_URL` to the tunnelled URL of your local API server (the one you made a note of in step 8 above).
 
-12. Run Expo using the command `npm start`  This will run some commands and then it show you a QR code in your terminal.
+12. Run Expo using `npm start`  This will run some commands and then it show you a QR code in your terminal.
 
 13. Connect your phone:
 - **iPhone:** open the camera and scan the QR code, tap on the link and it should open up the app in Expo Go
 - **Android:** open the Expo Go app itself and you can scan the QR code
-- You should now see your local development version of the app on your phone -- now any changes you make in your code should show instantly on your phone.  (If you find you're not seeing changes on your phone or Expo Go loses the connection, [see tips here.](APP_DEVELOPMENT.md#known-issues))
+- You should now see your local development version of the app on your phone -- any changes you make in your code should show almost instantly on your phone.  (If you find you're not seeing changes on your phone or Expo Go loses the connection, [see tips here.](APP_DEVELOPMENT.md#known-issues))
 
 14. When you've got the app to run, make a PR to improve this README! Fix something that caused you headaches, update something that's no longer correct, or add a training resource, or add something else you think would help other people to get up and running.
 
@@ -146,7 +152,7 @@ Below are some commonly encountered issues and possible ways to resolve them. If
 
 ## The app in Expo Go isn't showing my changes or has lost connection
 
-[See the tips here](APP_DEVELOPMENT.md#known-issues)
+- [See the tips here](APP_DEVELOPMENT.md#known-issues)
 
 # Subsequent run
 
@@ -156,9 +162,9 @@ Below are some commonly encountered issues and possible ways to resolve them. If
 
 3. In a separate terminal window, in the `api` folder enter `npm run tunnel-linux` or `npm run tunnel-windows` to tunnel your API server so the app in Expo Go can connect to it.
 
-4. Go to the `app` folder inside the project folder (e.g. **/path/to/Volunteer-app/app**) and enter `npm start`.
+4. Go to the `app` folder inside the project folder (e.g. **/path/to/Volunteer-app/app**) and enter `npm start` to run Expo
 
-5. Connect your phone to your local development version of the app: 
+5. Connect your phone to your local development version of the app in Expo Go: 
 - **iPhone:** open the camera and scan the QR code, this should open up the app in Expo Go
 - **Android:** open the Expo Go app itself and you can scan the QR code
    > If you find you're not seeing changes on your phone or Expo Go loses the connection, [see tips here.](APP_DEVELOPMENT.md#known-issues)

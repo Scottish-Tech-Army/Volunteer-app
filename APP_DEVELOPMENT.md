@@ -7,7 +7,7 @@ This file contains some tips and guidelines on building our front-end React Nati
 - [React Native and Expo](#react-native-and-expo)
   - [Expo trade-offs](#expo-trade-offs)
   - [Installing new packages](#installing-new-packages)
-  - [Known issues](#known-issues)
+  - [Expo known issues](#expo-known-issues)
 - [NativeBase](#nativebase)
   - [File locations, naming, moving and deleting](#file-locations-naming-moving-and-deleting)
   - [Theming & approach](#theming--approach)
@@ -52,9 +52,9 @@ It's easy to be confused about React Native and Expo, partly because they have c
 
 ### Expo trade-offs
 
-We are use the Expo CLI and Expo Go because they make development and deployment of the app a lot easier.  The main trade-off is that we cannot use every npm package that works with React Native.
+We are using the Expo CLI and Expo Go because they make development and deployment of the app a lot easier.  The main trade-off is that we cannot use every npm package that works with React Native.
 
-There are many React Native packages we can use, but when it involves interacting with the device hardware (e.g. camera, GPS, etc) or the OS (e.g. the clipboard, file storage or sharing) or occasionally other areas (e.g. SVGs) then we are usually limited to packages that are supported as part of the Expo SDK library.
+There are many React Native packages we can use, but when it involves interacting with the device hardware (e.g. camera, GPS, etc) or the OS (e.g. the clipboard, file storage or sharing) or occasionally other areas (e.g. SVGs) then we are usually limited to packages that are supported as part of the Expo SDK library (but for the kind of app we're building, this should be ok).
 
 You can see [the full list of Expo SDK libraries here](https://docs.expo.dev/versions/latest/sdk/accelerometer/) -- browse the menu to see all the different packages.
 
@@ -64,12 +64,12 @@ You can see [the full list of Expo SDK libraries here](https://docs.expo.dev/ver
 
 **For dev packages (for use in the development environment only), use** `npx expo install name-of-the-package-goes-here -- --save-dev` (instead of `npm install name-of-the-package-goes-here --save-dev`)
 
-### Known issues
+### Expo known issues
 
 - **If the app on your phone isn't showing the latest changes in your code** first you could try reloading it -- while viewing the app in Expo Go, shake your phone and it should show you some options include 'Reload'
 - **Sometimes the dev server loses connection with your phone** in which case you can try restarting the dev server -- in your terminal, press Ctrl+C to stop the dev server, then run `npm start` again
 - **If you're still having problems not seeing changes you have made on your phone** instead of `npm start` try `npm run start-clear-cache` (this does the same thing but also clears the Expo cache, so it'll be slower to load, but should force any changes to come through)
-- **Previewing the app in Expo Go, it doesn't pick up the colour mode set on your phone** (we need to check, but assume this shouldn't be an issue when the app is built and deployed) -- for testing purposes you can manually set dark/light mode on the Settings screen
+- **Previewing the app in Expo Go, it doesn't pick up the colour mode set on your phone** (we need to check, but assume this shouldn't be an issue when the app is built and deployed). For testing purposes you can manually set dark/light mode on the Settings screen.
 
 ## NativeBase
 
