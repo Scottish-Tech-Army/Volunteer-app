@@ -120,7 +120,7 @@ If you're using Visual Studio Code for development, it's recommended that you:
 13. Connect your phone:
 - **iPhone:** open the camera and scan the QR code, tap on the link and it should open up the app in Expo Go
 - **Android:** open the Expo Go app itself and you can scan the QR code
-- You should now see your local development version of the app on your phone -- any changes you make in your code should show almost instantly on your phone.  (If you find you're not seeing changes on your phone or Expo Go loses the connection, [see tips here.](APP_DEVELOPMENT.md#known-issues))
+- You should now see your local development version of the app on your phone -- any changes you make in your code should show almost instantly on your phone.  (If you find you're not seeing changes on your phone or Expo Go loses the connection, [see tips here.](APP_DEVELOPMENT.md#expo-known-issues))
 
 14. When you've got the app to run, make a PR to improve this README! Fix something that caused you headaches, update something that's no longer correct, or add a training resource, or add something else you think would help other people to get up and running.
 
@@ -154,7 +154,7 @@ Below are some commonly encountered issues and possible ways to resolve them. If
 
 ## The app in Expo Go isn't showing my changes or has lost connection
 
-- [See the tips here](APP_DEVELOPMENT.md#known-issues)
+- [See the tips here](APP_DEVELOPMENT.md#expo-known-issues)
 
 # Subsequent run
 
@@ -169,7 +169,7 @@ Below are some commonly encountered issues and possible ways to resolve them. If
 5. Connect your phone to your local development version of the app in Expo Go: 
 - **iPhone:** open the camera and scan the QR code, this should open up the app in Expo Go
 - **Android:** open the Expo Go app itself and you can scan the QR code
-   > If you find you're not seeing changes on your phone or Expo Go loses the connection, [see tips here.](APP_DEVELOPMENT.md#known-issues)
+   > If you find you're not seeing changes on your phone or Expo Go loses the connection, [see tips here.](APP_DEVELOPMENT.md#expo-known-issues)
 
 # Development
 
