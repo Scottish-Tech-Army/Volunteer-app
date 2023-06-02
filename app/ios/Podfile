@@ -26,5 +26,16 @@ target 'STA' do
 
   post_install do |installer|
     react_native_post_install(installer)
+    # Add these lines for Xcode 14 builds
+    installer.generated_projects.each do |project|
+      project.targets.each do |target|
+          target.build_configurations.each do |config|
+              config.build_settings["DEVELOPMENT_TEAM"] = "TEAM ID" 
+              # Team ID found on the apple developer website https://developer.apple.com/account/#/membership under the menu 
+              # "Certificates, Identifiers & Profiles" and then look at the top right under your account name.
+          end
+      end
+    end
+    # End of added lines
   end
 end
