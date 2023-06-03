@@ -9,7 +9,7 @@ import {
 import { useRoute } from '@react-navigation/native'
 import { ListContainer } from '@/Containers'
 import { ListType } from '@/NativeBase/Containers/ListContainer'
-import { ProfileContainer } from '@/NativeBase/Containers'
+import { ProfileContainer, SettingsContainer } from '@/NativeBase/Containers'
 import SelectionIcons from '@/NativeBase/Assets/Icons/Icomoon/SelectionIcons'
 import { View, useColorMode, Text, Icon } from 'native-base'
 import StaTheme from '@/NativeBase/Theme/StaTheme'
@@ -157,8 +157,16 @@ const MainNavigator = () => {
         }}
       /> */}
       <Tab.Screen
-        name="Settings"
+        name="Profile"
         component={ProfileContainer}
+        options={{
+          headerShown: false,
+          ...bottomTabOptions,
+        }}
+      />
+      <Tab.Screen
+        name="Settings"
+        component={SettingsContainer}
         options={{
           ...bottomTabOptions,
         }}
