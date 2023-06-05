@@ -110,6 +110,9 @@ If you're using Visual Studio Code for development, it's recommended that you:
 
 12. Run Expo using `npm start`  This will run some commands and then it show you a QR code in your terminal.
 
+  > You may get an automatic prompt to install `@expo/ngrok` or another package -- if so, type `y` to install it.
+  > If you get stuck at this stage, you might need to install `@expo/ngrok` manually, globally on your local machine: run `npm install -g @expo/ngrok` then try running `npm start` again.
+
 13. Connect your phone:
 - **iPhone:** open the camera and scan the QR code, tap on the link and it should open up the app in Expo Go
 - **Android:** open the Expo Go app itself and you can scan the QR code
@@ -132,6 +135,10 @@ Below are some commonly encountered issues and possible ways to resolve them. If
 
 - When I run `npm install`, it fails with dependency resolution errors
   > Sometimes this happens when one or more of the project dependencies gets updated and is out of step with the others. Try running `npm install --legacy-peer-deps` or `npm install --force`.
+
+- I can't get Expo started in my terminal when I run `npm start` in the `app` directory
+   > You may get an automatic prompt to install `@expo/ngrok` or another package -- if so, type `y` to install it.
+  > If you get stuck at this stage, you might need to install `@expo/ngrok` manually, globally on your local machine: run `npm install -g @expo/ngrok` then try running `npm start` again.
 
 ## The app gets stuck loading projects
 
