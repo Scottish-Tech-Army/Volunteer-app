@@ -3,6 +3,8 @@
  * These are used e.g. for searching projects
  */
 
+import Fuse from 'fuse.js'
+
 export interface RoleGroup {
   groupName: RoleGroupName
   roleNames: string[]
@@ -195,3 +197,17 @@ export const roleGroups: RoleGroup[] = [
     ],
   },
 ]
+
+// Gets an index for of the Role Group (used for NativeBase/Components/ColouredTag.tsx)
+export const getRoleGroupIndex = (possibleRoleName: string): number => {
+  const fuse = new Fuse(roleGroups, {
+    keys: ['roleNames'],
+  })
+  const fuseResults = fuse.search(possibleRoleName)
+
+  if (!Array.isArray(fuseResults) || !fuseResults.length) {
+    return 0
+  } else {
+    return fuseResults[0].refIndex
+  }
+}
