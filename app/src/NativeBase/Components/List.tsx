@@ -10,7 +10,7 @@ import { navigate, RootStackParamList } from '@/Navigators/utils'
 import { Events, EventsRange } from '@/Services/modules/events'
 import { Projects } from '@/Services/modules/projects'
 import underDevelopmentAlert from '../../Utils/UnderDevelopmentAlert'
-import ColouredTag from '../Components/ColouredTag'
+import ColouredTag from './ColouredTag'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
 import {

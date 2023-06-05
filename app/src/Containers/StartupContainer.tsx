@@ -3,7 +3,6 @@
  */
 import React, { useEffect } from 'react'
 import { ActivityIndicator, View } from 'react-native'
-import { useTranslation } from 'react-i18next'
 import { useTheme } from '@/Hooks'
 import Brand from '@/NativeBase/Components/Brand'
 import { setDefaultTheme } from '@/Store/Theme'
@@ -13,9 +12,7 @@ import { useSelector } from 'react-redux'
 import { Text } from 'native-base'
 
 const StartupContainer = () => {
-  const { Layout, Gutters, Fonts } = useTheme()
-
-  const { t } = useTranslation()
+  const { Layout, Gutters } = useTheme()
 
   const showWelcome = useSelector(
     (state: { welcome: WelcomeState }) => state.welcome.show,
@@ -45,14 +42,13 @@ const StartupContainer = () => {
       <Brand />
       <ActivityIndicator size={'large'} style={[Gutters.largeVMargin]} />
       <Text
-        numberOfLines={1}
-        fontFamily="Poppins-medium"
-        fontSize="18"
-        padding="0"
-        textAlign="center"
         adjustsFontSizeToFit
+        numberOfLines={1}
+        fontSize="18"
+        padding="8"
+        textAlign="center"
       >
-        {t('welcome')}
+        Welcome to the Scottish Tech Army App
       </Text>
     </View>
   )
