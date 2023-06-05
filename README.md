@@ -86,22 +86,15 @@ If you're using Visual Studio Code for development, it's recommended that you:
 
    > **For security reasons, the credentials themselves are not provided here.** Ask in the [volunteer-app](https://scottishtecharmy.slack.com/archives/C01SUL6K5E1) Slack channel when you join the dev group, and somebody will send them to you.
 
-   > **The variable `API_TUNNEL_SUBDOMAIN` is different to all the others -- it's personal to you.**  For this value, you should enter your own name in lowercase with only dashes in between, followed by a random string of letters and numbers.  (Your local API will be exposed externally so this makes it a little harder for a bot or hacker to find.)  For example if your name is Nadia Bloggs: `API_TUNNEL_SUBDOMAIN="nadia-bloggs-dfkjhdfkj3847594385ksjksd"`
-   (Don't use the random numbers and letters above, make up your own 🙂)
-
-   > **Do not use any comments in your `api/.env` file** (it's technically possible to put comments using the `#` character, but this causes problems for the API tunnel command we're going to use below)
-
 6. At the command prompt run `npm install` to install dependencies
 
 > **Note** Inside the `api` folder there are files `package.json` and `package-lock.json`. Every time either of these is modified, it is advised to repeat this step before running the project.
 
 7. Then run the command `npm start` to start the Volunteer App API server. You should see a message that says `Running scheduled cron jobs... ` and `Volunteer App API is listening on port <number>`.  Leave this terminal window open.
 
-8. Open another terminal window and in this new window run the command `npm run tunnel-linux` (if you are on a Mac or Linux) or `npm run tunnel-windows` (if you are on Windows). This 'tunnels' your local API server: makes it available externally so your app running in Expo Go can access it.  You should see a message saying your `your url is: https://.............` -- this is the URL of your local API server, make a note of it as you'll need it in a minute.
+8. Open another terminal window and in this new window run the command `npm run tunnel`. This 'tunnels' your local API server: makes it available externally so your app running in Expo Go can access it (using a free external service called [Serveo](https://serveo.net/)).  You should see a message saying your `Forwarding HTTP traffic from: https://xxxxxxxxx.serveo.net` -- this is the URL of your local API server, make a note of it as you'll need it in a minute.
 
-   > This URL should include the value you set for `API_TUNNEL_SUBDOMAIN` in your `api/.env` file, e.g. something like `https://nadia-bloggs-dfkjhdfkj3847594385ksjksd.loca.lt`
-
-   > **If you get an error message `export: #: bad variable name`** that's because you have a comment in your `api/.env` file.  Remove the comment and try again.
+   > This URL should generally stay the same each time you run the tunnel command, but if you find it changes, you'll need to update the `STA_BASE_URL` value in your `app/src/Config/index.ts` file (see step 11 below). (There are paid services or more complicated solutions we could use which guarantee a fixed URL, but for now this feels like the best solution that's easy to use and free for all devs in the team.)
 
 ## App
 
@@ -134,8 +127,6 @@ Below are some commonly encountered issues and possible ways to resolve them. If
   > It is likely there is an instance of a server running already. To end the old instance, in terminal put in:
   ``kill -9 `lsof -i:3000 -t` ``
   and try running the server again.
-- When I run  `npm run tunnel-linux` or `npm run tunnel-windows` in `/api` folder, I get an error message `export: #: bad variable name`
-   > That's probably because you have a comment (beginning with `#`) in your `api/.env` file.  Remove the comment and try again.
 
 ## The app won't build
 
@@ -144,9 +135,10 @@ Below are some commonly encountered issues and possible ways to resolve them. If
 
 ## The app builds, but crashes when I run it
 
-- The app gets stuck on the 'loading' screen
+- The app gets stuck on the projects screen -- projects never load
   > Make sure the API is running on your local machine, and that your **api/.env** and **app/Config/index.ts** files are configured correctly (see [Setup and first run](#setup-and-first-run) above)
-  > Make sure you have two terminal windows open running the API: one running `npm start` and one running `npm run tunnel-linux` or `npm run tunnel-windows` (see above), both are needed in order for the app to be able to connect to the API
+  > Make sure you have two terminal windows open running the API: one running `npm start` and one running `npm run tunnel` (see above), both are needed in order for the app to be able to connect to the API
+  > Has your tunnelled URL changed? Check what you see in the terminal window where you've run `npm run tunnel` and see if it's the same as the `STA_BASE_URL` value in your `app/src/Config/index.ts` file -- if not, you need to update that file then restart the app.
 - The app crashes with an error that says 'Metro has encountered an error: Cannot read properties of undefined (reading 'transformFile')'
   > Make sure you are using the LTS version of Node (currently v16); see [suggested solutions on StackOverflow](https://stackoverflow.com/questions/69647332/cannot-read-properties-of-undefined-reading-transformfile-at-bundler-transfo). If you want to keep your current version of Node as well, you can use tools such as [nvm (MacOS/Linux)](https://github.com/nvm-sh/nvm) or [nvm-windows](https://github.com/coreybutler/nvm-windows) to manage your Node installations.
 - The app crashes with an opensslErrorStack: (error: 03000086)
@@ -158,15 +150,13 @@ Below are some commonly encountered issues and possible ways to resolve them. If
 
 # Subsequent run
 
-1. Open Command terminal.
+1. In a terminal window, go to the `api` folder inside the project folder (e.g. **/path/to/Volunteer-app/api**) and enter `npm start` to start the Volunteer App API server.
 
-2. Go to the `api` folder inside the project folder (e.g. **/path/to/Volunteer-app/api**) and enter `npm start` to start the Volunteer App API server.
+2. In a second terminal window, in the `api` folder enter `npm run tunnel` to tunnel your API server so the app in Expo Go can connect to it.
 
-3. In a separate terminal window, in the `api` folder enter `npm run tunnel-linux` or `npm run tunnel-windows` to tunnel your API server so the app in Expo Go can connect to it.
+3. In a third terminal window, go to the `app` folder inside the project folder (e.g. **/path/to/Volunteer-app/app**) and enter `npm start` to run Expo
 
-4. Go to the `app` folder inside the project folder (e.g. **/path/to/Volunteer-app/app**) and enter `npm start` to run Expo
-
-5. Connect your phone to your local development version of the app in Expo Go: 
+4. Connect your phone to your local development version of the app in Expo Go: 
 - **iPhone:** open the camera and scan the QR code, this should open up the app in Expo Go
 - **Android:** open the Expo Go app itself and you can scan the QR code
    > If you find you're not seeing changes on your phone or Expo Go loses the connection, [see tips here.](APP_DEVELOPMENT.md#expo-known-issues)

@@ -5,8 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "nodemon server.js",
-    "tunnel-linux": "export $(cat .env | xargs) && npx localtunnel  --port 3000 --subdomain $API_TUNNEL_SUBDOMAIN",
-    "tunnel-windows": "(for /F \"tokens=*\" %i in (.env) do set %i) && npx localtunnel  --port 3000 --subdomain $API_TUNNEL_SUBDOMAIN",
+    "tunnel": "ssh -R 80:localhost:3000 serveo.net",
     "test": "jest"
   },
   "keywords": [],
