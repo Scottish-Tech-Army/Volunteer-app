@@ -133,12 +133,15 @@ Below are some commonly encountered issues and possible ways to resolve them. If
 - When I run `npm install`, it fails with dependency resolution errors
   > Sometimes this happens when one or more of the project dependencies gets updated and is out of step with the others. Try running `npm install --legacy-peer-deps` or `npm install --force`.
 
-## The app builds, but crashes when I run it
+## The app gets stuck loading projects
 
-- The app gets stuck on the projects screen -- projects never load
+- The app gets stuck on the Projects screen -- projects never load
   > Make sure the API is running on your local machine, and that your **api/.env** and **app/Config/index.ts** files are configured correctly (see [Setup and first run](#setup-and-first-run) above)
   > Make sure you have two terminal windows open running the API: one running `npm start` and one running `npm run tunnel` (see above), both are needed in order for the app to be able to connect to the API
   > Has your tunnelled URL changed? Check what you see in the terminal window where you've run `npm run tunnel` and see if it's the same as the `STA_BASE_URL` value in your `app/src/Config/index.ts` file -- if not, you need to update that file then restart the app.
+
+## The app builds, but crashes when I run it
+
 - The app crashes with an error that says 'Metro has encountered an error: Cannot read properties of undefined (reading 'transformFile')'
   > Make sure you are using the LTS version of Node (currently v16); see [suggested solutions on StackOverflow](https://stackoverflow.com/questions/69647332/cannot-read-properties-of-undefined-reading-transformfile-at-bundler-transfo). If you want to keep your current version of Node as well, you can use tools such as [nvm (MacOS/Linux)](https://github.com/nvm-sh/nvm) or [nvm-windows](https://github.com/coreybutler/nvm-windows) to manage your Node installations.
 - The app crashes with an opensslErrorStack: (error: 03000086)
