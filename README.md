@@ -113,6 +113,7 @@ If you're using Visual Studio Code for development, it's recommended that you:
 12. Run Expo using `npm start`  This will run some commands and then it show you a QR code in your terminal.
 
   > You may get an automatic prompt to install `@expo/ngrok` or another package -- if so, type `y` to install it.
+
   > If you get stuck at this stage, you might need to install `@expo/ngrok` manually, globally on your local machine: run `npm install -g @expo/ngrok` then try running `npm start` again.
 
 13. Connect your phone:
@@ -133,6 +134,9 @@ Below are some commonly encountered issues and possible ways to resolve them. If
   ``kill -9 `lsof -i:3000 -t` ``
   and try running the server again.
 
+- I'm not sure if my local API is running and successfully 'tunnelling' (working via a public Serveo URL)
+  > In the terminal window where you ran the `npm run tunnel` command, get the URL, then paste that URL into a web browser and add `/v1/projects` at the end -- if your local API is running and tunnelling successfully, you should see a JSON response with a list of projects. (If you don't see that, try the suggestion below, and also check the terminal window where you ran `npm start` and see if there are any error messages there.)
+
 - When I run `npm run tunnel` in the `api` folder, I get an error message similar to `autossh: not found`
    > You need to install `autossh`, see [requirements above](#requirements-to-run-the-project)
 
@@ -143,20 +147,27 @@ Below are some commonly encountered issues and possible ways to resolve them. If
 
 - I can't get Expo started in my terminal when I run `npm start` in the `app` directory
    > You may get an automatic prompt to install `@expo/ngrok` or another package -- if so, type `y` to install it.
+
   > If you get stuck at this stage, you might need to install `@expo/ngrok` manually, globally on your local machine: run `npm install -g @expo/ngrok` then try running `npm start` again.
 
 ## The app gets stuck loading projects
 
 - The app gets stuck on the Projects screen -- projects never load
   > Make sure the API is running on your local machine, and that your **api/.env** and **app/Config/index.ts** files are configured correctly (see [Setup and first run](#setup-and-first-run) above)
+
   > Make sure you have two terminal windows open running the API: one running `npm start` and one running `npm run tunnel` (see above), both are needed in order for the app to be able to connect to the API
+
+  > Check if you can see data coming through from the API.  In the terminal window where you ran the `npm run tunnel` command, get the URL, then paste that URL into a web browser and add `/v1/projects` at the end -- if your local API is running and tunnelling successfully, you should see a JSON response with a list of projects. (If you don't see that, try the suggestion below, and also check the terminal window where you ran `npm start` and see if there are any error messages there.)
+
   > Has your tunnelled URL changed? Check what you see in the terminal window where you've run `npm run tunnel` and see if it's the same as the `STA_BASE_URL` value in your `app/src/Config/index.ts` file -- if not, you need to update that file then restart the app.
+
   > Your API tunnel might have fallen asleep (although `autossh` tries to prevent this) -- try stopping the process (press Ctrl+C) in the window where you ran `npm run tunnel`, then run that command again.
 
 ## The app builds, but crashes when I run it
 
 - The app crashes with an error that says 'Metro has encountered an error: Cannot read properties of undefined (reading 'transformFile')'
   > Make sure you are using the LTS version of Node (currently v16); see [suggested solutions on StackOverflow](https://stackoverflow.com/questions/69647332/cannot-read-properties-of-undefined-reading-transformfile-at-bundler-transfo). If you want to keep your current version of Node as well, you can use tools such as [nvm (MacOS/Linux)](https://github.com/nvm-sh/nvm) or [nvm-windows](https://github.com/coreybutler/nvm-windows) to manage your Node installations.
+
 - The app crashes with an opensslErrorStack: (error: 03000086)
   > Make sure you are using Node v16 LTS due to known conflicts on some devices between OpenSSL and Node v17+; see [suggested solutions on StackOverflow](https://stackoverflow.com/questions/74726224/opensslerrorstack-error03000086digital-envelope-routinesinitialization-e).
 
