@@ -52,7 +52,9 @@ Alternatively, you can go to the link in the instructions above for installing t
    > npm usually is installed when Node.js is installed. Run the command `npm --version` to check if it is installed after installing Node.js in Command Terminal
 3. npx
    > Once you have npm, run the command `npx --version` to check if npx is installed. If that doesn't work, you can install npx with the command `npm install -g npx`
-4. [Install the Expo Go app on your iOS or Android phone](https://expo.dev/client) -- when you're developing the app locally, you'll use Expo Go to test the app on your phone.  As part of this you'll need to [set up an Expo account](https://expo.dev/signup) if you don't have one already.
+4. autossh
+   > This is used to tunnel your local API server so the app in Expo Go can connect to it.  There are [installation instructions here](https://www.everythingcli.org/ssh-tunnelling-for-fun-and-profit-autossh/#gfm-3)  (If you are on a Mac you'll need Brew to install autossh, if you don't have Brew [here's how to install that first](https://brew.sh/))
+5. [Install the Expo Go app on your iOS or Android phone](https://expo.dev/client) -- when you're developing the app locally, you'll use Expo Go to test the app on your phone.  As part of this you'll need to [set up an Expo account](https://expo.dev/signup) if you don't have one already.
 
 # Code editor
 
@@ -126,10 +128,13 @@ Below are some commonly encountered issues and possible ways to resolve them. If
 
 ## The API won't run
 
-- When I run `npm start` in `/api` folder, the server errors with code `EADDRINUSE`
+- When I run `npm start` in the `api` folder, the server errors with code `EADDRINUSE`
   > It is likely there is an instance of a server running already. To end the old instance, in terminal put in:
   ``kill -9 `lsof -i:3000 -t` ``
   and try running the server again.
+
+- When I run `npm run tunnel` in the `api` folder, I get an error message similar to `autossh: not found`
+   > You need to install `autossh`, see [requirements above](#requirements-to-run-the-project)
 
 ## The app won't build
 
@@ -146,6 +151,7 @@ Below are some commonly encountered issues and possible ways to resolve them. If
   > Make sure the API is running on your local machine, and that your **api/.env** and **app/Config/index.ts** files are configured correctly (see [Setup and first run](#setup-and-first-run) above)
   > Make sure you have two terminal windows open running the API: one running `npm start` and one running `npm run tunnel` (see above), both are needed in order for the app to be able to connect to the API
   > Has your tunnelled URL changed? Check what you see in the terminal window where you've run `npm run tunnel` and see if it's the same as the `STA_BASE_URL` value in your `app/src/Config/index.ts` file -- if not, you need to update that file then restart the app.
+  > Your API tunnel might have fallen asleep (although `autossh` tries to prevent this) -- try stopping the process (press Ctrl+C) in the window where you ran `npm run tunnel`, then run that command again.
 
 ## The app builds, but crashes when I run it
 
