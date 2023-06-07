@@ -6,8 +6,6 @@ const routes = require('./routes/index');
 const logging = require('./services/logging');
 const { version } = require('./package.json');
 
-console.log('process.env.BUGSNAG_API_KEY', process.env.BUGSNAG_API_KEY);
-console.log('process.env.NODE_ENV', process.env.NODE_ENV);
 if (logging.enableBugsnag()) {
   Bugsnag.start({
     apiKey: process.env.BUGSNAG_API_KEY,

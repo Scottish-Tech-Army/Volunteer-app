@@ -1,5 +1,6 @@
 const { faker } = require('@faker-js/faker');
 const airTable = require('../../helpers/airTable');
+const logging = require('../../services/logging');
 const airTableTestData = require('../../__test-data__/airTable');
 
 describe('Test the AirTable helpers', () => {
@@ -41,7 +42,7 @@ describe('Test the AirTable helpers', () => {
       _table: {
         name: fakeEventsTableName,
       },
-      id: faker.datatype.uuid(),
+      id: faker.string.uuid(),
       fields: {
         name: 'Microsoft AI',
         date: '2023-02-28',
@@ -57,13 +58,13 @@ describe('Test the AirTable helpers', () => {
 
     // Data for mocks
     const fakeSpeakersTableName = faker.lorem.words();
-    const fakeSpeakerName = faker.name.firstName() + " " + faker.name.lastName();
+    const fakeSpeakerName = faker.person.firstName() + " " + faker.person.lastName();
     const fakeSpeakerUrl = faker.internet.url();
     const fakeSpeakerRecord = {
       _table: {
         name: fakeSpeakersTableName,
       },
-      id: faker.datatype.uuid(),
+      id: faker.string.uuid(),
       fields: {
         name: fakeSpeakerName,
         url: fakeSpeakerUrl,
@@ -100,7 +101,7 @@ describe('Test the AirTable helpers', () => {
 
   test('getAllRecords gets records from AirTable and returns relevant data', async () => {
     // Set up fake test data
-    const fakeRecordsCount = faker.datatype.number({ min: 10, max: 30 });
+    const fakeRecordsCount = faker.number.int({ min: 10, max: 30 });
     const fakeTableName = faker.lorem.words(1);
     const fakeRecords = airTableTestData.fakeAirTableRecordsRaw(fakeRecordsCount, fakeTableName);
 
@@ -120,7 +121,7 @@ describe('Test the AirTable helpers', () => {
     expect(airTableClientTableMock).toHaveBeenCalledWith(fakeTableName);
     expect(airTableClientSelectMock).toHaveBeenCalledTimes(1);
     expect(airTableClientAllMock).toHaveBeenCalledTimes(1);
-    const randomRecordsIndex = faker.datatype.number(fakeRecordsCount - 1);
+    const randomRecordsIndex = faker.number.int(fakeRecordsCount - 1);
     expect(allRecords[randomRecordsIndex]).toEqual(fakeRecords[randomRecordsIndex].fields);
 
     // Clean up
@@ -138,6 +139,7 @@ describe('Test the AirTable helpers', () => {
     const airTableClientSpy = jest
       .spyOn(airTable, 'client')
       .mockImplementation(() => ({ table: airTableClientTableMock }));
+    const logErrorSpy = jest.spyOn(logging, 'logError').mockImplementation(() => {});
 
     // Run test
     const record = await airTable.getRecordById(fakeTableName, fakeRecords[0].id);
@@ -151,6 +153,7 @@ describe('Test the AirTable helpers', () => {
 
     // Clean up
     airTableClientSpy.mockRestore();
+    logErrorSpy.mockRestore();
   });
 
   test('getRecordByQuery gets a record from AirTable and returns relevant data', async () => {
@@ -169,6 +172,7 @@ describe('Test the AirTable helpers', () => {
     const airTableClientSpy = jest
       .spyOn(airTable, 'client')
       .mockImplementation(() => ({ table: airTableClientTableMock }));
+    const logErrorSpy = jest.spyOn(logging, 'logError').mockImplementation(() => {});
 
     // Run test
     const record = await airTable.getRecordByQuery(fakeTableName, {
@@ -188,6 +192,7 @@ describe('Test the AirTable helpers', () => {
 
     // Clean up
     airTableClientSpy.mockRestore();
+    logErrorSpy.mockRestore();
   });
 
   test('simplifyAttachmentsData correctly returns a simplified, flattened array', () => {
@@ -204,7 +209,7 @@ describe('Test the AirTable helpers', () => {
   test('updateRecordById updates a record in AirTable', async () => {
     // Set up fake test data
     const fakeTableName = faker.lorem.words(1);
-    const fakeRecordId = faker.datatype.uuid();
+    const fakeRecordId = faker.string.uuid();
     const fakeFields = {
       [faker.lorem.word()]: faker.lorem.words(5),
     };
@@ -215,6 +220,7 @@ describe('Test the AirTable helpers', () => {
     const airTableClientSpy = jest
       .spyOn(airTable, 'client')
       .mockImplementation(() => ({ table: airTableClientTableMock }));
+    const logErrorSpy = jest.spyOn(logging, 'logError').mockImplementation(() => {});
 
     // Run test
     await airTable.updateRecordById(fakeTableName, fakeRecordId, fakeFields);
@@ -232,5 +238,6 @@ describe('Test the AirTable helpers', () => {
 
     // Clean up
     airTableClientSpy.mockRestore();
+    logErrorSpy.mockRestore();
   });
 });

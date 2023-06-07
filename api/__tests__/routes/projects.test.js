@@ -19,7 +19,7 @@ describe('Test the projects api', () => {
   test('GET all method should respond successfully', async () => {
     // Set up fake test data
     const fakeProjectResources = projectsTestData.fakeProjectResourceObjects(
-      faker.datatype.number({ min: 30, max: 50 }),
+      faker.number.int({ min: 30, max: 50 }),
     );
 
     // Mock dependencies
@@ -63,8 +63,8 @@ describe('Test the projects api', () => {
     // Set up fake test data
     const fakeProjectResource = projectsTestData.fakeProjectResourceObject();
     const postData = {
-      firstName: faker.name.firstName(),
-      lastName: faker.name.lastName(),
+      firstName: faker.person.firstName(),
+      lastName: faker.person.lastName(),
       email: faker.internet.email(),
       happyToMentor: faker.datatype.boolean(),
       lookingForBuddy: faker.datatype.boolean(),
@@ -99,8 +99,8 @@ describe('Test the projects api', () => {
         res: fakeProjectResource.res_id,
       },
       body: {
-        firstName: faker.name.firstName(),
-        lastName: faker.name.lastName(),
+        firstName: faker.person.firstName(),
+        lastName: faker.person.lastName(),
         email: faker.internet.email(),
         lookingForPeerSupport: faker.datatype.boolean(),
         availableFrom: '2022-12-31',
@@ -158,8 +158,8 @@ describe('Test the projects api', () => {
         res: fakeProjectResource.res_id,
       },
       body: {
-        firstName: faker.name.firstName(),
-        lastName: faker.name.lastName(),
+        firstName: faker.person.firstName(),
+        lastName: faker.person.lastName(),
         email: faker.internet.email(),
         lookingForPeerSupport: faker.datatype.boolean(),
         availableFrom: '2022-12-31',
@@ -274,8 +274,8 @@ describe('Test the projects api', () => {
         res: fakeProjectResource.res_id,
       },
       body: {
-        firstName: faker.name.firstName(),
-        lastName: faker.name.lastName(),
+        firstName: faker.person.firstName(),
+        lastName: faker.person.lastName(),
         email: faker.internet.email(),
         lookingForPeerSupport: faker.datatype.boolean(),
         availableFrom: '2022-12-31',

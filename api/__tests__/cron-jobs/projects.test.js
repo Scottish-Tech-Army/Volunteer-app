@@ -5,6 +5,7 @@ const cacheProjects = require('../../cron-jobs/projects');
 const { faker } = require('@faker-js/faker');
 const projectsHelpers = require('../../helpers/projects');
 const projectsTestData = require('../../__test-data__/projects');
+const logging = require('../../services/logging');
 const videosService = require('../../services/videos');
 
 axios.defaults.adapter = require('axios/lib/adapters/http');
@@ -16,14 +17,14 @@ describe('Test the projects/resources caching cron job', () => {
 
   test('addNewProjectsResources adds new records in chunks', async () => {
     // Set up fake test data
-    const fakeProjectsResourcesCount = faker.datatype.number({ min: 30, max: 50 });
+    const fakeProjectsResourcesCount = faker.number.int({ min: 30, max: 50 });
     const fakeProjectsResourcesChunkCount = Math.ceil(fakeProjectsResourcesCount / 10);
     const fakeProjectsResources = projectsTestData.fakeProjectResourceObjects(fakeProjectsResourcesCount);
 
     // Mock dependencies
     const arraysHelpersSpy = jest
       .spyOn(arraysHelpers, 'chunk')
-      .mockImplementation((array) => faker.datatype.array(Math.ceil(array.length / 10)));
+      .mockImplementation((array) => Array.from(Array(Math.ceil(array.length / 10))));
     const addNewRecordsSpy = jest.spyOn(cacheProjects, 'addNewRecords').mockImplementation(() => Promise.resolve());
     const consoleLogSpy = jest.spyOn(global.console, 'log').mockImplementation(() => {});
 
@@ -69,27 +70,27 @@ describe('Test the projects/resources caching cron job', () => {
     const addNewProjectsResourcesSpy = jest
       .spyOn(cacheProjects, 'addNewProjectsResources')
       .mockImplementation(() => Promise.resolve());
-    const consoleErrorSpy = jest.spyOn(global.console, 'error').mockImplementation(() => {});
+    const logErrorSpy = jest.spyOn(logging, 'logError').mockImplementation(() => {});
 
     // Run test
     await cacheProjects.cacheProjectsAndResources([], []);
 
     expect(deleteAllRecordsSpy).toHaveBeenCalledTimes(0);
     expect(addNewProjectsResourcesSpy).toHaveBeenCalledTimes(0);
-    expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
+    expect(logErrorSpy).toHaveBeenCalledTimes(1);
 
     // Clean up
     deleteAllRecordsSpy.mockRestore();
     addNewProjectsResourcesSpy.mockRestore();
-    consoleErrorSpy.mockRestore();
+    logErrorSpy.mockRestore();
   });
 
   test('cacheProjectsAndResources deletes old data and adds new data', async () => {
     // Set up fake test data
-    const fakeProjects = projectsTestData.fakeProjectObjects(faker.datatype.number({ min: 20, max: 30 }));
-    const fakeResources = projectsTestData.fakeResourceObjects(faker.datatype.number({ min: 30, max: 50 }));
+    const fakeProjects = projectsTestData.fakeProjectObjects(faker.number.int({ min: 20, max: 30 }));
+    const fakeResources = projectsTestData.fakeResourceObjects(faker.number.int({ min: 30, max: 50 }));
     const fakeProjectsResources = projectsTestData.fakeProjectResourceObjects(
-      faker.datatype.number({ min: 30, max: 50 }),
+      faker.number.int({ min: 30, max: 50 }),
     );
 
     // Mock dependencies
@@ -103,6 +104,7 @@ describe('Test the projects/resources caching cron job', () => {
       .spyOn(cacheProjects, 'addNewProjectsResources')
       .mockImplementation(() => Promise.resolve());
     const consoleLogSpy = jest.spyOn(global.console, 'log').mockImplementation(() => {});
+    const logErrorSpy = jest.spyOn(logging, 'logError').mockImplementation(() => {});
 
     // Run test
     await cacheProjects.cacheProjectsAndResources(fakeProjects, fakeResources);
@@ -117,6 +119,7 @@ describe('Test the projects/resources caching cron job', () => {
     deleteAllRecordsSpy.mockRestore();
     addNewProjectsResourcesSpy.mockRestore();
     consoleLogSpy.mockRestore();
+    logErrorSpy.mockRestore();
   });
 
   test('deleteAllRecords gets existing records from AirTable and chunks data to delete', async () => {
@@ -137,6 +140,7 @@ describe('Test the projects/resources caching cron job', () => {
       .mockImplementation(() => [fakeRecords.slice(0, 10), fakeRecords.slice(10, 20), fakeRecords.slice(20)]);
     const deleteRecordsSpy = jest.spyOn(cacheProjects, 'deleteRecords').mockImplementation(() => Promise.resolve());
     const consoleLogSpy = jest.spyOn(global.console, 'log').mockImplementation(() => {});
+    const logErrorSpy = jest.spyOn(logging, 'logError').mockImplementation(() => {});
 
     // Run test
     await cacheProjects.deleteAllRecords(fakeTableName);
@@ -153,12 +157,13 @@ describe('Test the projects/resources caching cron job', () => {
     arraysHelpersSpy.mockRestore();
     deleteRecordsSpy.mockRestore();
     consoleLogSpy.mockRestore();
+    logErrorSpy.mockRestore();
   });
 
   test('deleteRecords calls AirTable client', async () => {
     // Set up fake test data
     const fakeTableName = faker.lorem.words(1);
-    const fakeRecordIds = faker.datatype.array(10);
+    const fakeRecordIds = Array.from(Array(10));
 
     // Mock dependencies
     const airTableClientDestroyMock = jest.fn((recordIds, done) => done());
@@ -166,6 +171,7 @@ describe('Test the projects/resources caching cron job', () => {
     const airTableClientSpy = jest
       .spyOn(airTable, 'client')
       .mockImplementation(() => ({ table: airTableClientTableMock }));
+    const logErrorSpy = jest.spyOn(logging, 'logError').mockImplementation(() => {});
 
     // Run test
     await cacheProjects.deleteRecords(fakeTableName, fakeRecordIds);
@@ -178,6 +184,7 @@ describe('Test the projects/resources caching cron job', () => {
 
     // Clean up
     airTableClientSpy.mockRestore();
+    logErrorSpy.mockRestore();
   });
 
   test('filterProjectsConnectedWithResources correctly filters projects', () => {
@@ -296,7 +303,7 @@ describe('Test the projects/resources caching cron job', () => {
     // Set up fake test data
     const fakeProjectsCountMinimum = 10;
     const fakeProjectsCountMaximum = 50;
-    const fakeProjectsCount = faker.datatype.number({ min: fakeProjectsCountMinimum, max: fakeProjectsCountMaximum });
+    const fakeProjectsCount = faker.number.int({ min: fakeProjectsCountMinimum, max: fakeProjectsCountMaximum });
     const fakeJiraItApiResults = projectsTestData.fakeJiraItApiResults(fakeProjectsCount);
     const fakeVideoWebpagePlayerOnly = faker.internet.url();
 
@@ -311,7 +318,7 @@ describe('Test the projects/resources caching cron job', () => {
 
     expect(axiosSpy).toHaveBeenCalledTimes(1);
     expect(videosServiceSpy).toHaveBeenCalledTimes(fakeProjectsCount);
-    const randomItemIndex = faker.datatype.number({ min: fakeProjectsCountMinimum - 1, max: fakeProjectsCount - 1 });
+    const randomItemIndex = faker.number.int({ min: fakeProjectsCountMinimum - 1, max: fakeProjectsCount - 1 });
     expect(jiraItArray[randomItemIndex]).toEqual({
       it_key: fakeJiraItApiResults.data.issues[randomItemIndex].key,
       name: fakeJiraItApiResults.data.issues[randomItemIndex].fields.summary,
@@ -332,7 +339,7 @@ describe('Test the projects/resources caching cron job', () => {
     // Set up fake test data
     const fakeResourcesCountMinimum = 30;
     const fakeResourcesCountMaximum = 80;
-    const fakeResourcesCount = faker.datatype.number({
+    const fakeResourcesCount = faker.number.int({
       min: fakeResourcesCountMinimum,
       max: fakeResourcesCountMaximum,
     });
@@ -345,7 +352,7 @@ describe('Test the projects/resources caching cron job', () => {
     const jiraResArray = await cacheProjects.getResourcesFromJira(0, []);
 
     expect(axiosSpy).toHaveBeenCalledTimes(1);
-    const randomItemIndex = faker.datatype.number({ min: fakeResourcesCountMinimum - 1, max: fakeResourcesCount - 1 });
+    const randomItemIndex = faker.number.int({ min: fakeResourcesCountMinimum - 1, max: fakeResourcesCount - 1 });
     expect(jiraResArray[randomItemIndex]).toEqual({
       res_id: fakeJiraResApiResults.data.issues[randomItemIndex].id,
       it_key: fakeJiraResApiResults.data.issues[randomItemIndex].fields.customfield_10109,

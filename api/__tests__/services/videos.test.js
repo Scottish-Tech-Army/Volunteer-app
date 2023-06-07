@@ -7,7 +7,7 @@ const youTubeService = require('../../services/youTube');
 describe('Test the videos service', () => {
   test('getVideoWebpagePlayerOnly gets Vimeo URL', async () => {
     // Set up fake test data
-    const fakeVideoWebPage = `https://vimeo.com/${faker.datatype.number({ min: 100000000, max: 999999999 })}`;
+    const fakeVideoWebPage = `https://vimeo.com/${faker.number.int({ min: 100000000, max: 999999999 })}`;
     const fakeVideoWebPagePlayerOnly = faker.internet.url();
 
     // Mock dependencies
