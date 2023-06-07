@@ -1,6 +1,8 @@
 /**
  * @file Runs the app!
  */
+import Bugsnag from '@bugsnag/expo'
+import Constants from 'expo-constants'
 import { useFonts } from 'expo-font'
 import * as SplashScreen from 'expo-splash-screen'
 import { NativeBaseProvider } from 'native-base'
@@ -13,6 +15,7 @@ import ColourModeManager from '@/NativeBase/Theme/ColourModeManager'
 import StaTheme from '@/NativeBase/Theme/StaTheme'
 import ApplicationNavigator from '@/Navigators/Application'
 import { store, persistor } from '@/Store'
+import { isDevelopmentMode } from '@/Utils/Expo'
 
 SplashScreen.preventAutoHideAsync()
 
@@ -43,6 +46,17 @@ const App = () => {
     'Poppins-ThinItalic': require('./src/Assets/Fonts/Poppins-ThinItalic.ttf'),
   })
   const [displayApp, setDisplayApp] = useState(false)
+
+  useEffect(() => {
+    if (
+      !isDevelopmentMode() ||
+      Constants.expoConfig?.extra?.bugsnag?.alwaysSendBugs
+    ) {
+      Bugsnag.start({
+        apiKey: Constants.expoConfig?.extra?.bugsnag?.apiKey,
+      })
+    }
+  }, [])
 
   useEffect(() => {
     if (fontsLoaded) SplashScreen.hideAsync().then(() => setDisplayApp(true))
