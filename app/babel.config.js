@@ -1,18 +1,32 @@
-const presets = ['module:metro-react-native-babel-preset']
-const plugins = []
+/**
+ * @file Babel compiler configuration
+ */
 
-plugins.push([
-  'module-resolver',
-  {
-    root: ['./src'],
-    extensions: ['.js', '.json'],
-    alias: {
-      '@': './src',
-    },
-  },
-])
-
-module.exports = {
-  presets,
-  plugins,
+module.exports = api => {
+  api.cache(true)
+  return {
+    presets: ['babel-preset-expo'],
+    plugins: [
+      [
+        'module-resolver',
+        {
+          alias: {
+            '@': './src',
+          },
+          extensions: [
+            '.json',
+            '.js',
+            '.jsx',
+            '.ts',
+            '.tsx',
+            '.android.js',
+            '.android.tsx',
+            '.ios.js',
+            '.ios.tsx',
+          ],
+          root: ['./src'],
+        },
+      ],
+    ],
+  }
 }

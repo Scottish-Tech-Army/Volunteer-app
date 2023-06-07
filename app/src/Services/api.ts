@@ -1,7 +1,6 @@
 /**
  * @file defines API endpoints, and how to fetch and transform data using RTK Query's createApi.
  */
-import { Config } from '@/Config'
 import {
   BaseQueryFn,
   FetchArgs,
@@ -10,7 +9,7 @@ import {
   FetchBaseQueryError,
 } from '@reduxjs/toolkit/query/react'
 
-const baseQuery = fetchBaseQuery({ baseUrl: Config.API_URL })
+const baseQuery = fetchBaseQuery({ baseUrl: '' })
 export type ApiBaseQueryFunctionType = BaseQueryFn<
   string | FetchArgs,
   unknown,
@@ -23,8 +22,7 @@ const baseQueryWithInterceptor: ApiBaseQueryFunctionType = async (
   extraOptions,
 ) => {
   const result = await baseQuery(args, api, extraOptions)
-  if (result.error && result.error.status === 401) {
-  }
+
   return result
 }
 

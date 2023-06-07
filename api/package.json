@@ -4,8 +4,9 @@
   "description": "RESTful API to surface the data required for the Volunteer App.",
   "main": "app.js",
   "scripts": {
-    "test": "jest",
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "tunnel": "ssh -R 80:localhost:3000 serveo.net",
+    "test": "jest"
   },
   "keywords": [],
   "author": "",

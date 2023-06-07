@@ -1,4 +1,29 @@
 {
-  "name": "STA",
-  "displayName": "STA Volunteers"
+  "expo": {
+    "name": "STA",
+    "displayName": "STA Volunteers",
+    "slug": "sta",
+    "version": "1.0.13",
+    "orientation": "portrait",
+    "icon": "./assets/sta-icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash-screen.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/sta-icon.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
 }

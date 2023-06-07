@@ -7,7 +7,7 @@ import {
   BottomTabNavigationOptions,
 } from '@react-navigation/bottom-tabs'
 import { useRoute } from '@react-navigation/native'
-import { ListContainer } from '@/Containers'
+import { ListContainer } from '@/NativeBase/Containers'
 import { ListType } from '@/NativeBase/Containers/ListContainer'
 import { ProfileContainer, SettingsContainer } from '@/NativeBase/Containers'
 import SelectionIcons from '@/NativeBase/Assets/Icons/Icomoon/SelectionIcons'

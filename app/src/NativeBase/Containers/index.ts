@@ -2,6 +2,7 @@
  * @file Exports the containers for easy access elsewhere.
  */
 
+export { default as ListContainer } from './ListContainer'
 export { default as ProfileContainer } from './ProfileContainer'
 export { default as ProjectDetailContainer } from './ProjectDetailContainer'
 export { default as ProjectSearchContainer } from './ProjectSearchContainer'
