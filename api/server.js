@@ -1,6 +1,5 @@
 const app = require('./app');
 const cron = require('./cron-jobs/run-cron-jobs');
-const { logError } = require('./services/logging');
 
 const port = 3000;
 
