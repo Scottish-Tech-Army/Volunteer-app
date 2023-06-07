@@ -228,18 +228,16 @@ We have the [react-native-svg](https://github.com/software-mansion/react-native-
 
 ## Logging errors and crashes
 
-We use Bugsnag to log errors and crashes in the front-end app when it's running on people's phones. To log errors to Bugsnag in the app in production, use the `logError` function in `app/src/Service/modules/logging/index.ts` instead of `console.error` (it calls `console.error` itself anyway as part of what it does).
+We use Bugsnag to log errors and crashes in the front-end app when it's running on people's phones -- (otherwise we might not know if the app's going wrong when people are using it). To log errors to Bugsnag in the app in production, always use the `logError` function in `app/src/Service/modules/logging/index.ts` instead of `console.error` (it calls `console.error` itself anyway as part of what it does).
 
 (While you're developing and testing out your code, you can still use `console.log` and `console.error` to see errors in your terminal.)
 
 There are broadly two kinds of things that can go wrong on the front-end app:
 
 - **Errors** Errors that happen in our React/Typescript code, either unforeseen or (ideally) caught in a `try...catch` statement. These are what's most likely to go wrong. The user can opt in/out of sending these kinds of errors, which are more likely to contain personal data. **Normally, these are only logged to Bugsnag when the app is installed on an actual device, rather than running in Expo Go during development.** This is so that we don't get flooded by lots of errors that occur during development, and because we're on a free tier package that only allows a limited number of error reports per day/month so we want to minimise the errors reported to Bugsnag to only include issues in production.
-- **Crashes** The app can crash entirely e.g. if something goes wrong in a native library or the app runs out of memory, although this is probably unlikely with Expo. Logging these cannot be switched off, because Bugsnag starts when the first app loads. From an initial look, it appears these crash reports don't contain personal data. These **will** still be logged if you're on Expo Go because we can't switch them on/off using code. (If we're getting 'false positive' crashes during development that are distracting / not useful, we could ask devs to remove the `BUGSNAG_API_KEY` from their `app/.env` file.)
+- **Crashes** The app can crash entirely e.g. if something goes wrong in a native library or the app runs out of memory, although this is probably unlikely with Expo. Logging these crash reports cannot be switched off, because Bugsnag starts when the first app loads. From an initial look, it appears these crash reports don't contain personal data.
 
-To send errors and crash logs, you must have an `app/.env` file with this set `BUGSNAG_API_KEY="insert_key_here"` (replacing `insert_key_here` with the actual API key from Bugsnag).
-
-Ordinarily, when you are developing in Expo Go, you should **not** have `BUGSNAG_API_KEY` set to the real API key value, otherwise it will send crash logs to Bugsnag which we usually don't want (ordinarily we only want to use Bugsnag to track errors and crashes on real devices).
+Ordinarily, when you are developing using Expo Go, you should **not** have `BUGSNAG_API_KEY` set to the real API key value, otherwise it will send crash logs to Bugsnag which we usually don't want (ordinarily we only want to use Bugsnag to track errors and crashes on real devices).
 
   > You do need to set a value otherwise the app will not run, so you can use e.g. `BUGSNAG_API_KEY="no_api_key"`
 
@@ -255,12 +253,13 @@ To get more details on a bug you'll need to go to [our Bugsnag inbox here](https
 
 ### Logging errors to Bugsnag during development
 
-You can log errors to Bugsnag when developing in Expo Go if you really need to. **You don't normally need to do this -- Bugsnag error logging is usually to monitor crashes and errors in the production app.  You should only use this in development when normal error detection is insufficient** e.g. because you want to figure out why the app is crashing due to a lack of memory.  **Don't** use this in place of normal code tools like `console.error` and `console.log` and other normal testing approaches.
+You can log errors to Bugsnag when developing in Expo Go if you really need to. **You shouldn't normally need to do this -- Bugsnag error logging is usually to monitor crashes and errors in the production app.  You should only use this in development when normal error detection is insufficient** e.g. because you want to figure out why the app is crashing due to a lack of memory.  **Don't** use this in place of normal code tools like `console.error` and `console.log` and other normal testing approaches.
 
 You can force the app to report errors to Bugsnag during development using Expo Go (this also overrides the user permissions setting which normally determines whether or not send error reports).  To do this:
 
+- In your `app/.env` file set `BUGSNAG_API_KEY` to the value of our actual Bugsnag API key (ask on the team Slack channel and someone can give you this)
 - Change the `version` number in `app/package.json` to one that isn't in use yet (if other developers are also doing the same thing, you'll need to coordinate with them so as not to overlap with using the same version number -- or you'll also see each other's errors)
-  > You must do this or it'll screw up error reporting for the current version of the app in production
+  > You must do this step or it'll screw up error reporting for the current version of the app in production
 - Create an `app/.env` file or update your existing file and include the line `BUGSNAG_ALWAYS_SEND_BUGS="true"`
 - Start/restart Expo and reload the app
 
