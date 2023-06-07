@@ -11,7 +11,7 @@ import { isDevelopmentMode } from '@/Utils/Expo'
  * Logs errors to Bugsnag.
  *
  * @param {string} errorMessage An error message
- * @param {unknown} extraInfo Any extra info about the error -- e.g. some data or a caught exception
+ * @param {unknown} [extraInfo] Any optional extra info about the error -- e.g. some data or a caught exception, you can pass this as an object or other data type
  * @returns {React.ReactElement} Component
  */
 export const logError = (errorMessage: string, extraInfo?: unknown) => {
@@ -29,10 +29,6 @@ export const logError = (errorMessage: string, extraInfo?: unknown) => {
     Bugsnag.notify(
       new Error(errorMessage),
       event => {
-        event.addMetadata('developmentMode', {
-          isDevelopmentMode: isDevelopmentMode(),
-        })
-
         if (extraInfo) event.addMetadata('extraInfo', extraInfo)
       },
       (bugsnagError, event) => {

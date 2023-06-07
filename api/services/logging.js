@@ -12,14 +12,20 @@ function enableBugsnag() {
   return false;
 }
 
-function logError(errorMessage, eventInfo) {
+/**
+ * Logs errors to Bugsnag.
+ *
+ * @param {string} errorMessage An error message
+ * @param {unknown} [extraInfo] Any optional extra info about the error -- e.g. some data or a caught exception, you can pass this as an object or other data type
+ * @returns {React.ReactElement} Component
+ */
+function logError(errorMessage, extraInfo) {
   console.error(errorMessage);
-  if (eventInfo) console.error(eventInfo);
+  if (extraInfo) console.error(extraInfo);
 
   if (enableBugsnag())
     Bugsnag.notify(new Error(errorMessage), event => {
-      if (eventInfo?.extraInfo)
-        event.addMetadata('extraInfo', eventInfo.extraInfo);
+      if (extraInfo) event.addMetadata('extraInfo', extraInfo);
     });
 }
 

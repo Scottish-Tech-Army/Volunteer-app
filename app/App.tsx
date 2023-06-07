@@ -50,14 +50,20 @@ const App = () => {
 
   useEffect(() => {
     if (
-      (!isDevelopmentMode() ||
-        Constants.expoConfig?.extra?.bugsnag?.alwaysSendBugs) &&
-      Constants.expoConfig?.extra?.bugsnag?.apiKey
+      !isDevelopmentMode() ||
+      Constants.expoConfig?.extra?.bugsnag?.alwaysSendBugs
     ) {
-      Bugsnag.start({
-        apiKey: Constants.expoConfig?.extra?.bugsnag?.apiKey,
-        appVersion: version,
-      })
+      if (Constants.expoConfig?.extra?.bugsnag?.apiKey) {
+        Bugsnag.start({
+          apiKey: Constants.expoConfig.extra.bugsnag.apiKey,
+          appVersion: version,
+          releaseStage: isDevelopmentMode() ? 'development' : 'production',
+        })
+      } else {
+        console.error(
+          '❌ Could not enable Bugsnag -- BUGSNAG_API_KEY environment variable is required',
+        )
+      }
     }
   }, [])
 

@@ -102,9 +102,7 @@ If you're using Visual Studio Code for development, it's recommended that you:
 
 9. Go to the `app` folder inside the project folder (e.g. **/path/to/Volunteer-app/app**)
 
-10. Copy the `.env.example` file in the app root folder and name your new file `.env` in the same folder -- e.g. using the command `cp .env.example .env` Leave `BUGSNAG_API_KEY="no_api_key"` as it is.
-
-11. At the command prompt type `npm install`
+10. At the command prompt type `npm install`
 
    > Inside the `app` folder there are files `package.json` and `package-lock.json`. **Every time either of these is modified, it is advised to repeat this step before running the project.**
 
@@ -112,20 +110,20 @@ If you're using Visual Studio Code for development, it's recommended that you:
 
    > **If you get *errors* about installing dependencies** you may need to run `npm install --legacy-peer-deps` or `npm install --force` (instead of `npm install`)
 
-12. Duplicate the example config file `app/src/Config/index.example.ts` and name your new file `app/src/Config/index.ts`  Set the value of `STA_BASE_URL` to the tunnelled URL of your local API server (the one you made a note of in step 8 above).
+11. Duplicate the example config file `app/src/Config/index.example.ts` and name your new file `app/src/Config/index.ts`  Set the value of `STA_BASE_URL` to the tunnelled URL of your local API server (the one you made a note of in step 8 above).
 
-13. Run Expo using `npm start`  This will run some commands and then it show you a QR code in your terminal.
+12. Run Expo using `npm start`  This will run some commands and then it show you a QR code in your terminal.
 
   > You may get an automatic prompt to install `@expo/ngrok` or another package -- if so, type `y` to install it.
 
   > If you get stuck at this stage, you might need to install `@expo/ngrok` manually, globally on your local machine: run `npm install -g @expo/ngrok` then try running `npm start` again.
 
-14. Connect your phone:
+13. Connect your phone:
 - **iPhone:** open the camera and scan the QR code, tap on the link and it should open up the app in Expo Go
 - **Android:** open the Expo Go app itself and you can scan the QR code
 - You should now see your local development version of the app on your phone -- any changes you make in your code should show almost instantly on your phone.  (If you find you're not seeing changes on your phone or Expo Go loses the connection, [see tips here.](APP_DEVELOPMENT.md#expo-known-issues))
 
-15. When you've got the app to run, make a PR to improve this README! Fix something that caused you headaches, update something that's no longer correct, or add a training resource, or add something else you think would help other people to get up and running.
+14. When you've got the app to run, make a PR to improve this README! Fix something that caused you headaches, update something that's no longer correct, or add a training resource, or add something else you think would help other people to get up and running.
 
 # Troubleshooting
 

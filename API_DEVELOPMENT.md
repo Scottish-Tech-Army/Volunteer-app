@@ -8,6 +8,8 @@ This file contains some tips and guidelines on building our back-end Node JS API
 - [Services](#services)
   - [Slack](#slack)
 - [Logging errors](#logging-errors)
+  - [Seeing Bugsnag reports](#seeing-bugsnag-reports)
+  - [Logging to Bugsnag from your local API](#logging-to-bugsnag-from-your-local-api)
 
 ## Cron jobs
 

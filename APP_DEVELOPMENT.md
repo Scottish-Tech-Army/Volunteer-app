@@ -7,6 +7,7 @@ This file contains some tips and guidelines on building our front-end React Nati
 - [React Native and Expo](#react-native-and-expo)
   - [Expo trade-offs](#expo-trade-offs)
   - [Installing new packages](#installing-new-packages)
+  - [Using .env variables](#using-env-variables)
   - [Expo known issues](#expo-known-issues)
 - [NativeBase](#nativebase)
   - [File locations, naming, moving and deleting](#file-locations-naming-moving-and-deleting)
@@ -17,6 +18,8 @@ This file contains some tips and guidelines on building our front-end React Nati
   - [Icons](#icons)
 - [Images](#images)
 - [Logging errors and crashes](#logging-errors-and-crashes)
+  - [Seeing Bugsnag reports](#seeing-bugsnag-reports)
+  - [Logging errors to Bugsnag during development](#logging-errors-to-bugsnag-during-development)
 - [Performance issues](#performance-issues)
 
 ## Overview of directories
@@ -243,7 +246,7 @@ Ordinarily, when you are developing using Expo Go, you should **not** have `BUGS
 
   > During development, in the terminal window where you are running Expo you may see the message `[bugsnag] Bugsnag.start() was called more than once. Ignoring.`  You don't need to worry about this, it's just the app reloading and trying to start Bugsnag again.
 
-### Seeing Bugsnag bug reports
+### Seeing Bugsnag reports
 
 Ask one of the team to add you to the **it470-volunteer-app-errors** Slack channel where you can see the latest bugs coming in from the app on real devices, and the API production server.
 
@@ -262,14 +265,11 @@ You can log errors to Bugsnag when developing in Expo Go if you really need to. 
 You can force the app to report errors to Bugsnag during development using Expo Go (this also overrides the user permissions setting which normally determines whether or not send error reports).  To do this:
 
 - Create a `app/.env` file if you don't have one already, and add `BUGSNAG_API_KEY="xxxxxxxxxxxxxxxx"` repacing `xxxxxxxxxxxxxxxx` with the value of our actual Bugsnag API key for the app (ask on the team Slack channel and someone can give you this -- note: the front-end app and the API use different Bugsnag API keys)
-- Change the `version` number in `app/package.json` to one that isn't in use yet (if other developers are also doing the same thing, you'll need to coordinate with them so as not to overlap with using the same version number -- or you'll also see each other's errors)
-  > You must do this step or it'll screw up error reporting for the current version of the app in production
 - In your `app/.env` file include the line `BUGSNAG_ALWAYS_SEND_BUGS="true"` (this forces the API to send errors to Bugsnag, even though you're in a development environment)
 - Start/restart Expo and reload the app
 
 **After you've finished testing you must:**
 
-- Change back the `version` number in `app/package.json` to what it was before
 - Remove the `BUGSNAG_ALWAYS_SEND_BUGS` line from your `app/.env` file or set it to `BUGSNAG_ALWAYS_SEND_BUGS="false"`
 - Restart Expo and reload the app
 
