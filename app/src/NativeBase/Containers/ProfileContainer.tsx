@@ -18,7 +18,7 @@ const ProfileContainer = () => {
       alignItems="center"
       space="4"
       backgroundColor="secondaryGrey.60"
-      _dark={{ backgroundColor: 'bg.100' }}
+      _dark={{ backgroundColor: 'bgDarkMode.100' }}
     >
       <Center
         backgroundColor="bg.100"
