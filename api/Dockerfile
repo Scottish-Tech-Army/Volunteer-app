@@ -16,6 +16,9 @@ RUN npm ci --omit=dev
 # Bundle app source
 COPY . .
 
+# Set the Node environment to production
+ENV NODE_ENV production
+
 # Open port 3000 because that's where the server connects...
 EXPOSE 3000
 

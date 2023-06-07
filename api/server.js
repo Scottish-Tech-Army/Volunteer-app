@@ -1,7 +1,10 @@
-const app = require("./app");
+const app = require('./app');
 const cron = require('./cron-jobs/run-cron-jobs');
+const { logError } = require('./services/logging');
 
-app.listen(3000, () => {
+const port = 3000;
+
+app.listen(port, () => {
   cron;
-  console.log("Volunteer App API is listening on port 3000");
+  console.log(`🛈 Volunteer App API is listening on port ${port} in ${process.env.NODE_ENV || 'development'} environment`);
 });

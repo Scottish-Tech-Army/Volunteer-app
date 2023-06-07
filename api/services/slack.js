@@ -6,6 +6,7 @@
 
 require('dotenv').config();
 const axios = require('axios').default;
+const logging = require('../services/logging');
 
 function convertChannelNameToWebHookEnvVariable (channel) {
   return `SLACK_SECRET_WEBHOOK_${channel.toUpperCase().replace(/-/g, '_')}`;
@@ -16,7 +17,7 @@ async function postMessage(channel, text) {
 
   if (!process.env[webHookEnvVariableName]) {
     const error = `❌ Webhook variable ${webHookEnvVariableName} for Slack channel ${channel} has not been set in your .env file`;
-    console.error(error);
+    logging.logError(error);
 
     return {
       error,
@@ -33,14 +34,16 @@ async function postMessage(channel, text) {
         data: 'success',
       };
     } else {
-      console.error(response.statusText);
+      logging.logError(`Error posting message to Slack: ${response.statusText}`);
 
       return {
         error: response.statusText,
       }
     }
   } catch (error) {
-    console.error(error.message);
+    logging.logError(`Error posting message to Slack: ${error.message}`, {
+      extraInfo: error,
+    });
 
     return {
       error: error.message,

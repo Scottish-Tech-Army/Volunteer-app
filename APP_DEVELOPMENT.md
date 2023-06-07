@@ -249,7 +249,11 @@ Ask one of the team to add you to the **it470-volunteer-app-errors** Slack chann
 
 If you know a bug  has been fixed or can safely be ignored, please click the 'Mark as fixed' or 'Ignore' button on the error in the Slack message.
 
-To get more details on a bug you'll need to go to [our Bugsnag inbox here](https://app.bugsnag.com/scottish-tech-army/volunteer-app/errors) -- you'll need the login details from another team member.
+To get more details on a bug you'll need to go to [our Bugsnag inbox here](https://app.bugsnag.com/scottish-tech-army/volunteer-app/errors) -- you'll need the Bugsnag login details from another team member.  
+
+  > Note: there are two Projects in Bugsnag -- one for the front-end app ('Volunteer app'), another for the API ('Volunteer app API'). Make sure you're looking at the right one. You can also filter by development/production.
+
+  > When you look into an error, click on it in the Inbox in Bugsnag, then on the 'Stacktrace' tab you'll need to find where the error originated. The first entry in the stacktrace is just the `logging` module, you need to find what's below that and click to expand it to see where in the code the error actually occurred.
 
 ### Logging errors to Bugsnag during development
 
@@ -257,10 +261,10 @@ You can log errors to Bugsnag when developing in Expo Go if you really need to. 
 
 You can force the app to report errors to Bugsnag during development using Expo Go (this also overrides the user permissions setting which normally determines whether or not send error reports).  To do this:
 
-- In your `app/.env` file set `BUGSNAG_API_KEY` to the value of our actual Bugsnag API key (ask on the team Slack channel and someone can give you this)
+- Create a `app/.env` file if you don't have one already, and add `BUGSNAG_API_KEY="xxxxxxxxxxxxxxxx"` repacing `xxxxxxxxxxxxxxxx` with the value of our actual Bugsnag API key for the app (ask on the team Slack channel and someone can give you this -- note: the front-end app and the API use different Bugsnag API keys)
 - Change the `version` number in `app/package.json` to one that isn't in use yet (if other developers are also doing the same thing, you'll need to coordinate with them so as not to overlap with using the same version number -- or you'll also see each other's errors)
   > You must do this step or it'll screw up error reporting for the current version of the app in production
-- Create an `app/.env` file or update your existing file and include the line `BUGSNAG_ALWAYS_SEND_BUGS="true"`
+- In your `app/.env` file include the line `BUGSNAG_ALWAYS_SEND_BUGS="true"` (this forces the API to send errors to Bugsnag, even though you're in a development environment)
 - Start/restart Expo and reload the app
 
 **After you've finished testing you must:**

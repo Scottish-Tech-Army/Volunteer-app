@@ -16,6 +16,7 @@ import StaTheme from '@/NativeBase/Theme/StaTheme'
 import ApplicationNavigator from '@/Navigators/Application'
 import { store, persistor } from '@/Store'
 import { isDevelopmentMode } from '@/Utils/Expo'
+import { version } from './package.json'
 
 SplashScreen.preventAutoHideAsync()
 
@@ -49,11 +50,13 @@ const App = () => {
 
   useEffect(() => {
     if (
-      !isDevelopmentMode() ||
-      Constants.expoConfig?.extra?.bugsnag?.alwaysSendBugs
+      (!isDevelopmentMode() ||
+        Constants.expoConfig?.extra?.bugsnag?.alwaysSendBugs) &&
+      Constants.expoConfig?.extra?.bugsnag?.apiKey
     ) {
       Bugsnag.start({
         apiKey: Constants.expoConfig?.extra?.bugsnag?.apiKey,
+        appVersion: version,
       })
     }
   }, [])

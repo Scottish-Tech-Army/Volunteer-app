@@ -12,6 +12,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@bugsnag/js": "^7.20.2",
+    "@bugsnag/plugin-express": "^7.19.0",
     "airtable": "^0.11.1",
     "axios": "^0.25.0",
     "cors": "^2.8.5",
