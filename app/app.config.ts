@@ -1,3 +1,7 @@
+/**
+ * @file Expo configuration file.
+ */
+
 import 'dotenv/config'
 import { version } from './package.json'
 
