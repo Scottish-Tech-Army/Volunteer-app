@@ -21,3 +21,7 @@ web-build/
 
 # Local settings files
 .vscode/
+
+# Old Android and iOS directories - no longer in use
+android/
+ios/
