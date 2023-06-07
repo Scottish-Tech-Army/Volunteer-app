@@ -9,8 +9,9 @@ import { ListType } from '@/NativeBase/Containers/ListContainer'
 import { navigate, RootStackParamList } from '@/Navigators/utils'
 import { Events, EventsRange } from '@/Services/modules/events'
 import { Projects } from '@/Services/modules/projects'
-import underDevelopmentAlert from '../../Utils/UnderDevelopmentAlert'
-import ColouredTag from './ColouredTag'
+import underDevelopmentAlert from '@/Utils/UnderDevelopmentAlert'
+import { makeUrlsClickable } from '@/Utils/Text'
+import ColouredTag from '../Components/ColouredTag'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
 import {
@@ -168,7 +169,11 @@ const List: FC<ListProps> = ({
                     <Text fontSize="xs">{item.client}</Text>
                     <ColouredTag title={item.role} />
                     <Text fontSize="xs">{item.hours}</Text>
-                    <Text fontSize="xs">{item.description}</Text>
+
+                    <Text fontSize="xs">
+                      {makeUrlsClickable(item.description)}
+                    </Text>
+
                     {Boolean(item.buddying) && (
                       <HStack
                         justifyContent="space-between"

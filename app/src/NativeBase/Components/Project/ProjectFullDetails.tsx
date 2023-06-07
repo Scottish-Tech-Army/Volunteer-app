@@ -22,6 +22,7 @@ import {
 import Video from '../Video'
 import ProjectAttachments from '../ProjectAttachments'
 import ColouredTag from '../ColouredTag'
+import { makeUrlsClickable } from '@/Utils/Text'
 
 interface ProjectFullDetailsProps {
   project: Project
@@ -86,7 +87,7 @@ const ProjectFullDetails = ({
             <ColouredTag title={project.role} />
             <Text fontSize="xs">{project.hours}</Text>
             <Text fontSize="xs" fontWeight="300">
-              {project.description}
+              {makeUrlsClickable(project.description)}
             </Text>
             {Boolean(project.buddying) && (
               <Text fontSize="xs">Suitable for pairing</Text>
