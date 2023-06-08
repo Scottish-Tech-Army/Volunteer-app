@@ -9,7 +9,7 @@ const relatedInitiatives = ['', 'Volunteering app', 'Eleos', 'Climate change app
 const times = ['10:00', '12:00', '15:30', '19:00'];
 
 function fakeImages() {
-  const count = faker.datatype.number(3);
+  const count = faker.number.int(3);
   const images = [];
 
   if (count) {
@@ -27,7 +27,7 @@ function fakeDate(type) {
   switch (type) {
     case 'any':
     default:
-      date = faker.date.between('2021-01-01T00:00:00.000Z', '2025-01-01T00:00:00.000Z');
+      date = faker.date.between({ from: '2021-01-01T00:00:00.000Z', to: '2025-01-01T00:00:00.000Z' });
       break;
     case 'future':
       date = faker.date.future();
@@ -42,16 +42,16 @@ function fakeDate(type) {
 
 function fakeEventObject(dateType) {
   return {
-    id: faker.datatype.uuid(),
+    id: faker.string.uuid(),
     name: faker.lorem.words(4),
     date: fakeDate(dateType),
-    time: faker.random.arrayElement(times),
-    duration: faker.random.arrayElement(durations),
+    time: faker.helpers.arrayElement(times),
+    duration: faker.helpers.arrayElement(durations),
     description: faker.lorem.sentences(4),
-    type: faker.random.arrayElement(eventTypes),
+    type: faker.helpers.arrayElement(eventTypes),
     notes: faker.lorem.sentence(),
-    series: faker.random.arrayElement(series),
-    related_initiative: faker.random.arrayElement(relatedInitiatives),
+    series: faker.helpers.arrayElement(series),
+    related_initiative: faker.helpers.arrayElement(relatedInitiatives),
     video_webpage: faker.internet.url(),
     video_thumbnail: faker.internet.url(),
     images: fakeImages(),
@@ -81,7 +81,7 @@ function fakeEventAirTableRecords(count, dateType, includeVideo = false) {
 function fakeEventAirTableRecord(dateType, includeVideo = false) {
   const event = {
     ...fakeEventObject(dateType),
-    time: faker.datatype.number(19) * 60 * 60,
+    time: faker.number.int(19) * 60 * 60,
   };
 
   delete event.notes;

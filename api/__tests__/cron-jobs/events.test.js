@@ -5,6 +5,7 @@ const { faker } = require('@faker-js/faker');
 const eventsHelper = require('../../helpers/events');
 const eventsTestData = require('../../__test-data__/events');
 const timing = require('../../util/timing');
+const logging = require('../../services/logging');
 const vimeoService = require('../../services/vimeo');
 
 axios.defaults.adapter = require('axios/lib/adapters/http');
@@ -19,11 +20,11 @@ describe('Test the events cron jobs', () => {
     const fakeTableName = faker.lorem.word();
     const fakeEventsCountMin = 10;
     const fakeEventsCountMax = 20;
-    const fakeEventsCountWithoutVideoThumbnail = faker.datatype.number({ min: 2, max: 5 }); // how many events have a video but don't have a video thumbnail
+    const fakeEventsCountWithoutVideoThumbnail = faker.number.int({ min: 2, max: 5 }); // how many events have a video but don't have a video thumbnail
 
     let videoThumbnailsRemoved = 0;
     const fakeEvents = eventsTestData
-      .fakeEventObjects(faker.datatype.number({ min: fakeEventsCountMin, max: fakeEventsCountMax }))
+      .fakeEventObjects(faker.number.int({ min: fakeEventsCountMin, max: fakeEventsCountMax }))
       // Remove thumbnails from some events that have videos, to check that thumbnails are only added for events that don't have them
       // so we can be sure we're only adding thumbnails to events that don't have them yet
       .map((event) => {
@@ -45,6 +46,7 @@ describe('Test the events cron jobs', () => {
     const airTableEventsTableSpy = jest.spyOn(airTable, 'eventsTable').mockImplementation(() => fakeTableName);
     const timingDelaySpy = jest.spyOn(timing, 'delay').mockImplementation(() => Promise.resolve());
     const consoleLogSpy = jest.spyOn(global.console, 'log').mockImplementation(() => {});
+    const logErrorSpy = jest.spyOn(logging, 'logError').mockImplementation(() => {});
 
     // Run the function we're testing
     await eventsCronJobs.addEventsVideoThumbnails(fakeEvents);
@@ -61,12 +63,13 @@ describe('Test the events cron jobs', () => {
     airTableEventsTableSpy.mockRestore();
     timingDelaySpy.mockRestore();
     consoleLogSpy.mockRestore();
+    logErrorSpy.mockRestore();
   });
 
   test('getAllEvents gets all events from AirTable', async () => {
     // Set up fake test data
     const fakeTableName = faker.lorem.word();
-    const fakeEventsCount = faker.datatype.number(20);
+    const fakeEventsCount = faker.number.int(20);
     const fakeEvents = eventsTestData.fakeEventAirTableRecords(fakeEventsCount);
 
     // Mock dependencies
@@ -75,6 +78,7 @@ describe('Test the events cron jobs', () => {
     const eventsHelperFormatEventFromAirTable = jest
       .spyOn(eventsHelper, 'formatEventFromAirTable')
       .mockImplementation((eventAirTableRecord) => eventAirTableRecord);
+    const logErrorSpy = jest.spyOn(logging, 'logError').mockImplementation(() => {});
 
     // Run test
     await eventsCronJobs.getAllEvents();
@@ -87,6 +91,7 @@ describe('Test the events cron jobs', () => {
     airTableEventsTableSpy.mockRestore();
     airTableGetAllRecordsSpy.mockRestore();
     eventsHelperFormatEventFromAirTable.mockRestore();
+    logErrorSpy.mockRestore();
   });
 
   test('startGettingNewVideoThumbnails gets all events then attempts to add video thumbnails', async () => {

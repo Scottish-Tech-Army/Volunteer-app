@@ -1,11 +1,12 @@
 const { faker } = require('@faker-js/faker');
 const axios = require('axios');
+const logging = require('../../services/logging');
 const vimeoService = require('../../services/vimeo');
 
 describe('Test the Vimeo service', () => {
   test('getVideoThumbnail', async () => {
     // Set up fake test data
-    const fakeVimeoId = faker.datatype.number({ min: 100000000, max: 999999999 });
+    const fakeVimeoId = faker.number.int({ min: 100000000, max: 999999999 });
     const fakeVideoWebPage = `https://vimeo.com/${fakeVimeoId}`;
     const fakeApiVimeoCall = `https://player.vimeo.com/video/${fakeVimeoId}/config`;
 
@@ -32,6 +33,7 @@ describe('Test the Vimeo service', () => {
       .spyOn(vimeoService, 'getVideoIdFromUrl')
       .mockImplementation(() => fakeVimeoId);
     const axiosSpy = jest.spyOn(axios, 'get').mockImplementation(() => Promise.resolve(fakeVimeoData));
+    const logErrorSpy = jest.spyOn(logging, 'logError').mockImplementation(() => {});
 
     // Run the function we're testing
     const response = await vimeoService.getVideoThumbnail(fakeVideoWebPage);
@@ -45,11 +47,12 @@ describe('Test the Vimeo service', () => {
     // Clean up
     getVideoIdFromUrlSpy.mockRestore();
     axiosSpy.mockRestore();
+    logErrorSpy.mockRestore();
   });
 
   test('getVideoWebpagePlayerOnly', async () => {
     // Set up fake test data
-    const fakeVimeoId = faker.datatype.number({ min: 100000000, max: 999999999 });
+    const fakeVimeoId = faker.number.int({ min: 100000000, max: 999999999 });
     const fakeVideoWebPage = `https://vimeo.com/${fakeVimeoId}`;
     const fakeVideoWebPagePlayerOnly = `https://player.vimeo.com/video/${fakeVimeoId}`;
 
@@ -66,6 +69,7 @@ describe('Test the Vimeo service', () => {
           });
         },
       }));
+    const logErrorSpy = jest.spyOn(logging, 'logError').mockImplementation(() => {});
 
     // Run the function we're testing
     const response = await vimeoService.getVideoWebpagePlayerOnly(fakeVideoWebPage);
@@ -78,15 +82,19 @@ describe('Test the Vimeo service', () => {
     // Clean up
     getVideoIdFromUrlSpy.mockRestore();
     clientSpy.mockRestore();
+    logErrorSpy.mockRestore();
   });
 
   test('getVideoIdFromUrl correctly gets the video ID from a Vimeo video page URL', async () => {
     // Set up fake test data
-    const fakeVimeoId = faker.datatype.number({ min: 100000000, max: 999999999 });
+    const fakeVimeoId = faker.number.int({ min: 100000000, max: 999999999 });
     const fakeVideoWebPages = [
       `https://vimeo.com/${fakeVimeoId}`,
       `https://vimeo.com/manage/videos/${fakeVimeoId}`,
     ];
+
+    // Mock dependencies
+    const logErrorSpy = jest.spyOn(logging, 'logError').mockImplementation(() => {});
 
     for (const fakeVideoWebPage of fakeVideoWebPages) {
       // Run the function we're testing
@@ -95,6 +103,9 @@ describe('Test the Vimeo service', () => {
       // Check our test expectations are met
       expect(response).toEqual(fakeVimeoId.toString());
     }
+
+    // Clean up
+    logErrorSpy.mockRestore();
   });
 
   test('getVideoIdFromUrl checks it is a Vimeo URL', async () => {
@@ -102,7 +113,7 @@ describe('Test the Vimeo service', () => {
     const nonVimeoWebPage = faker.internet.url();
 
     // Mock dependencies
-    const consoleErrorSpy = jest.spyOn(global.console, 'error').mockImplementation(() => {});
+    const logErrorSpy = jest.spyOn(logging, 'logError').mockImplementation(() => {});
 
     // Run the function we're testing
     const response = vimeoService.getVideoIdFromUrl(nonVimeoWebPage);
@@ -111,15 +122,15 @@ describe('Test the Vimeo service', () => {
     expect(response).toEqual(undefined);
 
     // Clean up
-    consoleErrorSpy.mockRestore();
+    logErrorSpy.mockRestore();
   });
 
   test('getVideoIdFromUrl checks video ID is a number', async () => {
     // Set up fake test data
-    const incorrectVimeoWebPage = `https://vimeo.com/${faker.datatype.string(10)}`;
+    const incorrectVimeoWebPage = `https://vimeo.com/${faker.string.alpha(10)}`;
 
     // Mock dependencies
-    const consoleErrorSpy = jest.spyOn(global.console, 'error').mockImplementation(() => {});
+    const logErrorSpy = jest.spyOn(logging, 'logError').mockImplementation(() => {});
 
     // Run the function we're testing
     const response = vimeoService.getVideoIdFromUrl(incorrectVimeoWebPage);
@@ -128,6 +139,6 @@ describe('Test the Vimeo service', () => {
     expect(response).toEqual(undefined);
 
     // Clean up
-    consoleErrorSpy.mockRestore();
+    logErrorSpy.mockRestore();
   });
 });

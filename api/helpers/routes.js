@@ -1,5 +1,9 @@
+const logging = require('../services/logging');
+
 function sendError(res, errorMessage, data) {
-  console.error(errorMessage);
+  logging.logError(errorMessage, {
+    extraInfo: data,
+  });
 
   res.status(400).send(
     data ?? {

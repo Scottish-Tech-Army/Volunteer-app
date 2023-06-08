@@ -5,13 +5,15 @@
   "main": "app.js",
   "scripts": {
     "start": "nodemon server.js",
-    "tunnel": "ssh -R 80:localhost:3000 serveo.net",
+    "tunnel": "autossh -M 0 -o \"ServerAliveInterval 30\" -o \"ServerAliveCountMax 3\" -R 80:localhost:3000 serveo.net",
     "test": "jest"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@bugsnag/js": "^7.20.2",
+    "@bugsnag/plugin-express": "^7.19.0",
     "airtable": "^0.11.1",
     "axios": "^0.25.0",
     "cors": "^2.8.5",
@@ -25,7 +27,7 @@
     "vimeo": "^2.1.1"
   },
   "devDependencies": {
-    "@faker-js/faker": "^6.0.0-alpha.6",
+    "@faker-js/faker": "^8.0.2",
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "jest": "^27.2.4",

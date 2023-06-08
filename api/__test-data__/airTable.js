@@ -2,12 +2,12 @@ const { faker } = require('@faker-js/faker');
 
 function fakeAirTableAttachmentData() {
   return {
-    id: faker.datatype.uuid(),
-    width: faker.datatype.number({ min: 300, max: 1200 }),
-    height: faker.datatype.number({ min: 300, max: 1200 }),
+    id: faker.string.uuid(),
+    width: faker.number.int({ min: 300, max: 1200 }),
+    height: faker.number.int({ min: 300, max: 1200 }),
     url: faker.internet.url(),
     filename: faker.system.commonFileName('jpg'),
-    size: faker.datatype.number({ min: 10000, max: 100000 }),
+    size: faker.number.int({ min: 10000, max: 100000 }),
     type: 'image/jpeg',
     thumbnails: {
       small: {
@@ -38,7 +38,7 @@ function fakeAirTableRecordRaw(tableName, fields) {
     _table: {
       name: tableName,
     },
-    id: faker.datatype.uuid(),
+    id: faker.string.uuid(),
     fields: {},
   };
 
@@ -46,7 +46,7 @@ function fakeAirTableRecordRaw(tableName, fields) {
     let fieldValue;
     switch (field.type) {
       case 'number':
-        fieldValue = faker.datatype.number();
+        fieldValue = faker.number.int();
         break;
       case 'string':
         fieldValue = faker.lorem.words(5);

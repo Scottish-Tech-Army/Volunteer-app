@@ -28,7 +28,7 @@ const common = {
   },
   fonts: {
     family: {
-      primary: 'Poppins',
+      primary: 'Poppins-Regular',
     },
     size: {
       '2xs': 12,
@@ -200,6 +200,7 @@ const StaTheme = extendTheme({
         fontWeight: '600',
       },
     },
+
     Button: {
       baseStyle: {
         rounded: 'full',
@@ -236,6 +237,7 @@ const StaTheme = extendTheme({
         xs: 4,
       },
     },
+
     IconButton: {
       defaultProps: {
         size: common.icons.size,
@@ -260,6 +262,7 @@ const StaTheme = extendTheme({
         }),
       }),
     },
+
     FormControlLabel: {
       baseStyle: () => {
         return {
@@ -286,6 +289,7 @@ const StaTheme = extendTheme({
         }
       },
     },
+
     FormControlErrorMessage: {
       baseStyle: () => {
         return {
@@ -304,6 +308,7 @@ const StaTheme = extendTheme({
         }
       },
     },
+
     Input: {
       baseStyle: () => ({
         placeholderTextColor: 'text.100',
@@ -346,11 +351,19 @@ const StaTheme = extendTheme({
         },
       },
     },
+
+    Link: {
+      baseStyle: () => ({
+        fontFamily: 'primary',
+      }),
+    },
+
     ScrollView: {
       defaultProps: {
         padding: '4',
       },
     },
+
     Text: {
       baseStyle: () => ({
         fontFamily: 'primary',

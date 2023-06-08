@@ -5,6 +5,7 @@ const axios = require("axios").default;
 const urlsHelpers = require("../helpers/urls");
 const projectsHelpers = require("../helpers/projects");
 const videosService = require("../services/videos");
+const logging = require("../services/logging");
 const api_key = process.env.JIRA_API_KEY;
 const email = process.env.JIRA_EMAIL;
 const resourcingJiraBoardName = "RES";
@@ -44,9 +45,16 @@ async function addNewRecords(tableName, recordsChunk) {
 
 async function cacheProjectsAndResources(projects, resources) {
   if (!projects?.length || !resources?.length) {
-    console.error(
-      "❌ No projects/resources returned from Jira API, so aborted updating cache"
+    logging.logError(
+      "❌ No projects/resources returned from Jira API, so aborted updating cache",
+      {
+        extraInfo: {
+          projects,
+          resources,
+        },
+      }
     );
+
     return;
   }
 
@@ -62,8 +70,11 @@ async function cacheProjectsAndResources(projects, resources) {
       airTable.projectsResourcesCacheTable()
     );
   } catch (error) {
-    console.error(
-      "❌ Could not delete existing projects/resources records in cache, so aborted updating cache"
+    logging.logError(
+      "❌ Could not delete existing projects/resources records in cache, so aborted updating cache",
+      {
+        extraInfo: error,
+      }
     );
 
     return;
@@ -72,7 +83,12 @@ async function cacheProjectsAndResources(projects, resources) {
   try {
     await module.exports.addNewProjectsResources(projectsResources);
   } catch (error) {
-    console.error("❌ Could not save new projects/resources records in cache");
+    logging.logError(
+      "❌ Could not save new projects/resources records in cache",
+      {
+        extraInfo: error,
+      }
+    );
 
     return;
   }
@@ -101,7 +117,12 @@ async function deleteAllRecords(tableName) {
         try {
           await module.exports.deleteRecords(tableName, recordIds);
         } catch (error) {
-          console.error(`❌ Error deleting all records in table ${tableName}`);
+          logging.logError(
+            `❌ Error deleting all records in table ${tableName}`,
+            {
+              extraInfo: error,
+            }
+          );
 
           reject();
         }
@@ -121,7 +142,10 @@ async function deleteRecords(tableName, recordIds) {
       .table(tableName)
       .destroy(recordIds, (error) => {
         if (error) {
-          console.error("❌ AirTable delete error", error);
+          logging.logError(`❌ AirTable delete error with table ${tableName}`, {
+            extraInfo: error,
+          });
+
           reject();
         }
         resolve();
