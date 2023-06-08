@@ -270,6 +270,7 @@ You can force the app to report errors to Bugsnag during development using Expo 
 
 **After you've finished testing you must:**
 
+- Remove the `BUGSNAG_API_KEY` line from your `app/.env` file or comment it out by adding a `#` at the start of the line
 - Remove the `BUGSNAG_ALWAYS_SEND_BUGS` line from your `app/.env` file or set it to `BUGSNAG_ALWAYS_SEND_BUGS="false"`
 - Restart Expo and reload the app
 
