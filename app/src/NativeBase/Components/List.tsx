@@ -3,6 +3,7 @@
  */
 
 import React, { FC } from 'react'
+import Hyperlink from 'react-native-hyperlink'
 import styled from 'styled-components/native'
 import EventSummary from '@/Components/Event/EventSummary'
 import { ListType } from '@/NativeBase/Containers/ListContainer'
@@ -10,9 +11,9 @@ import { navigate, RootStackParamList } from '@/Navigators/utils'
 import { Events, EventsRange } from '@/Services/modules/events'
 import { Projects } from '@/Services/modules/projects'
 import underDevelopmentAlert from '@/Utils/UnderDevelopmentAlert'
-import { makeUrlsClickable } from '@/Utils/Text'
 import ColouredTag from '../Components/ColouredTag'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import StaTheme from '../Theme/StaTheme'
 
 import {
   FlatList,
@@ -170,9 +171,12 @@ const List: FC<ListProps> = ({
                     <ColouredTag title={item.role} />
                     <Text fontSize="xs">{item.hours}</Text>
 
-                    <Text fontSize="xs">
-                      {makeUrlsClickable(item.description)}
-                    </Text>
+                    <Hyperlink
+                      linkDefault
+                      linkStyle={{ color: StaTheme.colors.primary[100] }}
+                    >
+                      <Text fontSize="xs">{item.description}</Text>
+                    </Hyperlink>
 
                     {Boolean(item.buddying) && (
                       <HStack
