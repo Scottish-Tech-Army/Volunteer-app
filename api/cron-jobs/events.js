@@ -3,6 +3,7 @@
 require('dotenv').config();
 const airTable = require('../helpers/airTable');
 const eventsHelper = require('../helpers/events');
+const logging = require('../services/logging');
 const vimeoService = require('../services/vimeo');
 const timing = require('../util/timing');
 
@@ -27,10 +28,9 @@ async function addEventsVideoThumbnails(events) {
       });
 
       if (updateRecordResult.error) {
-        console.error(
-          `❌ Could not update event record in AirTable for event ${event.name} (${event.id})`,
-          updateRecordResult.error,
-        );
+        logging.logError(`❌ Could not update event record in AirTable for event ${event.name} (${event.id})`, {
+          extraInfo: updateRecordResult.error,
+        });
       } else {
         console.log(`✅ Added video thumbnail for event ${event.name} (${event.id})`);
       }
@@ -44,7 +44,9 @@ async function getAllEvents() {
   const events = await airTable.getAllRecords(airTable.eventsTable(), true);
 
   if (events.error) {
-    console.error('❌ Could not get events from AirTable', events.error);
+    logging.logError('❌ Could not get events from AirTable', {
+      extraInfo: events.error,
+    });
 
     return;
   }

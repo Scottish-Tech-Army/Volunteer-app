@@ -74,7 +74,7 @@ describe('Test the events api', () => {
   test('getEventsHandler gets all records from AirTable, formats data and returns a response', async () => {
     // Set up fake test data
     const fakeTableName = faker.lorem.word();
-    const fakeEventsCount = faker.datatype.number(10);
+    const fakeEventsCount = faker.number.int(10);
     const fakeEvents = eventsTestData.fakeEventAirTableRecords(fakeEventsCount);
 
     // Mock dependencies
@@ -155,8 +155,8 @@ describe('Test the events api', () => {
       },
     };
     const fakeTableName = faker.lorem.word();
-    const fakePastEventsCount = faker.datatype.number(10);
-    const fakeFutureEventsCount = faker.datatype.number(10);
+    const fakePastEventsCount = faker.number.int(10);
+    const fakeFutureEventsCount = faker.number.int(10);
     const fakePastEvents = eventsTestData.fakeEventAirTableRecords(fakePastEventsCount, 'past');
     const fakeFutureEvents = eventsTestData.fakeEventAirTableRecords(fakeFutureEventsCount, 'future');
     const fakeAllEvents = [...fakePastEvents, ...fakeFutureEvents];
@@ -206,8 +206,8 @@ describe('Test the events api', () => {
       },
     };
     const fakeTableName = faker.lorem.word();
-    const fakePastEventsCount = faker.datatype.number(5);
-    const fakeFutureEventsCount = faker.datatype.number(5);
+    const fakePastEventsCount = faker.number.int(5);
+    const fakeFutureEventsCount = faker.number.int(5);
     const fakePastEvents = eventsTestData.fakeEventAirTableRecords(fakePastEventsCount, 'past');
     const fakeFutureEvents = eventsTestData.fakeEventAirTableRecords(fakeFutureEventsCount, 'future');
     const fakeAllEvents = [...fakePastEvents, ...fakeFutureEvents];

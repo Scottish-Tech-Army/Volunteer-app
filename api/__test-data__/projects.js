@@ -4,18 +4,18 @@ const projectTypes = ['Charity', 'Design and Build', 'External Project', 'Extern
 const frequencyUnits = ['days', 'days a week', 'days total', 'hours', 'hours a week'];
 
 function fakeHours() {
-  return `${faker.datatype.number({ min: 1, max: 4 })}-${faker.datatype.number({
+  return `${faker.number.int({ min: 1, max: 4 })}-${faker.number.int({
     min: 5,
     max: 8,
-  })} ${faker.random.arrayElement(frequencyUnits)}`;
+  })} ${faker.helpers.arrayElement(frequencyUnits)}`;
 }
 
 function fakeItKey() {
-  return `IT-${faker.datatype.number({ min: 100, max: 999 })}`;
+  return `IT-${faker.number.int({ min: 100, max: 999 })}`;
 }
 
 function fakeResId() {
-  return `${faker.datatype.number({ min: 15000, max: 15999 })}`;
+  return `${faker.number.int({ min: 15000, max: 15999 })}`;
 }
 
 function fakeJiraItApiResultIssuesObject() {
@@ -24,9 +24,9 @@ function fakeJiraItApiResultIssuesObject() {
     fields: {
       summary: faker.lorem.sentence(),
       description: faker.lorem.sentences(4),
-      customfield_10027: faker.company.companyName(), // client
-      customfield_10159: faker.helpers.randomize([faker.internet.url(), '']), // video URL
-      customfield_10090: faker.helpers.randomize([faker.internet.url(), '']), // scope URL
+      customfield_10027: faker.company.name(), // client
+      customfield_10159: faker.helpers.arrayElement([faker.internet.url(), '']), // video URL
+      customfield_10090: faker.helpers.arrayElement([faker.internet.url(), '']), // scope URL
       customfield_10148: { value: faker.lorem.sentence() }, //sector
     },
   };
@@ -52,12 +52,12 @@ function fakeJiraResApiResultIssuesObject() {
     id: fakeResId(),
     fields: {
       customfield_10109: fakeItKey(),
-      customfield_10112: faker.random.arrayElement(projectTypes), // project type
-      customfield_10113: faker.name.jobTitle(), // role
+      customfield_10112: faker.helpers.arrayElement(projectTypes), // project type
+      customfield_10113: faker.person.jobTitle(), // role
       customfield_10061: faker.lorem.sentence(), // skills
       customfield_10062: fakeHours(), // hours
       customfield_10108: {
-        value: faker.helpers.randomize(['Yes', '']),
+        value: faker.helpers.arrayElement(['Yes', '']),
       }, // buddying
     },
   };
@@ -83,7 +83,7 @@ function fakeProjectObject() {
     it_key: fakeItKey(),
     name: faker.lorem.sentence(),
     description: faker.lorem.sentences(4),
-    client: faker.company.companyName(),
+    client: faker.company.name(),
     scope: faker.internet.url(),
     sector: faker.lorem.sentence(),
     video_webpage: faker.internet.url(),
@@ -128,7 +128,7 @@ function fakeProjectAirTableRecords(count) {
 
   for (let i = 0; i < count; i++) {
     fakeProjectObjectArray.push({
-      id: faker.datatype.uuid(),
+      id: faker.string.uuid(),
       ...fakeProjectObject(),
     });
   }
@@ -140,8 +140,8 @@ function fakeResourceObject() {
   return {
     res_id: fakeResId(),
     it_key: fakeItKey(),
-    type: faker.random.arrayElement(projectTypes),
-    role: faker.name.jobTitle(),
+    type: faker.helpers.arrayElement(projectTypes),
+    role: faker.person.jobTitle(),
     skills: faker.lorem.sentence(),
     hours: fakeHours(),
     required: 1,
@@ -164,9 +164,9 @@ function fakeAirTableProjectResource(includeBuddying) {
     it_key: fakeItKey(),
     res_id: fakeResId(),
     name: faker.lorem.sentence(),
-    type: faker.random.arrayElement(projectTypes),
-    client: faker.company.companyName(),
-    role: faker.name.jobTitle(),
+    type: faker.helpers.arrayElement(projectTypes),
+    client: faker.company.name(),
+    role: faker.person.jobTitle(),
     description: faker.lorem.sentences(4),
     scope: faker.internet.url(),
     sector: faker.lorem.sentence(),

@@ -7,6 +7,7 @@ This file contains some tips and guidelines on building our front-end React Nati
 - [React Native and Expo](#react-native-and-expo)
   - [Expo trade-offs](#expo-trade-offs)
   - [Installing new packages](#installing-new-packages)
+  - [Using .env variables](#using-env-variables)
   - [Expo known issues](#expo-known-issues)
 - [NativeBase](#nativebase)
   - [File locations, naming, moving and deleting](#file-locations-naming-moving-and-deleting)
@@ -16,6 +17,9 @@ This file contains some tips and guidelines on building our front-end React Nati
   - [Custom components](#custom-components)
   - [Icons](#icons)
 - [Images](#images)
+- [Logging errors and crashes](#logging-errors-and-crashes)
+  - [Seeing Bugsnag reports](#seeing-bugsnag-reports)
+  - [Logging errors to Bugsnag during development](#logging-errors-to-bugsnag-during-development)
 - [Performance issues](#performance-issues)
 
 ## Overview of directories
@@ -64,10 +68,23 @@ You can see [the full list of Expo SDK libraries here](https://docs.expo.dev/ver
 
 **For dev packages (for use in the development environment only), use** `npm install name-of-the-package-goes-here --save-dev`
 
+### Using .env variables
+
+You can use an `app/.env` file to store environment variables (often sensitive details like API keys, etc).
+
+> Be careful about using sensitive details like passwords and API keys in the front-end app as it's possible for someone to break into an app on their phone and get this data. Consider whether this is the best approach and discuss with others in the team if you're not sure.
+
+There are a few steps to add and use an environment variable using Expo:
+
+1. Add your variable to the `app/.env` file, e.g. `AMAZING_API_KEY="abc123def456ghi789"`
+2. Edit the `app/app.config.ts` file and add a new entry inside the `extra` object, e.g. `amazingApiKey: process.env.AMAZING_API_KEY,`
+3. In the file in your code where you want to use this variable, add an import statement at the top of the file `import Constants from 'expo-constants'`
+4. In the same file, at the place in the code where you want to use the variable, you can access your variable with e.g. `Constants.expoConfig?.extra?.amazingApiKey` (note: Typescript considers that the value of this could be `undefined`, so you may need to handle that possibility)
+
 ### Expo known issues
 
 - **If the app on your phone isn't showing the latest changes in your code** first you could try reloading it -- while viewing the app in Expo Go, shake your phone and it should show you some options include 'Reload'
-- **Sometimes the dev server loses connection with your phone** in which case you can try restarting the dev server -- in your terminal, press Ctrl+C to stop the dev server, then run `npm start` again
+- **Sometimes the dev server loses connection with your phone** in which case you can try restarting Expo in your terminal -- press Ctrl+C to stop it, then run `npm start` again
 - **If you're still having problems not seeing changes you have made on your phone** instead of `npm start` try `npm run start-clear-cache` (this does the same thing but also clears the Expo cache, so it'll be slower to load, but should force any changes to come through)
 - **Previewing the app in Expo Go, it doesn't pick up the colour mode set on your phone** (we need to check, but assume this shouldn't be an issue when the app is built and deployed). For testing purposes you can manually set dark/light mode on the Settings screen.
 
@@ -151,6 +168,12 @@ Tappable list of options to choose from, with arrows
 
 Text input for searching
 
+#### Modal
+
+![Modal component](screenshots/components/Modal.png)
+
+A modal used to show the user a message. Can optionally include buttons to get the user's response/choice.
+
 #### NavigationHeader
 
 ![NavigationHeader component](screenshots/components/NavigationHeader.png)
@@ -174,12 +197,6 @@ Shown at the top of some screens - a small STA logo and (optionally) a search ic
 ![TextInputControl component](screenshots/components/TextInputControl.png)
 
 Default text input, label, required indicator and validation/error message.
-
-#### ResponseModal
-
-![ResponseModal component](screenshots/components/ResponseModal.png)
-
-Shows the result of server interaction (e.g submitting a form) to the user. Handles success/error.
 
 ### Icons
 
@@ -212,6 +229,51 @@ We have the [react-native-svg](https://github.com/software-mansion/react-native-
 - Import it at the top of your component file, e.g. `import StaLogoWide from '@/NativeBase/Assets/Images/Logos/sta-logo-wide.svg'`
 - Use it like you would a normal component, e.g. `<StaLogoWide />`
 - See `interface SvgProps` [in this file](https://github.com/software-mansion/react-native-svg/blob/main/src/elements/Svg.tsx) for common props you can use, and [here for touch events](https://github.com/software-mansion/react-native-svg/blob/main/USAGE.md#touch-events)
+
+## Logging errors and crashes
+
+We use Bugsnag to log errors and crashes in the front-end app when it's running on people's phones -- (otherwise we might not know if the app's going wrong when people are using it). To log errors to Bugsnag in the app in production, always use the `logError` function in `app/src/Service/modules/logging/index.ts` instead of `console.error` (it calls `console.error` itself anyway as part of what it does).
+
+(While you're developing and testing out your code, you can still use `console.log` and `console.error` to see errors in your terminal.)
+
+There are broadly two kinds of things that can go wrong on the front-end app:
+
+- **Errors** Errors that happen in our React/Typescript code, either unforeseen or (ideally) caught in a `try...catch` statement. These are what's most likely to go wrong. The user can opt in/out of sending these kinds of errors, which are more likely to contain personal data. **Normally, these are only logged to Bugsnag when the app is installed on an actual device, rather than running in Expo Go during development.** This is so that we don't get flooded by lots of errors that occur during development, and because we're on a free tier package that only allows a limited number of error reports per day/month so we want to minimise the errors reported to Bugsnag to only include issues in production.
+- **Crashes** The app can crash entirely e.g. if something goes wrong in a native library or the app runs out of memory, although this is probably unlikely with Expo. Logging these crash reports cannot be switched off, because Bugsnag starts when the first app loads. From an initial look, it appears these crash reports don't contain personal data.
+
+Ordinarily, when you are developing using Expo Go, you should **not** have `BUGSNAG_API_KEY` set to the real API key value, otherwise it will send crash logs to Bugsnag which we usually don't want (ordinarily we only want to use Bugsnag to track errors and crashes on real devices).
+
+  > You do need to set a value otherwise the app will not run, so you can use e.g. `BUGSNAG_API_KEY="no_api_key"`
+
+  > During development, in the terminal window where you are running Expo you may see the message `[bugsnag] Bugsnag.start() was called more than once. Ignoring.`  You don't need to worry about this, it's just the app reloading and trying to start Bugsnag again.
+
+### Seeing Bugsnag reports
+
+Ask one of the team to add you to the **it470-volunteer-app-errors** Slack channel where you can see the latest bugs coming in from the app on real devices, and the API production server.
+
+If you know a bug  has been fixed or can safely be ignored, please click the 'Mark as fixed' or 'Ignore' button on the error in the Slack message.
+
+To get more details on a bug you'll need to go to [our Bugsnag inbox here](https://app.bugsnag.com/scottish-tech-army/volunteer-app/errors) -- you'll need the Bugsnag login details from another team member.  
+
+  > Note: there are two Projects in Bugsnag -- one for the front-end app ('Volunteer app'), another for the API ('Volunteer app API'). Make sure you're looking at the right one. You can also filter by development/production.
+
+  > When you look into an error, click on it in the Inbox in Bugsnag, then on the 'Stacktrace' tab you'll need to find where the error originated. The first entry in the stacktrace is just the `logging` module, you need to find what's below that and click to expand it to see where in the code the error actually occurred.
+
+### Logging errors to Bugsnag during development
+
+You can log errors to Bugsnag when developing in Expo Go if you really need to. **You shouldn't normally need to do this -- Bugsnag error logging is usually to monitor crashes and errors in the production app.  You should only use this in development when normal error detection is insufficient** e.g. because you want to figure out why the app is crashing due to a lack of memory.  **Don't** use this in place of normal code tools like `console.error` and `console.log` and other normal testing approaches.
+
+You can force the app to report errors to Bugsnag during development using Expo Go (this also overrides the user permissions setting which normally determines whether or not send error reports).  To do this:
+
+- Create a `app/.env` file if you don't have one already, and add `BUGSNAG_API_KEY="xxxxxxxxxxxxxxxx"` repacing `xxxxxxxxxxxxxxxx` with the value of our actual Bugsnag API key for the app (ask on the team Slack channel and someone can give you this -- note: the front-end app and the API use different Bugsnag API keys)
+- In your `app/.env` file include the line `BUGSNAG_ALWAYS_SEND_BUGS="true"` (this forces the API to send errors to Bugsnag, even though you're in a development environment)
+- Start/restart Expo and reload the app
+
+**After you've finished testing you must:**
+
+- Remove the `BUGSNAG_API_KEY` line from your `app/.env` file or comment it out by adding a `#` at the start of the line
+- Remove the `BUGSNAG_ALWAYS_SEND_BUGS` line from your `app/.env` file or set it to `BUGSNAG_ALWAYS_SEND_BUGS="false"`
+- Restart Expo and reload the app
 
 ## Performance issues
 

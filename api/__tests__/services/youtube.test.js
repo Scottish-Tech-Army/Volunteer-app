@@ -1,4 +1,5 @@
 const { faker } = require('@faker-js/faker');
+const logging = require('../../services/logging');
 const youTubeService = require('../../services/youTube');
 
 describe('Test the YouTube service', () => {
@@ -33,6 +34,9 @@ describe('Test the YouTube service', () => {
       `https://youtu.be/${fakeYouTubeId}`,
     ];
 
+    // Mock dependencies
+    const logErrorSpy = jest.spyOn(logging, 'logError').mockImplementation(() => {});
+
     for (const fakeVideoWebPage of fakeVideoWebPages) {
       // Run the function we're testing
       const response = youTubeService.getVideoIdFromUrl(fakeVideoWebPage);
@@ -40,6 +44,9 @@ describe('Test the YouTube service', () => {
       // Check our test expectations are met
       expect(response).toEqual(fakeYouTubeId);
     }
+
+    // Clean up
+    logErrorSpy.mockRestore();
   });
 
   test('getVideoIdFromUrl checks it is a YouTube URL', () => {
@@ -47,7 +54,7 @@ describe('Test the YouTube service', () => {
     const nonYouTubeWebPage = faker.internet.url();
 
     // Mock dependencies
-    const consoleErrorSpy = jest.spyOn(global.console, 'error').mockImplementation(() => {});
+    const logErrorSpy = jest.spyOn(logging, 'logError').mockImplementation(() => {});
 
     // Run the function we're testing
     const response = youTubeService.getVideoIdFromUrl(nonYouTubeWebPage);
@@ -56,6 +63,6 @@ describe('Test the YouTube service', () => {
     expect(response).toEqual(undefined);
 
     // Clean up
-    consoleErrorSpy.mockRestore();
+    logErrorSpy.mockRestore();
   });
 });

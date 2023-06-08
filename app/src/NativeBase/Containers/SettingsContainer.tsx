@@ -16,20 +16,19 @@
 import {
   Heading,
   VStack,
-  HStack,
-  Icon,
-  Link,
+  Checkbox,
   Text,
-  Spacer,
   ScrollView,
   useColorMode,
 } from 'native-base'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import Brand from '@/NativeBase/Components/Brand'
+import PrivacyAndTermsLinks from '@/NativeBase/Components/PrivacyAndTermsLinks'
+import YesNoChoice from '@/NativeBase/Components/Forms/YesNoChoice'
+import { setPermissions, PermissionsState } from '@/Store/Permissions'
 import { changeTheme, ThemeState } from '@/Store/Theme'
-// import { changeWelcome, WelcomeState } from '@/Store/Welcome'     currently not being used due to cleanup for MVP
+// import { changeWelcome, WelcomeState } from '@/Store/Welcome'     // currently not being used due to cleanup for MVP
 import { version } from '../../../package.json'
 import SegmentedPicker, {
   SegmentedPickerOption,
@@ -42,6 +41,12 @@ const SettingsContainer = () => {
   // const onChangeSplash = ({ welcome, show }: Partial<WelcomeState>) => {
   //   dispatch(changeWelcome({ welcome, show }))
   // }
+  const dataPermissionsState = useSelector(
+    (state: { permissions: PermissionsState }) => state.permissions.data,
+  )
+  const onChangeErrorLogsPermission = (errorLogs: boolean) => {
+    dispatch(setPermissions({ data: { ...dataPermissionsState, errorLogs } }))
+  }
   const useSystemColourMode = useSelector(
     (state: { theme: ThemeState }) => state.theme.useSystemColourMode,
   )
@@ -90,48 +95,52 @@ const SettingsContainer = () => {
   }
 
   return (
-    <ScrollView>
-      <VStack safeAreaTop space={4} padding={4}>
-        <Brand />
+    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+      <VStack
+        height="100%"
+        justifyContent="space-between"
+        safeAreaY
+        space={4}
+        padding={4}
+      >
+        <VStack space="4">
+          <Brand />
 
-        <Heading size="sm">Settings</Heading>
+          <VStack>
+            <Heading size="xs">Dark mode</Heading>
+            <SegmentedPicker options={colourModeOptions} />
+          </VStack>
 
-        <SegmentedPicker options={colourModeOptions} />
+          <VStack>
+            <YesNoChoice
+              description="Send bug reports?"
+              onChange={() =>
+                onChangeErrorLogsPermission(!dataPermissionsState.errorLogs)
+              }
+              value={dataPermissionsState.errorLogs}
+            />
+            <Text fontSize="xs">
+              Automatically send bug reports to the STA team? May include
+              personal data
+            </Text>
+          </VStack>
 
-        {/* <Heading size="sm">Welcome screen</Heading>
-        <Checkbox
-          colorScheme={'pink'}
-          value="welcome"
-          accessibilityLabel="Show a splash screen when the app starts"
-          isChecked={welcomeState}
-          onChange={() => onChangeSplash({ show: !welcomeState })}
-        >
-          <Text fontSize="sm">Show splash screen on app launch</Text>
-        </Checkbox> */}
-        <Spacer />
-        <HStack justifyContent="center">
-          <Icon
-            size={8}
-            as={MaterialIcons}
-            name="info"
-            color="black"
-            mx={0}
-            px={0}
-          />
-          <Text fontSize="2xs">Version {version}</Text>
-        </HStack>
-        <HStack safeAreaBottom space="4" justifyContent={'center'}>
-          <Text fontSize="sm">
-            <Link href="https://www.scottishtecharmy.org/app-privacy-policy">
-              Privacy policy
-            </Link>
-          </Text>
-          <Text fontSize="sm">
-            <Link href="https://www.scottishtecharmy.org/app-terms-conditions">
-              Terms & conditions
-            </Link>
-          </Text>
-        </HStack>
+          {/* <Heading size="sm">Welcome screen</Heading>
+          <Checkbox
+            colorScheme={'pink'}
+            value="welcome"
+            accessibilityLabel="Show a splash screen when the app starts"
+            isChecked={welcomeState}
+            onChange={() => onChangeSplash({ show: !welcomeState })}
+          >
+            <Text fontSize="sm">Show splash screen on app launch</Text>
+          </Checkbox> */}
+        </VStack>
+
+        <VStack alignItems="center">
+          <Text fontSize="xs">Version {version}</Text>
+          <PrivacyAndTermsLinks />
+        </VStack>
       </VStack>
     </ScrollView>
   )

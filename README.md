@@ -92,7 +92,7 @@ If you're using Visual Studio Code for development, it's recommended that you:
 
 > **Note** Inside the `api` folder there are files `package.json` and `package-lock.json`. Every time either of these is modified, it is advised to repeat this step before running the project.
 
-7. Then run the command `npm start` to start the Volunteer App API server. You should see a message that says `Running scheduled cron jobs... ` and `Volunteer App API is listening on port <number>`.  Leave this terminal window open.
+7. Then run the command `npm start` to start the Volunteer App API server. You should see a message that says `Running scheduled cron jobs... ` and `Volunteer App API is listening on port <number> in development environment`.  Leave this terminal window open.
 
 8. Open another terminal window and in this new window run the command `npm run tunnel`. This 'tunnels' your local API server: makes it available externally so your app running in Expo Go can access it (using a free external service called [Serveo](https://serveo.net/)).  You should see a message saying your `Forwarding HTTP traffic from: https://xxxxxxxxx.serveo.net` -- this is the URL of your local API server, make a note of it as you'll need it in a minute.
 
@@ -106,7 +106,9 @@ If you're using Visual Studio Code for development, it's recommended that you:
 
    > Inside the `app` folder there are files `package.json` and `package-lock.json`. **Every time either of these is modified, it is advised to repeat this step before running the project.**
 
-   > **If you get an error about installing dependencies** you may need to run `npm install --legacy-peer-deps` or `npm install --force` (instead of `npm install`)
+   > **If you get *warnings* about installing dependencies** you probably don't worry about these
+
+   > **If you get *errors* about installing dependencies** you may need to run `npm install --legacy-peer-deps` or `npm install --force` (instead of `npm install`)
 
 11. Duplicate the example config file `app/src/Config/index.example.ts` and name your new file `app/src/Config/index.ts`  Set the value of `STA_BASE_URL` to the tunnelled URL of your local API server (the one you made a note of in step 8 above).
 
@@ -190,54 +192,17 @@ Below are some commonly encountered issues and possible ways to resolve them. If
 
 # Development
 
+## Bugs
+
+Ask one of the team to add you to the **it470-volunteer-app-errors** Slack channel where you can see crash and error reports coming via [Bugsnag](https://www.bugsnag.com).  Find out more about Bugsnag on the app and API development pages linked to below.
+
 ## App
 
 [Please see here](APP_DEVELOPMENT.md) for more info on developing the front-end app, including more about React Native and Expo, and NativeBase.
 
 ## API
 
-### Cron jobs
-
-[Cron jobs](https://en.wikipedia.org/wiki/Cron) are bits of code that can run regularly in the background to carry out things that need to be done repeatedly on a schedule (rather than code that's triggered by a user request, like most of our API).
-
-These are stored in the `/api/cron-jobs` directory. Please see instructions at the end of the [Subsequent run](#subsequent-run) section above on how to run these scripts.
-
-We make use of cron jobs on the API server for a couple of things:
-
-#### Projects
-
-Projects data comes originally from Jira. We have found the Jira API can be too slow for us to fetch data from it each time a request is made to the API (partly because of the speed of Jira's API itself, partly because we may be making multiple calls and then combining the data received).
-
-So instead we store a cached copy of projects data, in the format we use it in our API, in our own database (currently AirTable) so that we can deliver a fast response when someone calls our API. There are projects scripts that can be run as a cron job to regularly update our database from the Jira API.
-
-The projects cron jobs also grab video thumbnail images from Vimeo and save them in AirTable, and updates AirTable with Vimeo/YouTube/other video webpage URLs.
-
-#### Events
-
-There is also a cron job for events that have videos (these are usually past events - the videos are event recordings).
-
-This job grabs video thumbnail images from Vimeo and saves them in AirTable.
-
-### Services
-
-#### Slack
-
-This file `/api/services/slack.js` allows you to post messages to Slack. If you want to enable posting to a new channel that we don't already post to, you need to:
-
-1. [Create a Slack app](https://api.slack.com/start/planning) with a bot user, [approved by the owner of the Slack workspace](https://slack.com/intl/en-gb/help/articles/222386767-Manage-app-approval-for-your-workspace#h_01EC8H3AWBYEAAN5AKBTVKPC5K). This step has already been done, the Slack app is called ['Volunteer App'.](https://api.slack.com/apps/A03ALL3M137/general) If you don't have access to this, another member of the team can [add you as a 'collaborator'.](https://app.slack.com/app-settings/T011F5L41NH/A03ALL3M137/collaborators)
-
-2. [Set up a webhook](https://api.slack.com/apps/A03ALL3M137/incoming-webhooks?) for the channel you want to post to. ([More info about Slack webhooks here.](https://api.slack.com/messaging/webhooks))
-
-   > **Note:** this webhook URL must remain secret (don't share it openly, don't commit it to GitHub) as it enables anyone to post to that channel
-
-3. Add the webhook as a variable in your `/api/.env` file (and in `/api/.env.example` but without the webhook URL itself). This variable must be named `SLACK_SECRET_WEBHOOK_` and then the name of the Slack channel, all in capitals and with hyphens replaced by underscores.
-   > For example, if the Slack channel is called `my-awesome-channel`, the .env variable should be called `SLACK_SECRET_WEBHOOK_MY_AWESOME_CHANNEL`
-
-4. Add this variable to the Volunteer-app/.github/workflows/ci_api.yml file, following the format of the variables already listed there. 
-   > For example, the above .env variable would require the following entry at the bottom of the yml file: 
-     SLACK_SECRET_WEBHOOK_MY_AWESOME_CHANNEL: ${{ secrets.SLACK_SECRET_WEBHOOK_MY_AWESOME_CHANNEL}}
-
-5. Add this variable as a new [GitHub Actions Secret](https://github.com/Scottish-Tech-Army/Volunteer-app/settings/secrets/actions).
+[Please see here](API_DEVELOPMENT.md) for more info on developing the back-end API.
 
 # Deploying the app and API
 

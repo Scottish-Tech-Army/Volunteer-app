@@ -1,6 +1,7 @@
 const { faker } = require('@faker-js/faker');
 const axios = require('axios');
 const dotenv = require('dotenv');
+const logging = require('../../services/logging');
 const slackService = require('../../services/slack');
 
 describe('Test the Slack service', () => {
@@ -24,16 +25,16 @@ describe('Test the Slack service', () => {
   test('postMessage returns an error if .env variable has not been set', async () => {
     // Mock dependencies
     process.env = {};
-    const consoleErrorSpy = jest.spyOn(global.console, 'error').mockImplementation(() => {});
+    const logErrorSpy = jest.spyOn(logging, 'logError').mockImplementation(() => {});
 
     // Run test
     const response = await slackService.postMessage('my-awesome-channel', 'My message');
 
-    expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
+    expect(logErrorSpy).toHaveBeenCalledTimes(1);
     expect(response).toHaveProperty('error');
 
     // Clean up
-    consoleErrorSpy.mockRestore();
+    logErrorSpy.mockRestore();
   });
 
   test('postMessage correctly calls Slack webhook', async () => {
@@ -43,6 +44,7 @@ describe('Test the Slack service', () => {
 
     // Mock dependencies
     process.env.SLACK_SECRET_WEBHOOK_MY_AWESOME_CHANNEL = webhookUrl;
+    const logErrorSpy = jest.spyOn(logging, 'logError').mockImplementation(() => {});
     const axiosSpy = jest.spyOn(axios, 'post').mockImplementationOnce(() => Promise.resolve({
       status: 200,
     }));
@@ -55,6 +57,7 @@ describe('Test the Slack service', () => {
     expect(response).toHaveProperty('data');
 
     // Clean up
+    logErrorSpy.mockRestore();
     axiosSpy.mockRestore();
   });
 
@@ -65,7 +68,7 @@ describe('Test the Slack service', () => {
 
     // Mock dependencies
     process.env.SLACK_SECRET_WEBHOOK_MY_AWESOME_CHANNEL = webhookUrl;
-    const consoleErrorSpy = jest.spyOn(global.console, 'error').mockImplementation(() => {});
+    const logErrorSpy = jest.spyOn(logging, 'logError').mockImplementation(() => {});
     const axiosSpy = jest.spyOn(axios, 'post').mockImplementationOnce(() => Promise.resolve({
       status: 400,
       statusText,
@@ -75,11 +78,11 @@ describe('Test the Slack service', () => {
     const response = await slackService.postMessage('my-awesome-channel', 'My message');
 
     expect(axiosSpy).toHaveBeenCalledTimes(1);
-    expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
+    expect(logErrorSpy).toHaveBeenCalledTimes(1);
     expect(response).toHaveProperty('error', statusText);
 
     // Clean up
-    consoleErrorSpy.mockRestore();
+    logErrorSpy.mockRestore();
     axiosSpy.mockRestore();
   });
 });

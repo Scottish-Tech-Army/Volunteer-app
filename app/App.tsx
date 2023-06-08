@@ -1,6 +1,8 @@
 /**
  * @file Runs the app!
  */
+import Bugsnag from '@bugsnag/expo'
+import Constants from 'expo-constants'
 import { useFonts } from 'expo-font'
 import * as SplashScreen from 'expo-splash-screen'
 import { NativeBaseProvider } from 'native-base'
@@ -13,6 +15,8 @@ import ColourModeManager from '@/NativeBase/Theme/ColourModeManager'
 import StaTheme from '@/NativeBase/Theme/StaTheme'
 import ApplicationNavigator from '@/Navigators/Application'
 import { store, persistor } from '@/Store'
+import { isDevelopmentMode } from '@/Utils/Expo'
+import { version } from './package.json'
 
 SplashScreen.preventAutoHideAsync()
 
@@ -43,6 +47,25 @@ const App = () => {
     'Poppins-ThinItalic': require('./src/Assets/Fonts/Poppins-ThinItalic.ttf'),
   })
   const [displayApp, setDisplayApp] = useState(false)
+
+  useEffect(() => {
+    if (
+      !isDevelopmentMode() ||
+      Constants.expoConfig?.extra?.bugsnag?.alwaysSendBugs
+    ) {
+      if (Constants.expoConfig?.extra?.bugsnag?.apiKey) {
+        Bugsnag.start({
+          apiKey: Constants.expoConfig.extra.bugsnag.apiKey,
+          appVersion: version,
+          releaseStage: isDevelopmentMode() ? 'development' : 'production',
+        })
+      } else {
+        console.error(
+          '❌ Could not enable Bugsnag -- BUGSNAG_API_KEY environment variable is required',
+        )
+      }
+    }
+  }, [])
 
   useEffect(() => {
     if (fontsLoaded) SplashScreen.hideAsync().then(() => setDisplayApp(true))

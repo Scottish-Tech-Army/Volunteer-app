@@ -9,7 +9,7 @@ import dayjs from 'dayjs'
 import YesNoChoice from '../Forms/YesNoChoice'
 import TextInputControl from '../Forms/TextInputControl'
 import DatePicker from '../Forms/DatePicker'
-import ResponseModal from '../Forms/ResponseModal'
+import Modal from '../Modal'
 import { goBack } from '@/Navigators/utils'
 import {
   Project,
@@ -51,11 +51,9 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
     useLazyProjectRegisterInterestQuery()
   const [loading, setLoading] = useState(false)
 
-  //modal states
-  const [success, setSuccess] = useState(false)
-
   const [responseHeader, setResponseHeader] = useState('')
-  const [responseMessage, setResponseMessage] = useState('')
+  const [responseHeaderIcon, setResponseHeaderIcon] = useState('')
+  const [responseBody, setResponseBody] = useState<JSX.Element[]>([])
   const [modalVisible, setModalVisible] = useState(false)
   const navigation = useNavigation()
 
@@ -65,20 +63,26 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
       setModalVisible(true)
 
       if (responseData) {
-        setSuccess(true)
         setResponseHeader('Application Received')
-        setResponseMessage(
-          'Your request has been received. The STA team will respond shortly.',
-        )
+        setResponseHeaderIcon('check-circle')
+        setResponseBody([
+          <>
+            Your request has been received. The STA team will respond shortly.
+          </>,
+        ])
         navigation.setOptions({
           title: 'Registration confirmed',
         })
       }
       if (responseError) {
         setResponseHeader('Something went wrong')
-        setResponseMessage(
-          "Sorry, we couldn't send your message - please try again. If this keeps happening, please contact the STA Volunteer App team.",
-        )
+        setResponseHeaderIcon('error')
+        setResponseBody([
+          <>
+            Sorry, we couldn't send your message - please try again. If this
+            keeps happening, please contact the STA Volunteer App team.
+          </>,
+        ])
       }
     }
   }, [responseData, responseError, navigation])
@@ -159,11 +163,11 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
 
   return (
     <>
-      <ResponseModal
-        isOpen={modalVisible}
+      <Modal
+        body={responseBody}
         header={responseHeader}
-        message={responseMessage}
-        success={success}
+        headerIcon={responseHeaderIcon}
+        isOpen={modalVisible}
         onClose={onClose}
       />
       <ScrollView>
