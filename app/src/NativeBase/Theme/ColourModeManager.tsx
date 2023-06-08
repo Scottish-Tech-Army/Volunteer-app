@@ -2,7 +2,7 @@
  * @file Persists the dark/light colour mode when the user comes back to the app
  *
  * Follows recommended approach here https://docs.nativebase.io/color-mode#h2-persisting-the-color-mode
- * See also more detailed notes in ProfileContainer and APP_DEVELOPMENT about how we handle dark mode
+ * See also more detailed notes in SettingsContainer and APP_DEVELOPMENT about how we handle dark mode
  */
 
 import { StorageManager, ColorMode } from 'native-base'
