@@ -65,6 +65,22 @@ const App = () => {
         )
       }
     }
+
+    if (isDevelopmentMode()) {
+      if (Constants.expoConfig?.extra?.api?.baseUrl === 'https://the-sta.com') {
+        console.warn(
+          '❗  You are running in development mode but you are using the production API server -- this is usually a bad idea, you should be using your local API development server instead. You probably need to stop the app, add a STA_API_BASE_URL value to your app/.env file, and then restart it.',
+        )
+      } else {
+        console.log(
+          `🛈 Using API server at ${Constants.expoConfig?.extra?.api?.baseUrl}`,
+        )
+      }
+
+      console.log(
+        `🛈 Using ${Constants.expoConfig?.extra?.api?.version} API version`,
+      )
+    }
   }, [])
 
   useEffect(() => {

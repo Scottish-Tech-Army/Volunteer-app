@@ -25,3 +25,6 @@ web-build/
 # Old Android and iOS directories - no longer in use
 android/
 ios/
+
+# Deployment credentials files
+deployment/
