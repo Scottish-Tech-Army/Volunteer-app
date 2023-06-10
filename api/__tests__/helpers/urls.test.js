@@ -8,7 +8,7 @@ describe("Test the clean-up urls and emails helper", () => {
     expect(formattedUrl).toEqual(expectedOutput);
   });
 
-  it("should detect urls and emails in text and clean up de url and remove the email", () => {
+  it("should detect urls and emails in text and clean up the url and remove the email", () => {
     const text =
       "This is some text with a url [https://example.com/|unwanted text] in it, and an email [test@example.com|mailto:test@example.com|unwanted text]";
     const expectedOutput =
