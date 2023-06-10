@@ -1,19 +1,19 @@
-require("dotenv").config();
-const airTable = require("../helpers/airTable");
-const arraysHelpers = require("../helpers/arrays");
-const axios = require("axios").default;
-const urlsHelpers = require("../helpers/urls");
-const projectsHelpers = require("../helpers/projects");
-const videosService = require("../services/videos");
-const logging = require("../services/logging");
+require('dotenv').config();
+const airTable = require('../helpers/airTable');
+const arraysHelpers = require('../helpers/arrays');
+const axios = require('axios').default;
+const urlsHelpers = require('../helpers/urls');
+const projectsHelpers = require('../helpers/projects');
+const videosService = require('../services/videos');
+const logging = require('../services/logging');
 const api_key = process.env.JIRA_API_KEY;
 const email = process.env.JIRA_EMAIL;
-const resourcingJiraBoardName = "RES";
-const recruiterAssignedJiraColumnName = "Recruiter Assigned";
-const projectJiraBoardName = "IT";
-const volunteerSearch = "Volunteer Search";
-const volunteerIntroduction = "Volunteer Introduction";
-const activityUnderway = "Activity Underway";
+const resourcingJiraBoardName = 'RES';
+const recruiterAssignedJiraColumnName = 'Recruiter Assigned';
+const projectJiraBoardName = 'IT';
+const volunteerSearch = 'Volunteer Search';
+const volunteerIntroduction = 'Volunteer Introduction';
+const activityUnderway = 'Activity Underway';
 
 async function addNewProjectsResources(projectsResources) {
   // AirTable accepts creating records in groups of 10 (faster than doing just one record at at time),
@@ -21,7 +21,7 @@ async function addNewProjectsResources(projectsResources) {
 
   const projectsResourcesChunked = arraysHelpers.chunk(projectsResources, 10);
 
-  console.log("🛈 Saving project resources");
+  console.log('🛈 Saving project resources');
   for (const projectsResourcesChunk of projectsResourcesChunked) {
     await module.exports.addNewRecords(
       airTable.projectsResourcesCacheTable(),
@@ -29,7 +29,7 @@ async function addNewProjectsResources(projectsResources) {
     );
   }
 
-  console.log("🛈 Finished saving new cache data");
+  console.log('🛈 Finished saving new cache data');
 }
 
 async function addNewRecords(tableName, recordsChunk) {
@@ -46,7 +46,7 @@ async function addNewRecords(tableName, recordsChunk) {
 async function cacheProjectsAndResources(projects, resources) {
   if (!projects?.length || !resources?.length) {
     logging.logError(
-      "❌ No projects/resources returned from Jira API, so aborted updating cache",
+      '❌ No projects/resources returned from Jira API, so aborted updating cache',
       {
         extraInfo: {
           projects,
@@ -58,7 +58,7 @@ async function cacheProjectsAndResources(projects, resources) {
     return;
   }
 
-  console.log("🛈 Attempting to cache new data");
+  console.log('🛈 Attempting to cache new data');
 
   const projectsResources = projectsHelpers.combineProjectsAndResources(
     projects,
@@ -71,7 +71,7 @@ async function cacheProjectsAndResources(projects, resources) {
     );
   } catch (error) {
     logging.logError(
-      "❌ Could not delete existing projects/resources records in cache, so aborted updating cache",
+      '❌ Could not delete existing projects/resources records in cache, so aborted updating cache',
       {
         extraInfo: error,
       }
@@ -84,7 +84,7 @@ async function cacheProjectsAndResources(projects, resources) {
     await module.exports.addNewProjectsResources(projectsResources);
   } catch (error) {
     logging.logError(
-      "❌ Could not save new projects/resources records in cache",
+      '❌ Could not save new projects/resources records in cache',
       {
         extraInfo: error,
       }
@@ -93,7 +93,7 @@ async function cacheProjectsAndResources(projects, resources) {
     return;
   }
 
-  console.log("🏁 Complete!");
+  console.log('🏁 Complete!');
 }
 
 async function deleteAllRecords(tableName) {
@@ -172,7 +172,7 @@ function formatProjects(projects, resources) {
     );
     const projectType = resourcesConnectedToProject.length
       ? resourcesConnectedToProject[0].type
-      : "";
+      : '';
 
     return {
       ...project,
@@ -183,7 +183,7 @@ function formatProjects(projects, resources) {
 
 async function getAllProjectsAndResourcesFromJira() {
   console.log(
-    "🛈 Getting data from Jira and Vimeo APIs - this can take 5 seconds or more"
+    '🛈 Getting data from Jira and Vimeo APIs - this can take 5 seconds or more'
   );
 
   return new Promise((resolve) => {
@@ -201,7 +201,7 @@ async function getAllProjectsAndResourcesFromJira() {
 
         if (!itArray || !resArray)
           throw new Error(
-            "Initial triage data or resource data returned as undefined"
+            'Initial triage data or resource data returned as undefined'
           );
 
         const projectsFiltered =
@@ -249,15 +249,15 @@ async function getInitialTriageProjectsFromJira(startAt, itArray) {
           Authorization: `Basic ${Buffer.from(
             // below use email address you used for jira and generate token from jira
             `${email}:${api_key}`
-          ).toString("base64")}`,
-          Accept: "application/json",
+          ).toString('base64')}`,
+          Accept: 'application/json',
         },
       }
     );
     if (!jiraIt?.data?.issues?.length)
-      throw new Error("Jira returned no initial triage projects");
+      throw new Error('Jira returned no initial triage projects');
   } catch (error) {
-    console.error("While getting initial triage projects from Jira: ", error);
+    console.error('While getting initial triage projects from Jira: ', error);
     return;
   }
 
@@ -267,15 +267,15 @@ async function getInitialTriageProjectsFromJira(startAt, itArray) {
     jiraIt.data.issues.map(async (x) => {
       try {
         const project = {
-          it_key: x["key"],
-          name: x["fields"].summary,
+          it_key: x['key'],
+          name: x['fields'].summary,
           description: urlsHelpers.cleanUrlsAndEmails(
-            x["fields"].description ?? ""
+            x['fields'].description ?? ''
           ),
-          client: x["fields"].customfield_10027,
-          video_webpage: x["fields"].customfield_10159 ?? "",
-          scope: x["fields"].customfield_10090,
-          sector: x["fields"].customfield_10148?.value ?? "",
+          client: x['fields'].customfield_10027,
+          video_webpage: x['fields'].customfield_10159 ?? '',
+          scope: x['fields'].customfield_10090,
+          sector: x['fields'].customfield_10148?.value ?? '',
         };
         project.video_webpage_player_only =
           await videosService.getVideoWebpagePlayerOnly(project.video_webpage);
@@ -312,15 +312,15 @@ async function getResourcesFromJira(startAt, resArray) {
           Authorization: `Basic ${Buffer.from(
             // below use email address you used for jira and generate token from jira
             `${email}:${api_key}`
-          ).toString("base64")}`,
-          Accept: "application/json",
+          ).toString('base64')}`,
+          Accept: 'application/json',
         },
       }
     );
     if (!jiraRes?.data?.issues?.length)
-      throw new Error("Jira returned no resources");
+      throw new Error('Jira returned no resources');
   } catch (error) {
-    console.error("While getting resources from Jira: ", error);
+    console.error('While getting resources from Jira: ', error);
     return;
   }
 
@@ -328,18 +328,18 @@ async function getResourcesFromJira(startAt, resArray) {
 
   jiraRes.data.issues.map((x) =>
     resArray.push({
-      res_id: x["id"],
-      it_key: x["fields"].customfield_10109,
-      type: x["fields"].customfield_10112,
-      role: x["fields"].customfield_10113,
-      skills: x["fields"].customfield_10061 ?? "",
+      res_id: x['id'],
+      it_key: x['fields'].customfield_10109,
+      type: x['fields'].customfield_10112,
+      role: x['fields'].customfield_10113,
+      skills: x['fields'].customfield_10061 ?? '',
       hours:
-        x["fields"].customfield_10165?.value ??
-        x["fields"].customfield_10062 ??
-        "", // customfield_10165 is the newer field, customfield_10062 may not be needed in the future
+        x['fields'].customfield_10165?.value ??
+        x['fields'].customfield_10062 ??
+        '', // customfield_10165 is the newer field, customfield_10062 may not be needed in the future
       required: 1, // currently hardcoded as cannot see number of people coming back in Jira results
-      buddying: x["fields"].customfield_10108
-        ? x["fields"].customfield_10108.value.toLowerCase() === "yes"
+      buddying: x['fields'].customfield_10108
+        ? x['fields'].customfield_10108.value.toLowerCase() === 'yes'
         : false,
     })
   );
