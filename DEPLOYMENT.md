@@ -6,6 +6,46 @@ This file gives instructions for deploying the API to AWS, and the app to TestFl
 
 # Setup to deploy the app
 
+==================================================
+
+Limited number of free builds per month.................
+
+`npm install --global eas-cli`
+
+1. In the pull request for the changes you're making (e.g. a new app feature), before you submit the PR for review, update the `version` number in `app/package.json`. Normally for minor features/fixes, just update the last part of the version number (e.g. `"1.0.24"` becomes `"1.0.25"`).
+
+2. Update the Android `versionCode` in `app/app.config.ts` (e.g. `11` becomes `12`)
+
+3. Update the iOS `buildNumber` in `app/app.config.ts` (e.g. `19` becomes `20`)
+
+> The different version numbers/codes mentioned above may well all have different values.
+
+`eas build`
+(do you need credentials on local machine??)
+
+Builds can take some time, but you can check the exact status of the build and the different steps that are taking place in the Expo Application Services dashboard -- follow the URL you'll see in your terminal (ask another team member for the Expo Application Services login details)
+
+iOS
+
+Would you like to set up Push Notifications for your project? › No
+
+## Build Android version
+
+......First of these is wrong?  Needs to be production version to upload to Google Play Store including internal?
+1. If you are creating a build for internal testing `eas build --platform android --profile preview` or if you are building to release the actual app to the public `eas build --platform android --profile production`
+
+2. Install and run the Android build on an emulator? … no
+
+## Submit to Google Play Store
+
+1. If you are creating a build for internal testing `eas submit --platform android --profile preview` or if you are building to release the actual app to the public `eas submit --platform android --profile production`
+
+2. What would you like to submit? Select a build from EAS. Then use arrow keys to choose the build from the list, and press enter.
+
+3. 
+
+==================================================
+
 This is how you get set up ready to deploy the app to the Google Play Store (for Android) and TestFlight (for iOS) later, using [Fastlane](https://fastlane.tools/).
 
 You don't need to worry about doing this section until you've gone through all the setup steps in the [README](README.md) and you've solved any headaches getting the API and the app running locally.

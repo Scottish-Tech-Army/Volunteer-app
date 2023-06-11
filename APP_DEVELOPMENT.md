@@ -86,7 +86,6 @@ There are a few steps to add and use an environment variable using Expo:
 - **If the app on your phone isn't showing the latest changes in your code** first you could try reloading it -- while viewing the app in Expo Go, shake your phone and it should show you some options include 'Reload'
 - **Sometimes the dev server loses connection with your phone** in which case you can try restarting Expo in your terminal -- press Ctrl+C to stop it, then run `npm start` again
 - **If you're still having problems not seeing changes you have made on your phone** instead of `npm start` try `npm run start-clear-cache` (this does the same thing but also clears the Expo cache, so it'll be slower to load, but should force any changes to come through)
-- **Previewing the app in Expo Go, it doesn't pick up the colour mode set on your phone** (we need to check, but assume this shouldn't be an issue when the app is built and deployed). For testing purposes you can manually set dark/light mode on the Settings screen.
 
 ## NativeBase
 
