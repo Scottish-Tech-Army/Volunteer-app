@@ -9,7 +9,7 @@ import {
 import { useRoute } from '@react-navigation/native'
 import { ListContainer } from '@/NativeBase/Containers'
 import { ListType } from '@/NativeBase/Containers/ListContainer'
-import { ProfileContainer, SettingsContainer } from '@/NativeBase/Containers'
+import { SettingsContainer } from '@/NativeBase/Containers'
 import SelectionIcons from '@/NativeBase/Assets/Icons/Icomoon/SelectionIcons'
 import { View, useColorMode, Text, Icon } from 'native-base'
 import StaTheme from '@/NativeBase/Theme/StaTheme'
@@ -156,14 +156,15 @@ const MainNavigator = () => {
           ...bottomTabOptions,
         }}
       /> */}
-      <Tab.Screen
+      {/* @TODO: Make visible for MVP+1 */}
+      {/* <Tab.Screen
         name="Profile"
         component={ProfileContainer}
         options={{
           headerShown: false,
           ...bottomTabOptions,
         }}
-      />
+      /> */}
       <Tab.Screen
         name="Settings"
         component={SettingsContainer}
