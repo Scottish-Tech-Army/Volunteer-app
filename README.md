@@ -132,7 +132,7 @@ If you're using Visual Studio Code for development, it's recommended that you:
 
    > **If you get *warnings* about installing dependencies** you probably don't worry about these
 
-   > **If you get *errors* about installing dependencies** you may need to run `npm install --legacy-peer-deps` or `npm install --force` (instead of `npm install`)
+   > **If you get *errors* about installing dependencies** you may need to run `npm install --legacy-peer-deps` or `npm install --force` (instead of `npm install`). When using `npm install` with `--legacy-peer-deps` flag, run `npx expo install` first.
 
 11. Copy the `.env.example` file in the api root folder and name your new file `.env` in the same folder -- e.g. using the command `cp .env.example .env` Set the value of `STA_API_BASE_URL` to the tunnelled URL of your local API server (the one you made a note of in step 8 above).
 
@@ -218,7 +218,7 @@ Below are some commonly encountered issues and possible ways to resolve them. If
 
 3. In a third terminal window, go to the `app` folder inside the project folder (e.g. **/path/to/Volunteer-app/app**) and enter `npm start` to run Expo
 
-4. Connect your phone to your local development version of the app in Expo Go: 
+4. Connect your phone to your local development version of the app in Expo Go:
 - **iPhone:** open the camera and scan the QR code, this should open up the app in Expo Go
 - **Android:** open the Expo Go app itself and you can scan the QR code
    > If you find you're not seeing changes on your phone or Expo Go loses the connection, [see tips here.](APP_DEVELOPMENT.md#expo-known-issues)
