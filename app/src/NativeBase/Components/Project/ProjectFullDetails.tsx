@@ -3,6 +3,7 @@
  */
 
 import React from 'react'
+import Hyperlink from 'react-native-hyperlink'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { navigate } from '@/Navigators/utils'
 import { Project } from '@/Services/modules/projects'
@@ -22,6 +23,7 @@ import {
 import Video from '../Video'
 import ProjectAttachments from '../ProjectAttachments'
 import ColouredTag from '../ColouredTag'
+import StaTheme from '../../Theme/StaTheme'
 
 interface ProjectFullDetailsProps {
   project: Project
@@ -85,9 +87,14 @@ const ProjectFullDetails = ({
             <Text>{project.client}</Text>
             <ColouredTag title={project.role} />
             <Text fontSize="xs">{project.hours}</Text>
-            <Text fontSize="xs" fontWeight="300">
-              {project.description}
-            </Text>
+            <Hyperlink
+              linkDefault
+              linkStyle={{ color: StaTheme.colors.primary[100] }}
+            >
+              <Text fontSize="xs" fontWeight="300">
+                {project.description}
+              </Text>
+            </Hyperlink>
             {Boolean(project.buddying) && (
               <Text fontSize="xs">Suitable for pairing</Text>
             )}
