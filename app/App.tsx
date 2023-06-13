@@ -73,13 +73,19 @@ const App = () => {
         )
       } else {
         console.log(
-          `🛈 Using API server at ${Constants.expoConfig?.extra?.api?.baseUrl}`,
+          `🛈 Using API server at ${Constants.expoConfig?.extra?.api?.baseUrl} (not sure if it's working? try ${Constants.expoConfig?.extra?.api?.baseUrl}/v1/projects in your browser)`,
         )
       }
 
-      console.log(
-        `🛈 Using ${Constants.expoConfig?.extra?.api?.version} API version`,
-      )
+      if (!Constants.expoConfig?.extra?.api?.version) {
+        console.error(
+          '❌ Could not get the API version number -- you are probably missing the STA_API_VERSION value in your app/.env file',
+        )
+      } else {
+        console.log(
+          `🛈 Using API version: ${Constants.expoConfig?.extra?.api?.version}`,
+        )
+      }
     }
   }, [])
 
