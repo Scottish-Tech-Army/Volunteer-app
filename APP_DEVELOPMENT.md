@@ -8,6 +8,7 @@ This file contains some tips and guidelines on building our front-end React Nati
   - [Expo trade-offs](#expo-trade-offs)
   - [Installing new packages](#installing-new-packages)
   - [Using .env variables](#using-env-variables)
+  - [Expo config file](#expo-config-file)
   - [Expo known issues](#expo-known-issues)
 - [NativeBase](#nativebase)
   - [File locations, naming, moving and deleting](#file-locations-naming-moving-and-deleting)
@@ -80,6 +81,10 @@ There are a few steps to add and use an environment variable using Expo:
 2. Edit the `app/app.config.ts` file and add a new entry inside the `extra` object, e.g. `amazingApiKey: process.env.AMAZING_API_KEY,`
 3. In the file in your code where you want to use this variable, add an import statement at the top of the file `import Constants from 'expo-constants'`
 4. In the same file, at the place in the code where you want to use the variable, you can access your variable with e.g. `Constants.expoConfig?.extra?.amazingApiKey` (note: Typescript considers that the value of this could be `undefined`, so you may need to handle that possibility)
+
+### Expo config file
+
+The `app/app.config.ts` file contains some configuration settings for the Expo CLI. In some Expo documentation you might see references to updating a `config.json` file -- this is the same thing, we just store it in `app.config.ts` because it's more flexible (e.g. we can insert environment variables into it when the app is built and deployed).
 
 ### Expo known issues
 

@@ -1,95 +1,131 @@
 This file gives instructions for deploying the API to AWS, and the app to TestFlight (iOS) and the Google Play Store (Android).
 
 - [Setup to deploy the app](#setup-to-deploy-the-app)
-- [API deployment on AWS](#api-deployment-on-aws)
 - [App deployment](#app-deployment)
+- [API deployment on AWS](#api-deployment-on-aws)
 
 # Setup to deploy the app
 
-==================================================
+These are the one-time setup steps you need to do in order to get ready to deploy the app.
 
-Limited number of free builds per month.................
+## Google Play Store (Android)
 
-`npm install --global eas-cli`
-
-1. In the pull request for the changes you're making (e.g. a new app feature), before you submit the PR for review, update the `version` number in `app/package.json`. Normally for minor features/fixes, just update the last part of the version number (e.g. `"1.0.24"` becomes `"1.0.25"`).
-
-2. Update the Android `versionCode` in `app/app.config.ts` (e.g. `11` becomes `12`)
-
-3. Update the iOS `buildNumber` in `app/app.config.ts` (e.g. `19` becomes `20`)
-
-> The different version numbers/codes mentioned above may well all have different values.
-
-`eas build`
-(do you need credentials on local machine??)
-
-Builds can take some time, but you can check the exact status of the build and the different steps that are taking place in the Expo Application Services dashboard -- follow the URL you'll see in your terminal (ask another team member for the Expo Application Services login details)
-
-iOS
-
-Would you like to set up Push Notifications for your project? › No
-
-## Build Android version
-
-......First of these is wrong?  Needs to be production version to upload to Google Play Store including internal?
-1. If you are creating a build for internal testing `eas build --platform android --profile preview` or if you are building to release the actual app to the public `eas build --platform android --profile production`
-
-2. Install and run the Android build on an emulator? … no
-
-## Submit to Google Play Store
-
-1. If you are creating a build for internal testing `eas submit --platform android --profile preview` or if you are building to release the actual app to the public `eas submit --platform android --profile production`
-
-2. What would you like to submit? Select a build from EAS. Then use arrow keys to choose the build from the list, and press enter.
-
-3. 
-
-==================================================
-
-This is how you get set up ready to deploy the app to the Google Play Store (for Android) and TestFlight (for iOS) later, using [Fastlane](https://fastlane.tools/).
-
-You don't need to worry about doing this section until you've gone through all the setup steps in the [README](README.md) and you've solved any headaches getting the API and the app running locally.
-
-**If you're on a Mac** you can deploy the Android and iOS versions of the app.
-
-**If you're on Windows/Linux** you can only deploy the Android version of the app (you'll always need to get another team member with a Mac to deploy the iOS version).
-
-1. Install Fastlane: [Mac instructions in the 'Installing Fastlane' section here](https://thecodingmachine.github.io/react-native-boilerplate/docs/BetaBuild/#installing-fastlane) - [Windows/Linux instructions here](https://docs.fastlane.tools/getting-started/android/setup/)
-
-   ## Google Play Store (Android)
-
-2. Add `key.json` and `my-release-key.keystore` files into the `/app/android/` directory. These files contain credentials for uploading the app to the Google Play Store. Ask on Slack for another developer in the team to send you these files. Also ask them for the password for the `my-release-key.keystore` file -- save this somewhere safe (e.g. [a password manager](https://www.techradar.com/uk/best/password-manager)), you'll need it in the future to deploy the app.
+1. Add `google-service-account-key-key.json` and `my-release-key.keystore` files into the `app/deployment/` directory. These files contain credentials for uploading the app to the Google Play Store. Ask on Slack for another developer in the team to send you these files. Also ask them for the password for the `my-release-key.keystore` file -- save this somewhere safe (e.g. [a password manager](https://www.techradar.com/uk/best/password-manager)), you'll need it in the future to deploy the app.
 
    > Because these files contain sensitive access credentials we should never commit them to GitHub as our repository is open-source, anyone can see it.
 
    > On some systems, the terminal has a problem if the password for `my-release-key.keystore` contains symbols, so this password may need to be letters and numbers only (just make sure it's a long, strong password). If you need to change the password locally you can use this command `keytool -storepasswd -keystore path/to/my-release-key.keystore -storetype PKCS12`
 
-3. Ask Joanna to give you Developer access to the STA Google Play Store account. That will allow you to check whether releases you deploy have uploaded successfully, and you'll be able to add new testers.
+2. Ask Joanna to give you Developer access to the STA Google Play Store account. That will allow you to check whether releases you deploy have uploaded successfully, and you'll be able to add new testers.
 
 ## TestFlight (iOS)
 
-4. Ask Joanna to give you Developer access to the STA App Store Connect account. This will allow you to make a build and send it to Test Flight and check whether releases you deploy have uploaded successfully.
+3. Ask Joanna to give you Developer access to the STA App Store Connect account (you should be able to do this without having to pay for an Apple Developer account). This is necessary in order to submit iOS versions of the app via Expo Application Services, and will allow you to check whether releases you submit have been uploaded successfully and accepted by Apple.
 
-5. Duplicate the `app/.env.example` file and name it `app/.env` then add your App Store Connect email address in place of the example one in the `APPLE_ID` variable.
+# App deployment
+
+**All devs on the team can deploy the app** -- it should be something we all usually incorporate into any pull request where we make a change to the front-end app.
+
+**We use [Expo Application Services (EAS)](https://expo.dev/eas)** to build and deploy the app. We are using the free tier which gives us 30 builds per calendar month (15 iOS, 15 Android -- so it's really 15 new deployments). This includes test builds (the Google Play test version and TestFlight) and production builds, it's all the same total.
+
+**As a general rule you're strongly encouraged to deploy changes as part of any pull request that updates the front-end app** by following the steps below. **But we also just need to be careful not to hit the 15 deployments (30 builds)) limit,** so if there has been a high frequency of approved pull requests this month or your pull request is only a very minor change to the front-end app, you might not want to update the app version and do a new deployment.  If you're not sure, check [how many builds have already been done this month](https://expo.dev/accounts/scottishtecharmy/settings/billing) (and if you're still unsure ask the team on Slack).
+
+1. In the pull request for the changes you're making (e.g. a new app feature), before you submit the PR for review, update the `version` number in `app/package.json`. Normally for minor features/fixes, just update the last part of the version number (e.g. `"1.0.24"` becomes `"1.0.25"`).
+
+   > This is a string
+
+2. Update the Android `versionCode` in `app/app.config.ts` (e.g. `11` becomes `12`)
+
+   > This is a number
+
+3. Update the iOS `buildNumber` in `app/app.config.ts` (e.g. `'19'` becomes `'20'`)
+
+   > This is a string
+
+   > The different version numbers/codes mentioned in steps 1-3 will probably all have different values.
+
+4. Get your pull request approved as you normally would. When you're ready to merge your code into the `main` branch and deploy the updated app, double-check your version numbers in the previous steps are still right compared to what's in `main` (somebody else could have merged in code recently and changed the version numbers since you last checked - if you need to, update the version numbers before merging).
+
+   > We haven't dealt with version number issues with a release branch yet. You'll need to see whether the iOS and Android version numbers/codes have to be increased and how that works with production releases.
+
+5. Go ahead and merge your pull request into the `main` branch.
+
+## Build the Android version
+
+6. In the `app` directory run `npm run build-android` (it's the same command if you are creating a build either for internal testing or for production - releasing the app to the public)
+
+   > If asked to install extra packages, say **yes**
+
+   > If you aren't already logged into Expo Application Services (EAS), you'll be asked to login. Ask another team member for the STA's Expo Application Services login details.
+
+   > If you get a message saying *EAS project not configured. Existing EAS project found for @scottishtecharmy/volunteer-app Configure this project?* Stop the build process. You need to add `EXPO_APPLICATION_SERVICES_PROJECT_ID` to your `app/.env` file. Ask another team member for the value of this variable.
+
+   > Builds can take some time (sometimes 10-20 minutes, sometimes more than an hour, depending on how busy EAS servers are), but you can check the exact status of a build and the different steps that are taking place in the Expo Application Services dashboard -- follow the URL you'll see in your terminal after you run one of the build commands below (ask another team member for the Expo Application Services login details). You can also see there if there are any errors.
+
+7. Once the build is complete, if you get a message asking *Install and run the Android build on an emulator?* say **no**
+
+## Submit to the Google Play Store
+
+You've created an Android build and it's stored in the cloud with EAS.  Now we need to submit it to the Google Play Store.
+
+8. Make sure you use the right submit command. If you want to **publish the app to the internal test track** (for the Volunteer app team only to download) use `npm run submit-android-preview` -- or to publish the app to production (for people to download publicly from the Google Play Store) use `npm run submit-android-production`
+
+9. When asked *What would you like to submit?* choose *Select a build from EAS*. Then use arrow keys to choose the build from the list that you created with the build steps above, and press enter.
+
+10. Wait for the build to be submitted.
+
+11. Once it's finished, if you have access, check in the [Google Play Console](https://play.google.com/console) that the new version of the app has successfully been added (*Volunteer app > Release > Internal testing* or *Volunteer app > Release > Production*) -- you should see the new version number next to 'Latest release' under 'Track summary'.
+
+12. If you have an Android phone, download the updated version of the app ([see instructions](README.md#updating-to-the-latest-version-of-the-app)) and double check it's all working as expected.
+
+## Build the iOS version
+
+13. In the `app` directory run `npm run build-ios` (it's the same command if you are creating a build either for TestFlight internal testing or for production - releasing the app to the public)
+
+14. If asked *Do you want to log in to your Apple account?* say **yes.** Follow the steps to log into your account and when asked to select a Team and a Provider choose Scottish Tech Army.
+
+15. If asked if you want to generate a new Distribution Certificate and/or Provisioning Profile (if you've deployed recently you may not get asked this), say **yes**
+
+16. If asked *Would you like to set up Push Notifications for your project?* say **no**
+
+17. Wait for the build process to complete
+
+   > See the notes under step 6 (Android build) above about build issues and how to check its progress
+
+## Submit to TestFlight / the App Store
+
+You've created an iOS build and it's stored in the cloud with EAS.  Now we need to submit it to TestFlight / the App Store.
+
+18. Make sure you use the right submit command. If you want to **publish the app to TestFlight for internal testing** (for the Volunteer app team only to download) use `npm run submit-ios-preview` -- or to publish the app to production (for people to download publicly from the App Store) use `npm run submit-ios-production`
+
+19. When asked *What would you like to submit?* choose *Select a build from EAS*. Then use arrow keys to choose the build from the list that you created with the build steps above, and press enter.
+
+20. Wait for the build to be submitted.
+
+21. Check in [App Store Connect](https://appstoreconnect.apple.com/apps) that the new version of the app has successfully been uploaded and processed (Apps > STA Volunteer App > TestFlight or Apps > STA Volunteer App > App Store) -- you should see the new build number below the latest version.
+
+   > Apple perform some automated checks on a build after it's been submitted, these can take 10-20 minutes. If you don't see your build appear in the list Apple might have found some problems with it. Check your email to see if you have a message from Apple, if not ask Joanna if she has.
+
+22. If you have an iPhone are part of the iOS beta test group, you should get a notification on your phone from TestFlight that a new version is available to test. Download the updated version of the app to your iPhone ([see instructions](README.md#updating-to-the-latest-version-of-the-app)).
 
 # API deployment on AWS
 
 ## Automatic deployment with GitHub Actions
 
-API deployment is automatic whenever a Pull Request is merged into the `main` branch on GitHub.
+**API deployment is automatic whenever a Pull Request is merged into the `main` branch on GitHub -- you shouldn't need to do any manual deployment steps with the API.**
 
 The relevant GitHub Action is cd_api.yml and relies on three [GitHub Actions Repository secrets](https://github.com/Scottish-Tech-Army/Volunteer-app/settings/secrets/actions):
 - `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` for user eb-dev in volapp-dev-test.
 - `DEPLOY_ENV_FILE` contains a copy of the `api/.env` file.
 
-Note: If environment variables have changed, the entire `api/.env` file should be pasted into `DEPLOY_ENV_FILE` in [our GitHub repo's Secrets.](https://github.com/Scottish-Tech-Army/Volunteer-app/settings/secrets/actions) **You need to be very careful with this step** -- there are some environment variables that will be different for the production server to what you have locally, or don't exist in your local ..env file:
+Note: If environment variables have changed, the entire `api/.env` file should be pasted into `DEPLOY_ENV_FILE` in [our GitHub repo's Secrets.](https://github.com/Scottish-Tech-Army/Volunteer-app/settings/secrets/actions) **You need to be very careful with this step** -- there are some environment variables that will be different for the production server to what you have locally, or which don't exist in your local .env file:
 
 - `AIRTABLE_PROJECTS_RESOURCES_CACHE_TABLE` should be different on the production server
 - `BUGSNAG_API_KEY` should not usually be in your local .env file, but must be included on the production server
 - `SLACK_CHANNEL_VOLUNTEER_PROJECT_INTEREST` should be different on the production server
 - `SLACK_SECRET_WEBHOOK_INITIAL_TRIAGE` should not usually be in your local .env file, but must be included on the production server
 
-> Make sure the .env file you use is all correctly formatted too: there should be no spaces before and after `=` signs, string values should be inside double quotes `"`, e.g. `BUGSNAG_API_KEY="abc123def456hij7890xxxxxxxx"`
+> Make sure the .env file you copy and paste from is all correctly formatted too: there should be no spaces before and after `=` signs, string values should be inside double quotes `"`, e.g. `BUGSNAG_API_KEY="abc123def456hij7890xxxxxxxx"`
 
 If you need access to update secrets or make changes on AWS, reach out on [volunteer-app](https://scottishtecharmy.slack.com/archives/C01SUL6K5E1) Slack channel.
 
@@ -128,46 +164,3 @@ E.g. `cp Volunteer-app/api/.env volunteer-app-aws-deployment/api/.env` (but this
 14. Delete the new directory containing copy of the repo you made in step 2 and everything in it, e.g. `rm -rf volunteer-app-aws-deployment/`
 
 **Note: If you end up with 502 errors it is almost certain that the .env file is missing or incorrect.**
-
-# App deployment
-
-**If you're on a Mac** you can deploy the Android and iOS versions of the app.
-
-**If you're on Windows/Linux** you can only deploy the Android version of the app (you'll always need to get another team member with a Mac to deploy the iOS version).
-
-1. In the pull request for the changes you're making (e.g. a new app feature), before you submit the PR for review, update the `version` number in `app/package.json`. Normally for minor features/fixes, just update the last part of the version number (e.g. `"1.0.24"` becomes `"1.0.25"`).
-
-2. Add changelog notes - a quick summary (a line or two will usually do) of what this new version does (NB the public will see these notes in the Play Store / App Store, so keep them easy to understand and relevant to app users). These should be added to the 'Unreleased' section of [app/android/CHANGELOG.md](app/android/CHANGELOG.md). You may wish to use the structure suggested by the [Keep a Changelog](https://keepachangelog.com/) project, and use subheadings to indicate additions, changes, fixes, etc.
-
-3. If updating the Android version, navigate to the `app/android` directory and run `fastlane pre_beta`. This will update the Android version code (a unique build number), generate a version-specific changelog (`app/android/app/fastlane/metadata/android/en-GB/changelogs/<versionCode>.txt`) from your updates in CHANGELOG.md, and update CHANGELOG.md to move the unreleased changes to the new version.
-
-4. Get your pull request approved as you normally would. When you're ready to merge your code into the `main` branch and deploy the updated app, double-check your version numbers in the previous steps are still right compared to what's in `main` (somebody else could have merged in code recently and changed the version numbers since you last checked - if you need to, update the version numbers before merging).
-
-5. In `/app/src/Config/index.ts` set `STA_BASE_URL` to point to the external URL `'https://the-sta.com'` -- not to your localhost or its IP address, otherwise the app won't be able to connect to the API when it's installed on someone's phone.
-
-   ## Google Play Store (Android)
-
-6. Go to the `/app/android` directory in a terminal window and run the command `fastlane beta`. You'll be prompted twice at the beginning for passwords -- both are the password you got for the `my-release-key.keystore` file in the [Setup to deploy the app section](#setup-to-deploy-the-app) above.
-
-   > The process can take a while (sometimes 30 minutes or more)! If it fails, try [the troubleshooting tips here](https://thecodingmachine.github.io/react-native-boilerplate/docs/BetaBuild/#troubleshooting), see [Google Play Store known issues](#google-play-store-known-issues) below or ask for help on the team Slack channel if you can't figure it out.
-
-7. If you have access, check in the [Google Play Console](https://play.google.com/console) that the new version of the app has successfully been added (Volunteer app > Release > Internal testing) -- you should see the new version number next to 'Latest release' under 'Track summary'.
-
-8. Download the updated version of the app to your Android phone ([see download instructions](#download-the-app) near the top of this README). On the Google Play Store screen, there should be an 'Update' button to download the latest version of the app to your device.
-
-   ### Google Play Store known issues
-
-   - If you encounter an error containing `Java heap space` during the deployment, you can try closing any unessential programs or tabs (or just restart your machine) and re-try the `fastland beta` command. If the error appears again, add this property `org.gradle.jvmargs=-Xmx4608M` to your android/gradle.properties file and run again.
-   
-   - Near the end of the deployment process an AAB file is uploaded to the Google Play Store. This can take some time (e.g. 20 minutes on slow internet connections). It should be working, unless you get a `HTTPClient::SendTimeoutError: execution expired` error message in your terminal window. If the Fastlane process fails for this reason, you may need to run it again.
-
-   ## TestFlight (iOS)
-
-9. Make sure you have your email set in the  `APPLE_ID` variable in `app/.env`.
-
-10. Go to the `/app/ios` directory in a terminal window and run the command `fastlane beta`.  You'll be prompted to login (maybe several times) with your App Store Connect login.
-    > The process can take a while (sometimes 30 minutes or more)!  If it fails, try [the troubleshooting tips here](https://thecodingmachine.github.io/react-native-boilerplate/docs/BetaBuild/#troubleshooting), or ask for help on the team Slack channel if you can't figure it out.
-
-11. If you have access, check in the [App Store Connect](https://appstoreconnect.apple.com/apps) that the new version of the app has successfully been uploaded and processed (STA Volunteer app > TestFlight) -- you should see the new build number below the latest version.
-
-12. If you are part of the iOS beta test group, you should get a notification on your phone from TestFlight that a new version is available to test. Download the updated version of the app to your iPhone ([see download instructions](#download-the-app) near the top of this README).

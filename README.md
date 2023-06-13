@@ -96,7 +96,7 @@ If you're using Visual Studio Code for development, it's recommended that you:
 
 8. Open another terminal window and in this new window run the command `npm run tunnel`. This 'tunnels' your local API server: makes it available externally so your app running in Expo Go can access it (using a free external service called [Serveo](https://serveo.net/)).  You should see a message saying your `Forwarding HTTP traffic from: https://xxxxxxxxx.serveo.net` -- this is the URL of your local API server, make a note of it as you'll need it in a minute.
 
-   > This URL should generally stay the same each time you run the tunnel command, but if you find it changes, you'll need to update the `STA_BASE_URL` value in your `app/src/Config/index.ts` file (see step 11 below). (There are paid services or more complicated solutions we could use which guarantee a fixed URL, but for now this feels like the best solution that's easy to use and free for all devs in the team.)
+   > This URL should generally stay the same each time you run the tunnel command, but if you find it changes, you'll need to update the `STA_BASE_URL` value in your `app/.env` file (see step 11 below). (There are paid services or more complicated solutions we could use which guarantee a fixed URL, but for now this feels like the best solution that's easy to use and free for all devs in the team.)
 
 ## App
 
@@ -110,7 +110,9 @@ If you're using Visual Studio Code for development, it's recommended that you:
 
    > **If you get *errors* about installing dependencies** you may need to run `npm install --legacy-peer-deps` or `npm install --force` (instead of `npm install`)
 
-11. Duplicate the example config file `app/src/Config/index.example.ts` and name your new file `app/src/Config/index.ts`  Set the value of `STA_BASE_URL` to the tunnelled URL of your local API server (the one you made a note of in step 8 above).
+11. Copy the `.env.example` file in the api root folder and name your new file `.env` in the same folder -- e.g. using the command `cp .env.example .env` Set the value of `STA_BASE_URL` to the tunnelled URL of your local API server (the one you made a note of in step 8 above). Ask on Slack for a member of the team to send you the value to use for `EXPO_APPLICATION_SERVICES_PROJECT_ID`.
+
+    > For security reasons, the `EXPO_APPLICATION_SERVICES_PROJECT_ID` value is not stored in this repo.
 
 12. Run Expo using `npm start`  This will run some commands and then it show you a QR code in your terminal.
 
@@ -124,6 +126,8 @@ If you're using Visual Studio Code for development, it's recommended that you:
 - You should now see your local development version of the app on your phone -- any changes you make in your code should show almost instantly on your phone.  (If you find you're not seeing changes on your phone or Expo Go loses the connection, [see tips here.](APP_DEVELOPMENT.md#expo-known-issues))
 
 14. When you've got the app to run, make a PR to improve this README! Fix something that caused you headaches, update something that's no longer correct, or add a training resource, or add something else you think would help other people to get up and running.
+
+15. See the [Subsequent run](#subsequent-run) section below for what to do next time you want to run the app. See the [Development](#development) section below for more info on developing the app, and how to get set up to deploy changes to the app.
 
 # Troubleshooting
 
@@ -155,13 +159,13 @@ Below are some commonly encountered issues and possible ways to resolve them. If
 ## The app gets stuck loading projects
 
 - The app gets stuck on the Projects screen -- projects never load
-  > Make sure the API is running on your local machine, and that your **api/.env** and **app/Config/index.ts** files are configured correctly (see [Setup and first run](#setup-and-first-run) above)
+  > Make sure the API is running on your local machine, and that your **api/.env** and **app/.env** files are configured correctly (see [Setup and first run](#setup-and-first-run) above)
 
   > Make sure you have two terminal windows open running the API: one running `npm start` and one running `npm run tunnel` (see above), both are needed in order for the app to be able to connect to the API
 
   > Check if you can see data coming through from the API.  In the terminal window where you ran the `npm run tunnel` command, get the URL, then paste that URL into a web browser and add `/v1/projects` at the end -- if your local API is running and tunnelling successfully, you should see a JSON response with a list of projects. (If you don't see that, try the suggestion below, and also check the terminal window where you ran `npm start` and see if there are any error messages there.)
 
-  > Has your tunnelled URL changed? Check what you see in the terminal window where you've run `npm run tunnel` and see if it's the same as the `STA_BASE_URL` value in your `app/src/Config/index.ts` file -- if not, you need to update that file then restart the app.
+  > Has your tunnelled URL changed? Check what you see in the terminal window where you've run `npm run tunnel` and see if it's the same as the `STA_BASE_URL` value in your `app/.env` file -- if not, you need to update that file then restart the app.
 
   > Your API tunnel might have fallen asleep (although `autossh` tries to prevent this) -- try stopping the process (press Ctrl+C) in the window where you ran `npm run tunnel`, then run that command again.
 
@@ -206,7 +210,7 @@ Ask one of the team to add you to the **it470-volunteer-app-errors** Slack chann
 
 # Deploying the app and API
 
-The app is currently deployed for internal testing. We deploy the API to AWS, and for the app, we use [Fastlane](https://fastlane.tools/) to deploy to [TestFlight](https://developer.apple.com/testflight/) (iOS) and the [Google Play Store](https://play.google.com/) (Android). Deployment instructions can be found [here](DEPLOYMENT.md).
+Get set up now so you can deploy changes to the app and API. Check out the [deployment instructions here.](DEPLOYMENT.md)
 
 # Training resources
 
