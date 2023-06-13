@@ -26,9 +26,7 @@ import TopOfApp from '@/NativeBase/Components/TopOfApp'
 import { navigate, RootStackParamList } from '@/Navigators/utils'
 import { capitaliseFirstLetter } from '@/Utils/Text'
 
-import SegmentedPicker, {
-  SegmentedPickerOption,
-} from '../Components/SegmentedPicker'
+import { SegmentedPickerOption } from '../Components/SegmentedPicker'
 
 import {
   Events,
@@ -276,7 +274,8 @@ const ListContainer = (props: {
       />
       <VStack paddingBottom="2" alignItems="center" space={4} padding={4}>
         <Heading size="sm">Projects List</Heading>
-        <SegmentedPicker options={projectListOptions} />
+        {/* TODO: reinstate when functionality is ready */}
+        {/* <SegmentedPicker options={projectListOptions} /> */}
 
         {params?.type && listItemsToShow ? (
           <>

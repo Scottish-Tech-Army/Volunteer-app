@@ -138,11 +138,10 @@ const List: FC<ListProps> = ({
                       paddingRight="4"
                       space="0"
                     >
-                      <Heading width="70%" fontSize="sm">
-                        {item.name}
-                      </Heading>
+                      <Heading fontSize="sm">{item.name}</Heading>
 
-                      <HStack
+                      {/* TODO: reinstate when functionality is ready and set Heading width="70%" */}
+                      {/* <HStack
                         justifyContent="space-between"
                         alignItems="center"
                         space="4"
@@ -165,7 +164,7 @@ const List: FC<ListProps> = ({
                           padding="0"
                           size="lg"
                         />
-                      </HStack>
+                      </HStack> */}
                     </HStack>
                     <Text fontSize="xs">{item.client}</Text>
                     <ColouredTag title={item.role} />
