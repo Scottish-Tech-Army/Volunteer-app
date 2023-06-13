@@ -12,7 +12,7 @@
     "type-check": "tsc",
     "prepare": "cd .. && husky install .husky",
     "lint-app": "lint-staged --quiet",
-    "build-android": "npx eas-cli submit --platform android --profile production",
+    "build-android": "npx eas-cli build --platform android --profile production",
     "submit-android-preview": "npx eas-cli submit --platform android --profile preview",
     "submit-android-production": "npx eas-cli submit --platform android --profile production"
   },
