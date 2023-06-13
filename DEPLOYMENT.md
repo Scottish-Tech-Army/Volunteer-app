@@ -76,13 +76,20 @@ You don't need to worry about doing this section until you've gone through all t
 
 ## Automatic deployment with GitHub Actions
 
-API deployment is automatic whenever a Pull Request is merged into Main on GitHub.
+API deployment is automatic whenever a Pull Request is merged into the `main` branch on GitHub.
 
-The relevant GitHub Action is cd_api.yml and relies on three GitHub Actions Repository secrets:
-- AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY for user eb-dev in volapp-dev-test.
-- DEPLOY_ENV_FILE contains a copy of the .env file.
+The relevant GitHub Action is cd_api.yml and relies on three [GitHub Actions Repository secrets](https://github.com/Scottish-Tech-Army/Volunteer-app/settings/secrets/actions):
+- `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` for user eb-dev in volapp-dev-test.
+- `DEPLOY_ENV_FILE` contains a copy of the `api/.env` file.
 
-Note: If environment variables have changed, the entire .env file should be pasted into DEPLOY_ENV_FILE
+Note: If environment variables have changed, the entire `api/.env` file should be pasted into `DEPLOY_ENV_FILE` in [our GitHub repo's Secrets.](https://github.com/Scottish-Tech-Army/Volunteer-app/settings/secrets/actions) **You need to be very careful with this step** -- there are some environment variables that will be different for the production server to what you have locally, or don't exist in your local ..env file:
+
+- `AIRTABLE_PROJECTS_RESOURCES_CACHE_TABLE` should be different on the production server
+- `BUGSNAG_API_KEY` should not usually be in your local .env file, but must be included on the production server
+- `SLACK_CHANNEL_VOLUNTEER_PROJECT_INTEREST` should be different on the production server
+- `SLACK_SECRET_WEBHOOK_INITIAL_TRIAGE` should not usually be in your local .env file, but must be included on the production server
+
+> Make sure the .env file you use is all correctly formatted too: there should be no spaces before and after `=` signs, string values should be inside double quotes `"`, e.g. `BUGSNAG_API_KEY="abc123def456hij7890xxxxxxxx"`
 
 If you need access to update secrets or make changes on AWS, reach out on [volunteer-app](https://scottishtecharmy.slack.com/archives/C01SUL6K5E1) Slack channel.
 
