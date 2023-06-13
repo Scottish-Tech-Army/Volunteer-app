@@ -9,6 +9,7 @@
 
 import { Heading, VStack } from 'native-base'
 import React, { useEffect, useState } from 'react'
+import { Dimensions } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components/native'
 import { EventSearch } from '@/Containers/EventSearchContainer'
@@ -24,6 +25,7 @@ import List, {
 import ProjectFilterSort from '@/Components/Project/ProjectFilterSort'
 import TopOfApp from '@/NativeBase/Components/TopOfApp'
 import { navigate, RootStackParamList } from '@/Navigators/utils'
+import { heightOfTopOfAppPlusBottomNav } from '@/Utils/Layout'
 import { capitaliseFirstLetter } from '@/Utils/Text'
 
 import SegmentedPicker, {
@@ -112,6 +114,7 @@ const ListContainer = (props: {
     } as ListScreens,
     search: searchScreens,
   }
+  const windowHeight = Dimensions.get('window').height
 
   const projectListOptions = ['all', 'saved', 'my'].map(
     option =>
@@ -274,7 +277,12 @@ const ListContainer = (props: {
         showSearchButton
         onSearchButtonPress={() => navigate(screens.search[params.type], '')}
       />
-      <VStack paddingBottom="2" alignItems="center" space={4} padding={4}>
+      <VStack
+        alignItems="center"
+        maxHeight={windowHeight - heightOfTopOfAppPlusBottomNav}
+        space={4}
+        padding={4}
+      >
         <Heading size="sm">Projects List</Heading>
         <SegmentedPicker options={projectListOptions} />
 
