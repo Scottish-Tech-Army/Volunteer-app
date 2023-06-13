@@ -11,7 +11,10 @@
     "lint-ci": "eslint . -c .eslintrc.ci.js --ext .js,.jsx,.ts,.tsx",
     "type-check": "tsc",
     "prepare": "cd .. && husky install .husky",
-    "lint-app": "lint-staged --quiet"
+    "lint-app": "lint-staged --quiet",
+    "build-android": "npx eas-cli submit --platform android --profile production",
+    "submit-android-preview": "npx eas-cli submit --platform android --profile preview",
+    "submit-android-production": "npx eas-cli submit --platform android --profile production"
   },
   "dependencies": {
     "@bugsnag/expo": "^48.0.0",
