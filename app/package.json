@@ -13,8 +13,12 @@
     "prepare": "cd .. && husky install .husky",
     "lint-app": "lint-staged --quiet",
     "build-android": "npx eas-cli build --platform android --profile production",
+    "build-ios-preview": "npx eas-cli build --platform ios --profile preview",
+    "build-ios-production": "npx eas-cli build --platform ios --profile production",
     "submit-android-preview": "npx eas-cli submit --platform android --profile preview",
-    "submit-android-production": "npx eas-cli submit --platform android --profile production"
+    "submit-android-production": "npx eas-cli submit --platform android --profile production",
+    "submit-ios-preview": "npx eas-cli submit --platform ios --profile preview",
+    "submit-ios-production": "npx eas-cli submit --platform ios --profile production"
   },
   "dependencies": {
     "@bugsnag/expo": "^48.0.0",
