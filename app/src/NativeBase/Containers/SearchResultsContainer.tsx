@@ -12,6 +12,7 @@ import {
   Text,
   View,
 } from 'native-base'
+import { Dimensions } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { EventSearch } from '@/Containers/EventSearchContainer'
 import List, {
@@ -64,6 +65,9 @@ const SearchResultsContainer = (props: {
     [ListType.Events]: 'Events' as keyof RootStackParamList,
     [ListType.Projects]: 'Projects' as keyof RootStackParamList,
   } as ListScreens
+  const headerAndSpacingHeight = 100
+  const [searchResultsTextHeight, setSearchResultsTextHeight] = useState(0)
+  const windowHeight = Dimensions.get('window').height
 
   const clearSearch = () => {
     navigate(screens[params.type], {
@@ -84,7 +88,8 @@ const SearchResultsContainer = (props: {
           _dark={{ backgroundColor: 'bg.100' }}
           justifyContent="space-between"
           onLayout={onLayoutEvent => {
-            const { width } = onLayoutEvent.nativeEvent.layout
+            const { height, width } = onLayoutEvent.nativeEvent.layout
+            setSearchResultsTextHeight(height)
             setBoxWidth(width)
           }}
           paddingRight="1"
@@ -120,7 +125,12 @@ const SearchResultsContainer = (props: {
       </View>
 
       {Boolean(params.search?.results) && (
-        <View padding="4">
+        <View
+          maxHeight={
+            windowHeight - headerAndSpacingHeight - searchResultsTextHeight
+          }
+          padding="4"
+        >
           <List
             data={params.search?.results as Events | Projects}
             mode={ListDisplayMode.Search}
