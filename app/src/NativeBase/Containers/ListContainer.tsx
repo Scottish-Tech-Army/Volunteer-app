@@ -28,9 +28,7 @@ import { navigate, RootStackParamList } from '@/Navigators/utils'
 import { heightOfTopOfAppPlusBottomNav } from '@/Utils/Layout'
 import { capitaliseFirstLetter } from '@/Utils/Text'
 
-import SegmentedPicker, {
-  SegmentedPickerOption,
-} from '../Components/SegmentedPicker'
+import { SegmentedPickerOption } from '../Components/SegmentedPicker'
 
 import {
   Events,
@@ -284,7 +282,8 @@ const ListContainer = (props: {
         padding={4}
       >
         <Heading size="sm">Projects List</Heading>
-        <SegmentedPicker options={projectListOptions} />
+        {/* TODO: reinstate when functionality is ready */}
+        {/* <SegmentedPicker options={projectListOptions} /> */}
 
         {params?.type && listItemsToShow ? (
           <>

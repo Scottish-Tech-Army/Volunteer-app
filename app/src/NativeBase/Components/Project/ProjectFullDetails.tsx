@@ -4,19 +4,14 @@
 
 import React from 'react'
 import Hyperlink from 'react-native-hyperlink'
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { navigate } from '@/Navigators/utils'
 import { Project } from '@/Services/modules/projects'
-import underDevelopmentAlert from '@/Utils/UnderDevelopmentAlert'
 import {
   Button,
   Card,
   Heading,
   HStack,
-  Icon,
-  IconButton,
   ScrollView,
-  ShareIcon,
   Text,
   VStack,
 } from 'native-base'
@@ -47,11 +42,10 @@ const ProjectFullDetails = ({
             alignItems="center"
             paddingRight="4"
           >
-            <Heading width="70%" fontSize="md">
-              {project.name}
-            </Heading>
+            <Heading fontSize="md">{project.name}</Heading>
 
-            <HStack
+            {/* TODO: reinstate when functionality is ready and set Heading width="70%" */}
+            {/* <HStack
               justifyContent="space-between"
               alignItems="center"
               space="4"
@@ -74,7 +68,7 @@ const ProjectFullDetails = ({
                 padding="0"
                 size="lg"
               />
-            </HStack>
+            </HStack> */}
           </HStack>
 
           <Video
