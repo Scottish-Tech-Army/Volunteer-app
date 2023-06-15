@@ -28,6 +28,18 @@ These are the one-time setup steps you need to do in order to get ready to deplo
 
 **We use [Expo Application Services (EAS)](https://expo.dev/eas)** to build and deploy the app. We are using the free tier which gives us 30 builds per calendar month (15 iOS, 15 Android -- so it's really 15 new deployments). This includes test builds (the Google Play test version and TestFlight) and production builds, it's all the same total.
 
+## Changing the EAS configuration
+
+This isn't something you should need to do often, but if you want to amend the EAS configuration there are a couple of places to look:
+
+Some build and submit settings are in `app/eas.json`.
+
+There are also settings in the main Expo config file `app/app.config.ts` -- look for the `eas` object, also the `android` and `ios` objects.
+
+> Where you see `process.env.XXXXXXXXXX` references in `app/app.config.ts`, for the app build with Expo Application Services environment variables that are secret can be set [in our EAS account](https://expo.dev/accounts/scottishtecharmy/projects/volunteer-app/secrets) In cases where values are not secret and are not liable to change in the built app (e.g. the API `baseUrl` and `version`) these are set directly in the `app/app.config.ts` file (those `process.env.XXXXXXXXXX` variables are only used when you're running the app locally, getting values from your `app/.env` file).
+
+## Deployment process
+
 **As a general rule you're strongly encouraged to deploy changes as part of any pull request that updates the front-end app** by following the steps below. **But we also just need to be careful not to hit the 15 deployments (30 builds)) limit,** so if there has been a high frequency of approved pull requests this month or your pull request is only a very minor change to the front-end app, you might not want to update the app version and do a new deployment.  If you're not sure, check [how many builds have already been done this month](https://expo.dev/accounts/scottishtecharmy/settings/billing) (and if you're still unsure ask the team on Slack).
 
 1. If you're making major design/functionality changes/additions, consider updating the screenshots we use in the Google Play Store and App Store. Store screenshots in the `screenshots/app` directory and you'll need to upload them manually in the Google Play and App Store admin consoles.
