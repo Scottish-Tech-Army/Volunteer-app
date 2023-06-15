@@ -2,9 +2,10 @@ require('dotenv').config();
 const airTable = require('../helpers/airTable');
 const arraysHelpers = require('../helpers/arrays');
 const axios = require('axios').default;
+const urlsHelpers = require('../helpers/urls');
 const projectsHelpers = require('../helpers/projects');
-const logging = require('../services/logging');
 const videosService = require('../services/videos');
+const logging = require('../services/logging');
 const api_key = process.env.JIRA_API_KEY;
 const email = process.env.JIRA_EMAIL;
 const resourcingJiraBoardName = 'RES';
@@ -44,12 +45,15 @@ async function addNewRecords(tableName, recordsChunk) {
 
 async function cacheProjectsAndResources(projects, resources) {
   if (!projects?.length || !resources?.length) {
-    logging.logError('❌ No projects/resources returned from Jira API, so aborted updating cache', {
-      extraInfo: {
-        projects,
-        resources,
-      },
-    });
+    logging.logError(
+      '❌ No projects/resources returned from Jira API, so aborted updating cache',
+      {
+        extraInfo: {
+          projects,
+          resources,
+        },
+      }
+    );
 
     return;
   }
@@ -66,9 +70,12 @@ async function cacheProjectsAndResources(projects, resources) {
       airTable.projectsResourcesCacheTable()
     );
   } catch (error) {
-    logging.logError('❌ Could not delete existing projects/resources records in cache, so aborted updating cache', {
-      extraInfo: error,
-    });
+    logging.logError(
+      '❌ Could not delete existing projects/resources records in cache, so aborted updating cache',
+      {
+        extraInfo: error,
+      }
+    );
 
     return;
   }
@@ -76,9 +83,12 @@ async function cacheProjectsAndResources(projects, resources) {
   try {
     await module.exports.addNewProjectsResources(projectsResources);
   } catch (error) {
-    logging.logError('❌ Could not save new projects/resources records in cache', {
-      extraInfo: error,
-    });
+    logging.logError(
+      '❌ Could not save new projects/resources records in cache',
+      {
+        extraInfo: error,
+      }
+    );
 
     return;
   }
@@ -90,29 +100,36 @@ async function deleteAllRecords(tableName) {
   console.log(`🛈 Deleting old records from ${tableName}`);
 
   return new Promise(async (resolve, reject) => {
-    const allRecordsRaw = await airTable
-      .client()
-      .table(tableName)
-      .select()
-      .all();
+    try {
+      const allRecordsRaw = await airTable
+        .client()
+        .table(tableName)
+        .select()
+        .all();
 
-    // AirTable accepts creating records in groups of 10 (faster than doing just one record at at time),
-    // so we chunk our data into an array of arrays, where each top-level array item is an array of up to 10 records
-    const allRecordsChunked = arraysHelpers.chunk(allRecordsRaw, 10);
+      // AirTable accepts creating records in groups of 10 (faster than doing just one record at at time),
+      // so we chunk our data into an array of arrays, where each top-level array item is an array of up to 10 records
+      const allRecordsChunked = arraysHelpers.chunk(allRecordsRaw, 10);
 
-    allRecordsChunked.forEach(async (recordsChunk) => {
-      const recordIds = recordsChunk.map((record) => record.id);
+      allRecordsChunked.forEach(async (recordsChunk) => {
+        const recordIds = recordsChunk.map((record) => record.id);
 
-      try {
-        await module.exports.deleteRecords(tableName, recordIds);
-      } catch (error) {
-        logging.logError(`❌ Error deleting all records in table ${tableName}`, {
-          extraInfo: error,
-        });
+        try {
+          await module.exports.deleteRecords(tableName, recordIds);
+        } catch (error) {
+          logging.logError(
+            `❌ Error deleting all records in table ${tableName}`,
+            {
+              extraInfo: error,
+            }
+          );
 
-        reject();
-      }
-    });
+          reject();
+        }
+      });
+    } catch (error) {
+      console.error(error);
+    }
 
     resolve();
   });
@@ -248,21 +265,29 @@ async function getInitialTriageProjectsFromJira(startAt, itArray) {
 
   await Promise.all(
     jiraIt.data.issues.map(async (x) => {
-      const project = {
-        it_key: x['key'],
-        name: x['fields'].summary,
-        description: x['fields'].description,
-        client: x['fields'].customfield_10027,
-        video_webpage: x['fields'].customfield_10159 ?? '',
-        scope: x['fields'].customfield_10090,
-        sector: x['fields'].customfield_10148?.value ?? '',
-      };
-      project.video_webpage_player_only =
-        await videosService.getVideoWebpagePlayerOnly(project.video_webpage);
+      try {
+        const project = {
+          it_key: x['key'],
+          name: x['fields'].summary,
+          description: urlsHelpers.cleanUrlsAndEmails(
+            x['fields'].description ?? ''
+          ),
+          client: x['fields'].customfield_10027,
+          video_webpage: x['fields'].customfield_10159 ?? '',
+          scope: x['fields'].customfield_10090,
+          sector: x['fields'].customfield_10148?.value ?? '',
+        };
+        project.video_webpage_player_only =
+          await videosService.getVideoWebpagePlayerOnly(project.video_webpage);
 
-      itArray.push(project);
+        itArray.push(project);
+      } catch (error) {
+        console.error(error);
+      }
     })
-  );
+  ).catch((error) => {
+    console.error(error);
+  });
 
   if (itArray.length < itTotalData) {
     const itStartResultSearch = itArray.length;

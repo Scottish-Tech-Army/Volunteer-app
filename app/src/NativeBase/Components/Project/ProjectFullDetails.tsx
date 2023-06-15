@@ -3,25 +3,22 @@
  */
 
 import React from 'react'
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import Hyperlink from 'react-native-hyperlink'
 import { navigate } from '@/Navigators/utils'
 import { Project } from '@/Services/modules/projects'
-import underDevelopmentAlert from '@/Utils/UnderDevelopmentAlert'
 import {
   Button,
   Card,
   Heading,
   HStack,
-  Icon,
-  IconButton,
   ScrollView,
-  ShareIcon,
   Text,
   VStack,
 } from 'native-base'
 import Video from '../Video'
 import ProjectAttachments from '../ProjectAttachments'
 import ColouredTag from '../ColouredTag'
+import StaTheme from '../../Theme/StaTheme'
 
 interface ProjectFullDetailsProps {
   project: Project
@@ -45,11 +42,10 @@ const ProjectFullDetails = ({
             alignItems="center"
             paddingRight="4"
           >
-            <Heading width="70%" fontSize="md">
-              {project.name}
-            </Heading>
+            <Heading fontSize="md">{project.name}</Heading>
 
-            <HStack
+            {/* TODO: reinstate when functionality is ready and set Heading width="70%" */}
+            {/* <HStack
               justifyContent="space-between"
               alignItems="center"
               space="4"
@@ -72,7 +68,7 @@ const ProjectFullDetails = ({
                 padding="0"
                 size="lg"
               />
-            </HStack>
+            </HStack> */}
           </HStack>
 
           <Video
@@ -85,9 +81,14 @@ const ProjectFullDetails = ({
             <Text>{project.client}</Text>
             <ColouredTag title={project.role} />
             <Text fontSize="xs">{project.hours}</Text>
-            <Text fontSize="xs" fontWeight="300">
-              {project.description}
-            </Text>
+            <Hyperlink
+              linkDefault
+              linkStyle={{ color: StaTheme.colors.primary[100] }}
+            >
+              <Text fontSize="xs" fontWeight="300">
+                {project.description}
+              </Text>
+            </Hyperlink>
             {Boolean(project.buddying) && (
               <Text fontSize="xs">Suitable for pairing</Text>
             )}
