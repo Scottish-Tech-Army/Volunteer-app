@@ -151,7 +151,19 @@ If you need access to update secrets or make changes on AWS, reach out on [volun
 
 ## Manual deployment to AWS
 
-**This section is only for information, should there be an issue with GitHub Actions**
+**You can force a manual deployment to AWS by triggering the GitHub action manually.** This could be useful if the API code hasn't changed (which would automatically trigger the GitHub action to deploy) but e.g. you've changed the environment variables (in the `DEPLOY_ENV_FILE` GitHub secret) and you want to deploy those changes. To do this:
+
+1. Go to our repo's [GitHub Actions page](https://github.com/Scottish-Tech-Army/Volunteer-app/actions)
+
+2. Choose **Continuous Integration - API** from the left-hand menu
+
+3. Above the list of workflow runs, select the **Run workflow** dropdown.
+
+4. Choose the branch (usually `main`)
+
+5. Click the **Run workflow** button.
+
+**You can also run through manual steps in AWS to deploy the API. The following instructions shouldn't normally need to be used -- they are only for if there's an issue with GitHub Actions.**
 
 Ask David Calder in the [volunteer-app](https://scottishtecharmy.slack.com/archives/C01SUL6K5E1) Slack channel to give you AWS access. Once that's set up, you can log in to AWS here: https://scottishtecharmy.awsapps.com/start#/ You'll need to navigate to the management console for the volapp-dev-test account, change your region to London (eu-west-2), and navigate to Elastic Beanstalk.
 

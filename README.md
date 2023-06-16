@@ -53,7 +53,9 @@ Alternatively, you can go to the link in the instructions above for installing t
 3. npx
    > Once you have npm, run the command `npx --version` to check if npx is installed. If that doesn't work, you can install npx with the command `npm install -g npx`
 4. autossh
-   > This is used to tunnel your local API server so the app in Expo Go can connect to it.  There are [installation instructions here](https://www.everythingcli.org/ssh-tunnelling-for-fun-and-profit-autossh/#gfm-3)  (If you are on a Mac you'll need Brew to install autossh, if you don't have Brew [here's how to install that first](https://brew.sh/))
+   > This is used to tunnel your local API server so the app in Expo Go can connect to it. There are [installation instructions here for Mac and Linux](https://www.everythingcli.org/ssh-tunnelling-for-fun-and-profit-autossh/#gfm-3)
+   > If you are on a Mac you'll need Brew to install autossh, if you don't have Brew [here's how to install that first](https://brew.sh/))
+   > If you are on Windows you you'll need to install Windows Subsystem for Linux (WSL) first to use Linux, and then afterwards install autossh. There's [a guide to installing WSL here](https://learn.microsoft.com/en-us/windows/wsl/install) but it's often as easy as just opening a terminal and running `wsl --install`
 5. [Install the Expo Go app on your iOS or Android phone](https://expo.dev/client) -- when you're developing the app locally, you'll use Expo Go to test the app on your phone.  As part of this you'll need to [set up an Expo account](https://expo.dev/signup) if you don't have one already.
 
 # Code editor
