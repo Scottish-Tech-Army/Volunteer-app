@@ -10,21 +10,23 @@ These are the one-time setup steps you need to do in order to get ready to deplo
 
 ## Google Play Store (Android)
 
-1. Add `google-service-account-key-key.json` and `my-release-key.keystore` files into the `app/deployment/` directory. These files contain credentials for uploading the app to the Google Play Store. Ask on Slack for another developer in the team to send you these files. Also ask them for the password for the `my-release-key.keystore` file -- save this somewhere safe (e.g. [a password manager](https://www.techradar.com/uk/best/password-manager)), you'll need it in the future to deploy the app.
+1. Add `google-service-account-key-key.json` and `my-release-key.keystore` files into the `app/deployment/` directory. These files contain credentials you will need for uploading the app to the Google Play Store via Expo Application Services. Ask on Slack for another developer in the team to send you these files. Also ask them for the password for the `my-release-key.keystore` file -- save this password somewhere safe (e.g. [a password manager](https://www.techradar.com/uk/best/password-manager)), you'll need it in the future to deploy the app.
 
-   > Because these files contain sensitive access credentials we should never commit them to GitHub as our repository is open-source, anyone can see it.
+   > Because these files contain sensitive access credentials, be careful never to commit them to GitHub as our repository is open-source, anyone can see it.
 
-   > On some systems, the terminal has a problem if the password for `my-release-key.keystore` contains symbols, so this password may need to be letters and numbers only (just make sure it's a long, strong password). If you need to change the password locally you can use this command `keytool -storepasswd -keystore path/to/my-release-key.keystore -storetype PKCS12`
+   > On some systems, the terminal has a problem if the password for `my-release-key.keystore` contains symbols, so this password may need to be letters and numbers only (just make sure it's a long, strong password). If you need to change the password locally you can use this command `keytool -storepasswd -keystore path/to/my-release-key.keystore -storetype PKCS12` (changing `path/to` as needed)
 
-2. Ask Joanna to give you0** Developer access to the STA Google Play Store account**. That will allow you to check whether releases you deploy have uploaded successfully, and you'll be able to add new testers.
+2. Ask Joanna to give you **Developer access to the STA Google Play Store account**. That will allow you to check whether releases you deploy have uploaded successfully, and you'll be able to add new testers.
 
 ## TestFlight / App Store (iOS)
 
-3. Ask Joanna to give you **Developer access to the STA App Store Connect account** (you should be able to do this without having to pay for an Apple Developer account). You will need an Apple account ([create one here free if you don't have one](https://support.apple.com/en-gb/HT204316)) -- then you'll need to give Joanna the email address you use for your Apple ID. This is necessary in order to submit iOS versions of the app via Expo Application Services, and will allow you to check whether releases you submit have been uploaded successfully and accepted by Apple.
+3. Ask Joanna to give you **Developer access to the STA App Store Connect account** (you should be able to do this without having to pay for an Apple Developer account). You will need an Apple account ([create one here free if you don't have one](https://support.apple.com/en-gb/HT204316)) -- then you'll need to give Joanna the email address you use for your Apple ID. Getting access to App Store Connect is necessary in order to submit iOS versions of the app via Expo Application Services, and will allow you to check whether releases you submit have been uploaded successfully and accepted by Apple.
 
 # App deployment
 
 **All devs on the team can deploy the app** -- it should be something we all usually incorporate into any pull request where we make a change to the front-end app.
+
+**There are two versions of the app we can deploy** -- one for internal testing (TestFlight for iOS, Google Play Store *internal track* for Android) and one for public release (App Store for iOS, Google Play Store *production track* for Android). The internal testing versions are for the Volunteer app team to download and test before we release the app to the public. The public release versions are for anyone to download from the app stores.
 
 **We use [Expo Application Services (EAS)](https://expo.dev/eas)** to build and deploy the app. We are using the free tier which gives us 30 builds per calendar month (15 iOS, 15 Android -- so it's really 15 new deployments). This includes test builds (the Google Play test version and TestFlight) and production builds, it's all the same total.
 
@@ -98,19 +100,17 @@ You've created an Android build and it's stored in the cloud with EAS.  Now we n
 
 14. In the `app` directory run `npm run build-ios` (it's the same command if you are creating a build either for TestFlight internal testing or for production - releasing the app to the public)
 
-   > See the notes under step 7. above (Android build) about logging into Expo Application Services (EAS), installing extra packages, and some other issues you might also run into during the iOS build process.
+   > The next few steps below cover iOS-specific issues. See also the notes under step 7. above (Android build) about logging into Expo Application Services (EAS), installing extra packages, and some other issues you might also run into during the iOS build process.
 
 15. If asked *Do you want to log in to your Apple account?* say **yes.** Follow the steps to log into your account and when asked to select a Team and a Provider choose Scottish Tech Army.
 
-   > If you get an error message similar to `Failed to register bundle identifier` or `Apple 403 detected - Access forbidden` try logging in to your [App Store Account](https://appstoreconnect.apple.com/) (or [App Developer account](https://developer.apple.com/) if you have one) -- look around in your account, there may be some updated terms and conditions you need to accept before you can try running the build command again.
+   > If you get an error message similar to `Failed to register bundle identifier` or `Apple 403 detected - Access forbidden` try logging in to your [App Store Account](https://appstoreconnect.apple.com/) (or [App Developer account](https://developer.apple.com/) if you have one) -- look around in your account, there may be some updated terms and conditions you need to accept before you can try running the build command again. If you can't see anything you need to accept, it may be that Alistair needs to accept some new terms & conditions in his [Apple developer account]( https://developer.apple.com/account/) -- ask him (or ask Joanna to ask him) to check.
 
 16. If asked if you want to generate a new Distribution Certificate and/or Provisioning Profile (if you've deployed recently you may not get asked this), say **yes**
 
 17. If asked *Would you like to set up Push Notifications for your project?* say **no**
 
 18. Wait for the build process to complete
-
-   > See the notes under step 6 (Android build) above about build issues and how to check its progress
 
 ## Submit to TestFlight / the App Store
 
