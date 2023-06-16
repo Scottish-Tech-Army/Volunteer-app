@@ -8,6 +8,7 @@ This file contains some tips and guidelines on building our front-end React Nati
   - [Expo trade-offs](#expo-trade-offs)
   - [Installing new packages](#installing-new-packages)
   - [Using .env variables](#using-env-variables)
+  - [Expo config file](#expo-config-file)
   - [Expo known issues](#expo-known-issues)
 - [NativeBase](#nativebase)
   - [File locations, naming, moving and deleting](#file-locations-naming-moving-and-deleting)
@@ -81,12 +82,15 @@ There are a few steps to add and use an environment variable using Expo:
 3. In the file in your code where you want to use this variable, add an import statement at the top of the file `import Constants from 'expo-constants'`
 4. In the same file, at the place in the code where you want to use the variable, you can access your variable with e.g. `Constants.expoConfig?.extra?.amazingApiKey` (note: Typescript considers that the value of this could be `undefined`, so you may need to handle that possibility)
 
+### Expo config file
+
+The `app/app.config.ts` file contains some configuration settings for the Expo CLI. In some Expo documentation you might see references to updating a `config.json` file -- this is the same thing, we just store it in `app.config.ts` because it's more flexible (e.g. we can insert environment variables into it when the app is built and deployed).
+
 ### Expo known issues
 
 - **If the app on your phone isn't showing the latest changes in your code** first you could try reloading it -- while viewing the app in Expo Go, shake your phone and it should show you some options include 'Reload'
 - **Sometimes the dev server loses connection with your phone** in which case you can try restarting Expo in your terminal -- press Ctrl+C to stop it, then run `npm start` again
 - **If you're still having problems not seeing changes you have made on your phone** instead of `npm start` try `npm run start-clear-cache` (this does the same thing but also clears the Expo cache, so it'll be slower to load, but should force any changes to come through)
-- **Previewing the app in Expo Go, it doesn't pick up the colour mode set on your phone** (we need to check, but assume this shouldn't be an issue when the app is built and deployed). For testing purposes you can manually set dark/light mode on the Settings screen.
 
 ## NativeBase
 

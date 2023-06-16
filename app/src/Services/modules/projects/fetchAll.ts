@@ -1,7 +1,7 @@
 /**
  * @file Fetches all projects data.
  */
-import { Config } from '@/Config'
+import Constants from 'expo-constants'
 import { EndpointBuilder } from '@reduxjs/toolkit/dist/query/endpointDefinitions'
 import { Projects } from '.'
 import { ApiBaseQueryFunctionType } from '@/Services/api'
@@ -15,6 +15,9 @@ export default (
   build: EndpointBuilder<ApiBaseQueryFunctionType, never, 'api'>,
 ) =>
   build.query<Projects, string>({
-    query: () => `${Config.STA_BASE_URL}${Config.STA_API_VERSION}/projects`,
+    query: () =>
+      `${Constants.expoConfig?.extra?.api?.baseUrl ?? ''}/${
+        Constants.expoConfig?.extra?.api?.version ?? ''
+      }/projects`,
     transformResponse: (data: Projects) => data,
   })

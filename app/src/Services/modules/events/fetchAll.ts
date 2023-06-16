@@ -2,7 +2,7 @@
  * @file Fetches all events data within a specified range
  */
 
-import { Config } from '@/Config'
+import Constants from 'expo-constants'
 import { EndpointBuilder } from '@reduxjs/toolkit/dist/query/endpointDefinitions'
 import { Events } from '.'
 import { EventsRange } from '.'
@@ -20,6 +20,8 @@ export default (
 ) =>
   build.query<Events, string>({
     query: () =>
-      `${Config.STA_BASE_URL}${Config.STA_API_VERSION}/events/schedule/${range}`,
+      `${Constants.expoConfig?.extra?.api?.baseUrl ?? ''}/${
+        Constants.expoConfig?.extra?.api?.version ?? ''
+      }/events/schedule/${range}`,
     transformResponse: (data: Events) => data,
   })
