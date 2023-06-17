@@ -6,7 +6,7 @@ on:
     types: [opened, synchronize, reopened, edited]
     paths:
       - "api/**"
-  workflow_dispatch:
+
 jobs:
   test:
     name: Tests

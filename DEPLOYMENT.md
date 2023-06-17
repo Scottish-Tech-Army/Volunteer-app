@@ -155,7 +155,7 @@ If you need access to update secrets or make changes on AWS, reach out on [volun
 
 1. Go to our repo's [GitHub Actions page](https://github.com/Scottish-Tech-Army/Volunteer-app/actions)
 
-2. Choose **Continuous Integration - API** from the left-hand menu
+2. Choose **Deploy to Elastic Beanstalk** from the left-hand menu
 
 3. Above the list of workflow runs, select the **Run workflow** dropdown.
 
