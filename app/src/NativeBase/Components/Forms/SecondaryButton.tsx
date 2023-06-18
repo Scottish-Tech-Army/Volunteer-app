@@ -16,14 +16,9 @@ interface SecondaryButtonProps {
 const SecondaryButton: FC<SecondaryButtonProps> = ({ onPress, text }) => {
   return (
     <Button
+      backgroundColor="bg.secondary"
       borderColor="primary.100"
       borderWidth="2"
-      _dark={{
-        bg: 'bgDarkMode',
-      }}
-      _light={{
-        bg: 'bg.secondary',
-      }}
       onPress={onPress}
       _pressed={{ bg: 'primary.20' }}
       _text={{ color: 'primary.100' }}
