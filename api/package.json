@@ -1,6 +1,6 @@
 {
   "name": "volunteer-app-api",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "RESTful API to surface the data required for the Volunteer App.",
   "main": "app.js",
   "scripts": {
