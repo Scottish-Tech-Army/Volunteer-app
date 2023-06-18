@@ -16,7 +16,7 @@ interface SecondaryButtonProps {
 const SecondaryButton: FC<SecondaryButtonProps> = ({ onPress, text }) => {
   return (
     <Button
-      backgroundColor="bg.secondary"
+      backgroundColor="bg.100"
       borderColor="primary.100"
       borderWidth="2"
       onPress={onPress}
