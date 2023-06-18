@@ -18,6 +18,15 @@ router.get('/', async (req, res) => {
     return;
   }
 
+  if (!projectsResources?.length) {
+    routesHelper.sendError(
+      res,
+      'Could not get projects from database',
+    );
+
+    return;
+  }
+
   const projectsResourcesFormatted = projectsResources.map((projectResource) =>
     projectsHelper.formatProjectResourceFromAirTable(projectResource),
   );
