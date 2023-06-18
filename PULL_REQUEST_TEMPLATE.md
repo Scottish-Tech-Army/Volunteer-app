@@ -34,7 +34,8 @@ Please delete options that are not relevant
 - [] I have addressed accessibility, if needed
 - [] I have followed best practices, e.g. NativeBase approaches and theming
 - [] I have checked the app in dark mode, if making front-end design changes
-- [] If updating the front-end app, I have updated version numbers to prepare for me to [deploy the updated app](DEPLOYMENT.md#app-deployment)
+- [] If updating the front-end app, I have updated app version codes/numbers to prepare for me to [deploy the updated app](DEPLOYMENT.md#app-deployment)
+- [] If updating the API, I have updated the API version number to prepare for me to [deploy the updated API](DEPLOYMENT.md#api-deployment-on-aws)
 - [] My changes generate no new warnings
 - [] I have added tests that prove my fix is effective or that my feature works
 - [] New and existing unit tests pass locally with my changes
