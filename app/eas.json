@@ -1,5 +1,6 @@
 {
   "cli": {
+    "appVersionSource": "remote",
     "version": ">= 3.13.3"
   },
   "build": {
@@ -10,7 +11,9 @@
     "preview": {
       "distribution": "internal"
     },
-    "production": {}
+    "production": {
+      "autoIncrement": true
+    }
   },
   "submit": {
     "preview": {
@@ -23,6 +26,9 @@
       "android": {
         "serviceAccountKeyPath": "./deployment/google-service-account-key.json",
         "track": "production"
+      },
+      "ios": {
+        "ascAppId": "1632619020"
       }
     }
   }

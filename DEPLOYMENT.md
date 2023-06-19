@@ -54,25 +54,21 @@ There are also settings in the main Expo config file `app/app.config.ts` -- look
 
    > This is a string
 
-3. Update the Android `versionCode` in `app/app.config.ts` (e.g. `11` becomes `12`)
+   > Version numbers for the MVP version of the app should begin with a `1`, version numbers for the MVP+1 version of the app should begin with a `2` etc.
 
-   > This is a number
+3. Get your pull request approved as you normally would. When you're ready to merge your code and deploy the updated app, double-check the version numbers in the previous steps are still right compared to what's in `main` or the release branch (somebody else could have merged in code recently and changed the version numbers since you last checked - if you need to, update the version numbers before merging).
 
-4. Update the iOS `buildNumber` in `app/app.config.ts` (e.g. `'19'` becomes `'20'`)
-
-   > This is a string
-
-   > The different version numbers/codes mentioned in steps 1-3 will probably all have different values.
-
-5. Get your pull request approved as you normally would. When you're ready to merge your code into the `main` branch and deploy the updated app, double-check your version numbers in the previous steps are still right compared to what's in `main` (somebody else could have merged in code recently and changed the version numbers since you last checked - if you need to, update the version numbers before merging).
-
-   > We haven't dealt with version number issues with a release branch yet. You'll need to see whether the iOS and Android version numbers/codes have to be increased and how that works with production releases.
-
-6. Go ahead and merge your pull request into the `main` branch.
+4. Go ahead and merge your pull request into the `main` or release branch.
 
 ### Build the Android version
 
-7. In the `app` directory run `npm run build-android` (it's the same command if you are creating a build either for internal testing or for production - releasing the app to the public)
+5. Make sure you are on the right branch locally and have pulled the latest code before you go any further.
+
+   > If you are deploying a production release, you should be on the `main` branch. If you are deploying a test release, you should be on a release branch.
+
+   > Do `git pull` to make sure you have pulled the latest changes from GitHub, including the pull request you've merged in.
+
+6. In the `app` directory run `npm run build-android` (it's the same command if you are creating a build either for internal testing or for production - releasing the app to the public)
 
    > If asked to install extra packages, say **yes**
 
@@ -84,23 +80,33 @@ There are also settings in the main Expo config file `app/app.config.ts` -- look
 
    > Builds can take some time (sometimes 10-20 minutes, sometimes more than an hour, depending on how busy EAS servers are), but you can check the exact status of a build and the different steps that are taking place in the Expo Application Services dashboard -- follow the URL you'll see in your terminal after you run one of the build commands below (ask another team member for the Expo Application Services login details). You can also see there if there are any errors.
 
-8. Once the build is complete, if you get a message asking *Install and run the Android build on an emulator?* say **no**
+7. Once the build is complete, ignore the QR code and if you get a message asking *Install and run the Android build on an emulator?* say **no**
 
 ### Submit to the Google Play Store
 
 You've created an Android build and it's stored in the cloud with EAS.  Now we need to submit it to the Google Play Store.
 
-9. Make sure you use the right submit command. If you want to **publish the app to the internal test track** (for the Volunteer app team only to download) use `npm run submit-android-preview` -- or to publish the app to production (for people to download publicly from the Google Play Store) use `npm run submit-android-production`
+8. Make sure you use the right submit command. If you want to **publish the app to the internal test track** (for the Volunteer app team only to download) use `npm run submit-android-testing` -- or to **publish the app to production** (for people to download publicly from the Google Play Store) use `npm run submit-android-production`
 
-10. When asked *What would you like to submit?* choose *Select a build from EAS*. Then use arrow keys to choose the build from the list that you created with the build steps above, and press enter.
+9. When asked *What would you like to submit?* choose *Select a build from EAS*. Then use arrow keys to choose the build from the list that you created with the build steps above, and press enter.
 
-11. Wait for the build to be submitted.
+   > If you get asked for the password for the release key (`my-release-key.keystore`), enter it. (You should have saved in a password manager when you set up your deployment environment - if you don't have it, ask another member of the team on Slack, and save it in a password manager for future use.)
 
-12. Once it's finished, if you have access, check in the [Google Play Console](https://play.google.com/console) that the new version of the app has successfully been added (*Volunteer app > Release > Internal testing* or *Volunteer app > Release > Production*) -- you should see the new version number next to 'Latest release' under 'Track summary'.
+10. Wait for the build to be submitted.
 
-13. If you have an Android phone, download the updated version of the app ([see instructions](README.md#updating-to-the-latest-version-of-the-app)) and double check it's all working as expected.
+11. Once it's finished, check in the [Google Play Console](https://play.google.com/console) that the new version of the app has successfully been added (*Volunteer app > Release > Internal testing* or *Volunteer app > Release > Production*) -- you should see the new version number next to 'Latest release' under 'Track summary'.
+
+   > Google Play Store reviews the release before it's made public -- check the status of the release in the Google Play Console. If it's not yet available to download, check back later.
+
+12. If you have an Android phone, download the updated version of the app ([see instructions](README.md#updating-to-the-latest-version-of-the-app)) and double check it's all working as expected.
 
 ### Build the iOS version
+
+13. Make sure you are on the right branch locally and have pulled the latest code before you go any further.
+
+   > If you are deploying a production release, you should be on the `main` branch. If you are deploying a test release, you should be on a release branch.
+
+   > Do `git pull` to make sure you have pulled the latest changes from GitHub, including the pull request you merged in.
 
 14. In the `app` directory run `npm run build-ios` (it's the same command if you are creating a build either for TestFlight internal testing or for production - releasing the app to the public)
 
@@ -120,7 +126,7 @@ You've created an Android build and it's stored in the cloud with EAS.  Now we n
 
 You've created an iOS build and it's stored in the cloud with EAS.  Now we need to submit it to TestFlight / the App Store.
 
-19. Make sure you use the right submit command. If you want to **publish the app to TestFlight for internal testing** (for the Volunteer app team only to download) use `npm run submit-ios-preview` -- or to publish the app to production (for people to download publicly from the App Store) use `npm run submit-ios-production`
+19. Make sure you use the right submit command. If you want to **publish the app to TestFlight for internal testing** (for the Volunteer app team only to download) use `npm run submit-ios-testing` -- or to **publish the app to production** (for people to download publicly from the App Store) use `npm run submit-ios-production`
 
 20. When asked *What would you like to submit?* choose *Select a build from EAS*. Then use arrow keys to choose the build from the list that you created with the build steps above, and press enter.
 
@@ -137,6 +143,8 @@ You've created an iOS build and it's stored in the cloud with EAS.  Now we need 
 ## Pull requests
 
 Each time you update API code, before you submit your pull request for review, update the `version` number in `api/package.json`. Normally for minor features/fixes, just update the last part of the version number (e.g. `"1.0.24"` becomes `"1.0.25"`).
+
+> Version numbers for the MVP version of the app should begin with a `1`, version numbers for the MVP+1 version of the app should begin with a `2` etc.
 
 Updating the version number helps us keep track of which version of the API is running on the server, [it's used by Bugsnag when errors are reported.](API_DEVELOPMENT.md#logging-errors)
 

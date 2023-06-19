@@ -15,7 +15,9 @@ Welcome to the the Volunteering App Github repo
 
 # Download the app!
 
-Get the test version of the app on your own phone so you can see it working in practice.
+Get the test version of the app on your own phone so you can see it working in practice and see new test releases when they're available.
+
+(You can also download the production version of the app from the [App Store](https://apps.apple.com/us/app/sta-volunteer-app/id1632619020) or [Google Play](https://play.google.com/store/apps/details?id=org.scottishtecharmy.volunteerapp), but you can't have both test and production versions installed on the same device.)
 
 ## iOS
 
