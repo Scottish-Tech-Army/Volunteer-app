@@ -72,6 +72,22 @@ const TextInputControl: FC<TextInputControlProps> = ({
     | 'username-new'
     | 'off'
     | undefined
+  let inputMode = 'text' as
+    | 'none'
+    | 'text'
+    | 'decimal'
+    | 'numeric'
+    | 'tel'
+    | 'search'
+    | 'email'
+    | 'url'
+  let keyboardType = 'default' as
+    | 'default'
+    | 'email-address'
+    | 'numeric'
+    | 'phone-pad'
+    | 'number-pad'
+    | 'decimal-pad'
   let textContentType = 'none' as
     | 'none'
     | 'URL'
@@ -106,6 +122,8 @@ const TextInputControl: FC<TextInputControlProps> = ({
   switch (type) {
     case 'email':
       autoComplete = 'email'
+      inputMode = 'email'
+      keyboardType = 'email-address'
       textContentType = 'emailAddress'
       break
     case 'firstName':
@@ -138,6 +156,8 @@ const TextInputControl: FC<TextInputControlProps> = ({
       <Input
         autoCapitalize={autoCapitalize}
         autoComplete={autoComplete}
+        inputMode={inputMode}
+        keyboardType={keyboardType}
         onBlur={onBlur}
         size="sm"
         onChangeText={onChange}

@@ -1,6 +1,6 @@
 {
   "name": "STA Volunteer app",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "private": true,
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
