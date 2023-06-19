@@ -44,7 +44,11 @@ There are also settings in the main Expo config file `app/app.config.ts` -- look
 
 **As a general rule you're strongly encouraged to deploy changes as part of any pull request that updates the front-end app** by following the steps below. **But we also just need to be careful not to hit the 15 deployments (30 builds)) limit,** so if there has been a high frequency of approved pull requests this month or your pull request is only a very minor change to the front-end app, you might not want to update the app version and do a new deployment.  If you're not sure, check [how many builds have already been done this month](https://expo.dev/accounts/scottishtecharmy/settings/billing) (and if you're still unsure ask the team on Slack).
 
+### Screenshots
+
 1. If you're making major design/functionality changes/additions, consider updating the screenshots we use in the Google Play Store and App Store. Store screenshots in the `screenshots/app` directory and you'll need to upload them manually in the Google Play and App Store admin consoles.
+
+### Pull request
 
 2. In the pull request for the changes you're making (e.g. a new app feature), before you submit the PR for review, update the `version` number in `app/package.json`. Normally for minor features/fixes, just update the last part of the version number (e.g. `"1.0.24"` becomes `"1.0.25"`).
 
@@ -66,7 +70,7 @@ There are also settings in the main Expo config file `app/app.config.ts` -- look
 
 6. Go ahead and merge your pull request into the `main` branch.
 
-## Build the Android version
+### Build the Android version
 
 7. In the `app` directory run `npm run build-android` (it's the same command if you are creating a build either for internal testing or for production - releasing the app to the public)
 
@@ -82,7 +86,7 @@ There are also settings in the main Expo config file `app/app.config.ts` -- look
 
 8. Once the build is complete, if you get a message asking *Install and run the Android build on an emulator?* say **no**
 
-## Submit to the Google Play Store
+### Submit to the Google Play Store
 
 You've created an Android build and it's stored in the cloud with EAS.  Now we need to submit it to the Google Play Store.
 
@@ -96,7 +100,7 @@ You've created an Android build and it's stored in the cloud with EAS.  Now we n
 
 13. If you have an Android phone, download the updated version of the app ([see instructions](README.md#updating-to-the-latest-version-of-the-app)) and double check it's all working as expected.
 
-## Build the iOS version
+### Build the iOS version
 
 14. In the `app` directory run `npm run build-ios` (it's the same command if you are creating a build either for TestFlight internal testing or for production - releasing the app to the public)
 
@@ -112,7 +116,7 @@ You've created an Android build and it's stored in the cloud with EAS.  Now we n
 
 18. Wait for the build process to complete
 
-## Submit to TestFlight / the App Store
+### Submit to TestFlight / the App Store
 
 You've created an iOS build and it's stored in the cloud with EAS.  Now we need to submit it to TestFlight / the App Store.
 
@@ -130,6 +134,12 @@ You've created an iOS build and it's stored in the cloud with EAS.  Now we need 
 
 # API deployment on AWS
 
+## Pull requests
+
+Each time you update API code, before you submit your pull request for review, update the `version` number in `api/package.json`. Normally for minor features/fixes, just update the last part of the version number (e.g. `"1.0.24"` becomes `"1.0.25"`).
+
+Updating the version number helps us keep track of which version of the API is running on the server, [it's used by Bugsnag when errors are reported.](API_DEVELOPMENT.md#logging-errors)
+
 ## Automatic deployment with GitHub Actions
 
 **API deployment is automatic whenever a Pull Request is merged into the `main` branch on GitHub -- you shouldn't need to do any manual deployment steps with the API.**
@@ -144,6 +154,8 @@ Note: If environment variables have changed, the entire `api/.env` file should b
 - `BUGSNAG_API_KEY` should not usually be in your local .env file, but must be included on the production server
 - `SLACK_CHANNEL_VOLUNTEER_PROJECT_INTEREST` should be different on the production server
 - `SLACK_SECRET_WEBHOOK_INITIAL_TRIAGE` should not usually be in your local .env file, but must be included on the production server
+
+> After you have added the updated .env values to GitHub Secrets, **if you amended your local .env file make sure you reset it back to the values you had before** for local development (e.g. `AIRTABLE_PROJECTS_RESOURCES_CACHE_TABLE` should be the test table name, not the production table name etc -- check all the the variables mentioned in the list above).
 
 > Make sure the .env file you copy and paste from is all correctly formatted too: there should be no spaces before and after `=` signs, string values should be inside double quotes `"`, e.g. `BUGSNAG_API_KEY="abc123def456hij7890xxxxxxxx"`
 

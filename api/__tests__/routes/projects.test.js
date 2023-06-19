@@ -3,10 +3,11 @@ const app = require('../../app');
 const axios = require('axios');
 const { faker } = require('@faker-js/faker');
 const nock = require('nock');
-const { projectRegisterInterestHandler } = require('../../routes/projects');
+const { getAllProjectsHandler, projectRegisterInterestHandler } = require('../../routes/projects');
 const projectsHelper = require('../../helpers/projects');
 const projectsTestData = require('../../__test-data__/projects');
 const request = require('supertest');
+const routesHelper = require('../../helpers/routes');
 const slackService = require('../../services/slack');
 
 axios.defaults.adapter = require('axios/lib/adapters/http');
@@ -31,6 +32,137 @@ describe('Test the projects api', () => {
 
     expect(response.status).toBe(200);
     expect(response.data).toEqual(fakeProjectResources);
+  });
+
+  test('getAllProjectsHandler calls AirTable and returns a response', async () => {
+    // Set up fake test data
+    const fakeRequest = {
+      query: {},
+      body: {},
+    };
+    const fakeTableName = faker.lorem.word();
+    const numberOfProjects = faker.number.int({ min: 10, max: 30 });
+    const fakeProjectResources = [];
+    for (let i = 0; i < numberOfProjects; i++) {
+      fakeProjectResources.push(projectsTestData.fakeAirTableProjectResource(true));
+    }
+
+    // Mock dependencies
+    const airTableHelperProjectsResourcesCacheTableSpy = jest
+      .spyOn(airTable, 'projectsResourcesCacheTable')
+      .mockImplementation(() => fakeTableName);
+    const airTableHelperGetAllRecordsSpy = jest
+      .spyOn(airTable, 'getAllRecords')
+      .mockImplementation(() => fakeProjectResources);
+    const projectsHelperFormatProjectResourceFromAirTableSpy = jest
+      .spyOn(projectsHelper, 'formatProjectResourceFromAirTable')
+      .mockImplementation(fakeProjectResource => fakeProjectResource);
+    const responseMock = {
+      send: jest.fn(() => responseMock),
+      status: jest.fn(() => responseMock),
+    };
+
+    // Run test
+    await getAllProjectsHandler(fakeRequest, responseMock);
+
+    expect(airTableHelperProjectsResourcesCacheTableSpy).toHaveBeenCalledTimes(1);
+    expect(airTableHelperGetAllRecordsSpy).toHaveBeenCalledTimes(1);
+    expect(projectsHelperFormatProjectResourceFromAirTableSpy).toHaveBeenCalledTimes(numberOfProjects);
+    expect(responseMock.status).toHaveBeenCalledTimes(1);
+    expect(responseMock.status).toHaveBeenCalledWith(200);
+    expect(responseMock.send).toHaveBeenCalledTimes(1);
+    expect(responseMock.send).toHaveBeenCalledWith(fakeProjectResources);
+
+    // Clean up
+    airTableHelperProjectsResourcesCacheTableSpy.mockRestore();
+    airTableHelperGetAllRecordsSpy.mockRestore();
+    projectsHelperFormatProjectResourceFromAirTableSpy.mockRestore();
+  });
+
+  test('getAllProjectsHandler returns an error if AirTable has an error', async () => {
+    // Set up fake test data
+    const fakeRequest = {
+      query: {},
+      body: {},
+    };
+    const fakeTableName = faker.lorem.word();
+
+    // Mock dependencies
+    const airTableHelperProjectsResourcesCacheTableSpy = jest
+      .spyOn(airTable, 'projectsResourcesCacheTable')
+      .mockImplementation(() => fakeTableName);
+    const airTableHelperGetAllRecordsSpy = jest
+      .spyOn(airTable, 'getAllRecords')
+      .mockImplementation(() => ({ error: 'Some error message' }));
+    const routesHelperSendErrorSpy = jest
+      .spyOn(routesHelper, 'sendError')
+      .mockImplementation(() => {});
+    const projectsHelperFormatProjectResourceFromAirTableSpy = jest
+      .spyOn(projectsHelper, 'formatProjectResourceFromAirTable')
+      .mockImplementation(fakeProjectResource => fakeProjectResource);
+    const responseMock = {
+      send: jest.fn(() => responseMock),
+      status: jest.fn(() => responseMock),
+    };
+
+    // Run test
+    await getAllProjectsHandler(fakeRequest, responseMock);
+
+    expect(airTableHelperProjectsResourcesCacheTableSpy).toHaveBeenCalledTimes(1);
+    expect(airTableHelperGetAllRecordsSpy).toHaveBeenCalledTimes(1);
+    expect(routesHelperSendErrorSpy).toHaveBeenCalledTimes(1);
+    expect(projectsHelperFormatProjectResourceFromAirTableSpy).toHaveBeenCalledTimes(0);
+    expect(responseMock.status).toHaveBeenCalledTimes(0);
+    expect(responseMock.send).toHaveBeenCalledTimes(0);
+
+    // Clean up
+    airTableHelperProjectsResourcesCacheTableSpy.mockRestore();
+    airTableHelperGetAllRecordsSpy.mockRestore();
+    routesHelperSendErrorSpy.mockRestore();
+    projectsHelperFormatProjectResourceFromAirTableSpy.mockRestore();
+  });
+
+  test('getAllProjectsHandler returns an error if AirTable returns no projects', async () => {
+    // Set up fake test data
+    const fakeRequest = {
+      query: {},
+      body: {},
+    };
+    const fakeTableName = faker.lorem.word();
+
+    // Mock dependencies
+    const airTableHelperProjectsResourcesCacheTableSpy = jest
+      .spyOn(airTable, 'projectsResourcesCacheTable')
+      .mockImplementation(() => fakeTableName);
+    const airTableHelperGetAllRecordsSpy = jest
+      .spyOn(airTable, 'getAllRecords')
+      .mockImplementation(() => undefined);
+    const routesHelperSendErrorSpy = jest
+      .spyOn(routesHelper, 'sendError')
+      .mockImplementation(() => {});
+    const projectsHelperFormatProjectResourceFromAirTableSpy = jest
+      .spyOn(projectsHelper, 'formatProjectResourceFromAirTable')
+      .mockImplementation(fakeProjectResource => fakeProjectResource);
+    const responseMock = {
+      send: jest.fn(() => responseMock),
+      status: jest.fn(() => responseMock),
+    };
+
+    // Run test
+    await getAllProjectsHandler(fakeRequest, responseMock);
+
+    expect(airTableHelperProjectsResourcesCacheTableSpy).toHaveBeenCalledTimes(1);
+    expect(airTableHelperGetAllRecordsSpy).toHaveBeenCalledTimes(1);
+    expect(routesHelperSendErrorSpy).toHaveBeenCalledTimes(1);
+    expect(projectsHelperFormatProjectResourceFromAirTableSpy).toHaveBeenCalledTimes(0);
+    expect(responseMock.status).toHaveBeenCalledTimes(0);
+    expect(responseMock.send).toHaveBeenCalledTimes(0);
+
+    // Clean up
+    airTableHelperProjectsResourcesCacheTableSpy.mockRestore();
+    airTableHelperGetAllRecordsSpy.mockRestore();
+    routesHelperSendErrorSpy.mockRestore();
+    projectsHelperFormatProjectResourceFromAirTableSpy.mockRestore();
   });
 
   test('GET single project by ID method should return Not Found', async () => {

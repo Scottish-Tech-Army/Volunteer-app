@@ -6,13 +6,24 @@ const projectsHelper = require('../helpers/projects');
 const router = express.Router();
 const routesHelper = require('../helpers/routes');
 
-router.get('/', async (req, res) => {
+router.get('/', async (req, res) => await getAllProjectsHandler(req, res));
+
+const getAllProjectsHandler = async (req, res) => {
   const projectsResources = await airTable.getAllRecords(airTable.projectsResourcesCacheTable());
 
-  if (projectsResources.error) {
+  if (projectsResources && projectsResources.error) {
     routesHelper.sendError(
       res,
       `Database connection error: ${airTable.connectionErrorMessage()}`,
+    );
+
+    return;
+  }
+
+  if (!projectsResources?.length) {
+    routesHelper.sendError(
+      res,
+      'Could not get projects from database',
     );
 
     return;
@@ -23,7 +34,7 @@ router.get('/', async (req, res) => {
   );
 
   res.status(200).send(projectsResourcesFormatted);
-});
+};
 
 router.get('/single', async (req, res) => {
   const projectItKey = req.query.it;
@@ -110,6 +121,7 @@ const projectRegisterInterestHandler = async (req, res) => {
 };
 
 module.exports = {
+  getAllProjectsHandler,
   projectsApi: router,
   projectRegisterInterestHandler,
 };
