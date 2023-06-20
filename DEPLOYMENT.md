@@ -46,7 +46,7 @@ There are also settings in the main Expo config file `app/app.config.ts` -- look
 
 ### Pull request
 
-4. In the pull request for the changes you're making (e.g. a new app feature), before you submit the PR for review, update the `version` number in `app/package.json`. Normally for minor features/fixes, just update the last part of the version number (e.g. `"1.0.24"` becomes `"1.0.25"`).
+4. In the pull request for the changes you're making (e.g. a new app feature), before you submit the PR for review, update the `version` number in `app/package.json`. Normally for minor features/fixes, just update the last part of the version number (e.g. `"1.0.24"` becomes `"1.0.25"` -- [read more about semantic versioning](https://semver.org/)).
 
    > Version numbers for the MVP version of the app should begin with a `1`, version numbers for the MVP+1 version of the app should begin with a `2` etc.
 
@@ -136,7 +136,7 @@ You've created an iOS build and it's stored in the cloud with EAS.  Now we need 
 
 ## Pull requests
 
-Each time you update API code, before you submit your pull request for review, update the `version` number in `api/package.json`. Normally for minor features/fixes, just update the last part of the version number (e.g. `"1.0.24"` becomes `"1.0.25"`).
+Each time you update API code, before you submit your pull request for review, update the `version` number in `api/package.json`. Normally for minor features/fixes, just update the last part of the version number (e.g. `"1.0.24"` becomes `"1.0.25"` -- [read more about semantic versioning](https://semver.org/)).
 
 > Version numbers for the MVP version of the app should begin with a `1`, version numbers for the MVP+1 version of the app should begin with a `2` etc.
 
