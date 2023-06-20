@@ -37,4 +37,4 @@ Please delete options that are not relevant
 - [] My changes generate no new warnings
 - [] I have added tests that prove my fix is effective or that my feature works
 - [] New and existing unit tests pass locally with my changes
-- [] I have updated the version numbers in `package.json` files in the [app](DEPLOYMENT.md#app-deployment) and/or [API](DEPLOYMENT.md#api-deployment-on-aws) directories
+- [] I have updated the version numbers in `package.json` files in the [app](DEPLOYMENT.md#app-deployment) and/or [api](DEPLOYMENT.md#api-deployment-on-aws) directories as needed
