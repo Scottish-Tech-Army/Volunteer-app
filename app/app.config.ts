@@ -7,7 +7,7 @@ import { version } from './package.json'
 
 module.exports = {
   expo: {
-    name: 'STA',
+    name: 'STA Volunteers',
     slug: 'volunteer-app',
     version,
     orientation: 'portrait',
