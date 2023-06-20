@@ -40,25 +40,25 @@ There are also settings in the main Expo config file `app/app.config.ts` -- look
 
 > Where you see `process.env.XXXXXXXXXX` references in `app/app.config.ts`, for the app build with Expo Application Services environment variables that are secret can be set [in our EAS account](https://expo.dev/accounts/scottishtecharmy/projects/volunteer-app/secrets) In cases where values are not secret and are not liable to change in the built app (e.g. the API `baseUrl` and `version`) these are set directly in the `app/app.config.ts` file (those `process.env.XXXXXXXXXX` variables are only used when you're running the app locally, getting values from your `app/.env` file).
 
+> For builds, in EAS's terminology we use a 'production' profile for both testing and production versions of the app. (There are [other build options in EAS](https://docs.expo.dev/build/eas-json/) such as for 'internal' use, but those are not as well suited to uploading test versions that can be installed on any device.)
+
 ## Deployment process
 
 **As a general rule you're strongly encouraged to deploy changes as part of any pull request that updates the front-end app** by following the steps below. **But we also just need to be careful not to hit the 15 deployments (30 builds)) limit,** so if there has been a high frequency of approved pull requests this month or your pull request is only a very minor change to the front-end app, you might not want to update the app version and do a new deployment.  If you're not sure, check [how many builds have already been done this month](https://expo.dev/accounts/scottishtecharmy/settings/billing) (and if you're still unsure ask the team on Slack).
 
 ### Screenshots
 
-1. If you're making major design/functionality changes/additions, consider updating the screenshots we use in the Google Play Store and App Store. Store screenshots in the `screenshots/app` directory and you'll need to upload them manually in the Google Play and App Store admin consoles.
+1. If you're making major design/functionality changes/additions, consider updating the screenshots we use in the Google Play Store and App Store. Store screenshots in the `screenshots/app` directory. You'll need to upload them manually in the Google Play Store console, and you'll need to ask Joanna to do the same in App Store Connect.
 
 ### Pull request
 
 2. In the pull request for the changes you're making (e.g. a new app feature), before you submit the PR for review, update the `version` number in `app/package.json`. Normally for minor features/fixes, just update the last part of the version number (e.g. `"1.0.24"` becomes `"1.0.25"`).
 
-   > This is a string
-
    > Version numbers for the MVP version of the app should begin with a `1`, version numbers for the MVP+1 version of the app should begin with a `2` etc.
 
 3. Get your pull request approved as you normally would. When you're ready to merge your code and deploy the updated app, double-check the version numbers in the previous steps are still right compared to what's in `main` or the release branch (somebody else could have merged in code recently and changed the version numbers since you last checked - if you need to, update the version numbers before merging).
 
-4. Go ahead and merge your pull request into the `main` or release branch.
+4. Go ahead and merge your pull request into `main` or the release branch.
 
 ### Build the Android version
 
@@ -136,7 +136,9 @@ You've created an iOS build and it's stored in the cloud with EAS.  Now we need 
 
    > Apple perform some automated checks on a build after it's been submitted, these can take 10-20 minutes. If you don't see your build appear in the list Apple might have found some problems with it. Check your email to see if you have a message from Apple, if not ask Joanna if she has.
 
-23. If you have an iPhone are part of the iOS beta test group, you should get a notification on your phone from TestFlight that a new version is available to test. Download the updated version of the app to your iPhone ([see instructions](README.md#updating-to-the-latest-version-of-the-app)).
+   > Check that the new build (matching the build number in App Store Connect to the version number you set in `app/package.json` e.g. `1.0.25`) has been published. When we submitted the first version of the app Joanna had to submit it to the App Store manually for review -- this may need to happen again for new production releases.
+
+23. If you submitted a test version of the app (for TestFlight), you have an iPhone and you're part of the iOS beta test group, you should get a notification on your phone from TestFlight that a new version is available to test. Download the updated version of the app to your iPhone ([see instructions](README.md#updating-to-the-latest-version-of-the-app)).
 
 # API deployment on AWS
 
