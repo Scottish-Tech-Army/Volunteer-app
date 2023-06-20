@@ -15,8 +15,8 @@
     "build-android": "echo \"Building Android app\" && npx eas-cli build --platform android --profile production",
     "build-ios": "echo \"Building iOS app\" && npx eas-cli build --platform ios --profile production",
     "submit-android-testing": "echo \"Submitting Android app for internal testing \" && npx eas-cli submit --platform android --profile preview",
-    "submit-android-production": "echo \"Submitting Android *** PRODUCTION *** app\" && npx eas-cli submit --platform android --profile production",
-    "submit-ios-testing": "echo \"❗ Submitting Android app for TestFlight \" && npx eas-cli submit --platform ios --profile preview",
+    "submit-android-production": "echo \"❗ Submitting Android *** PRODUCTION *** app\" && npx eas-cli submit --platform android --profile production",
+    "submit-ios-testing": "echo \"Submitting iOS app for TestFlight \" && npx eas-cli submit --platform ios --profile preview",
     "submit-ios-production": "echo \"❗ Submitting iOS *** PRODUCTION *** app\" && npx eas-cli submit --platform ios --profile production"
   },
   "dependencies": {

@@ -11,13 +11,11 @@
   "submit": {
     "preview": {
       "android": {
-        "serviceAccountKeyPath": "./deployment/google-service-account-key.json",
         "track": "internal"
       }
     },
     "production": {
       "android": {
-        "serviceAccountKeyPath": "./deployment/google-service-account-key.json",
         "track": "production"
       },
       "ios": {
