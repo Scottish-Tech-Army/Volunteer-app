@@ -10,17 +10,11 @@ These are the one-time setup steps you need to do in order to get ready to deplo
 
 ## Google Play Store (Android)
 
-1. Add `google-service-account-key-key.json` and `my-release-key.keystore` files into the `app/deployment/` directory. These files contain credentials you will need for uploading the app to the Google Play Store via Expo Application Services. Ask on Slack for another developer in the team to send you these files. Also ask them for the password for the `my-release-key.keystore` file -- save this password somewhere safe (e.g. [a password manager](https://www.techradar.com/uk/best/password-manager)), you'll need it in the future to deploy the app.
-
-   > Because these files contain sensitive access credentials, be careful never to commit them to GitHub as our repository is open-source, anyone can see it.
-
-   > On some systems, the terminal has a problem if the password for `my-release-key.keystore` contains symbols, so this password may need to be letters and numbers only (just make sure it's a long, strong password). If you need to change the password locally you can use this command `keytool -storepasswd -keystore path/to/my-release-key.keystore -storetype PKCS12` (changing `path/to` as needed)
-
-2. Ask Joanna to give you **Developer access to the STA Google Play Store account**. That will allow you to check whether releases you deploy have uploaded successfully, and you'll be able to add new testers.
+1. Ask Joanna to give you **Developer access to the STA Google Play Store account**. That will allow you to check whether releases you deploy have uploaded successfully, and you'll be able to add new testers.
 
 ## TestFlight / App Store (iOS)
 
-3. Ask Joanna to give you **Developer access to the STA App Store Connect account** (you should be able to do this without having to pay for an Apple Developer account). You will need an Apple account ([create one here free if you don't have one](https://support.apple.com/en-gb/HT204316)) -- then you'll need to give Joanna the email address you use for your Apple ID. Getting access to App Store Connect is necessary in order to submit iOS versions of the app via Expo Application Services, and will allow you to check whether releases you submit have been uploaded successfully and accepted by Apple.
+2. Ask Joanna to give you **Developer access to the STA App Store Connect account** (you should be able to do this without having to pay for an Apple Developer account). You will need an Apple account ([create one here free if you don't have one](https://support.apple.com/en-gb/HT204316)) -- then you'll need to give Joanna the email address you use for your Apple ID. Getting access to App Store Connect is necessary in order to submit iOS versions of the app via Expo Application Services, and will allow you to check whether releases you submit have been uploaded successfully and accepted by Apple.
 
 # App deployment
 
@@ -48,27 +42,27 @@ There are also settings in the main Expo config file `app/app.config.ts` -- look
 
 ### Screenshots
 
-1. If you're making major design/functionality changes/additions, consider updating the screenshots we use in the Google Play Store and App Store. Store screenshots in the `screenshots/app` directory. You'll need to upload them manually in the Google Play Store console, and you'll need to ask Joanna to do the same in App Store Connect.
+3. If you're making major design/functionality changes/additions, consider updating the screenshots we use in the Google Play Store and App Store. Store screenshots in the `screenshots/app` directory. You'll need to upload them manually in the Google Play Store console, and you'll need to ask Joanna to do the same in App Store Connect.
 
 ### Pull request
 
-2. In the pull request for the changes you're making (e.g. a new app feature), before you submit the PR for review, update the `version` number in `app/package.json`. Normally for minor features/fixes, just update the last part of the version number (e.g. `"1.0.24"` becomes `"1.0.25"`).
+4. In the pull request for the changes you're making (e.g. a new app feature), before you submit the PR for review, update the `version` number in `app/package.json`. Normally for minor features/fixes, just update the last part of the version number (e.g. `"1.0.24"` becomes `"1.0.25"`).
 
    > Version numbers for the MVP version of the app should begin with a `1`, version numbers for the MVP+1 version of the app should begin with a `2` etc.
 
-3. Get your pull request approved as you normally would. When you're ready to merge your code and deploy the updated app, double-check the version numbers in the previous steps are still right compared to what's in `main` or the release branch (somebody else could have merged in code recently and changed the version numbers since you last checked - if you need to, update the version numbers before merging).
+5. Get your pull request approved as you normally would. When you're ready to merge your code and deploy the updated app, double-check the version numbers in the previous steps are still right compared to what's in `main` or the release branch (somebody else could have merged in code recently and changed the version numbers since you last checked - if you need to, update the version numbers before merging).
 
-4. Go ahead and merge your pull request into `main` or the release branch.
+6. Go ahead and merge your pull request into `main` or the release branch.
 
 ### Build the Android version
 
-5. Make sure you are on the right branch locally and have pulled the latest code before you go any further.
+7. Make sure you are on the right branch locally and have pulled the latest code before you go any further.
 
    > If you are deploying a production release, you should be on the `main` branch. If you are deploying a test release, you should be on a release branch.
 
    > Do `git pull` to make sure you have pulled the latest changes from GitHub, including the pull request you've merged in.
 
-6. In the `app` directory run `npm run build-android` (it's the same command if you are creating a build either for internal testing or for production - releasing the app to the public)
+8. In the `app` directory run `npm run build-android` (it's the same command if you are creating a build either for internal testing or for production - releasing the app to the public)
 
    > If asked to install extra packages, say **yes**
 
@@ -80,65 +74,63 @@ There are also settings in the main Expo config file `app/app.config.ts` -- look
 
    > Builds can take some time (sometimes 10-20 minutes, sometimes more than an hour, depending on how busy EAS servers are), but you can check the exact status of a build and the different steps that are taking place in the Expo Application Services dashboard -- follow the URL you'll see in your terminal after you run one of the build commands below (ask another team member for the Expo Application Services login details). You can also see there if there are any errors.
 
-7. Once the build is complete, ignore the QR code and if you get a message asking *Install and run the Android build on an emulator?* say **no**
+9. Once the build is complete, ignore the QR code and if you get a message asking *Install and run the Android build on an emulator?* say **no**
 
 ### Submit to the Google Play Store
 
 You've created an Android build and it's stored in the cloud with EAS.  Now we need to submit it to the Google Play Store.
 
-8. Make sure you use the right submit command. If you want to **publish the app to the internal test track** (for the Volunteer app team only to download) use `npm run submit-android-testing` -- or to **publish the app to production** (for people to download publicly from the Google Play Store) use `npm run submit-android-production`
+10. Make sure you use the right submit command. If you want to **publish the app to the internal test track** (for the Volunteer app team only to download) use `npm run submit-android-testing` -- or to **publish the app to production** (for people to download publicly from the Google Play Store) use `npm run submit-android-production`
 
-9. When asked *What would you like to submit?* choose *Select a build from EAS*. Then use arrow keys to choose the build from the list that you created with the build steps above, and press enter.
+11. When asked *What would you like to submit?* choose *Select a build from EAS*. Then use arrow keys to choose the build from the list that you created with the build steps above, and press enter.
 
-   > If you get asked for the password for the release key (`my-release-key.keystore`), enter it. (You should have saved in a password manager when you set up your deployment environment - if you don't have it, ask another member of the team on Slack, and save it in a password manager for future use.)
+12. Wait for the build to be submitted.
 
-10. Wait for the build to be submitted.
-
-11. Once it's finished, check in the [Google Play Console](https://play.google.com/console) that the new version of the app has successfully been added (*Volunteer app > Release > Internal testing* or *Volunteer app > Release > Production*) -- you should see the new version number next to 'Latest release' under 'Track summary'.
+13. Once it's finished, check in the [Google Play Console](https://play.google.com/console) that the new version of the app has successfully been added (*Volunteer app > Release > Internal testing* or *Volunteer app > Release > Production*) -- you should see the new version number next to 'Latest release' under 'Track summary'.
 
    > Google Play Store reviews the release before it's made public -- check the status of the release in the Google Play Console. If it's not yet available to download, check back later.
 
-12. If you have an Android phone, download the updated version of the app ([see instructions](README.md#updating-to-the-latest-version-of-the-app)) and double check it's all working as expected.
+14. If you have an Android phone, download the updated version of the app ([see instructions](README.md#updating-to-the-latest-version-of-the-app)) and double check it's all working as expected.
 
 ### Build the iOS version
 
-13. Make sure you are on the right branch locally and have pulled the latest code before you go any further.
+15. Make sure you are on the right branch locally and have pulled the latest code before you go any further.
 
    > If you are deploying a production release, you should be on the `main` branch. If you are deploying a test release, you should be on a release branch.
 
    > Do `git pull` to make sure you have pulled the latest changes from GitHub, including the pull request you merged in.
 
-14. In the `app` directory run `npm run build-ios` (it's the same command if you are creating a build either for TestFlight internal testing or for production - releasing the app to the public)
+16. In the `app` directory run `npm run build-ios` (it's the same command if you are creating a build either for TestFlight internal testing or for production - releasing the app to the public)
 
    > The next few steps below cover iOS-specific issues. See also the notes under step 7. above (Android build) about logging into Expo Application Services (EAS), installing extra packages, and some other issues you might also run into during the iOS build process.
 
-15. If asked *Do you want to log in to your Apple account?* say **yes.** Follow the steps to log into your account and when asked to select a Team and a Provider choose Scottish Tech Army.
+17. If asked *Do you want to log in to your Apple account?* say **yes.** Follow the steps to log into your account and when asked to select a Team and a Provider choose Scottish Tech Army.
 
    > If you get an error message similar to `Failed to register bundle identifier` or `Apple 403 detected - Access forbidden` try logging in to your [App Store Account](https://appstoreconnect.apple.com/) (or [App Developer account](https://developer.apple.com/) if you have one) -- look around in your account, there may be some updated terms and conditions you need to accept before you can try running the build command again. If you can't see anything you need to accept, it may be that Alistair needs to accept some new terms & conditions in his [Apple developer account]( https://developer.apple.com/account/) -- ask him (or ask Joanna to ask him) to check.
 
-16. If asked if you want to generate a new Distribution Certificate and/or Provisioning Profile (if you've deployed recently you may not get asked this), say **yes**
+18. If asked if you want to generate a new Distribution Certificate and/or Provisioning Profile (if you've deployed recently you may not get asked this), say **yes**
 
-17. If asked *Would you like to set up Push Notifications for your project?* say **no**
+19. If asked *Would you like to set up Push Notifications for your project?* say **no**
 
-18. Wait for the build process to complete
+20. Wait for the build process to complete
 
 ### Submit to TestFlight / the App Store
 
 You've created an iOS build and it's stored in the cloud with EAS.  Now we need to submit it to TestFlight / the App Store.
 
-19. Make sure you use the right submit command. If you want to **publish the app to TestFlight for internal testing** (for the Volunteer app team only to download) use `npm run submit-ios-testing` -- or to **publish the app to production** (for people to download publicly from the App Store) use `npm run submit-ios-production`
+21. Make sure you use the right submit command. If you want to **publish the app to TestFlight for internal testing** (for the Volunteer app team only to download) use `npm run submit-ios-testing` -- or to **publish the app to production** (for people to download publicly from the App Store) use `npm run submit-ios-production`
 
-20. When asked *What would you like to submit?* choose *Select a build from EAS*. Then use arrow keys to choose the build from the list that you created with the build steps above, and press enter.
+22. When asked *What would you like to submit?* choose *Select a build from EAS*. Then use arrow keys to choose the build from the list that you created with the build steps above, and press enter.
 
-21. Wait for the build to be submitted.
+23. Wait for the build to be submitted.
 
-22. Check in [App Store Connect](https://appstoreconnect.apple.com/apps) that the new version of the app has successfully been uploaded and processed (Apps > STA Volunteer App > TestFlight or Apps > STA Volunteer App > App Store) -- you should see the new build number below the latest version.
+24. Check in [App Store Connect](https://appstoreconnect.apple.com/apps) that the new version of the app has successfully been uploaded and processed (Apps > STA Volunteer App > TestFlight or Apps > STA Volunteer App > App Store) -- you should see the new build number below the latest version.
 
    > Apple perform some automated checks on a build after it's been submitted, these can take 10-20 minutes. If you don't see your build appear in the list Apple might have found some problems with it. Check your email to see if you have a message from Apple, if not ask Joanna if she has.
 
    > Check that the new build (matching the build number in App Store Connect to the version number you set in `app/package.json` e.g. `1.0.25`) has been published. When we submitted the first version of the app Joanna had to submit it to the App Store manually for review -- this may need to happen again for new production releases.
 
-23. If you submitted a test version of the app (for TestFlight), you have an iPhone and you're part of the iOS beta test group, you should get a notification on your phone from TestFlight that a new version is available to test. Download the updated version of the app to your iPhone ([see instructions](README.md#updating-to-the-latest-version-of-the-app)).
+25. If you submitted a test version of the app (for TestFlight), you have an iPhone and you're part of the iOS beta test group, you should get a notification on your phone from TestFlight that a new version is available to test. Download the updated version of the app to your iPhone ([see instructions](README.md#updating-to-the-latest-version-of-the-app)).
 
 # API deployment on AWS
 
