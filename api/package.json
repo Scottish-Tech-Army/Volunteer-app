@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "nodemon server.js",
-    "tunnel": "autossh -M 0 -o \"ServerAliveInterval 30\" -o \"ServerAliveCountMax 3\" -R 80:localhost:3000 serveo.net",
+    "tunnel-mac-linux": "export $(cat .env | xargs) && npx localtunnel  --port 3000 --subdomain $API_TUNNEL_SUBDOMAIN",
+    "tunnel-windows": "(for /F \"tokens=*\" %i in (.env) do set %i) && npx localtunnel  --port 3000 --subdomain $API_TUNNEL_SUBDOMAIN",
     "test": "jest"
   },
   "keywords": [],
