@@ -168,9 +168,9 @@ Below are some commonly encountered issues and possible ways to resolve them. If
 
   > Make sure you have three terminal windows open, two running the API: one running `npm start` and one running the npm tunnel command (see above), both are needed in order for the app to be able to connect to the API
 
-  > Check if you can see data coming through from the API.  In the terminal window where you ran the npm tunnel command command, get the URL, then paste that URL into a web browser and add `/v1/projects` at the end -- if your local API is running and tunnelling successfully, you should see a JSON response with a list of projects. (If you don't see that, try the suggestion below, and also check the terminal window where you ran `npm start` and see if there are any error messages there.)
+  > Check if you can see data coming through from the API.  In the terminal window where you ran the npm tunnelling command, get the URL, then paste that URL into a web browser and add `/v1/projects` at the end -- if your local API is running and tunnelling successfully, you should see a JSON response with a list of projects. (If you don't see that, try the suggestion below, and also check the terminal window where you ran `npm start` and see if there are any error messages there.)
 
-  > Your API tunnel might have fallen asleep -- try stopping the process (press Ctrl+C) in the window where you ran the npm tunnel command, then run that command again.
+  > Your API tunnel might have fallen asleep -- try stopping the process (press Ctrl+C) in the window where you ran the npm tunnelling command, then run that command again.
 
   > Once a week, your API tunnel will expire and you'll need to enter an IP address in order to continue using it. To check if this is the case, go to the URL of your tunnelled API and add `/v1/projects` at the end (e.g. `https://nadia-bloggs-abc123def456ghi789.loca.lt/v1/projects`) If you see a web page instead of projects data, follow the instructions on the page to enter your public IP address -- follow what it says in the *If you're the developer...* section further down the page. Then stop and restart your app in Expo.
 
