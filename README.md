@@ -88,7 +88,7 @@ If you're using Visual Studio Code for development, it's recommended that you:
 
    > **For security reasons, the credentials themselves are not provided here.** Ask in the [volunteer-app](https://scottishtecharmy.slack.com/archives/C01SUL6K5E1) Slack channel when you join the dev group, and somebody will send them to you.
 
-   > **The variable `API_TUNNEL_SUBDOMAIN` is different to all the others -- it's personal to you.**  For this value, you should enter your own name in lowercase with only dashes in between, followed by a random string of letters and numbers.  (Your local API will be exposed externally so this makes it harder for a bot or hacker to find.)  For example if your name is Nadia Bloggs it could be: `API_TUNNEL_SUBDOMAIN="nadia-bloggs-abc123def456ghi789"` (But don't use the random numbers and letters here or they won't be random 🙂 - make up your own)
+   > **The variable `API_TUNNEL_SUBDOMAIN` is different to all the others -- it's personal to you.**  For this value, you should enter your own name in lowercase with only dashes in between, followed by a random string of letters and numbers.  (Your local API will be exposed externally so this makes it harder for a bot or hacker to find.)  For example if your name is Nadia Bloggs it could be: `API_TUNNEL_SUBDOMAIN="nadia-bloggs-abc123def456ghi789"` (But don't use the numbers and letters here or they won't be random 🙂 - make up your own)
 
    > **Do not use any comments in your `api/.env` file** (it's technically possible to put comments in a .env file using the `#` character, but this causes problems for the API tunnel command we're going to use below)
 
