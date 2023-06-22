@@ -98,7 +98,7 @@ If you're using Visual Studio Code for development, it's recommended that you:
 
 7. Then run the command `npm start` to start the Volunteer App API server. You should see a message that says `Running scheduled cron jobs... ` and `Volunteer App API is listening on port <number> in development environment`.  Leave this terminal window open.
 
-8. Open another terminal window and in this new window run the command `npm run tunnel-linux` (if you are on a Mac or Linux) or `npm run tunnel-windows` (if you are on Windows). This 'tunnels' your local API server: makes it available externally so your app running in Expo Go can access it. You should see a message saying your `your url is: https://.............` -- this is the URL of your local API server, make a note of it as you'll need it in a minute.
+8. Open another terminal window and in this new window run the command `npm run tunnel-mac-linux` (if you are on a Mac or Linux) or `npm run tunnel-windows` (if you are on Windows). This 'tunnels' your local API server: makes it available externally so your app running in Expo Go can access it. You should see a message saying your `your url is: https://.............` -- this is the URL of your local API server, make a note of it as you'll need it in a minute.
 
    > This URL should include the value you set for `API_TUNNEL_SUBDOMAIN` in your `api/.env` file, e.g. something like `https://nadia-bloggs-abc123def456ghi789.loca.lt`
 
