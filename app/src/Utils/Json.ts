@@ -1,3 +1,7 @@
+/**
+ * @file Useful shared functions for use with JSON.
+ */
+
 export const isJson = (string: string) => {
   try {
     const jsonParseResult = JSON.parse(string)
