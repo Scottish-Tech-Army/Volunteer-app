@@ -1,8 +1,6 @@
-module.exports = {
-  bracketSameLine: false,
-  singleQuote: true,
-  trailingComma: 'all',
-  semi: false,
-  arrowParens: 'avoid',
-  embeddedLanguageFormatting: 'off',
-}
+export const bracketSameLine = false;
+export const singleQuote = true;
+export const trailingComma = 'all';
+export const semi = false;
+export const arrowParens = 'avoid';
+export const embeddedLanguageFormatting = 'off';
