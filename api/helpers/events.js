@@ -1,4 +1,4 @@
-const airTable = require('../helpers/airTable');
+const airTable = require('../helpers/airTable').default;
 const apiDefinition = require('../definitions/api_definition.json');
 
 /* Takes an event with the fields as they have come from AirTable,

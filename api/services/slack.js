@@ -5,8 +5,8 @@
  */
 
 require('dotenv').config();
-const axios = require('axios').default;
-const logging = require('../services/logging');
+import axios from 'axios';
+import logging from '../services/logging';
 
 function convertChannelNameToWebHookEnvVariable (channel) {
   return `SLACK_SECRET_WEBHOOK_${channel.toUpperCase().replace(/-/g, '_')}`;
@@ -51,7 +51,7 @@ async function postMessage(channel, text) {
   }
 }
 
-module.exports = {
+export default {
   convertChannelNameToWebHookEnvVariable,
   postMessage,
 };

@@ -1,17 +1,17 @@
-const airTable = require('../helpers/airTable');
-const dayjs = require('dayjs');
-const eventsHelper = require('../helpers/events');
-const express = require('express');
-const router = express.Router();
-const routesHelper = require('../helpers/routes');
+import { getRecordById, eventsTable, eventsTableLinkedFields, getAllRecords, connectionErrorMessage } from '../helpers/airTable';
+import dayjs from 'dayjs';
+import { formatEventFromAirTable } from '../helpers/events';
+import { Router } from 'express';
+const router = Router();
+import { sendError } from '../helpers/routes';
 
 router.get('/:id', async (req, res) => getEventHandler(req, res));
 
 const getEventHandler = async (req, res) => {
-  const event = await airTable.getRecordById(airTable.eventsTable(), req.params.id, airTable.eventsTableLinkedFields());
+  const event = await getRecordById(eventsTable(), req.params.id, eventsTableLinkedFields());
 
   if (!event || event.error) {
-    routesHelper.sendError(
+    sendError(
       res,
       `❌ Could not find event with ID ${req.params.id}. Please check the ID and check your AirTable details are correct in your .env file.`,
     );
@@ -19,7 +19,7 @@ const getEventHandler = async (req, res) => {
     return;
   }
 
-  const eventFormatted = eventsHelper.formatEventFromAirTable(event);
+  const eventFormatted = formatEventFromAirTable(event);
 
   res.status(200).send(eventFormatted);
 };
@@ -28,15 +28,15 @@ const getEventHandler = async (req, res) => {
 router.get('/schedule/:schedule', async (req, res) => getScheduledEventsHandler(req, res));
 
 const getScheduledEventsHandler = async (req, res) => {
-  const allEvents = await airTable.getAllRecords(airTable.eventsTable(), true, airTable.eventsTableLinkedFields());
+  const allEvents = await getAllRecords(eventsTable(), true, eventsTableLinkedFields());
 
   if (allEvents.error) {
-    routesHelper.sendError(res, airTable.connectionErrorMessage());
+    sendError(res, connectionErrorMessage());
 
     return;
   }
 
-  const allEventsFormatted = allEvents.map((event) => eventsHelper.formatEventFromAirTable(event));
+  const allEventsFormatted = allEvents.map((event) => formatEventFromAirTable(event));
 
   const now = dayjs();
 
@@ -53,7 +53,7 @@ const getScheduledEventsHandler = async (req, res) => {
 
     res.status(200).send(upcomingEvents);
   } else {
-    routesHelper.sendError(
+    sendError(
       res,
       `❌ You did not specify a valid final part of the URL - it must be /events/schedule/past or /events/schedule/upcoming, you requested /events/schedule/${req.params.schedule}`,
     );
@@ -63,20 +63,20 @@ const getScheduledEventsHandler = async (req, res) => {
 router.get('/', async (req, res) => await getEventsHandler(req, res));
 
 const getEventsHandler = async (req, res) => {
-  const allEvents = await airTable.getAllRecords(airTable.eventsTable(), true, airTable.eventsTableLinkedFields());
+  const allEvents = await getAllRecords(eventsTable(), true, eventsTableLinkedFields());
 
   if (allEvents.error) {
-    routesHelper.sendError(res, airTable.connectionErrorMessage());
+    sendError(res, connectionErrorMessage());
 
     return;
   }
 
-  const allEventsFormatted = allEvents.map((event) => eventsHelper.formatEventFromAirTable(event));
+  const allEventsFormatted = allEvents.map((event) => formatEventFromAirTable(event));
 
   res.status(200).send(allEventsFormatted);
 };
 
-module.exports = {
+export default {
   eventsApi: router,
   getEventHandler,
   getEventsHandler,

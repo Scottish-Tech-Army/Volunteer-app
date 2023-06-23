@@ -1,11 +1,11 @@
 // Get video thumbnails and MP4 video files for event videos
 
 require('dotenv').config();
-const airTable = require('../helpers/airTable');
-const eventsHelper = require('../helpers/events');
-const logging = require('../services/logging');
-const vimeoService = require('../services/vimeo');
-const timing = require('../util/timing');
+import { updateRecordById, eventsTable, getAllRecords } from '../helpers/airTable';
+import { formatEventFromAirTable } from '../helpers/events';
+import { logError } from '../services/logging';
+import { getVideoThumbnail } from '../services/vimeo';
+import { delay } from '../util/timing';
 
 // Add thumbnails to any events that have a video but don't yet have a thumbnail
 // We save the image itself to AirTable, so this doesn't need refreshing later
@@ -16,10 +16,10 @@ async function addEventsVideoThumbnails(events) {
   );
 
   for (const event of eventsNeedingVideoThumbnailAdded) {
-    const video_thumbnail = await vimeoService.getVideoThumbnail(event.video_webpage);
+    const video_thumbnail = await getVideoThumbnail(event.video_webpage);
 
     if (video_thumbnail) {
-      const updateRecordResult = await airTable.updateRecordById(airTable.eventsTable(), event.id, {
+      const updateRecordResult = await updateRecordById(eventsTable(), event.id, {
         video_thumbnail: [
           {
             url: video_thumbnail,
@@ -28,7 +28,7 @@ async function addEventsVideoThumbnails(events) {
       });
 
       if (updateRecordResult.error) {
-        logging.logError(`❌ Could not update event record in AirTable for event ${event.name} (${event.id})`, {
+        logError(`❌ Could not update event record in AirTable for event ${event.name} (${event.id})`, {
           extraInfo: updateRecordResult.error,
         });
       } else {
@@ -36,22 +36,22 @@ async function addEventsVideoThumbnails(events) {
       }
     }
 
-    await timing.delay(1000); // wait for 1 second, in case we are calling Vimeo's API multiple times we don't want to hit a rate limit
+    await delay(1000); // wait for 1 second, in case we are calling Vimeo's API multiple times we don't want to hit a rate limit
   }
 }
 
 async function getAllEvents() {
-  const events = await airTable.getAllRecords(airTable.eventsTable(), true);
+  const events = await getAllRecords(eventsTable(), true);
 
   if (events.error) {
-    logging.logError('❌ Could not get events from AirTable', {
+    logError('❌ Could not get events from AirTable', {
       extraInfo: events.error,
     });
 
     return;
   }
 
-  const eventsFormatted = events.map((event) => eventsHelper.formatEventFromAirTable(event));
+  const eventsFormatted = events.map((event) => formatEventFromAirTable(event));
 
   return eventsFormatted;
 }
@@ -60,14 +60,14 @@ async function getAllEvents() {
 async function startGettingNewVideoThumbnails() {
   console.log(`🚀 Started getting new thumbnails for event videos at ${new Date()}`);
 
-  const events = await module.exports.getAllEvents();
+  const events = await _getAllEvents();
 
-  await module.exports.addEventsVideoThumbnails(events);
+  await _addEventsVideoThumbnails(events);
 
   console.log('🏁 Complete!');
 }
 
-module.exports = {
+export default {
   addEventsVideoThumbnails,
   getAllEvents,
   startGettingNewVideoThumbnails,

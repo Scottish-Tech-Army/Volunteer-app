@@ -1,4 +1,4 @@
-const logging = require('../services/logging');
+const logging = require('../services/logging').default;
 
 function sendError(res, errorMessage, data) {
   logging.logError(errorMessage, {

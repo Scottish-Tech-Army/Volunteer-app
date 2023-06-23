@@ -6,6 +6,6 @@ function delay(milliseconds) {
   });
 }
 
-module.exports = {
+export default {
   delay,
 };

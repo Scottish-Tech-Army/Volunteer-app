@@ -14,6 +14,6 @@ function cleanUrlsAndEmails(string) {
   );
 }
 
-module.exports = {
+export default {
   cleanUrlsAndEmails,
 };

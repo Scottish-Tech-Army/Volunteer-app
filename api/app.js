@@ -1,13 +1,13 @@
-const Bugsnag = require('@bugsnag/js');
-const BugsnagPluginExpress = require('@bugsnag/plugin-express');
-const cors = require('cors');
-const express = require('express');
-const routes = require('./routes/index');
-const logging = require('./services/logging');
-const { version } = require('./package.json');
+import { start, getPlugin } from '@bugsnag/js';
+import BugsnagPluginExpress from '@bugsnag/plugin-express';
+import cors from 'cors';
+import express, { json } from 'express';
+import routes from './routes/index';
+import { enableBugsnag } from './services/logging';
+import { version } from './package.json';
 
-if (logging.enableBugsnag()) {
-  Bugsnag.start({
+if (enableBugsnag()) {
+  start({
     apiKey: process.env.BUGSNAG_API_KEY,
     appVersion: version,
     plugins: [BugsnagPluginExpress],
@@ -17,22 +17,22 @@ if (logging.enableBugsnag()) {
   console.log("🛈 Bugsnag is not enabled (this is normal if you're in a development environment)");
 }
 
-const bugsnagMiddleware = logging.enableBugsnag() ? Bugsnag.getPlugin('express') : undefined;
+const bugsnagMiddleware = enableBugsnag() ? getPlugin('express') : undefined;
 
 const app = express();
 
 // This must be the first piece of middleware in the stack
 // It can only capture errors in downstream middleware
-if (logging.enableBugsnag())
+if (enableBugsnag())
   app.use(bugsnagMiddleware.requestHandler);
 
 app.use(cors());
-app.use(express.json());
+app.use(json());
 app.use('/v1', routes);
 
 // This handles any errors that Express catches. This needs to go before other
 // error handlers. BugSnag will call the `next` error handler if it exists.
-if (logging.enableBugsnag())
+if (enableBugsnag())
   app.use(bugsnagMiddleware.errorHandler);
 
 app.use((req, res, next) => {
@@ -47,4 +47,4 @@ app.use((err, req, res, next) => {
   next(notFound);
 });
 
-module.exports = app;
+export default app;

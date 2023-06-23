@@ -1,4 +1,4 @@
-exports.chunk = function (array, chunkSize) {
+export function chunk (array, chunkSize) {
   const chunked = [];
 
   for (let i = 0; i < array.length; i += chunkSize) {
@@ -6,4 +6,4 @@ exports.chunk = function (array, chunkSize) {
   }
 
   return chunked;
-};
+}

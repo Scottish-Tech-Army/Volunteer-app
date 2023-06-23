@@ -1,9 +1,9 @@
-const express = require('express');
-const router = express.Router();
-const { eventsApi } = require('./events');
-const { projectsApi } = require('./projects');
+import { Router } from 'express';
+const router = Router();
+import { eventsApi } from './events';
+import { projectsApi } from './projects';
 
 router.use('/projects', projectsApi);
 router.use('/events', eventsApi);
 
-module.exports = router;
+export default router;

@@ -2,9 +2,9 @@
  * Vimeo API request to retrieve MP4 video files and thumbnail images for the requested video webpage
  */
 
-const axios = require('axios').default;
-const Vimeo = require('vimeo').Vimeo;
-const logging = require('../services/logging');
+import axios from 'axios';
+import { Vimeo } from 'vimeo';
+import { logError } from '../services/logging';
 
 function client() {
   return new Vimeo(process.env.VIMEO_CLIENT_ID, process.env.VIMEO_CLIENT_SECRET, process.env.VIMEO_ACCESS_TOKEN);
@@ -14,7 +14,7 @@ function client() {
 async function getVideoThumbnail(videoWebpageUrl) {
   if (!videoWebpageUrl) return;
 
-  const vimeoId = module.exports.getVideoIdFromUrl(videoWebpageUrl);
+  const vimeoId = _getVideoIdFromUrl(videoWebpageUrl);
   if (!vimeoId) return;
 
   try {
@@ -32,15 +32,15 @@ async function getVideoThumbnail(videoWebpageUrl) {
         // Add a file extension in order to make sure the image shows in the front-end app -- on some emulators had problems where the image did not include an extension
         return `${thumbnailUrl}.jpg`;
       } else {
-        logging.logError(`❌ Could not get Vimeo thumbnail for video ID ${vimeoId} -- no thumbnail returned from Vimeo`);
+        logError(`❌ Could not get Vimeo thumbnail for video ID ${vimeoId} -- no thumbnail returned from Vimeo`);
       }
     } else {
-      logging.logError(`❌ Could not get Vimeo thumbnail for video ID ${vimeoId} -- error connecting to Vimeo API`, {
+      logError(`❌ Could not get Vimeo thumbnail for video ID ${vimeoId} -- error connecting to Vimeo API`, {
         extraInfo: vimeoResponse.statusText,
       });
     }
   } catch (error) {
-    logging.logError(`❌ Could not get Vimeo thumbnail for video ID ${vimeoId} -- error connecting to Vimeo API`, {
+    logError(`❌ Could not get Vimeo thumbnail for video ID ${vimeoId} -- error connecting to Vimeo API`, {
       extraInfo: error,
     });
   }
@@ -52,10 +52,10 @@ async function getVideoThumbnail(videoWebpageUrl) {
 async function getVideoWebpagePlayerOnly(videoWebpageUrl) {
   if (!videoWebpageUrl) return;
 
-  const vimeoId = module.exports.getVideoIdFromUrl(videoWebpageUrl);
+  const vimeoId = _getVideoIdFromUrl(videoWebpageUrl);
   if (!vimeoId) return;
 
-  const vimeoClient = module.exports.client();
+  const vimeoClient = _client();
 
   return new Promise ((resolve, reject) => {
     try {
@@ -64,7 +64,7 @@ async function getVideoWebpagePlayerOnly(videoWebpageUrl) {
         path: `/videos/${vimeoId}`
       }, function (error, body) {
         if (error) {
-          logging.logError('Error getting video info from Vimeo', {
+          logError('Error getting video info from Vimeo', {
             extraInfo: error,
           });
 
@@ -77,7 +77,7 @@ async function getVideoWebpagePlayerOnly(videoWebpageUrl) {
         resolve(getVideoWebpagePlayerOnlyDefault(vimeoId));
       });
     } catch (error) {
-      logging.logError('Error getting video info from Vimeo', {
+      logError('Error getting video info from Vimeo', {
         extraInfo: error,
       });
 
@@ -112,7 +112,7 @@ function getVideoIdFromUrl(videoWebpageUrl) {
       return;
     }
   } catch (error) {
-    logging.logError(`Error getting Vimeo video ID from video webpage URL ${videoWebpageUrl}`, {
+    logError(`Error getting Vimeo video ID from video webpage URL ${videoWebpageUrl}`, {
       extraInfo: error,
     });
 
@@ -120,7 +120,7 @@ function getVideoIdFromUrl(videoWebpageUrl) {
   }
 }
 
-module.exports = {
+export default {
   client,
   getVideoThumbnail,
   getVideoWebpagePlayerOnly,

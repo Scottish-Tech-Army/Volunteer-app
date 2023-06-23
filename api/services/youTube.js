@@ -1,8 +1,8 @@
-const logging = require('../services/logging');
+import { logError } from '../services/logging';
 
 // Returns the URL of a webpage which contains only a video player (no branding, text, other videos, etc)
 function getVideoWebpagePlayerOnly(videoWebpageUrl) {
-  const youTubeId = module.exports.getVideoIdFromUrl(videoWebpageUrl);
+  const youTubeId = getVideoIdFromUrl(videoWebpageUrl);
   if (!youTubeId) return;
 
   return `https://www.youtube.com/embed/${youTubeId}`;
@@ -24,7 +24,7 @@ function getVideoIdFromUrl(videoWebpageUrl) {
       return;
     }
   } catch (error) {
-    logging.logError(`Could not get YouTube video ID from video webpage URL ${videoWebpageUrl}`, {
+    logError(`Could not get YouTube video ID from video webpage URL ${videoWebpageUrl}`, {
       extraInfo: error,
     });
 
@@ -32,7 +32,7 @@ function getVideoIdFromUrl(videoWebpageUrl) {
   }
 }
 
-module.exports = {
+export default {
   getVideoWebpagePlayerOnly,
   getVideoIdFromUrl,
 };

@@ -1,6 +1,6 @@
-const airTable = require('../helpers/airTable');
+const airTable = require('../helpers/airTable').default;
 const apiDefinition = require('../definitions/api_definition.json');
-const stringsHelper = require('../helpers/strings');
+const stringsHelper = require('../helpers/strings').default;
 
 function combineProjectsAndResources(projects, resources) {
   return resources.map((resource) => {

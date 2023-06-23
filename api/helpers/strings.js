@@ -9,7 +9,7 @@ function splitByLineBreak(string) {
   return arrayOfLinesTrimmed;
 }
 
-module.exports = {
+export default {
   removeBlankLines,
   splitByLineBreak,
 };
