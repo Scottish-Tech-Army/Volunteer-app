@@ -90,6 +90,8 @@ If you're using Visual Studio Code for development, it's recommended that you:
 
    > **The variable `API_TUNNEL_SUBDOMAIN` is different to all the others -- it's personal to you.**  For this value, you should enter your own name in lowercase with only dashes in between, followed by a random string of letters and numbers.  (Your local API will be exposed externally so this makes it harder for a bot or hacker to find.)  For example if your name is Nadia Bloggs it could be: `API_TUNNEL_SUBDOMAIN="nadia-bloggs-abc123def456ghi789"` (But don't use the numbers and letters here or they won't be random 🙂 - make up your own)
 
+   > **Make sure you don't have any spaces either side of `=` in your `api/.env` file** for any of the values there e.g. you should have something like `AIRTABLE_ID="abc123def456"` **not** `AIRTABLE_ID = "abc123def456"`
+
    > **Do not use any comments in your `api/.env` file** (it's technically possible to put comments in a .env file using the `#` character, but this causes problems for the API tunnel command we're going to use below)
 
 6. At the command prompt run `npm install` to install dependencies
