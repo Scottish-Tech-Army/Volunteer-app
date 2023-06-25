@@ -3,6 +3,7 @@
   "version": "1.0.1",
   "description": "RESTful API to surface the data required for the Volunteer App.",
   "main": "app.js",
+  "type": "module",
   "scripts": {
     "start": "nodemon server.js",
     "tunnel": "autossh -M 0 -o \"ServerAliveInterval 30\" -o \"ServerAliveCountMax 3\" -R 80:localhost:3000 serveo.net",
