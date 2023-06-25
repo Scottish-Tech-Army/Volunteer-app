@@ -1,4 +1,4 @@
-const logging = require('../services/logging').default;
+import logging from '../services/logging';
 
 function sendError(res, errorMessage, data) {
   logging.logError(errorMessage, {
@@ -12,6 +12,6 @@ function sendError(res, errorMessage, data) {
   );
 }
 
-module.exports = {
+export default {
   sendError,
 };

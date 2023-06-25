@@ -1,7 +1,7 @@
-const { faker } = require('@faker-js/faker');
-const axios = require('axios');
-const dotenv = require('dotenv');
-const logging = require('../../services/logging');
+import { faker } from '@faker-js/faker';
+import axios from 'axios';
+import dotenv from 'dotenv';
+import { enableBugsnag } from '../../services/logging';
 
 describe('Test the logging service', () => {
   const OLD_ENV = process.env;
@@ -23,7 +23,7 @@ describe('Test the logging service', () => {
     const consoleErrorSpy = jest.spyOn(global.console, 'error').mockImplementation(() => {});
 
     // Run test
-    const result = logging.enableBugsnag();
+    const result = enableBugsnag();
 
     // Check expectations are met
     expect(result).toEqual(false);
@@ -41,7 +41,7 @@ describe('Test the logging service', () => {
     const consoleErrorSpy = jest.spyOn(global.console, 'error').mockImplementation(() => {});
 
     // Run test
-    const result = logging.enableBugsnag();
+    const result = enableBugsnag();
 
     // Check expectations are met
     expect(result).toEqual(true);

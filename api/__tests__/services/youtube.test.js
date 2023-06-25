@@ -1,6 +1,6 @@
-const { faker } = require('@faker-js/faker');
-const logging = require('../../services/logging');
-const youTubeService = require('../../services/youTube');
+import { faker } from '@faker-js/faker';
+import logging from '../../services/logging';
+import youTubeService, { getVideoWebpagePlayerOnly, getVideoIdFromUrl } from '../../services/youTube';
 
 describe('Test the YouTube service', () => {
   test('getVideoWebpagePlayerOnly', () => {
@@ -15,7 +15,7 @@ describe('Test the YouTube service', () => {
       .mockImplementation(() => fakeYouTubeId);
 
     // Run the function we're testing
-    const response = youTubeService.getVideoWebpagePlayerOnly(fakeVideoWebPage);
+    const response = getVideoWebpagePlayerOnly(fakeVideoWebPage);
 
     // Check our test expectations are met
     expect(getVideoIdFromUrlSpy).toHaveBeenCalledTimes(1);
@@ -39,7 +39,7 @@ describe('Test the YouTube service', () => {
 
     for (const fakeVideoWebPage of fakeVideoWebPages) {
       // Run the function we're testing
-      const response = youTubeService.getVideoIdFromUrl(fakeVideoWebPage);
+      const response = getVideoIdFromUrl(fakeVideoWebPage);
 
       // Check our test expectations are met
       expect(response).toEqual(fakeYouTubeId);
@@ -57,7 +57,7 @@ describe('Test the YouTube service', () => {
     const logErrorSpy = jest.spyOn(logging, 'logError').mockImplementation(() => {});
 
     // Run the function we're testing
-    const response = youTubeService.getVideoIdFromUrl(nonYouTubeWebPage);
+    const response = getVideoIdFromUrl(nonYouTubeWebPage);
 
     // Check our test expectations are met
     expect(response).toEqual(undefined);

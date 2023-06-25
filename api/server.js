@@ -1,5 +1,6 @@
-import { listen } from './app';
-import cron from './cron-jobs/run-cron-jobs';
+
+import cron from './cron-jobs/run-cron-jobs.js';
+import { listen } from '../app/node_modules/expo/AppEntry.js';
 
 const port = 3000;
 

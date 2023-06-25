@@ -1,7 +1,7 @@
-const airTable = require('../../helpers/airTable');
-const { faker } = require('@faker-js/faker');
-const eventsHelpers = require('../../helpers/events');
-const eventsTestData = require('../../__test-data__/events');
+import airTable from '../../helpers/airTable';
+import { faker } from '@faker-js/faker';
+import { formatEventFromAirTable } from '../../helpers/events';
+import { fakeEventAirTableRecord } from '../../__test-data__/events';
 
 describe('Test the events helpers', () => {
   beforeEach(() => {
@@ -10,7 +10,7 @@ describe('Test the events helpers', () => {
 
   test('formatEventFromAirTable correctly formats data', async () => {
     // Set up fake test data
-    const fakeEventFromAirTable = eventsTestData.fakeEventAirTableRecord('any', true);
+    const fakeEventFromAirTable = fakeEventAirTableRecord('any', true);
     const fakeSimplifiedAttachmentsData = [faker.internet.url()];
 
     // Mock dependencies
@@ -22,7 +22,7 @@ describe('Test the events helpers', () => {
     const formatTimeSpy = jest.spyOn(airTable, 'formatTime').mockImplementation((time) => time);
 
     // Run test
-    const formattedEvent = eventsHelpers.formatEventFromAirTable(fakeEventFromAirTable);
+    const formattedEvent = formatEventFromAirTable(fakeEventFromAirTable);
 
     // simplifyAttachmentsData should be called once for images, once for video_thumbnail 
     expect(simplifyAttachmentsDataSpy).toHaveBeenCalledTimes(2);

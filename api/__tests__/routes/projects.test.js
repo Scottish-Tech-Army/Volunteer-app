@@ -1,16 +1,16 @@
-const airTable = require('../../helpers/airTable');
-const app = require('../../app');
-const axios = require('axios');
-const { faker } = require('@faker-js/faker');
-const nock = require('nock');
-const { getAllProjectsHandler, projectRegisterInterestHandler } = require('../../routes/projects');
-const projectsHelper = require('../../helpers/projects');
-const projectsTestData = require('../../__test-data__/projects');
-const request = require('supertest');
-const routesHelper = require('../../helpers/routes');
-const slackService = require('../../services/slack');
+import airTable from '../../helpers/airTable';
+import app from '../../app';
+import { defaults, get, post } from 'axios';
+import { faker } from '@faker-js/faker';
+import nock from 'nock';
+import { getAllProjectsHandler, projectRegisterInterestHandler } from '../../routes/projects';
+import projectsHelper from '../../helpers/projects';
+import { fakeProjectResourceObjects, fakeAirTableProjectResource, fakeProjectResourceObject } from '../../__test-data__/projects';
+import request from 'supertest';
+import routesHelper from '../../helpers/routes';
+import slackService from '../../services/slack';
 
-axios.defaults.adapter = require('axios/lib/adapters/http');
+defaults.adapter = require('axios/lib/adapters/http');
 
 describe('Test the projects api', () => {
   beforeEach(() => {
@@ -19,7 +19,7 @@ describe('Test the projects api', () => {
 
   test('GET all method should respond successfully', async () => {
     // Set up fake test data
-    const fakeProjectResources = projectsTestData.fakeProjectResourceObjects(
+    const fakeProjectResources = fakeProjectResourceObjects(
       faker.number.int({ min: 30, max: 50 }),
     );
 
@@ -27,7 +27,7 @@ describe('Test the projects api', () => {
     const requestMock = nock('http://localhost:3000').get('/projects').reply(200, fakeProjectResources);
 
     // Run test
-    const response = await axios.get('http://localhost:3000/projects');
+    const response = await get('http://localhost:3000/projects');
     requestMock.done();
 
     expect(response.status).toBe(200);
@@ -44,7 +44,7 @@ describe('Test the projects api', () => {
     const numberOfProjects = faker.number.int({ min: 10, max: 30 });
     const fakeProjectResources = [];
     for (let i = 0; i < numberOfProjects; i++) {
-      fakeProjectResources.push(projectsTestData.fakeAirTableProjectResource(true));
+      fakeProjectResources.push(fakeAirTableProjectResource(true));
     }
 
     // Mock dependencies
@@ -172,7 +172,7 @@ describe('Test the projects api', () => {
 
   test('GET a single project method should respond successfully', async () => {
     // Set up fake test data
-    const fakeProjectResource = projectsTestData.fakeProjectResourceObject();
+    const fakeProjectResource = fakeProjectResourceObject();
 
     // Mock dependencies
     const singleProjectsMock = nock('http://localhost:3000')
@@ -180,7 +180,7 @@ describe('Test the projects api', () => {
       .reply(200, fakeProjectResource);
 
     // Run test
-    const response = await axios.get(
+    const response = await get(
       `http://localhost:3000/projects/single?res=${fakeProjectResource.res_id}&it=${fakeProjectResource.it_key}`,
     );
 
@@ -193,7 +193,7 @@ describe('Test the projects api', () => {
 
   test('POST register interest in a single project method should respond successfully', async () => {
     // Set up fake test data
-    const fakeProjectResource = projectsTestData.fakeProjectResourceObject();
+    const fakeProjectResource = fakeProjectResourceObject();
     const postData = {
       firstName: faker.person.firstName(),
       lastName: faker.person.lastName(),
@@ -212,7 +212,7 @@ describe('Test the projects api', () => {
       .reply(200, responseData);
 
     // Run test
-    const response = await axios.post(
+    const response = await post(
       `http://localhost:3000/projects/single/register-interest?res=${fakeProjectResource.res_id}&it=${fakeProjectResource.it_key}`,
     );
     requestMock.done();
@@ -224,7 +224,7 @@ describe('Test the projects api', () => {
   test('projectRegisterInterestHandler calls AirTable and Slack and returns a response', async () => {
     // Set up fake test data
     const fakeTableName = faker.lorem.word();
-    const fakeProjectResource = projectsTestData.fakeAirTableProjectResource(true);
+    const fakeProjectResource = fakeAirTableProjectResource(true);
     const fakeRequest = {
       query: {
         it: fakeProjectResource.it_key,
@@ -283,7 +283,7 @@ describe('Test the projects api', () => {
   test('projectRegisterInterestHandler returns an error if project cannot be found', async () => {
     // Set up fake test data
     const fakeTableName = faker.lorem.word();
-    const fakeProjectResource = projectsTestData.fakeAirTableProjectResource(true);
+    const fakeProjectResource = fakeAirTableProjectResource(true);
     const fakeRequest = {
       query: {
         it: fakeProjectResource.it_key,
@@ -344,7 +344,7 @@ describe('Test the projects api', () => {
   test('projectRegisterInterestHandler returns an error if data is missing from the request', async () => {
     // Set up fake test data
     const fakeTableName = faker.lorem.word();
-    const fakeProjectResource = projectsTestData.fakeAirTableProjectResource(true);
+    const fakeProjectResource = fakeAirTableProjectResource(true);
     const fakeRequest = {
       query: {
         it: fakeProjectResource.it_key,
@@ -399,7 +399,7 @@ describe('Test the projects api', () => {
   test('projectRegisterInterestHandler returns an error if Slack service returns an error', async () => {
     // Set up fake test data
     const fakeTableName = faker.lorem.word();
-    const fakeProjectResource = projectsTestData.fakeAirTableProjectResource(true);
+    const fakeProjectResource = fakeAirTableProjectResource(true);
     const fakeRequest = {
       query: {
         it: fakeProjectResource.it_key,

@@ -1,8 +1,8 @@
-const airTable = require('../../helpers/airTable');
-const { faker } = require('@faker-js/faker');
-const projectsHelpers = require('../../helpers/projects');
-const stringsHelpers = require('../../helpers/strings');
-const projectsTestData = require('../../__test-data__/projects');
+import airTable from '../../helpers/airTable';
+import { faker } from '@faker-js/faker';
+import { combineProjectsAndResources, formatProjectResourceFromAirTable } from '../../helpers/projects';
+import stringsHelpers from '../../helpers/strings';
+import { fakeProjectObjects, fakeResourceObjects, fakeAirTableProjectResource } from '../../__test-data__/projects';
 
 describe('Test the projects helpers', () => {
   beforeEach(() => {
@@ -11,8 +11,8 @@ describe('Test the projects helpers', () => {
 
   test('combineProjectsAndResources correctly formats data', async () => {
     // Set up fake test data
-    const fakeProjects = projectsTestData.fakeProjectObjects(2);
-    const fakeResources = projectsTestData.fakeResourceObjects(5);
+    const fakeProjects = fakeProjectObjects(2);
+    const fakeResources = fakeResourceObjects(5);
     fakeResources[0].it_key = fakeProjects[0].it_key;
     fakeResources[1].it_key = fakeProjects[0].it_key;
     fakeResources[2].it_key = fakeProjects[1].it_key;
@@ -20,7 +20,7 @@ describe('Test the projects helpers', () => {
     fakeResources[4].it_key = fakeProjects[1].it_key;
 
     // Run test
-    const combinedProjectsResources = projectsHelpers.combineProjectsAndResources(fakeProjects, fakeResources);
+    const combinedProjectsResources = combineProjectsAndResources(fakeProjects, fakeResources);
 
     expect(combinedProjectsResources.length).toEqual(5);
     expect(combinedProjectsResources[0]).toEqual({
@@ -47,7 +47,7 @@ describe('Test the projects helpers', () => {
 
   test('formatProjectResourceFromAirTable correctly formats data it receives from AirTable', async () => {
     // Set up fake test data
-    const fakeProjectResourceDataFromAirTable = projectsTestData.fakeAirTableProjectResource(false);
+    const fakeProjectResourceDataFromAirTable = fakeAirTableProjectResource(false);
 
     // Mock dependencies
     airTable;
@@ -62,7 +62,7 @@ describe('Test the projects helpers', () => {
       .mockImplementation(() => {});
 
     // Run test
-    const formattedProjectResource = projectsHelpers.formatProjectResourceFromAirTable(
+    const formattedProjectResource = formatProjectResourceFromAirTable(
       fakeProjectResourceDataFromAirTable,
     );
 

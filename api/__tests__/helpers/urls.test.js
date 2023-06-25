@@ -1,4 +1,4 @@
-const cleanUrlsAndEmails = require('../../helpers/urls').cleanUrlsAndEmails;
+import { cleanUrlsAndEmails } from '../../helpers/urls';
 
 describe('Test the clean-up urls and emails helper', () => {
   it('should remove unwanted characters from a URL', () => {

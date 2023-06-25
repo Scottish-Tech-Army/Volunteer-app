@@ -1,6 +1,6 @@
-const airTable = require('../helpers/airTable').default;
-const apiDefinition = require('../definitions/api_definition.json');
-const stringsHelper = require('../helpers/strings').default;
+import airTable from '../helpers/airTable';
+import { components } from '../definitions/api_definition.json';
+import stringsHelper from '../helpers/strings';
 
 function combineProjectsAndResources(projects, resources) {
   return resources.map((resource) => {
@@ -17,7 +17,7 @@ function combineProjectsAndResources(projects, resources) {
    with the fields as they have come from AirTable,
    and formats it correctly for the API to return it to the user */
 function formatProjectResourceFromAirTable(projectResource) {
-  const projectResourceFieldDefinitions = apiDefinition.components.schemas.project.items.properties;
+  const projectResourceFieldDefinitions = components.schemas.project.items.properties;
 
   const projectResourceFormatted = airTable.addEmptyFields({
     ...projectResource,
@@ -42,7 +42,7 @@ function formatProjectResourceFromAirTable(projectResource) {
   return projectResourceFormatted;
 }
 
-module.exports = {
+export default {
   combineProjectsAndResources,
   formatProjectResourceFromAirTable,
 };

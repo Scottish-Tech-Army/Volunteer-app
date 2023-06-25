@@ -1,8 +1,8 @@
-const { faker } = require('@faker-js/faker');
-const axios = require('axios');
-const dotenv = require('dotenv');
-const logging = require('../../services/logging');
-const slackService = require('../../services/slack');
+import { faker } from '@faker-js/faker';
+import axios from 'axios';
+import dotenv from 'dotenv';
+import logging from '../../services/logging';
+import { convertChannelNameToWebHookEnvVariable, postMessage } from '../../services/slack';
 
 describe('Test the Slack service', () => {
   const OLD_ENV = process.env;
@@ -17,7 +17,7 @@ describe('Test the Slack service', () => {
   });
 
   test('convertChannelNameToWebHookEnvVariable correctly reformats a string', () => {
-    const envVariableName = slackService.convertChannelNameToWebHookEnvVariable('my-awesome-channel');
+    const envVariableName = convertChannelNameToWebHookEnvVariable('my-awesome-channel');
 
     expect(envVariableName).toEqual('SLACK_SECRET_WEBHOOK_MY_AWESOME_CHANNEL');
   });
@@ -28,7 +28,7 @@ describe('Test the Slack service', () => {
     const logErrorSpy = jest.spyOn(logging, 'logError').mockImplementation(() => {});
 
     // Run test
-    const response = await slackService.postMessage('my-awesome-channel', 'My message');
+    const response = await postMessage('my-awesome-channel', 'My message');
 
     expect(logErrorSpy).toHaveBeenCalledTimes(1);
     expect(response).toHaveProperty('error');
@@ -50,7 +50,7 @@ describe('Test the Slack service', () => {
     }));
 
     // Run test
-    const response = await slackService.postMessage('my-awesome-channel', messageText);
+    const response = await postMessage('my-awesome-channel', messageText);
 
     expect(axiosSpy).toHaveBeenCalledTimes(1);
     expect(axiosSpy).toHaveBeenCalledWith(webhookUrl, { text: messageText });
@@ -75,7 +75,7 @@ describe('Test the Slack service', () => {
     }));
 
     // Run test
-    const response = await slackService.postMessage('my-awesome-channel', 'My message');
+    const response = await postMessage('my-awesome-channel', 'My message');
 
     expect(axiosSpy).toHaveBeenCalledTimes(1);
     expect(logErrorSpy).toHaveBeenCalledTimes(1);
