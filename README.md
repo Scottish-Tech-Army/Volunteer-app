@@ -186,9 +186,9 @@ Below are some commonly encountered issues and possible ways to resolve them. If
 - The app gets stuck on the Projects screen -- projects never load
   > Make sure the API is running on your local machine, and that your **api/.env** and **app/.env** files are configured correctly (see [Setup and first run](#setup-and-first-run) above)
 
-  > Check the URL for both `API_TUNNEL_SUBDOMAIN` and `STA_API_BASE_URL`. `STA_API_BASE_URL` should be prefixed with `https://` but not `API_TUNNEL_SUBDOMAIN`. 
-  -     `STA_API_BASE_URL=https://nadia-bloggs-abc123def456ghi789.loca.lt` 
-  -     `API_TUNNEL_SUBDOMAIN=nadia-bloggs-abc123def456ghi789.loca.lt`
+  > Check the URL for both `API_TUNNEL_SUBDOMAIN` and `STA_API_BASE_URL`. `STA_API_BASE_URL` should be prefixed with `https://`. `API_TUNNEL_SUBDOMAIN` should *not* be prefixed with `https://` and should *only* include the URL up to but **not** including `loca.lt`.
+  -     STA_API_BASE_URL="https://nadia-bloggs-abc123def456ghi789.loca.lt"
+  -     API_TUNNEL_SUBDOMAIN="nadia-bloggs-abc123def456ghi789"
   
   > Make sure you have three terminal windows open, two running the API: one running `npm start` and one running the npm tunnel command (see above), both are needed in order for the app to be able to connect to the API
 
