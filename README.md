@@ -118,7 +118,7 @@ If you're using Visual Studio Code for development, it's recommended that you:
 
 8. Open another terminal window and in this new window run the command `npm run tunnel-mac-linux` (if you are on a Mac or Linux) or `npm run tunnel-windows` (if you are on Windows). This 'tunnels' your local API server: makes it available externally so your app running in Expo Go can access it. You should see a message saying your `your url is: https://.............` -- this is the URL of your local API server, make a note of it as you'll need it in a minute.
 
-   > This URL should include the value you set for `API_TUNNEL_SUBDOMAIN` in your `api/.env` file, e.g. something like `https://nadia-bloggs-abc123def456ghi789.loca.lt`. If you do not see this URL, then double-check your `API_TUNNEL_SUBDOMAIN` as discussed in step 5. Ensure it is not prefixed with `https://`.
+   > This URL should include the value you set for `API_TUNNEL_SUBDOMAIN` in your `api/.env` file, e.g. something like `https://nadia-bloggs-abc123def456ghi789`. If you do not see this URL, then double-check your `API_TUNNEL_SUBDOMAIN` as discussed in step 5. Ensure it is not prefixed with `https://`.
 
    > **If you get an error message `export: #: bad variable name`** that's because you have a comment (a line beginning with a `#`) in your `api/.env` file. Remove the commented line and try again.
 
@@ -135,7 +135,7 @@ If you're using Visual Studio Code for development, it's recommended that you:
    > **If you get *errors* about installing dependencies** you may need to run `npm install --legacy-peer-deps` or `npm install --force` (instead of `npm install`)
 
 11. Copy the `.env.example` file in the api root folder and name your new file `.env` in the same folder -- e.g. using the command `cp .env.example .env` Set the value of `STA_API_BASE_URL` to the tunnelled URL of your local API server (the one you made a note of in step 8 above).  
-**Tip**: Ensure that `STA_API_BASE_URL` is prefixed with `https://` *unlike* the URL set for Step 8. For example, `https://nadia-bloggs-abc123def456ghi789` .
+**Tip**: Ensure that `STA_API_BASE_URL` is prefixed with `https://` *unlike* the URL set for Step 8. For example,  `https://nadia-bloggs-abc123def456ghi789.loca.lt` .
 12.  Ask on Slack for a member of the team to send you the value to use for `EXPO_APPLICATION_SERVICES_PROJECT_ID`.
 
     > For security reasons, the `EXPO_APPLICATION_SERVICES_PROJECT_ID` value is not stored in this repo.
@@ -186,7 +186,7 @@ Below are some commonly encountered issues and possible ways to resolve them. If
 - The app gets stuck on the Projects screen -- projects never load
   > Make sure the API is running on your local machine, and that your **api/.env** and **app/.env** files are configured correctly (see [Setup and first run](#setup-and-first-run) above)
 
-  > Check the URL for both `API_TUNNEL_SUBDOMAIN` and `STA_API_BASE_URL`. `STA_API_BASE_URL` should be prefixed with `https://`. `API_TUNNEL_SUBDOMAIN` should *not* be prefixed with `https://` and should *only* include the URL up to but **not** including `loca.lt`.
+  > Check the URL for both `API_TUNNEL_SUBDOMAIN` and `STA_API_BASE_URL`. `STA_API_BASE_URL` should be prefixed with `https://`. `API_TUNNEL_SUBDOMAIN` should *not* be prefixed with `https://` and should *only* include the URL up to but **not** including `.loca.lt`.
   -     STA_API_BASE_URL="https://nadia-bloggs-abc123def456ghi789.loca.lt"
   -     API_TUNNEL_SUBDOMAIN="nadia-bloggs-abc123def456ghi789"
   
