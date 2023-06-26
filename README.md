@@ -134,8 +134,8 @@ If you're using Visual Studio Code for development, it's recommended that you:
 
    > **If you get *errors* about installing dependencies** you may need to run `npm install --legacy-peer-deps` or `npm install --force` (instead of `npm install`)
 
-11. Copy the `.env.example` file in the api root folder and name your new file `.env` in the same folder -- e.g. using the command `cp .env.example .env` Set the value of `STA_BASE_URL` to the tunnelled URL of your local API server (the one you made a note of in step 8 above).  
-**Tip**: Ensure that `STA_BASE_URL` is prefixed with `https://` *unlike* the URL set for Step 8. For example, `https://nadia-bloggs-abc123def456ghi789.loca.lt` .
+11. Copy the `.env.example` file in the api root folder and name your new file `.env` in the same folder -- e.g. using the command `cp .env.example .env` Set the value of `STA_API_BASE_URL` to the tunnelled URL of your local API server (the one you made a note of in step 8 above).  
+**Tip**: Ensure that `STA_API_BASE_URL` is prefixed with `https://` *unlike* the URL set for Step 8. For example, `https://nadia-bloggs-abc123def456ghi789` .
 12.  Ask on Slack for a member of the team to send you the value to use for `EXPO_APPLICATION_SERVICES_PROJECT_ID`.
 
     > For security reasons, the `EXPO_APPLICATION_SERVICES_PROJECT_ID` value is not stored in this repo.
