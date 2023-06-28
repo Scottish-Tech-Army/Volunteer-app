@@ -1,11 +1,27 @@
 - [Welcome](#welcome)
 - [Download the app!](#download-the-app)
+  - [iOS](#ios)
+  - [Android](#android)
 - [Updating to the latest version of the app](#updating-to-the-latest-version-of-the-app)
+  - [iOS](#ios-1)
+  - [Android](#android-1)
 - [Requirements to run the project:](#requirements-to-run-the-project)
+- [Code editor](#code-editor)
+  - [Visual Studio Code](#visual-studio-code)
 - [Setup and first run](#setup-and-first-run)
+  - [API](#api)
+  - [App](#app)
 - [Troubleshooting](#troubleshooting)
+  - [The API won't run](#the-api-wont-run)
+  - [The app won't build](#the-app-wont-build)
+  - [The app gets stuck loading projects](#the-app-gets-stuck-loading-projects)
+  - [The app builds, but crashes when I run it](#the-app-builds-but-crashes-when-i-run-it)
+  - [The app in Expo Go isn't showing my changes or has lost connection](#the-app-in-expo-go-isnt-showing-my-changes-or-has-lost-connection)
 - [Subsequent run](#subsequent-run)
 - [Development](#development)
+  - [Bugs](#bugs)
+  - [App](#app-1)
+  - [API](#api-1)
 - [Deploying the app and API](#deploying-the-app-and-api)
 - [Training resources](#training-resources)
 
@@ -88,8 +104,8 @@ If you're using Visual Studio Code for development, it's recommended that you:
 
    > **For security reasons, the credentials themselves are not provided here.** Ask in the [volunteer-app](https://scottishtecharmy.slack.com/archives/C01SUL6K5E1) Slack channel when you join the dev group, and somebody will send them to you.
 
-   > **The variable `API_TUNNEL_SUBDOMAIN` is different to all the others -- it's personal to you.**  For this value, you should enter your own name in lowercase with only dashes in between, followed by a random string of letters and numbers.  (Your local API will be exposed externally so this makes it harder for a bot or hacker to find.)  For example if your name is Nadia Bloggs it could be: `API_TUNNEL_SUBDOMAIN="nadia-bloggs-abc123def456ghi789"` (But don't use the numbers and letters here or they won't be random 🙂 - make up your own)
-
+   > **The variable `API_TUNNEL_SUBDOMAIN` is different to all the others -- it's personal to you.**  For this value, you should enter your own name in lowercase with only dashes in between, followed by a random string of letters and numbers.  (Your local API will be exposed externally so this makes it harder for a bot or hacker to find.)  For example if your name is Nadia Bloggs it could be: `API_TUNNEL_SUBDOMAIN="nadia-bloggs-abc123def456ghi789"` (But don't use the numbers and letters here or they won't be random 🙂 - make up your own). You could use a tool like Random.Org to generate random string and letters: <https://www.random.org/strings/>. 
+  
    > **Make sure you don't have any spaces either side of `=` in your `api/.env` file** for any of the values there e.g. you should have something like `AIRTABLE_ID="abc123def456"` **not** `AIRTABLE_ID = "abc123def456"`
 
    > **Do not use any comments in your `api/.env` file** (it's technically possible to put comments in a .env file using the `#` character, but this causes problems for the API tunnel command we're going to use below)
@@ -102,7 +118,7 @@ If you're using Visual Studio Code for development, it's recommended that you:
 
 8. Open another terminal window and in this new window run the command `npm run tunnel-mac-linux` (if you are on a Mac or Linux) or `npm run tunnel-windows` (if you are on Windows). This 'tunnels' your local API server: makes it available externally so your app running in Expo Go can access it. You should see a message saying your `your url is: https://.............` -- this is the URL of your local API server, make a note of it as you'll need it in a minute.
 
-   > This URL should include the value you set for `API_TUNNEL_SUBDOMAIN` in your `api/.env` file, e.g. something like `https://nadia-bloggs-abc123def456ghi789.loca.lt`
+   > This URL should look something like `https://nadia-bloggs-abc123def456ghi789.loca.lt` The sub-domain (the bit between `https://` and `.loca.lt`) should be the value you set for `API_TUNNEL_SUBDOMAIN` in your `api/.env` file.
 
    > **If you get an error message `export: #: bad variable name`** that's because you have a comment (a line beginning with a `#`) in your `api/.env` file. Remove the commented line and try again.
 
@@ -118,24 +134,26 @@ If you're using Visual Studio Code for development, it's recommended that you:
 
    > **If you get *errors* about installing dependencies** you may need to run `npm install --legacy-peer-deps` or `npm install --force` (instead of `npm install`)
 
-11. Copy the `.env.example` file in the api root folder and name your new file `.env` in the same folder -- e.g. using the command `cp .env.example .env` Set the value of `STA_BASE_URL` to the tunnelled URL of your local API server (the one you made a note of in step 8 above). Ask on Slack for a member of the team to send you the value to use for `EXPO_APPLICATION_SERVICES_PROJECT_ID`.
+11. Copy the `.env.example` file in the api root folder and name your new file `.env` in the same folder -- e.g. using the command `cp .env.example .env` Set the value of `STA_API_BASE_URL` to the tunnelled URL of your local API server (the one you made a note of in step 8 above).
+
+12.  Ask on Slack for a member of the team to send you the value to use for `EXPO_APPLICATION_SERVICES_PROJECT_ID`.
 
     > For security reasons, the `EXPO_APPLICATION_SERVICES_PROJECT_ID` value is not stored in this repo.
 
-12. Run Expo using `npm start`  This will run some commands and then it show you a QR code in your terminal.
+13. Run Expo using `npm start`  This will run some commands and then it show you a QR code in your terminal.
 
   > You may get an automatic prompt to install `@expo/ngrok` or another package -- if so, type `y` to install it.
 
   > If you get stuck at this stage, you might need to install `@expo/ngrok` manually, globally on your local machine: run `npm install -g @expo/ngrok` then try running `npm start` again.
 
-13. Connect your phone:
+14. Connect your phone:
 - **iPhone:** open the camera and scan the QR code, tap on the link and it should open up the app in Expo Go
 - **Android:** open the Expo Go app itself and you can scan the QR code
 - You should now see your local development version of the app on your phone -- any changes you make in your code should show almost instantly on your phone.  (If you find you're not seeing changes on your phone or Expo Go loses the connection, [see tips here.](APP_DEVELOPMENT.md#expo-known-issues))
 
-14. When you've got the app to run, make a PR to improve this README! Fix something that caused you headaches, update something that's no longer correct, or add a training resource, or add something else you think would help other people to get up and running.
+15. When you've got the app to run, make a PR to improve this README! Fix something that caused you headaches, update something that's no longer correct, or add a training resource, or add something else you think would help other people to get up and running.
 
-15. See the [Subsequent run](#subsequent-run) section below for what to do next time you want to run the app. See the [Development](#development) section below for more info on developing the app, and how to get set up to deploy changes to the app.
+16. See the [Subsequent run](#subsequent-run) section below for what to do next time you want to run the app. See the [Development](#development) section below for more info on developing the app, and how to get set up to deploy changes to the app.
 
 # Troubleshooting
 
@@ -168,6 +186,10 @@ Below are some commonly encountered issues and possible ways to resolve them. If
 - The app gets stuck on the Projects screen -- projects never load
   > Make sure the API is running on your local machine, and that your **api/.env** and **app/.env** files are configured correctly (see [Setup and first run](#setup-and-first-run) above)
 
+  > Check the values for both `API_TUNNEL_SUBDOMAIN` and `STA_API_BASE_URL`. `STA_API_BASE_URL` should be prefixed with `https://`. `API_TUNNEL_SUBDOMAIN` should *not* be prefixed with `https://` and should *only* include the URL up to but **not** including `.loca.lt`.
+  -     STA_API_BASE_URL="https://nadia-bloggs-abc123def456ghi789.loca.lt"
+  -     API_TUNNEL_SUBDOMAIN="nadia-bloggs-abc123def456ghi789"
+  
   > Make sure you have three terminal windows open, two running the API: one running `npm start` and one running the npm tunnel command (see above), both are needed in order for the app to be able to connect to the API
 
   > Check if you can see data coming through from the API.  In the terminal window where you ran the npm tunnelling command, get the URL, then paste that URL into a web browser and add `/v1/projects` at the end -- if your local API is running and tunnelling successfully, you should see a JSON response with a list of projects. (If you don't see that, try the suggestion below, and also check the terminal window where you ran `npm start` and see if there are any error messages there.)
