@@ -116,7 +116,7 @@ If you're using Visual Studio Code for development, it's recommended that you:
 
 7. Then run the command `npm start` to start the Volunteer App API server. You should see a message that says `Running scheduled cron jobs... ` and `Volunteer App API is listening on port <number> in development environment`.  Leave this terminal window open.
 
-8. Open another terminal window and in this new window run the command `npm run tunnel-mac-linux` (if you are on a Mac or Linux) or `npm run tunnel-windows` (if you are on Windows). This 'tunnels' your local API server: makes it available externally so your app running in Expo Go can access it. You should see a message saying your `your url is: https://.............` -- this is the URL of your local API server, make a note of it as you'll need it in a minute.
+8. Open another terminal window and in this new window run the command `npm run tunnel` This 'tunnels' your local API server: makes it available externally so your app running in Expo Go can access it. You should see a message saying your `your url is: https://.............` -- this is the URL of your local API server, make a note of it as you'll need it in a minute.
 
    > This URL should look something like `https://nadia-bloggs-abc123def456ghi789.loca.lt` The sub-domain (the bit between `https://` and `.loca.lt`) should be the value you set for `API_TUNNEL_SUBDOMAIN` in your `api/.env` file.
 
@@ -214,7 +214,7 @@ Below are some commonly encountered issues and possible ways to resolve them. If
 
 1. In a terminal window, go to the `api` folder inside the project folder (e.g. **/path/to/Volunteer-app/api**) and enter `npm start` to start the Volunteer App API server.
 
-2. In a second terminal window, in the `api` folder and use the npm tunnel command (`npm run tunnel-mac-linux` or `npm run tunnel-windows`) to tunnel your API server so the app in Expo Go can connect to it.
+2. In a second terminal window, in the `api` folder and use the `npm run tunnel` command to tunnel your API server so the app in Expo Go can connect to it.
 
 3. In a third terminal window, go to the `app` folder inside the project folder (e.g. **/path/to/Volunteer-app/app**) and enter `npm start` to run Expo
 
