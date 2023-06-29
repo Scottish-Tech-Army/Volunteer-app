@@ -104,8 +104,8 @@ If you're using Visual Studio Code for development, it's recommended that you:
 
    > **For security reasons, the credentials themselves are not provided here.** Ask in the [volunteer-app](https://scottishtecharmy.slack.com/archives/C01SUL6K5E1) Slack channel when you join the dev group, and somebody will send them to you.
 
-   > **The variable `API_TUNNEL_SUBDOMAIN` is different to all the others -- it's personal to you.**  For this value, you should enter your own name in lowercase with only dashes in between, followed by a random string of letters and numbers.  (Your local API will be exposed externally so this makes it harder for a bot or hacker to find.)  For example if your name is Nadia Bloggs it could be: `API_TUNNEL_SUBDOMAIN="nadia-bloggs-abc123def456ghi789"` (But don't use the numbers and letters here or they won't be random 🙂 - make up your own). You could use a tool like Random.Org to generate random string and letters: <https://www.random.org/strings/>. 
-  
+   > **The variable `API_TUNNEL_SUBDOMAIN` is different to all the others -- it's personal to you.**  For this value, you should enter your own name in lowercase with only dashes in between, followed by a random string of letters and numbers.  (Your local API will be exposed externally so this makes it harder for a bot or hacker to find.)  For example if your name is Nadia Bloggs it could be: `API_TUNNEL_SUBDOMAIN="nadia-bloggs-abc123def456ghi789"` (But don't use the numbers and letters here or they won't be random 🙂 - make up your own). You could use a tool like Random.Org to generate random string and letters: <https://www.random.org/strings/>.
+
    > **Make sure you don't have any spaces either side of `=` in your `api/.env` file** for any of the values there e.g. you should have something like `AIRTABLE_ID="abc123def456"` **not** `AIRTABLE_ID = "abc123def456"`
 
    > **Do not use any comments in your `api/.env` file** (it's technically possible to put comments in a .env file using the `#` character, but this causes problems for the API tunnel command we're going to use below)
@@ -126,13 +126,13 @@ If you're using Visual Studio Code for development, it's recommended that you:
 
 9. Go to the `app` folder inside the project folder (e.g. **/path/to/Volunteer-app/app**)
 
-10. At the command prompt type `npm install`
+10. At the command prompt type `npx expo install`
 
    > Inside the `app` folder there are files `package.json` and `package-lock.json`. **Every time either of these is modified, it is advised to repeat this step before running the project.**
 
    > **If you get *warnings* about installing dependencies** you probably don't worry about these
 
-   > **If you get *errors* about installing dependencies** you may need to run `npm install --legacy-peer-deps` or `npm install --force` (instead of `npm install`)
+   > **If you get *errors* about installing dependencies** try running `npx expo install` and then `npm install --legacy-peer-deps` or `npm install --force`.
 
 11. Copy the `.env.example` file in the api root folder and name your new file `.env` in the same folder -- e.g. using the command `cp .env.example .env` Set the value of `STA_API_BASE_URL` to the tunnelled URL of your local API server (the one you made a note of in step 8 above).
 
@@ -174,7 +174,7 @@ Below are some commonly encountered issues and possible ways to resolve them. If
 ## The app won't build
 
 - When I run `npm install`, it fails with dependency resolution errors
-  > Sometimes this happens when one or more of the project dependencies gets updated and is out of step with the others. Try running `npm install --legacy-peer-deps` or `npm install --force`.
+  > Sometimes this happens when one or more of the project dependencies gets updated and is out of step with the others. You should try running `npx expo install` and then `npm install --legacy-peer-deps` or `npm install --force`.
 
 - I can't get Expo started in my terminal when I run `npm start` in the `app` directory
    > You may get an automatic prompt to install `@expo/ngrok` or another package -- if so, type `y` to install it.
@@ -189,7 +189,7 @@ Below are some commonly encountered issues and possible ways to resolve them. If
   > Check the values for both `API_TUNNEL_SUBDOMAIN` and `STA_API_BASE_URL`. `STA_API_BASE_URL` should be prefixed with `https://`. `API_TUNNEL_SUBDOMAIN` should *not* be prefixed with `https://` and should *only* include the URL up to but **not** including `.loca.lt`.
   -     STA_API_BASE_URL="https://nadia-bloggs-abc123def456ghi789.loca.lt"
   -     API_TUNNEL_SUBDOMAIN="nadia-bloggs-abc123def456ghi789"
-  
+
   > Make sure you have three terminal windows open, two running the API: one running `npm start` and one running the npm tunnel command (see above), both are needed in order for the app to be able to connect to the API
 
   > Check if you can see data coming through from the API.  In the terminal window where you ran the npm tunnelling command, get the URL, then paste that URL into a web browser and add `/v1/projects` at the end -- if your local API is running and tunnelling successfully, you should see a JSON response with a list of projects. (If you don't see that, try the suggestion below, and also check the terminal window where you ran `npm start` and see if there are any error messages there.)
@@ -218,7 +218,7 @@ Below are some commonly encountered issues and possible ways to resolve them. If
 
 3. In a third terminal window, go to the `app` folder inside the project folder (e.g. **/path/to/Volunteer-app/app**) and enter `npm start` to run Expo
 
-4. Connect your phone to your local development version of the app in Expo Go: 
+4. Connect your phone to your local development version of the app in Expo Go:
 - **iPhone:** open the camera and scan the QR code, this should open up the app in Expo Go
 - **Android:** open the Expo Go app itself and you can scan the QR code
    > If you find you're not seeing changes on your phone or Expo Go loses the connection, [see tips here.](APP_DEVELOPMENT.md#expo-known-issues)
