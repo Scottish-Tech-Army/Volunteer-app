@@ -3,7 +3,7 @@
  */
 import { Heading, VStack, Checkbox, ScrollView, Flex } from 'native-base'
 import StaRibbon from '../Components/StaRibbon'
-import StaThemeLogo from '@/NativeBase/Assets/Images/Logos/StaThemeLogo.svg'
+import StaThemeLogo from '@/NativeBase/Assets/Images/Logos/sta-ribbon-logo.svg'
 import FreeSearchBar from '../Components/FreeSearchBar'
 import React from 'react'
 import {
