@@ -1,5 +1,5 @@
 /**
- * @file the MySkills form screen for the STA Volunteer App
+ * @file the MyExperience screen for the STA Volunteer App
  */
 import {
   Heading,
@@ -14,15 +14,14 @@ import StaRibbon from '../Components/StaRibbon'
 import StaThemeLogo from '@/NativeBase/Assets/Images/Logos/sta-ribbon-logo.svg'
 import FreeSearchBar from '../Components/FreeSearchBar'
 import React from 'react'
-import {
-  RoleGroup,
-  RoleGroupName,
-  roleGroups,
-} from '@/Services/modules/projects/roleGroups'
+import { RoleGroup, roleGroups } from '@/Services/modules/projects/roleGroups'
 const MyExperienceContainer = () => {
   const [skillsValue, setSkillsValue] = React.useState<string[]>([])
   const [searchTxt, setSearchTxt] = React.useState<string>('') // search text
 
+  /**
+   * Filter the role groups based on the search text entered by the user
+   */
   const filteredSkills = roleGroups.filter((roleGroup: RoleGroup) => {
     return roleGroup.groupName.toLowerCase().includes(searchTxt.toLowerCase())
   })
