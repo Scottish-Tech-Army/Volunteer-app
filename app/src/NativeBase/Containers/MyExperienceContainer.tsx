@@ -1,7 +1,15 @@
 /**
- * @file the MySkills form screen
+ * @file the MySkills form screen for the STA Volunteer App
  */
-import { Heading, VStack, Checkbox, ScrollView, Flex } from 'native-base'
+import {
+  Heading,
+  VStack,
+  HStack,
+  Checkbox,
+  ScrollView,
+  Flex,
+  Button,
+} from 'native-base'
 import StaRibbon from '../Components/StaRibbon'
 import StaThemeLogo from '@/NativeBase/Assets/Images/Logos/sta-ribbon-logo.svg'
 import FreeSearchBar from '../Components/FreeSearchBar'
@@ -11,30 +19,27 @@ import {
   RoleGroupName,
   roleGroups,
 } from '@/Services/modules/projects/roleGroups'
-const MySkillsContainer = () => {
+const MyExperienceContainer = () => {
   const [skillsValue, setSkillsValue] = React.useState<string[]>([])
+  const [searchTxt, setSearchTxt] = React.useState<string>('') // search text
+
+  const filteredSkills = roleGroups.filter((roleGroup: RoleGroup) => {
+    return roleGroup.groupName.toLowerCase().includes(searchTxt.toLowerCase())
+  })
 
   return (
     <>
-      <Flex
-        direction="row"
-        alignItems={'flex-end'}
-        marginLeft={-12}
-        marginTop={-12}
-        marginBottom={3}
-      >
-        <Heading size="md" fontWeight="bold" marginLeft={12} marginBottom={4}>
-          My Experience
-        </Heading>
-        <StaThemeLogo />
+      <Flex alignItems={'flex-end'} marginY={-12}>
+        <HStack marginBottom={12} alignItems={'flex-end'}>
+          <Heading size="md" fontWeight="bold" marginRight={-5} marginY={2}>
+            My Experience
+          </Heading>
+          <StaThemeLogo />
+        </HStack>
       </Flex>
       <StaRibbon />
       <ScrollView>
         <VStack
-          paddingTop="2"
-          paddingBottom="1"
-          margin="1"
-          space="2"
           backgroundColor="bg.100"
           _dark={{ backgroundColor: 'bgDarkMode.100' }}
         />
@@ -43,12 +48,10 @@ const MySkillsContainer = () => {
           marginBottom="1"
           marginTop="4"
           handleSubmit={() => {
-            console.log('submit')
+            null
           }}
           handleChangeText={(text: string) => {
-            setSkillsValue((skills: string[]) => {
-              return [...skills, text]
-            })
+            setSearchTxt(text)
           }}
         />
         <VStack
@@ -65,7 +68,7 @@ const MySkillsContainer = () => {
             value={skillsValue}
             accessibilityLabel="choose skills"
           >
-            {roleGroups.map((roleGroup: RoleGroup) => (
+            {filteredSkills.map((roleGroup: RoleGroup) => (
               <Checkbox
                 borderColor="inputBorder.100"
                 colorScheme="primary"
@@ -77,9 +80,31 @@ const MySkillsContainer = () => {
             ))}
           </Checkbox.Group>
         </VStack>
+        <VStack marginX={6}>
+          <Button
+            borderWidth={2}
+            backgroundColor="bg.100"
+            variant="outline"
+            borderColor="purple.100"
+            _text={{
+              color: 'purple.100',
+            }}
+          >
+            Next
+          </Button>
+          <Button
+            backgroundColor="bg.100"
+            _dark={{ backgroundColor: 'bgDarkMode.100' }}
+            _text={{
+              color: 'black',
+            }}
+          >
+            Skip
+          </Button>
+        </VStack>
       </ScrollView>
     </>
   )
 }
 
-export default MySkillsContainer
+export default MyExperienceContainer
