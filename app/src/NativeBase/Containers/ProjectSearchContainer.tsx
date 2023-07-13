@@ -69,6 +69,9 @@ const ProjectSearchContainer = () => {
     roleGroupName =>
       ({
         text: roleGroupName,
+        color: 'primary.100',
+        darkModeColor: 'primary.40',
+        fontWeight: '300',
         onPress: () =>
           handleQuickSearchSubmit(ProjectsSearchField.Role, roleGroupName),
       } as ChoicesListChoice),
@@ -78,6 +81,9 @@ const ProjectSearchContainer = () => {
     technology =>
       ({
         text: technology,
+        color: 'primary.100',
+        darkModeColor: 'primary.40',
+        fontWeight: '300',
         onPress: () =>
           handleQuickSearchSubmit(ProjectsSearchField.Skills, technology),
       } as ChoicesListChoice),
@@ -87,6 +93,9 @@ const ProjectSearchContainer = () => {
     cause =>
       ({
         text: cause,
+        color: 'primary.100',
+        darkModeColor: 'primary.40',
+        fontWeight: '300',
         onPress: () =>
           handleQuickSearchSubmit(ProjectsSearchField.Sector, cause),
       } as ChoicesListChoice),

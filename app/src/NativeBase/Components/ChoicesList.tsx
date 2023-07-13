@@ -8,6 +8,10 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
 export interface ChoicesListChoice {
   text: string
+  color: string
+  darkModeColor: string
+  fontSize?: string
+  fontWeight?: string
   onPress: () => void
 }
 
@@ -32,10 +36,13 @@ const ChoicesList: FC<ChoicesListProps> = ({ choices }) => (
           borderBottomWidth="1"
           justifyContent="space-between"
         >
-          <Text fontWeight="300">{choice.text}</Text>
+          <Text fontWeight={choice.fontWeight} fontSize={choice.fontSize}>
+            {choice.text}
+          </Text>
           <Icon
             as={MaterialIcons}
-            color="primary.100"
+            color={choice.color}
+            _dark={{ color: choice.darkModeColor }}
             name="arrow-forward-ios"
             size="md"
           />

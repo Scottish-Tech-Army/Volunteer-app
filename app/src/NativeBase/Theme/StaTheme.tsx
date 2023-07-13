@@ -28,7 +28,8 @@ const common = {
   },
   fonts: {
     family: {
-      primary: 'Poppins-Regular',
+      primary: 'Poppins',
+      secondary: 'BebasNeue-Regular',
     },
     size: {
       '2xs': 12,
@@ -174,7 +175,9 @@ const StaTheme = extendTheme({
   fonts: {
     body: common.fonts.family.primary,
     heading: common.fonts.family.primary,
+    title: common.fonts.family.secondary,
     primary: common.fonts.family.primary,
+    secondary: common.fonts.family.secondary,
   },
 
   fontSizes: common.fonts.size,
