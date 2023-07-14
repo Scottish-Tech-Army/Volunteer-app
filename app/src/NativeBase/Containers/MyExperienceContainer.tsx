@@ -15,6 +15,7 @@ import StaThemeLogo from '@/NativeBase/Assets/Images/Logos/sta-ribbon-logo.svg'
 import FreeSearchBar from '../Components/FreeSearchBar'
 import React from 'react'
 import { RoleGroup, roleGroups } from '@/Services/modules/projects/roleGroups'
+
 const MyExperienceContainer = () => {
   const [skillsValue, setSkillsValue] = React.useState<string[]>([])
   const [searchTxt, setSearchTxt] = React.useState<string>('') // search text
@@ -48,13 +49,8 @@ const MyExperienceContainer = () => {
             setSearchTxt(text)
           }}
         />
-        <VStack paddingTop="4" paddingBottom="2" margin="2" space="4">
+        <VStack paddingTop="4" paddingBottom="2" margin="2">
           <Checkbox.Group
-            _dark={
-              {
-                // backgroundColor: 'bgDarkMode.100',
-              }
-            }
             marginLeft="2"
             onChange={(value: string[]) => {
               setSkillsValue(value)
@@ -66,6 +62,9 @@ const MyExperienceContainer = () => {
               <Checkbox
                 borderColor="inputBorder.100"
                 colorScheme="primary"
+                _dark={{
+                  borderColor: 'white',
+                }}
                 value={roleGroup.groupName}
                 key={`${roleGroup.groupName} - ${index}`}
               >
