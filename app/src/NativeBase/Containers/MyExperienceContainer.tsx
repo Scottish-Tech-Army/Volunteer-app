@@ -38,11 +38,6 @@ const MyExperienceContainer = () => {
       </Flex>
       <StaRibbon />
       <ScrollView>
-        <VStack
-          backgroundColor="bg.100"
-          _dark={{ backgroundColor: 'bgDarkMode.100' }}
-        />
-
         <FreeSearchBar
           marginBottom="1"
           marginTop="4"
@@ -53,26 +48,26 @@ const MyExperienceContainer = () => {
             setSearchTxt(text)
           }}
         />
-        <VStack
-          paddingTop="4"
-          paddingBottom="2"
-          margin="2"
-          space="4"
-          backgroundColor="bg.100"
-          _dark={{ backgroundColor: 'bgDarkMode.100' }}
-        >
+        <VStack paddingTop="4" paddingBottom="2" margin="2" space="4">
           <Checkbox.Group
+            _dark={
+              {
+                // backgroundColor: 'bgDarkMode.100',
+              }
+            }
             marginLeft="2"
-            onChange={setSkillsValue}
+            onChange={(value: string[]) => {
+              setSkillsValue(value)
+            }}
             value={skillsValue}
             accessibilityLabel="choose skills"
           >
-            {filteredSkills.map((roleGroup: RoleGroup) => (
+            {filteredSkills.map((roleGroup: RoleGroup, index: number) => (
               <Checkbox
                 borderColor="inputBorder.100"
                 colorScheme="primary"
                 value={roleGroup.groupName}
-                key={roleGroup.groupName}
+                key={`${roleGroup.groupName} - ${index}`}
               >
                 {roleGroup.groupName}
               </Checkbox>
@@ -93,7 +88,11 @@ const MyExperienceContainer = () => {
           </Button>
           <Button
             backgroundColor="bg.100"
-            _dark={{ backgroundColor: 'bgDarkMode.100' }}
+            _dark={{
+              backgroundColor: 'bgDarkMode.100',
+              _text: { color: 'white' },
+              borderColor: 'white',
+            }}
             _text={{
               color: 'black',
             }}
