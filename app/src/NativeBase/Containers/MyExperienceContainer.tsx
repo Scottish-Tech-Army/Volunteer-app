@@ -29,7 +29,7 @@ const MyExperienceContainer = () => {
 
   return (
     <>
-      <Flex alignItems={'flex-end'} marginY={-12}>
+      <Flex marginY={-12}>
         <HStack marginBottom={12} alignItems={'flex-end'}>
           <Heading size="md" fontWeight="bold" marginRight={-5} marginY={2}>
             My Experience
@@ -61,7 +61,6 @@ const MyExperienceContainer = () => {
             {filteredSkills.map((roleGroup: RoleGroup, index: number) => (
               <Checkbox
                 borderColor="inputBorder.100"
-                colorScheme="primary"
                 _dark={{
                   borderColor: 'white',
                 }}
@@ -77,7 +76,6 @@ const MyExperienceContainer = () => {
           <Button
             borderWidth={2}
             backgroundColor="bg.100"
-            variant="outline"
             borderColor="purple.100"
             _text={{
               color: 'purple.100',
@@ -86,6 +84,8 @@ const MyExperienceContainer = () => {
             Next
           </Button>
           <Button
+            borderWidth={2}
+            borderColor={'bg.100'}
             backgroundColor="bg.100"
             _dark={{
               backgroundColor: 'bgDarkMode.100',
