@@ -35,11 +35,11 @@ export enum ChoicesListFontStyle {
 const fontStyles = {
   [ChoicesListFontStyle.mediumLight]: {
     fontSize: 'md',
-    fontWeight: '300',
+    fontFamily: 'primaryLight',
   },
   [ChoicesListFontStyle.smallSemiBold]: {
     fontSize: 'sm',
-    fontWeight: '600',
+    fontFamily: 'primarySemiBold',
   },
 }
 
@@ -67,7 +67,7 @@ const ChoicesList: FC<ChoicesListProps> = ({ choices, colour, style }) => (
           justifyContent="space-between"
         >
           <Text
-            fontWeight={fontStyles[style].fontWeight}
+            fontFamily={fontStyles[style].fontFamily}
             fontSize={fontStyles[style].fontSize}
           >
             {choice.text}

@@ -13,6 +13,7 @@ import {
   Heading,
   HStack,
   Icon,
+  Pressable,
   ScrollView,
   Text,
   VStack,
@@ -72,28 +73,31 @@ const ProfileContainer = () => {
               borderRadius="full"
               marginLeft="24px"
             />
-            <Icon
-              as={MaterialIcons}
-              color="darkGrey.100"
-              _dark={{ color: 'secondaryGrey.40' }}
-              name="lock"
-              size={6}
-            />
+            <Pressable onPress={underDevelopmentAlert}>
+              <Icon
+                as={MaterialIcons}
+                color="darkGrey.100"
+                _dark={{ color: 'secondaryGrey.40' }}
+                name="lock"
+                size={6}
+              />
+            </Pressable>
           </HStack>
           <HStack>
-            <Heading fontSize="md" fontWeight="700" paddingLeft="24px">
+            <Heading fontSize="md" fontFamily="heading" paddingLeft="24px">
               Full Name
             </Heading>
             <Text fontSize="xs" paddingLeft="-2">
               (She)
             </Text>
-            <Box
+            <Pressable
               width="24px"
               height="24px"
               marginTop="-2"
               borderBottomWidth={2}
               borderBottomColor="darkGrey.100"
               _dark={{ borderBottomColor: 'secondaryGrey.40' }}
+              onPress={underDevelopmentAlert}
             >
               <Icon
                 as={MaterialCommunityIcons}
@@ -102,7 +106,7 @@ const ProfileContainer = () => {
                 name="pencil-outline"
                 size={6}
               />
-            </Box>
+            </Pressable>
           </HStack>
           <Text fontSize="xs" marginTop="-4">
             P-R-O-N-O-U-N-C-I-A-T-I-O-N
@@ -113,7 +117,7 @@ const ProfileContainer = () => {
           <Text fontSize="xs" paddingTop={-2}>
             Status
           </Text>
-          <Heading fontSize="md" fontWeight="700" paddingTop={-2}>
+          <Heading fontSize="md" fontFamily="heading" paddingTop={-2}>
             My volunteering
           </Heading>
           <Box
@@ -123,7 +127,7 @@ const ProfileContainer = () => {
             shadow="9"
             marginTop={2}
             padding={2}
-            width="92%"
+            width="95%"
           >
             <HStack>
               <Icon

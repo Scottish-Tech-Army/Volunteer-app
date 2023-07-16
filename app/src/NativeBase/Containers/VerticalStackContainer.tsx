@@ -77,7 +77,7 @@ const VerticalStackContainer = () => {
           >
             <VStack padding="2" shadow="2">
               <Heading paddingBottom="2">{item.title}</Heading>
-              <Text fontWeight="bold">{item.charity}</Text>
+              <Text fontFamily="primaryBold">{item.charity}</Text>
               <Text>{item.role}</Text>
               <Text>{item.description}</Text>
               <TechBadge badges={item.badge} />
