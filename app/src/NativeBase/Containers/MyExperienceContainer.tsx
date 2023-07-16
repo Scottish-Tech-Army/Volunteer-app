@@ -9,6 +9,7 @@ import {
   ScrollView,
   Flex,
   Button,
+  Box,
 } from 'native-base'
 import StaRibbon from '../Components/StaRibbon'
 import StaThemeLogo from '@/NativeBase/Assets/Images/Logos/sta-ribbon-logo.svg'
@@ -29,14 +30,14 @@ const MyExperienceContainer = () => {
 
   return (
     <>
-      <Flex marginY={-12}>
-        <HStack marginBottom={12} alignItems={'flex-end'}>
-          <Heading size="md" fontWeight="bold" marginRight={-5} marginY={2}>
-            My Experience
-          </Heading>
+      <HStack marginTop={-10} marginBottom={12} alignItems={'flex-end'}>
+        <Heading size="md" fontWeight="bold" marginRight={-5}>
+          My Experience
+        </Heading>
+        <Flex flex={1} alignItems={'flex-end'}>
           <StaThemeLogo />
-        </HStack>
-      </Flex>
+        </Flex>
+      </HStack>
       <StaRibbon />
       <ScrollView>
         <FreeSearchBar
