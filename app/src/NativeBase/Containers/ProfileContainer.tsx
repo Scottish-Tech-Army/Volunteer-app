@@ -71,17 +71,7 @@ const ProfileContainer = () => {
               _dark={{ borderColor: 'secondaryGrey.40' }}
               borderWidth="4px"
               borderRadius="full"
-              marginLeft="24px"
             />
-            <Pressable onPress={underDevelopmentAlert}>
-              <Icon
-                as={MaterialIcons}
-                color="darkGrey.100"
-                _dark={{ color: 'secondaryGrey.40' }}
-                name="lock"
-                size={6}
-              />
-            </Pressable>
           </HStack>
           <HStack>
             <Heading fontSize="md" fontFamily="heading" paddingLeft="24px">
