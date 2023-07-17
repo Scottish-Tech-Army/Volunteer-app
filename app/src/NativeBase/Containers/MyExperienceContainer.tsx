@@ -9,7 +9,7 @@ import {
   ScrollView,
   Flex,
   Button,
-  Box,
+  View,
 } from 'native-base'
 import StaRibbon from '../Components/StaRibbon'
 import StaThemeLogo from '@/NativeBase/Assets/Images/Logos/sta-ribbon-logo.svg'
@@ -30,8 +30,8 @@ const MyExperienceContainer = () => {
 
   return (
     <>
-      <HStack marginTop={-10} marginBottom={12} alignItems={'flex-end'}>
-        <Heading size="md" fontWeight="bold" marginRight={-5}>
+      <HStack mt={-10} mb={12} alignItems={'flex-end'}>
+        <Heading size="md" fontWeight="bold" marginRight={-5} mb={-5}>
           My Experience
         </Heading>
         <Flex flex={1} alignItems={'flex-end'}>
@@ -39,10 +39,9 @@ const MyExperienceContainer = () => {
         </Flex>
       </HStack>
       <StaRibbon />
-      <ScrollView>
+      <View margin={'4'} pt={2}>
         <FreeSearchBar
-          marginBottom="1"
-          marginTop="4"
+          marginTop="2"
           handleSubmit={() => {
             null
           }}
@@ -50,9 +49,11 @@ const MyExperienceContainer = () => {
             setSearchTxt(text)
           }}
         />
-        <VStack paddingTop="4" paddingBottom="2" margin="2">
+      </View>
+      <ScrollView>
+        <VStack pb="1" mt={-3} margin="2">
           <Checkbox.Group
-            marginLeft="2"
+            ml="2"
             onChange={(value: string[]) => {
               setSkillsValue(value)
             }}
