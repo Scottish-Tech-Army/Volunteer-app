@@ -9,6 +9,7 @@ import {
   ScrollView,
   Flex,
   Button,
+  Box,
   View,
 } from 'native-base'
 import StaRibbon from '../Components/StaRibbon'
@@ -31,15 +32,22 @@ const MyExperienceContainer = () => {
   return (
     <>
       <HStack mt={-10} mb={12} alignItems={'flex-end'}>
-        <Heading size="md" fontWeight="bold" marginRight={-5} mb={-5}>
+        <Heading
+          size="md"
+          letterSpacing={3}
+          fontWeight={400}
+          mb={-3}
+          fontFamily="BebasNeue-Regular"
+          adjustsFontSizeToFit
+        >
           My Experience
         </Heading>
-        <Flex flex={1} alignItems={'flex-end'}>
-          <StaThemeLogo />
+        <Flex flex={1} alignItems={'flex-end'} mt={-10}>
+          <StaThemeLogo width={'100%'} />
         </Flex>
       </HStack>
       <StaRibbon />
-      <View margin={'4'} pt={2}>
+      <View margin={'4'}>
         <FreeSearchBar
           marginTop="2"
           handleSubmit={() => {
@@ -51,7 +59,7 @@ const MyExperienceContainer = () => {
         />
       </View>
       <ScrollView>
-        <VStack pb="1" mt={-3} margin="2">
+        <VStack mt={-3} margin="2">
           <Checkbox.Group
             ml="2"
             onChange={(value: string[]) => {
