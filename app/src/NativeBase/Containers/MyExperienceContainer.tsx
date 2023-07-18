@@ -11,6 +11,7 @@ import {
   Button,
   View,
 } from 'native-base'
+import { TouchableWithoutFeedback, Keyboard } from 'react-native'
 import StaRibbon from '../Components/StaRibbon'
 import StaThemeLogo from '@/NativeBase/Assets/Images/Logos/sta-ribbon-logo.svg'
 import FreeSearchBar from '../Components/FreeSearchBar'
@@ -45,63 +46,65 @@ const MyExperienceContainer = () => {
         </Flex>
       </HStack>
       <StaRibbon />
-      <View margin={'4'}>
-        <FreeSearchBar
-          marginTop="2"
-          handleSubmit={() => null}
-          handleChangeText={(text: string) => setSearchTxt(text)}
-        />
-      </View>
-      <ScrollView>
-        <VStack mt={-3} margin="2">
-          <Checkbox.Group
-            ml="2"
-            onChange={(value: string[]) => setSkillsValue(value)}
-            value={skillsValue}
-            accessibilityLabel="choose skills"
-          >
-            {filteredSkills.map((roleGroup: RoleGroup, index: number) => (
-              <Checkbox
-                borderColor="inputBorder.100"
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <View margin={'4'}>
+          <FreeSearchBar
+            marginTop="2"
+            handleSubmit={() => null}
+            handleChangeText={(text: string) => setSearchTxt(text)}
+          />
+          <ScrollView>
+            <VStack mt={-3} margin="2">
+              <Checkbox.Group
+                ml="2"
+                onChange={(value: string[]) => setSkillsValue(value)}
+                value={skillsValue}
+                accessibilityLabel="choose skills"
+              >
+                {filteredSkills.map((roleGroup: RoleGroup, index: number) => (
+                  <Checkbox
+                    borderColor="inputBorder.100"
+                    _dark={{
+                      borderColor: 'white',
+                    }}
+                    value={roleGroup.groupName}
+                    key={`${roleGroup.groupName} - ${index}`}
+                  >
+                    {roleGroup.groupName}
+                  </Checkbox>
+                ))}
+              </Checkbox.Group>
+            </VStack>
+            <VStack marginX={6}>
+              <Button
+                borderWidth={2}
+                backgroundColor="bg.100"
+                borderColor="purple.100"
+                _text={{
+                  color: 'purple.100',
+                }}
+              >
+                Next
+              </Button>
+              <Button
+                borderWidth={2}
+                borderColor={'bg.100'}
+                backgroundColor="bg.100"
                 _dark={{
+                  backgroundColor: 'bgDarkMode.100',
+                  _text: { color: 'white' },
                   borderColor: 'white',
                 }}
-                value={roleGroup.groupName}
-                key={`${roleGroup.groupName} - ${index}`}
+                _text={{
+                  color: 'black',
+                }}
               >
-                {roleGroup.groupName}
-              </Checkbox>
-            ))}
-          </Checkbox.Group>
-        </VStack>
-        <VStack marginX={6}>
-          <Button
-            borderWidth={2}
-            backgroundColor="bg.100"
-            borderColor="purple.100"
-            _text={{
-              color: 'purple.100',
-            }}
-          >
-            Next
-          </Button>
-          <Button
-            borderWidth={2}
-            borderColor={'bg.100'}
-            backgroundColor="bg.100"
-            _dark={{
-              backgroundColor: 'bgDarkMode.100',
-              _text: { color: 'white' },
-              borderColor: 'white',
-            }}
-            _text={{
-              color: 'black',
-            }}
-          >
-            Skip
-          </Button>
-        </VStack>
-      </ScrollView>
+                Skip
+              </Button>
+            </VStack>
+          </ScrollView>
+        </View>
+      </TouchableWithoutFeedback>
     </>
   )
 }
