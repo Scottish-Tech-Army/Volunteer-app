@@ -9,7 +9,6 @@ import {
   ScrollView,
   Flex,
   Button,
-  Box,
   View,
 } from 'native-base'
 import StaRibbon from '../Components/StaRibbon'
@@ -21,13 +20,12 @@ import { RoleGroup, roleGroups } from '@/Services/modules/projects/roleGroups'
 const MyExperienceContainer = () => {
   const [skillsValue, setSkillsValue] = React.useState<string[]>([])
   const [searchTxt, setSearchTxt] = React.useState<string>('') // search text
-
   /**
    * Filter the role groups based on the search text entered by the user
    */
-  const filteredSkills = roleGroups.filter((roleGroup: RoleGroup) => {
-    return roleGroup.groupName.toLowerCase().includes(searchTxt.toLowerCase())
-  })
+  const filteredSkills = roleGroups.filter((roleGroup: RoleGroup) =>
+    roleGroup.groupName.toLowerCase().includes(searchTxt.toLowerCase()),
+  )
 
   return (
     <>
@@ -50,21 +48,15 @@ const MyExperienceContainer = () => {
       <View margin={'4'}>
         <FreeSearchBar
           marginTop="2"
-          handleSubmit={() => {
-            null
-          }}
-          handleChangeText={(text: string) => {
-            setSearchTxt(text)
-          }}
+          handleSubmit={() => null}
+          handleChangeText={(text: string) => setSearchTxt(text)}
         />
       </View>
       <ScrollView>
         <VStack mt={-3} margin="2">
           <Checkbox.Group
             ml="2"
-            onChange={(value: string[]) => {
-              setSkillsValue(value)
-            }}
+            onChange={(value: string[]) => setSkillsValue(value)}
             value={skillsValue}
             accessibilityLabel="choose skills"
           >
