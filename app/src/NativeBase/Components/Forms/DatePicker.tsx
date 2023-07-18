@@ -109,7 +109,7 @@ const DatePicker: FC<DatePickerProps> = ({
           <Text
             paddingTop="8"
             fontSize="sm"
-            fontWeight="600"
+            fontFamily="primarySemiBold"
             lineHeight="7"
             paddingLeft="6"
             color={

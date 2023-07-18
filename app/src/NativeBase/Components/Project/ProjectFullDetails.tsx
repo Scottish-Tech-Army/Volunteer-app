@@ -85,7 +85,7 @@ const ProjectFullDetails = ({
               linkDefault
               linkStyle={{ color: StaTheme.colors.primary[100] }}
             >
-              <Text fontSize="xs" fontWeight="300">
+              <Text fontSize="xs" fontFamily="primaryLight">
                 {project.description}
               </Text>
             </Hyperlink>

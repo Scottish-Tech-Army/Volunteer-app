@@ -27,9 +27,8 @@ const common = {
     white: '#ffffff',
   },
   fonts: {
-    family: {
-      primary: 'Poppins-Regular',
-    },
+    primary: 'Poppins-Regular',
+    secondary: 'BebasNeue-Regular',
     size: {
       '2xs': 12,
       xs: 16,
@@ -169,12 +168,18 @@ const StaTheme = extendTheme({
         italic: 'Poppins-BlackItalic',
       },
     },
+    BebasNeue: 'BebasNeue-Regular',
   },
 
   fonts: {
-    body: common.fonts.family.primary,
-    heading: common.fonts.family.primary,
-    primary: common.fonts.family.primary,
+    body: common.fonts.primary,
+    heading: 'Poppins-SemiBold',
+    title: common.fonts.secondary,
+    primary: common.fonts.primary,
+    primaryLight: 'Poppins-Light',
+    primarySemiBold: 'Poppins-SemiBold',
+    primaryBold: 'Poppins-Bold',
+    secondary: common.fonts.secondary,
   },
 
   fontSizes: common.fonts.size,
@@ -196,8 +201,7 @@ const StaTheme = extendTheme({
         _dark: {
           color: common.colours.offWhite100,
         },
-        fontFamily: 'primary',
-        fontWeight: '600',
+        fontFamily: 'heading',
       },
     },
 
@@ -214,7 +218,7 @@ const StaTheme = extendTheme({
           bg: 'primary.80',
         },
         _text: {
-          fontWeight: '600',
+          fontFamily: 'primarySemiBold',
           fontSize: 'md',
           padding: '0',
           color: common.colours.white,
@@ -272,7 +276,7 @@ const StaTheme = extendTheme({
           _text: {
             px: '0',
             fontSize: 'sm',
-            fontWeight: '600',
+            fontFamily: 'primarySemiBold',
             color: 'text.100',
           },
           _astrick: {
