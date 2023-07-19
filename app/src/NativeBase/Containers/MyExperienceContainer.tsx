@@ -10,8 +10,9 @@ import {
   Flex,
   Button,
   View,
+  Pressable,
 } from 'native-base'
-import { TouchableWithoutFeedback, Keyboard } from 'react-native'
+import { Keyboard } from 'react-native'
 import StaRibbon from '../Components/StaRibbon'
 import StaThemeLogo from '@/NativeBase/Assets/Images/Logos/sta-ribbon-logo.svg'
 import FreeSearchBar from '../Components/FreeSearchBar'
@@ -30,23 +31,23 @@ const MyExperienceContainer = () => {
 
   return (
     <>
-      <HStack mt={-10} mb={12} alignItems={'flex-end'}>
-        <Heading
-          size="md"
-          letterSpacing={3}
-          fontWeight={400}
-          mb={-3}
-          fontFamily="BebasNeue-Regular"
-          adjustsFontSizeToFit
-        >
-          My Experience
-        </Heading>
-        <Flex flex={1} alignItems={'flex-end'} mt={-10}>
-          <StaThemeLogo width={'100%'} />
-        </Flex>
-      </HStack>
-      <StaRibbon />
-      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <Pressable onPress={() => Keyboard.dismiss()}>
+        <HStack mt={-10} mb={12} alignItems={'flex-end'}>
+          <Heading
+            size="md"
+            letterSpacing={3}
+            fontWeight={400}
+            mb={-3}
+            fontFamily="BebasNeue-Regular"
+            adjustsFontSizeToFit
+          >
+            My Experience
+          </Heading>
+          <Flex flex={1} alignItems={'flex-end'} mt={-10}>
+            <StaThemeLogo width={'100%'} />
+          </Flex>
+        </HStack>
+        <StaRibbon />
         <View margin={'4'}>
           <FreeSearchBar
             marginTop="2"
@@ -104,7 +105,7 @@ const MyExperienceContainer = () => {
             </VStack>
           </ScrollView>
         </View>
-      </TouchableWithoutFeedback>
+      </Pressable>
     </>
   )
 }
