@@ -44,7 +44,7 @@ const MyExperienceContainer = () => {
           <StaThemeLogo width={'110%'} />
         </Flex>
       </HStack>
-      <ProgressBar />
+      <ProgressBar bgColor="purple.20" />
       <View margin={'4'}>
         <FreeSearchBar
           marginTop="2"
