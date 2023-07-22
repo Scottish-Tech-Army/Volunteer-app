@@ -11,6 +11,15 @@ type CheckboxProps = {
   checked: boolean
 }
 
+/**
+ * Component that displays a checkbox that can be checked or unchecked.
+ *
+ * @param { CheckboxProps} props The component props
+ * @param {value: string[] => void} props.onChange function called when the checkbox is pressed
+ * @param {boolean} props.checked whether the checkbox is checked or not
+ * @returns {React.ReactElement} Component
+ */
+
 const Checkbox: React.FC<CheckboxProps> = ({ onChange, checked }) => {
   return (
     <Pressable
