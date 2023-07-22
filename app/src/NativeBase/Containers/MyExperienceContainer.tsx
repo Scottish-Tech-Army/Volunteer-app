@@ -5,84 +5,95 @@ import {
   Heading,
   VStack,
   HStack,
-  Checkbox,
   ScrollView,
   Flex,
   Button,
-  Box,
   View,
-  Pressable,
+  Text,
 } from 'native-base'
-import { Keyboard } from 'react-native'
-import StaRibbon from '../Components/StaRibbon'
+import ProgressBar from '../Components/ProgressBar'
 import StaThemeLogo from '@/NativeBase/Assets/Images/Logos/sta-ribbon-logo.svg'
 import FreeSearchBar from '../Components/FreeSearchBar'
 import React from 'react'
+import Checkbox from '../Components/Checkbox'
 import { RoleGroup, roleGroups } from '@/Services/modules/projects/roleGroups'
 
 const MyExperienceContainer = () => {
   const [skillsValue, setSkillsValue] = React.useState<string[]>([])
   const [searchTxt, setSearchTxt] = React.useState<string>('') // search text
-
   /**
    * Filter the role groups based on the search text entered by the user
    */
-  const filteredSkills = roleGroups.filter((roleGroup: RoleGroup) => {
-    return roleGroup.groupName.toLowerCase().includes(searchTxt.toLowerCase())
-  })
+  const filteredSkills = roleGroups.filter((roleGroup: RoleGroup) =>
+    roleGroup.groupName.toLowerCase().includes(searchTxt.toLowerCase()),
+  )
 
   return (
     <>
-      <HStack mt={-10} mb={12} alignItems={'flex-end'}>
+      <HStack mt={-10} mb={5} alignItems={'flex-end'}>
         <Heading
           size="md"
           letterSpacing={3}
           fontWeight={400}
-          mb={-3}
           fontFamily="BebasNeue-Regular"
           adjustsFontSizeToFit
         >
           My Experience
         </Heading>
         <Flex flex={1} alignItems={'flex-end'} mt={-10}>
-          <StaThemeLogo width={'100%'} />
+          <StaThemeLogo width={'110%'} />
         </Flex>
       </HStack>
-      <StaRibbon />
+      <ProgressBar />
       <View margin={'4'}>
         <FreeSearchBar
           marginTop="2"
-          handleSubmit={() => {
-            null
-          }}
-          handleChangeText={(text: string) => {
-            setSearchTxt(text)
-          }}
+          marginBottom="-2"
+          handleSubmit={() => null}
+          handleChangeText={(text: string) => setSearchTxt(text)}
         />
       </View>
       <ScrollView>
-        <VStack mt={-3} margin="2">
-          <Checkbox.Group
-            ml="2"
-            onChange={(value: string[]) => {
-              setSkillsValue(value)
-            }}
-            value={skillsValue}
-            accessibilityLabel="choose skills"
-          >
-            {filteredSkills.map((roleGroup: RoleGroup, index: number) => (
+        <VStack mt={-2} margin="2">
+          {filteredSkills.map((roleGroup: RoleGroup, index: number) => (
+            <View
+              key={`${roleGroup.groupName} - ${index}`}
+              flexDirection={'row'}
+              alignItems={'center'}
+            >
               <Checkbox
-                borderColor="inputBorder.100"
-                _dark={{
-                  borderColor: 'white',
+                onChange={() => {
+                  if (skillsValue.includes(roleGroup.groupName)) {
+                    setSkillsValue(
+                      skillsValue.filter(
+                        skill => skill !== roleGroup.groupName, // remove the skill from the array
+                      ),
+                    )
+                  } else {
+                    setSkillsValue([...skillsValue, roleGroup.groupName]) // add the skill to the array
+                  }
                 }}
-                value={roleGroup.groupName}
-                key={`${roleGroup.groupName} - ${index}`}
+                checked={skillsValue.includes(roleGroup.groupName)}
+              />
+              <Text
+                ml="4"
+                marginY="0.5"
+                onPress={() => {
+                  if (skillsValue.includes(roleGroup.groupName)) {
+                    setSkillsValue(
+                      skillsValue.filter(
+                        skill => skill !== roleGroup.groupName,
+                      ),
+                    )
+                  } else {
+                    setSkillsValue([...skillsValue, roleGroup.groupName])
+                  }
+                }}
               >
                 {roleGroup.groupName}
-              </Checkbox>
-            ))}
-          </Checkbox.Group>
+              </Text>
+            </View>
+          ))}
         </VStack>
         <VStack marginX={6}>
           <Button
