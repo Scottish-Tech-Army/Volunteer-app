@@ -17,16 +17,24 @@ import FreeSearchBar from '../Components/FreeSearchBar'
 import React from 'react'
 import Checkbox from '../Components/Checkbox'
 import { RoleGroup, roleGroups } from '@/Services/modules/projects/roleGroups'
+import {
+  progressBarColors,
+  changeScreen,
+  goBackScreen,
+} from '../../Utils/ProgressBarColours'
 
 const MyExperienceContainer = () => {
   const [skillsValue, setSkillsValue] = React.useState<string[]>([])
   const [searchTxt, setSearchTxt] = React.useState<string>('') // search text
+  const [currentBox, setCurrentBox] = React.useState<number>(1) // current box in the progress bar
   /**
    * Filter the role groups based on the search text entered by the user
    */
   const filteredSkills = roleGroups.filter((roleGroup: RoleGroup) =>
     roleGroup.groupName.toLowerCase().includes(searchTxt.toLowerCase()),
   )
+
+  const progressBarColorsObject = progressBarColors(currentBox)
 
   return (
     <>
@@ -44,7 +52,7 @@ const MyExperienceContainer = () => {
           <StaThemeLogo width={'110%'} />
         </Flex>
       </HStack>
-      <ProgressBar bgColor="purple.20" />
+      <ProgressBar progressBarColors={progressBarColorsObject} />
       <View margin={'4'}>
         <FreeSearchBar
           marginTop="2"
@@ -103,6 +111,8 @@ const MyExperienceContainer = () => {
             _text={{
               color: 'purple.100',
             }}
+            onPress={() => changeScreen(currentBox, setCurrentBox)}
+            disabled={currentBox === 4}
           >
             Next
           </Button>
@@ -118,6 +128,8 @@ const MyExperienceContainer = () => {
             _text={{
               color: 'black',
             }}
+            disabled={currentBox === 1}
+            onPress={() => goBackScreen(currentBox, setCurrentBox)}
           >
             Skip
           </Button>
