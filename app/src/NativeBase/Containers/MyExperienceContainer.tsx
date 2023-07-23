@@ -39,32 +39,32 @@ const MyExperienceContainer = () => {
 
   return (
     <>
+      <HStack mt={-10} mb={5} alignItems={'flex-end'}>
+        <Heading
+          size="md"
+          letterSpacing={3}
+          fontWeight={400}
+          fontFamily="BebasNeue-Regular"
+          adjustsFontSizeToFit
+        >
+          My Experience
+        </Heading>
+        <Flex flex={1} mt={-5} alignItems={'flex-end'}>
+          <StaThemeLogo />
+        </Flex>
+      </HStack>
+      <ProgressBar progressBarColors={progressBarColorsObject} />
+      <View margin={'4'}>
+        <FreeSearchBar
+          marginTop="2"
+          marginBottom="-2"
+          handleSubmit={() => null}
+          handleChangeText={(text: string) => setSearchTxt(text)}
+        />
+      </View>
       <KeyboardAwareScrollView>
-        <HStack mt={-10} mb={5} alignItems={'flex-end'}>
-          <Heading
-            size="md"
-            letterSpacing={3}
-            fontWeight={400}
-            fontFamily="BebasNeue-Regular"
-            adjustsFontSizeToFit
-          >
-            My Experience
-          </Heading>
-          <Flex flex={1} alignItems={'flex-end'} mt={-10}>
-            <StaThemeLogo width={'110%'} />
-          </Flex>
-        </HStack>
-        <ProgressBar progressBarColors={progressBarColorsObject} />
-        <View margin={'4'}>
-          <FreeSearchBar
-            marginTop="2"
-            marginBottom="-2"
-            handleSubmit={() => null}
-            handleChangeText={(text: string) => setSearchTxt(text)}
-          />
-        </View>
         <ScrollView>
-          <VStack mt={-2} margin="2">
+          <VStack mt={-2} margin="5">
             {filteredSkills.map((roleGroup: RoleGroup, index: number) => (
               <View
                 key={`${roleGroup.groupName} - ${index}`}
