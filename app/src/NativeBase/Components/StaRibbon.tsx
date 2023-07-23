@@ -4,10 +4,14 @@
 import { HStack, Box } from 'native-base'
 import React from 'react'
 
-const StaRibbon = () => (
+type StaRibbonProps = {
+  colour: string
+}
+
+const StaRibbon: React.FC<StaRibbonProps> = ({ colour }) => (
   <HStack space="2">
-    <Box bgColor="primary.100" height="15" width="70%" />
-    <Box bgColor="primary.100" height="15" width="5%" borderRightRadius={10} />
+    <Box bgColor={colour} height="15" width="70%" />
+    <Box bgColor={colour} height="15" width="5%" borderRightRadius={10} />
   </HStack>
 )
 
