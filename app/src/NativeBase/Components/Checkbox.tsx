@@ -36,7 +36,7 @@ const Checkbox: React.FC<CheckboxProps> = ({ onChange, checked }) => {
         borderColor: 'white',
       }}
     >
-      {checked && <Ionicons name="checkmark" size={20} color="red" />}
+      {checked && <Ionicons name="checkmark" size={20} color="#D1338A" />}
     </Pressable>
   )
 }
