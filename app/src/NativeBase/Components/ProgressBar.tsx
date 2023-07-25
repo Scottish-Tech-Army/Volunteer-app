@@ -4,23 +4,23 @@
 import { Box, HStack } from 'native-base'
 import React from 'react'
 
-interface ProgressBarColors {
-  box1: string
-  box2: string
-  box3: string
-  box4: string
+interface ProgressBarProps {
+  colours: string[]
 }
 
-const ProgressBar: React.FC<{ progressBarColors: ProgressBarColors }> = ({
-  progressBarColors,
-}) => {
+const ProgressBar: React.FC<ProgressBarProps> = ({ colours }) => {
   return (
     <>
       <HStack marginX={5} space="3">
-        <Box bgColor={progressBarColors.box1} height="15" width="22%" />
-        <Box bgColor={progressBarColors.box2} height="15" width="22%" />
-        <Box bgColor={progressBarColors.box3} height="15" width="22%" />
-        <Box bgColor={progressBarColors.box4} height="15" width="22%" />
+        {colours.map((colour, index) => (
+          <Box
+            key={index}
+            bgColor={colour}
+            height="15"
+            width="22%"
+            borderRadius={5}
+          />
+        ))}
       </HStack>
     </>
   )

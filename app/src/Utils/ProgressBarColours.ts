@@ -2,23 +2,39 @@
  * @desc This file contains the functions that are used to change the colour of the progress bar
  */
 
+// type for the colours of the progress bar
 type ProgressBarColors = {
   box1: string
   box2: string
   box3: string
-  box4: string
+  bgColor: string
 }
 
-export const progressBarColors = (currentBox: number): ProgressBarColors => {
+/**
+ *
+ * @param currentBox
+ * @param bgColor
+ * @returns  {ProgressBarColors} - returns the colours for the progress bar
+ */
+
+export const getProgressBarColors = (
+  currentBox: number,
+  bgColor: string,
+): ProgressBarColors => {
+  const boxes = ['#F1F1F1', '#F1F1F1', '#F1F1F1'] // default colour for all boxes while the user is on the same screen
+  for (let i = 0; i < currentBox; i++) {
+    boxes[i] = bgColor
+  }
+
   return {
-    box1: currentBox >= 1 ? 'purple.20' : 'secondaryGrey.80',
-    box2: currentBox >= 2 ? 'purple.20' : 'secondaryGrey.80',
-    box3: currentBox >= 3 ? 'purple.20' : 'secondaryGrey.80',
-    box4: currentBox >= 4 ? 'purple.20' : 'secondaryGrey.80',
+    box1: boxes[0],
+    box2: boxes[1],
+    box3: boxes[2],
+    bgColor: boxes[3] === bgColor ? bgColor : '#F1F1F1',
   }
 }
 
-export const changeScreen = (
+export const nextScreen = (
   currentBox: number,
   setCurrentBox: (value: number) => void,
 ) => {
@@ -27,6 +43,7 @@ export const changeScreen = (
   }
 }
 
+//return to previous screen and update progress bar. Not used currently but can be used in future
 export const goBackScreen = (
   currentBox: number,
   setCurrentBox: (value: number) => void,
