@@ -11,6 +11,7 @@ import {
   View,
   Text,
 } from 'native-base'
+import ProfileButtons from '../Components/ProfileButtons'
 import ProgressBar from '../Components/ProgressBar'
 import StaThemeLogo from '@/NativeBase/Assets/Images/Logos/sta-ribbon-logo.svg'
 import FreeSearchBar from '../Components/FreeSearchBar'
@@ -18,15 +19,15 @@ import React from 'react'
 import Checkbox from '../Components/Checkbox'
 import { RoleGroup, roleGroups } from '@/Services/modules/projects/roleGroups'
 import {
-  progressBarColors,
-  changeScreen,
-  goBackScreen,
+  getProgressBarColors,
+  nextScreen,
 } from '../../Utils/ProgressBarColours'
 
 const MyExperienceContainer = () => {
-  const [skillsValue, setSkillsValue] = React.useState<string[]>([])
+  const [skillsValue, setSkillsValue] = React.useState<string[]>([]) // skills selected by the user
   const [searchTxt, setSearchTxt] = React.useState<string>('') // search text
   const [currentBox, setCurrentBox] = React.useState<number>(1) // current box in the progress bar
+
   /**
    * Filter the role groups based on the search text entered by the user
    */
@@ -34,7 +35,10 @@ const MyExperienceContainer = () => {
     roleGroup.groupName.toLowerCase().includes(searchTxt.toLowerCase()),
   )
 
-  const progressBarColorsObject = progressBarColors(currentBox)
+  //  get the progress bar colours for the current box in the progress bar
+  const progressBarColourObject = Object.values(
+    getProgressBarColors(currentBox, 'purple.20'),
+  )
 
   return (
     <>
@@ -52,7 +56,7 @@ const MyExperienceContainer = () => {
           <StaThemeLogo />
         </Flex>
       </HStack>
-      <ProgressBar progressBarColors={progressBarColorsObject} />
+      <ProgressBar colours={progressBarColourObject} />
       <View margin={'4'}>
         <FreeSearchBar
           marginTop="2"
@@ -61,7 +65,6 @@ const MyExperienceContainer = () => {
           handleChangeText={(text: string) => setSearchTxt(text)}
         />
       </View>
-
       <ScrollView>
         <VStack mt={-2} margin="5">
           {filteredSkills.map((roleGroup: RoleGroup, index: number) => (
@@ -72,14 +75,15 @@ const MyExperienceContainer = () => {
             >
               <Checkbox
                 onChange={() => {
+                  // required to make the checkbox work on android devices (ios should work without this)  https://reactnative.dev/blog/2022/12/13/pointer-events-in-react-native
                   if (skillsValue.includes(roleGroup.groupName)) {
                     setSkillsValue(
                       skillsValue.filter(
-                        skill => skill !== roleGroup.groupName, // remove the skill from the array
+                        skill => skill !== roleGroup.groupName, // remove skill from the array
                       ),
                     )
                   } else {
-                    setSkillsValue([...skillsValue, roleGroup.groupName]) // add the skill to the array
+                    setSkillsValue([...skillsValue, roleGroup.groupName]) // add skill to the array
                   }
                 }}
                 checked={skillsValue.includes(roleGroup.groupName)}
@@ -88,6 +92,7 @@ const MyExperienceContainer = () => {
                 ml="4"
                 marginY="0.5"
                 onPress={() => {
+                  // required to make the text label work on android devices (ios should work without this)
                   if (skillsValue.includes(roleGroup.groupName)) {
                     setSkillsValue(
                       skillsValue.filter(
@@ -104,36 +109,37 @@ const MyExperienceContainer = () => {
             </View>
           ))}
         </VStack>
-        <VStack marginX={6}>
-          <Button
+        <VStack marginX={5}>
+          <ProfileButtons
             borderWidth={2}
             backgroundColor="bg.100"
             borderColor="purple.100"
+            fontFamily="Poppins-SemiBold"
             _text={{
               color: 'purple.100',
             }}
-            onPress={() => changeScreen(currentBox, setCurrentBox)}
-            disabled={currentBox === 4}
+            onPress={() => nextScreen(currentBox, setCurrentBox)}
+            disabled={currentBox === currentBox - 1}
           >
             Next
-          </Button>
-          <Button
-            borderWidth={2}
-            borderColor={'bg.100'}
+          </ProfileButtons>
+          <ProfileButtons
             backgroundColor="bg.100"
+            borderColor="bg.100"
+            fontFamily="Poppins-SemiBold"
             _dark={{
               backgroundColor: 'bgDarkMode.100',
               _text: { color: 'white' },
               borderColor: 'white',
             }}
             _text={{
-              color: 'black',
+              color: 'darkGrey.100',
             }}
-            disabled={currentBox === 1}
-            onPress={() => goBackScreen(currentBox, setCurrentBox)}
+            onPress={() => nextScreen(currentBox, setCurrentBox)}
+            disabled={currentBox === currentBox - 1}
           >
             Skip
-          </Button>
+          </ProfileButtons>
         </VStack>
       </ScrollView>
     </>
