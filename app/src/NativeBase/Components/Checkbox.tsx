@@ -1,10 +1,10 @@
-import { Pressable } from 'native-base'
-import React from 'react'
-import { Ionicons } from '@expo/vector-icons'
-
 /**
  * @file CheckBox component for the STA Volunteer App
  */
+
+import { Pressable } from 'native-base'
+import React from 'react'
+import { Ionicons } from '@expo/vector-icons'
 
 type CheckboxProps = {
   onChange: (value: string[]) => void

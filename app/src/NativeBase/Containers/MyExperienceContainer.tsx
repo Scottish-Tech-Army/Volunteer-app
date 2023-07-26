@@ -7,7 +7,6 @@ import {
   HStack,
   ScrollView,
   Flex,
-  Button,
   View,
   Text,
 } from 'native-base'
