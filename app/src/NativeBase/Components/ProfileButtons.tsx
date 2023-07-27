@@ -1,9 +1,13 @@
+/**
+ * @file for sta profile butttons
+ */
+
 import { Button } from 'native-base'
 import React from 'react'
 
 type ProfileButtonsProps = {
   onPress: () => void
-  disabled: boolean
+  disabled?: boolean
   children: React.ReactNode
   borderWidth?: number
   backgroundColor?: string

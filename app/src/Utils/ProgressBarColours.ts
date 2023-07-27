@@ -1,5 +1,5 @@
 /**
- * @desc This file contains the functions that are used to change the colour of the progress bar
+ * @file This file contains the functions that are used to change the colour of the progress bar
  */
 
 // type for the colours of the progress bar

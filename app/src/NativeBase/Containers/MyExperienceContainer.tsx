@@ -7,7 +7,6 @@ import {
   HStack,
   ScrollView,
   Flex,
-  Button,
   View,
   Text,
 } from 'native-base'
@@ -46,8 +45,7 @@ const MyExperienceContainer = () => {
         <Heading
           size="md"
           letterSpacing={3}
-          fontWeight={400}
-          fontFamily="BebasNeue-Regular"
+          fontFamily="title"
           adjustsFontSizeToFit
         >
           My Experience
