@@ -20,6 +20,7 @@ import ChoicesList, {
   ChoicesListFontStyle,
 } from '../Components/ChoicesList'
 import underDevelopmentAlert from '../../Utils/UnderDevelopmentAlert'
+import { navigate } from '@/Navigators/utils'
 
 // Define the menu items to show in the profile menu
 const profileMenuItems: string[] = [
@@ -37,10 +38,12 @@ const profileMenuChoices = profileMenuItems.map(
   (item: string) =>
     ({
       text: item,
-      onPress: underDevelopmentAlert,
+      onPress: () =>
+        navigate('MyExperience', {
+          skills: undefined,
+        }),
     } as ChoicesListChoice),
 )
-
 /**
  * A screen container that displays the user's profile.
  * @returns {JSX.Element} React element that renders the ProfileContainer component.
