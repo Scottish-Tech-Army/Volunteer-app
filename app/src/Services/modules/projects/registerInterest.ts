@@ -37,6 +37,9 @@ export default (
         query.project.res_id
       }`,
       method: 'POST',
+      headers: {
+        'x-api-key': `${Constants.expoConfig?.extra?.api?.apiKey ?? ''}`,
+      },
       body: query.user,
     }),
     transformResponse: (data: RegisterInterestResponseType) => data,
