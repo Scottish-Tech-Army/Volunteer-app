@@ -42,12 +42,7 @@ const MyExperienceContainer = () => {
   return (
     <>
       <HStack mt={-10} mb={5} alignItems={'flex-end'}>
-        <Heading
-          size="md"
-          letterSpacing={3}
-          fontFamily="title"
-          adjustsFontSizeToFit
-        >
+        <Heading size="md" fontFamily="title" adjustsFontSizeToFit>
           My Experience
         </Heading>
         <Flex flex={1} mt={-5} alignItems={'flex-end'}>
@@ -112,7 +107,7 @@ const MyExperienceContainer = () => {
             borderWidth={2}
             backgroundColor="bg.100"
             borderColor="purple.100"
-            fontFamily="Poppins-SemiBold"
+            fontFamily="primarySemiBold"
             _text={{
               color: 'purple.100',
             }}
@@ -124,7 +119,7 @@ const MyExperienceContainer = () => {
           <ProfileButtons
             backgroundColor="bg.100"
             borderColor="bg.100"
-            fontFamily="Poppins-SemiBold"
+            fontFamily="primarySemiBold"
             _dark={{
               backgroundColor: 'bgDarkMode.100',
               _text: { color: 'white' },
