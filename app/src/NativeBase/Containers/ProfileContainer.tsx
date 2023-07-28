@@ -15,35 +15,38 @@ import {
 } from 'native-base'
 import React from 'react'
 import ChoicesList, {
-  ChoicesListChoice,
   ChoicesListColour,
   ChoicesListFontStyle,
 } from '../Components/ChoicesList'
 import underDevelopmentAlert from '../../Utils/UnderDevelopmentAlert'
 import { navigate } from '@/Navigators/utils'
 
-// Define the menu items to show in the profile menu
-const profileMenuItems: string[] = [
-  'My Projects',
-  'My Experience',
-  'Volunteer Vibes',
-  'Notifications & Settings',
-]
-
 // Define the colour and font style for the profile menu
 const colourChoice = ChoicesListColour.purple
 const fontStyleChoice = ChoicesListFontStyle.smallSemiBold
 
-const profileMenuChoices = profileMenuItems.map(
-  (item: string) =>
-    ({
-      text: item,
-      onPress: () =>
-        navigate('MyExperience', {
-          skills: undefined,
-        }),
-    } as ChoicesListChoice),
-)
+const profileMenuChoices: { text: string; onPress: any }[] = [
+  {
+    text: 'My Projects',
+    onPress: underDevelopmentAlert,
+  },
+  {
+    text: 'My Experience',
+    onPress: () =>
+      navigate('MyExperience', {
+        skills: undefined,
+      }),
+  },
+  {
+    text: 'Volunteer Vibes',
+    onPress: underDevelopmentAlert,
+  },
+  {
+    text: 'Notifications & Settings',
+    onPress: () => underDevelopmentAlert,
+  },
+]
+
 /**
  * A screen container that displays the user's profile.
  * @returns {JSX.Element} React element that renders the ProfileContainer component.
