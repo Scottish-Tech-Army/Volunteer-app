@@ -39,7 +39,7 @@ export const nextScreen = (
   setCurrentBox: (value: number) => void,
 ) => {
   if (currentBox < 4) {
-    setCurrentBox((value: number) => value + 1)
+    setCurrentBox(currentBox + 1)
   }
 }
 
@@ -49,6 +49,6 @@ export const goBackScreen = (
   setCurrentBox: (value: number) => void,
 ) => {
   if (currentBox > 1) {
-    setCurrentBox(value => value - 1)
+    setCurrentBox(currentBox - 1)
   }
 }
