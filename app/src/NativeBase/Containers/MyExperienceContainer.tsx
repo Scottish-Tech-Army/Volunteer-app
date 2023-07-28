@@ -128,8 +128,7 @@ const MyExperienceContainer = () => {
             _text={{
               color: 'darkGrey.100',
             }}
-            onPress={() => nextScreen(currentBox, setCurrentBox)}
-            disabled={currentBox === currentBox - 1}
+            onPress={() => []}
           >
             Skip
           </ProfileButtons>
