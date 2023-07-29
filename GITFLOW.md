@@ -44,10 +44,23 @@ You only need to complete this step the first time you clone a repository or whe
 3. Create a pull request as usual, which still requires two reviewers, what has changed is that we're now merging with `develop` and not `main`. 
 4. Once your PR is merged `git flow feature finish` will ensure that your feature is merged with your local `develop` branch and removes the `feature` branch.
 
-### Bugfix or release
+### Bugfix
 The process is the same, except the command changes from feature to hotfix `git flow bugfix start bug_number`
+1. `git flow bugfix start bug_number` creates a new `feature` branch from `develop` and switches to it.
+2. Once you're done then `git flow bugfix publish`.
+3. Create a pull request as usual, which still requires two reviewers, this will merge to `main` and `develop`. 
+4. Once your PR is merged `git flow bugfix finish` will ensure that your feature is merged with `main` and `develop`, then removes the `bugfix` branch.
+
+### Release
+The process is the same, except the command changes from feature to hotfix `git flow bugfix start bug_number`
+1. `git flow release start mvp-X` (where X is the MVP number) creates a new `feature` branch from `develop` and switches to it.
+2. Once you're done then `git flow release publish`.
+3. Create a pull request as usual, which still requires two reviewers, this will merge to `main`. 
+4. Once your PR is merged `git flow release finish` will ensure that your feature is merged with `main` then removes the `release` branch.
 
 ## Caveat
+When merging remember to squash and merge, especially on main, to make it clear what feature was merged.
+
 Ensure when creating or reviewing PR that the branches are as you expect:
 - `feature` merge to `develop`
 - `bugfix` merge to `main` and `develop`
