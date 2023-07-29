@@ -99,7 +99,7 @@ The Team use Git Flow to manage development and release versions, follow the [Gi
 
    > Using SSH do `git clone git@github.com:Scottish-Tech-Army/Volunteer-app.git` or using https do `git clone https://github.com/Scottish-Tech-Army/Volunteer-app.git`
 
-3. Open your terminal
+3. Open your terminal and in the new `Volunteer-app` directory type `git flow init` to initialise Git Flow (see [Git Flow](GITFLOW.md)).
 
 ## API
 

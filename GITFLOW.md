@@ -1,5 +1,5 @@
 # Git Flow
-The team uses Git Flow to to develop the application and it's API.
+The team uses Git Flow to to develop the application and it's API. For more detail, have a look at Atlassian's [Git Flow documentation](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow) or for a good synopsis [Daniel Kummer's cheatsheat](https://danielkummer.github.io/git-flow-cheatsheet/)
 
 ## Installing
 
@@ -39,7 +39,7 @@ After cloning the repository or from your existing local repository enter `git f
 You only need to complete this step the first time you clone a repository or when you first start using Git Flow in a project. You will have to do it for each computer you work on, unless you have some funky home directory syncing going on.
 
 ### Create a new feature
-1. `git flow feature start JIRA-TICKET` creates a new `feature` branch from `develop` and switches to it.
+1. `git flow feature start SVA-999-my-jira-ticket` (where 999 is your ticket number) creates a new `feature` branch from `develop` and switches to it.
 2. Once you're done then `git flow feature publish`.
 3. Create a pull request as usual, which still requires two reviewers, what has changed is that we're now merging with `develop` and not `main`. 
 4. Once your PR is merged `git flow feature finish` will ensure that your feature is merged with your local `develop` branch and removes the `feature` branch.
