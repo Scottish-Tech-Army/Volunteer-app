@@ -1,7 +1,7 @@
-const airTable = require('../../helpers/airTable')
-const { faker } = require('@faker-js/faker')
-const eventsHelpers = require('../../helpers/events')
-const eventsTestData = require('../../__test-data__/events')
+import airTable from '../../helpers/airTable'
+import { faker } from '@faker-js/faker'
+import { formatEventFromAirTable } from '../../helpers/events'
+import { fakeEventAirTableRecord } from '../../__test-data__/events'
 
 describe('Test the events helpers', () => {
   beforeEach(() => {
@@ -10,7 +10,7 @@ describe('Test the events helpers', () => {
 
   test('formatEventFromAirTable correctly formats data', async () => {
     // Set up fake test data
-    const fakeEventFromAirTable = eventsTestData.fakeEventAirTableRecord(
+    const fakeEventFromAirTable = fakeEventAirTableRecord(
       'any',
       true,
     )
@@ -31,7 +31,7 @@ describe('Test the events helpers', () => {
       .mockImplementation(time => time)
 
     // Run test
-    const formattedEvent = eventsHelpers.formatEventFromAirTable(
+    const formattedEvent = formatEventFromAirTable(
       fakeEventFromAirTable,
     )
 

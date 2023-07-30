@@ -1,14 +1,14 @@
-const airTable = require('../../helpers/airTable')
-const axios = require('axios')
-const arraysHelpers = require('../../helpers/arrays')
-const cacheProjects = require('../../cron-jobs/projects')
-const { faker } = require('@faker-js/faker')
-const projectsHelpers = require('../../helpers/projects')
-const projectsTestData = require('../../__test-data__/projects')
-const logging = require('../../services/logging')
-const videosService = require('../../services/videos')
+import airTable from '../../helpers/airTable'
+import axios, { defaults } from 'axios'
+import arraysHelpers from '../../helpers/arrays'
+import cacheProjects, { addNewProjectsResources, addNewRecords, cacheProjectsAndResources, deleteAllRecords, deleteRecords, filterProjectsConnectedWithResources, filterResourcesConnectedWithProjects, formatProjects, getAllProjectsAndResourcesFromJira, getInitialTriageProjectsFromJira, getResourcesFromJira, startCachingLatestFromJira } from '../../cron-jobs/projects'
+import { faker } from '@faker-js/faker'
+import projectsHelpers from '../../helpers/projects'
+import { fakeProjectResourceObjects, fakeProjectObjects, fakeResourceObjects, fakeProjectAirTableRecords, fakeJiraItApiResults as _fakeJiraItApiResults, fakeJiraResApiResults as _fakeJiraResApiResults } from '../../__test-data__/projects'
+import logging from '../../services/logging'
+import videosService from '../../services/videos'
 
-axios.defaults.adapter = require('axios/lib/adapters/http')
+defaults.adapter = require('axios/lib/adapters/http')
 
 describe('Test the projects/resources caching cron job', () => {
   beforeEach(() => {
@@ -21,7 +21,7 @@ describe('Test the projects/resources caching cron job', () => {
     const fakeProjectsResourcesChunkCount = Math.ceil(
       fakeProjectsResourcesCount / 10,
     )
-    const fakeProjectsResources = projectsTestData.fakeProjectResourceObjects(
+    const fakeProjectsResources = fakeProjectResourceObjects(
       fakeProjectsResourcesCount,
     )
 
@@ -39,7 +39,7 @@ describe('Test the projects/resources caching cron job', () => {
       .mockImplementation(() => {})
 
     // Run test
-    await cacheProjects.addNewProjectsResources(fakeProjectsResources)
+    await addNewProjectsResources(fakeProjectsResources)
 
     expect(arraysHelpersSpy).toHaveBeenCalledTimes(1)
     expect(addNewRecordsSpy).toHaveBeenCalledTimes(
@@ -54,7 +54,7 @@ describe('Test the projects/resources caching cron job', () => {
 
   test('addNewRecords calls AirTable client', async () => {
     // Set up fake test data
-    const fakeProjectsChunk = projectsTestData.fakeProjectObjects(10)
+    const fakeProjectsChunk = fakeProjectObjects(10)
 
     // Mock dependencies
     const airTableClientCreateMock = jest.fn()
@@ -66,7 +66,7 @@ describe('Test the projects/resources caching cron job', () => {
       .mockImplementation(() => ({ table: airTableClientTableMock }))
 
     // Run test
-    await cacheProjects.addNewRecords(faker.lorem.words(1), fakeProjectsChunk)
+    await addNewRecords(faker.lorem.words(1), fakeProjectsChunk)
 
     expect(airTableClientSpy).toHaveBeenCalledTimes(1)
     expect(airTableClientTableMock).toHaveBeenCalledTimes(1)
@@ -89,7 +89,7 @@ describe('Test the projects/resources caching cron job', () => {
       .mockImplementation(() => {})
 
     // Run test
-    await cacheProjects.cacheProjectsAndResources([], [])
+    await cacheProjectsAndResources([], [])
 
     expect(deleteAllRecordsSpy).toHaveBeenCalledTimes(0)
     expect(addNewProjectsResourcesSpy).toHaveBeenCalledTimes(0)
@@ -103,13 +103,13 @@ describe('Test the projects/resources caching cron job', () => {
 
   test('cacheProjectsAndResources deletes old data and adds new data', async () => {
     // Set up fake test data
-    const fakeProjects = projectsTestData.fakeProjectObjects(
+    const fakeProjects = fakeProjectObjects(
       faker.number.int({ min: 20, max: 30 }),
     )
-    const fakeResources = projectsTestData.fakeResourceObjects(
+    const fakeResources = fakeResourceObjects(
       faker.number.int({ min: 30, max: 50 }),
     )
-    const fakeProjectsResources = projectsTestData.fakeProjectResourceObjects(
+    const fakeProjectsResources = fakeProjectResourceObjects(
       faker.number.int({ min: 30, max: 50 }),
     )
 
@@ -131,7 +131,7 @@ describe('Test the projects/resources caching cron job', () => {
       .mockImplementation(() => {})
 
     // Run test
-    await cacheProjects.cacheProjectsAndResources(fakeProjects, fakeResources)
+    await cacheProjectsAndResources(fakeProjects, fakeResources)
 
     expect(combineProjectsAndResourcesSpy).toHaveBeenCalledTimes(1)
     expect(deleteAllRecordsSpy).toHaveBeenCalledTimes(1)
@@ -153,7 +153,7 @@ describe('Test the projects/resources caching cron job', () => {
     const fakeTableName = faker.lorem.words(1)
     const fakeRecordsCount = 25
     const fakeRecords =
-      projectsTestData.fakeProjectAirTableRecords(fakeRecordsCount)
+      fakeProjectAirTableRecords(fakeRecordsCount)
 
     // Mock dependencies
     const airTableClientAllMock = jest.fn(() => fakeRecords)
@@ -184,7 +184,7 @@ describe('Test the projects/resources caching cron job', () => {
       .mockImplementation(() => {})
 
     // Run test
-    await cacheProjects.deleteAllRecords(fakeTableName)
+    await deleteAllRecords(fakeTableName)
 
     expect(airTableClientSpy).toHaveBeenCalledTimes(1)
     expect(airTableClientTableMock).toHaveBeenCalledTimes(1)
@@ -221,7 +221,7 @@ describe('Test the projects/resources caching cron job', () => {
       .mockImplementation(() => {})
 
     // Run test
-    await cacheProjects.deleteRecords(fakeTableName, fakeRecordIds)
+    await deleteRecords(fakeTableName, fakeRecordIds)
 
     expect(airTableClientSpy).toHaveBeenCalledTimes(1)
     expect(airTableClientTableMock).toHaveBeenCalledTimes(1)
@@ -239,8 +239,8 @@ describe('Test the projects/resources caching cron job', () => {
 
   test('filterProjectsConnectedWithResources correctly filters projects', () => {
     // Set up fake test data
-    const fakeProjects = projectsTestData.fakeProjectObjects(4)
-    const fakeResources = projectsTestData.fakeResourceObjects(8)
+    const fakeProjects = fakeProjectObjects(4)
+    const fakeResources = fakeResourceObjects(8)
     fakeResources[0].it_key = fakeProjects[0].it_key
     fakeResources[1].it_key = fakeProjects[0].it_key
     fakeResources[2].it_key = fakeProjects[1].it_key
@@ -252,7 +252,7 @@ describe('Test the projects/resources caching cron job', () => {
         'IT-000'
 
     // Run test
-    const filteredProjects = cacheProjects.filterProjectsConnectedWithResources(
+    const filteredProjects = filterProjectsConnectedWithResources(
       fakeProjects,
       fakeResources,
     )
@@ -262,8 +262,8 @@ describe('Test the projects/resources caching cron job', () => {
 
   test('filterResourcesConnectedWithProjects correctly filters resources', () => {
     // Set up fake test data
-    const fakeProjects = projectsTestData.fakeProjectObjects(5)
-    const fakeResources = projectsTestData.fakeResourceObjects(8)
+    const fakeProjects = fakeProjectObjects(5)
+    const fakeResources = fakeResourceObjects(8)
     fakeResources[0].it_key = fakeProjects[0].it_key
     fakeResources[1].it_key = fakeProjects[0].it_key
     fakeResources[2].it_key = fakeProjects[1].it_key
@@ -276,7 +276,7 @@ describe('Test the projects/resources caching cron job', () => {
 
     // Run test
     const filteredResources =
-      cacheProjects.filterResourcesConnectedWithProjects(
+      filterResourcesConnectedWithProjects(
         fakeProjects,
         fakeResources,
       )
@@ -286,10 +286,10 @@ describe('Test the projects/resources caching cron job', () => {
 
   test('formatProjects correctly gets project type from resource', () => {
     // Set up fake test data
-    const fakeProjects = projectsTestData.fakeProjectObjects(5)
+    const fakeProjects = fakeProjectObjects(5)
     fakeProjects[2].it_key = 'IT-000' // this value will not appear elsewhere in fake test data
     fakeProjects[3].it_key = 'IT-001' // this value will not appear elsewhere in fake test data
-    const fakeResources = projectsTestData.fakeResourceObjects(8)
+    const fakeResources = fakeResourceObjects(8)
     fakeResources[0].it_key = fakeProjects[0].it_key
     fakeResources[1].it_key = fakeProjects[0].it_key
     fakeResources[2].it_key = fakeProjects[1].it_key
@@ -301,7 +301,7 @@ describe('Test the projects/resources caching cron job', () => {
         'IT-002' // this value will not appear elsewhere in fake test data
 
     // Run test
-    const formattedProjects = cacheProjects.formatProjects(
+    const formattedProjects = formatProjects(
       fakeProjects,
       fakeResources,
     )
@@ -332,8 +332,8 @@ describe('Test the projects/resources caching cron job', () => {
 
   test('getAllProjectsAndResourcesFromJira calls related functions', async () => {
     // Set up fake test data
-    const fakeProjects = projectsTestData.fakeProjectObjects(15)
-    const fakeResources = projectsTestData.fakeResourceObjects(25)
+    const fakeProjects = fakeProjectObjects(15)
+    const fakeResources = fakeResourceObjects(25)
 
     // Mock dependencies
     const getInitialTriageProjectsFromJiraSpy = jest
@@ -356,7 +356,7 @@ describe('Test the projects/resources caching cron job', () => {
       .mockImplementation(() => {})
 
     // Run test
-    await cacheProjects.getAllProjectsAndResourcesFromJira()
+    await getAllProjectsAndResourcesFromJira()
 
     expect(getInitialTriageProjectsFromJiraSpy).toHaveBeenCalledTimes(1)
     expect(getResourcesFromJiraSpy).toHaveBeenCalledTimes(1)
@@ -390,7 +390,7 @@ describe('Test the projects/resources caching cron job', () => {
       max: fakeProjectsCountMaximum,
     })
     const fakeJiraItApiResults =
-      projectsTestData.fakeJiraItApiResults(fakeProjectsCount)
+      _fakeJiraItApiResults(fakeProjectsCount)
     const fakeVideoWebpagePlayerOnly = faker.internet.url()
 
     // Mock dependencies
@@ -402,7 +402,7 @@ describe('Test the projects/resources caching cron job', () => {
       .mockImplementation(() => Promise.resolve(fakeVideoWebpagePlayerOnly))
 
     // Run test
-    const jiraItArray = await cacheProjects.getInitialTriageProjectsFromJira(
+    const jiraItArray = await getInitialTriageProjectsFromJira(
       0,
       [],
     )
@@ -447,7 +447,7 @@ describe('Test the projects/resources caching cron job', () => {
       max: fakeResourcesCountMaximum,
     })
     const fakeJiraResApiResults =
-      projectsTestData.fakeJiraResApiResults(fakeResourcesCount)
+      _fakeJiraResApiResults(fakeResourcesCount)
 
     // Mock dependencies
     const axiosSpy = jest
@@ -455,7 +455,7 @@ describe('Test the projects/resources caching cron job', () => {
       .mockImplementationOnce(() => Promise.resolve(fakeJiraResApiResults))
 
     // Run test
-    const jiraResArray = await cacheProjects.getResourcesFromJira(0, [])
+    const jiraResArray = await getResourcesFromJira(0, [])
 
     expect(axiosSpy).toHaveBeenCalledTimes(1)
     const randomItemIndex = faker.number.int({
@@ -491,8 +491,8 @@ describe('Test the projects/resources caching cron job', () => {
 
   test('startCachingLatestFromJira gets all data from Jira API then attempts to cache it', async () => {
     // Set up fake test data
-    const fakeProjects = projectsTestData.fakeProjectObjects(15)
-    const fakeResources = projectsTestData.fakeResourceObjects(25)
+    const fakeProjects = fakeProjectObjects(15)
+    const fakeResources = fakeResourceObjects(25)
 
     // Mock dependencies
     const getAllProjectsAndResourcesFromJiraSpy = jest
@@ -511,7 +511,7 @@ describe('Test the projects/resources caching cron job', () => {
       .mockImplementation(() => {})
 
     // Run test
-    await cacheProjects.startCachingLatestFromJira()
+    await startCachingLatestFromJira()
 
     expect(getAllProjectsAndResourcesFromJiraSpy).toHaveBeenCalledTimes(1)
     expect(cacheProjectsAndResourcesSpy).toHaveBeenCalledTimes(1)

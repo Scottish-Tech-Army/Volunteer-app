@@ -1,4 +1,4 @@
-const { faker } = require('@faker-js/faker')
+import { faker } from '@faker-js/faker'
 
 const projectTypes = [
   'Charity',
@@ -195,7 +195,7 @@ function fakeAirTableProjectResource(includeBuddying) {
   return projectResource
 }
 
-module.exports = {
+export default {
   fakeHours,
   fakeItKey,
   fakeResId,

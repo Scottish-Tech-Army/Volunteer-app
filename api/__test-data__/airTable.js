@@ -1,4 +1,4 @@
-const { faker } = require('@faker-js/faker')
+import { faker } from '@faker-js/faker'
 
 function fakeAirTableAttachmentData() {
   return {
@@ -83,7 +83,7 @@ function fakeAirTableRecordsRaw(count, tableName) {
   return fakeAirTableRecordsRawArray
 }
 
-module.exports = {
+export default {
   fakeAirTableAttachmentData,
   fakeAirTableAttachmentsData,
   fakeAirTableRecordRaw,

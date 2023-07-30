@@ -1,23 +1,19 @@
-const airTable = require('../../helpers/airTable')
-const axios = require('axios')
-const eventsHelper = require('../../helpers/events')
-const { faker } = require('@faker-js/faker')
-const request = require('supertest')
-const routesHelper = require('../../helpers/routes')
-const {
-  getEventHandler,
-  getEventsHandler,
-  getScheduledEventsHandler,
-} = require('../../routes/events')
-const eventsTestData = require('../../__test-data__/events')
-const nock = require('nock')
+import airTable from '../../helpers/airTable'
+import { defaults, get } from 'axios'
+import eventsHelper from '../../helpers/events'
+import { faker } from '@faker-js/faker'
+import request from 'supertest'
+import routesHelper from '../../helpers/routes'
+import { getEventHandler, getEventsHandler, getScheduledEventsHandler } from '../../routes/events'
+import { fakeEventObjects, fakeEventObject, fakeEventAirTableRecords, fakeEventAirTableRecord } from '../../__test-data__/events'
+import nock from 'nock'
 
-axios.defaults.adapter = require('axios/lib/adapters/http')
+defaults.adapter = require('axios/lib/adapters/http')
 
 describe('Test the events api', () => {
   test('GET all method should respond successfully', async () => {
     // Set up fake test data
-    const fakeAllEvents = eventsTestData.fakeEventObjects(10)
+    const fakeAllEvents = fakeEventObjects(10)
 
     // Mock dependencies
     const requestMock = nock('http://localhost:3000')
@@ -25,7 +21,7 @@ describe('Test the events api', () => {
       .reply(200, fakeAllEvents)
 
     // Run test
-    const response = await axios.get('http://localhost:3000/events')
+    const response = await get('http://localhost:3000/events')
     requestMock.done()
 
     expect(response.status).toBe(200)
@@ -34,7 +30,7 @@ describe('Test the events api', () => {
 
   test('GET single event should respond successfully', async () => {
     // Set up fake test data
-    const fakeEvent = eventsTestData.fakeEventObject()
+    const fakeEvent = fakeEventObject()
 
     // Mock dependencies
     const requestMock = nock('http://localhost:3000')
@@ -42,7 +38,7 @@ describe('Test the events api', () => {
       .reply(200, fakeEvent)
 
     // Run test
-    const response = await axios.get(
+    const response = await get(
       `http://localhost:3000/events/${fakeEvent.id}`,
     )
     requestMock.done()
@@ -53,7 +49,7 @@ describe('Test the events api', () => {
 
   test('GET past events should respond successfully', async () => {
     // Set up fake test data
-    const fakePastEvents = eventsTestData.fakeEventObjects(5, 'past')
+    const fakePastEvents = fakeEventObjects(5, 'past')
 
     // Mock dependencies
     const requestMock = nock('http://localhost:3000')
@@ -61,7 +57,7 @@ describe('Test the events api', () => {
       .reply(200, fakePastEvents)
 
     // Run test
-    const response = await axios.get(
+    const response = await get(
       'http://localhost:3000/events/scheduled/past',
     )
     requestMock.done()
@@ -72,7 +68,7 @@ describe('Test the events api', () => {
 
   test('GET upcoming events should respond successfully', async () => {
     // Set up fake test data
-    const fakeFutureEvents = eventsTestData.fakeEventObjects(5, 'future')
+    const fakeFutureEvents = fakeEventObjects(5, 'future')
 
     // Mock dependencies
     const requestMock = nock('http://localhost:3000')
@@ -80,7 +76,7 @@ describe('Test the events api', () => {
       .reply(200, fakeFutureEvents)
 
     // Run test
-    const response = await axios.get(
+    const response = await get(
       'http://localhost:3000/events/scheduled/upcoming',
     )
     requestMock.done()
@@ -93,7 +89,7 @@ describe('Test the events api', () => {
     // Set up fake test data
     const fakeTableName = faker.lorem.word()
     const fakeEventsCount = faker.number.int(10)
-    const fakeEvents = eventsTestData.fakeEventAirTableRecords(fakeEventsCount)
+    const fakeEvents = fakeEventAirTableRecords(fakeEventsCount)
 
     // Mock dependencies
     const airTableHelperEventsTableTableSpy = jest
@@ -132,7 +128,7 @@ describe('Test the events api', () => {
   test('getEventHandler gets a single record from AirTable, formats data and returns a response', async () => {
     // Set up fake test data
     const fakeTableName = faker.lorem.word()
-    const fakeEvent = eventsTestData.fakeEventAirTableRecord()
+    const fakeEvent = fakeEventAirTableRecord()
     const fakeRequest = {
       params: {
         id: fakeEvent.id,
@@ -181,11 +177,11 @@ describe('Test the events api', () => {
     const fakeTableName = faker.lorem.word()
     const fakePastEventsCount = faker.number.int(10)
     const fakeFutureEventsCount = faker.number.int(10)
-    const fakePastEvents = eventsTestData.fakeEventAirTableRecords(
+    const fakePastEvents = fakeEventAirTableRecords(
       fakePastEventsCount,
       'past',
     )
-    const fakeFutureEvents = eventsTestData.fakeEventAirTableRecords(
+    const fakeFutureEvents = fakeEventAirTableRecords(
       fakeFutureEventsCount,
       'future',
     )
@@ -244,11 +240,11 @@ describe('Test the events api', () => {
     const fakeTableName = faker.lorem.word()
     const fakePastEventsCount = faker.number.int(5)
     const fakeFutureEventsCount = faker.number.int(5)
-    const fakePastEvents = eventsTestData.fakeEventAirTableRecords(
+    const fakePastEvents = fakeEventAirTableRecords(
       fakePastEventsCount,
       'past',
     )
-    const fakeFutureEvents = eventsTestData.fakeEventAirTableRecords(
+    const fakeFutureEvents = fakeEventAirTableRecords(
       fakeFutureEventsCount,
       'future',
     )

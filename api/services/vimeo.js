@@ -2,9 +2,9 @@
  * Vimeo API request to retrieve MP4 video files and thumbnail images for the requested video webpage
  */
 
-const axios = require('axios').default
-const Vimeo = require('vimeo').Vimeo
-const logging = require('../services/logging')
+import axios from 'axios'
+import { Vimeo } from 'vimeo'
+import logging from '../services/logging'
 
 function client() {
   return new Vimeo(
@@ -18,7 +18,7 @@ function client() {
 async function getVideoThumbnail(videoWebpageUrl) {
   if (!videoWebpageUrl) return
 
-  const vimeoId = module.exports.getVideoIdFromUrl(videoWebpageUrl)
+  const vimeoId = _getVideoIdFromUrl(videoWebpageUrl)
   if (!vimeoId) return
 
   try {
@@ -66,10 +66,10 @@ async function getVideoThumbnail(videoWebpageUrl) {
 async function getVideoWebpagePlayerOnly(videoWebpageUrl) {
   if (!videoWebpageUrl) return
 
-  const vimeoId = module.exports.getVideoIdFromUrl(videoWebpageUrl)
+  const vimeoId = _getVideoIdFromUrl(videoWebpageUrl)
   if (!vimeoId) return
 
-  const vimeoClient = module.exports.client()
+  const vimeoClient = _client()
 
   return new Promise((resolve, reject) => {
     try {
@@ -140,7 +140,7 @@ function getVideoIdFromUrl(videoWebpageUrl) {
   }
 }
 
-module.exports = {
+export default {
   client,
   getVideoThumbnail,
   getVideoWebpagePlayerOnly,

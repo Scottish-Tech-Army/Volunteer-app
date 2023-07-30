@@ -1,7 +1,7 @@
-const { faker } = require('@faker-js/faker')
-const airTable = require('../../helpers/airTable')
-const logging = require('../../services/logging')
-const airTableTestData = require('../../__test-data__/airTable')
+import { faker } from '@faker-js/faker'
+import airTable, { addEmptyFields, addLinkedFields, getAllRecords, getRecordById, getRecordByQuery, simplifyAttachmentsData, updateRecordById } from '../../helpers/airTable'
+import logging from '../../services/logging'
+import { fakeAirTableRecordsRaw, fakeAirTableAttachmentsData } from '../../__test-data__/airTable'
 
 describe('Test the AirTable helpers', () => {
   test('addEmptyFields adds all empty fields', () => {
@@ -23,7 +23,7 @@ describe('Test the AirTable helpers', () => {
     }
 
     // Run test
-    const recordWithBlankFieldsAdded = airTable.addEmptyFields(
+    const recordWithBlankFieldsAdded = addEmptyFields(
       fakeRecord,
       fakeFieldDefinitions,
     )
@@ -96,7 +96,7 @@ describe('Test the AirTable helpers', () => {
       .mockImplementation(() => ({ table: airTableClientTableMock }))
 
     // 3. Run our function with test data
-    const resultEventRecord = await airTable.addLinkedFields(
+    const resultEventRecord = await addLinkedFields(
       fakeEventsTableName,
       fakeEventRecord,
       fakeLinkedFields,
@@ -113,7 +113,7 @@ describe('Test the AirTable helpers', () => {
     // Set up fake test data
     const fakeRecordsCount = faker.number.int({ min: 10, max: 30 })
     const fakeTableName = faker.lorem.words(1)
-    const fakeRecords = airTableTestData.fakeAirTableRecordsRaw(
+    const fakeRecords = fakeAirTableRecordsRaw(
       fakeRecordsCount,
       fakeTableName,
     )
@@ -131,7 +131,7 @@ describe('Test the AirTable helpers', () => {
       .mockImplementation(() => ({ table: airTableClientTableMock }))
 
     // Run test
-    const allRecords = await airTable.getAllRecords(fakeTableName)
+    const allRecords = await getAllRecords(fakeTableName)
 
     expect(airTableClientSpy).toHaveBeenCalledTimes(1)
     expect(airTableClientTableMock).toHaveBeenCalledTimes(1)
@@ -150,7 +150,7 @@ describe('Test the AirTable helpers', () => {
   test('getRecordById gets a record from AirTable and returns relevant data', async () => {
     // Set up fake test data
     const fakeTableName = faker.lorem.words(1)
-    const fakeRecords = airTableTestData.fakeAirTableRecordsRaw(
+    const fakeRecords = fakeAirTableRecordsRaw(
       1,
       fakeTableName,
     )
@@ -168,7 +168,7 @@ describe('Test the AirTable helpers', () => {
       .mockImplementation(() => {})
 
     // Run test
-    const record = await airTable.getRecordById(
+    const record = await getRecordById(
       fakeTableName,
       fakeRecords[0].id,
     )
@@ -188,7 +188,7 @@ describe('Test the AirTable helpers', () => {
   test('getRecordByQuery gets a record from AirTable and returns relevant data', async () => {
     // Set up fake test data
     const fakeTableName = faker.lorem.words(1)
-    const fakeRecords = airTableTestData.fakeAirTableRecordsRaw(
+    const fakeRecords = fakeAirTableRecordsRaw(
       1,
       fakeTableName,
     )
@@ -213,7 +213,7 @@ describe('Test the AirTable helpers', () => {
       .mockImplementation(() => {})
 
     // Run test
-    const record = await airTable.getRecordByQuery(fakeTableName, {
+    const record = await getRecordByQuery(fakeTableName, {
       [fakeFieldName1]: fakeFieldValue1,
       [fakeFieldName2]: fakeFieldValue2,
     })
@@ -235,11 +235,11 @@ describe('Test the AirTable helpers', () => {
 
   test('simplifyAttachmentsData correctly returns a simplified, flattened array', () => {
     // Set up fake test data
-    const fakeAttachmentsData = airTableTestData.fakeAirTableAttachmentsData(2)
+    const fakeAttachmentsData = fakeAirTableAttachmentsData(2)
 
     // Run test
     const simplifiedAttachmentsData =
-      airTable.simplifyAttachmentsData(fakeAttachmentsData)
+      simplifyAttachmentsData(fakeAttachmentsData)
 
     expect(simplifiedAttachmentsData[0]).toEqual(fakeAttachmentsData[0].url)
     expect(simplifiedAttachmentsData[1]).toEqual(fakeAttachmentsData[1].url)
@@ -266,7 +266,7 @@ describe('Test the AirTable helpers', () => {
       .mockImplementation(() => {})
 
     // Run test
-    await airTable.updateRecordById(fakeTableName, fakeRecordId, fakeFields)
+    await updateRecordById(fakeTableName, fakeRecordId, fakeFields)
 
     expect(airTableClientSpy).toHaveBeenCalledTimes(1)
     expect(airTableClientTableMock).toHaveBeenCalledTimes(1)

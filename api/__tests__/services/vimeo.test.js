@@ -1,7 +1,7 @@
-const { faker } = require('@faker-js/faker')
-const axios = require('axios')
-const logging = require('../../services/logging')
-const vimeoService = require('../../services/vimeo')
+import { faker } from '@faker-js/faker'
+import axios from 'axios'
+import logging from '../../services/logging'
+import vimeoService, { getVideoThumbnail, getVideoWebpagePlayerOnly, getVideoIdFromUrl } from '../../services/vimeo'
 
 describe('Test the Vimeo service', () => {
   test('getVideoThumbnail', async () => {
@@ -40,7 +40,7 @@ describe('Test the Vimeo service', () => {
       .mockImplementation(() => {})
 
     // Run the function we're testing
-    const response = await vimeoService.getVideoThumbnail(fakeVideoWebPage)
+    const response = await getVideoThumbnail(fakeVideoWebPage)
 
     // Check our test expectations are met
     expect(getVideoIdFromUrlSpy).toHaveBeenCalledTimes(1)
@@ -78,7 +78,7 @@ describe('Test the Vimeo service', () => {
       .mockImplementation(() => {})
 
     // Run the function we're testing
-    const response = await vimeoService.getVideoWebpagePlayerOnly(
+    const response = await getVideoWebpagePlayerOnly(
       fakeVideoWebPage,
     )
 
@@ -108,7 +108,7 @@ describe('Test the Vimeo service', () => {
 
     for (const fakeVideoWebPage of fakeVideoWebPages) {
       // Run the function we're testing
-      const response = vimeoService.getVideoIdFromUrl(fakeVideoWebPage)
+      const response = getVideoIdFromUrl(fakeVideoWebPage)
 
       // Check our test expectations are met
       expect(response).toEqual(fakeVimeoId.toString())
@@ -128,7 +128,7 @@ describe('Test the Vimeo service', () => {
       .mockImplementation(() => {})
 
     // Run the function we're testing
-    const response = vimeoService.getVideoIdFromUrl(nonVimeoWebPage)
+    const response = getVideoIdFromUrl(nonVimeoWebPage)
 
     // Check our test expectations are met
     expect(response).toEqual(undefined)
@@ -147,7 +147,7 @@ describe('Test the Vimeo service', () => {
       .mockImplementation(() => {})
 
     // Run the function we're testing
-    const response = vimeoService.getVideoIdFromUrl(incorrectVimeoWebPage)
+    const response = getVideoIdFromUrl(incorrectVimeoWebPage)
 
     // Check our test expectations are met
     expect(response).toEqual(undefined)

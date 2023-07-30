@@ -1,9 +1,9 @@
 require('dotenv').config()
-const AirTable = require('airtable')
-const dayjs = require('dayjs')
-const relativeTime = require('dayjs/plugin/relativeTime')
-dayjs.extend(relativeTime)
-const logging = require('../services/logging')
+import AirTable from 'airtable'
+import dayjs, { extend } from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+extend(relativeTime)
+import { logError } from '../services/logging'
 
 const eventsTableLinkedFields = () => [
   {
@@ -77,11 +77,7 @@ function formatTime(timeInSeconds) {
 
 async function getAllRecords(tableName, includeId = false, linkedFields) {
   try {
-    const allRecordsRaw = await module.exports
-      .client()
-      .table(tableName)
-      .select()
-      .all()
+    const allRecordsRaw = await _client().table(tableName).select().all()
 
     return await Promise.all(
       allRecordsRaw.map(async record => {
@@ -106,8 +102,7 @@ async function addLinkedFields(tableName, record, linkedFields) {
     if (record.fields[linkedField.fieldName]) {
       record.fields[linkedField.fieldName] = await Promise.all(
         record.fields[linkedField.fieldName].map(async field => {
-          const linkedRecord = await module.exports
-            .client()
+          const linkedRecord = await _client()
             .table(linkedField.tableName)
             .find(field)
           // In a linked table, AirTable adds an extra column pointing back to the
@@ -133,7 +128,7 @@ async function addLinkedFields(tableName, record, linkedFields) {
  */
 async function getRecordById(tableName, recordId, linkedFields) {
   try {
-    let record = await module.exports.client().table(tableName).find(recordId)
+    let record = await _client().table(tableName).find(recordId)
 
     if (linkedFields?.length) {
       record = await addLinkedFields(tableName, record, linkedFields)
@@ -141,12 +136,9 @@ async function getRecordById(tableName, recordId, linkedFields) {
 
     return record.fields
   } catch (error) {
-    logging.logError(
-      `Could not get record ID ${recordId} from table ${tableName}`,
-      {
-        extraInfo: error,
-      },
-    )
+    logError(`Could not get record ID ${recordId} from table ${tableName}`, {
+      extraInfo: error,
+    })
 
     return error
   }
@@ -162,8 +154,7 @@ async function getRecordByQuery(tableName, filterQuery) {
   filterFormula = `AND(${filterFormula})`
 
   try {
-    const recordsRaw = await module.exports
-      .client()
+    const recordsRaw = await _client()
       .table(tableName)
       .select({
         filterByFormula: filterFormula,
@@ -172,7 +163,7 @@ async function getRecordByQuery(tableName, filterQuery) {
 
     return recordsRaw.length ? recordsRaw[0].fields : undefined
   } catch (error) {
-    logging.logError(
+    logError(
       `Could not get record using query ${JSON.stringify(
         filterQuery,
       )} from table ${tableName}`,
@@ -211,14 +202,11 @@ async function updateRecordById(tableName, recordId, fields) {
       },
     ]
 
-    const result = await module.exports
-      .client()
-      .table(tableName)
-      .update(updateData)
+    const result = await _client().table(tableName).update(updateData)
 
     return result
   } catch (error) {
-    logging.logError(
+    logError(
       `Could not update record with ID ${recordId} with fields ${JSON.stringify(
         fields,
       )} from table ${tableName}`,
@@ -231,7 +219,7 @@ async function updateRecordById(tableName, recordId, fields) {
   }
 }
 
-module.exports = {
+export default {
   addEmptyFields,
   addLinkedFields,
   client,

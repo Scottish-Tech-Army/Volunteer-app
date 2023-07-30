@@ -1,5 +1,5 @@
-const { faker } = require('@faker-js/faker')
-const stringsHelper = require('../../helpers/strings')
+import { faker } from '@faker-js/faker'
+import { removeBlankLines, splitByLineBreak } from '../../helpers/strings'
 
 describe('Test the strings helpers', () => {
   test('removeBlankLines correctly removes blank lines', () => {
@@ -12,7 +12,7 @@ describe('Test the strings helpers', () => {
     something else
     something more`
 
-    const stringFormatted = stringsHelper.removeBlankLines(stringWithBlankLines)
+    const stringFormatted = removeBlankLines(stringWithBlankLines)
 
     expect(stringFormatted).toEqual(stringWithoutBlankLines)
   })
@@ -27,7 +27,7 @@ describe('Test the strings helpers', () => {
       'something more',
     ]
 
-    const stringFormatted = stringsHelper.splitByLineBreak(stringWithLineBreaks)
+    const stringFormatted = splitByLineBreak(stringWithLineBreaks)
 
     expect(stringFormatted).toEqual(arrayOfLinesTrimmed)
   })

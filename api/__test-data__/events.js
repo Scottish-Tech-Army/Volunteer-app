@@ -1,6 +1,6 @@
 // Provides sample data for events tests
 
-const { faker } = require('@faker-js/faker')
+import { faker } from '@faker-js/faker'
 
 const eventTypes = ['Internal', 'External']
 const durations = [60, 120, 360, 480] // example event durations in minutes -- 1, 2, 6 and 8 hours
@@ -110,7 +110,7 @@ function fakeEventAirTableRecord(dateType, includeVideo = false) {
   return event
 }
 
-module.exports = {
+export default {
   fakeDate,
   fakeEventObject,
   fakeEventObjects,

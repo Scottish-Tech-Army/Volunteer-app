@@ -1,9 +1,9 @@
-const app = require('./app')
-const cron = require('./cron-jobs/run-cron-jobs')
+import { listen } from './app'
+import cron from './cron-jobs/run-cron-jobs'
 
 const port = 3000
 
-app.listen(port, () => {
+listen(port, () => {
   cron
 
   console.log(

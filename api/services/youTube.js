@@ -1,8 +1,8 @@
-const logging = require('../services/logging')
+import logging from '../services/logging'
 
 // Returns the URL of a webpage which contains only a video player (no branding, text, other videos, etc)
 function getVideoWebpagePlayerOnly(videoWebpageUrl) {
-  const youTubeId = module.exports.getVideoIdFromUrl(videoWebpageUrl)
+  const youTubeId = _getVideoIdFromUrl(videoWebpageUrl)
   if (!youTubeId) return
 
   return `https://www.youtube.com/embed/${youTubeId}`
@@ -35,7 +35,7 @@ function getVideoIdFromUrl(videoWebpageUrl) {
   }
 }
 
-module.exports = {
+export default {
   getVideoWebpagePlayerOnly,
   getVideoIdFromUrl,
 }

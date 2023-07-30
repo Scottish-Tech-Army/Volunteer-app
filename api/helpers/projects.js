@@ -1,6 +1,6 @@
-const airTable = require('../helpers/airTable')
-const apiDefinition = require('../definitions/api_definition.json')
-const stringsHelper = require('../helpers/strings')
+import airTable from '../helpers/airTable'
+import { components } from '../definitions/api_definition.json'
+import { splitByLineBreak, removeBlankLines } from '../helpers/strings'
 
 function combineProjectsAndResources(projects, resources) {
   return resources.map(resource => {
@@ -20,7 +20,7 @@ function combineProjectsAndResources(projects, resources) {
    and formats it correctly for the API to return it to the user */
 function formatProjectResourceFromAirTable(projectResource) {
   const projectResourceFieldDefinitions =
-    apiDefinition.components.schemas.project.items.properties
+    components.schemas.project.items.properties
 
   const projectResourceFormatted = airTable.addEmptyFields(
     {
@@ -43,8 +43,8 @@ function formatProjectResourceFromAirTable(projectResource) {
       case 'skills':
         // For now, assumption based on available data is that skills are in separate paragraphs in a text field
         projectResourceFormatted[fieldName] = projectResource[fieldName]
-          ? stringsHelper.splitByLineBreak(
-              stringsHelper.removeBlankLines(projectResource[fieldName]),
+          ? splitByLineBreak(
+              removeBlankLines(projectResource[fieldName]),
             )
           : []
         break
@@ -54,7 +54,7 @@ function formatProjectResourceFromAirTable(projectResource) {
   return projectResourceFormatted
 }
 
-module.exports = {
+export default {
   combineProjectsAndResources,
   formatProjectResourceFromAirTable,
 }

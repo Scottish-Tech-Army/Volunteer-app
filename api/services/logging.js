@@ -1,4 +1,4 @@
-const Bugsnag = require('@bugsnag/js')
+import { notify } from '@bugsnag/js'
 
 function enableBugsnag() {
   if (
@@ -29,12 +29,12 @@ function logError(errorMessage, extraInfo) {
   if (extraInfo) console.error(extraInfo)
 
   if (enableBugsnag())
-    Bugsnag.notify(new Error(errorMessage), event => {
+    notify(new Error(errorMessage), event => {
       if (extraInfo) event.addMetadata('extraInfo', extraInfo)
     })
 }
 
-module.exports = {
+export default {
   enableBugsnag,
   logError,
 }

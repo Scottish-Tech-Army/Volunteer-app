@@ -1,18 +1,18 @@
-const vimeoService = require('../services/vimeo')
-const youTubeService = require('../services/youTube')
+import { getVideoWebpagePlayerOnly as _getVideoWebpagePlayerOnly } from '../services/vimeo'
+import { getVideoWebpagePlayerOnly as __getVideoWebpagePlayerOnly } from '../services/youTube'
 
 async function getVideoWebpagePlayerOnly(videoWebpageUrl) {
   if (!videoWebpageUrl) return
 
-  const vimeoUrl = await vimeoService.getVideoWebpagePlayerOnly(videoWebpageUrl)
+  const vimeoUrl = await _getVideoWebpagePlayerOnly(videoWebpageUrl)
   if (vimeoUrl) return vimeoUrl
 
-  const youTubeUrl = youTubeService.getVideoWebpagePlayerOnly(videoWebpageUrl)
+  const youTubeUrl = __getVideoWebpagePlayerOnly(videoWebpageUrl)
   if (youTubeUrl) return youTubeUrl
 
   return
 }
 
-module.exports = {
+export default {
   getVideoWebpagePlayerOnly,
 }

@@ -1,8 +1,8 @@
-const { faker } = require('@faker-js/faker')
-const axios = require('axios')
-const videosService = require('../../services/videos')
-const vimeoService = require('../../services/vimeo')
-const youTubeService = require('../../services/youTube')
+import { faker } from '@faker-js/faker'
+import axios from 'axios'
+import { getVideoWebpagePlayerOnly } from '../../services/videos'
+import vimeoService from '../../services/vimeo'
+import youTubeService from '../../services/youTube'
 
 describe('Test the videos service', () => {
   test('getVideoWebpagePlayerOnly gets Vimeo URL', async () => {
@@ -23,7 +23,7 @@ describe('Test the videos service', () => {
     )
 
     // Run the function we're testing
-    const response = await videosService.getVideoWebpagePlayerOnly(
+    const response = await getVideoWebpagePlayerOnly(
       fakeVideoWebPage,
     )
 
@@ -56,7 +56,7 @@ describe('Test the videos service', () => {
       .mockImplementation(() => fakeVideoWebPagePlayerOnly)
 
     // Run the function we're testing
-    const response = await videosService.getVideoWebpagePlayerOnly(
+    const response = await getVideoWebpagePlayerOnly(
       fakeVideoWebPage,
     )
 
@@ -89,7 +89,7 @@ describe('Test the videos service', () => {
       .mockImplementation(() => undefined)
 
     // Run the function we're testing
-    const response = await videosService.getVideoWebpagePlayerOnly(
+    const response = await getVideoWebpagePlayerOnly(
       fakeVideoWebPage,
     )
 

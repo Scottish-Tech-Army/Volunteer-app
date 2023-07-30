@@ -1,5 +1,5 @@
-const { faker } = require('@faker-js/faker')
-const arraysHelper = require('../../helpers/arrays')
+import { faker } from '@faker-js/faker'
+import { chunk } from '../../helpers/arrays'
 
 describe('Test the arrays helpers', () => {
   test('chunk breaks array into chunks of sub-arrays', () => {
@@ -7,7 +7,7 @@ describe('Test the arrays helpers', () => {
     const originalArray = Array.from(Array(originalArrayLength))
     const chunkLength = faker.number.int({ min: 2, max: 10 })
 
-    const chunkedArray = arraysHelper.chunk(originalArray, chunkLength)
+    const chunkedArray = chunk(originalArray, chunkLength)
 
     expect(chunkedArray.length).toBe(
       Math.ceil(originalArrayLength / chunkLength),

@@ -1,7 +1,7 @@
-const logging = require('../services/logging')
+import { logError } from '../services/logging'
 
 function sendError(res, errorMessage, data) {
-  logging.logError(errorMessage, {
+  logError(errorMessage, {
     extraInfo: data,
   })
 
@@ -12,6 +12,6 @@ function sendError(res, errorMessage, data) {
   )
 }
 
-module.exports = {
+export default {
   sendError,
 }

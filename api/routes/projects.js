@@ -1,35 +1,35 @@
-const airTable = require('../helpers/airTable')
-const dayjs = require('dayjs')
-const express = require('express')
-const slackService = require('../services/slack')
-const projectsHelper = require('../helpers/projects')
-const router = express.Router()
-const routesHelper = require('../helpers/routes')
+import { getAllRecords, projectsResourcesCacheTable, connectionErrorMessage, getRecordByQuery } from '../helpers/airTable'
+import dayjs from 'dayjs'
+import { Router } from 'express'
+import { postMessage } from '../services/slack'
+import { formatProjectResourceFromAirTable } from '../helpers/projects'
+const router = Router()
+import { sendError } from '../helpers/routes'
 
 router.get('/', async (req, res) => await getAllProjectsHandler(req, res))
 
 const getAllProjectsHandler = async (req, res) => {
-  const projectsResources = await airTable.getAllRecords(
-    airTable.projectsResourcesCacheTable(),
+  const projectsResources = await getAllRecords(
+    projectsResourcesCacheTable(),
   )
 
   if (projectsResources && projectsResources.error) {
-    routesHelper.sendError(
+    sendError(
       res,
-      `Database connection error: ${airTable.connectionErrorMessage()}`,
+      `Database connection error: ${connectionErrorMessage()}`,
     )
 
     return
   }
 
   if (!projectsResources?.length) {
-    routesHelper.sendError(res, 'Could not get projects from database')
+    sendError(res, 'Could not get projects from database')
 
     return
   }
 
   const projectsResourcesFormatted = projectsResources.map(projectResource =>
-    projectsHelper.formatProjectResourceFromAirTable(projectResource),
+    formatProjectResourceFromAirTable(projectResource),
   )
 
   res.status(200).send(projectsResourcesFormatted)
@@ -39,8 +39,8 @@ router.get('/single', async (req, res) => {
   const projectItKey = req.query.it
   const resourceId = req.query.res
 
-  const projectResource = await airTable.getRecordByQuery(
-    airTable.projectsResourcesCacheTable(),
+  const projectResource = await getRecordByQuery(
+    projectsResourcesCacheTable(),
     {
       it_key: projectItKey,
       res_id: resourceId,
@@ -48,7 +48,7 @@ router.get('/single', async (req, res) => {
   )
 
   if (!projectResource || projectResource.error) {
-    routesHelper.sendError(
+    sendError(
       res,
       `Could not find project matching it_key ${projectItKey} and/or res_id ${resourceId} - please check these details are correct.  Please check database details are correct in the API .env file.`,
     )
@@ -57,7 +57,7 @@ router.get('/single', async (req, res) => {
   }
 
   const projectResourceFormatted =
-    projectsHelper.formatProjectResourceFromAirTable(projectResource)
+    formatProjectResourceFromAirTable(projectResource)
 
   res.status(200).send(projectResourceFormatted)
 })
@@ -78,8 +78,8 @@ const projectRegisterInterestHandler = async (req, res) => {
   const projectItKey = req.query.it
   const resourceId = req.query.res
 
-  const projectResource = await airTable.getRecordByQuery(
-    airTable.projectsResourcesCacheTable(),
+  const projectResource = await getRecordByQuery(
+    projectsResourcesCacheTable(),
     {
       it_key: projectItKey,
       res_id: resourceId,
@@ -87,7 +87,7 @@ const projectRegisterInterestHandler = async (req, res) => {
   )
 
   if (!projectResource || projectResource.error) {
-    routesHelper.sendError(
+    sendError(
       res,
       `Could not find project matching it_key ${projectItKey} and/or res_id ${resourceId} - please check these details are correct.  Please check database details are correct in the API .env file.`,
     )
@@ -96,7 +96,7 @@ const projectRegisterInterestHandler = async (req, res) => {
   }
 
   const projectResourceFormatted =
-    projectsHelper.formatProjectResourceFromAirTable(projectResource)
+    formatProjectResourceFromAirTable(projectResource)
 
   const dataExpected = [
     'availableFrom',
@@ -114,7 +114,7 @@ const projectRegisterInterestHandler = async (req, res) => {
   }
 
   if (dataNotProvided.length) {
-    routesHelper.sendError(
+    sendError(
       res,
       `These properties were missing from your request: ${dataNotProvided.join(
         ', ',
@@ -124,7 +124,7 @@ const projectRegisterInterestHandler = async (req, res) => {
     return
   }
 
-  const slackResponse = await slackService.postMessage(
+  const slackResponse = await postMessage(
     process.env.SLACK_CHANNEL_VOLUNTEER_PROJECT_INTEREST,
     `🎉🎉🎉 Hurray! We've got a new volunteer interested in *${
       projectResourceFormatted.name
@@ -146,7 +146,7 @@ const projectRegisterInterestHandler = async (req, res) => {
   res.status(slackResponse.data ? 200 : 400).send(slackResponse)
 }
 
-module.exports = {
+export default {
   getAllProjectsHandler,
   projectsApi: router,
   projectRegisterInterestHandler,

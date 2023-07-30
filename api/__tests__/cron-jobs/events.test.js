@@ -1,14 +1,14 @@
-const airTable = require('../../helpers/airTable')
-const axios = require('axios')
-const eventsCronJobs = require('../../cron-jobs/events')
-const { faker } = require('@faker-js/faker')
-const eventsHelper = require('../../helpers/events')
-const eventsTestData = require('../../__test-data__/events')
-const timing = require('../../util/timing')
-const logging = require('../../services/logging')
-const vimeoService = require('../../services/vimeo')
+import airTable from '../../helpers/airTable'
+import { defaults } from 'axios'
+import eventsCronJobs, { addEventsVideoThumbnails, getAllEvents, startGettingNewVideoThumbnails } from '../../cron-jobs/events'
+import { faker } from '@faker-js/faker'
+import eventsHelper from '../../helpers/events'
+import { fakeEventObjects, fakeEventAirTableRecords } from '../../__test-data__/events'
+import timing from '../../util/timing'
+import logging from '../../services/logging'
+import vimeoService from '../../services/vimeo'
 
-axios.defaults.adapter = require('axios/lib/adapters/http')
+defaults.adapter = require('axios/lib/adapters/http')
 
 describe('Test the events cron jobs', () => {
   beforeEach(() => {
@@ -26,8 +26,7 @@ describe('Test the events cron jobs', () => {
     }) // how many events have a video but don't have a video thumbnail
 
     let videoThumbnailsRemoved = 0
-    const fakeEvents = eventsTestData
-      .fakeEventObjects(
+    const fakeEvents = fakeEventObjects(
         faker.number.int({ min: fakeEventsCountMin, max: fakeEventsCountMax }),
       )
       // Remove thumbnails from some events that have videos, to check that thumbnails are only added for events that don't have them
@@ -62,7 +61,7 @@ describe('Test the events cron jobs', () => {
       .mockImplementation(() => {})
 
     // Run the function we're testing
-    await eventsCronJobs.addEventsVideoThumbnails(fakeEvents)
+    await addEventsVideoThumbnails(fakeEvents)
 
     // Check our test expectations are met
     expect(getVideoThumbnailSpy).toHaveBeenCalledTimes(
@@ -91,7 +90,7 @@ describe('Test the events cron jobs', () => {
     // Set up fake test data
     const fakeTableName = faker.lorem.word()
     const fakeEventsCount = faker.number.int(20)
-    const fakeEvents = eventsTestData.fakeEventAirTableRecords(fakeEventsCount)
+    const fakeEvents = fakeEventAirTableRecords(fakeEventsCount)
 
     // Mock dependencies
     const airTableEventsTableSpy = jest
@@ -108,7 +107,7 @@ describe('Test the events cron jobs', () => {
       .mockImplementation(() => {})
 
     // Run test
-    await eventsCronJobs.getAllEvents()
+    await getAllEvents()
 
     expect(airTableEventsTableSpy).toHaveBeenCalledTimes(1)
     expect(airTableGetAllRecordsSpy).toHaveBeenCalledTimes(1)
@@ -125,7 +124,7 @@ describe('Test the events cron jobs', () => {
 
   test('startGettingNewVideoThumbnails gets all events then attempts to add video thumbnails', async () => {
     // Set up fake test data
-    const fakeEvents = eventsTestData.fakeEventObjects(20)
+    const fakeEvents = fakeEventObjects(20)
 
     // Mock dependencies
     const getAllEventsSpy = jest
@@ -139,7 +138,7 @@ describe('Test the events cron jobs', () => {
       .mockImplementation(() => {})
 
     // Run test
-    await eventsCronJobs.startGettingNewVideoThumbnails()
+    await startGettingNewVideoThumbnails()
 
     expect(getAllEventsSpy).toHaveBeenCalledTimes(1)
     expect(addEventsVideoThumbnailsSpy).toHaveBeenCalledTimes(1)
