@@ -86,6 +86,11 @@ If you're using Visual Studio Code for development, it's recommended that you:
 - Install the [Prettier extension](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 - [Enable formatting on save](https://scottsauber.com/2017/06/10/prettier-format-on-save-never-worry-about-formatting-javascript-again/). Combined with ESLint and Prettier, this takes care of some code style issues such as formatting, indentation and semicolon consistency for you automatically.
 
+## Git Flow
+*** Make sure that you are familiar with Git Flow before starting! ***
+
+The Team use Git Flow to manage development and release versions, follow the [Git Flow setup steps first](GITFLOW.md).
+
 # Setup and first run
 
 1. Ensure that you've gone through the setup instructions above
@@ -94,7 +99,7 @@ If you're using Visual Studio Code for development, it's recommended that you:
 
    > Using SSH do `git clone git@github.com:Scottish-Tech-Army/Volunteer-app.git` or using https do `git clone https://github.com/Scottish-Tech-Army/Volunteer-app.git`
 
-3. Open your terminal
+3. Open your terminal and in the new `Volunteer-app` directory type `git flow init` to initialise Git Flow (see [Git Flow](GITFLOW.md)).
 
 ## API
 
