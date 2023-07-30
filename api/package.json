@@ -14,16 +14,20 @@
   "dependencies": {
     "@bugsnag/js": "^7.20.2",
     "@bugsnag/plugin-express": "^7.19.0",
+    "@react-native-community/eslint-config": "^3.2.0",
     "airtable": "^0.11.1",
     "axios": "^0.25.0",
     "cors": "^2.8.5",
     "dayjs": "^1.11.1",
     "dotenv": "^10.0.0",
+    "eslint": "^8.46.0",
     "express": "^4.17.1",
     "i": "^0.3.7",
+    "lint-staged": "^13.2.3",
     "node-cron": "^3.0.0",
     "node-fetch": "^3.0.0",
     "nodemon": "^2.0.12",
+    "prettier": "^3.0.0",
     "vimeo": "^2.1.1"
   },
   "devDependencies": {
@@ -32,9 +36,18 @@
     "babel-preset-env": "^1.7.0",
     "cross-var": "^1.1.0",
     "dotenv-cli": "^7.2.1",
+    "eslint-plugin-prettier": "^5.0.0",
     "jest": "^27.2.4",
     "nock": "^13.2.0",
     "superagent": "^6.1.0",
     "supertest": "^6.1.6"
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx, jsx}": [
+      "eslint --fix"
+    ],
+    "*.{json,md,html,js,jsx,ts,tsx}": [
+      "prettier --write"
+    ]
   }
 }
