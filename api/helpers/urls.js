@@ -7,13 +7,13 @@
 
 function cleanUrlsAndEmails(string) {
   const urlAndEmailRegExPattern =
-    /\[(https?\S+?)\s*\|.*?\]|\[[^\s@]+@[^\s@]+\.[^\s@]+\|.*?\]/g;
+    /\[(https?\S+?)\s*\|.*?\]|\[[^\s@]+@[^\s@]+\.[^\s@]+\|.*?\]/g
 
   return string.replace(urlAndEmailRegExPattern, (match, url) =>
-    url ? url : ""
-  );
+    url ? url : '',
+  )
 }
 
 module.exports = {
   cleanUrlsAndEmails,
-};
+}

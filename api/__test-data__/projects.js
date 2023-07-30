@@ -1,21 +1,33 @@
-const { faker } = require('@faker-js/faker');
+const { faker } = require('@faker-js/faker')
 
-const projectTypes = ['Charity', 'Design and Build', 'External Project', 'External STA Project', 'Internal'];
-const frequencyUnits = ['days', 'days a week', 'days total', 'hours', 'hours a week'];
+const projectTypes = [
+  'Charity',
+  'Design and Build',
+  'External Project',
+  'External STA Project',
+  'Internal',
+]
+const frequencyUnits = [
+  'days',
+  'days a week',
+  'days total',
+  'hours',
+  'hours a week',
+]
 
 function fakeHours() {
   return `${faker.number.int({ min: 1, max: 4 })}-${faker.number.int({
     min: 5,
     max: 8,
-  })} ${faker.helpers.arrayElement(frequencyUnits)}`;
+  })} ${faker.helpers.arrayElement(frequencyUnits)}`
 }
 
 function fakeItKey() {
-  return `IT-${faker.number.int({ min: 100, max: 999 })}`;
+  return `IT-${faker.number.int({ min: 100, max: 999 })}`
 }
 
 function fakeResId() {
-  return `${faker.number.int({ min: 15000, max: 15999 })}`;
+  return `${faker.number.int({ min: 15000, max: 15999 })}`
 }
 
 function fakeJiraItApiResultIssuesObject() {
@@ -29,14 +41,14 @@ function fakeJiraItApiResultIssuesObject() {
       customfield_10090: faker.helpers.arrayElement([faker.internet.url(), '']), // scope URL
       customfield_10148: { value: faker.lorem.sentence() }, //sector
     },
-  };
+  }
 }
 
 function fakeJiraItApiResults(count) {
-  const fakeIssuesObjectArray = [];
+  const fakeIssuesObjectArray = []
 
   for (let i = 0; i < count; i++) {
-    fakeIssuesObjectArray.push(fakeJiraItApiResultIssuesObject());
+    fakeIssuesObjectArray.push(fakeJiraItApiResultIssuesObject())
   }
 
   return {
@@ -44,7 +56,7 @@ function fakeJiraItApiResults(count) {
       issues: fakeIssuesObjectArray,
       total: count.toString(),
     },
-  };
+  }
 }
 
 function fakeJiraResApiResultIssuesObject() {
@@ -60,14 +72,14 @@ function fakeJiraResApiResultIssuesObject() {
         value: faker.helpers.arrayElement(['Yes', '']),
       }, // buddying
     },
-  };
+  }
 }
 
 function fakeJiraResApiResults(count) {
-  const fakeIssuesObjectArray = [];
+  const fakeIssuesObjectArray = []
 
   for (let i = 0; i < count; i++) {
-    fakeIssuesObjectArray.push(fakeJiraResApiResultIssuesObject());
+    fakeIssuesObjectArray.push(fakeJiraResApiResultIssuesObject())
   }
 
   return {
@@ -75,7 +87,7 @@ function fakeJiraResApiResults(count) {
       issues: fakeIssuesObjectArray,
       total: count.toString(),
     },
-  };
+  }
 }
 
 function fakeProjectObject() {
@@ -88,52 +100,52 @@ function fakeProjectObject() {
     sector: faker.lorem.sentence(),
     video_webpage: faker.internet.url(),
     video_webpage_player_only: faker.internet.url(),
-  };
+  }
 }
 
 function fakeProjectObjects(count) {
-  const fakeProjectObjectArray = [];
+  const fakeProjectObjectArray = []
 
   for (let i = 0; i < count; i++) {
-    fakeProjectObjectArray.push(fakeProjectObject());
+    fakeProjectObjectArray.push(fakeProjectObject())
   }
 
-  return fakeProjectObjectArray;
+  return fakeProjectObjectArray
 }
 
 function fakeProjectResourceObject() {
   const projectResourceObject = {
     ...fakeProjectObject(),
     ...fakeResourceObject(),
-  };
+  }
 
-  projectResourceObject.required = '1 person';
-  projectResourceObject.skills = [projectResourceObject.skills];
+  projectResourceObject.required = '1 person'
+  projectResourceObject.skills = [projectResourceObject.skills]
 
-  return projectResourceObject;
+  return projectResourceObject
 }
 
 function fakeProjectResourceObjects(count) {
-  const fakeProjectResourceObjectArray = [];
+  const fakeProjectResourceObjectArray = []
 
   for (let i = 0; i < count; i++) {
-    fakeProjectResourceObjectArray.push(fakeProjectResourceObject());
+    fakeProjectResourceObjectArray.push(fakeProjectResourceObject())
   }
 
-  return fakeProjectResourceObjectArray;
+  return fakeProjectResourceObjectArray
 }
 
 function fakeProjectAirTableRecords(count) {
-  const fakeProjectObjectArray = [];
+  const fakeProjectObjectArray = []
 
   for (let i = 0; i < count; i++) {
     fakeProjectObjectArray.push({
       id: faker.string.uuid(),
       ...fakeProjectObject(),
-    });
+    })
   }
 
-  return fakeProjectObjectArray;
+  return fakeProjectObjectArray
 }
 
 function fakeResourceObject() {
@@ -146,17 +158,17 @@ function fakeResourceObject() {
     hours: fakeHours(),
     required: 1,
     buddying: faker.datatype.boolean(),
-  };
+  }
 }
 
 function fakeResourceObjects(count) {
-  const fakeResourceObjectArray = [];
+  const fakeResourceObjectArray = []
 
   for (let i = 0; i < count; i++) {
-    fakeResourceObjectArray.push(fakeResourceObject());
+    fakeResourceObjectArray.push(fakeResourceObject())
   }
 
-  return fakeResourceObjectArray;
+  return fakeResourceObjectArray
 }
 
 function fakeAirTableProjectResource(includeBuddying) {
@@ -176,11 +188,11 @@ function fakeAirTableProjectResource(includeBuddying) {
     required: 1,
     video_webpage: faker.internet.url(),
     video_webpage_player_only: faker.internet.url(),
-  };
+  }
 
-  if (includeBuddying) projectResource.buddying = true;
+  if (includeBuddying) projectResource.buddying = true
 
-  return projectResource;
+  return projectResource
 }
 
 module.exports = {
@@ -199,4 +211,4 @@ module.exports = {
   fakeResourceObject,
   fakeResourceObjects,
   fakeAirTableProjectResource,
-};
+}

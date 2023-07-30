@@ -1,12 +1,16 @@
-const app = require('./app');
-const cron = require('./cron-jobs/run-cron-jobs');
+const app = require('./app')
+const cron = require('./cron-jobs/run-cron-jobs')
 
-const port = 3000;
+const port = 3000
 
 app.listen(port, () => {
-  cron;
+  cron
 
-  console.log(`🛈 Volunteer App API is listening on port ${port} in ${process.env.NODE_ENV || 'development'} environment`);
+  console.log(
+    `🛈 Volunteer App API is listening on port ${port} in ${
+      process.env.NODE_ENV || 'development'
+    } environment`,
+  )
 
   // Check .env file values are set -- helpful check for devs
   if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
@@ -22,10 +26,13 @@ app.listen(port, () => {
       'VIMEO_CLIENT_ID',
       'VIMEO_CLIENT_SECRET',
       'VIMEO_ACCESS_TOKEN',
-    ];
+    ]
 
-    requiredEnvVariablesInDevelopment.forEach((envVariable) => {
-      if (!process.env[envVariable]) console.log(`❌ Environment variable ${envVariable} is missing or not set in your .env file`);
-    });
+    requiredEnvVariablesInDevelopment.forEach(envVariable => {
+      if (!process.env[envVariable])
+        console.log(
+          `❌ Environment variable ${envVariable} is missing or not set in your .env file`,
+        )
+    })
   }
-});
+})

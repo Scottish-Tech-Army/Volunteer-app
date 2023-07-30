@@ -1,6 +1,5 @@
-const { default: axios } = require("axios")
+const { default: axios } = require('axios')
 
+get: jest.fn(() => Promise.resolve({ data: {} }))
 
-    get: jest.fn(() => Promise.resolve({ data: {} }))
-
-    module.exports = axios
+module.exports = axios

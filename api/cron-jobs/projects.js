@@ -1,46 +1,46 @@
-require('dotenv').config();
-const airTable = require('../helpers/airTable');
-const arraysHelpers = require('../helpers/arrays');
-const axios = require('axios').default;
-const urlsHelpers = require('../helpers/urls');
-const projectsHelpers = require('../helpers/projects');
-const videosService = require('../services/videos');
-const logging = require('../services/logging');
-const api_key = process.env.JIRA_API_KEY;
-const email = process.env.JIRA_EMAIL;
-const resourcingJiraBoardName = 'RES';
-const recruiterAssignedJiraColumnName = 'Recruiter Assigned';
-const projectJiraBoardName = 'IT';
-const volunteerSearch = 'Volunteer Search';
-const volunteerIntroduction = 'Volunteer Introduction';
-const activityUnderway = 'Activity Underway';
+require('dotenv').config()
+const airTable = require('../helpers/airTable')
+const arraysHelpers = require('../helpers/arrays')
+const axios = require('axios').default
+const urlsHelpers = require('../helpers/urls')
+const projectsHelpers = require('../helpers/projects')
+const videosService = require('../services/videos')
+const logging = require('../services/logging')
+const api_key = process.env.JIRA_API_KEY
+const email = process.env.JIRA_EMAIL
+const resourcingJiraBoardName = 'RES'
+const recruiterAssignedJiraColumnName = 'Recruiter Assigned'
+const projectJiraBoardName = 'IT'
+const volunteerSearch = 'Volunteer Search'
+const volunteerIntroduction = 'Volunteer Introduction'
+const activityUnderway = 'Activity Underway'
 
 async function addNewProjectsResources(projectsResources) {
   // AirTable accepts creating records in groups of 10 (faster than doing just one record at at time),
   // so we chunk our data into an array of arrays, where each top-level array item is an array of up to 10 projects/resources
 
-  const projectsResourcesChunked = arraysHelpers.chunk(projectsResources, 10);
+  const projectsResourcesChunked = arraysHelpers.chunk(projectsResources, 10)
 
-  console.log('🛈 Saving project resources');
+  console.log('🛈 Saving project resources')
   for (const projectsResourcesChunk of projectsResourcesChunked) {
     await module.exports.addNewRecords(
       airTable.projectsResourcesCacheTable(),
-      projectsResourcesChunk
-    );
+      projectsResourcesChunk,
+    )
   }
 
-  console.log('🛈 Finished saving new cache data');
+  console.log('🛈 Finished saving new cache data')
 }
 
 async function addNewRecords(tableName, recordsChunk) {
-  const recordsChunkFormattedForAirTable = recordsChunk.map((record) => ({
+  const recordsChunkFormattedForAirTable = recordsChunk.map(record => ({
     fields: record,
-  }));
+  }))
 
   await airTable
     .client()
     .table(tableName)
-    .create(recordsChunkFormattedForAirTable);
+    .create(recordsChunkFormattedForAirTable)
 }
 
 async function cacheProjectsAndResources(projects, resources) {
@@ -52,52 +52,52 @@ async function cacheProjectsAndResources(projects, resources) {
           projects,
           resources,
         },
-      }
-    );
+      },
+    )
 
-    return;
+    return
   }
 
-  console.log('🛈 Attempting to cache new data');
+  console.log('🛈 Attempting to cache new data')
 
   const projectsResources = projectsHelpers.combineProjectsAndResources(
     projects,
-    resources
-  );
+    resources,
+  )
 
   try {
     await module.exports.deleteAllRecords(
-      airTable.projectsResourcesCacheTable()
-    );
+      airTable.projectsResourcesCacheTable(),
+    )
   } catch (error) {
     logging.logError(
       '❌ Could not delete existing projects/resources records in cache, so aborted updating cache',
       {
         extraInfo: error,
-      }
-    );
+      },
+    )
 
-    return;
+    return
   }
 
   try {
-    await module.exports.addNewProjectsResources(projectsResources);
+    await module.exports.addNewProjectsResources(projectsResources)
   } catch (error) {
     logging.logError(
       '❌ Could not save new projects/resources records in cache',
       {
         extraInfo: error,
-      }
-    );
+      },
+    )
 
-    return;
+    return
   }
 
-  console.log('🏁 Complete!');
+  console.log('🏁 Complete!')
 }
 
 async function deleteAllRecords(tableName) {
-  console.log(`🛈 Deleting old records from ${tableName}`);
+  console.log(`🛈 Deleting old records from ${tableName}`)
 
   return new Promise(async (resolve, reject) => {
     try {
@@ -105,34 +105,34 @@ async function deleteAllRecords(tableName) {
         .client()
         .table(tableName)
         .select()
-        .all();
+        .all()
 
       // AirTable accepts creating records in groups of 10 (faster than doing just one record at at time),
       // so we chunk our data into an array of arrays, where each top-level array item is an array of up to 10 records
-      const allRecordsChunked = arraysHelpers.chunk(allRecordsRaw, 10);
+      const allRecordsChunked = arraysHelpers.chunk(allRecordsRaw, 10)
 
-      allRecordsChunked.forEach(async (recordsChunk) => {
-        const recordIds = recordsChunk.map((record) => record.id);
+      allRecordsChunked.forEach(async recordsChunk => {
+        const recordIds = recordsChunk.map(record => record.id)
 
         try {
-          await module.exports.deleteRecords(tableName, recordIds);
+          await module.exports.deleteRecords(tableName, recordIds)
         } catch (error) {
           logging.logError(
             `❌ Error deleting all records in table ${tableName}`,
             {
               extraInfo: error,
-            }
-          );
+            },
+          )
 
-          reject();
+          reject()
         }
-      });
+      })
     } catch (error) {
-      console.error(error);
+      console.error(error)
     }
 
-    resolve();
-  });
+    resolve()
+  })
 }
 
 async function deleteRecords(tableName, recordIds) {
@@ -140,107 +140,101 @@ async function deleteRecords(tableName, recordIds) {
     airTable
       .client()
       .table(tableName)
-      .destroy(recordIds, (error) => {
+      .destroy(recordIds, error => {
         if (error) {
           logging.logError(`❌ AirTable delete error with table ${tableName}`, {
             extraInfo: error,
-          });
+          })
 
-          reject();
+          reject()
         }
-        resolve();
-      });
-  });
+        resolve()
+      })
+  })
 }
 
 function filterProjectsConnectedWithResources(itArray, resArray) {
-  return itArray.filter((project) =>
-    resArray.some((resource) => resource.it_key === project.it_key)
-  );
+  return itArray.filter(project =>
+    resArray.some(resource => resource.it_key === project.it_key),
+  )
 }
 
 function filterResourcesConnectedWithProjects(itArray, resArray) {
-  return resArray.filter((resource) =>
-    itArray.some((project) => project.it_key === resource.it_key)
-  );
+  return resArray.filter(resource =>
+    itArray.some(project => project.it_key === resource.it_key),
+  )
 }
 
 function formatProjects(projects, resources) {
-  return projects.map((project) => {
+  return projects.map(project => {
     const resourcesConnectedToProject = resources.filter(
-      (resource) => resource.it_key === project.it_key
-    );
+      resource => resource.it_key === project.it_key,
+    )
     const projectType = resourcesConnectedToProject.length
       ? resourcesConnectedToProject[0].type
-      : '';
+      : ''
 
     return {
       ...project,
       type: projectType,
-    };
-  });
+    }
+  })
 }
 
 async function getAllProjectsAndResourcesFromJira() {
   console.log(
-    '🛈 Getting data from Jira and Vimeo APIs - this can take 5 seconds or more'
-  );
+    '🛈 Getting data from Jira and Vimeo APIs - this can take 5 seconds or more',
+  )
 
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     const callAllItData = Promise.resolve(
-      module.exports.getInitialTriageProjectsFromJira(0, [])
-    );
+      module.exports.getInitialTriageProjectsFromJira(0, []),
+    )
     const callAllResData = Promise.resolve(
-      module.exports.getResourcesFromJira(0, [])
-    );
+      module.exports.getResourcesFromJira(0, []),
+    )
 
-    Promise.all([callAllItData, callAllResData]).then((data) => {
+    Promise.all([callAllItData, callAllResData]).then(data => {
       try {
-        const itArray = data[0];
-        const resArray = data[1];
+        const itArray = data[0]
+        const resArray = data[1]
 
         if (!itArray || !resArray)
           throw new Error(
-            'Initial triage data or resource data returned as undefined'
-          );
+            'Initial triage data or resource data returned as undefined',
+          )
 
         const projectsFiltered =
-          module.exports.filterProjectsConnectedWithResources(
-            itArray,
-            resArray
-          );
+          module.exports.filterProjectsConnectedWithResources(itArray, resArray)
         const resourcesFiltered =
-          module.exports.filterResourcesConnectedWithProjects(
-            itArray,
-            resArray
-          );
+          module.exports.filterResourcesConnectedWithProjects(itArray, resArray)
         const projectsFilteredAndFormatted = module.exports.formatProjects(
           projectsFiltered,
-          resourcesFiltered
-        );
+          resourcesFiltered,
+        )
 
         console.log(
-          `🛈 Found ${projectsFilteredAndFormatted.length} projects matching resources, ${resourcesFiltered.length} resources matching projects`
-        );
+          `🛈 Found ${projectsFilteredAndFormatted.length} projects matching resources, ${resourcesFiltered.length} resources matching projects`,
+        )
 
         resolve({
           projects: projectsFilteredAndFormatted,
           resources: resourcesFiltered,
-        });
+        })
       } catch (error) {
-        console.log(error);
-        return;
+        console.log(error)
+        return
       }
-    });
-  });
+    })
+  })
 }
 
 async function getInitialTriageProjectsFromJira(startAt, itArray) {
   const itJqlQuery = encodeURIComponent(
-    `project=${projectJiraBoardName} AND status='${volunteerSearch}' OR status='${volunteerIntroduction}' OR status='${activityUnderway}'`
-  );
+    `project=${projectJiraBoardName} AND status='${volunteerSearch}' OR status='${volunteerIntroduction}' OR status='${activityUnderway}'`,
+  )
 
-  let jiraIt;
+  let jiraIt
   try {
     jiraIt = await axios.get(
       `https://sta2020.atlassian.net/rest/api/2/search?jql=${itJqlQuery}&startAt=${startAt}&maxResults=1000`,
@@ -248,62 +242,62 @@ async function getInitialTriageProjectsFromJira(startAt, itArray) {
         headers: {
           Authorization: `Basic ${Buffer.from(
             // below use email address you used for jira and generate token from jira
-            `${email}:${api_key}`
+            `${email}:${api_key}`,
           ).toString('base64')}`,
           Accept: 'application/json',
         },
-      }
-    );
+      },
+    )
     if (!jiraIt?.data?.issues?.length)
-      throw new Error('Jira returned no initial triage projects');
+      throw new Error('Jira returned no initial triage projects')
   } catch (error) {
-    console.error('While getting initial triage projects from Jira: ', error);
-    return;
+    console.error('While getting initial triage projects from Jira: ', error)
+    return
   }
 
-  const itTotalData = parseInt(jiraIt.data.total);
+  const itTotalData = parseInt(jiraIt.data.total)
 
   await Promise.all(
-    jiraIt.data.issues.map(async (x) => {
+    jiraIt.data.issues.map(async x => {
       try {
         const project = {
           it_key: x['key'],
           name: x['fields'].summary,
           description: urlsHelpers.cleanUrlsAndEmails(
-            x['fields'].description ?? ''
+            x['fields'].description ?? '',
           ),
           client: x['fields'].customfield_10027,
           video_webpage: x['fields'].customfield_10159 ?? '',
           scope: x['fields'].customfield_10090,
           sector: x['fields'].customfield_10148?.value ?? '',
-        };
+        }
         project.video_webpage_player_only =
-          await videosService.getVideoWebpagePlayerOnly(project.video_webpage);
+          await videosService.getVideoWebpagePlayerOnly(project.video_webpage)
 
-        itArray.push(project);
+        itArray.push(project)
       } catch (error) {
-        console.error(error);
+        console.error(error)
       }
-    })
-  ).catch((error) => {
-    console.error(error);
-  });
+    }),
+  ).catch(error => {
+    console.error(error)
+  })
 
   if (itArray.length < itTotalData) {
-    const itStartResultSearch = itArray.length;
+    const itStartResultSearch = itArray.length
     return module.exports.getInitialTriageProjectsFromJira(
       itStartResultSearch,
-      itArray
-    );
+      itArray,
+    )
   }
-  return itArray;
+  return itArray
 }
 
 async function getResourcesFromJira(startAt, resArray) {
   const resJqlQuery = encodeURIComponent(
-    `project=${resourcingJiraBoardName} AND status='${recruiterAssignedJiraColumnName}'`
-  );
-  let jiraRes;
+    `project=${resourcingJiraBoardName} AND status='${recruiterAssignedJiraColumnName}'`,
+  )
+  let jiraRes
   try {
     jiraRes = await axios.get(
       `https://sta2020.atlassian.net/rest/api/2/search?jql=${resJqlQuery}&startAt=${startAt}&maxResults=1000`,
@@ -311,22 +305,22 @@ async function getResourcesFromJira(startAt, resArray) {
         headers: {
           Authorization: `Basic ${Buffer.from(
             // below use email address you used for jira and generate token from jira
-            `${email}:${api_key}`
+            `${email}:${api_key}`,
           ).toString('base64')}`,
           Accept: 'application/json',
         },
-      }
-    );
+      },
+    )
     if (!jiraRes?.data?.issues?.length)
-      throw new Error('Jira returned no resources');
+      throw new Error('Jira returned no resources')
   } catch (error) {
-    console.error('While getting resources from Jira: ', error);
-    return;
+    console.error('While getting resources from Jira: ', error)
+    return
   }
 
-  const resTotalData = parseInt(jiraRes.data.total);
+  const resTotalData = parseInt(jiraRes.data.total)
 
-  jiraRes.data.issues.map((x) =>
+  jiraRes.data.issues.map(x =>
     resArray.push({
       res_id: x['id'],
       it_key: x['fields'].customfield_10109,
@@ -341,27 +335,27 @@ async function getResourcesFromJira(startAt, resArray) {
       buddying: x['fields'].customfield_10108
         ? x['fields'].customfield_10108.value.toLowerCase() === 'yes'
         : false,
-    })
-  );
+    }),
+  )
 
   if (resArray.length < resTotalData) {
-    const resStartResultSearch = resArray.length;
+    const resStartResultSearch = resArray.length
 
-    return module.exports.getResourcesFromJira(resStartResultSearch, resArray);
+    return module.exports.getResourcesFromJira(resStartResultSearch, resArray)
   }
 
-  return resArray;
+  return resArray
 }
 
 async function startCachingLatestFromJira() {
-  console.log(`🚀 Started caching projects and resources at ${new Date()}`);
+  console.log(`🚀 Started caching projects and resources at ${new Date()}`)
 
   const allProjectsAndResources =
-    await module.exports.getAllProjectsAndResourcesFromJira();
+    await module.exports.getAllProjectsAndResourcesFromJira()
   module.exports.cacheProjectsAndResources(
     allProjectsAndResources.projects,
-    allProjectsAndResources.resources
-  );
+    allProjectsAndResources.resources,
+  )
 }
 
 module.exports = {
@@ -377,4 +371,4 @@ module.exports = {
   getInitialTriageProjectsFromJira,
   getResourcesFromJira,
   startCachingLatestFromJira,
-};
+}

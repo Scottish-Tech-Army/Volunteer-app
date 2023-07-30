@@ -1,4 +1,4 @@
-const { faker } = require('@faker-js/faker');
+const { faker } = require('@faker-js/faker')
 
 function fakeAirTableAttachmentData() {
   return {
@@ -20,17 +20,17 @@ function fakeAirTableAttachmentData() {
         url: faker.internet.url(),
       },
     },
-  };
+  }
 }
 
 function fakeAirTableAttachmentsData(count) {
-  const attachmentsData = [];
+  const attachmentsData = []
 
   for (let i = 0; i < count; i++) {
-    attachmentsData.push(fakeAirTableAttachmentData());
+    attachmentsData.push(fakeAirTableAttachmentData())
   }
 
-  return attachmentsData;
+  return attachmentsData
 }
 
 function fakeAirTableRecordRaw(tableName, fields) {
@@ -40,27 +40,27 @@ function fakeAirTableRecordRaw(tableName, fields) {
     },
     id: faker.string.uuid(),
     fields: {},
-  };
-
-  for (const field of fields) {
-    let fieldValue;
-    switch (field.type) {
-      case 'number':
-        fieldValue = faker.number.int();
-        break;
-      case 'string':
-        fieldValue = faker.lorem.words(5);
-        break;
-    }
-
-    recordRaw.fields[field.name] = fieldValue;
   }
 
-  return recordRaw;
+  for (const field of fields) {
+    let fieldValue
+    switch (field.type) {
+      case 'number':
+        fieldValue = faker.number.int()
+        break
+      case 'string':
+        fieldValue = faker.lorem.words(5)
+        break
+    }
+
+    recordRaw.fields[field.name] = fieldValue
+  }
+
+  return recordRaw
 }
 
 function fakeAirTableRecordsRaw(count, tableName) {
-  const fakeAirTableRecordsRawArray = [];
+  const fakeAirTableRecordsRawArray = []
   const fields = [
     {
       name: faker.lorem.words(1),
@@ -74,13 +74,13 @@ function fakeAirTableRecordsRaw(count, tableName) {
       name: faker.lorem.words(1),
       type: 'number',
     },
-  ];
+  ]
 
   for (let i = 0; i < count; i++) {
-    fakeAirTableRecordsRawArray.push(fakeAirTableRecordRaw(tableName, fields));
+    fakeAirTableRecordsRawArray.push(fakeAirTableRecordRaw(tableName, fields))
   }
 
-  return fakeAirTableRecordsRawArray;
+  return fakeAirTableRecordsRawArray
 }
 
 module.exports = {
@@ -88,4 +88,4 @@ module.exports = {
   fakeAirTableAttachmentsData,
   fakeAirTableRecordRaw,
   fakeAirTableRecordsRaw,
-};
+}
