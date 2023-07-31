@@ -5,9 +5,9 @@
 import { Pressable } from 'native-base'
 import React from 'react'
 import { Ionicons } from '@expo/vector-icons'
-
+import StaTheme from '../Theme/StaTheme'
 type CheckboxProps = {
-  onChange: (value: string[]) => void
+  onChange: () => void
   checked: boolean
 }
 
@@ -23,7 +23,7 @@ type CheckboxProps = {
 const Checkbox: React.FC<CheckboxProps> = ({ onChange, checked }) => {
   return (
     <Pressable
-      onPress={() => onChange([])}
+      onPress={onChange}
       flexDirection={'row'}
       alignItems={'center'}
       borderColor={'purple.100'}
@@ -36,7 +36,13 @@ const Checkbox: React.FC<CheckboxProps> = ({ onChange, checked }) => {
         borderColor: 'white',
       }}
     >
-      {checked && <Ionicons name="checkmark" size={20} color="#D1338A" />}
+      {checked && (
+        <Ionicons
+          name="checkmark"
+          size={20}
+          color={StaTheme.colors.primary[100]}
+        />
+      )}
     </Pressable>
   )
 }
