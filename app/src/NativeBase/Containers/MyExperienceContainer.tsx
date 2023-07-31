@@ -50,7 +50,7 @@ const MyExperienceContainer = () => {
         </Flex>
       </HStack>
       <ProgressBar colours={progressBarColourObject} />
-      <View margin={'4'}>
+      <View margin={4}>
         <FreeSearchBar
           marginTop="2"
           marginBottom="-2"
@@ -59,7 +59,7 @@ const MyExperienceContainer = () => {
         />
       </View>
       <ScrollView>
-        <VStack mt={-2} margin="5">
+        <VStack mt={-2} margin={5}>
           {filteredSkills.map((roleGroup: RoleGroup, index: number) => (
             <View
               key={`${roleGroup.groupName} - ${index}`}
