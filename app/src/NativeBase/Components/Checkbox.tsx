@@ -6,6 +6,7 @@ import { Pressable, Icon } from 'native-base'
 import React from 'react'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import StaTheme from '../Theme/StaTheme'
+
 type CheckboxProps = {
   onChange: () => void
   checked: boolean
@@ -15,7 +16,7 @@ type CheckboxProps = {
  * Component that displays a checkbox that can be checked or unchecked.
  *
  * @param { CheckboxProps} props The component props
- * @param {value: string[] => void} props.onChange function called when the checkbox is pressed
+ * @param {() => void} props.onChange function to call when the checkbox is changed
  * @param {boolean} props.checked whether the checkbox is checked or not
  * @returns {React.ReactElement} Component
  */
@@ -24,14 +25,14 @@ const Checkbox: React.FC<CheckboxProps> = ({ onChange, checked }) => {
   return (
     <Pressable
       onPress={onChange}
-      flexDirection={'row'}
-      alignItems={'center'}
-      borderColor={'purple.100'}
-      borderWidth={2}
-      borderRadius={2}
-      width={30}
-      height={30}
-      justifyContent={'center'}
+      flexDirection="row"
+      alignItems="center"
+      borderColor="purple.100"
+      borderWidth="2"
+      borderRadius="2"
+      width="30"
+      height="30"
+      justifyContent="center"
       _dark={{
         borderColor: 'white',
       }}
