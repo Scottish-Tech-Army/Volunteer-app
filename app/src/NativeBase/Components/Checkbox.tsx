@@ -2,9 +2,9 @@
  * @file CheckBox component for the STA Volunteer App
  */
 
-import { Pressable } from 'native-base'
+import { Pressable, Icon } from 'native-base'
 import React from 'react'
-import { Ionicons } from '@expo/vector-icons'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import StaTheme from '../Theme/StaTheme'
 type CheckboxProps = {
   onChange: () => void
@@ -37,9 +37,10 @@ const Checkbox: React.FC<CheckboxProps> = ({ onChange, checked }) => {
       }}
     >
       {checked && (
-        <Ionicons
-          name="checkmark"
-          size={20}
+        <Icon
+          as={MaterialIcons}
+          name="check"
+          size={5}
           color={StaTheme.colors.primary[100]}
         />
       )}
