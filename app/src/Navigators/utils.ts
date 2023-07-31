@@ -51,7 +51,7 @@ export type RootStackParamList = {
   EventSearch: string | undefined
 
   MyExperience: {
-    url: string
+    skills?: undefined
   }
 }
 
