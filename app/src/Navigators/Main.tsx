@@ -7,7 +7,7 @@ import {
   BottomTabNavigationOptions,
 } from '@react-navigation/bottom-tabs'
 import { useRoute } from '@react-navigation/native'
-import { ListContainer, ProfileContainer } from '@/NativeBase/Containers'
+import { ListContainer } from '@/NativeBase/Containers'
 import { ListType } from '@/NativeBase/Containers/ListContainer'
 import { SettingsContainer } from '@/NativeBase/Containers'
 import SelectionIcons from '@/NativeBase/Assets/Icons/Icomoon/SelectionIcons'
@@ -15,6 +15,7 @@ import { View, useColorMode, Text, Icon } from 'native-base'
 import StaTheme from '@/NativeBase/Theme/StaTheme'
 import { Platform } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import MyProfile from '@/NativeBase/Containers/ProfileContainer'
 
 const Tab = createBottomTabNavigator()
 
@@ -159,7 +160,7 @@ const MainNavigator = () => {
       {/* @TODO: Make visible for MVP+1 */}
       <Tab.Screen
         name="Profile"
-        component={ProfileContainer}
+        component={MyProfile}
         options={{
           headerShown: false,
           ...bottomTabOptions,

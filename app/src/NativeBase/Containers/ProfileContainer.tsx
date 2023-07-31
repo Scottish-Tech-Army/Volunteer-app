@@ -2,12 +2,7 @@
  * @file Profile screen showing user's personal profile.
  */
 
-import {
-  AntDesign,
-  Feather,
-  MaterialIcons,
-  MaterialCommunityIcons,
-} from '@expo/vector-icons'
+import { AntDesign, Feather, MaterialCommunityIcons } from '@expo/vector-icons'
 import {
   Box,
   Heading,
@@ -19,32 +14,39 @@ import {
   VStack,
 } from 'native-base'
 import React from 'react'
+
 import ChoicesList, {
-  ChoicesListChoice,
   ChoicesListColour,
   ChoicesListFontStyle,
 } from '../Components/ChoicesList'
 import underDevelopmentAlert from '../../Utils/UnderDevelopmentAlert'
-
-// Define the menu items to show in the profile menu
-const profileMenuItems: string[] = [
-  'My Projects',
-  'My Experience',
-  'Volunteer Vibes',
-  'Notifications & Settings',
-]
+import { navigate } from '@/Navigators/utils'
 
 // Define the colour and font style for the profile menu
 const colourChoice = ChoicesListColour.purple
 const fontStyleChoice = ChoicesListFontStyle.smallSemiBold
 
-const profileMenuChoices = profileMenuItems.map(
-  (item: string) =>
-    ({
-      text: item,
-      onPress: underDevelopmentAlert,
-    } as ChoicesListChoice),
-)
+const profileMenuChoices: { text: string; onPress: any }[] = [
+  {
+    text: 'My Projects',
+    onPress: underDevelopmentAlert,
+  },
+  {
+    text: 'My Experience',
+    onPress: () =>
+      navigate('MyExperience', {
+        skills: undefined,
+      }),
+  },
+  {
+    text: 'Volunteer Vibes',
+    onPress: underDevelopmentAlert,
+  },
+  {
+    text: 'Notifications & Settings',
+    onPress: underDevelopmentAlert,
+  },
+]
 
 /**
  * A screen container that displays the user's profile.
@@ -54,8 +56,11 @@ const profileMenuChoices = profileMenuItems.map(
 const ProfileContainer = () => {
   return (
     <VStack
-      padding={2}
-      backgroundColor="bg.100"
+      paddingTop="4"
+      paddingBottom="2"
+      alignItems="center"
+      space="4"
+      backgroundColor="secondaryGrey.60"
       _dark={{ backgroundColor: 'bgDarkMode.100' }}
     >
       <ScrollView>

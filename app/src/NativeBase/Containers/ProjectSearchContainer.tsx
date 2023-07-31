@@ -7,11 +7,7 @@ import Fuse from 'fuse.js' // fuzzy text search - see docs at https://fusejs.io
 import { ScrollView } from 'native-base'
 import { useSelector } from 'react-redux'
 import { ListRouteParams, ListSearch, ListType } from './ListContainer'
-import ChoicesList, {
-  ChoicesListChoice,
-  ChoicesListColour,
-  ChoicesListFontStyle,
-} from '../Components/ChoicesList'
+import ChoicesList, { ChoicesListChoice } from '../Components/ChoicesList'
 import FreeSearchBar from '../Components/FreeSearchBar'
 import SegmentedPicker, {
   SegmentedPickerOption,
@@ -95,10 +91,6 @@ const ProjectSearchContainer = () => {
           handleQuickSearchSubmit(ProjectsSearchField.Sector, cause),
       } as ChoicesListChoice),
   )
-
-  // Define colour and style to use for quick search options
-  const quickSearchListColour = ChoicesListColour.primary
-  const quickSearchListStyle = ChoicesListFontStyle.mediumLight
 
   // Ensure job title searches find related roles
   const getRelatedRoles = (
@@ -217,27 +209,15 @@ const ProjectSearchContainer = () => {
       <SegmentedPicker marginBottom="5" options={tabs} />
 
       {selectedTab === Tab.Roles && (
-        <ChoicesList
-          choices={quickSearchRoleChoices}
-          colour={quickSearchListColour}
-          style={quickSearchListStyle}
-        />
+        <ChoicesList choices={quickSearchRoleChoices} />
       )}
 
       {selectedTab === Tab.Tech && (
-        <ChoicesList
-          choices={quickSearchTechnologies}
-          colour={quickSearchListColour}
-          style={quickSearchListStyle}
-        />
+        <ChoicesList choices={quickSearchTechnologies} />
       )}
 
       {selectedTab === Tab.Causes && (
-        <ChoicesList
-          choices={quickSearchCauses}
-          colour={quickSearchListColour}
-          style={quickSearchListStyle}
-        />
+        <ChoicesList choices={quickSearchCauses} />
       )}
     </ScrollView>
   )

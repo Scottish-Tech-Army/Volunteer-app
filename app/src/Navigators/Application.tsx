@@ -19,6 +19,7 @@ import {
   EventSearchContainer,
   WelcomeContainer,
 } from '@/Containers'
+import MyExperienceContainer from '@/NativeBase/Containers/MyExperienceContainer'
 import ProjectRegisterInterestContainer from '@/NativeBase/Containers/ProjectRegisterInterestContainer'
 import MainNavigator from './Main'
 import { navigationRef } from './utils'
@@ -208,7 +209,13 @@ const ApplicationNavigator = () => {
               title: 'Event Search',
             }}
           />
-
+          <Stack.Screen
+            name="MyExperience"
+            component={MyExperienceContainer}
+            options={{
+              ...stackScreenDefaultOptions,
+            }}
+          />
           <Stack.Screen
             name="Welcome"
             component={WelcomeContainer}
