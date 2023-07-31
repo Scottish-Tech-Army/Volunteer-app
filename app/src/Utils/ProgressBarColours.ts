@@ -21,7 +21,13 @@ export const getProgressBarColors = (
   currentBox: number,
   bgColor: string,
 ): ProgressBarColors => {
-  const boxes = ['#F1F1F1', '#F1F1F1', '#F1F1F1'] // default colour for all boxes while the user is on the same screen
+  const boxes = [
+    'secondaryGrey.80',
+    'secondaryGrey.80',
+    'secondaryGrey.80',
+    'secondaryGrey.80',
+  ] // default colour for all boxes while the user is on the same screen
+  // import secondaryGrey80 from StaTheme
   for (let i = 0; i < currentBox; i++) {
     boxes[i] = bgColor
   }
@@ -30,7 +36,7 @@ export const getProgressBarColors = (
     box1: boxes[0],
     box2: boxes[1],
     box3: boxes[2],
-    bgColor: boxes[3] === bgColor ? bgColor : '#F1F1F1',
+    bgColor: boxes[3] === bgColor ? bgColor : 'secondaryGrey.80',
   }
 }
 
