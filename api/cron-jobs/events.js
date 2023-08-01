@@ -1,7 +1,11 @@
 // Get video thumbnails and MP4 video files for event videos
 
 require('dotenv').config()
-import { updateRecordById, eventsTable, getAllRecords } from '../helpers/airTable'
+import {
+  updateRecordById,
+  eventsTable,
+  getAllRecords,
+} from '../helpers/airTable'
 import { formatEventFromAirTable } from '../helpers/events'
 import { logError } from '../services/logging'
 import { getVideoThumbnail } from '../services/vimeo'
@@ -18,9 +22,7 @@ async function addEventsVideoThumbnails(events) {
   )
 
   for (const event of eventsNeedingVideoThumbnailAdded) {
-    const video_thumbnail = await getVideoThumbnail(
-      event.video_webpage,
-    )
+    const video_thumbnail = await getVideoThumbnail(event.video_webpage)
 
     if (video_thumbnail) {
       const updateRecordResult = await updateRecordById(
@@ -64,9 +66,7 @@ async function getAllEvents() {
     return
   }
 
-  const eventsFormatted = events.map(event =>
-    formatEventFromAirTable(event),
-  )
+  const eventsFormatted = events.map(event => formatEventFromAirTable(event))
 
   return eventsFormatted
 }
