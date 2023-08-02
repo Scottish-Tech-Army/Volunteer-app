@@ -126,7 +126,6 @@ describe('Test the AirTable helpers', () => {
     expect(airTableClientTableMock).toHaveBeenCalledWith(fakeTableName);
     expect(airTableClientTableCreateMock).toHaveBeenCalledTimes(1);
     const airTableCreateDataReceived = airTableClientTableCreateMock.mock.calls[0][0];
-    console.log('airTableCreateDataReceived', airTableCreateDataReceived);
     expect(airTableCreateDataReceived).toMatchObject([{ fields: fakeFields }]);
     expect(success).toEqual(true);
 
