@@ -51,10 +51,10 @@ describe('Test the AirTable helpers', () => {
         description: 'What does the future hold\n',
         type: 'Internal',
         series: 'Microsoft',
-        speakers: [ 'recJ3qeK5GXidUYxW' ],
+        speakers: ['recJ3qeK5GXidUYxW'],
       },
     };
-    const fakeLinkedFields = [ { fieldName: 'speakers', tableName: 'STA Events Speakers' } ];
+    const fakeLinkedFields = [{ fieldName: 'speakers', tableName: 'STA Events Speakers' }];
 
     // Data for mocks
     const fakeSpeakersTableName = faker.lorem.words();
@@ -99,6 +99,42 @@ describe('Test the AirTable helpers', () => {
     airTableClientSpy.mockRestore();
   });
 
+  test('createRecord creates a record in AirTable', async () => {
+    // Set up fake test data
+    const fakeTableName = faker.lorem.words(1);
+    const fakeFields = {
+      [faker.lorem.words(1)]: faker.lorem.words(3),
+      [faker.lorem.words(1)]: faker.lorem.words(3),
+      [faker.lorem.words(1)]: faker.lorem.words(3),
+      [faker.lorem.words(1)]: faker.lorem.words(3),
+      [faker.lorem.words(1)]: faker.lorem.words(3),
+    };
+
+    // Mock dependencies
+    const airTableClientTableCreateMock = jest.fn(() => ({}));
+    const airTableClientTableMock = jest.fn(() => ({ create: airTableClientTableCreateMock }));
+    const airTableClientSpy = jest
+      .spyOn(airTable, 'client')
+      .mockImplementation(() => ({ table: airTableClientTableMock }));
+    const logErrorSpy = jest.spyOn(logging, 'logError').mockImplementation(() => { });
+
+    // Run test
+    const success = await airTable.createRecord(fakeTableName, fakeFields);
+
+    expect(airTableClientSpy).toHaveBeenCalledTimes(1);
+    expect(airTableClientTableMock).toHaveBeenCalledTimes(1);
+    expect(airTableClientTableMock).toHaveBeenCalledWith(fakeTableName);
+    expect(airTableClientTableCreateMock).toHaveBeenCalledTimes(1);
+    const airTableCreateDataReceived = airTableClientTableCreateMock.mock.calls[0][0];
+    console.log('airTableCreateDataReceived', airTableCreateDataReceived);
+    expect(airTableCreateDataReceived).toMatchObject([{ fields: fakeFields }]);
+    expect(success).toEqual(true);
+
+    // Clean up
+    airTableClientSpy.mockRestore();
+    logErrorSpy.mockRestore();
+  });
+
   test('getAllRecords gets records from AirTable and returns relevant data', async () => {
     // Set up fake test data
     const fakeRecordsCount = faker.number.int({ min: 10, max: 30 });
@@ -139,7 +175,7 @@ describe('Test the AirTable helpers', () => {
     const airTableClientSpy = jest
       .spyOn(airTable, 'client')
       .mockImplementation(() => ({ table: airTableClientTableMock }));
-    const logErrorSpy = jest.spyOn(logging, 'logError').mockImplementation(() => {});
+    const logErrorSpy = jest.spyOn(logging, 'logError').mockImplementation(() => { });
 
     // Run test
     const record = await airTable.getRecordById(fakeTableName, fakeRecords[0].id);
@@ -172,7 +208,7 @@ describe('Test the AirTable helpers', () => {
     const airTableClientSpy = jest
       .spyOn(airTable, 'client')
       .mockImplementation(() => ({ table: airTableClientTableMock }));
-    const logErrorSpy = jest.spyOn(logging, 'logError').mockImplementation(() => {});
+    const logErrorSpy = jest.spyOn(logging, 'logError').mockImplementation(() => { });
 
     // Run test
     const record = await airTable.getRecordByQuery(fakeTableName, {
@@ -220,7 +256,7 @@ describe('Test the AirTable helpers', () => {
     const airTableClientSpy = jest
       .spyOn(airTable, 'client')
       .mockImplementation(() => ({ table: airTableClientTableMock }));
-    const logErrorSpy = jest.spyOn(logging, 'logError').mockImplementation(() => {});
+    const logErrorSpy = jest.spyOn(logging, 'logError').mockImplementation(() => { });
 
     // Run test
     await airTable.updateRecordById(fakeTableName, fakeRecordId, fakeFields);
