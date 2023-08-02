@@ -42,6 +42,7 @@ Git Flow gives us the flexibility to continue developing as a team but picking a
 Whatever you're doing the sequence is the same - start and push. Remember to replace JIRA-TICKET with the JIRA ticket you're working on, or a descriptive name if its not in Jira for whatever reason.
 
 ## Switching to Git Flow
+
 ***You must complete this step***
 After cloning the repository or from your existing local repository enter `git flow init`. This asks a series of questions, accept all the default values, and configures your local `.gitconfig` file. This file is not uploaded to GitHub so only affects local installs.
 
@@ -65,7 +66,7 @@ The process is the same, except the command changes from feature to hotfix `git 
 
 ### Release
 
-The process is the same, except the command changes from feature to hotfix `git flow bugfix start bug_number`
+The process is the same, except the command changes to release `git flow release start release_id`
 
 1. `git flow release start mvp-X` (where X is the MVP number) creates a new `feature` branch from `develop` and switches to it.
 2. Once you're done then `git flow release publish`.
