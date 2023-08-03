@@ -37,9 +37,26 @@ function addEmptyFields(record, fieldDefinitions) {
   return record;
 }
 
-function client() {
+function client(airTableBase) {
+  let apiKey = ''; // this can be an AirTable API key (being deprecated in January 2024) or a personal access token (newer)
+  let baseId = '';
+
+  switch (airTableBase) {
+    case 'sta': // 'Scottish Tech Army' account
+      apiKey = process.env.AIRTABLE_STA_ACCESS_TOKEN;
+      baseId = process.env.AIRTABLE_STA_BASE_ID;
+      break;
+    case 'staVolunteerApp': // 'Scottish Tech Army copy for Volunteer app' account
+    default: // defaults to this option as currently this is mostly in use across the API
+      apiKey = process.env.AIRTABLE_API_KEY;
+      baseId = process.env.AIRTABLE_ID;
+      break;
+  }
+
   try {
-    const airTableClient = new AirTable().base(process.env.AIRTABLE_ID);
+    const airTableClient = new AirTable({
+      apiKey,
+    }).base(baseId);
 
     return airTableClient;
   } catch (error) {
@@ -51,6 +68,33 @@ function client() {
 
 function connectionErrorMessage() {
   return '❌ Could not connect to AirTable - please check you have the correct details in your .env file.';
+}
+
+/**
+ * Creates a record in a table
+ * @param {string} tableName Name of the table as it appears in AirTable
+ * @param {object} fields Object of fields to use for the record -- the keys you use here must match *exactly* the field names in AirTable
+ * @param {string} [base] Optional: specify the ID of the AirTable base to use
+ * @returns {Promise<boolean>} true if successful, false if not
+ */
+async function createRecord(tableName, fields, base) {
+  try {
+    const table = await module.exports.client(base).table(tableName);
+
+    await table.create([
+      {
+        fields,
+      },
+    ]);
+
+    return true;
+  } catch (error) {
+    logging.logError(`Could not create record in table ${tableName}, fields: ${JSON.stringify(fields)}`, {
+      extraInfo: error,
+    });
+
+    return false;
+  }
 }
 
 function eventsTable() {
@@ -82,9 +126,9 @@ async function getAllRecords(tableName, includeId = false, linkedFields) {
         }
         return includeId // if records don't already have a unique identifier column (e.g. events), it's useful to include the record ID from AirTable
           ? {
-              id: record.id,
-              ...record.fields,
-            }
+            id: record.id,
+            ...record.fields,
+          }
           : record.fields;
       }),
     );
@@ -127,7 +171,7 @@ async function getRecordById(tableName, recordId, linkedFields) {
     if (linkedFields?.length) {
       record = await addLinkedFields(tableName, record, linkedFields);
     }
-    
+
     return record.fields;
   } catch (error) {
     logging.logError(`Could not get record ID ${recordId} from table ${tableName}`, {
@@ -164,6 +208,10 @@ async function getRecordByQuery(tableName, filterQuery) {
 
     return error;
   }
+}
+
+function projectsRegisterInterestTable() {
+  return process.env.AIRTABLE_STA_PROJECTS_REGISTER_INTEREST_TABLE;
 }
 
 function projectsResourcesCacheTable() {
@@ -207,6 +255,7 @@ module.exports = {
   addLinkedFields,
   client,
   connectionErrorMessage,
+  createRecord,
   eventsTable,
   eventsTableLinkedFields,
   formatDuration,
@@ -215,6 +264,7 @@ module.exports = {
   getRecordById,
   getRecordByQuery,
   projectsResourcesCacheTable,
+  projectsRegisterInterestTable,
   simplifyAttachmentsData,
   updateRecordById,
 };
