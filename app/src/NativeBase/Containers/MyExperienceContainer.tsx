@@ -55,7 +55,7 @@ const MyExperienceContainer = () => {
           <StaThemeLogo />
         </Flex>
       </HStack>
-      <ProgressBar colours={progressBarColourObject} />
+      {/* <ProgressBar colours={progressBarColourObject} /> */}
       <View margin={4}>
         <FreeSearchBar
           marginTop="2"

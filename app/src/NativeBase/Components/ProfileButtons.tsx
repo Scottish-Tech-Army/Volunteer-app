@@ -37,7 +37,7 @@ const ProfileButtons: React.FC<ProfileButtonsProps> = ({
       _text={pressed ? { color: 'white' } : props._text}
       disabled={disabled}
     >
-      {pressed ? 'Continue' : children}
+      {pressed ? 'Done' : children}
     </Button>
   )
 }
