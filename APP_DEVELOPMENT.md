@@ -19,10 +19,9 @@ This file contains some tips and guidelines on building our front-end React Nati
       - [WebViewContainer](#webviewcontainer)
     - [Custom components](#custom-components)
       - [Brand](#brand)
-      - [STA Multi-coloured Matchstick Logo](#sta-multi-coloured-matchstick-logo)
-      - [STA Single Matchstick](#sta-single-matchstick)
-      - [Checkbox Group](#checkbox-group)
-      - [Progress Bar](#progress-bar)
+      - [STAMatchstick](#stamatchstick)
+      - [Checkbox](#checkbox)
+      - [ProgressBar](#progressbar)
       - [ChoicesList](#choiceslist)
       - [FreeSearchBar](#freesearchbar)
       - [Modal](#modal)
@@ -174,30 +173,24 @@ These are custom components we've developed, in addition to NativeBase readymade
 
 Displays the wide version of the STA logo
 
-#### STA Multi-coloured Matchstick Logo
+#### STAMatchstick
 
-![STA Matchstick](app/src/Assets/Images/STA%20Matchstick%20Logo.png)
-
-STA Matchstick Logo with seven, rotated multi-coloured matchsticks
-
-#### STA Single Matchstick
-
-![STA Single Matchstick](src/../app/src/Assets/Images/STA%20Pencil.jpg)
+![STA Matchstick](src/../app/src/Assets/Images/STA%20Pencil.jpg)
 
 A Single STA Matchstick that can be reused in any component with the appropriate colour
 
-#### Checkbox Group
+#### Checkbox
 
 ![Checkbox Group](app/src/Assets/Images/Checkbox%20Group.jpg)
 
 A reusable checkbox component that can be configured for multiple different values.
 
-#### Progress Bar
+#### ProgressBar
 
 ![Progress Bar](src/../app/src/Assets/Images/ProgressBar.jpg)
 
 A dynamic custom progress bar for reuse in the Profile containers (or elsewhere).
-The choice of progress bar colour can be modified. (see example in `NativeBase/Containers/MyExperienceContainer`)
+The choice of progress bar colour can be modified.
 
 #### ChoicesList
 
