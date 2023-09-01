@@ -175,19 +175,19 @@ Displays the wide version of the STA logo
 
 #### STAMatchstick
 
-![STA Matchstick](src/../app/src/Assets/Images/STA%20Pencil.jpg)
+![STA Matchstick](screenshots/components/STA%20Pencil.jpg)
 
 A Single STA Matchstick that can be reused in any component with the appropriate colour
 
 #### Checkbox
 
-![Checkbox Group](app/src/Assets/Images/Checkbox%20Group.jpg)
+![Checkbox Group](screenshots/components/Checkbox%20Group.jpg)
 
 A reusable checkbox component that can be configured for multiple different values.
 
 #### ProgressBar
 
-![Progress Bar](src/../app/src/Assets/Images/ProgressBar.jpg)
+![Progress Bar](screenshots/components/ProgressBar.jpg)
 
 A dynamic custom progress bar for reuse in the Profile containers (or elsewhere).
 The choice of progress bar colour can be modified.

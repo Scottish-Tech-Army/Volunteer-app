@@ -40,6 +40,8 @@ const Checkbox: React.FC<CheckboxProps> = ({ onChange, checked }) => {
       {checked && (
         <Icon
           as={MaterialIcons}
+          aria-label="checked"
+          aria-checked={checked}
           name="check"
           size={5}
           color={StaTheme.colors.primary[100]}
