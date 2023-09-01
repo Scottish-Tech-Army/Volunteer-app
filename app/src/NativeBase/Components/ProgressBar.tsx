@@ -15,10 +15,6 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ colours }) => {
         {colours.map((colour, index) => (
           <Box
             key={index}
-            role="progressbar"
-            aria-valuemax={4}
-            aria-valuemin={0}
-            aria-valuenow={index + 1}
             bgColor={colour}
             height="15"
             width="22%"
