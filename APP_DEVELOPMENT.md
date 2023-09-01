@@ -19,7 +19,7 @@ This file contains some tips and guidelines on building our front-end React Nati
       - [WebViewContainer](#webviewcontainer)
     - [Custom components](#custom-components)
       - [Brand](#brand)
-      - [STAMatchstick](#stamatchstick)
+      - [STA Matchstick](#sta-matchstick)
       - [Checkbox](#checkbox)
       - [ProgressBar](#progressbar)
       - [ChoicesList](#choiceslist)
@@ -173,21 +173,21 @@ These are custom components we've developed, in addition to NativeBase readymade
 
 Displays the wide version of the STA logo
 
-#### STAMatchstick
+#### STA Matchstick
 
-![STA Matchstick](src/../app/src/Assets/Images/STA%20Pencil.jpg)
+![STA Matchstick](screenshots/components/STAPencil.jpg)
 
 A Single STA Matchstick that can be reused in any component with the appropriate colour
 
 #### Checkbox
 
-![Checkbox Group](app/src/Assets/Images/Checkbox%20Group.jpg)
+![Checkbox Group](screenshots/components/Checkbox.jpg)
 
 A reusable checkbox component that can be configured for multiple different values.
 
 #### ProgressBar
 
-![Progress Bar](src/../app/src/Assets/Images/ProgressBar.jpg)
+![Progress Bar](screenshots/components/ProgressBar.jpg)
 
 A dynamic custom progress bar for reuse in the Profile containers (or elsewhere).
 The choice of progress bar colour can be modified.
