@@ -9,6 +9,7 @@ import {
   Flex,
   View,
   Text,
+  Button,
 } from 'native-base'
 import ProfileButtons from '../Components/ProfileButtons'
 import ProgressBar from '../Components/ProgressBar'
@@ -26,7 +27,7 @@ const MyExperienceContainer = () => {
   const [skillsValue, setSkillsValue] = React.useState<string[]>([]) // skills selected by the user
   const [searchTxt, setSearchTxt] = React.useState<string>('') // search text
   const [currentBox, setCurrentBox] = React.useState<number>(1) // current box in the progress bar
-
+  const [nextButton, setNextButton] = React.useState<boolean>(false) // next screen button
   /**
    * Filter the role groups based on the search text entered by the user
    */
@@ -39,6 +40,11 @@ const MyExperienceContainer = () => {
     getProgressBarColors(currentBox, 'purple.20'),
   )
 
+  const handleButtonPress = () => {
+    setNextButton(true)
+    nextScreen(currentBox, setCurrentBox)
+  }
+
   return (
     <>
       <HStack mt={-10} mb={5} alignItems={'flex-end'}>
@@ -49,7 +55,7 @@ const MyExperienceContainer = () => {
           <StaThemeLogo />
         </Flex>
       </HStack>
-      <ProgressBar colours={progressBarColourObject} />
+      {/* <ProgressBar colours={progressBarColourObject} /> */}
       <View margin={4}>
         <FreeSearchBar
           marginTop="2"
@@ -111,27 +117,31 @@ const MyExperienceContainer = () => {
             _text={{
               color: 'purple.100',
             }}
-            onPress={() => nextScreen(currentBox, setCurrentBox)}
+            onPress={handleButtonPress}
             disabled={currentBox === currentBox - 1}
           >
             Next
           </ProfileButtons>
-          <ProfileButtons
-            backgroundColor="bg.100"
-            borderColor="bg.100"
-            fontFamily="primarySemiBold"
-            _dark={{
-              backgroundColor: 'bgDarkMode.100',
-              _text: { color: 'white' },
-              borderColor: 'white',
-            }}
-            _text={{
-              color: 'darkGrey.100',
-            }}
-            onPress={() => []}
-          >
-            Skip
-          </ProfileButtons>
+          {nextButton ? (
+            <View marginBottom={8} />
+          ) : (
+            <Button
+              backgroundColor="bg.100"
+              borderColor="bg.100"
+              fontFamily="primarySemiBold"
+              _dark={{
+                backgroundColor: 'bgDarkMode.200',
+                _text: { color: 'white' },
+                borderColor: 'white',
+              }}
+              _text={{
+                color: 'darkGrey.100',
+              }}
+              onPress={() => []}
+            >
+              Skip
+            </Button>
+          )}
         </VStack>
       </ScrollView>
     </>

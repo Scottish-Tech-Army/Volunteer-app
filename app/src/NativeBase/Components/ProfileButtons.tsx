@@ -23,10 +23,23 @@ const ProfileButtons: React.FC<ProfileButtonsProps> = ({
   children,
   ...props
 }) => {
+  const [pressed, setButtonPressed] = React.useState(false)
+
+  const handlePressIn = () => {
+    setButtonPressed(true)
+    onPress()
+  }
   return (
-    <Button onPress={onPress} disabled={disabled} {...props}>
-      {children}
+    <Button
+      onPress={handlePressIn}
+      {...props}
+      backgroundColor={pressed ? 'purple.100' : props.backgroundColor}
+      _text={pressed ? { color: 'white' } : props._text}
+      disabled={disabled}
+    >
+      {pressed ? 'Done' : children}
     </Button>
   )
 }
+
 export default ProfileButtons

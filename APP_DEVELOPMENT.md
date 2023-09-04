@@ -2,26 +2,39 @@
 
 This file contains some tips and guidelines on building our front-end React Native app. Please add to it!
 
-- [Overview of directories](#overview-of-directories)
-- [Working with Figma](#working-with-figma)
-- [React Native and Expo](#react-native-and-expo)
-  - [Expo trade-offs](#expo-trade-offs)
-  - [Installing new packages](#installing-new-packages)
-  - [Using .env variables](#using-env-variables)
-  - [Expo config file](#expo-config-file)
-  - [Expo known issues](#expo-known-issues)
-- [NativeBase](#nativebase)
-  - [File locations, naming, moving and deleting](#file-locations-naming-moving-and-deleting)
-  - [Theming & approach](#theming--approach)
-  - [Dark mode](#dark-mode)
-  - [Reusable containers](#reusable-containers)
-  - [Custom components](#custom-components)
-  - [Icons](#icons)
-- [Images](#images)
-- [Logging errors and crashes](#logging-errors-and-crashes)
-  - [Seeing Bugsnag reports](#seeing-bugsnag-reports)
-  - [Logging errors to Bugsnag during development](#logging-errors-to-bugsnag-during-development)
-- [Performance issues](#performance-issues)
+- [App development](#app-development)
+  - [Overview of directories](#overview-of-directories)
+  - [Working with Figma](#working-with-figma)
+  - [React Native and Expo](#react-native-and-expo)
+    - [Expo trade-offs](#expo-trade-offs)
+    - [Installing new packages](#installing-new-packages)
+    - [Using .env variables](#using-env-variables)
+    - [Expo config file](#expo-config-file)
+    - [Expo known issues](#expo-known-issues)
+  - [NativeBase](#nativebase)
+    - [File locations, naming, moving and deleting](#file-locations-naming-moving-and-deleting)
+    - [Theming \& approach](#theming--approach)
+    - [Dark mode](#dark-mode)
+    - [Reusable containers](#reusable-containers)
+      - [WebViewContainer](#webviewcontainer)
+    - [Custom components](#custom-components)
+      - [Brand](#brand)
+      - [STA Matchstick](#sta-matchstick)
+      - [Checkbox](#checkbox)
+      - [ProgressBar](#progressbar)
+      - [ChoicesList](#choiceslist)
+      - [FreeSearchBar](#freesearchbar)
+      - [Modal](#modal)
+      - [NavigationHeader](#navigationheader)
+      - [SegmentedPicker](#segmentedpicker)
+      - [TopOfApp](#topofapp)
+      - [TextInputControl](#textinputcontrol)
+    - [Icons](#icons)
+  - [Images](#images)
+  - [Logging errors and crashes](#logging-errors-and-crashes)
+    - [Seeing Bugsnag reports](#seeing-bugsnag-reports)
+    - [Logging errors to Bugsnag during development](#logging-errors-to-bugsnag-during-development)
+  - [Performance issues](#performance-issues)
 
 ## Overview of directories
 
@@ -159,6 +172,25 @@ These are custom components we've developed, in addition to NativeBase readymade
 ![Brand component](screenshots/components/Brand.png)
 
 Displays the wide version of the STA logo
+
+#### STA Matchstick
+
+![STA Matchstick](screenshots/components/STAPencil.jpg)
+
+A Single STA Matchstick that can be reused in any component with the appropriate colour
+
+#### Checkbox
+
+![Checkbox Group](screenshots/components/Checkbox.jpg)
+
+A reusable checkbox component that can be configured for multiple different values.
+
+#### ProgressBar
+
+![Progress Bar](screenshots/components/ProgressBar.jpg)
+
+A dynamic custom progress bar for reuse in the Profile containers (or elsewhere).
+The choice of progress bar colour can be modified.
 
 #### ChoicesList
 
