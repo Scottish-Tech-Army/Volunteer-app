@@ -18,7 +18,7 @@ const YesNoChoice: FC<YesNoChoiceProps> = ({
 }) => {
   return (
     <HStack marginTop="2" justifyContent="space-between">
-      <Text fontWeight="600" fontSize="sm">
+      <Text fontFamily="primarySemiBold" fontSize="sm">
         {description}
       </Text>
       <Switch

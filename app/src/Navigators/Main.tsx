@@ -15,6 +15,7 @@ import { View, useColorMode, Text, Icon } from 'native-base'
 import StaTheme from '@/NativeBase/Theme/StaTheme'
 import { Platform } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import MyProfile from '@/NativeBase/Containers/ProfileContainer'
 
 const Tab = createBottomTabNavigator()
 
@@ -157,14 +158,14 @@ const MainNavigator = () => {
         }}
       /> */}
       {/* @TODO: Make visible for MVP+1 */}
-      {/* <Tab.Screen
+      <Tab.Screen
         name="Profile"
-        component={ProfileContainer}
+        component={MyProfile}
         options={{
           headerShown: false,
           ...bottomTabOptions,
         }}
-      /> */}
+      />
       <Tab.Screen
         name="Settings"
         component={SettingsContainer}

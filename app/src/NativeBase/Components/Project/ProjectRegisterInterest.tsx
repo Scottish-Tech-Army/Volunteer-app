@@ -79,8 +79,8 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
         setResponseHeaderIcon('error')
         setResponseBody([
           <>
-            Sorry, we couldn't send your message - please try again. If this
-            keeps happening, please contact the STA Volunteer App team.
+            Sorry, we couldn't register your interest - please try again. If
+            this keeps happening, please contact the STA Volunteer App team.
           </>,
         ])
       }

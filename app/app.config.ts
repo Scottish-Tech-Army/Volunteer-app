@@ -7,7 +7,7 @@ import { version } from './package.json'
 
 module.exports = {
   expo: {
-    name: 'STA',
+    name: 'STA Volunteers',
     slug: 'volunteer-app',
     version,
     orientation: 'portrait',
@@ -25,7 +25,6 @@ module.exports = {
         backgroundColor: '#ffffff',
       },
       package: 'org.scottishtecharmy.volunteerapp',
-      versionCode: 15,
     },
     ios: {
       bundleIdentifier: 'org.scottishtecharmy.volunteerapp',
@@ -34,7 +33,6 @@ module.exports = {
         NSCalendarsUsageDescription:
           "The app will show tech/volunteering-related events that the user might be interested in. The user can choose to attend an event - if so, the app needs access to the user's calendar in order to add an event.",
       },
-      buildNumber: '17',
       supportsTablet: true,
     },
     web: {
