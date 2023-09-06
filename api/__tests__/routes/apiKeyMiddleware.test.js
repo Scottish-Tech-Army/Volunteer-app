@@ -2,11 +2,22 @@ const axios = require('axios');
 const eventsHelper = require('../../helpers/events');
 const { apiKeyMiddleware } = require('../../routes/apiKeyMiddleware');
 axios.defaults.adapter = require('axios/lib/adapters/http');
-process.env = {
-  API_KEY: 'TEST-API-KEY',
-};
 
 describe('Test API key Authentication', () => {
+
+  const OLD_ENV = process.env;
+
+  beforeEach(() => {
+    jest.resetModules();
+    process.env = {
+      STA_API_KEY: 'TEST-API-KEY',
+    };
+  });
+
+  afterAll(() => {
+    process.env = OLD_ENV;
+  });
+
     test('Should pass to next when expected API key is passed', async () => {
       
         const fakeRequest = {
@@ -31,11 +42,7 @@ describe('Test API key Authentication', () => {
 
     test('Should throw unauthorised when passes incorrect key', async () => {
 
-      process.env = {
-        API_KEY: 'TEST-API-KEY',
-      };
-
-        const fakeRequest = {
+      const fakeRequest = {
             header: jest.fn((key) => 'invalid-test-api-key'),
         };
 

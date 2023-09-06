@@ -49,6 +49,10 @@ export type RootStackParamList = {
     key: string
   }
   EventSearch: string | undefined
+
+  MyExperience: {
+    skills?: undefined
+  }
 }
 
 export const navigationRef = createNavigationContainerRef<RootStackParamList>()

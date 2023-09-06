@@ -102,14 +102,15 @@ const projectRegisterInterestHandler = async (req, res) => {
     return;
   }
 
+  const fullName = `${req.body.firstName} ${req.body.lastName}`;
+
   const slackResponse = await slackService.postMessage(
     process.env.SLACK_CHANNEL_VOLUNTEER_PROJECT_INTEREST,
-    `🎉🎉🎉 Hurray! We've got a new volunteer interested in *${projectResourceFormatted.name}* for *${
-      projectResourceFormatted.client
+    `🎉🎉🎉 Hurray! We've got a new volunteer interested in *${projectResourceFormatted.name}* for *${projectResourceFormatted.client
     }*
 
     ➡️ *Role*  ${projectResourceFormatted.role}
-    👤 *Volunteer*  ${req.body.firstName} ${req.body.lastName}
+    👤 *Volunteer*  ${fullName}
     ✉️ *Email*  ${req.body.email}
     🧑‍🤝‍🧑 *Looking for peer support?*  ${req.body.lookingForPeerSupport ? 'Yes' : 'No'}
     📅 *Available from*  ${dayjs(req.body.availableFrom, 'YYYY-MM-DD').format('D MMMM YYYY')}
@@ -117,7 +118,17 @@ const projectRegisterInterestHandler = async (req, res) => {
     Please get in touch with them to follow up`,
   );
 
-  res.status(slackResponse.data ? 200 : 400).send(slackResponse);
+  const airTableCreateRecordSuccess = await airTable.createRecord(airTable.projectsRegisterInterestTable(), {
+    'Name': fullName,
+    'Create date': dayjs().format('YYYY-MM-DD'),
+    'Available from': req.body.availableFrom,
+    'Project name': projectResourceFormatted.name,
+    'Role': projectResourceFormatted.role,
+    'Peer Support': req.body.lookingForPeerSupport ? 'Yes' : 'No',
+    'email': req.body.email,
+  }, 'sta');
+
+  res.status((slackResponse.data && airTableCreateRecordSuccess) ? 200 : 400).send(slackResponse);
 };
 
 module.exports = {

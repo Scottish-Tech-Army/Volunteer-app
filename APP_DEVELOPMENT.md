@@ -2,26 +2,39 @@
 
 This file contains some tips and guidelines on building our front-end React Native app. Please add to it!
 
-- [Overview of directories](#overview-of-directories)
-- [Working with Figma](#working-with-figma)
-- [React Native and Expo](#react-native-and-expo)
-  - [Expo trade-offs](#expo-trade-offs)
-  - [Installing new packages](#installing-new-packages)
-  - [Using .env variables](#using-env-variables)
-  - [Expo config file](#expo-config-file)
-  - [Expo known issues](#expo-known-issues)
-- [NativeBase](#nativebase)
-  - [File locations, naming, moving and deleting](#file-locations-naming-moving-and-deleting)
-  - [Theming & approach](#theming--approach)
-  - [Dark mode](#dark-mode)
-  - [Reusable containers](#reusable-containers)
-  - [Custom components](#custom-components)
-  - [Icons](#icons)
-- [Images](#images)
-- [Logging errors and crashes](#logging-errors-and-crashes)
-  - [Seeing Bugsnag reports](#seeing-bugsnag-reports)
-  - [Logging errors to Bugsnag during development](#logging-errors-to-bugsnag-during-development)
-- [Performance issues](#performance-issues)
+- [App development](#app-development)
+  - [Overview of directories](#overview-of-directories)
+  - [Working with Figma](#working-with-figma)
+  - [React Native and Expo](#react-native-and-expo)
+    - [Expo trade-offs](#expo-trade-offs)
+    - [Installing new packages](#installing-new-packages)
+    - [Using .env variables](#using-env-variables)
+    - [Expo config file](#expo-config-file)
+    - [Expo known issues](#expo-known-issues)
+  - [NativeBase](#nativebase)
+    - [File locations, naming, moving and deleting](#file-locations-naming-moving-and-deleting)
+    - [Theming \& approach](#theming--approach)
+    - [Dark mode](#dark-mode)
+    - [Reusable containers](#reusable-containers)
+      - [WebViewContainer](#webviewcontainer)
+    - [Custom components](#custom-components)
+      - [Brand](#brand)
+      - [STA Matchstick](#sta-matchstick)
+      - [Checkbox](#checkbox)
+      - [ProgressBar](#progressbar)
+      - [ChoicesList](#choiceslist)
+      - [FreeSearchBar](#freesearchbar)
+      - [Modal](#modal)
+      - [NavigationHeader](#navigationheader)
+      - [SegmentedPicker](#segmentedpicker)
+      - [TopOfApp](#topofapp)
+      - [TextInputControl](#textinputcontrol)
+    - [Icons](#icons)
+  - [Images](#images)
+  - [Logging errors and crashes](#logging-errors-and-crashes)
+    - [Seeing Bugsnag reports](#seeing-bugsnag-reports)
+    - [Logging errors to Bugsnag during development](#logging-errors-to-bugsnag-during-development)
+  - [Performance issues](#performance-issues)
 
 ## Overview of directories
 
@@ -83,7 +96,7 @@ There are a few steps to add and use an environment variable using Expo:
 4. In the same file, at the place in the code where you want to use the variable, you can access your variable with e.g. `Constants.expoConfig?.extra?.amazingApiKey` (note: Typescript considers that the value of this could be `undefined`, so you may need to handle that possibility)
 
 ### Version
-API version 1.1 are protected by API_KEY, that needs to be configured in `api/.env` and `app/.env` file. The version to be used in the development can be changed by modifying the STA_API_VERSION in the `app/.env` file in the `app` directory.
+API version 1.1 are protected by STA_API_KEY, that needs to be configured in `api/.env` and `app/.env` file. The version to be used in the development can be changed by modifying the STA_API_VERSION in the `app/.env` file in the `app` directory.
 
 ### Expo config file
 
@@ -92,7 +105,7 @@ The `app/app.config.ts` file contains some configuration settings for the Expo C
 ### Expo known issues
 
 - **If the app on your phone isn't showing the latest changes in your code** first you could try reloading it -- while viewing the app in Expo Go, shake your phone and it should show you some options include 'Reload'
-- **Sometimes the dev server loses connection with your phone** in which case you can try restarting Expo in your terminal -- press Ctrl+C to stop it, then run `npm start` again
+- **Sometimes the Expo dev server loses connection with your phone** in which case you can try restarting Expo in your terminal -- press Ctrl+C to stop it, then run `npm start` again
 - **If you're still having problems not seeing changes you have made on your phone** instead of `npm start` try `npm run start-clear-cache` (this does the same thing but also clears the Expo cache, so it'll be slower to load, but should force any changes to come through)
 
 ## NativeBase
@@ -162,6 +175,25 @@ These are custom components we've developed, in addition to NativeBase readymade
 ![Brand component](screenshots/components/Brand.png)
 
 Displays the wide version of the STA logo
+
+#### STA Matchstick
+
+![STA Matchstick](screenshots/components/STAPencil.jpg)
+
+A Single STA Matchstick that can be reused in any component with the appropriate colour
+
+#### Checkbox
+
+![Checkbox Group](screenshots/components/Checkbox.jpg)
+
+A reusable checkbox component that can be configured for multiple different values.
+
+#### ProgressBar
+
+![Progress Bar](screenshots/components/ProgressBar.jpg)
+
+A dynamic custom progress bar for reuse in the Profile containers (or elsewhere).
+The choice of progress bar colour can be modified.
 
 #### ChoicesList
 

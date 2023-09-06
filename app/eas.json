@@ -1,28 +1,25 @@
 {
   "cli": {
+    "appVersionSource": "remote",
     "version": ">= 3.13.3"
   },
   "build": {
-    "development": {
-      "developmentClient": true,
-      "distribution": "internal"
-    },
-    "preview": {
-      "distribution": "internal"
-    },
-    "production": {}
+    "production": {
+      "autoIncrement": true
+    }
   },
   "submit": {
     "preview": {
       "android": {
-        "serviceAccountKeyPath": "./deployment/google-service-account-key.json",
         "track": "internal"
       }
     },
     "production": {
       "android": {
-        "serviceAccountKeyPath": "./deployment/google-service-account-key.json",
         "track": "production"
+      },
+      "ios": {
+        "ascAppId": "1632619020"
       }
     }
   }
