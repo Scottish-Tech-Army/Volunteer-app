@@ -173,7 +173,7 @@ Below are some commonly encountered issues and possible ways to resolve them. If
 
 - I'm not sure if my local API is running and successfully 'tunnelling' (working via a publicly available URL)
  > ### Using Postman
- > Install postman by [Link](https://www.postman.com/downloads/). Once installed and running, select 'import' in the app and use the following cURL code with the api key pasted after the colon. The cURL will automatically build the postman request for you. To check if the api key works, toggle and untoggle the key and send your request. Some examples of the api key in the header is found in this [link](https://blog.postman.com/how-to-use-api-keys/) for extra knowledge.
+ > Install postman by [Link](https://www.postman.com/downloads/). Once installed and running, select 'import' in the app and use the following cURL code with the api key pasted after the colon (note:- Depending on certain versions of Postman 'Raw Text' option might be needed before pasting the cURL). The cURL will automatically build the postman request for you. To check if the api key works, toggle and untoggle the key and send your request. Some examples of the api key in the header is found in this [link](https://blog.postman.com/how-to-use-api-keys/) for extra knowledge.
  > ```cURL
  > curl --location 'http://localhost:3000/v1.1/events' \
  >      --header 'x-api-key: <<STA_API_KEY>>'
