@@ -42,6 +42,7 @@ module.exports = {
       api: {
         baseUrl: process.env.STA_API_BASE_URL ?? 'https://the-sta.com',
         version: process.env.STA_API_VERSION ?? 'v1',
+        apiKey: process.env.STA_API_KEY ?? '',
       },
       bugsnag: {
         alwaysSendBugs: process.env.BUGSNAG_ALWAYS_SEND_BUGS

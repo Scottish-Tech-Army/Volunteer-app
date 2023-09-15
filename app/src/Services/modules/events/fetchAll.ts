@@ -19,9 +19,14 @@ export default (
   range: EventsRange,
 ) =>
   build.query<Events, string>({
-    query: () =>
-      `${Constants.expoConfig?.extra?.api?.baseUrl ?? ''}/${
+    query: () => ({
+      url: `${Constants.expoConfig?.extra?.api?.baseUrl ?? ''}/${
         Constants.expoConfig?.extra?.api?.version ?? ''
       }/events/schedule/${range}`,
+      method: 'GET',
+      headers: {
+        'x-api-key': `${Constants.expoConfig?.extra?.api?.apiKey ?? ''}`,
+      },
+    }),
     transformResponse: (data: Events) => data,
   })

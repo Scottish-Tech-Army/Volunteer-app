@@ -95,6 +95,9 @@ There are a few steps to add and use an environment variable using Expo:
 3. In the file in your code where you want to use this variable, add an import statement at the top of the file `import Constants from 'expo-constants'`
 4. In the same file, at the place in the code where you want to use the variable, you can access your variable with e.g. `Constants.expoConfig?.extra?.amazingApiKey` (note: Typescript considers that the value of this could be `undefined`, so you may need to handle that possibility)
 
+### Version
+API version 1.1 are protected by STA_API_KEY, that needs to be configured in `api/.env` and `app/.env` file. The version to be used in the development can be changed by modifying the STA_API_VERSION in the `app/.env` file in the `app` directory.
+
 ### Expo config file
 
 The `app/app.config.ts` file contains some configuration settings for the Expo CLI. In some Expo documentation you might see references to updating a `config.json` file -- this is the same thing, we just store it in `app.config.ts` because it's more flexible (e.g. we can insert environment variables into it when the app is built and deployed).

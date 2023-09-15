@@ -172,9 +172,16 @@ Below are some commonly encountered issues and possible ways to resolve them. If
   and try running the server again.
 
 - I'm not sure if my local API is running and successfully 'tunnelling' (working via a publicly available URL)
-  > In the terminal window where you ran the npm tunnel command, get the URL, then paste that URL into a web browser and add `/v1/projects` at the end -- if your local API is running and tunnelling successfully, you should see a JSON response with a list of projects. (If you don't see that, try the suggestion below, and also check the terminal window where you ran `npm start` and see if there are any error messages there.)
+ > ### Using Postman
+ > Install postman by [Link](https://www.postman.com/downloads/). Once installed and running, select 'import' in the app and use the following cURL code with the api key pasted after the colon (note:- Depending on certain versions of Postman 'Raw Text' option might be needed before pasting the cURL). The cURL will automatically build the postman request for you. To check if the api key works, toggle and untoggle the key and send your request. Some examples of the api key in the header is found in this [link](https://blog.postman.com/how-to-use-api-keys/) for extra knowledge.
+ > ```cURL
+ > curl --location 'http://localhost:3000/v1.1/events' \
+ >      --header 'x-api-key: <<STA_API_KEY>>'
+ >```
+ > ### Using browser
+ > In the terminal window where you ran the npm tunnel command, get the URL, then paste that URL into a web browser and add `/v1.1/projects` at the end -- if your local API is running and tunnelling successfully, you should see a JSON response with a list of projects. (If you don't see that, try the suggestion below, and also check the terminal window where you ran `npm start` and see if there are any error messages there.)
 
-  > Once a week, your API tunnel will expire and you'll need to enter an IP address in order to continue using it. To check if this is the case, go to the URL of your tunnelled API and add `/v1/projects` at the end (e.g. `https://nadia-bloggs-abc123def456ghi789.loca.lt/v1/projects`) If you see a web page instead of projects data, follow the instructions on the page to enter your public IP address -- follow what it says in the *If you're the developer...* section further down the page. Then stop and restart your app in Expo.
+  > Once a week, your API tunnel will expire and you'll need to enter an IP address in order to continue using it. To check if this is the case, go to the URL of your tunnelled API and add `/v1.1/projects` at the end (e.g. `https://nadia-bloggs-abc123def456ghi789.loca.lt/v1.1/projects`) If you see a web page instead of projects data, follow the instructions on the page to enter your public IP address -- follow what it says in the *If you're the developer...* section further down the page. Then stop and restart your app in Expo.
 
 ## The app won't build
 

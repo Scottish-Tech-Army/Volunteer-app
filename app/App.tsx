@@ -82,7 +82,7 @@ const App = () => {
         )
       } else {
         console.log(
-          `🛈 Using API server at ${Constants.expoConfig?.extra?.api?.baseUrl} (not sure if it's working? try ${Constants.expoConfig?.extra?.api?.baseUrl}/v1/projects in your browser)`,
+          `🛈 Using API server at ${Constants.expoConfig?.extra?.api?.baseUrl} (not sure if it's working? try ${Constants.expoConfig?.extra?.api?.baseUrl}/v1.1/projects in postman)`,
         )
       }
 

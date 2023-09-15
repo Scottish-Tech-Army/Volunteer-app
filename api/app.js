@@ -2,7 +2,8 @@ const Bugsnag = require('@bugsnag/js');
 const BugsnagPluginExpress = require('@bugsnag/plugin-express');
 const cors = require('cors');
 const express = require('express');
-const routes = require('./routes/index');
+const v1Routes = require('./routes/v1/index');
+const v1_1Routes = require('./routes/v1.1/index');
 const logging = require('./services/logging');
 const { version } = require('./package.json');
 
@@ -28,7 +29,8 @@ if (logging.enableBugsnag())
 
 app.use(cors());
 app.use(express.json());
-app.use('/v1', routes);
+app.use('/v1', v1Routes);
+app.use('/v1.1', v1_1Routes);
 
 // This handles any errors that Express catches. This needs to go before other
 // error handlers. BugSnag will call the `next` error handler if it exists.

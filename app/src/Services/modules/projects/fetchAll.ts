@@ -15,9 +15,14 @@ export default (
   build: EndpointBuilder<ApiBaseQueryFunctionType, never, 'api'>,
 ) =>
   build.query<Projects, string>({
-    query: () =>
-      `${Constants.expoConfig?.extra?.api?.baseUrl ?? ''}/${
+    query: () => ({
+      url: `${Constants.expoConfig?.extra?.api?.baseUrl ?? ''}/${
         Constants.expoConfig?.extra?.api?.version ?? ''
       }/projects`,
+      method: 'GET',
+      headers: {
+        'x-api-key': `${Constants.expoConfig?.extra?.api?.apiKey ?? ''}`,
+      },
+    }),
     transformResponse: (data: Projects) => data,
   })
