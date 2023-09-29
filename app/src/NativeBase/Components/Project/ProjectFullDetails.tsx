@@ -11,6 +11,7 @@ import {
   Card,
   Heading,
   HStack,
+  Icon,
   ScrollView,
   Text,
   VStack,
@@ -19,6 +20,7 @@ import Video from '../Video'
 import ProjectAttachments from '../ProjectAttachments'
 import ColouredTag from '../ColouredTag'
 import StaTheme from '../../Theme/StaTheme'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
 interface ProjectFullDetailsProps {
   project: Project
@@ -41,8 +43,11 @@ const ProjectFullDetails = ({
             justifyContent="space-between"
             alignItems="center"
             paddingRight="4"
+            space={4}
           >
-            <Heading fontSize="md">{project.name}</Heading>
+            <Heading fontSize="md" width="70%">
+              {project.name}
+            </Heading>
 
             {/* TODO: reinstate when functionality is ready and set Heading width="70%" */}
             {/* <HStack
@@ -53,19 +58,13 @@ const ProjectFullDetails = ({
               <ShareIcon
                 size="md"
                 color="secondaryGrey.100"
-                onPress={underDevelopmentAlert}
+                //onPress={underDevelopmentAlert}
               />
-              <IconButton
-                icon={
-                  <Icon
-                    as={MaterialIcons}
-                    color="secondaryGrey.100"
-                    name="favorite-border"
-                  />
-                }
-                margin="0"
-                onPress={underDevelopmentAlert}
-                padding="0"
+              <Icon
+                as={MaterialIcons}
+                color="secondaryGrey.100"
+                //onPress={underDevelopmentAlert}
+                name="favorite-border"
                 size="lg"
               />
             </HStack> */}
@@ -77,22 +76,39 @@ const ProjectFullDetails = ({
             videoWebpageScreen="ProjectVideo"
           />
 
-          <Card paddingY="3">
-            <Text>{project.client}</Text>
-            <ColouredTag title={project.role} />
-            <Text fontSize="xs">{project.hours}</Text>
-            <Hyperlink
-              linkDefault
-              linkStyle={{ color: StaTheme.colors.primary[100] }}
-            >
-              <Text fontSize="xs" fontFamily="primaryLight">
-                {project.description}
-              </Text>
-            </Hyperlink>
-            {Boolean(project.buddying) && (
-              <Text fontSize="xs">Suitable for pairing</Text>
-            )}
-            <ProjectAttachments details={'Project Scope'} url={project.scope} />
+          <Card>
+            <VStack space={2}>
+              <Text fontSize="md">{project.client}</Text>
+              <ColouredTag title={project.role} />
+              <Text fontSize="xs">{project.hours}</Text>
+              <Hyperlink
+                linkDefault
+                linkStyle={{ color: StaTheme.colors.primary[100] }}
+              >
+                <Text fontSize="xs" fontFamily="primaryLight">
+                  {project.description}
+                </Text>
+              </Hyperlink>
+              {Boolean(project.buddying) && (
+                <HStack
+                  justifyContent="space-between"
+                  alignItems="center"
+                  paddingRight="4"
+                >
+                  <Text fontSize="xs">Suitable for pairing</Text>
+                  <Icon
+                    size={7}
+                    as={MaterialIcons}
+                    name="group"
+                    color="mediumGrey.100"
+                  />
+                </HStack>
+              )}
+              <ProjectAttachments
+                details={'Project Scope'}
+                url={project.scope}
+              />
+            </VStack>
           </Card>
         </VStack>
       </ScrollView>

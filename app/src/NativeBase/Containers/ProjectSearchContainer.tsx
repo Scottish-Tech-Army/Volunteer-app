@@ -4,7 +4,7 @@
 
 import React, { useState } from 'react'
 import Fuse from 'fuse.js' // fuzzy text search - see docs at https://fusejs.io
-import { ScrollView } from 'native-base'
+import { ScrollView, VStack } from 'native-base'
 import { useSelector } from 'react-redux'
 import { ListRouteParams, ListSearch, ListType } from './ListContainer'
 import ChoicesList, {
@@ -214,31 +214,33 @@ const ProjectSearchContainer = () => {
     <ScrollView>
       <FreeSearchBar handleSubmit={handleFreeTextSubmit} marginBottom="10" />
 
-      <SegmentedPicker marginBottom="5" options={tabs} />
+      <SegmentedPicker marginBottom="7" options={tabs} />
 
-      {selectedTab === Tab.Roles && (
-        <ChoicesList
-          choices={quickSearchRoleChoices}
-          colour={quickSearchListColour}
-          style={quickSearchListStyle}
-        />
-      )}
+      <VStack padding="2">
+        {selectedTab === Tab.Roles && (
+          <ChoicesList
+            choices={quickSearchRoleChoices}
+            colour={quickSearchListColour}
+            style={quickSearchListStyle}
+          />
+        )}
 
-      {selectedTab === Tab.Tech && (
-        <ChoicesList
-          choices={quickSearchTechnologies}
-          colour={quickSearchListColour}
-          style={quickSearchListStyle}
-        />
-      )}
+        {selectedTab === Tab.Tech && (
+          <ChoicesList
+            choices={quickSearchTechnologies}
+            colour={quickSearchListColour}
+            style={quickSearchListStyle}
+          />
+        )}
 
-      {selectedTab === Tab.Causes && (
-        <ChoicesList
-          choices={quickSearchCauses}
-          colour={quickSearchListColour}
-          style={quickSearchListStyle}
-        />
-      )}
+        {selectedTab === Tab.Causes && (
+          <ChoicesList
+            choices={quickSearchCauses}
+            colour={quickSearchListColour}
+            style={quickSearchListStyle}
+          />
+        )}
+      </VStack>
     </ScrollView>
   )
 }

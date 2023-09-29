@@ -1,6 +1,9 @@
 /**
  * @file Theme definition for NativeProvider
+ *
+ * View the Design System in Figma::
  * https://www.figma.com/file/RgxknLjxmS2CqBEDEZWPCU/STA-Volunteer-App---New-Designs
+ *
  */
 
 import { extendTheme } from 'native-base'
@@ -171,12 +174,16 @@ const StaTheme = extendTheme({
     BebasNeue: 'BebasNeue-Regular',
   },
 
+  /**
+   * You can use theses fonts using the fontFamily prop, i.e. fontFamily="primarySemiBold"
+   */
   fonts: {
     body: common.fonts.primary,
     heading: 'Poppins-SemiBold',
     title: common.fonts.secondary,
     primary: common.fonts.primary,
     primaryLight: 'Poppins-Light',
+    primaryMedium: 'Poppins-Medium',
     primarySemiBold: 'Poppins-SemiBold',
     primaryBold: 'Poppins-Bold',
     secondary: common.fonts.secondary,
@@ -184,27 +191,12 @@ const StaTheme = extendTheme({
 
   fontSizes: common.fonts.size,
 
-  // Open the extendTheme files referenced above to see all the components and default properties you can set
+  /**
+   * Below are the default styles for each component
+   *
+   * Open the extendTheme files referenced above to see all the components and default properties you can set
+   */
   components: {
-    Divider: {
-      baseStyle: {
-        bg: common.colours.mediumGrey100,
-        _dark: {
-          bg: common.colours.mediumGrey100,
-        },
-      },
-    },
-
-    Heading: {
-      baseStyle: {
-        color: common.colours.darkGrey100,
-        _dark: {
-          color: common.colours.offWhite100,
-        },
-        fontFamily: 'heading',
-      },
-    },
-
     Button: {
       baseStyle: {
         rounded: 'full',
@@ -220,51 +212,33 @@ const StaTheme = extendTheme({
         _text: {
           fontFamily: 'primarySemiBold',
           fontSize: 'md',
-          padding: '0',
           color: common.colours.white,
         },
       },
     },
 
-    Icon: {
+    Card: {
       baseStyle: () => ({
-        color: 'black',
         _dark: {
-          color: 'white',
+          backgroundColor: 'bgDarkMode.100',
         },
+        _light: {
+          backgroundColor: 'bg.100',
+        },
+        borderWidth: 1,
+        borderColor: 'mediumGrey.100',
+        rounded: 'xl',
+        padding: '2',
       }),
-      defaultProps: {
-        size: common.icons.size,
-      },
-      sizes: {
-        '2xs': 2,
-        xs: 4,
-      },
     },
 
-    IconButton: {
-      defaultProps: {
-        size: common.icons.size,
-      },
-      sizes: {
-        sm: {
-          _icon: {
-            size: 6,
-          },
+    Divider: {
+      baseStyle: {
+        bg: common.colours.mediumGrey100,
+        _dark: {
+          bg: common.colours.mediumGrey100,
         },
       },
-      variants: () => ({
-        ghost: () => ({
-          _icon: {
-            color: 'black',
-          },
-          _dark: {
-            _icon: {
-              color: 'white',
-            },
-          },
-        }),
-      }),
     },
 
     FormControlLabel: {
@@ -311,6 +285,57 @@ const StaTheme = extendTheme({
           },
         }
       },
+    },
+
+    Heading: {
+      baseStyle: {
+        color: common.colours.darkGrey100,
+        _dark: {
+          color: common.colours.offWhite100,
+        },
+        fontFamily: 'heading',
+      },
+    },
+
+    Icon: {
+      baseStyle: () => ({
+        color: 'darkGrey.100',
+        _dark: {
+          color: 'secondaryGrey.40',
+        },
+      }),
+      defaultProps: {
+        size: common.icons.size,
+      },
+      sizes: {
+        '2xs': 2,
+        xs: 4,
+      },
+    },
+
+    IconButton: {
+      defaultProps: {
+        size: common.icons.size,
+      },
+      sizes: {
+        sm: {
+          _icon: {
+            size: 6,
+          },
+        },
+      },
+      variants: () => ({
+        ghost: () => ({
+          _icon: {
+            color: 'black',
+          },
+          _dark: {
+            _icon: {
+              color: 'white',
+            },
+          },
+        }),
+      }),
     },
 
     Input: {
@@ -372,33 +397,14 @@ const StaTheme = extendTheme({
       baseStyle: () => ({
         fontFamily: 'primary',
         _light: {
-          color: 'darkGrey.100',
-          padding: '2',
+          color: 'text.100',
         },
         _dark: {
           color: 'textDarkMode.100',
-          padding: '2',
         },
       }),
       defaultProps: {
         fontSize: common.fonts.size.md,
-      },
-    },
-
-    Card: {
-      baseStyle: () => ({
-        _dark: {
-          backgroundColor: 'bgDarkMode.100',
-        },
-        _light: {
-          backgroundColor: 'bg.100',
-          borderWidth: 1,
-          borderColor: 'secondaryGrey.80',
-        },
-      }),
-      defaultProps: {
-        rounded: 'xl',
-        paddingLeft: '2',
       },
     },
   },

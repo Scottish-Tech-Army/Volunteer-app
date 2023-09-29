@@ -33,8 +33,10 @@ const WelcomeButton = () => {
     <VStack marginTop="6" paddingX="4" width="100%">
       <Modal
         body={[
-          <Text>Can we automatically send bug reports to the STA team?</Text>,
-          <Text>
+          <Text fontSize="md">
+            Can we automatically send bug reports to the STA team?
+          </Text>,
+          <Text fontSize="md">
             These might include some personally identifiable data. You can
             switch them off at any time in settings.
           </Text>,

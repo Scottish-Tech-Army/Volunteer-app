@@ -38,7 +38,8 @@ const ColouredTag = ({ title }: ColouredTagProps) => {
         _dark={{ backgroundColor: 'bg.100' }}
         _light={{ backgroundColor: selectedColour }}
         rounded="md"
-        marginLeft={2}
+        paddingX="2"
+        paddingY="1"
         maxHeight="xs"
       >
         <Text _dark={{ color: selectedColour }} fontSize="xs">
