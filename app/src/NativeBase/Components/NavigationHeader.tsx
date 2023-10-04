@@ -54,8 +54,6 @@ const NavigationHeader: React.FC<StackHeaderProps> = ({
           {Boolean(back) && (
             <IconButton
               icon={<Icon as={MaterialIcons} name="arrow-back-ios" />}
-              marginLeft={0}
-              paddingLeft={0}
               onPress={navigation.goBack}
               size="sm"
             />

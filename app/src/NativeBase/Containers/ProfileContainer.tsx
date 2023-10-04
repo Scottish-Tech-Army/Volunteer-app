@@ -55,109 +55,76 @@ const profileMenuChoices: { text: string; onPress: any }[] = [
 
 const ProfileContainer = () => {
   return (
-    <VStack
-      paddingTop="4"
-      paddingBottom="2"
-      alignItems="center"
-      space="4"
-      backgroundColor="secondaryGrey.60"
-      _dark={{ backgroundColor: 'bgDarkMode.100' }}
-    >
-      <ScrollView>
-        <VStack alignItems="center" fontSize="xs">
-          <Heading fontFamily="title" size="lg">
-            My Profile
+    <ScrollView>
+      <VStack alignItems="center" marginBottom={7}>
+        <Heading fontFamily="title" size="lg">
+          My Profile
+        </Heading>
+        <Box
+          height="93px"
+          width="93px"
+          borderColor="darkGrey.100"
+          _dark={{ borderColor: 'secondaryGrey.40' }}
+          borderWidth="4px"
+          borderRadius="full"
+          marginTop={8}
+          marginBottom={2}
+        />
+
+        <HStack space={2}>
+          <Heading fontSize="md" fontFamily="heading" paddingLeft="24px">
+            Full Name
           </Heading>
-          <HStack marginTop={4}>
-            <Box
-              height="93px"
-              width="93px"
-              borderColor="darkGrey.100"
-              _dark={{ borderColor: 'secondaryGrey.40' }}
-              borderWidth="4px"
-              borderRadius="full"
-            />
-          </HStack>
-          <HStack>
-            <Heading fontSize="md" fontFamily="heading" paddingLeft="24px">
-              Full Name
-            </Heading>
-            <Text fontSize="xs" paddingLeft="-2">
-              (She)
-            </Text>
-            <Pressable
-              width="24px"
-              height="24px"
-              marginTop="-2"
-              borderBottomWidth={2}
-              borderBottomColor="darkGrey.100"
-              _dark={{ borderBottomColor: 'secondaryGrey.40' }}
-              onPress={underDevelopmentAlert}
-            >
-              <Icon
-                as={MaterialCommunityIcons}
-                color="darkGrey.100"
-                _dark={{ color: 'secondaryGrey.40' }}
-                name="pencil-outline"
-                size={6}
-              />
-            </Pressable>
-          </HStack>
-          <Text fontSize="xs" marginTop="-4">
-            P-R-O-N-O-U-N-C-I-A-T-I-O-N
-          </Text>
-          <Text fontSize="xs" paddingTop={-2}>
-            Role
-          </Text>
-          <Text fontSize="xs" paddingTop={-2}>
-            Status
-          </Text>
-          <Heading fontSize="md" fontFamily="heading" paddingTop={-2}>
+          <Text fontSize="xs">(She)</Text>
+          <Pressable
+            width="24px"
+            height="24px"
+            marginTop={-4}
+            borderBottomWidth={2}
+            borderBottomColor="darkGrey.100"
+            _dark={{ borderBottomColor: 'secondaryGrey.40' }}
+            onPress={underDevelopmentAlert}
+          >
+            <Icon as={MaterialCommunityIcons} name="pencil-outline" size={6} />
+          </Pressable>
+        </HStack>
+
+        <Text fontSize="xs">P-R-O-N-O-U-N-C-I-A-T-I-O-N</Text>
+
+        <VStack alignItems="center" space={4} marginY={4}>
+          <Text fontSize="xs">Role</Text>
+          <Text fontSize="xs">Status</Text>
+          <Heading fontSize="md" fontFamily="heading">
             My volunteering
           </Heading>
-          <Box
-            bg="secondaryGrey.60"
-            _dark={{ bg: 'bgDarkMode.200' }}
-            paddingLeft={4}
-            shadow="9"
-            marginTop={2}
-            padding={2}
-            width="95%"
-          >
-            <HStack>
-              <Icon
-                as={Feather}
-                color="darkGrey.100"
-                _dark={{ color: 'secondaryGrey.40' }}
-                name="award"
-                size={6}
-                marginTop={2}
-              />
-              <Text fontSize="sm">Completed projects</Text>
-            </HStack>
-            <HStack>
-              <Icon
-                as={AntDesign}
-                color="darkGrey.100"
-                _dark={{ color: 'secondaryGrey.40' }}
-                name="rocket1"
-                size={6}
-              />
-              <Text fontSize="sm" paddingTop={-2}>
-                Ongoing projects
-              </Text>
-            </HStack>
-          </Box>
         </VStack>
-        <VStack textAlign="left" marginY={4}>
-          <ChoicesList
-            choices={profileMenuChoices}
-            colour={colourChoice}
-            style={fontStyleChoice}
-          />
-        </VStack>
-      </ScrollView>
-    </VStack>
+
+        <Box
+          bg="secondaryGrey.60"
+          _dark={{ bg: 'bgDarkMode.200' }}
+          shadow="4"
+          paddingX="4"
+          paddingY="2"
+          width="95%"
+        >
+          <HStack space={2} marginBottom={2}>
+            <Icon as={Feather} name="award" size={6} />
+            <Text fontSize="sm">Completed projects</Text>
+          </HStack>
+
+          <HStack space={2}>
+            <Icon as={AntDesign} name="rocket1" size={6} />
+            <Text fontSize="sm">Ongoing projects</Text>
+          </HStack>
+        </Box>
+      </VStack>
+
+      <ChoicesList
+        choices={profileMenuChoices}
+        colour={colourChoice}
+        style={fontStyleChoice}
+      />
+    </ScrollView>
   )
 }
 

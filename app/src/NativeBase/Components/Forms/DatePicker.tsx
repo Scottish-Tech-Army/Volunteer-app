@@ -56,6 +56,16 @@ const DatePicker: FC<DatePickerProps> = ({
     }
   }
 
+  const todayTextStyle = {
+    color:
+      colorMode === 'light' && !todaySelected
+        ? StaTheme.colors.darkGrey['100']
+        : 'white',
+  }
+  const textStyle = {
+    color: colorMode === 'light' ? StaTheme.colors.darkGrey['100'] : 'white',
+  }
+
   //override calendarpicker todayStyle default to set border and bg on today's date
   const customDatesStylesCallback = (date: Date) => {
     if (dayjs(date).isSame(dayjs(), 'day')) {
@@ -79,124 +89,104 @@ const DatePicker: FC<DatePickerProps> = ({
   }
 
   return (
-    <VStack>
-      <Box marginTop="5" marginBottom="10" borderColor="border.100" shadow="2">
-        <VStack>
-          <Box
-            marginTop="1"
-            marginX="0.5"
-            shadow="1"
-            bg={
-              !pickerActive && colorMode === 'light'
-                ? 'secondaryGrey.60'
-                : 'primary.80'
-            }
-          >
-            <Text
-              paddingTop="7"
-              fontSize="xs"
-              lineHeight="7"
-              color={
-                !pickerActive && colorMode === 'light'
-                  ? 'text.100'
-                  : 'textDarkMode.100'
-              }
-              paddingLeft="6"
-            >
-              {description}
-            </Text>
-          </Box>
+    <VStack marginTop="5" marginBottom="10">
+      <VStack>
+        <Box
+          paddingX="6"
+          paddingY="2"
+          bgColor={
+            !pickerActive && colorMode === 'light'
+              ? 'secondaryGrey.60'
+              : 'primary.80'
+          }
+          shadow="4"
+        >
+          <Text fontSize="xs">{description}</Text>
+        </Box>
+
+        <VStack
+          bgColor="white"
+          _dark={{ bgColor: 'bgDarkMode.100' }}
+          shadow="4"
+          paddingX="6"
+          paddingTop="6"
+          paddingBottom="2"
+          space="2"
+        >
           <Text
-            paddingTop="8"
             fontSize="sm"
             fontFamily="primarySemiBold"
-            lineHeight="7"
-            paddingLeft="6"
-            color={
-              !pickerActive && colorMode === 'light'
-                ? 'text.100'
-                : 'primary.100'
+            _dark={{ color: 'primary.100' }}
+            _light={
+              pickerActive ? { color: 'primary.100' } : { color: 'text.100' }
             }
           >
             Enter Date
           </Text>
           <Pressable onPress={toggleShowDatePicker}>
-            <View pointerEvents="none">
+            <View
+              pointerEvents="none"
+              borderBottomWidth="1"
+              borderBottomColor="primary.100"
+            >
               <Input
-                marginX="6"
                 value={dayjs(value).format('DD/MM/YY')}
                 accessibilityLabel="picker for date"
-                borderColor="inputBorder.100"
+                borderColor={
+                  pickerActive ? 'secondaryGrey.80' : 'inputBorder.100'
+                }
+                _dark={{ backgroundColor: 'bgDarkMode.100' }}
+                backgroundColor={pickerActive ? 'secondaryGrey.80' : 'white'}
                 isReadOnly={true}
                 size="sm"
-                borderWidth={pickerActive ? '0' : '1'}
-                borderBottomWidth="1"
-                borderBottomColor={
-                  pickerActive ? 'primary.100' : 'inputBorder.100'
-                }
-                _light={{ bg: 'secondaryGrey.80' }}
-                _dark={{ bg: 'bgDarkMode.100' }}
               />
             </View>
           </Pressable>
-        </VStack>
 
-        {pickerActive ? (
-          <Box paddingTop="2">
-            <CalendarPicker
-              startFromMonday
-              minDate={minimumDate}
-              maxDate={maximumDate}
-              weekdays={['M', 'T', 'W', 'T', 'F', 'S', 'S']}
-              restrictMonthNavigation
-              onDateChange={handleChange}
-              date={value}
-              todayTextStyle={{
-                fontFamily: StaTheme.fontConfig.Poppins['500'].normal,
-                color:
-                  colorMode === 'light' && !todaySelected
-                    ? StaTheme.colors.darkGrey['100']
-                    : 'white',
-              }}
-              selectedStartDate={selectedStartDate ? selectedStartDate : null}
-              selectedDayColor={StaTheme.colors.primary['80']}
-              dayTextColor={
-                colorMode === 'light'
-                  ? StaTheme.colors.darkGrey['100']
-                  : 'white'
-              }
-              selectedDayTextColor="white"
-              width={width - 22}
-              textStyle={{
-                fontFamily: StaTheme.fontConfig.Poppins['500'].normal,
-                color:
+          {pickerActive && (
+            <Box paddingTop="2">
+              <CalendarPicker
+                startFromMonday
+                minDate={minimumDate}
+                maxDate={maximumDate}
+                weekdays={['M', 'T', 'W', 'T', 'F', 'S', 'S']}
+                restrictMonthNavigation
+                onDateChange={handleChange}
+                date={value}
+                fontFamily="primaryMedium"
+                todayTextStyle={todayTextStyle}
+                selectedStartDate={selectedStartDate ? selectedStartDate : null}
+                selectedDayColor={StaTheme.colors.primary['80']}
+                dayTextColor={
                   colorMode === 'light'
                     ? StaTheme.colors.darkGrey['100']
-                    : 'white',
-              }}
-              customDatesStyles={customDatesStylesCallback}
-              nextComponent={
-                <Icon
-                  as={MaterialIcons}
-                  color="primary.100"
-                  name="arrow-forward-ios"
-                  size="sm"
-                />
-              }
-              previousComponent={
-                <Icon
-                  as={MaterialIcons}
-                  color="primary.100"
-                  name="arrow-back-ios"
-                  size="sm"
-                />
-              }
-            />
-          </Box>
-        ) : (
-          <Box p="2" />
-        )}
-      </Box>
+                    : 'white'
+                }
+                selectedDayTextColor="white"
+                width={width - 22}
+                textStyle={textStyle}
+                customDatesStyles={customDatesStylesCallback}
+                nextComponent={
+                  <Icon
+                    as={MaterialIcons}
+                    color="primary.100"
+                    name="arrow-forward-ios"
+                    size="sm"
+                  />
+                }
+                previousComponent={
+                  <Icon
+                    as={MaterialIcons}
+                    color="primary.100"
+                    name="arrow-back-ios"
+                    size="sm"
+                  />
+                }
+              />
+            </Box>
+          )}
+        </VStack>
+      </VStack>
     </VStack>
   )
 }

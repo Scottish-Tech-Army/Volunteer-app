@@ -69,6 +69,7 @@ const ChoicesList: FC<ChoicesListProps> = ({ choices, colour, style }) => (
           <Text
             fontFamily={fontStyles[style].fontFamily}
             fontSize={fontStyles[style].fontSize}
+            paddingY="2"
           >
             {choice.text}
           </Text>

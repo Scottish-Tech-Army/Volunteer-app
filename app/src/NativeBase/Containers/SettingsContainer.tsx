@@ -13,14 +13,7 @@
  * See more about dark mode in APP_DEVELOPMENT.md
  */
 
-import {
-  Heading,
-  VStack,
-  Checkbox,
-  Text,
-  ScrollView,
-  useColorMode,
-} from 'native-base'
+import { Heading, VStack, Text, ScrollView, useColorMode } from 'native-base'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Brand from '@/NativeBase/Components/Brand'
@@ -106,7 +99,7 @@ const SettingsContainer = () => {
         <VStack space="4">
           <Brand />
 
-          <VStack>
+          <VStack space="2">
             <Heading size="xs">Dark mode</Heading>
             <SegmentedPicker options={colourModeOptions} />
           </VStack>
@@ -137,7 +130,7 @@ const SettingsContainer = () => {
           </Checkbox> */}
         </VStack>
 
-        <VStack alignItems="center">
+        <VStack alignItems="center" space="2">
           <Text fontSize="xs">Version {version}</Text>
           <PrivacyAndTermsLinks />
         </VStack>

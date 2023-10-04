@@ -72,7 +72,7 @@ const List: FC<ListProps> = ({
   if (!data.length)
     return (
       <>
-        <Text>
+        <Text fontSize="md">
           Sorry, we couldn't find any {type}{' '}
           {mode === ListDisplayMode.Full
             ? 'at the moment.'
@@ -87,6 +87,7 @@ const List: FC<ListProps> = ({
               navigate(searchScreen, undefined)
             }}
             underline
+            fontSize="md"
           >
             Try another search
           </Text>
@@ -123,32 +124,26 @@ const List: FC<ListProps> = ({
           data={data as Projects}
           renderItem={({ item }) => {
             return (
-              <Card marginY="2" paddingY="3">
+              <Card marginY="2">
                 <Pressable
                   onPress={() => {
                     navigate('ProjectDetail', { item, key: item.res_id })
                   }}
                   overflow="hidden"
                 >
-                  <VStack>
-                    <HStack
-                      justifyContent="space-between"
-                      alignItems="center"
-                      paddingRight="4"
-                      space="0"
-                    >
+                  <VStack space="2">
+                    <HStack justifyContent="space-between" alignItems="center">
                       <Heading fontSize="sm">{item.name}</Heading>
 
                       {/* TODO: reinstate when functionality is ready and set Heading width="70%" */}
                       {/* <HStack
                         justifyContent="space-between"
                         alignItems="center"
-                        space="4"
                       >
                         <ShareIcon
                           size="md"
                           color="secondaryGrey.100"
-                          onPress={underDevelopmentAlert}
+                          //onPress={underDevelopmentAlert}
                         />
                         <IconButton
                           icon={
@@ -158,9 +153,7 @@ const List: FC<ListProps> = ({
                               name="favorite-border"
                             />
                           }
-                          margin="0"
-                          onPress={underDevelopmentAlert}
-                          padding="0"
+                          //onPress={underDevelopmentAlert}
                           size="lg"
                         />
                       </HStack> */}
@@ -187,9 +180,7 @@ const List: FC<ListProps> = ({
                           size={7}
                           as={MaterialIcons}
                           name="group"
-                          color="grey"
-                          mx={0}
-                          px={0}
+                          color="mediumGrey.100"
                         />
                       </HStack>
                     )}
