@@ -25,6 +25,7 @@
     "node-cron": "^3.0.0",
     "node-fetch": "^3.0.0",
     "nodemon": "^2.0.12",
+    "uuid": "^9.0.1",
     "vimeo": "^2.1.1"
   },
   "devDependencies": {

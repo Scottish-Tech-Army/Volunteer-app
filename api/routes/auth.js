@@ -5,7 +5,10 @@ const {
   AdminInitiateAuthCommand,
   AdminRespondToAuthChallengeCommand,
   RevokeTokenCommand,
+  AdminGetUserCommand,
+  SignUpCommand,
 } = require("@aws-sdk/client-cognito-identity-provider");
+const { v4: uuidv4 } = require("uuid");
 
 router.post("/login", async (req, res) => {
   const email = req.body?.email;
@@ -17,7 +20,43 @@ router.post("/login", async (req, res) => {
     });
   }
 
-  const { cognitoClient } = req.dependencies;
+  const { cognitoClient, hubspot } = req.dependencies;
+
+  try {
+    await cognitoClient.send(
+      new AdminGetUserCommand({
+        UserPoolId: process.env.COGNITO_USER_POOL_ID,
+        Username: email,
+      })
+    );
+  } catch (e) {
+    if (e.name === "UserNotFoundException") {
+      const hasContact = await hubspot.hasContactByEmail(email);
+
+      if (!hasContact) {
+        return res.status(403).send({
+          error: "signup_required",
+          message: "Please signup via the STA website first",
+        });
+      }
+
+      await cognitoClient.send(
+        new SignUpCommand({
+          ClientId: process.env.COGNITO_USER_POOL_CLIENT_ID,
+          Password: uuidv4(),
+          Username: email,
+          UserAttributes: [
+            {
+              Name: "email",
+              Value: email,
+            },
+          ],
+        })
+      );
+    } else {
+      throw e;
+    }
+  }
 
   const result = await cognitoClient.send(
     new AdminInitiateAuthCommand({
@@ -124,6 +163,10 @@ module.exports = {
   middlewares: async (req, res, next) => {
     req.dependencies = {
       cognitoClient,
+      // TODO: Add Hubspot client
+      hubspot: {
+        hasContactByEmail: async () => true,
+      },
     };
     next();
   },
