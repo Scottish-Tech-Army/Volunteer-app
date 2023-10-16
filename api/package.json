@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@aws-sdk/client-cognito-identity-provider": "^3.428.0",
     "@bugsnag/js": "^7.20.2",
     "@bugsnag/plugin-express": "^7.19.0",
     "airtable": "^0.11.1",
@@ -28,6 +29,7 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.2",
+    "aws-sdk-client-mock": "^3.0.0",
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "cross-var": "^1.1.0",
