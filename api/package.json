@@ -6,6 +6,7 @@
   "scripts": {
     "start": "nodemon server.js",
     "tunnel": "dotenv -- cross-var npx localtunnel --port 3000 --subdomain %API_TUNNEL_SUBDOMAIN%",
+    "lint": "eslint .",
     "test": "jest"
   },
   "keywords": [],
