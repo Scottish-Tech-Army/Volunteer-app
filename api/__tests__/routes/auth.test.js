@@ -1,4 +1,5 @@
 const { mockClient } = require("aws-sdk-client-mock");
+require("aws-sdk-client-mock-jest");
 const express = require("express");
 const request = require("supertest");
 const {
@@ -7,7 +8,10 @@ const {
   AdminGetUserCommand,
   UserNotFoundException,
   SignUpCommand,
+  AdminRespondToAuthChallengeCommand,
+  AdminUpdateUserAttributesCommand,
 } = require("@aws-sdk/client-cognito-identity-provider");
+const jwt = require("jsonwebtoken");
 
 const { authApi } = require("../../routes/auth");
 
@@ -152,9 +156,132 @@ describe("/auth", () => {
   });
 
   describe("POST /verify-challenge", () => {
-    test("returns tokens if challenge is correct for existing user", () => {});
-    test("returns tokens if challenge is correct for new user user", () => {});
-    test("returns error if challenge is incorrect", () => {});
+    test("returns tokens on correct challenge answer for existing user", async () => {
+      const idToken = jwt.sign(
+        {
+          email_verified: true,
+        },
+        "secret"
+      );
+
+      mockCognitoClient
+        .on(AdminRespondToAuthChallengeCommand, {
+          ChallengeName: "CUSTOM_CHALLENGE",
+          Session: "123abc",
+          ChallengeResponses: {
+            USERNAME: "foo@bar.com",
+            ANSWER: "123456",
+          },
+        })
+        .resolves({
+          AuthenticationResult: {
+            AccessToken: "access-token",
+            IdToken: idToken,
+            RefreshToken: "refresh-token",
+          },
+        });
+
+      const response = await request(app).post("/auth/verify-challenge").send({
+        username: "foo@bar.com",
+        session: "123abc",
+        answer: "123456",
+      });
+
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual({
+        tokens: {
+          accessToken: "access-token",
+          idToken: idToken,
+          refreshToken: "refresh-token",
+        },
+      });
+    });
+
+    test("returns tokens on correct challenge answer for new user user", async () => {
+      const idToken = jwt.sign(
+        {
+          email_verified: false,
+        },
+        "secret"
+      );
+
+      mockCognitoClient
+        .on(AdminRespondToAuthChallengeCommand, {
+          ChallengeName: "CUSTOM_CHALLENGE",
+          Session: "123abc",
+          ChallengeResponses: {
+            USERNAME: "foo@bar.com",
+            ANSWER: "123456",
+          },
+        })
+        .resolves({
+          AuthenticationResult: {
+            AccessToken: "access-token",
+            IdToken: idToken,
+            RefreshToken: "refresh-token",
+          },
+        });
+
+      const response = await request(app).post("/auth/verify-challenge").send({
+        username: "foo@bar.com",
+        session: "123abc",
+        answer: "123456",
+      });
+
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual({
+        tokens: {
+          accessToken: "access-token",
+          idToken: idToken,
+          refreshToken: "refresh-token",
+        },
+      });
+      expect(mockCognitoClient).toHaveReceivedCommand(
+        AdminUpdateUserAttributesCommand,
+        {
+          Username: "foo@bar.com",
+          UserAttributes: [
+            {
+              Name: "email_verified",
+              Value: "true",
+            },
+          ],
+        }
+      );
+    });
+
+    test("continues challenge on incorrect answer", async () => {
+      mockCognitoClient
+        .on(AdminRespondToAuthChallengeCommand, {
+          ChallengeName: "CUSTOM_CHALLENGE",
+          Session: "123abc",
+          ChallengeResponses: {
+            USERNAME: "foo@bar.com",
+            ANSWER: "123456",
+          },
+        })
+        .resolves({
+          ChallengeName: "CUSTOM_CHALLENGE",
+          ChallengeParameters: {
+            USERNAME: "foo@bar.com",
+          },
+          Session: "123abc",
+        });
+
+      const response = await request(app).post("/auth/verify-challenge").send({
+        username: "foo@bar.com",
+        session: "123abc",
+        answer: "123456",
+      });
+
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual({
+        challenge: {
+          username: "foo@bar.com",
+          session: "123abc",
+        },
+      });
+    });
   });
 
   describe("POST /refresh", () => {

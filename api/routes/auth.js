@@ -7,8 +7,10 @@ const {
   RevokeTokenCommand,
   AdminGetUserCommand,
   SignUpCommand,
+  AdminUpdateUserAttributesCommand,
 } = require("@aws-sdk/client-cognito-identity-provider");
 const { v4: uuidv4 } = require("uuid");
+const jwtDecode = require("jwt-decode");
 
 router.post("/login", async (req, res) => {
   const email = req.body?.email;
@@ -97,6 +99,23 @@ router.post("/verify-challenge", async (req, res) => {
   );
 
   if (result.AuthenticationResult) {
+    const claims = jwtDecode(result.AuthenticationResult.IdToken);
+
+    if (!claims.email_verified) {
+      await cognitoClient.send(
+        new AdminUpdateUserAttributesCommand({
+          UserAttributes: [
+            {
+              Name: "email_verified",
+              Value: "true",
+            },
+          ],
+          Username: username,
+          UserPoolId: process.env.COGNITO_USER_POOL_ID,
+        })
+      );
+    }
+
     return res.status(200).send({
       tokens: {
         accessToken: result.AuthenticationResult.AccessToken,
