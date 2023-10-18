@@ -10,6 +10,7 @@ const {
   SignUpCommand,
   AdminRespondToAuthChallengeCommand,
   AdminUpdateUserAttributesCommand,
+  RevokeTokenCommand,
 } = require("@aws-sdk/client-cognito-identity-provider");
 const jwt = require("jsonwebtoken");
 
@@ -327,7 +328,25 @@ describe("/auth", () => {
   });
 
   describe("POST /logout", () => {
-    test("returns success if refresh token is valid", () => {});
-    test("returns error if refresh token is invalid", () => {});
+    test("revokes tokens on valid refresh token", async () => {
+      const response = await request(app).post("/auth/logout").send({
+        refreshToken: "refresh-token",
+      });
+
+      expect(response.status).toBe(200);
+      expect(mockCognitoClient).toHaveReceivedCommand(RevokeTokenCommand, {
+        Token: "refresh-token",
+      });
+    });
+
+    test("returns error if refresh token not provided", async () => {
+      const response = await request(app).post("/auth/logout").send({});
+
+      expect(response.status).toBe(400);
+      expect(response.body).toEqual({
+        error: "invalid_input",
+        message: "Refresh token is required",
+      });
+    });
   });
 });

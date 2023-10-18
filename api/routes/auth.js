@@ -171,6 +171,14 @@ router.post("/refresh", async (req, res) => {
 
 router.post("/logout", async (req, res) => {
   const refreshToken = req.body.refreshToken;
+
+  if (!refreshToken) {
+    return res.status(400).send({
+      error: "invalid_input",
+      message: "Refresh token is required",
+    });
+  }
+
   const { cognitoClient } = req.dependencies;
 
   await cognitoClient.send(
