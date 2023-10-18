@@ -285,8 +285,45 @@ describe("/auth", () => {
   });
 
   describe("POST /refresh", () => {
-    test("returns new tokens if refresh token is valid", () => {});
-    test("returns error if refresh token is invalid", () => {});
+    test("returns new tokens for valid refresh token", async () => {
+      mockCognitoClient
+        .on(AdminInitiateAuthCommand, {
+          AuthFlow: "REFRESH_TOKEN_AUTH",
+          AuthParameters: {
+            REFRESH_TOKEN: "foobar",
+          },
+        })
+        .resolves({
+          AuthenticationResult: {
+            AccessToken: "access-token",
+            IdToken: "id-token",
+            RefreshToken: "refresh-token",
+          },
+        });
+
+      const response = await request(app).post("/auth/refresh").send({
+        refreshToken: "foobar",
+      });
+
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual({
+        tokens: {
+          accessToken: "access-token",
+          idToken: "id-token",
+          refreshToken: "refresh-token",
+        },
+      });
+    });
+
+    test("returns error if tokens not provided", async () => {
+      const response = await request(app).post("/auth/refresh").send({});
+
+      expect(response.status).toBe(400);
+      expect(response.body).toEqual({
+        error: "invalid_input",
+        message: "Refresh token is required",
+      });
+    });
   });
 
   describe("POST /logout", () => {

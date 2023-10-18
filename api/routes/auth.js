@@ -135,9 +135,17 @@ router.post("/verify-challenge", async (req, res) => {
 
 router.post("/refresh", async (req, res) => {
   const refreshToken = req.body.refreshToken;
+
+  if (!refreshToken) {
+    return res.status(400).send({
+      error: "invalid_input",
+      message: "Refresh token is required",
+    });
+  }
+
   const { cognitoClient } = req.dependencies;
 
-  const result = await this.cognitoIdp.send(
+  const result = await cognitoClient.send(
     new AdminInitiateAuthCommand({
       AuthFlow: "REFRESH_TOKEN_AUTH",
       AuthParameters: {
