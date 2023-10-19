@@ -21,7 +21,6 @@
     "eslint": "^8.46.0",
     "express": "^4.17.1",
     "i": "^0.3.7",
-    "lint-staged": "^13.2.3",
     "node-cron": "^3.0.0",
     "node-fetch": "^3.0.0",
     "nodemon": "^2.0.12",
@@ -29,12 +28,12 @@
     "vimeo": "^2.1.1"
   },
   "devDependencies": {
-    "@faker-js/faker": "^8.0.2",
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
     "@bugsnag/js": "^7.20.2",
     "@bugsnag/plugin-express": "^7.19.0",
+    "@faker-js/faker": "^8.0.2",
     "@react-native-community/eslint-config": "^3.2.0",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
     "cross-var": "^1.1.0",
     "dotenv-cli": "^7.2.1",
     "eslint-plugin-prettier": "^5.0.0",
@@ -42,13 +41,5 @@
     "nock": "^13.2.0",
     "superagent": "^6.1.0",
     "supertest": "^6.1.6"
-  },
-  "lint-staged": {
-    "*.{js,ts,tsx, jsx}": [
-      "eslint --fix"
-    ],
-    "*.{json,md,html,js,jsx,ts,tsx}": [
-      "prettier --write"
-    ]
   }
 }
