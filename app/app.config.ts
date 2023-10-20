@@ -34,6 +34,9 @@ module.exports = {
           "The app will show tech/volunteering-related events that the user might be interested in. The user can choose to attend an event - if so, the app needs access to the user's calendar in order to add an event.",
       },
       supportsTablet: true,
+      config: {
+        usesNonExemptEncryption: false,
+      },
     },
     web: {
       favicon: './assets/favicon.png',
