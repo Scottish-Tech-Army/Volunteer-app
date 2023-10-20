@@ -21,7 +21,7 @@ describe('AuthClient', () => {
     mockStorage = new InMemoryStorage()
     authClient = new AuthClient({
       storage: mockStorage,
-      domain: 'http://testing.com',
+      baseUrl: 'http://testing.com',
     })
   })
 

@@ -43,7 +43,7 @@ export interface AuthError {
 
 export interface AuthClientConfig {
   storage?: Storage
-  domain: string
+  baseUrl: string
   trace?: TraceFn
 }
 
@@ -63,13 +63,13 @@ const noopTrace = () => {
 
 export class AuthClient {
   private readonly storage: Storage
-  private readonly domain: string
+  private readonly baseUrl: string
   private refreshRequest?: Promise<string | undefined>
   private readonly trace: TraceFn
 
-  constructor({ storage = SecureStorage, domain, trace }: AuthClientConfig) {
+  constructor({ storage = SecureStorage, baseUrl, trace }: AuthClientConfig) {
     this.storage = storage
-    this.domain = domain
+    this.baseUrl = baseUrl
     this.trace = trace || noopTrace
   }
 
@@ -181,7 +181,7 @@ export class AuthClient {
 
     for (let i = 0; i < DEFAULT_NETWORK_RETRY_COUNT; i++) {
       try {
-        response = await fetch(`${this.domain}/auth/${method}`, {
+        response = await fetch(`${this.baseUrl}/auth/${method}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -225,7 +225,7 @@ export class AuthClient {
   }
 
   async logout(): Promise<void> {
-    await fetch(`${this.domain}/auth/logout`, {
+    await fetch(`${this.baseUrl}/auth/logout`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
