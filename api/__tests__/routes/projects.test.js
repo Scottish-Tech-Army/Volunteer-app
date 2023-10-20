@@ -4,12 +4,14 @@ const axios = require('axios');
 const dayjs = require('dayjs');
 const { faker } = require('@faker-js/faker');
 const nock = require('nock');
-const { getAllProjectsHandler, projectRegisterInterestHandler } = require('../../routes/projects');
+const {
+  getAllProjectsHandler,
+  projectRegisterInterestHandler,
+} = require('../../routes/projects');
 const projectsHelper = require('../../helpers/projects');
 const projectsTestData = require('../../__test-data__/projects');
 const request = require('supertest');
 const routesHelper = require('../../helpers/routes');
-const slackService = require('../../services/slack');
 
 axios.defaults.adapter = require('axios/lib/adapters/http');
 
@@ -25,7 +27,9 @@ describe('Test the projects api', () => {
     );
 
     // Mock dependencies
-    const requestMock = nock('http://localhost:3000').get('/projects').reply(200, fakeProjectResources);
+    const requestMock = nock('http://localhost:3000')
+      .get('/projects')
+      .reply(200, fakeProjectResources);
 
     // Run test
     const response = await axios.get('http://localhost:3000/projects');
@@ -45,7 +49,9 @@ describe('Test the projects api', () => {
     const numberOfProjects = faker.number.int({ min: 10, max: 30 });
     const fakeProjectResources = [];
     for (let i = 0; i < numberOfProjects; i++) {
-      fakeProjectResources.push(projectsTestData.fakeAirTableProjectResource(true));
+      fakeProjectResources.push(
+        projectsTestData.fakeAirTableProjectResource(true),
+      );
     }
 
     // Mock dependencies
@@ -66,9 +72,13 @@ describe('Test the projects api', () => {
     // Run test
     await getAllProjectsHandler(fakeRequest, responseMock);
 
-    expect(airTableHelperProjectsResourcesCacheTableSpy).toHaveBeenCalledTimes(1);
+    expect(airTableHelperProjectsResourcesCacheTableSpy).toHaveBeenCalledTimes(
+      1,
+    );
     expect(airTableHelperGetAllRecordsSpy).toHaveBeenCalledTimes(1);
-    expect(projectsHelperFormatProjectResourceFromAirTableSpy).toHaveBeenCalledTimes(numberOfProjects);
+    expect(
+      projectsHelperFormatProjectResourceFromAirTableSpy,
+    ).toHaveBeenCalledTimes(numberOfProjects);
     expect(responseMock.status).toHaveBeenCalledTimes(1);
     expect(responseMock.status).toHaveBeenCalledWith(200);
     expect(responseMock.send).toHaveBeenCalledTimes(1);
@@ -97,7 +107,7 @@ describe('Test the projects api', () => {
       .mockImplementation(() => ({ error: 'Some error message' }));
     const routesHelperSendErrorSpy = jest
       .spyOn(routesHelper, 'sendError')
-      .mockImplementation(() => { });
+      .mockImplementation(() => {});
     const projectsHelperFormatProjectResourceFromAirTableSpy = jest
       .spyOn(projectsHelper, 'formatProjectResourceFromAirTable')
       .mockImplementation(fakeProjectResource => fakeProjectResource);
@@ -109,10 +119,14 @@ describe('Test the projects api', () => {
     // Run test
     await getAllProjectsHandler(fakeRequest, responseMock);
 
-    expect(airTableHelperProjectsResourcesCacheTableSpy).toHaveBeenCalledTimes(1);
+    expect(airTableHelperProjectsResourcesCacheTableSpy).toHaveBeenCalledTimes(
+      1,
+    );
     expect(airTableHelperGetAllRecordsSpy).toHaveBeenCalledTimes(1);
     expect(routesHelperSendErrorSpy).toHaveBeenCalledTimes(1);
-    expect(projectsHelperFormatProjectResourceFromAirTableSpy).toHaveBeenCalledTimes(0);
+    expect(
+      projectsHelperFormatProjectResourceFromAirTableSpy,
+    ).toHaveBeenCalledTimes(0);
     expect(responseMock.status).toHaveBeenCalledTimes(0);
     expect(responseMock.send).toHaveBeenCalledTimes(0);
 
@@ -140,7 +154,7 @@ describe('Test the projects api', () => {
       .mockImplementation(() => undefined);
     const routesHelperSendErrorSpy = jest
       .spyOn(routesHelper, 'sendError')
-      .mockImplementation(() => { });
+      .mockImplementation(() => {});
     const projectsHelperFormatProjectResourceFromAirTableSpy = jest
       .spyOn(projectsHelper, 'formatProjectResourceFromAirTable')
       .mockImplementation(fakeProjectResource => fakeProjectResource);
@@ -152,10 +166,14 @@ describe('Test the projects api', () => {
     // Run test
     await getAllProjectsHandler(fakeRequest, responseMock);
 
-    expect(airTableHelperProjectsResourcesCacheTableSpy).toHaveBeenCalledTimes(1);
+    expect(airTableHelperProjectsResourcesCacheTableSpy).toHaveBeenCalledTimes(
+      1,
+    );
     expect(airTableHelperGetAllRecordsSpy).toHaveBeenCalledTimes(1);
     expect(routesHelperSendErrorSpy).toHaveBeenCalledTimes(1);
-    expect(projectsHelperFormatProjectResourceFromAirTableSpy).toHaveBeenCalledTimes(0);
+    expect(
+      projectsHelperFormatProjectResourceFromAirTableSpy,
+    ).toHaveBeenCalledTimes(0);
     expect(responseMock.status).toHaveBeenCalledTimes(0);
     expect(responseMock.send).toHaveBeenCalledTimes(0);
 
@@ -177,7 +195,9 @@ describe('Test the projects api', () => {
 
     // Mock dependencies
     const singleProjectsMock = nock('http://localhost:3000')
-      .get(`/projects/single?res=${fakeProjectResource.res_id}&it=${fakeProjectResource.it_key}`)
+      .get(
+        `/projects/single?res=${fakeProjectResource.res_id}&it=${fakeProjectResource.it_key}`,
+      )
       .reply(200, fakeProjectResource);
 
     // Run test
@@ -209,7 +229,9 @@ describe('Test the projects api', () => {
 
     // Mock dependencies
     const requestMock = nock('http://localhost:3000')
-      .post(`/projects/single/register-interest?res=${fakeProjectResource.res_id}&it=${fakeProjectResource.it_key}`)
+      .post(
+        `/projects/single/register-interest?res=${fakeProjectResource.res_id}&it=${fakeProjectResource.it_key}`,
+      )
       .reply(200, responseData);
 
     // Run test
@@ -222,11 +244,12 @@ describe('Test the projects api', () => {
     expect(response.data).toEqual(responseData);
   });
 
-  test('projectRegisterInterestHandler calls AirTable and Slack and returns a response', async () => {
+  test('projectRegisterInterestHandler calls AirTable and returns a response', async () => {
     // Set up fake test data
     const fakeProjectsResourcesCacheTableName = faker.lorem.word();
     const fakeProjectsRegisterInterestTableName = faker.lorem.word();
-    const fakeProjectResource = projectsTestData.fakeAirTableProjectResource(true);
+    const fakeProjectResource =
+      projectsTestData.fakeAirTableProjectResource(true);
     const fakeRequest = {
       query: {
         it: fakeProjectResource.it_key,
@@ -257,9 +280,6 @@ describe('Test the projects api', () => {
     const projectsHelperFormatProjectResourceFromAirTableSpy = jest
       .spyOn(projectsHelper, 'formatProjectResourceFromAirTable')
       .mockImplementation(() => fakeProjectResource);
-    const slackServicePostMessageSpy = jest
-      .spyOn(slackService, 'postMessage')
-      .mockImplementation(() => ({ data: 'success' }));
     const responseMock = {
       send: jest.fn(() => responseMock),
       status: jest.fn(() => responseMock),
@@ -268,27 +288,38 @@ describe('Test the projects api', () => {
     // Run test
     await projectRegisterInterestHandler(fakeRequest, responseMock);
 
-    expect(airTableHelperProjectsResourcesCacheTableSpy).toHaveBeenCalledTimes(1);
+    expect(airTableHelperProjectsResourcesCacheTableSpy).toHaveBeenCalledTimes(
+      1,
+    );
     expect(airTableHelperGetRecordByQuerySpy).toHaveBeenCalledTimes(1);
-    expect(airTableHelperGetRecordByQuerySpy).toHaveBeenCalledWith(fakeProjectsResourcesCacheTableName, {
-      it_key: fakeRequest.query.it,
-      res_id: fakeRequest.query.res,
-    });
-    expect(projectsHelperFormatProjectResourceFromAirTableSpy).toHaveBeenCalledTimes(1);
+    expect(airTableHelperGetRecordByQuerySpy).toHaveBeenCalledWith(
+      fakeProjectsResourcesCacheTableName,
+      {
+        it_key: fakeRequest.query.it,
+        res_id: fakeRequest.query.res,
+      },
+    );
+    expect(
+      projectsHelperFormatProjectResourceFromAirTableSpy,
+    ).toHaveBeenCalledTimes(1);
 
-    expect(slackServicePostMessageSpy).toHaveBeenCalledTimes(1);
-
-    expect(airTableHelperProjectsRegisterInterestCacheTableSpy).toHaveBeenCalledTimes(1);
+    expect(
+      airTableHelperProjectsRegisterInterestCacheTableSpy,
+    ).toHaveBeenCalledTimes(1);
     expect(airTableHelperCreateRecordSpy).toHaveBeenCalledTimes(1);
-    expect(airTableHelperCreateRecordSpy).toHaveBeenCalledWith(fakeProjectsRegisterInterestTableName, {
-      'Name': `${fakeRequest.body.firstName} ${fakeRequest.body.lastName}`,
-      'Create date': dayjs().format('YYYY-MM-DD'),
-      'Available from': fakeRequest.body.availableFrom,
-      'Project name': fakeProjectResource.name,
-      'Role': fakeProjectResource.role,
-      'Peer Support': fakeRequest.body.lookingForPeerSupport ? 'Yes' : 'No',
-      'email': fakeRequest.body.email,
-    }, 'sta');
+    expect(airTableHelperCreateRecordSpy).toHaveBeenCalledWith(
+      fakeProjectsRegisterInterestTableName,
+      {
+        Name: `${fakeRequest.body.firstName} ${fakeRequest.body.lastName}`,
+        'Create date': dayjs().format('YYYY-MM-DD'),
+        'Available from': fakeRequest.body.availableFrom,
+        'Project name': fakeProjectResource.name,
+        Role: fakeProjectResource.role,
+        'Peer Support': fakeRequest.body.lookingForPeerSupport ? 'Yes' : 'No',
+        email: fakeRequest.body.email,
+      },
+      'sta',
+    );
 
     expect(responseMock.status).toHaveBeenCalledTimes(1);
     expect(responseMock.status).toHaveBeenCalledWith(200);
@@ -300,13 +331,13 @@ describe('Test the projects api', () => {
     airTableHelperGetRecordByQuerySpy.mockRestore();
     airTableHelperCreateRecordSpy.mockRestore();
     projectsHelperFormatProjectResourceFromAirTableSpy.mockRestore();
-    slackServicePostMessageSpy.mockRestore();
   });
 
   test('projectRegisterInterestHandler returns an error if project cannot be found', async () => {
     // Set up fake test data
     const fakeTableName = faker.lorem.word();
-    const fakeProjectResource = projectsTestData.fakeAirTableProjectResource(true);
+    const fakeProjectResource =
+      projectsTestData.fakeAirTableProjectResource(true);
     const fakeRequest = {
       query: {
         it: fakeProjectResource.it_key,
@@ -322,7 +353,9 @@ describe('Test the projects api', () => {
     };
 
     // Mock dependencies
-    const consoleErrorSpy = jest.spyOn(global.console, 'error').mockImplementation(() => { });
+    const consoleErrorSpy = jest
+      .spyOn(global.console, 'error')
+      .mockImplementation(() => {});
     const airTableHelperProjectsResourcesCacheTableSpy = jest
       .spyOn(airTable, 'projectsResourcesCacheTable')
       .mockImplementation(() => fakeTableName);
@@ -332,9 +365,6 @@ describe('Test the projects api', () => {
     const projectsHelperFormatProjectResourceFromAirTableSpy = jest
       .spyOn(projectsHelper, 'formatProjectResourceFromAirTable')
       .mockImplementation(() => fakeProjectResource);
-    const slackServicePostMessageSpy = jest
-      .spyOn(slackService, 'postMessage')
-      .mockImplementation(() => ({ data: 'success' }));
     const responseMock = {
       send: jest.fn(() => responseMock),
       status: jest.fn(() => responseMock),
@@ -343,14 +373,20 @@ describe('Test the projects api', () => {
     // Run test
     await projectRegisterInterestHandler(fakeRequest, responseMock);
 
-    expect(airTableHelperProjectsResourcesCacheTableSpy).toHaveBeenCalledTimes(1);
+    expect(airTableHelperProjectsResourcesCacheTableSpy).toHaveBeenCalledTimes(
+      1,
+    );
     expect(airTableHelperGetRecordByQuerySpy).toHaveBeenCalledTimes(1);
-    expect(airTableHelperGetRecordByQuerySpy).toHaveBeenCalledWith(fakeTableName, {
-      it_key: fakeRequest.query.it,
-      res_id: fakeRequest.query.res,
-    });
-    expect(projectsHelperFormatProjectResourceFromAirTableSpy).not.toHaveBeenCalled();
-    expect(slackServicePostMessageSpy).not.toHaveBeenCalled();
+    expect(airTableHelperGetRecordByQuerySpy).toHaveBeenCalledWith(
+      fakeTableName,
+      {
+        it_key: fakeRequest.query.it,
+        res_id: fakeRequest.query.res,
+      },
+    );
+    expect(
+      projectsHelperFormatProjectResourceFromAirTableSpy,
+    ).not.toHaveBeenCalled();
     expect(responseMock.status).toHaveBeenCalledTimes(1);
     expect(responseMock.status).toHaveBeenCalledWith(400);
     expect(responseMock.send).toHaveBeenCalledTimes(1);
@@ -361,13 +397,13 @@ describe('Test the projects api', () => {
     airTableHelperProjectsResourcesCacheTableSpy.mockRestore();
     airTableHelperGetRecordByQuerySpy.mockRestore();
     projectsHelperFormatProjectResourceFromAirTableSpy.mockRestore();
-    slackServicePostMessageSpy.mockRestore();
   });
 
   test('projectRegisterInterestHandler returns an error if data is missing from the request', async () => {
     // Set up fake test data
     const fakeTableName = faker.lorem.word();
-    const fakeProjectResource = projectsTestData.fakeAirTableProjectResource(true);
+    const fakeProjectResource =
+      projectsTestData.fakeAirTableProjectResource(true);
     const fakeRequest = {
       query: {
         it: fakeProjectResource.it_key,
@@ -377,7 +413,9 @@ describe('Test the projects api', () => {
     };
 
     // Mock dependencies
-    const consoleErrorSpy = jest.spyOn(global.console, 'error').mockImplementation(() => { });
+    const consoleErrorSpy = jest
+      .spyOn(global.console, 'error')
+      .mockImplementation(() => {});
     const airTableHelperProjectsResourcesCacheTableSpy = jest
       .spyOn(airTable, 'projectsResourcesCacheTable')
       .mockImplementation(() => fakeTableName);
@@ -387,9 +425,6 @@ describe('Test the projects api', () => {
     const projectsHelperFormatProjectResourceFromAirTableSpy = jest
       .spyOn(projectsHelper, 'formatProjectResourceFromAirTable')
       .mockImplementation(() => fakeProjectResource);
-    const slackServicePostMessageSpy = jest
-      .spyOn(slackService, 'postMessage')
-      .mockImplementation(() => ({ data: 'success' }));
     const responseMock = {
       send: jest.fn(() => responseMock),
       status: jest.fn(() => responseMock),
@@ -398,14 +433,20 @@ describe('Test the projects api', () => {
     // Run test
     await projectRegisterInterestHandler(fakeRequest, responseMock);
 
-    expect(airTableHelperProjectsResourcesCacheTableSpy).toHaveBeenCalledTimes(1);
+    expect(airTableHelperProjectsResourcesCacheTableSpy).toHaveBeenCalledTimes(
+      1,
+    );
     expect(airTableHelperGetRecordByQuerySpy).toHaveBeenCalledTimes(1);
-    expect(airTableHelperGetRecordByQuerySpy).toHaveBeenCalledWith(fakeTableName, {
-      it_key: fakeRequest.query.it,
-      res_id: fakeRequest.query.res,
-    });
-    expect(projectsHelperFormatProjectResourceFromAirTableSpy).toHaveBeenCalledTimes(1);
-    expect(slackServicePostMessageSpy).not.toHaveBeenCalled();
+    expect(airTableHelperGetRecordByQuerySpy).toHaveBeenCalledWith(
+      fakeTableName,
+      {
+        it_key: fakeRequest.query.it,
+        res_id: fakeRequest.query.res,
+      },
+    );
+    expect(
+      projectsHelperFormatProjectResourceFromAirTableSpy,
+    ).toHaveBeenCalledTimes(1);
     expect(responseMock.status).toHaveBeenCalledTimes(1);
     expect(responseMock.status).toHaveBeenCalledWith(400);
     expect(responseMock.send).toHaveBeenCalledTimes(1);
@@ -416,68 +457,5 @@ describe('Test the projects api', () => {
     airTableHelperProjectsResourcesCacheTableSpy.mockRestore();
     airTableHelperGetRecordByQuerySpy.mockRestore();
     projectsHelperFormatProjectResourceFromAirTableSpy.mockRestore();
-    slackServicePostMessageSpy.mockRestore();
-  });
-
-  test('projectRegisterInterestHandler returns an error if Slack service returns an error', async () => {
-    // Set up fake test data
-    const fakeTableName = faker.lorem.word();
-    const fakeProjectResource = projectsTestData.fakeAirTableProjectResource(true);
-    const fakeRequest = {
-      query: {
-        it: fakeProjectResource.it_key,
-        res: fakeProjectResource.res_id,
-      },
-      body: {
-        firstName: faker.person.firstName(),
-        lastName: faker.person.lastName(),
-        email: faker.internet.email(),
-        lookingForPeerSupport: faker.datatype.boolean(),
-        availableFrom: '2022-12-31',
-      },
-    };
-    const slackErrorResponse = { error: 'Some error message' };
-
-    // Mock dependencies
-    const consoleErrorSpy = jest.spyOn(global.console, 'error').mockImplementation(() => { });
-    const airTableHelperProjectsResourcesCacheTableSpy = jest
-      .spyOn(airTable, 'projectsResourcesCacheTable')
-      .mockImplementation(() => fakeTableName);
-    const airTableHelperGetRecordByQuerySpy = jest
-      .spyOn(airTable, 'getRecordByQuery')
-      .mockImplementation(() => fakeProjectResource);
-    const projectsHelperFormatProjectResourceFromAirTableSpy = jest
-      .spyOn(projectsHelper, 'formatProjectResourceFromAirTable')
-      .mockImplementation(() => fakeProjectResource);
-    const slackServicePostMessageSpy = jest
-      .spyOn(slackService, 'postMessage')
-      .mockImplementation(() => slackErrorResponse);
-    const responseMock = {
-      send: jest.fn(() => responseMock),
-      status: jest.fn(() => responseMock),
-    };
-
-    // Run test
-    await projectRegisterInterestHandler(fakeRequest, responseMock);
-
-    expect(airTableHelperProjectsResourcesCacheTableSpy).toHaveBeenCalledTimes(1);
-    expect(airTableHelperGetRecordByQuerySpy).toHaveBeenCalledTimes(1);
-    expect(airTableHelperGetRecordByQuerySpy).toHaveBeenCalledWith(fakeTableName, {
-      it_key: fakeRequest.query.it,
-      res_id: fakeRequest.query.res,
-    });
-    expect(projectsHelperFormatProjectResourceFromAirTableSpy).toHaveBeenCalledTimes(1);
-    expect(slackServicePostMessageSpy).toHaveBeenCalledTimes(1);
-    expect(responseMock.status).toHaveBeenCalledTimes(1);
-    expect(responseMock.status).toHaveBeenCalledWith(400);
-    expect(responseMock.send).toHaveBeenCalledTimes(1);
-    expect(responseMock.send).toHaveBeenCalledWith(slackErrorResponse);
-
-    // Clean up
-    consoleErrorSpy.mockRestore();
-    airTableHelperProjectsResourcesCacheTableSpy.mockRestore();
-    airTableHelperGetRecordByQuerySpy.mockRestore();
-    projectsHelperFormatProjectResourceFromAirTableSpy.mockRestore();
-    slackServicePostMessageSpy.mockRestore();
   });
 });
