@@ -1,3 +1,7 @@
+/**
+ * @file A client for authentication
+ */
+
 import jwtDecode from 'jwt-decode'
 import type { JwtPayload } from 'jwt-decode'
 

@@ -1,3 +1,7 @@
+/**
+ * @file Storage wrappers
+ */
+
 import * as SecureStore from 'expo-secure-store'
 
 export interface Storage {
