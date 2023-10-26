@@ -72,13 +72,13 @@ const App = () => {
     if (isDevelopmentMode()) {
       if (!Constants.expoConfig?.extra?.api?.baseUrl) {
         console.error(
-          '❌  Could not get the STA API URL -- you are probably missing the STA_API_BASE_URL value in your app/.env file',
+          '❌  Could not get the STA API URL -- you are probably missing the STA_API_BASE_URL value in your .env file',
         )
       } else if (
         Constants.expoConfig?.extra?.api?.baseUrl === 'https://the-sta.com'
       ) {
         console.warn(
-          '❗  You are running in development mode but you are using the production API server -- this is usually a bad idea, you should be using your local API development server instead. You probably need to stop the app, add a STA_API_BASE_URL value to your app/.env file, and then restart it.',
+          '❗  You are running in development mode but you are using the production API server -- this is usually a bad idea, you should be using your local API development server instead. You probably need to stop the app, add a STA_API_BASE_URL value to your .env file, and then restart it.',
         )
       } else {
         console.log(
@@ -88,7 +88,7 @@ const App = () => {
 
       if (!Constants.expoConfig?.extra?.api?.version) {
         console.error(
-          '❌ Could not get the STA API version number -- you are probably missing the STA_API_VERSION value in your app/.env file',
+          '❌ Could not get the STA API version number -- you are probably missing the STA_API_VERSION value in your .env file',
         )
       } else {
         console.log(
