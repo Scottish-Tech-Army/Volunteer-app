@@ -249,6 +249,7 @@ describe('AuthProvider', () => {
 
   describe('blockUntilInitialised', () => {
     test('only renders children after initialisation', async () => {
+      mockAuthClient.getCurrentUser.mockResolvedValue(undefined)
       const blockingWrapper = ({ children }: { children: ReactNode }) => (
         <AuthProvider
           client={mockAuthClient as any}
