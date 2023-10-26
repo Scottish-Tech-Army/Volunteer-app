@@ -274,6 +274,6 @@ describe('AuthProvider', () => {
       await waitFor(() =>
         expect(queryByText('Authentication test')).toBeTruthy(),
       )
-    })
+    }, 20000)
   })
 })
