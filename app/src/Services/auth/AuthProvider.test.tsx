@@ -248,14 +248,6 @@ describe('AuthProvider', () => {
   })
 
   describe('blockUntilInitialised', () => {
-    beforeEach(() => {
-      jest.useFakeTimers()
-    })
-
-    afterEach(() => {
-      jest.useRealTimers()
-    })
-
     test('only renders children after initialisation', async () => {
       mockAuthClient.getCurrentUser.mockResolvedValue(undefined)
       const blockingWrapper = ({ children }: { children: ReactNode }) => (
@@ -274,6 +266,6 @@ describe('AuthProvider', () => {
       await waitFor(() =>
         expect(queryByText('Authentication test')).toBeTruthy(),
       )
-    }, 20000)
+    }, 10000)
   })
 })
