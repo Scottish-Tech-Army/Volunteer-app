@@ -266,6 +266,7 @@ describe('AuthProvider', () => {
       await waitFor(() =>
         expect(queryByText('Authentication test')).toBeTruthy(),
       )
-    }, 10000)
+    }, 10000) // Without this, the test fails on GitHub Actions run.
+    // Would very much like to know why!
   })
 })
