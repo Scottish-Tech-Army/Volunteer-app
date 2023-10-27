@@ -24,7 +24,7 @@ export const Colors: ThemeColors = {
   primary: '#E14032',
   success: '#28a745',
   error: '#dc3545',
-  welcomeButton:'#EC6730',
+  welcomeButton: '#EC6730',
   dotActive: '#707070',
   dot: '#ffffff',
 }

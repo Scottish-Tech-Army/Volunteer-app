@@ -21,6 +21,7 @@ import ChoicesList, {
 } from '../Components/ChoicesList'
 import underDevelopmentAlert from '../../Utils/UnderDevelopmentAlert'
 import { navigate } from '@/Navigators/utils'
+import { useAuth } from '@/Services/auth'
 
 // Define the colour and font style for the profile menu
 const colourChoice = ChoicesListColour.purple
@@ -54,12 +55,14 @@ const profileMenuChoices: { text: string; onPress: any }[] = [
  */
 
 const ProfileContainer = () => {
+  const { authenticated } = useAuth()
   return (
     <ScrollView>
       <VStack alignItems="center" marginBottom={7}>
         <Heading fontFamily="title" size="lg">
           My Profile
         </Heading>
+        {!authenticated && <Text>Placeholder for login</Text>}
         <Box
           height="93px"
           width="93px"

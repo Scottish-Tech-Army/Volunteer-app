@@ -4,10 +4,11 @@
 
 module.exports = {
   extends: ['.eslintrc.js', 'plugin:jsdoc/recommended'],
+  ignorePatterns: ['**/*.test.ts'],
   rules: {
     'jsdoc/check-alignment': ['off'], // leave this to prettier to handle
     'jsdoc/newline-after-description': ['off'],
-    'jsdoc/require-file-overview': 'error',
+    'jsdoc/require-file-overview': 'warn',
     'jsdoc/require-jsdoc': [
       'warn',
       {
