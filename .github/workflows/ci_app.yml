@@ -13,8 +13,5 @@ jobs:
           node-version: 18.14
           cache: 'npm'
       - run: npm ci
-        working-directory: ./app
       - run: npm run lint-ci
-        working-directory: ./app
       - run: npm run test
-        working-directory: ./app
