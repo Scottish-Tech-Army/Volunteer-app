@@ -1,7 +1,3 @@
-/**
- * @file Babel compiler configuration
- */
-
 module.exports = api => {
   api.cache(true)
   return {

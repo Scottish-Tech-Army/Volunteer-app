@@ -18,12 +18,17 @@ import { store, persistor } from '@/Store'
 import { isDevelopmentMode } from '@/Utils/Expo'
 import { isJson } from '@/Utils/Json'
 import { version } from './package.json'
+import { AuthClient, AuthProvider } from '@/Services/auth'
 
 SplashScreen.preventAutoHideAsync()
 
-/**
- * @returns {React.FunctionComponent} A React functional component that returns the app
- */
+const authClient = new AuthClient({
+  baseUrl: `${Constants.expoConfig?.extra?.api?.baseUrl ?? ''}/${
+    Constants.expoConfig?.extra?.api?.version ?? ''
+  }`,
+  trace: console.log,
+})
+
 const App = () => {
   const [fontsLoaded] = useFonts({
     'BebasNeue-Regular': require('./src/Assets/Fonts/BebasNeue-Regular.ttf'),
@@ -141,7 +146,9 @@ const App = () => {
           colorModeManager={ColourModeManager}
           theme={StaTheme}
         >
-          <ApplicationNavigator />
+          <AuthProvider client={authClient} blockUntilInitialised={true}>
+            <ApplicationNavigator />
+          </AuthProvider>
         </NativeBaseProvider>
       </PersistGate>
     </Provider>
