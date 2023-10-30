@@ -13,6 +13,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@bugsnag/js": "^7.20.2",
+    "@bugsnag/plugin-express": "^7.19.0",
     "airtable": "^0.11.1",
     "axios": "^0.25.0",
     "cors": "^2.8.5",
@@ -28,8 +30,6 @@
     "vimeo": "^2.1.1"
   },
   "devDependencies": {
-    "@bugsnag/js": "^7.20.2",
-    "@bugsnag/plugin-express": "^7.19.0",
     "@faker-js/faker": "^8.0.2",
     "@react-native-community/eslint-config": "^3.2.0",
     "babel-cli": "^6.26.0",
