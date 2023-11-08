@@ -3,8 +3,6 @@ name: Continuous Integration - App
 on:
   pull_request:
     types: [opened, synchronize, reopened, edited]
-    paths:
-      - "app/**"
 jobs:
   test-and-lint:
     runs-on: ubuntu-latest
@@ -15,8 +13,5 @@ jobs:
           node-version: 18.14
           cache: 'npm'
       - run: npm ci
-        working-directory: ./app
       - run: npm run lint-ci
-        working-directory: ./app
       - run: npm run test
-        working-directory: ./app

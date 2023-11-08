@@ -38,11 +38,11 @@ This file contains some tips and guidelines on building our front-end React Nati
 
 ## Overview of directories
 
-**Within the `app` directory here is an `app/assets` directory** which is used by Expo for things like the app icon and splash screen.
+**`assets` directory** which is used by Expo for things like the app icon and splash screen.
 
-Most files live within the `app/src` directory.
+Most files live within the `src` directory.
 
-**Below is a brief rundown of the different directories inside `/app/src` and what they're for.**
+**Below is a brief rundown of the different directories inside `/src` and what they're for.**
 
 - `/Assets` -- fonts, images and other static files that are core to the app
 - `/Components` -- custom components that make up different parts of an app screen, e.g. a date search that might belong inside an event search container
@@ -84,23 +84,20 @@ You can see [the full list of Expo SDK libraries here](https://docs.expo.dev/ver
 
 ### Using .env variables
 
-You can use an `app/.env` file to store environment variables (often sensitive details like API keys, etc).
+You can use an `.env` file to store environment variables (often sensitive details like API keys, etc).
 
 > Be careful about using sensitive details like passwords and API keys in the front-end app as it's possible for someone to break into an app on their phone and get this data. Consider whether this is the best approach and discuss with others in the team if you're not sure.
 
 There are a few steps to add and use an environment variable using Expo:
 
-1. Add your variable to the `app/.env` file, e.g. `AMAZING_API_KEY="abc123def456ghi789"`
-2. Edit the `app/app.config.ts` file and add a new entry inside the `extra` object, e.g. `amazingApiKey: process.env.AMAZING_API_KEY,`
+1. Add your variable to the `.env` file, e.g. `AMAZING_API_KEY="abc123def456ghi789"`
+2. Edit the `app.config.ts` file and add a new entry inside the `extra` object, e.g. `amazingApiKey: process.env.AMAZING_API_KEY,`
 3. In the file in your code where you want to use this variable, add an import statement at the top of the file `import Constants from 'expo-constants'`
 4. In the same file, at the place in the code where you want to use the variable, you can access your variable with e.g. `Constants.expoConfig?.extra?.amazingApiKey` (note: Typescript considers that the value of this could be `undefined`, so you may need to handle that possibility)
 
-### Version
-API version 1.1 are protected by STA_API_KEY, that needs to be configured in `api/.env` and `app/.env` file. The version to be used in the development can be changed by modifying the STA_API_VERSION in the `app/.env` file in the `app` directory.
-
 ### Expo config file
 
-The `app/app.config.ts` file contains some configuration settings for the Expo CLI. In some Expo documentation you might see references to updating a `config.json` file -- this is the same thing, we just store it in `app.config.ts` because it's more flexible (e.g. we can insert environment variables into it when the app is built and deployed).
+The `app.config.ts` file contains some configuration settings for the Expo CLI. In some Expo documentation you might see references to updating a `config.json` file -- this is the same thing, we just store it in `app.config.ts` because it's more flexible (e.g. we can insert environment variables into it when the app is built and deployed).
 
 ### Expo known issues
 
@@ -124,11 +121,11 @@ Please raise on the Slack channel any questions about how best we can use Native
 
 ### File locations, naming, moving and deleting
 
-Currently, while we are in the process of transitioning different parts of the app to NativeBase and the new app designs, please put new assets (e.g. images), components and containers inside the `app/src/NativeBase` directory (e.g. `app/src/NativeBase/Components`).
+Currently, while we are in the process of transitioning different parts of the app to NativeBase and the new app designs, please put new assets (e.g. images), components and containers inside the `src/NativeBase` directory (e.g. `src/NativeBase/Components`).
 
 Parts of the app like `Config`, `Hooks`, `Services`, `Store` don't need to move. There may be some other things where we need to make a judgement call.
 
-If it makes sense to do so, you can a name new file the same as the old one it replaces (e.g. `app/src/Components/MyThing.tsx` can be `app/src/NativeBase/Components/MyThing.tsx`).
+If it makes sense to do so, you can a name new file the same as the old one it replaces (e.g. `src/Components/MyThing.tsx` can be `src/NativeBase/Components/MyThing.tsx`).
 
 If an old non-NativeBase file is no longer needed in the app, please delete it as part of the pull request you're working on, so we don't have old files hanging around that aren't used any more.
 
@@ -136,7 +133,7 @@ If an old non-NativeBase file is no longer needed in the app, please delete it a
 
 NativeBase has [lots of handy out-of-the-box defaults](https://docs.nativebase.io/default-theme) set on the theme.
 
-When we need to override this, we can do that in our theme file `app/src/NativeBase/Theme/StaTheme.tsx` [See here for the docs on theme customising.](https://docs.nativebase.io/customizing-theme) To see the full rundown of all the different things you can set, check out the NativeBase `extendTheme` file referenced in our StaTheme file (Ctrl-click or Command-click on `extendTheme` in the `import` statement at the top of the file to open it).
+When we need to override this, we can do that in our theme file `src/NativeBase/Theme/StaTheme.tsx` [See here for the docs on theme customising.](https://docs.nativebase.io/customizing-theme) To see the full rundown of all the different things you can set, check out the NativeBase `extendTheme` file referenced in our StaTheme file (Ctrl-click or Command-click on `extendTheme` in the `import` statement at the top of the file to open it).
 
 If you need to set something like colours, spacing, sizing, etc on a component or container you're working on, always think first **"could this be set as a theme default, rather than just setting it specifically on my component"**? Think ahead to whether this would help others in the team (and you!) in the future and help keep the app as consistent as possible, using as little code as needed in each individual component file.
 
@@ -152,7 +149,7 @@ NativeBase does some handling of dark mode straight out of the box, so you may n
 
 **If you need to set colours based on dark/light mode** [see the docs here](https://docs.nativebase.io/dark-mode) and wherever possible set `_light` and `_dark` properties in the `StaTheme` file (approach 1. in the docs) rather than setting them on your individual component -- i.e. try to make settings as universal and as easily reusable as possible.
 
-In case you need it, you can also use `useColorMode` or `useColorModeValue` to detect dark/light mode -- [see docs here](https://docs.nativebase.io/color-mode#h2-usecolormode) and an example in `app/src/NativeBase/Components/Brand`. But often you can do it using `_light` and `_dark` properties as described above.
+In case you need it, you can also use `useColorMode` or `useColorModeValue` to detect dark/light mode -- [see docs here](https://docs.nativebase.io/color-mode#h2-usecolormode) and an example in `src/NativeBase/Components/Brand`. But often you can do it using `_light` and `_dark` properties as described above.
 
 **To find which colours to use for dark mode in Figma** see _Design System_ in the list of Pages on the left-hand side of the screen. There are examples of some components using dark mode.
 
@@ -264,14 +261,14 @@ PNG, JPEG, GIF, etc images are better suited to photos. For icons use the Native
 
 We have the [react-native-svg](https://github.com/software-mansion/react-native-svg) package set up so you can use SVG images easily:
 
-- Copy the .svg file into the `app/src/NativeBase/Assets/Images` directory (or a sub-directory)
+- Copy the .svg file into the `src/NativeBase/Assets/Images` directory (or a sub-directory)
 - Import it at the top of your component file, e.g. `import StaLogoWide from '@/NativeBase/Assets/Images/Logos/sta-logo-wide.svg'`
 - Use it like you would a normal component, e.g. `<StaLogoWide />`
 - See `interface SvgProps` [in this file](https://github.com/software-mansion/react-native-svg/blob/main/src/elements/Svg.tsx) for common props you can use, and [here for touch events](https://github.com/software-mansion/react-native-svg/blob/main/USAGE.md#touch-events)
 
 ## Logging errors and crashes
 
-We use Bugsnag to log errors and crashes in the front-end app when it's running on people's phones -- (otherwise we might not know if the app's going wrong when people are using it). To log errors to Bugsnag in the app in production, always use the `logError` function in `app/src/Service/modules/logging/index.ts` instead of `console.error` (it calls `console.error` itself anyway as part of what it does).
+We use Bugsnag to log errors and crashes in the front-end app when it's running on people's phones -- (otherwise we might not know if the app's going wrong when people are using it). To log errors to Bugsnag in the app in production, always use the `logError` function in `src/Service/modules/logging/index.ts` instead of `console.error` (it calls `console.error` itself anyway as part of what it does).
 
 (While you're developing and testing out your code, you can still use `console.log` and `console.error` to see errors in your terminal.)
 
@@ -304,14 +301,14 @@ You can log errors to Bugsnag when developing in Expo Go if you really need to. 
 
 You can force the app to report errors to Bugsnag during development using Expo Go (this also overrides the user permissions setting which normally determines whether or not send error reports).  To do this:
 
-- Create a `app/.env` file if you don't have one already, and add `BUGSNAG_API_KEY="xxxxxxxxxxxxxxxx"` repacing `xxxxxxxxxxxxxxxx` with the value of our actual Bugsnag API key for the app (ask on the team Slack channel and someone can give you this -- note: the front-end app and the API use different Bugsnag API keys)
-- In your `app/.env` file include the line `BUGSNAG_ALWAYS_SEND_BUGS="true"` (this forces the API to send errors to Bugsnag, even though you're in a development environment)
+- Create a `.env` file if you don't have one already, and add `BUGSNAG_API_KEY="xxxxxxxxxxxxxxxx"` repacing `xxxxxxxxxxxxxxxx` with the value of our actual Bugsnag API key for the app (ask on the team Slack channel and someone can give you this -- note: the front-end app and the API use different Bugsnag API keys)
+- In your `.env` file include the line `BUGSNAG_ALWAYS_SEND_BUGS="true"` (this forces the API to send errors to Bugsnag, even though you're in a development environment)
 - Start/restart Expo and reload the app
 
 **After you've finished testing you must:**
 
-- Remove the `BUGSNAG_API_KEY` line from your `app/.env` file or comment it out by adding a `#` at the start of the line
-- Remove the `BUGSNAG_ALWAYS_SEND_BUGS` line from your `app/.env` file or set it to `BUGSNAG_ALWAYS_SEND_BUGS="false"`
+- Remove the `BUGSNAG_API_KEY` line from your `.env` file or comment it out by adding a `#` at the start of the line
+- Remove the `BUGSNAG_ALWAYS_SEND_BUGS` line from your `.env` file or set it to `BUGSNAG_ALWAYS_SEND_BUGS="false"`
 - Restart Expo and reload the app
 
 ## Performance issues
