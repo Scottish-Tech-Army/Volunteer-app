@@ -19,6 +19,7 @@ import { isDevelopmentMode } from '@/Utils/Expo'
 import { isJson } from '@/Utils/Json'
 import { version } from './package.json'
 import { AuthClient, AuthProvider } from '@/Services/auth'
+import { FeatureFlagsProvider } from '@/Services/featureFlags'
 
 SplashScreen.preventAutoHideAsync()
 
@@ -147,7 +148,11 @@ const App = () => {
           theme={StaTheme}
         >
           <AuthProvider client={authClient} blockUntilInitialised={true}>
-            <ApplicationNavigator />
+            <FeatureFlagsProvider
+              features={Constants.expoConfig?.extra?.features}
+            >
+              <ApplicationNavigator />
+            </FeatureFlagsProvider>
           </AuthProvider>
         </NativeBaseProvider>
       </PersistGate>

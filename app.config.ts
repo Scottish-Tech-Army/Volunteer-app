@@ -5,6 +5,10 @@
 import 'dotenv/config'
 import { version } from './package.json'
 
+const enabledFeatures = !process.env.FEATURES_ENABLED
+  ? []
+  : process.env.FEATURES_ENABLED.split(',')
+
 module.exports = {
   expo: {
     name: 'STA Volunteers',
@@ -42,6 +46,7 @@ module.exports = {
       favicon: './assets/favicon.png',
     },
     extra: {
+      features: enabledFeatures,
       api: {
         baseUrl: process.env.STA_API_BASE_URL ?? 'https://the-sta.com',
         version: process.env.STA_API_VERSION ?? 'v1',
