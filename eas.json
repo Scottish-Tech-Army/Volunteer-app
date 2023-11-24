@@ -5,6 +5,7 @@
   },
   "build": {
     "production": {
+      "distribution": "internal",
       "autoIncrement": true
     }
   },
