@@ -1,9 +1,7 @@
 on:
   push:
-    # tags:
-    #   - v**
-    branches:
-      - eas-build
+    tags:
+      - v**
 
 name: 🚀 build and upload to app stores
 
