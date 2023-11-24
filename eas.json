@@ -5,7 +5,7 @@
   },
   "build": {
     "production": {
-      "distribution": "internal",
+      "distribution": "store",
       "autoIncrement": true
     }
   },
@@ -20,7 +20,8 @@
         "track": "production"
       },
       "ios": {
-        "ascAppId": "1632619020"
+        "ascAppId": "1632619020",
+        "appleTeamId": "48N3J4V5KM"
       }
     }
   }

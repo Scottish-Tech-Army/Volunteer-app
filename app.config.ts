@@ -9,6 +9,7 @@ module.exports = {
   expo: {
     name: 'STA Volunteers',
     slug: 'volunteer-app',
+    owner: 'scottish-tech-army',
     version,
     orientation: 'portrait',
     icon: './assets/sta-icon.png',
@@ -54,7 +55,7 @@ module.exports = {
         apiKey: process.env.BUGSNAG_API_KEY,
       },
       eas: {
-        projectId: process.env.EXPO_APPLICATION_SERVICES_PROJECT_ID,
+        projectId: '9cd93ab4-ee33-43d1-a995-e4f8531553e2',
       },
     },
     hooks: {
