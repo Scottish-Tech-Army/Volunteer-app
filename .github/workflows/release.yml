@@ -27,4 +27,4 @@ jobs:
           eas-version: latest
           token: ${{ secrets.EXPO_ACCESS_TOKEN }}
       - name: 🚀 Build app
-        run: eas build --non-interactive
+        run: eas build --non-interactive --platform all
