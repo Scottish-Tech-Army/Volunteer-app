@@ -20,6 +20,12 @@ module.exports = {
       backgroundColor: '#ffffff',
     },
     assetBundlePatterns: ['**/*'],
+    updates: {
+      url: 'https://u.expo.dev/9cd93ab4-ee33-43d1-a995-e4f8531553e2',
+    },
+    runtimeVersion: {
+      policy: 'sdkVersion',
+    },
     android: {
       adaptiveIcon: {
         foregroundImage: './assets/sta-icon.png',
