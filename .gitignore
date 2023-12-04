@@ -1,3 +1,55 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+dist
+tmp
+/out-tsc
+
+# dependencies
 node_modules
-.vscode
-.idea
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+/typings
+
+# System Files
+.DS_Store
+Thumbs.db
+
+.env
+.env.local
+
+# Next.js
+.next
+
+# Temporary files created by Metro to check the health of the file watcher
+.metro-health-check*
+
+# Old Android and iOS directories - no longer in use
+android/
+ios/
+
+# Old config file - no longer in use, but included here to make sure it isn't accidentally committed to the repo
+src/Config/index.ts

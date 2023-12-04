@@ -1,45 +1,17 @@
 name: Continuous Integration - App
 
-# Triggers execute all tests workflow on pull request events
 on:
   pull_request:
     types: [opened, synchronize, reopened, edited]
-    paths:
-      - "app/**"
 jobs:
-  # test:
-  #   name: Tests
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v3
-  #     - name: Create config file
-  #       working-directory: ./app
-  #       run: ./scripts/createConfig.sh
-  #     - name: Setup Node.js
-  #       uses: actions/setup-node@v2
-  #       with:
-  #         node-version: '16'
-  #     - name: Run Tests
-  #       run: |
-  #         cd app
-  #         npm install --legacy-peer-deps
-  #         npm test
-  lint:
-    name: ESLint + JSDoc checks
+  test-and-lint:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        # This needs to be v1 in order for it to pick up main correctly so that we can diff against it; see https://github.com/actions/checkout/issues/296
-        uses: actions/checkout@v1
-      - name: Install deps
-        working-directory: ./app
-        run: npm install --legacy-peer-deps
-      - name: Run ESLint with extended checks
-        working-directory: ./app
-        # Run ESLint only on files that
-        # - have changed in this branch vs the current tip of the main branch, and have not been deleted in this branch (--diff-filter)
-        # - are in the current working directory (./app)
-        # - have extensions .js, .jsx, .ts, .tsx
-        # The file paths need to be supplied relative to the ./app directory because that's where ESLint runs. By default, the git diff command gives them relative to the repo root; --relative makes them relative to the current working directory.
-        run: npx eslint $(git diff --name-only --relative --diff-filter=ACMRTUXB origin/main HEAD . | grep -E '\.(js|jsx|ts|tsx)$'| xargs) -c .eslintrc.ci.js
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18.14
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run lint-ci
+      - run: npm run test
