@@ -12,6 +12,7 @@ jobs:
     env:
       STA_API_BASE_URL: https://the-sta.com
       STA_API_VERSION: v1
+      FEATURES_ENABLED: ""
     steps:
       - name: 🏗 Setup repo
         uses: actions/checkout@v4
