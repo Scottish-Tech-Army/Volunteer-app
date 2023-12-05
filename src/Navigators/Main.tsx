@@ -16,6 +16,7 @@ import StaTheme from '@/NativeBase/Theme/StaTheme'
 import { Platform } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import MyProfile from '@/NativeBase/Containers/ProfileContainer'
+import { useFeatureFlags } from '@/Services/featureFlags'
 
 const Tab = createBottomTabNavigator()
 
@@ -122,6 +123,7 @@ const BottomTabLabel = ({ focused }: BottomTabOptionsProps) => {
  * @returns {import('@react-navigation/bottom-tabs').BottomTabNavigator} A bottom tab navigator component from the '@react-navigation/bottom-tabs' package
  */
 const MainNavigator = () => {
+  const featureFlags = useFeatureFlags()
   const bottomTabOptions = {
     tabBarIcon: props => BottomTabIcon(props),
     tabBarLabel: props => BottomTabLabel(props),
@@ -149,23 +151,26 @@ const MainNavigator = () => {
           ...bottomTabOptions,
         }}
       />
-      {/* <Tab.Screen
-        name="Events"
-        component={ListContainer}
-        initialParams={{ type: ListType.Events }}
-        options={{
-          ...bottomTabOptions,
-        }}
-      /> */}
-      {/* @TODO: Make visible for MVP+1 */}
-      <Tab.Screen
-        name="Profile"
-        component={MyProfile}
-        options={{
-          headerShown: false,
-          ...bottomTabOptions,
-        }}
-      />
+      {featureFlags.events && (
+        <Tab.Screen
+          name="Events"
+          component={ListContainer}
+          initialParams={{ type: ListType.Events }}
+          options={{
+            ...bottomTabOptions,
+          }}
+        />
+      )}
+      {featureFlags.profileScreen && (
+        <Tab.Screen
+          name="Profile"
+          component={MyProfile}
+          options={{
+            headerShown: false,
+            ...bottomTabOptions,
+          }}
+        />
+      )}
       <Tab.Screen
         name="Settings"
         component={SettingsContainer}
