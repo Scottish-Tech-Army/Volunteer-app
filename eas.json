@@ -5,21 +5,18 @@
   },
   "build": {
     "production": {
+      "distribution": "store",
       "autoIncrement": true
     }
   },
   "submit": {
-    "preview": {
-      "android": {
-        "track": "internal"
-      }
-    },
     "production": {
       "android": {
-        "track": "production"
+        "track": "internal"
       },
       "ios": {
-        "ascAppId": "1632619020"
+        "ascAppId": "1632619020",
+        "appleTeamId": "48N3J4V5KM"
       }
     }
   }

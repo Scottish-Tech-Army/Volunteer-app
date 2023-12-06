@@ -106,11 +106,7 @@ If you're using Visual Studio Code for development, it's recommended that you:
 
 5. Copy the `.env.example` file in the api root folder and name your new file `.env` in the same folder -- e.g. using the command `cp .env.example .env` Set the value of `STA_API_BASE_URL` to the tunnelled URL of your local API server (the one you made a note of in step 8 above).
 
-6. Ask on Slack for a member of the team to send you the value to use for `EXPO_APPLICATION_SERVICES_PROJECT_ID`.
-
-   > For security reasons, the `EXPO_APPLICATION_SERVICES_PROJECT_ID` value is not stored in this repo.
-
-7. Run Expo using `npm start` This will run some commands and then it show you a QR code in your terminal.
+6. Run Expo using `npm start` This will run some commands and then it show you a QR code in your terminal.
 
 > You may get an automatic prompt to install `@expo/ngrok` or another package -- if so, type `y` to install it.
 
