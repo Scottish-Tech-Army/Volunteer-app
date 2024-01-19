@@ -1,4 +1,10 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 . "$(dirname -- "$0")/_/husky.sh"
+
+# Get the path to the Node.js binaries
+NODE_PATH=$(dirname $(which node))
+
+# Add the Node.js binaries directory to the PATH
+export PATH="$PATH:$NODE_PATH"
 
 npm run lint-app
