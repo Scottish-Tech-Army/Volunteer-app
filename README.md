@@ -70,13 +70,13 @@ Alternatively, you can go to the link in the instructions above for installing t
    > npm usually is installed when Node.js is installed. Run the command `npm --version` to check if it is installed after installing Node.js in Command Terminal
 3. npx
    > Once you have npm, run the command `npx --version` to check if npx is installed. If that doesn't work, you can install npx with the command `npm install -g npx`
-4. [Install the Expo Go app on your iOS or Android phone](https://expo.dev/client) -- when you're developing the app locally, you'll use Expo Go to test the app on your phone.  As part of this you'll need to [set up an Expo account](https://expo.dev/signup) if you don't have one already.
+4. [Install the Expo Go app on your iOS or Android phone](https://expo.dev/client) -- when you're developing the app locally, you'll use Expo Go to test the app on your phone. As part of this you'll need to [set up an Expo account](https://expo.dev/signup) if you don't have one already.
 
 # Code editor
 
 You can develop on your local machine.
 
-Or if you want, you can use a cloud-based alternative like [GitHub Codespaces](https://github.com/features/codespaces) (this might be good if you have a very slow laptop for instance).  With a free GitHub plan you get up to 60 hours a month of development time in Codespaces (which is probably plenty to volunteer on this project!)  You can [start a codespace here](https://github.com/codespaces) -- use the Blank template.
+Or if you want, you can use a cloud-based alternative like [GitHub Codespaces](https://github.com/features/codespaces) (this might be good if you have a very slow laptop for instance). With a free GitHub plan you get up to 60 hours a month of development time in Codespaces (which is probably plenty to volunteer on this project!) You can [start a codespace here](https://github.com/codespaces) -- use the Blank template.
 
 ## Visual Studio Code
 
@@ -87,7 +87,8 @@ If you're using Visual Studio Code for development, it's recommended that you:
 - [Enable formatting on save](https://scottsauber.com/2017/06/10/prettier-format-on-save-never-worry-about-formatting-javascript-again/). Combined with ESLint and Prettier, this takes care of some code style issues such as formatting, indentation and semicolon consistency for you automatically.
 
 ## Git Flow
-*** Make sure that you are familiar with Git Flow before starting! ***
+
+**_ Make sure that you are familiar with Git Flow before starting! _**
 
 The Team use Git Flow to manage development and release versions, follow the [Git Flow setup steps first](GITFLOW.md).
 
@@ -107,26 +108,27 @@ The Team use Git Flow to manage development and release versions, follow the [Gi
 
    > Inside the `app` folder there are files `package.json` and `package-lock.json`. **Every time either of these is modified, it is advised to repeat this step before running the project.**
 
-   > **If you get *warnings* about installing dependencies** you probably don't worry about these
+   > **If you get _warnings_ about installing dependencies** you probably don't worry about these
 
-   > **If you get *errors* about installing dependencies** try running `npx expo install` and then `npm install --legacy-peer-deps` or `npm install --force`.
+   > **If you get _errors_ about installing dependencies** try running `npx expo install` and then `npm install --legacy-peer-deps` or `npm install --force`.
 
 6. Copy the `.env.example` file in the api root folder and name your new file `.env` in the same folder -- e.g. using the command `cp .env.example .env` Set the value of `STA_API_BASE_URL` to the tunnelled URL of your local API server (the one you made a note of in step 8 above).
 
-7.  Ask on Slack for a member of the team to send you the value to use for `EXPO_APPLICATION_SERVICES_PROJECT_ID`.
+7. Ask on Slack for a member of the team to send you the value to use for `EXPO_APPLICATION_SERVICES_PROJECT_ID`.
 
-    > For security reasons, the `EXPO_APPLICATION_SERVICES_PROJECT_ID` value is not stored in this repo.
+   > For security reasons, the `EXPO_APPLICATION_SERVICES_PROJECT_ID` value is not stored in this repo.
 
-8. Run Expo using `npm start`  This will run some commands and then it show you a QR code in your terminal.
+8. Run Expo using `npm start` This will run some commands and then it show you a QR code in your terminal.
 
-  > You may get an automatic prompt to install `@expo/ngrok` or another package -- if so, type `y` to install it.
+> You may get an automatic prompt to install `@expo/ngrok` or another package -- if so, type `y` to install it.
 
-  > If you get stuck at this stage, you might need to install `@expo/ngrok` manually, globally on your local machine: run `npm install -g @expo/ngrok` then try running `npm start` again.
+> If you get stuck at this stage, you might need to install `@expo/ngrok` manually, globally on your local machine: run `npm install -g @expo/ngrok` then try running `npm start` again.
 
 9. Connect your phone:
+
 - **iPhone:** open the camera and scan the QR code, tap on the link and it should open up the app in Expo Go
 - **Android:** open the Expo Go app itself and you can scan the QR code
-- You should now see your local development version of the app on your phone -- any changes you make in your code should show almost instantly on your phone.  (If you find you're not seeing changes on your phone or Expo Go loses the connection, [see tips here.](APP_DEVELOPMENT.md#expo-known-issues))
+- You should now see your local development version of the app on your phone -- any changes you make in your code should show almost instantly on your phone. (If you find you're not seeing changes on your phone or Expo Go loses the connection, [see tips here.](APP_DEVELOPMENT.md#expo-known-issues))
 
 10. When you've got the app to run, make a PR to improve this README! Fix something that caused you headaches, update something that's no longer correct, or add a training resource, or add something else you think would help other people to get up and running.
 
@@ -139,33 +141,40 @@ Below are some commonly encountered issues and possible ways to resolve them. If
 ## The app won't build
 
 - When I run `npm install`, it fails with dependency resolution errors
+
   > Sometimes this happens when one or more of the project dependencies gets updated and is out of step with the others. You should try running `npx expo install` and then `npm install --legacy-peer-deps` or `npm install --force`.
 
 - I can't get Expo started in my terminal when I run `npm start` in the `app` directory
-   > You may get an automatic prompt to install `@expo/ngrok` or another package -- if so, type `y` to install it.
+
+  > You may get an automatic prompt to install `@expo/ngrok` or another package -- if so, type `y` to install it.
 
   > If you get stuck at this stage, you might need to install `@expo/ngrok` manually, globally on your local machine: run `npm install -g @expo/ngrok` then try running `npm start` again.
 
 ## The app gets stuck loading projects
 
 - The app gets stuck on the Projects screen -- projects never load
+
   > Make sure the API is running on your local machine, and that your **.env** files are configured correctly (see [Setup and first run](#setup-and-first-run) above)
 
-  > Check the values for both `API_TUNNEL_SUBDOMAIN` and `STA_API_BASE_URL`. `STA_API_BASE_URL` should be prefixed with `https://`. `API_TUNNEL_SUBDOMAIN` should *not* be prefixed with `https://` and should *only* include the URL up to but **not** including `.loca.lt`.
+  > Make sure the API is running on your local machine, and that your **.env** files are configured correctly (see [Setup and first run](#setup-and-first-run) above)
+
+  > Check the values for both `API_TUNNEL_SUBDOMAIN` and `STA_API_BASE_URL`. `STA_API_BASE_URL` should be prefixed with `https://`. `API_TUNNEL_SUBDOMAIN` should _not_ be prefixed with `https://` and should _only_ include the URL up to but **not** including `.loca.lt`.
+
   -     STA_API_BASE_URL="https://nadia-bloggs-abc123def456ghi789.loca.lt"
   -     API_TUNNEL_SUBDOMAIN="nadia-bloggs-abc123def456ghi789"
 
   > Make sure you have three terminal windows open, two running the API: one running `npm start` and one running the npm tunnel command (see above), both are needed in order for the app to be able to connect to the API
 
-  > Check if you can see data coming through from the API.  In the terminal window where you ran the npm tunnelling command, get the URL, then paste that URL into a web browser and add `/v1/projects` at the end -- if your local API is running and tunnelling successfully, you should see a JSON response with a list of projects. (If you don't see that, try the suggestion below, and also check the terminal window where you ran `npm start` and see if there are any error messages there.)
+  > Check if you can see data coming through from the API. In the terminal window where you ran the npm tunnelling command, get the URL, then paste that URL into a web browser and add `/v1/projects` at the end -- if your local API is running and tunnelling successfully, you should see a JSON response with a list of projects. (If you don't see that, try the suggestion below, and also check the terminal window where you ran `npm start` and see if there are any error messages there.)
 
   > Your API tunnel might have fallen asleep -- try stopping the process (press Ctrl+C) in the window where you ran the npm tunnelling command, then run that command again.
 
-  > Once a week, your API tunnel will expire and you'll need to enter an IP address in order to continue using it. To check if this is the case, go to the URL of your tunnelled API and add `/v1/projects` at the end (e.g. `https://nadia-bloggs-abc123def456ghi789.loca.lt/v1/projects`) If you see a web page instead of projects data, follow the instructions on the page to enter your public IP address -- follow what it says in the *If you're the developer...* section further down the page. Then stop and restart your app in Expo.
+  > Once a week, your API tunnel will expire and you'll need to enter an IP address in order to continue using it. To check if this is the case, go to the URL of your tunnelled API and add `/v1/projects` at the end (e.g. `https://nadia-bloggs-abc123def456ghi789.loca.lt/v1/projects`) If you see a web page instead of projects data, follow the instructions on the page to enter your public IP address -- follow what it says in the _If you're the developer..._ section further down the page. Then stop and restart your app in Expo.
 
 ## The app builds, but crashes when I run it
 
 - The app crashes with an error that says 'Metro has encountered an error: Cannot read properties of undefined (reading 'transformFile')'
+
   > Make sure you are using the LTS version of Node (currently v16); see [suggested solutions on StackOverflow](https://stackoverflow.com/questions/69647332/cannot-read-properties-of-undefined-reading-transformfile-at-bundler-transfo). If you want to keep your current version of Node as well, you can use tools such as [nvm (MacOS/Linux)](https://github.com/nvm-sh/nvm) or [nvm-windows](https://github.com/coreybutler/nvm-windows) to manage your Node installations.
 
 - The app crashes with an opensslErrorStack: (error: 03000086)
@@ -179,18 +188,17 @@ Below are some commonly encountered issues and possible ways to resolve them. If
 
 1. Start the api
 
-3. In a third terminal window, enter `npm start` to run Expo
+2. In a third terminal window, enter `npm start` to run Expo
 
-4. Connect your phone to your local development version of the app in Expo Go:
 - **iPhone:** open the camera and scan the QR code, this should open up the app in Expo Go
 - **Android:** open the Expo Go app itself and you can scan the QR code
-   > If you find you're not seeing changes on your phone or Expo Go loses the connection, [see tips here.](APP_DEVELOPMENT.md#expo-known-issues)
+  > If you find you're not seeing changes on your phone or Expo Go loses the connection, [see tips here.](APP_DEVELOPMENT.md#expo-known-issues)
 
 # Development
 
 ## Bugs
 
-Ask one of the team to add you to the **it470-volunteer-app-errors** Slack channel where you can see crash and error reports coming via [Bugsnag](https://www.bugsnag.com).  Find out more about Bugsnag on the app and API development pages linked to below.
+Ask one of the team to add you to the **it470-volunteer-app-errors** Slack channel where you can see crash and error reports coming via [Bugsnag](https://www.bugsnag.com). Find out more about Bugsnag on the app and API development pages linked to below.
 
 ## App
 

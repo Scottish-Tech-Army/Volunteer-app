@@ -1,0 +1,43 @@
+on:
+  push:
+    branches:
+      - main
+
+name: 🚀 build Expo Go preview
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    env:
+      STA_API_BASE_URL: https://the-sta.com
+      STA_API_VERSION: v1
+      FEATURES_ENABLED: events,profileScreen
+    steps:
+      - name: 🏗 Setup repo
+        uses: actions/checkout@v4
+      - name: 🏗 Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.14
+          cache: 'npm'
+      - name: 🏗 Setup EAS
+        uses: expo/expo-github-action@v7
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_ACCESS_TOKEN }}
+      - name: 📦 Install dependencies
+        run: npm ci
+      - name: 🚀 Create preview
+        uses: expo/expo-github-action/preview@v8
+        id: preview
+        with:
+          command: eas update --auto
+          comment: false
+      # TODO
+      # - name: 💬 Comment in Slack
+      #   uses: slackapi/slack-github-action@v1.17.0
+      #   env:
+      #     SLACK_BOT_TOKEN: ${{ secrets.SLACK_TOKEN }}
+      #   with:
+      #     channel-id: deployments
+      #     slack-message: 'New deployment is ready!\n- Preview: ${{ steps.preview.outputs.qr }}'
