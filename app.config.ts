@@ -5,10 +5,15 @@
 import 'dotenv/config'
 import { version } from './package.json'
 
+const enabledFeatures = !process.env.FEATURES_ENABLED
+  ? []
+  : process.env.FEATURES_ENABLED.split(',')
+
 module.exports = {
   expo: {
     name: 'STA Volunteers',
     slug: 'volunteer-app',
+    owner: 'scottish-tech-army',
     version,
     orientation: 'portrait',
     icon: './assets/sta-icon.png',
@@ -19,6 +24,12 @@ module.exports = {
       backgroundColor: '#ffffff',
     },
     assetBundlePatterns: ['**/*'],
+    updates: {
+      url: 'https://u.expo.dev/9cd93ab4-ee33-43d1-a995-e4f8531553e2',
+    },
+    runtimeVersion: {
+      policy: 'sdkVersion',
+    },
     android: {
       adaptiveIcon: {
         foregroundImage: './assets/sta-icon.png',
@@ -42,6 +53,7 @@ module.exports = {
       favicon: './assets/favicon.png',
     },
     extra: {
+      features: enabledFeatures,
       api: {
         baseUrl: process.env.STA_API_BASE_URL ?? 'https://the-sta.com',
         version: process.env.STA_API_VERSION ?? 'v1',
@@ -54,7 +66,9 @@ module.exports = {
         apiKey: process.env.BUGSNAG_API_KEY,
       },
       eas: {
-        projectId: process.env.EXPO_APPLICATION_SERVICES_PROJECT_ID,
+        projectId:
+          process.env.EXPO_APPLICATION_SERVICES_PROJECT_ID ??
+          '9cd93ab4-ee33-43d1-a995-e4f8531553e2',
       },
     },
     hooks: {
