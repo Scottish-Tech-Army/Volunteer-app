@@ -103,10 +103,7 @@ const ProjectFullDetails = ({
           onPress={() => {
             isAuthenticated
               ? navigate('ProjectRegisterInterest', { project })
-              : navigate('Login', {
-                  sourceScreen: 'ProjectFullDetails',
-                  project,
-                })
+              : navigate('Login', { project })
           }}
         >
           Register Interest

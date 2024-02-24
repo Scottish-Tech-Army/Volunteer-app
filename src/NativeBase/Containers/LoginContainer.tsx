@@ -20,20 +20,13 @@ import StaThemeLogo from '@/NativeBase/Assets/Images/Logos/sta-ribbon-logo.svg'
 import { Project } from '@/Services/modules/projects'
 import { useFeatureFlags } from '@/Services/featureFlags'
 import underDevelopmentAlert from '@/Utils/UnderDevelopmentAlert'
-
-interface LoginContainerProps {
-  sourceScreen?: string
-  project?: Project
-}
+import { Keyboard } from 'react-native'
 
 /**
  * A screen container that displays the login form.
  * @returns {JSX.Element} React element that renders the login form.
  */
-const LoginContainer = ({
-  sourceScreen,
-  project,
-}: LoginContainerProps): JSX.Element => {
+const LoginContainer = (project: Project): JSX.Element => {
   const [userEmail, setUserEmail] = React.useState('')
   const { login, loading } = useAuth()
   const featureFlags = useFeatureFlags()
@@ -44,12 +37,11 @@ const LoginContainer = ({
         console.log(
           'Login action completed - please note the authenticated state is not persisted, this only enables use of the login screen when login feature flag is enabled.',
         )
-        if (project && sourceScreen) {
+        if (project) {
           navigate('ProjectRegisterInterest', { project })
         } else {
           goBack()
         }
-        console.log('sourceScreen', sourceScreen)
       })
       .catch(error => {
         console.error('Failed to login', error)
@@ -59,7 +51,7 @@ const LoginContainer = ({
   return (
     <>
       <View
-        maxHeight="18%"
+        maxHeight="10%"
         justifyContent="flex-end"
         alignSelf="flex-end"
         maxWidth="55%"
@@ -74,7 +66,7 @@ const LoginContainer = ({
       >
         <FormControl>
           <View
-            minHeight="70%"
+            minHeight="60%"
             justifyContent="center"
             backgroundColor="transparant"
           >
@@ -83,21 +75,32 @@ const LoginContainer = ({
                 <Heading fontFamily="title" marginBottom={8}>
                   LOG IN
                 </Heading>
-                <FormControl.Label _text={{ fontFamily: 'heading' }}>
+                <FormControl.Label
+                  _text={{ fontFamily: 'heading' }}
+                  _dark={{
+                    _text: { color: 'textDarkMode.100' },
+                  }}
+                >
                   Email address
                 </FormControl.Label>
+
                 <Input
                   onChangeText={value => setUserEmail(value)}
+                  returnKeyType="done"
+                  onSubmitEditing={Keyboard.dismiss}
                   backgroundColor="softGrey"
                   borderWidth={0}
                   borderRadius={10}
                   minWidth="full"
+                  _dark={{
+                    color: 'text.100',
+                  }}
                 />
               </VStack>
             </HStack>
           </View>
 
-          <VStack minHeight="20%" justifyContent="flex-end">
+          <VStack minHeight="30%" justifyContent="flex-end">
             {featureFlags.login ? (
               <Button
                 marginY={5}

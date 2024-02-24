@@ -33,7 +33,6 @@ import {
 } from '@/NativeBase/Containers'
 import StaTheme from '@/NativeBase/Theme/StaTheme'
 import { ThemeState } from '@/Store/Theme'
-import ProjectFullDetails from '@/NativeBase/Components/Project/ProjectFullDetails'
 
 const Stack = createStackNavigator()
 
@@ -195,20 +194,11 @@ const ApplicationNavigator = () => {
           />
 
           <Stack.Screen
-            name="ProjectFullDetails"
-            component={ProjectFullDetails}
-            options={{
-              ...stackScreenDefaultOptions,
-              headerShown: false,
-            }}
-          />
-
-          <Stack.Screen
             name="Login"
             component={LoginContainer}
             options={{
               ...stackScreenDefaultOptions,
-              headerShown: false,
+              title: '',
             }}
           />
 
