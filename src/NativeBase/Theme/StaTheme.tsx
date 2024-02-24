@@ -28,6 +28,7 @@ const common = {
     secondaryGrey100: '#e6e6e6',
     offWhite100: '#fbfbfb',
     white: '#ffffff',
+    softGrey: '#eeeeee',
   },
   fonts: {
     primary: 'Poppins-Regular',
@@ -130,6 +131,7 @@ const StaTheme = extendTheme({
       100: common.colours.darkGrey100,
       50: common.colours.darkGrey050,
     },
+    softGrey: common.colours.softGrey,
   },
 
   fontConfig: {

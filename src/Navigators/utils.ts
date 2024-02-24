@@ -11,6 +11,7 @@ import { Project, ProjectsSearchField } from '@/Services/modules/projects'
 import {
   CommonActions,
   createNavigationContainerRef,
+  StackActions,
 } from '@react-navigation/native'
 
 /**
@@ -22,9 +23,13 @@ export type RootStackParamList = {
   Home: undefined
 
   Projects: ListRouteParams
+
   ProjectDetail: {
     item: Project
     key: string
+  }
+  ProjectFullDetails: {
+    project: Project
   }
   ProjectRegisterInterest: {
     project: Project
@@ -32,10 +37,10 @@ export type RootStackParamList = {
   ProjectScope: {
     url: string
   }
-  ProjectSearch: string | undefined
   ProjectVideo: {
     url: string
   }
+  ProjectSearch: string | undefined
 
   SearchResults: {
     results: (Project | Event)[]
@@ -53,6 +58,11 @@ export type RootStackParamList = {
   MyExperience: {
     skills?: undefined
   }
+
+  Login: {
+    sourceScreen?: string
+    project?: Project
+  }
 }
 
 export const navigationRef = createNavigationContainerRef<RootStackParamList>()
@@ -63,6 +73,15 @@ export const navigationRef = createNavigationContainerRef<RootStackParamList>()
 export function goBack() {
   if (navigationRef.isReady()) {
     navigationRef.goBack()
+  }
+}
+
+/**
+ * Push a new screen onto the stack
+ */
+export function push(...args: Parameters<typeof StackActions.push>) {
+  if (navigationRef.isReady()) {
+    navigationRef.dispatch(StackActions.push(...args))
   }
 }
 

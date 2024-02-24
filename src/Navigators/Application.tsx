@@ -25,6 +25,7 @@ import MainNavigator from './Main'
 import { navigationRef } from './utils'
 import NavigationHeader from '@/NativeBase/Components/NavigationHeader'
 import {
+  LoginContainer,
   ProjectDetailContainer,
   ProjectSearchContainer,
   SearchResultsContainer,
@@ -32,6 +33,7 @@ import {
 } from '@/NativeBase/Containers'
 import StaTheme from '@/NativeBase/Theme/StaTheme'
 import { ThemeState } from '@/Store/Theme'
+import ProjectFullDetails from '@/NativeBase/Components/Project/ProjectFullDetails'
 
 const Stack = createStackNavigator()
 
@@ -189,6 +191,24 @@ const ApplicationNavigator = () => {
             options={{
               ...stackScreenDefaultOptions,
               title: 'Project Video',
+            }}
+          />
+
+          <Stack.Screen
+            name="ProjectFullDetails"
+            component={ProjectFullDetails}
+            options={{
+              ...stackScreenDefaultOptions,
+              headerShown: false,
+            }}
+          />
+
+          <Stack.Screen
+            name="Login"
+            component={LoginContainer}
+            options={{
+              ...stackScreenDefaultOptions,
+              headerShown: false,
             }}
           />
 
