@@ -22,20 +22,22 @@ export type RootStackParamList = {
   Home: undefined
 
   Projects: ListRouteParams
+
   ProjectDetail: {
     item: Project
     key: string
   }
+
   ProjectRegisterInterest: {
     project: Project
   }
   ProjectScope: {
     url: string
   }
-  ProjectSearch: string | undefined
   ProjectVideo: {
     url: string
   }
+  ProjectSearch: string | undefined
 
   SearchResults: {
     results: (Project | Event)[]
@@ -52,6 +54,10 @@ export type RootStackParamList = {
 
   MyExperience: {
     skills?: undefined
+  }
+
+  Login: {
+    project?: Project
   }
 }
 

@@ -3,6 +3,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react'
 export enum FeatureFlags {
   'profileScreen' = 'profileScreen',
   'events' = 'events',
+  'login' = 'loginScreen',
 }
 
 type FeatureFlagsType = {

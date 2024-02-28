@@ -15,6 +15,7 @@ describe('useFeatureFlags', () => {
     expect(result.current).toEqual({
       profileScreen: true,
       events: false,
+      login: false,
     })
   })
 })
