@@ -407,6 +407,7 @@ const StaTheme = extendTheme({
       }),
       defaultProps: {
         fontSize: common.fonts.size.md,
+        allowFontScaling: false,
       },
     },
   },
