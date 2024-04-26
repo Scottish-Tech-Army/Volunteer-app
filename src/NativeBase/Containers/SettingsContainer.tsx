@@ -88,6 +88,15 @@ const SettingsContainer = () => {
     setColourModeChoice(newColourMode)
   }
 
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+  const handleLogin = () => {
+    setIsLoggedIn(!isLoggedIn)
+  }
+  const handleLogout = () => {
+    setIsLoggedIn(false)
+  }
+
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
       <VStack
@@ -135,7 +144,20 @@ const SettingsContainer = () => {
           <Text fontSize="xs">Version {version}</Text>
           <PrivacyAndTermsLinks />
 
-          <Button width="100%">Log in</Button>
+          {isLoggedIn ? (
+            <Text
+              fontSize="md"
+              color="#E30613"
+              onPress={handleLogout}
+              underline
+            >
+              Log out
+            </Text>
+          ) : (
+            <Button width="100%" onPress={handleLogin}>
+              Log in
+            </Button>
+          )}
         </VStack>
       </VStack>
     </ScrollView>
