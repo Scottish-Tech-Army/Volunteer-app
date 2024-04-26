@@ -27,6 +27,7 @@ import SegmentedPicker, {
   SegmentedPickerOption,
 } from '../Components/SegmentedPicker'
 import { capitaliseFirstLetter } from '@/Utils/Text'
+import { Button } from 'native-base'
 
 const SettingsContainer = () => {
   const { colorMode, toggleColorMode } = useColorMode()
@@ -130,9 +131,11 @@ const SettingsContainer = () => {
           </Checkbox> */}
         </VStack>
 
-        <VStack alignItems="center" space="2">
+        <VStack alignItems="center" space="2" width="100%">
           <Text fontSize="xs">Version {version}</Text>
           <PrivacyAndTermsLinks />
+
+          <Button width="100%">Log in</Button>
         </VStack>
       </VStack>
     </ScrollView>
