@@ -176,6 +176,7 @@ const MainNavigator = () => {
         component={SettingsContainer}
         options={{
           ...bottomTabOptions,
+          headerShown: false,
         }}
       />
     </Tab.Navigator>

@@ -13,7 +13,15 @@
  * See more about dark mode in APP_DEVELOPMENT.md
  */
 
-import { Heading, VStack, Text, ScrollView, useColorMode } from 'native-base'
+import {
+  Heading,
+  VStack,
+  Text,
+  ScrollView,
+  useColorMode,
+  HStack,
+  View,
+} from 'native-base'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Brand from '@/NativeBase/Components/Brand'
@@ -98,37 +106,41 @@ const SettingsContainer = () => {
   }
 
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-      <VStack
-        height="100%"
-        justifyContent="space-between"
-        safeAreaY
-        space={4}
-        padding={4}
-      >
-        <VStack space="4">
-          <Brand />
+    <>
+      <Heading textAlign="center" fontSize={32} marginTop={8}>
+        SETTINGS
+      </Heading>
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <VStack
+          height="100%"
+          justifyContent="space-between"
+          safeAreaY
+          space={4}
+          padding={4}
+        >
+          <VStack space="4" marginTop={48}>
+            <Brand />
 
-          <VStack space="2">
-            <Heading size="xs">Dark mode</Heading>
-            <SegmentedPicker options={colourModeOptions} />
-          </VStack>
+            <VStack space="2">
+              <Heading size="xs">Dark mode</Heading>
+              <SegmentedPicker options={colourModeOptions} />
+            </VStack>
 
-          <VStack>
-            <YesNoChoice
-              description="Send bug reports?"
-              onChange={() =>
-                onChangeErrorLogsPermission(!dataPermissionsState.errorLogs)
-              }
-              value={dataPermissionsState.errorLogs}
-            />
-            <Text fontSize="xs">
-              Automatically send bug reports to the STA team? May include
-              personal data
-            </Text>
-          </VStack>
+            <VStack>
+              <YesNoChoice
+                description="Send bug reports?"
+                onChange={() =>
+                  onChangeErrorLogsPermission(!dataPermissionsState.errorLogs)
+                }
+                value={dataPermissionsState.errorLogs}
+              />
+              <Text fontSize="xs">
+                Automatically send bug reports to the STA team? May include
+                personal data
+              </Text>
+            </VStack>
 
-          {/* <Heading size="sm">Welcome screen</Heading>
+            {/* <Heading size="sm">Welcome screen</Heading>
           <Checkbox
             colorScheme={'pink'}
             value="welcome"
@@ -138,29 +150,31 @@ const SettingsContainer = () => {
           >
             <Text fontSize="sm">Show splash screen on app launch</Text>
           </Checkbox> */}
-        </VStack>
+          </VStack>
 
-        <VStack alignItems="center" space="2" width="100%">
-          <Text fontSize="xs">Version {version}</Text>
-          <PrivacyAndTermsLinks />
-
-          {isLoggedIn ? (
-            <Text
-              fontSize="md"
-              color="#E30613"
-              onPress={handleLogout}
-              underline
-            >
-              Log out
-            </Text>
-          ) : (
-            <Button width="100%" onPress={handleLogin}>
-              Log in
-            </Button>
-          )}
+          <VStack alignItems="center" space="2" width="100%">
+            <Text fontSize="xs">Version {version}</Text>
+            <VStack width="100%">
+              <PrivacyAndTermsLinks />
+            </VStack>
+            {isLoggedIn ? (
+              <Text
+                fontSize="md"
+                color="#E30613"
+                onPress={handleLogout}
+                underline
+              >
+                Log out
+              </Text>
+            ) : (
+              <Button width="90%" onPress={handleLogin}>
+                Log in
+              </Button>
+            )}
+          </VStack>
         </VStack>
-      </VStack>
-    </ScrollView>
+      </ScrollView>
+    </>
   )
 }
 
