@@ -36,6 +36,8 @@ import SegmentedPicker, {
 } from '../Components/SegmentedPicker'
 import { capitaliseFirstLetter } from '@/Utils/Text'
 import { Button } from 'native-base'
+import { useAuth } from '@/Services/auth'
+import { navigate } from '@/Navigators/utils'
 
 const SettingsContainer = () => {
   const { colorMode, toggleColorMode } = useColorMode()
@@ -96,18 +98,24 @@ const SettingsContainer = () => {
     setColourModeChoice(newColourMode)
   }
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const { authenticated: isLoggedIn, login, logout } = useAuth()
 
   const handleLogin = () => {
-    setIsLoggedIn(!isLoggedIn)
+    navigate('Login', {})
   }
+
   const handleLogout = () => {
-    setIsLoggedIn(false)
+    logout()
   }
 
   return (
     <>
-      <Heading textAlign="center" fontSize={32} marginTop={8}>
+      <Heading
+        textAlign="center"
+        fontSize={32}
+        marginTop={8}
+        fontFamily="heading"
+      >
         SETTINGS
       </Heading>
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -118,10 +126,10 @@ const SettingsContainer = () => {
           space={4}
           padding={4}
         >
-          <VStack space="4" marginTop={48}>
+          <VStack space={4} marginTop={44}>
             <Brand />
 
-            <VStack space="2">
+            <VStack space={2}>
               <Heading size="xs">Dark mode</Heading>
               <SegmentedPicker options={colourModeOptions} />
             </VStack>
@@ -152,12 +160,17 @@ const SettingsContainer = () => {
           </Checkbox> */}
           </VStack>
 
-          <VStack alignItems="center" space="2" width="100%">
+          <VStack alignItems="center" space={2} width="100%">
             <Text fontSize="xs">Version {version}</Text>
-            <VStack width="100%">
+            <VStack width="100%" marginBottom={10}>
               <PrivacyAndTermsLinks />
             </VStack>
-            {isLoggedIn ? (
+
+            {!isLoggedIn ? (
+              <Button width="90%" onPress={handleLogin}>
+                Log in
+              </Button>
+            ) : (
               <Text
                 fontSize="md"
                 color="#E30613"
@@ -166,10 +179,6 @@ const SettingsContainer = () => {
               >
                 Log out
               </Text>
-            ) : (
-              <Button width="90%" onPress={handleLogin}>
-                Log in
-              </Button>
             )}
           </VStack>
         </VStack>
