@@ -13,16 +13,16 @@
  * See more about dark mode in APP_DEVELOPMENT.md
  */
 
+import React, { useState } from 'react'
 import {
   Heading,
   VStack,
   Text,
   ScrollView,
   useColorMode,
-  HStack,
+  Button,
   View,
 } from 'native-base'
-import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Brand from '@/NativeBase/Components/Brand'
 import PrivacyAndTermsLinks from '@/NativeBase/Components/PrivacyAndTermsLinks'
@@ -35,16 +35,18 @@ import SegmentedPicker, {
   SegmentedPickerOption,
 } from '../Components/SegmentedPicker'
 import { capitaliseFirstLetter } from '@/Utils/Text'
-import { Button } from 'native-base'
 import { useAuth } from '@/Services/auth'
 import { navigate } from '@/Navigators/utils'
+import { useFeatureFlags } from '@/Services/featureFlags'
 
 const SettingsContainer = () => {
   const { colorMode, toggleColorMode } = useColorMode()
   const dispatch = useDispatch()
+
   // const onChangeSplash = ({ welcome, show }: Partial<WelcomeState>) => {
   //   dispatch(changeWelcome({ welcome, show }))
   // }
+
   const dataPermissionsState = useSelector(
     (state: { permissions: PermissionsState }) => state.permissions.data,
   )
@@ -57,6 +59,7 @@ const SettingsContainer = () => {
   // const welcomeState = useSelector(
   //   (state: { welcome: WelcomeState }) => state.welcome.show,
   // )
+
   const [colourModeChoice, setColourModeChoice] = useState<string>(
     useSystemColourMode ? 'system' : colorMode ?? 'light',
   )
@@ -108,47 +111,40 @@ const SettingsContainer = () => {
     logout()
   }
 
+  const featureFlags = useFeatureFlags()
+
   return (
-    <>
-      <Heading
-        textAlign="center"
-        fontSize={32}
-        marginTop={8}
-        fontFamily="heading"
-      >
-        SETTINGS
-      </Heading>
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <VStack
-          height="100%"
-          justifyContent="space-between"
-          safeAreaY
-          space={4}
-          padding={4}
-        >
-          <VStack space={4} marginTop={44}>
-            <Brand />
+    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+      <VStack flex={1} padding={4} space={4}>
+        <Heading textAlign="center" size="lg" marginTop={8} fontFamily="title">
+          SETTINGS
+        </Heading>
 
-            <VStack space={2}>
-              <Heading size="xs">Dark mode</Heading>
-              <SegmentedPicker options={colourModeOptions} />
-            </VStack>
+        <View style={{ marginTop: 48 }}>
+          <Brand />
+        </View>
 
-            <VStack>
-              <YesNoChoice
-                description="Send bug reports?"
-                onChange={() =>
-                  onChangeErrorLogsPermission(!dataPermissionsState.errorLogs)
-                }
-                value={dataPermissionsState.errorLogs}
-              />
-              <Text fontSize="xs">
-                Automatically send bug reports to the STA team? May include
-                personal data
-              </Text>
-            </VStack>
+        <VStack space={4} flex={1}>
+          <VStack space={2}>
+            <Heading size="xs">Dark mode</Heading>
+            <SegmentedPicker options={colourModeOptions} />
+          </VStack>
 
-            {/* <Heading size="sm">Welcome screen</Heading>
+          <VStack>
+            <YesNoChoice
+              description="Send bug reports?"
+              onChange={() =>
+                onChangeErrorLogsPermission(!dataPermissionsState.errorLogs)
+              }
+              value={dataPermissionsState.errorLogs}
+            />
+            <Text fontSize="xs">
+              Automatically send bug reports to the STA team? May include
+              personal data
+            </Text>
+          </VStack>
+
+          {/* <Heading size="sm">Welcome screen</Heading>
           <Checkbox
             colorScheme={'pink'}
             value="welcome"
@@ -158,32 +154,30 @@ const SettingsContainer = () => {
           >
             <Text fontSize="sm">Show splash screen on app launch</Text>
           </Checkbox> */}
-          </VStack>
+        </VStack>
 
-          <VStack alignItems="center" space={2} width="100%">
-            <Text fontSize="xs">Version {version}</Text>
-            <VStack width="100%" marginBottom={10}>
-              <PrivacyAndTermsLinks />
-            </VStack>
-
-            {!isLoggedIn ? (
+        <VStack alignItems="center" space={2} width="100%" paddingBottom={4}>
+          <Text fontSize="xs">Version {version}</Text>
+          <PrivacyAndTermsLinks />
+          {featureFlags.login ? (
+            !isLoggedIn ? (
               <Button width="90%" onPress={handleLogin}>
                 Log in
               </Button>
             ) : (
-              <Text
-                fontSize="md"
-                color="#E30613"
+              <Button
+                width="90%"
+                backgroundColor="white"
+                _text={{ color: 'error.100', fontWeight: 'bold' }}
                 onPress={handleLogout}
-                underline
               >
                 Log out
-              </Text>
-            )}
-          </VStack>
+              </Button>
+            )
+          ) : null}
         </VStack>
-      </ScrollView>
-    </>
+      </VStack>
+    </ScrollView>
   )
 }
 
