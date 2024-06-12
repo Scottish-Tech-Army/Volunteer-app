@@ -114,37 +114,43 @@ const SettingsContainer = () => {
   const featureFlags = useFeatureFlags()
 
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-      <VStack flex={1} padding={4} space={4}>
-        <Heading textAlign="center" size="lg" marginTop={8} fontFamily="title">
-          SETTINGS
-        </Heading>
+    <>
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <VStack flex={1} padding={4} space={4}>
+          <Heading
+            textAlign="center"
+            size="lg"
+            marginTop={8}
+            fontFamily="title"
+          >
+            SETTINGS
+          </Heading>
 
-        <View style={{ marginTop: 48 }}>
-          <Brand />
-        </View>
+          <View marginTop={'48px'}>
+            <Brand />
+          </View>
 
-        <VStack space={4} flex={1}>
-          <VStack space={2}>
-            <Heading size="xs">Dark mode</Heading>
-            <SegmentedPicker options={colourModeOptions} />
-          </VStack>
+          <VStack space={4} flex={1}>
+            <VStack space={2}>
+              <Heading size="xs">Dark mode</Heading>
+              <SegmentedPicker options={colourModeOptions} />
+            </VStack>
 
-          <VStack>
-            <YesNoChoice
-              description="Send bug reports?"
-              onChange={() =>
-                onChangeErrorLogsPermission(!dataPermissionsState.errorLogs)
-              }
-              value={dataPermissionsState.errorLogs}
-            />
-            <Text fontSize="xs">
-              Automatically send bug reports to the STA team? May include
-              personal data
-            </Text>
-          </VStack>
+            <VStack>
+              <YesNoChoice
+                description="Send bug reports?"
+                onChange={() =>
+                  onChangeErrorLogsPermission(!dataPermissionsState.errorLogs)
+                }
+                value={dataPermissionsState.errorLogs}
+              />
+              <Text fontSize="xs">
+                Automatically send bug reports to the STA team? May include
+                personal data
+              </Text>
+            </VStack>
 
-          {/* <Heading size="sm">Welcome screen</Heading>
+            {/* <Heading size="sm">Welcome screen</Heading>
           <Checkbox
             colorScheme={'pink'}
             value="welcome"
@@ -154,30 +160,31 @@ const SettingsContainer = () => {
           >
             <Text fontSize="sm">Show splash screen on app launch</Text>
           </Checkbox> */}
+          </VStack>
         </VStack>
+      </ScrollView>
 
-        <VStack alignItems="center" space={2} width="100%" paddingBottom={4}>
-          <Text fontSize="xs">Version {version}</Text>
-          <PrivacyAndTermsLinks />
-          {featureFlags.login ? (
-            !isLoggedIn ? (
-              <Button width="90%" onPress={handleLogin}>
-                Log in
-              </Button>
-            ) : (
-              <Button
-                width="90%"
-                backgroundColor="white"
-                _text={{ color: 'error.100', fontWeight: 'bold' }}
-                onPress={handleLogout}
-              >
-                Log out
-              </Button>
-            )
-          ) : null}
-        </VStack>
+      <VStack alignItems="center" space={2} width="100%" paddingBottom={4}>
+        <Text fontSize="xs">Version {version}</Text>
+        <PrivacyAndTermsLinks />
+        {featureFlags.login ? (
+          !isLoggedIn ? (
+            <Button width="90%" onPress={handleLogin}>
+              Log in
+            </Button>
+          ) : (
+            <Button
+              width="90%"
+              backgroundColor="white"
+              _text={{ color: 'error.100', fontWeight: 'bold' }}
+              onPress={handleLogout}
+            >
+              Log out
+            </Button>
+          )
+        ) : null}
       </VStack>
-    </ScrollView>
+    </>
   )
 }
 
