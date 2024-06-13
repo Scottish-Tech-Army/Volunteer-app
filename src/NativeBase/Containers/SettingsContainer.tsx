@@ -1,18 +1,3 @@
-/**
- * @file Settings screen showing app configuration settings.
- *
- * The user's dark mode preference (which NativeBase calls colour mode) is handled in two ways:
- *
- * 1) 'System default' choice: we use the Redux store for our 'useSystemColourMode' flag -- this says whether or not the user's chosen 'Use system default'
- * (NativeBase doesn't seem to have an easy built-in way to handle this option that works.)
- * Then we use NativeBase's toggleColorMode to set the colour mode to reflect whether the OS is set to dark or light -- this happens in Navigators/Application.
- *
- * 2) 'Dark'/'Light' choice: if they choose to manually set the colour to dark or light, we ignore the OS's setting and simply use NativeBase's toggleColorMode
- * to set the colour mode to dark or light based on the user's preference.
- *
- * See more about dark mode in APP_DEVELOPMENT.md
- */
-
 import React, { useState } from 'react'
 import {
   Heading,
@@ -29,7 +14,6 @@ import PrivacyAndTermsLinks from '@/NativeBase/Components/PrivacyAndTermsLinks'
 import YesNoChoice from '@/NativeBase/Components/Forms/YesNoChoice'
 import { setPermissions, PermissionsState } from '@/Store/Permissions'
 import { changeTheme, ThemeState } from '@/Store/Theme'
-// import { changeWelcome, WelcomeState } from '@/Store/Welcome'     // currently not being used due to cleanup for MVP
 import { version } from '../../../package.json'
 import SegmentedPicker, {
   SegmentedPickerOption,
@@ -43,10 +27,6 @@ const SettingsContainer = () => {
   const { colorMode, toggleColorMode } = useColorMode()
   const dispatch = useDispatch()
 
-  // const onChangeSplash = ({ welcome, show }: Partial<WelcomeState>) => {
-  //   dispatch(changeWelcome({ welcome, show }))
-  // }
-
   const dataPermissionsState = useSelector(
     (state: { permissions: PermissionsState }) => state.permissions.data,
   )
@@ -56,9 +36,6 @@ const SettingsContainer = () => {
   const useSystemColourMode = useSelector(
     (state: { theme: ThemeState }) => state.theme.useSystemColourMode,
   )
-  // const welcomeState = useSelector(
-  //   (state: { welcome: WelcomeState }) => state.welcome.show,
-  // )
 
   const [colourModeChoice, setColourModeChoice] = useState<string>(
     useSystemColourMode ? 'system' : colorMode ?? 'light',
@@ -101,7 +78,7 @@ const SettingsContainer = () => {
     setColourModeChoice(newColourMode)
   }
 
-  const { authenticated: isLoggedIn, login, logout } = useAuth()
+  const { authenticated: isLoggedIn, logout } = useAuth()
 
   const handleLogin = () => {
     navigate('Login', {})
@@ -149,33 +126,26 @@ const SettingsContainer = () => {
                 personal data
               </Text>
             </VStack>
+          </VStack>
 
-            {/* <Heading size="sm">Welcome screen</Heading>
-          <Checkbox
-            colorScheme={'pink'}
-            value="welcome"
-            accessibilityLabel="Show a splash screen when the app starts"
-            isChecked={welcomeState}
-            onChange={() => onChangeSplash({ show: !welcomeState })}
-          >
-            <Text fontSize="sm">Show splash screen on app launch</Text>
-          </Checkbox> */}
+          <VStack alignItems="center" space={2} width="100%">
+            <Text fontSize="xs">Version {version}</Text>
+            <PrivacyAndTermsLinks />
           </VStack>
         </VStack>
       </ScrollView>
 
-      <VStack alignItems="center" space={2} width="100%" paddingBottom={4}>
-        <Text fontSize="xs">Version {version}</Text>
-        <PrivacyAndTermsLinks />
+      <VStack alignItems="center">
         {featureFlags.login ? (
           !isLoggedIn ? (
-            <Button width="90%" onPress={handleLogin}>
+            <Button width="90%" onPress={handleLogin} marginTop={24}>
               Log in
             </Button>
           ) : (
             <Button
               width="90%"
               backgroundColor="white"
+              marginTop={24}
               _text={{ color: 'error.100', fontWeight: 'bold' }}
               onPress={handleLogout}
             >
