@@ -103,7 +103,7 @@ const SettingsContainer = () => {
             SETTINGS
           </Heading>
 
-          <View marginTop={'48px'}>
+          <View marginTop={'48px'} marginBottom={'48px'}>
             <Brand />
           </View>
 
@@ -138,14 +138,14 @@ const SettingsContainer = () => {
       <VStack alignItems="center">
         {featureFlags.login ? (
           !isLoggedIn ? (
-            <Button width="90%" onPress={handleLogin} marginTop={24}>
+            <Button width="90%" onPress={handleLogin} marginTop={'48px'}>
               Log in
             </Button>
           ) : (
             <Button
               width="90%"
               backgroundColor="white"
-              marginTop={24}
+              marginTop={'48px'}
               _text={{ color: 'error.100', fontWeight: 'bold' }}
               onPress={handleLogout}
             >
