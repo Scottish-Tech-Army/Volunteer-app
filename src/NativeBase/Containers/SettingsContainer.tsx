@@ -147,6 +147,8 @@ const SettingsContainer = () => {
               backgroundColor="white"
               marginTop={'48px'}
               _text={{ color: 'error.100', fontWeight: 'bold' }}
+              borderColor="error.100"
+              borderWidth={1}
               onPress={handleLogout}
             >
               Log out
