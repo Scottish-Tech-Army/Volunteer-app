@@ -1,3 +1,18 @@
+/**
+ * @file Settings screen showing app configuration settings.
+ *
+ * The user's dark mode preference (which NativeBase calls colour mode) is handled in two ways:
+ *
+ * 1) 'System default' choice: we use the Redux store for our 'useSystemColourMode' flag -- this says whether or not the user's chosen 'Use system default'
+ * (NativeBase doesn't seem to have an easy built-in way to handle this option that works.)
+ * Then we use NativeBase's toggleColorMode to set the colour mode to reflect whether the OS is set to dark or light -- this happens in Navigators/Application.
+ *
+ * 2) 'Dark'/'Light' choice: if they choose to manually set the colour to dark or light, we ignore the OS's setting and simply use NativeBase's toggleColorMode
+ * to set the colour mode to dark or light based on the user's preference.
+ *
+ * See more about dark mode in APP_DEVELOPMENT.md
+ */
+
 import React, { useState } from 'react'
 import {
   Heading,
