@@ -407,6 +407,10 @@ const StaTheme = extendTheme({
       }),
       defaultProps: {
         fontSize: common.fonts.size.md,
+        /**
+         * TODO: REMOVE THIS ONCE THE WELCOME MODAL IS RE-DESIGNED.
+         * THIS OVERRIDES ACCESSIBILITY FONT SETTINGS TO ENSURE THE BUTONS ARE AVAILABLE.
+         */
         allowFontScaling: false,
       },
     },
