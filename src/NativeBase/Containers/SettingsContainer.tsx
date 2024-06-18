@@ -143,7 +143,12 @@ const SettingsContainer = () => {
             </VStack>
           </VStack>
 
-          <VStack alignItems="center" space={2} width="100%">
+          <VStack
+            alignItems="center"
+            space={2}
+            width="100%"
+            marginBottom={'48px'}
+          >
             <Text fontSize="xs">Version {version}</Text>
             <PrivacyAndTermsLinks />
           </VStack>
@@ -153,14 +158,13 @@ const SettingsContainer = () => {
       <VStack alignItems="center">
         {featureFlags.login ? (
           !isLoggedIn ? (
-            <Button width="90%" onPress={handleLogin} marginTop={'48px'}>
+            <Button width="90%" onPress={handleLogin}>
               Log in
             </Button>
           ) : (
             <Button
               width="90%"
               backgroundColor="white"
-              marginTop={'48px'}
               _text={{ color: 'error.100', fontWeight: 'bold' }}
               borderColor="error.100"
               borderWidth={1}
