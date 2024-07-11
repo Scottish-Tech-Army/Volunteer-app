@@ -18,7 +18,7 @@ const PrivacyAndTermsLinks: FC<PrivacyAndTermsLinksProps> = ({ fontSize }) => {
   fontSize = fontSize ?? 'xs'
 
   return (
-    <HStack space="4" justifyContent={'center'}>
+    <HStack space="4" justifyContent={'space-evenly'}>
       <Text>
         <Link
           _text={{
