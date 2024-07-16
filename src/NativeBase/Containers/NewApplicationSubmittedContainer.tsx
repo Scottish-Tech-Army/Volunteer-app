@@ -20,11 +20,17 @@ const NewApplicationSubmittedContainer = () => {
       justifyContent="flex-start"
       alignItems="center"
     >
-      <Icon size={7} as={MaterialIcons} name="check_circle" color="#3AAA35" />
+      <Icon
+        size={120}
+        as={MaterialIcons}
+        name="check-circle"
+        color="#3AAA35"
+        marginTop="48px"
+      />
       <Heading
         textAlign="center"
         size="lg"
-        marginTop="80px"
+        marginTop="64px"
         fontFamily="title"
         color="purple.80"
       >
