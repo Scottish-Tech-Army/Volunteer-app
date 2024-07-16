@@ -3,8 +3,10 @@
  */
 
 //  import { useAuth } from '@/Services/auth'
-import { Button, Heading, VStack, Text, Link } from 'native-base'
+import { Button, Heading, VStack, Text, Link, Icon } from 'native-base'
 import React from 'react'
+import StaTheme from '../Theme/StaTheme'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
 /**
  * A screen container that displays the new submitted application.
@@ -18,6 +20,7 @@ const NewApplicationSubmittedContainer = () => {
       justifyContent="flex-start"
       alignItems="center"
     >
+      <Icon size={7} as={MaterialIcons} name="check_circle" color="#3AAA35" />
       <Heading
         textAlign="center"
         size="lg"
@@ -41,8 +44,8 @@ const NewApplicationSubmittedContainer = () => {
 
         <Link
           _text={{
-            color: 'magenta.100',
             textDecoration: 'none',
+            color: StaTheme.colors.primary[100],
           }}
           marginTop="8px"
         >
