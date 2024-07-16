@@ -21,9 +21,9 @@ const NewApplicationSubmittedContainer = () => {
       alignItems="center"
     >
       <Icon
-        size={120}
+        size={'95px'}
         as={MaterialIcons}
-        name="check-circle"
+        name="check-circle-outline"
         color="#3AAA35"
         marginTop="48px"
       />
@@ -36,7 +36,7 @@ const NewApplicationSubmittedContainer = () => {
       >
         APPLICATION SUBMITTED
       </Heading>
-      <Text textAlign="center" marginTop="16px">
+      <Text textAlign="center" marginTop="16px" fontSize="md" fontWeight="bold">
         We'll review your application and keep you updated on progress via
         email.
       </Text>
