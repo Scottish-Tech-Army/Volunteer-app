@@ -17,6 +17,7 @@ import { Platform } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import MyProfile from '@/NativeBase/Containers/ProfileContainer'
 import { useFeatureFlags } from '@/Services/featureFlags'
+import NewApplicationSubmittedContainer from '@/NativeBase/Containers/NewApplicationSubmittedContainer'
 
 const Tab = createBottomTabNavigator()
 
@@ -174,6 +175,14 @@ const MainNavigator = () => {
       <Tab.Screen
         name="Settings"
         component={SettingsContainer}
+        options={{
+          ...bottomTabOptions,
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen
+        name="NewApplicationSubmitted"
+        component={NewApplicationSubmittedContainer}
         options={{
           ...bottomTabOptions,
           headerShown: false,
