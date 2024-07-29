@@ -7,11 +7,14 @@ import { Button, Heading, VStack, Text, Link, Icon } from 'native-base'
 import React from 'react'
 import StaTheme from '../Theme/StaTheme'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import { navigate } from '@/Navigators/utils'
+import { Project } from '@/Services/modules/projects'
 
 /**
  * A screen container that displays the new submitted application.
  **/
-const NewApplicationSubmittedContainer = () => {
+
+const NewApplicationSubmittedContainer = (project: Project) => {
   return (
     <VStack
       flex={1}
@@ -46,7 +49,14 @@ const NewApplicationSubmittedContainer = () => {
         position="absolute"
         bottom="60px"
       >
-        <Button width="90%">Go to Role</Button>
+        <Button
+          width="90%"
+          onPress={() => {
+            navigate('ProjectDetail', { item: project, key: project.it_key })
+          }}
+        >
+          Go to Role
+        </Button>
 
         <Link
           _text={{
