@@ -9,12 +9,20 @@ import StaTheme from '../Theme/StaTheme'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { navigate } from '@/Navigators/utils'
 import { Project } from '@/Services/modules/projects'
+import { goBack } from '@/Navigators/utils'
+import { ListType } from './ListContainer'
 
 /**
  * A screen container that displays the new submitted application.
  **/
 
-const NewApplicationSubmittedContainer = (project: Project) => {
+interface NewApplicationSubmittedContainerProps {
+  project: Project
+}
+
+const NewApplicationSubmittedContainer = ({
+  project,
+}: NewApplicationSubmittedContainerProps) => {
   return (
     <VStack
       flex={1}
@@ -53,6 +61,7 @@ const NewApplicationSubmittedContainer = (project: Project) => {
           width="90%"
           onPress={() => {
             navigate('ProjectDetail', { item: project, key: project.it_key })
+            // goBack()
           }}
         >
           Go to Role
@@ -64,6 +73,9 @@ const NewApplicationSubmittedContainer = (project: Project) => {
             color: StaTheme.colors.primary[100],
           }}
           marginTop="8px"
+          onPress={() => {
+            navigate('Projects', { type: ListType.Projects, options: {} })
+          }}
         >
           Browse Roles
         </Link>
