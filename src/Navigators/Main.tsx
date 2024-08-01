@@ -180,14 +180,6 @@ const MainNavigator = () => {
           headerShown: false,
         }}
       />
-      <Tab.Screen
-        name="NewApplicationSubmitted"
-        component={NewApplicationSubmittedContainer}
-        options={{
-          ...bottomTabOptions,
-          headerShown: false,
-        }}
-      />
     </Tab.Navigator>
   )
 }

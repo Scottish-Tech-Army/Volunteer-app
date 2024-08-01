@@ -2,14 +2,12 @@
  * @file New Application Submitted screen.
  */
 
-//  import { useAuth } from '@/Services/auth'
 import { Button, Heading, VStack, Text, Link, Icon } from 'native-base'
 import React from 'react'
 import StaTheme from '../Theme/StaTheme'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { navigate } from '@/Navigators/utils'
 import { Project } from '@/Services/modules/projects'
-import { goBack } from '@/Navigators/utils'
 import { ListType } from './ListContainer'
 
 /**
@@ -61,7 +59,6 @@ const NewApplicationSubmittedContainer = ({
           width="90%"
           onPress={() => {
             navigate('ProjectDetail', { item: project, key: project.it_key })
-            // goBack()
           }}
         >
           Go to Role
