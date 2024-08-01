@@ -17,7 +17,6 @@ import { Platform } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import MyProfile from '@/NativeBase/Containers/ProfileContainer'
 import { useFeatureFlags } from '@/Services/featureFlags'
-import NewApplicationSubmittedContainer from '@/NativeBase/Containers/NewApplicationSubmittedContainer'
 
 const Tab = createBottomTabNavigator()
 
