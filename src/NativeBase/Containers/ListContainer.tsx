@@ -7,7 +7,7 @@
 
 /* eslint-disable @typescript-eslint/no-shadow */
 
-import { Heading, VStack } from 'native-base'
+import { Heading, ScrollView, VStack } from 'native-base'
 import React, { useEffect, useState } from 'react'
 import { Dimensions } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
@@ -44,6 +44,7 @@ import { EventsState, setEvents } from '@/Store/Events'
 import { ProjectsState, setProjects } from '@/Store/Projects'
 import underDevelopmentAlert from '@/Utils/UnderDevelopmentAlert'
 import SkeletonLoading from '../Components/SkeletonLoading'
+import FreeSearchBar from '../Components/FreeSearchBar'
 
 const ClearSearchLabel = styled.Text`
 
@@ -269,78 +270,85 @@ const ListContainer = (props: {
     }
   }, [params?.options?.events, params?.search, params?.type])
 
+  const onSubmitEditing = (text: string) => text
+
   return (
     <>
-      <TopOfApp
+      {/* <TopOfApp
         showSearchButton
         onSearchButtonPress={() => navigate(screens.search[params.type], '')}
-      />
-      <VStack
-        alignItems="center"
-        maxHeight={windowHeight - heightOfTopOfAppPlusBottomNav}
-        space={4}
-        padding={4}
-      >
-        <Heading size="sm">Projects List</Heading>
+      /> */}
+      <VStack mt="4" px="4" space="2">
+        <Heading size="xl">Roles</Heading>
         {/* TODO: reinstate when functionality is ready */}
         {/* <SegmentedPicker options={projectListOptions} /> */}
 
-        {params?.type && listItemsToShow ? (
-          <>
-            {/* Past / Upcoming / My Events choice */}
-            {params.type === ListType.Events && (
-              <EventOptions selected={eventsSelectedOption} />
-            )}
+        <FreeSearchBar handleSubmit={onSubmitEditing} marginBottom="2" />
+      </VStack>
+      <ScrollView>
+        <VStack
+          alignItems="center"
+          maxHeight={windowHeight - heightOfTopOfAppPlusBottomNav}
+          space={4}
+          padding={4}
+        >
+          {params?.type && listItemsToShow ? (
+            <>
+              {/* Past / Upcoming / My Events choice */}
+              {params.type === ListType.Events && (
+                <EventOptions selected={eventsSelectedOption} />
+              )}
 
-            {/* Quick search for upcoming events (Today / This week / This month) */}
-            {params.type === ListType.Events &&
-              eventsShowUpcomingQuickSearch &&
-              eventsQuickSearchUpcomingChoice && (
+              {/* Quick search for upcoming events (Today / This week / This month) */}
+              {params.type === ListType.Events &&
+                eventsShowUpcomingQuickSearch &&
+                eventsQuickSearchUpcomingChoice && (
+                  <SearchResultsView>
+                    <EventSearchUpcomingQuickSearch
+                      selectedButton={eventsQuickSearchUpcomingChoice}
+                    />
+                  </SearchResultsView>
+                )}
+
+              {/* If the user has searched, show some text indicating what they searched for
+                and give them the option to clear the search */}
+              {params?.search && (
                 <SearchResultsView>
-                  <EventSearchUpcomingQuickSearch
-                    selectedButton={eventsQuickSearchUpcomingChoice}
-                  />
+                  {params?.search?.description && (
+                    <SearchResultsLabel>
+                      Results for {params.search.description}
+                    </SearchResultsLabel>
+                  )}
+                  <ClearSearchLabel onPress={clearSearch}>
+                    Clear search
+                  </ClearSearchLabel>
                 </SearchResultsView>
               )}
 
-            {/* If the user has searched, show some text indicating what they searched for
-                and give them the option to clear the search */}
-            {params?.search && (
-              <SearchResultsView>
-                {params?.search?.description && (
-                  <SearchResultsLabel>
-                    Results for {params.search.description}
-                  </SearchResultsLabel>
-                )}
-                <ClearSearchLabel onPress={clearSearch}>
-                  Clear search
-                </ClearSearchLabel>
-              </SearchResultsView>
-            )}
+              {/* Projects filter & sort options */}
+              {params.type === ListType.Projects &&
+                Boolean(params?.search) &&
+                Boolean(listItemsToShow.length) && <ProjectFilterSort />}
 
-            {/* Projects filter & sort options */}
-            {params.type === ListType.Projects &&
-              Boolean(params?.search) &&
-              Boolean(listItemsToShow.length) && <ProjectFilterSort />}
-
-            <List
-              data={listItemsToShow}
-              mode={
-                params?.search ? ListDisplayMode.Search : ListDisplayMode.Full
-              }
-              options={params?.options}
-              searchScreen={screens.search[params.type]}
-              type={params.type}
-            />
-          </>
-        ) : (
-          <>
-            <SkeletonLoading />
-            <SkeletonLoading />
-            <SkeletonLoading />
-          </>
-        )}
-      </VStack>
+              <List
+                data={listItemsToShow}
+                mode={
+                  params?.search ? ListDisplayMode.Search : ListDisplayMode.Full
+                }
+                options={params?.options}
+                searchScreen={screens.search[params.type]}
+                type={params.type}
+              />
+            </>
+          ) : (
+            <>
+              <SkeletonLoading />
+              <SkeletonLoading />
+              <SkeletonLoading />
+            </>
+          )}
+        </VStack>
+      </ScrollView>
     </>
   )
 }

@@ -14,7 +14,8 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 const SearchIconHighlighted = () => (
   <Icon
     as={MaterialIcons}
-    color="accentPurple.100"
+    // color="accentPurple.100"
+    color="gray.400"
     ml="2"
     name="search"
     size={6}
