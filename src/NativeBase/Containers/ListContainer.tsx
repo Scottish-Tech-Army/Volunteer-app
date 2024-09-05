@@ -7,7 +7,17 @@
 
 /* eslint-disable @typescript-eslint/no-shadow */
 
-import { Heading, ScrollView, VStack } from 'native-base'
+import {
+  Heading,
+  HStack,
+  Icon,
+  IconButton,
+  ScrollView,
+  Tag,
+  VStack,
+  Text,
+  Pressable,
+} from 'native-base'
 import React, { useEffect, useState } from 'react'
 import { Dimensions } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
@@ -45,6 +55,7 @@ import { ProjectsState, setProjects } from '@/Store/Projects'
 import underDevelopmentAlert from '@/Utils/UnderDevelopmentAlert'
 import SkeletonLoading from '../Components/SkeletonLoading'
 import FreeSearchBar from '../Components/FreeSearchBar'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
 const ClearSearchLabel = styled.Text`
 
@@ -272,6 +283,10 @@ const ListContainer = (props: {
 
   const onSubmitEditing = (text: string) => text
 
+  const handleTagPress = (tag: string) => {
+    console.log(`${tag} tag clicked`)
+  }
+
   return (
     <>
       {/* <TopOfApp
@@ -284,6 +299,91 @@ const ListContainer = (props: {
         {/* <SegmentedPicker options={projectListOptions} /> */}
 
         <FreeSearchBar handleSubmit={onSubmitEditing} marginBottom="2" />
+      </VStack>
+      <VStack space={2} alignItems="center">
+        <HStack space={2} alignItems="center">
+          <Pressable
+            onPress={() => handleTagPress('Roles')}
+            borderRadius={40}
+            p={2}
+            display="flex"
+            flexDirection="row"
+            alignItems="center"
+            justifyContent="center"
+            backgroundColor="#F6E2EE"
+            borderColor="#D1338A"
+            borderWidth={1}
+          >
+            <Text color="#D1338A">Roles</Text>
+            <IconButton
+              icon={
+                <Icon
+                  as={MaterialIcons}
+                  name="keyboard-arrow-down"
+                  size={5}
+                  color="#D1338A"
+                />
+              }
+              variant="outline"
+              _icon={{ color: 'gray.500' }}
+              onPress={() => handleTagPress('Roles')} // Optional: Handle icon click separately if needed
+            />
+          </Pressable>
+          <Pressable
+            onPress={() => handleTagPress('Tech')}
+            borderRadius={40}
+            p={2}
+            display="flex"
+            flexDirection="row"
+            alignItems="center"
+            justifyContent="center"
+            backgroundColor="#F6E2EE"
+            borderColor="#D1338A"
+            borderWidth={1}
+          >
+            <Text color="#D1338A">Tech</Text>
+            <IconButton
+              icon={
+                <Icon
+                  as={MaterialIcons}
+                  name="keyboard-arrow-down"
+                  size={5}
+                  color="#D1338A"
+                />
+              }
+              variant="outline"
+              _icon={{ color: 'gray.500' }}
+              onPress={() => handleTagPress('Tech')} // Optional: Handle icon click separately if needed
+            />
+          </Pressable>
+          <Pressable
+            onPress={() => handleTagPress('Causes')}
+            borderRadius={40}
+            p={2}
+            display="flex"
+            flexDirection="row"
+            alignItems="center"
+            justifyContent="center"
+            backgroundColor="#F6E2EE"
+            borderColor="#D1338A"
+            borderWidth={1}
+          >
+            <Text color="#D1338A">Causes</Text>
+            <IconButton
+              icon={
+                <Icon
+                  as={MaterialIcons}
+                  name="keyboard-arrow-down"
+                  size={5}
+                  color="#D1338A"
+                />
+              }
+              variant="outline"
+              _icon={{ color: 'gray.500' }}
+              onPress={() => handleTagPress('Causes')} // Optional: Handle icon click separately if needed
+            />
+          </Pressable>
+        </HStack>
       </VStack>
       <ScrollView>
         <VStack
