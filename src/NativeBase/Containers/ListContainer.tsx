@@ -160,6 +160,20 @@ const ListContainer = (props: {
     (state: { projects: ProjectsState }) => state.projects?.projects,
   )
 
+  // State for toggling icons
+  const [iconState, setIconState] = useState<Record<string, boolean>>({
+    Roles: false,
+    Tech: false,
+    Causes: false,
+  })
+
+  const handleTagPress = (tag: string) => {
+    setIconState(prevState => ({
+      ...prevState,
+      [tag]: !prevState[tag], // Toggle the state
+    }))
+  }
+
   /*
    *
    * Shared logic
@@ -283,10 +297,6 @@ const ListContainer = (props: {
 
   const onSubmitEditing = (text: string) => text
 
-  const handleTagPress = (tag: string) => {
-    console.log(`${tag} tag clicked`)
-  }
-
   return (
     <>
       {/* <TopOfApp
@@ -319,14 +329,18 @@ const ListContainer = (props: {
               icon={
                 <Icon
                   as={MaterialIcons}
-                  name="keyboard-arrow-down"
+                  name={
+                    iconState.Roles
+                      ? 'keyboard-arrow-up'
+                      : 'keyboard-arrow-down'
+                  }
                   size={5}
                   color="#D1338A"
                 />
               }
               variant="outline"
               _icon={{ color: 'gray.500' }}
-              onPress={() => handleTagPress('Roles')} // Optional: Handle icon click separately if needed
+              onPress={() => handleTagPress('Roles')}
             />
           </Pressable>
           <Pressable
@@ -346,14 +360,16 @@ const ListContainer = (props: {
               icon={
                 <Icon
                   as={MaterialIcons}
-                  name="keyboard-arrow-down"
+                  name={
+                    iconState.Tech ? 'keyboard-arrow-up' : 'keyboard-arrow-down'
+                  }
                   size={5}
                   color="#D1338A"
                 />
               }
               variant="outline"
               _icon={{ color: 'gray.500' }}
-              onPress={() => handleTagPress('Tech')} // Optional: Handle icon click separately if needed
+              onPress={() => handleTagPress('Tech')}
             />
           </Pressable>
           <Pressable
@@ -373,14 +389,18 @@ const ListContainer = (props: {
               icon={
                 <Icon
                   as={MaterialIcons}
-                  name="keyboard-arrow-down"
+                  name={
+                    iconState.Causes
+                      ? 'keyboard-arrow-up'
+                      : 'keyboard-arrow-down'
+                  }
                   size={5}
                   color="#D1338A"
                 />
               }
               variant="outline"
               _icon={{ color: 'gray.500' }}
-              onPress={() => handleTagPress('Causes')} // Optional: Handle icon click separately if needed
+              onPress={() => handleTagPress('Causes')}
             />
           </Pressable>
         </HStack>
