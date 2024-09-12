@@ -305,7 +305,7 @@ const ListContainer = (props: {
         showSearchButton
         onSearchButtonPress={() => navigate(screens.search[params.type], '')}
       /> */}
-      <VStack space={2} alignItems="center">
+      <VStack space={2} alignItems="stretch">
         <VStack mt="4" px="4">
           <Heading size="xl">Roles</Heading>
           <HStack space="2" alignItems="center" width="100%">
@@ -339,21 +339,13 @@ const ListContainer = (props: {
           </HStack>
         </VStack>
 
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          paddingTop="0px"
-        >
-          <TagButtons iconState={iconState} handleTagPress={handleTagPress} />
-        </ScrollView>
-
+        <View>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            <TagButtons iconState={iconState} handleTagPress={handleTagPress} />
+          </ScrollView>
+        </View>
         <ScrollView>
-          <VStack
-            alignItems="center"
-            maxHeight={windowHeight - heightOfTopOfAppPlusBottomNav}
-            space={4}
-            padding={4}
-          >
+          <VStack alignItems="center" space={4}>
             {params?.type && listItemsToShow ? (
               <>
                 {/* Past / Upcoming / My Events choice */}
