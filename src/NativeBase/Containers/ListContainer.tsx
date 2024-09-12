@@ -57,6 +57,7 @@ import underDevelopmentAlert from '@/Utils/UnderDevelopmentAlert'
 import SkeletonLoading from '../Components/SkeletonLoading'
 import FreeSearchBar from '../Components/FreeSearchBar'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import TagButtons from '../Components/TagButtons'
 
 const ClearSearchLabel = styled.Text`
 
@@ -343,173 +344,76 @@ const ListContainer = (props: {
           showsHorizontalScrollIndicator={false}
           paddingTop="0px"
         >
-          <HStack space={2} alignItems="center">
-            <Pressable
-              onPress={() => handleTagPress('Roles')}
-              borderRadius={40}
-              pl={4}
-              pr={2}
-              py={2}
-              display="flex"
-              flexDirection="row"
-              alignItems="center"
-              justifyContent="center"
-              backgroundColor="#F6E2EE"
-              borderColor="#D1338A"
-              borderWidth={1}
-            >
-              <Text color="#D1338A">Roles</Text>
-              <IconButton
-                icon={
-                  <Icon
-                    as={MaterialIcons}
-                    name={
-                      iconState.Roles
-                        ? 'keyboard-arrow-up'
-                        : 'keyboard-arrow-down'
-                    }
-                    size={5}
-                    color="#D1338A"
-                  />
-                }
-                variant="outline"
-                _icon={{ color: 'gray.500' }}
-                onPress={() => handleTagPress('Roles')}
-              />
-            </Pressable>
-            <Pressable
-              onPress={() => handleTagPress('Tech')}
-              borderRadius={40}
-              pl={4}
-              pr={2}
-              py={2}
-              display="flex"
-              flexDirection="row"
-              alignItems="center"
-              justifyContent="center"
-              backgroundColor="#F6E2EE"
-              borderColor="#D1338A"
-              borderWidth={1}
-            >
-              <Text color="#D1338A">Tech</Text>
-              <IconButton
-                icon={
-                  <Icon
-                    as={MaterialIcons}
-                    name={
-                      iconState.Tech
-                        ? 'keyboard-arrow-up'
-                        : 'keyboard-arrow-down'
-                    }
-                    size={5}
-                    color="#D1338A"
-                  />
-                }
-                variant="outline"
-                _icon={{ color: 'gray.500' }}
-                onPress={() => handleTagPress('Tech')}
-              />
-            </Pressable>
-            <Pressable
-              onPress={() => handleTagPress('Causes')}
-              borderRadius={40}
-              pl={4}
-              pr={2}
-              py={2}
-              display="flex"
-              flexDirection="row"
-              alignItems="center"
-              justifyContent="center"
-              backgroundColor="#F6E2EE"
-              borderColor="#D1338A"
-              borderWidth={1}
-            >
-              <Text color="#D1338A">Causes</Text>
-              <IconButton
-                icon={
-                  <Icon
-                    as={MaterialIcons}
-                    name={
-                      iconState.Causes
-                        ? 'keyboard-arrow-up'
-                        : 'keyboard-arrow-down'
-                    }
-                    size={5}
-                    color="#D1338A"
-                  />
-                }
-                variant="outline"
-                _icon={{ color: 'gray.500' }}
-                onPress={() => handleTagPress('Causes')}
-              />
-            </Pressable>
-          </HStack>
+          <TagButtons iconState={iconState} handleTagPress={handleTagPress} />
         </ScrollView>
-      </VStack>
-      <ScrollView>
-        <VStack
-          alignItems="center"
-          maxHeight={windowHeight - heightOfTopOfAppPlusBottomNav}
-          space={4}
-          padding={4}
-        >
-          {params?.type && listItemsToShow ? (
-            <>
-              {/* Past / Upcoming / My Events choice */}
-              {params.type === ListType.Events && (
-                <EventOptions selected={eventsSelectedOption} />
-              )}
 
-              {/* Quick search for upcoming events (Today / This week / This month) */}
-              {params.type === ListType.Events &&
-                eventsShowUpcomingQuickSearch &&
-                eventsQuickSearchUpcomingChoice && (
+        <ScrollView>
+          <VStack
+            alignItems="center"
+            maxHeight={windowHeight - heightOfTopOfAppPlusBottomNav}
+            space={4}
+            padding={4}
+          >
+            {params?.type && listItemsToShow ? (
+              <>
+                {/* Past / Upcoming / My Events choice */}
+                {params.type === ListType.Events && (
+                  <EventOptions selected={eventsSelectedOption} />
+                )}
+
+                {/* Quick search for upcoming events (Today / This week / This month) */}
+                {params.type === ListType.Events &&
+                  eventsShowUpcomingQuickSearch &&
+                  eventsQuickSearchUpcomingChoice && (
+                    <SearchResultsView>
+                      <EventSearchUpcomingQuickSearch
+                        selectedButton={eventsQuickSearchUpcomingChoice}
+                      />
+                    </SearchResultsView>
+                  )}
+
+                {/* If the user has searched, show some text indicating what they searched for
+                and give them the option to clear the search */}
+                {params?.search && (
                   <SearchResultsView>
-                    <EventSearchUpcomingQuickSearch
-                      selectedButton={eventsQuickSearchUpcomingChoice}
-                    />
+                    {params?.search?.description && (
+                      <SearchResultsLabel>
+                        Results for {params.search.description}
+                      </SearchResultsLabel>
+                    )}
+                    <ClearSearchLabel onPress={clearSearch}>
+                      Clear search
+                    </ClearSearchLabel>
                   </SearchResultsView>
                 )}
 
-              {/* If the user has searched, show some text indicating what they searched for
-                and give them the option to clear the search */}
-              {params?.search && (
-                <SearchResultsView>
-                  {params?.search?.description && (
-                    <SearchResultsLabel>
-                      Results for {params.search.description}
-                    </SearchResultsLabel>
-                  )}
-                  <ClearSearchLabel onPress={clearSearch}>
-                    Clear search
-                  </ClearSearchLabel>
-                </SearchResultsView>
-              )}
+                {/* Projects filter & sort options */}
+                {params.type === ListType.Projects &&
+                  Boolean(params?.search) &&
+                  Boolean(listItemsToShow.length) && <ProjectFilterSort />}
 
-              {/* Projects filter & sort options */}
-              {params.type === ListType.Projects &&
-                Boolean(params?.search) &&
-                Boolean(listItemsToShow.length) && <ProjectFilterSort />}
-
-              <List
-                data={listItemsToShow}
-                mode={
-                  params?.search ? ListDisplayMode.Search : ListDisplayMode.Full
-                }
-                options={params?.options}
-                searchScreen={screens.search[params.type]}
-                type={params.type}
-              />
-            </>
-          ) : (
-            <>
-              <SkeletonLoading />
-              <SkeletonLoading />
-              <SkeletonLoading />
-            </>
-          )}
-        </VStack>
-      </ScrollView>
+                <List
+                  data={listItemsToShow}
+                  mode={
+                    params?.search
+                      ? ListDisplayMode.Search
+                      : ListDisplayMode.Full
+                  }
+                  options={params?.options}
+                  searchScreen={screens.search[params.type]}
+                  type={params.type}
+                />
+              </>
+            ) : (
+              <>
+                <SkeletonLoading />
+                <SkeletonLoading />
+                <SkeletonLoading />
+              </>
+            )}
+          </VStack>
+        </ScrollView>
+      </VStack>
     </>
   )
 }
