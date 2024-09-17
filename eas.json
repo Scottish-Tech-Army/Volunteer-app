@@ -1,23 +1,21 @@
 {
   "cli": {
-    "appVersionSource": "remote",
-    "version": ">= 3.13.3"
+    "version": ">= 5.9.3",
+    "appVersionSource": "remote"
   },
   "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal"
+    },
+    "preview": {
+      "distribution": "internal"
+    },
     "production": {
-      "distribution": "store",
       "autoIncrement": true
     }
   },
   "submit": {
-    "production": {
-      "android": {
-        "track": "internal"
-      },
-      "ios": {
-        "ascAppId": "1632619020",
-        "appleTeamId": "48N3J4V5KM"
-      }
-    }
+    "production": {}
   }
 }
