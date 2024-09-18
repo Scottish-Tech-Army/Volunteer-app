@@ -1,66 +1,46 @@
-/**
- * @file Projects search screen container.
- */
-
 import React, { useState } from 'react'
-import Fuse from 'fuse.js' // fuzzy text search - see docs at https://fusejs.io
 import { ScrollView, VStack } from 'native-base'
 import { useSelector } from 'react-redux'
-import { ListRouteParams, ListSearch, ListType } from './ListContainer'
 import ChoicesList, {
   ChoicesListChoice,
   ChoicesListColour,
   ChoicesListFontStyle,
 } from '../Components/ChoicesList'
 import FreeSearchBar from '../Components/FreeSearchBar'
-import SegmentedPicker, {
-  SegmentedPickerOption,
-} from '../Components/SegmentedPicker'
+import TagButtons from '../Components/TagButtons' // Import your TagButtons component
 import { navigate, RootStackParamList } from '@/Navigators/utils'
 import {
-  Projects,
   ProjectsSearchField,
   ProjectSector,
   ProjectTechnology,
+  Projects,
 } from '@/Services/modules/projects'
-import {
-  roleGroups,
-  RoleGroupName,
-} from '@/Services/modules/projects/roleGroups'
 import { ProjectsState } from '@/Store/Projects'
 import { searchByArray, fuzzySearchByArray } from '@/Utils/Search'
+import {
+  RoleGroupName,
+  roleGroups,
+} from '@/Services/modules/projects/roleGroups'
+import Fuse from 'fuse.js'
+import { ListSearch, ListType, ListRouteParams } from './ListContainer'
 
-enum Tab {
-  Roles = 'Roles',
-  Tech = 'Tech',
-  Causes = 'Causes',
-}
+// Use string literals instead of enum for Tab
+type Tab = 'Roles' | 'Tech' | 'Causes'
 
 export interface ProjectSearch extends ListSearch {
   results: Projects // the projects results for this search
 }
 
-/**
- * Container for the user to search projects e.g. by free text, category, skills
- *
- * @returns {React.ReactElement} Component
- */
 const ProjectSearchContainer = () => {
+  // Fetch all projects from the store
   const allProjects = useSelector(
     (state: { projects: ProjectsState }) => state.projects.projects,
   )
-  const [selectedTab, setSelectedTab] = useState<Tab>(Tab.Roles)
-  const tabs = Object.values(Tab).map(
-    tab =>
-      ({
-        text: tab,
-        onPress: () => setSelectedTab(tab),
-        isSelected: tab === selectedTab,
-      } as SegmentedPickerOption),
-  )
+
+  // State to track the currently active tag
+  const [activeTag, setActiveTag] = useState<Tab | null>(null)
 
   // Define which quick search options to use
-
   const quickSearchRoleGroupNames: RoleGroupName[] = [
     RoleGroupName.WebDeveloper,
     RoleGroupName.TechSupport,
@@ -69,16 +49,19 @@ const ProjectSearchContainer = () => {
     RoleGroupName.BAPM,
     RoleGroupName.ScrumMaster,
   ]
-  const quickSearchRoleChoices = quickSearchRoleGroupNames.map(
-    roleGroupName =>
-      ({
-        text: roleGroupName,
-        onPress: () =>
-          handleQuickSearchSubmit(ProjectsSearchField.Role, roleGroupName),
-      } as ChoicesListChoice),
-  )
+  const quickSearchRoleChoices: ChoicesListChoice[] =
+    quickSearchRoleGroupNames.map(
+      roleGroupName =>
+        ({
+          text: roleGroupName,
+          onPress: () =>
+            handleQuickSearchSubmit(ProjectsSearchField.Role, roleGroupName),
+        } as ChoicesListChoice),
+    )
 
-  const quickSearchTechnologies = Object.values(ProjectTechnology).map(
+  const quickSearchTechnologies: ChoicesListChoice[] = Object.values(
+    ProjectTechnology,
+  ).map(
     technology =>
       ({
         text: technology,
@@ -87,7 +70,9 @@ const ProjectSearchContainer = () => {
       } as ChoicesListChoice),
   )
 
-  const quickSearchCauses = Object.values(ProjectSector).map(
+  const quickSearchCauses: ChoicesListChoice[] = Object.values(
+    ProjectSector,
+  ).map(
     cause =>
       ({
         text: cause,
@@ -210,14 +195,37 @@ const ProjectSearchContainer = () => {
     )
   }
 
+  /**
+   * Handle tag press logic
+   * If the tag is already open, close it by setting activeTag to null.
+   * If a different tag is clicked, close the previous one and open the new one.
+   */
+  const handleTagPress = (tag: Tab) => {
+    if (activeTag === tag) {
+      setActiveTag(null) // Close the currently active tag
+    } else {
+      setActiveTag(tag) // Open the selected tag and close others
+    }
+  }
+
   return (
     <ScrollView>
-      <FreeSearchBar handleSubmit={handleFreeTextSubmit} marginBottom="10" />
+      {/* Free Search Bar for entering free text queries */}
+      {/* <FreeSearchBar handleSubmit={handleFreeTextSubmit} marginBottom="10" /> */}
 
-      <SegmentedPicker marginBottom="7" options={tabs} />
+      {/* Tag Buttons for Roles, Tech, and Causes */}
+      <TagButtons
+        iconState={{
+          Roles: activeTag === 'Roles',
+          Tech: activeTag === 'Tech',
+          Causes: activeTag === 'Causes',
+        }}
+        handleTagPress={handleTagPress}
+      />
 
       <VStack padding="2">
-        {selectedTab === Tab.Roles && (
+        {/* Show the list of role choices if Roles tab is active */}
+        {activeTag === 'Roles' && (
           <ChoicesList
             choices={quickSearchRoleChoices}
             colour={quickSearchListColour}
@@ -225,7 +233,8 @@ const ProjectSearchContainer = () => {
           />
         )}
 
-        {selectedTab === Tab.Tech && (
+        {/* Show the list of technology choices if Tech tab is active */}
+        {activeTag === 'Tech' && (
           <ChoicesList
             choices={quickSearchTechnologies}
             colour={quickSearchListColour}
@@ -233,7 +242,8 @@ const ProjectSearchContainer = () => {
           />
         )}
 
-        {selectedTab === Tab.Causes && (
+        {/* Show the list of causes if Causes tab is active */}
+        {activeTag === 'Causes' && (
           <ChoicesList
             choices={quickSearchCauses}
             colour={quickSearchListColour}

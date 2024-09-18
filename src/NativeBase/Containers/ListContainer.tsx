@@ -58,6 +58,8 @@ import SkeletonLoading from '../Components/SkeletonLoading'
 import FreeSearchBar from '../Components/FreeSearchBar'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import TagButtons from '../Components/TagButtons'
+import ProjectSearchContainer from './ProjectSearchContainer'
+import MyExperienceContainer from './MyExperienceContainer'
 
 const ClearSearchLabel = styled.Text`
 
@@ -161,6 +163,7 @@ const ListContainer = (props: {
   const allProjects = useSelector(
     (state: { projects: ProjectsState }) => state.projects?.projects,
   )
+  const [searchText, setSearchText] = useState('')
 
   // State for toggling icons
   const [iconState, setIconState] = useState<Record<string, boolean>>({
@@ -262,7 +265,9 @@ const ListContainer = (props: {
       } as ListRouteParams)
     }
   }
-
+  const handleSearchSubmit = (text: string) => {
+    setSearchText(text)
+  }
   /*
    *
    * Events-specific logic
@@ -305,14 +310,20 @@ const ListContainer = (props: {
         showSearchButton
         onSearchButtonPress={() => navigate(screens.search[params.type], '')}
       /> */}
+      {/* TODO: reinstate when functionality is ready */}
+      {/* <SegmentedPicker options={projectListOptions} /> */}
+
       <VStack space={2} alignItems="stretch">
         <VStack mt="4" px="4">
           <Heading size="xl">Roles</Heading>
-          <HStack space="2" alignItems="center" width="100%">
-            {/* TODO: reinstate when functionality is ready */}
-            {/* <SegmentedPicker options={projectListOptions} /> */}
+          <MyExperienceContainer />
+
+          {/* <HStack space="2" alignItems="center" width="100%">
             <View flex={1}>
-              <FreeSearchBar handleSubmit={onSubmitEditing} marginBottom="2" />
+              <FreeSearchBar
+                handleSubmit={handleSearchSubmit}
+                marginBottom="2"
+              />
             </View>
             <View
               marginBottom="2"
@@ -336,12 +347,16 @@ const ListContainer = (props: {
                 }
               />
             </View>
-          </HStack>
+          </HStack> */}
         </VStack>
 
         <View>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            <TagButtons iconState={iconState} handleTagPress={handleTagPress} />
+            {/* <TagButtons iconState={iconState} handleTagPress={handleTagPress} /> */}
+            <ProjectSearchContainer />
+            <ProjectSearchContainer />
+            <ProjectSearchContainer />
+            <ProjectSearchContainer />
           </ScrollView>
         </View>
         <ScrollView>

@@ -10,6 +10,8 @@ import {
   View,
   Text,
   Button,
+  IconButton,
+  Icon,
 } from 'native-base'
 import ProfileButtons from '../Components/ProfileButtons'
 import ProgressBar from '../Components/ProgressBar'
@@ -22,6 +24,7 @@ import {
   getProgressBarColors,
   nextScreen,
 } from '../../Utils/ProgressBarColours'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
 const MyExperienceContainer = () => {
   const [skillsValue, setSkillsValue] = React.useState<string[]>([]) // skills selected by the user
@@ -47,23 +50,53 @@ const MyExperienceContainer = () => {
 
   return (
     <>
-      <HStack mt={-10} mb={5} alignItems={'flex-end'}>
+      {/* <HStack mt={-10} mb={5} alignItems={'flex-end'}>
         <Heading size="md" fontFamily="title" adjustsFontSizeToFit>
           My Experience
         </Heading>
         <Flex flex={1} mt={-5} alignItems={'flex-end'}>
           <StaThemeLogo />
         </Flex>
-      </HStack>
+      </HStack> */}
       {/* <ProgressBar colours={progressBarColourObject} /> */}
-      <View margin={4}>
-        <FreeSearchBar
-          marginTop="2"
-          marginBottom="-2"
-          handleSubmit={() => null}
-          handleChangeText={(text: string) => setSearchTxt(text)}
-        />
-      </View>
+      {/* <View margin={4}> */}
+
+      <HStack space="2" alignItems="center" width="100%">
+        <View flex={1}>
+          <FreeSearchBar
+            // marginTop="2"
+            // marginBottom="-2"
+            marginBottom="2"
+            handleSubmit={() => null}
+            handleChangeText={(text: string) => setSearchTxt(text)}
+          />
+        </View>
+
+        <View
+          marginBottom="2"
+          height="48px"
+          width="48px"
+          bg="#F0F0F0"
+          borderRadius="10px"
+          padding="2"
+          mx="10px"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <IconButton
+            icon={
+              <Icon
+                as={MaterialIcons}
+                name="tune"
+                size="24px"
+                color="gray.500"
+              />
+            }
+          />
+        </View>
+      </HStack>
+
+      {/* </View> */}
       <ScrollView>
         <VStack mt={-2} margin={5}>
           {filteredSkills.map((roleGroup: RoleGroup, index: number) => (
@@ -108,7 +141,7 @@ const MyExperienceContainer = () => {
             </View>
           ))}
         </VStack>
-        <VStack marginX={5}>
+        {/* <VStack marginX={5}>
           <ProfileButtons
             borderWidth={2}
             backgroundColor="bg.100"
@@ -142,7 +175,7 @@ const MyExperienceContainer = () => {
               Skip
             </Button>
           )}
-        </VStack>
+        </VStack> */}
       </ScrollView>
     </>
   )

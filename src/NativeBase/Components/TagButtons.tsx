@@ -3,8 +3,8 @@ import { HStack, Icon, IconButton, Pressable, Text } from 'native-base'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
 interface TagButtonsProps {
-  iconState: Record<string, boolean>
-  handleTagPress: (tag: string) => void
+  iconState: Record<'Roles' | 'Tech' | 'Causes', boolean> // Updated to specific keys
+  handleTagPress: (tag: 'Roles' | 'Tech' | 'Causes') => void // Updated to specific union type
 }
 
 const TagButtons: React.FC<TagButtonsProps> = ({
@@ -23,11 +23,11 @@ const TagButtons: React.FC<TagButtonsProps> = ({
         flexDirection="row"
         alignItems="center"
         justifyContent="center"
-        backgroundColor="#F6E2EE"
-        borderColor="#D1338A"
+        backgroundColor={iconState.Roles ? '#F6E2EE' : 'gray.100'}
+        borderColor={iconState.Roles ? '#D1338A' : 'transparent'}
         borderWidth={1}
       >
-        <Text color="#D1338A">Roles</Text>
+        <Text color={iconState.Roles ? '#D1338A' : 'gray.500'}>Roles</Text>
         <IconButton
           icon={
             <Icon
@@ -36,7 +36,7 @@ const TagButtons: React.FC<TagButtonsProps> = ({
                 iconState.Roles ? 'keyboard-arrow-up' : 'keyboard-arrow-down'
               }
               size={5}
-              color="#D1338A"
+              color={iconState.Roles ? '#D1338A' : 'gray.500'}
             />
           }
           variant="outline"
@@ -54,11 +54,11 @@ const TagButtons: React.FC<TagButtonsProps> = ({
         flexDirection="row"
         alignItems="center"
         justifyContent="center"
-        backgroundColor="#F6E2EE"
-        borderColor="#D1338A"
+        backgroundColor={iconState.Tech ? '#F6E2EE' : 'gray.100'}
+        borderColor={iconState.Tech ? '#D1338A' : 'transparent'}
         borderWidth={1}
       >
-        <Text color="#D1338A">Tech</Text>
+        <Text color={iconState.Tech ? '#D1338A' : 'gray.500'}>Tech</Text>
         <IconButton
           icon={
             <Icon
@@ -67,7 +67,7 @@ const TagButtons: React.FC<TagButtonsProps> = ({
                 iconState.Tech ? 'keyboard-arrow-up' : 'keyboard-arrow-down'
               }
               size={5}
-              color="#D1338A"
+              color={iconState.Tech ? '#D1338A' : 'gray.500'}
             />
           }
           variant="outline"
@@ -85,11 +85,11 @@ const TagButtons: React.FC<TagButtonsProps> = ({
         flexDirection="row"
         alignItems="center"
         justifyContent="center"
-        backgroundColor="#F6E2EE"
-        borderColor="#D1338A"
+        backgroundColor={iconState.Causes ? '#F6E2EE' : 'gray.100'}
+        borderColor={iconState.Causes ? '#D1338A' : 'transparent'}
         borderWidth={1}
       >
-        <Text color="#D1338A">Causes</Text>
+        <Text color={iconState.Causes ? '#D1338A' : 'gray.500'}>Causes</Text>
         <IconButton
           icon={
             <Icon
@@ -98,7 +98,7 @@ const TagButtons: React.FC<TagButtonsProps> = ({
                 iconState.Causes ? 'keyboard-arrow-up' : 'keyboard-arrow-down'
               }
               size={5}
-              color="#D1338A"
+              color={iconState.Causes ? '#D1338A' : 'gray.500'}
             />
           }
           variant="outline"
