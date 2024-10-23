@@ -316,9 +316,9 @@ const ListContainer = (props: {
       <VStack space={2} alignItems="stretch">
         <VStack mt="4" px="4">
           <Heading size="xl">Roles</Heading>
-          <MyExperienceContainer />
+          {/* <MyExperienceContainer /> */}
 
-          {/* <HStack space="2" alignItems="center" width="100%">
+          <HStack space="2" alignItems="center" width="100%">
             <View flex={1}>
               <FreeSearchBar
                 handleSubmit={handleSearchSubmit}
@@ -347,7 +347,7 @@ const ListContainer = (props: {
                 }
               />
             </View>
-          </HStack> */}
+          </HStack>
         </VStack>
 
         <View>

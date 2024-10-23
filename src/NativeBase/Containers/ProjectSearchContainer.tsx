@@ -7,7 +7,7 @@ import ChoicesList, {
   ChoicesListFontStyle,
 } from '../Components/ChoicesList'
 import FreeSearchBar from '../Components/FreeSearchBar'
-import TagButtons from '../Components/TagButtons' // Import your TagButtons component
+import TagButtons from '../Components/TagButtons'
 import { navigate, RootStackParamList } from '@/Navigators/utils'
 import {
   ProjectsSearchField,
@@ -24,9 +24,6 @@ import {
 import Fuse from 'fuse.js'
 import { ListSearch, ListType, ListRouteParams } from './ListContainer'
 
-// Use string literals instead of enum for Tab
-type Tab = 'Roles' | 'Tech' | 'Causes'
-
 export interface ProjectSearch extends ListSearch {
   results: Projects // the projects results for this search
 }
@@ -37,8 +34,8 @@ const ProjectSearchContainer = () => {
     (state: { projects: ProjectsState }) => state.projects.projects,
   )
 
-  // State to track the currently active tag
-  const [activeTag, setActiveTag] = useState<Tab | null>(null)
+  // State to track the currently active tag (using simple strings)
+  const [activeTag, setActiveTag] = useState<string | null>(null)
 
   // Define which quick search options to use
   const quickSearchRoleGroupNames: RoleGroupName[] = [
@@ -170,8 +167,6 @@ const ProjectSearchContainer = () => {
       allProjects,
       [
         { name: 'client', weight: 1 },
-        // We reduce the 'weight' (aka importance) put on the description field as it's more likely to return
-        //  false positive matches because there's lots of general text in that field
         { name: 'description', weight: 0.5 },
         { name: 'name', weight: 1 },
         { name: 'role', weight: 1 },
@@ -200,12 +195,8 @@ const ProjectSearchContainer = () => {
    * If the tag is already open, close it by setting activeTag to null.
    * If a different tag is clicked, close the previous one and open the new one.
    */
-  const handleTagPress = (tag: Tab) => {
-    if (activeTag === tag) {
-      setActiveTag(null) // Close the currently active tag
-    } else {
-      setActiveTag(tag) // Open the selected tag and close others
-    }
+  const handleTagPress = (tag: string) => {
+    setActiveTag(activeTag === tag ? null : tag)
   }
 
   return (
@@ -215,14 +206,14 @@ const ProjectSearchContainer = () => {
 
       {/* Tag Buttons for Roles, Tech, and Causes */}
       <TagButtons
+        tags={['Roles', 'Tech', 'Causes']} // String tags
         iconState={{
           Roles: activeTag === 'Roles',
           Tech: activeTag === 'Tech',
           Causes: activeTag === 'Causes',
         }}
-        handleTagPress={handleTagPress}
+        handleTagPress={handleTagPress} // String type handler
       />
-
       <VStack padding="2">
         {/* Show the list of role choices if Roles tab is active */}
         {activeTag === 'Roles' && (
@@ -242,7 +233,7 @@ const ProjectSearchContainer = () => {
           />
         )}
 
-        {/* Show the list of causes if Causes tab is active */}
+        {/* Show the list of causes if Causes tag is active */}
         {activeTag === 'Causes' && (
           <ChoicesList
             choices={quickSearchCauses}
