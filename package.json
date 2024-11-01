@@ -2,16 +2,17 @@
   "name": "STA Volunteer app",
   "version": "1.0.16",
   "private": true,
-  "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "start": "expo start --tunnel",
+    "start": "expo start --dev-client",
     "start-clear-cache": "expo start --tunnel --clear",
     "test": "jest",
     "lint": "eslint .",
     "lint-ci": "eslint . -c .eslintrc.ci.js --ext .js,.jsx,.ts,.tsx",
     "type-check": "tsc",
     "prepare": "husky install .husky",
-    "lint-app": "lint-staged --quiet"
+    "lint-app": "lint-staged --quiet",
+    "android": "expo run:android",
+    "ios": "expo run:ios"
   },
   "dependencies": {
     "@bugsnag/expo": "^48.0.0",
@@ -25,7 +26,7 @@
     "@reduxjs/toolkit": "^1.9.5",
     "dayjs": "^1.11.7",
     "dotenv": "^16.1.4",
-    "expo": "~48.0.15",
+    "expo": "~48.0.21",
     "expo-application": "~5.1.1",
     "expo-checkbox": "~2.3.1",
     "expo-constants": "~14.2.1",
@@ -42,7 +43,7 @@
     "moment": "^2.29.4",
     "native-base": "^3.4.28",
     "react": "18.2.0",
-    "react-native": "0.71.8",
+    "react-native": "0.71.14",
     "react-native-calendar-events": "^2.2.0",
     "react-native-calendar-picker": "^7.1.4",
     "react-native-date-picker": "^4.2.13",

@@ -16,9 +16,11 @@ export default (
 ) =>
   build.query<Projects, string>({
     query: () => ({
-      url: `${Constants.expoConfig?.extra?.api?.baseUrl ?? ''}/${
-        Constants.expoConfig?.extra?.api?.version ?? ''
-      }/projects`,
+      url: `${Constants.expoConfig?.extra?.api?.dynanmoUrl}`,
+      // removed appending path - this was for AirTable
+      //   ${
+      //     Constants.expoConfig?.extra?.api?.version ?? ''
+      //   }/projects`,
       method: 'GET',
       headers: {
         'x-api-key': `${Constants.expoConfig?.extra?.api?.apiKey ?? ''}`,

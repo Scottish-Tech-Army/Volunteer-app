@@ -56,6 +56,7 @@ module.exports = {
       features: enabledFeatures,
       api: {
         baseUrl: process.env.STA_API_BASE_URL ?? 'https://the-sta.com',
+        dynanmoUrl: process.env.STA_DYNAMO_API_URL,
         version: process.env.STA_API_VERSION ?? 'v1',
         apiKey: process.env.STA_API_KEY ?? '',
       },

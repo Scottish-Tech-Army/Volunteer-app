@@ -10,7 +10,7 @@ jobs:
     name: Release
     runs-on: ubuntu-latest
     env:
-      STA_API_BASE_URL: https://the-sta.com
+    STA_API_BASE_URL: https://the-sta.com
       STA_API_VERSION: v1
       FEATURES_ENABLED: ""
     steps:

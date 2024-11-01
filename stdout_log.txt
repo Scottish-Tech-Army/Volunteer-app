@@ -1,0 +1,4 @@
+Starting project at /Users/dvdjms/Projects/STA/New Volunteer App/Volunteer-app
+Starting Metro Bundler
+Waiting on http://localhost:19000
+Logs for your project will appear below.
