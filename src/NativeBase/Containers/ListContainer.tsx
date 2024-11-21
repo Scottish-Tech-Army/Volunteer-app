@@ -60,6 +60,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import TagButtons from '../Components/TagButtons'
 import ProjectSearchContainer from './ProjectSearchContainer'
 import MyExperienceContainer from './MyExperienceContainer'
+import { RoleGroup, roleGroups } from '@/Services/modules/projects/roleGroups'
 
 const ClearSearchLabel = styled.Text`
 
@@ -120,6 +121,7 @@ const ListContainer = (props: {
   // Shared
   const dispatch = useDispatch()
   const [listItemsToShow, setListItemsToShow] = useState<Events | Projects>()
+  const [roleSearchText, setRoleSearchText] = useState('')
   const params = props.route.params
   const screens = {
     list: {
@@ -137,6 +139,15 @@ const ListContainer = (props: {
         onPress: option === 'all' ? () => undefined : underDevelopmentAlert,
       } as SegmentedPickerOption),
   )
+  // Filter roles based on the search text
+  const filteredRoles = roleGroups.filter((roleGroup: RoleGroup) =>
+    roleGroup.groupName.toLowerCase().includes(roleSearchText.toLowerCase()),
+  )
+
+  // Handle role search submit
+  const handleRoleSearchChange = (text: string) => {
+    setRoleSearchText(text)
+  }
 
   // Events-specific
   const [fetchAllUpcomingEvents, { data: allUpcomingEventsResult }] =
@@ -265,9 +276,7 @@ const ListContainer = (props: {
       } as ListRouteParams)
     }
   }
-  const handleSearchSubmit = (text: string) => {
-    setSearchText(text)
-  }
+
   /*
    *
    * Events-specific logic
@@ -302,7 +311,7 @@ const ListContainer = (props: {
     }
   }, [params?.options?.events, params?.search, params?.type])
 
-  const onSubmitEditing = (text: string) => text
+  // const onSubmitEditing = (text: string) => text
 
   return (
     <>
@@ -315,13 +324,14 @@ const ListContainer = (props: {
 
       <VStack space={2} alignItems="stretch">
         <VStack mt="4" px="4">
-          <Heading size="xl">Roles</Heading>
-          {/* <MyExperienceContainer /> */}
-
+          <Heading size="xl" marginBottom="15px">
+            Roles
+          </Heading>
           <HStack space="2" alignItems="center" width="100%">
             <View flex={1}>
               <FreeSearchBar
-                handleSubmit={handleSearchSubmit}
+                handleSubmit={handleRoleSearchChange}
+                handleChangeText={handleRoleSearchChange}
                 marginBottom="2"
               />
             </View>
@@ -348,17 +358,31 @@ const ListContainer = (props: {
               />
             </View>
           </HStack>
+
+          {/* Display filtered roles based on the search */}
+          <SearchResultsView>
+            {roleSearchText && filteredRoles.length > 0 && (
+              <>
+                <SearchResultsLabel>
+                  Roles matching "{roleSearchText}"
+                </SearchResultsLabel>
+                {filteredRoles.map((roleGroup, index) => (
+                  <Text key={index} marginY="0.5">
+                    {roleGroup.groupName}
+                  </Text>
+                ))}
+              </>
+            )}
+          </SearchResultsView>
         </VStack>
 
-        <View>
+        <VStack>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {/* <TagButtons iconState={iconState} handleTagPress={handleTagPress} /> */}
-            <ProjectSearchContainer />
             <ProjectSearchContainer />
             <ProjectSearchContainer />
             <ProjectSearchContainer />
           </ScrollView>
-        </View>
+        </VStack>
         <ScrollView>
           <VStack alignItems="center" space={4}>
             {params?.type && listItemsToShow ? (
@@ -413,6 +437,8 @@ const ListContainer = (props: {
               </>
             ) : (
               <>
+                <SkeletonLoading />
+                <SkeletonLoading />
                 <SkeletonLoading />
                 <SkeletonLoading />
                 <SkeletonLoading />

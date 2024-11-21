@@ -200,7 +200,7 @@ const ProjectSearchContainer = () => {
   }
 
   return (
-    <ScrollView>
+    <VStack>
       {/* Free Search Bar for entering free text queries */}
       {/* <FreeSearchBar handleSubmit={handleFreeTextSubmit} marginBottom="10" /> */}
 
@@ -242,7 +242,7 @@ const ProjectSearchContainer = () => {
           />
         )}
       </VStack>
-    </ScrollView>
+    </VStack>
   )
 }
 
