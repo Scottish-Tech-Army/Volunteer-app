@@ -390,8 +390,6 @@ const ListContainer = (props: {
         <VStack>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             <ProjectSearchContainer />
-            <ProjectSearchContainer />
-            <ProjectSearchContainer />
           </ScrollView>
         </VStack>
         <ScrollView>
