@@ -10,6 +10,7 @@ import SearchIconHighlighted from './SearchIconHighlighted'
 export interface FreeSearchBarProps {
   handleChangeText?: (updatedText: string) => void
   handleSubmit: (submitText: string) => void
+  handleClearSearch?: () => void
   marginBottom?: string
   marginTop?: string
 }
@@ -27,6 +28,7 @@ export interface FreeSearchBarProps {
 const FreeSearchBar: FC<FreeSearchBarProps> = ({
   handleChangeText,
   handleSubmit,
+  handleClearSearch,
   marginBottom,
   marginTop,
 }) => {
@@ -40,7 +42,10 @@ const FreeSearchBar: FC<FreeSearchBarProps> = ({
 
   const onSubmitEditing = () => handleSubmit(text)
 
-  const clearText = () => setText('')
+  const clearText = () => {
+    setText('')
+    if (handleClearSearch) handleClearSearch() // Call the clear function passed as prop
+  }
 
   return (
     <Box alignItems="center">

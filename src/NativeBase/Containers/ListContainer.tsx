@@ -122,6 +122,7 @@ const ListContainer = (props: {
   const dispatch = useDispatch()
   const [listItemsToShow, setListItemsToShow] = useState<Events | Projects>()
   const [roleSearchText, setRoleSearchText] = useState('')
+  const [filteredRoles, setFilteredRoles] = useState<RoleGroup[]>(roleGroups)
   const params = props.route.params
   const screens = {
     list: {
@@ -139,14 +140,20 @@ const ListContainer = (props: {
         onPress: option === 'all' ? () => undefined : underDevelopmentAlert,
       } as SegmentedPickerOption),
   )
-  // Filter roles based on the search text
-  const filteredRoles = roleGroups.filter((roleGroup: RoleGroup) =>
-    roleGroup.groupName.toLowerCase().includes(roleSearchText.toLowerCase()),
-  )
-
-  // Handle role search submit
+  // Handle role search text change
   const handleRoleSearchChange = (text: string) => {
     setRoleSearchText(text)
+    // Filter roles based on search text
+    const filtered = roleGroups.filter(roleGroup =>
+      roleGroup.groupName.toLowerCase().includes(text.toLowerCase()),
+    )
+    setFilteredRoles(filtered)
+  }
+
+  // Clear role search text and reset filtered roles
+  const handleClearSearch = () => {
+    setRoleSearchText('') // Clear search text
+    setFilteredRoles(roleGroups) // Reset the filtered roles to the full list
   }
 
   // Events-specific
@@ -174,7 +181,7 @@ const ListContainer = (props: {
   const allProjects = useSelector(
     (state: { projects: ProjectsState }) => state.projects?.projects,
   )
-  const [searchText, setSearchText] = useState('')
+  // const [searchText, setSearchText] = useState('')
 
   // State for toggling icons
   const [iconState, setIconState] = useState<Record<string, boolean>>({
@@ -332,6 +339,7 @@ const ListContainer = (props: {
               <FreeSearchBar
                 handleSubmit={handleRoleSearchChange}
                 handleChangeText={handleRoleSearchChange}
+                handleClearSearch={handleClearSearch}
                 marginBottom="2"
               />
             </View>
@@ -372,6 +380,9 @@ const ListContainer = (props: {
                   </Text>
                 ))}
               </>
+            )}
+            {roleSearchText && filteredRoles.length === 0 && (
+              <Text>No roles found</Text>
             )}
           </SearchResultsView>
         </VStack>
