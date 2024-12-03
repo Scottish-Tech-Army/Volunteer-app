@@ -13,10 +13,8 @@ import {
   Icon,
   IconButton,
   ScrollView,
-  Tag,
   VStack,
   Text,
-  Pressable,
   View,
 } from 'native-base'
 import React, { useEffect, useState } from 'react'
@@ -34,13 +32,9 @@ import List, {
   ListOptions,
 } from '@/NativeBase/Components/List'
 import ProjectFilterSort from '@/Components/Project/ProjectFilterSort'
-import TopOfApp from '@/NativeBase/Components/TopOfApp'
 import { navigate, RootStackParamList } from '@/Navigators/utils'
-import { heightOfTopOfAppPlusBottomNav } from '@/Utils/Layout'
 import { capitaliseFirstLetter } from '@/Utils/Text'
-
 import { SegmentedPickerOption } from '../Components/SegmentedPicker'
-
 import {
   Events,
   EventsRange,
@@ -57,9 +51,7 @@ import underDevelopmentAlert from '@/Utils/UnderDevelopmentAlert'
 import SkeletonLoading from '../Components/SkeletonLoading'
 import FreeSearchBar from '../Components/FreeSearchBar'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import TagButtons from '../Components/TagButtons'
 import ProjectSearchContainer from './ProjectSearchContainer'
-import MyExperienceContainer from './MyExperienceContainer'
 import { RoleGroup, roleGroups } from '@/Services/modules/projects/roleGroups'
 
 const ClearSearchLabel = styled.Text`

@@ -7,7 +7,7 @@ import {
   BottomTabNavigationOptions,
 } from '@react-navigation/bottom-tabs'
 import { useRoute } from '@react-navigation/native'
-import { ListContainer, ProjectSearchContainer } from '@/NativeBase/Containers'
+import { ListContainer } from '@/NativeBase/Containers'
 import { ListType } from '@/NativeBase/Containers/ListContainer'
 import { SettingsContainer } from '@/NativeBase/Containers'
 import SelectionIcons from '@/NativeBase/Assets/Icons/Icomoon/SelectionIcons'
@@ -17,7 +17,6 @@ import { Platform } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import MyProfile from '@/NativeBase/Containers/ProfileContainer'
 import { useFeatureFlags } from '@/Services/featureFlags'
-import MyExperienceContainer from '@/NativeBase/Containers/MyExperienceContainer'
 
 const Tab = createBottomTabNavigator()
 
