@@ -7,34 +7,19 @@
 
 /* eslint-disable @typescript-eslint/no-shadow */
 
-import {
-  Heading,
-  HStack,
-  Icon,
-  IconButton,
-  ScrollView,
-  VStack,
-  Text,
-  View,
-} from 'native-base'
-import React, { useEffect, useState } from 'react'
-import { Dimensions } from 'react-native'
-import { useDispatch, useSelector } from 'react-redux'
-import styled from 'styled-components/native'
-import { EventSearch } from '@/Containers/EventSearchContainer'
-import { ProjectSearch } from './ProjectSearchContainer'
 import EventOptions from '@/Components/Event/EventOptions'
 import EventSearchUpcomingQuickSearch, {
   EventQuickSearchUpcomingChoice,
 } from '@/Components/Event/EventSearchQuickSearchUpcoming'
+import ProjectFilterSort from '@/Components/Project/ProjectFilterSort'
+import { EventSearch } from '@/Containers/EventSearchContainer'
+import FreeSearchBar from '@/NativeBase/Components/FreeSearchBar'
 import List, {
   ListDisplayMode,
   ListOptions,
 } from '@/NativeBase/Components/List'
-import ProjectFilterSort from '@/Components/Project/ProjectFilterSort'
+import SkeletonLoading from '@/NativeBase/Components/SkeletonLoading'
 import { navigate, RootStackParamList } from '@/Navigators/utils'
-import { capitaliseFirstLetter } from '@/Utils/Text'
-import { SegmentedPickerOption } from '../Components/SegmentedPicker'
 import {
   Events,
   EventsRange,
@@ -45,14 +30,28 @@ import {
   Projects,
   useLazyFetchAllProjectsQuery,
 } from '@/Services/modules/projects'
+import { RoleGroup, roleGroups } from '@/Services/modules/projects/roleGroups'
 import { EventsState, setEvents } from '@/Store/Events'
 import { ProjectsState, setProjects } from '@/Store/Projects'
+import { capitaliseFirstLetter } from '@/Utils/Text'
 import underDevelopmentAlert from '@/Utils/UnderDevelopmentAlert'
-import SkeletonLoading from '../Components/SkeletonLoading'
-import FreeSearchBar from '../Components/FreeSearchBar'
+import {
+  Heading,
+  HStack,
+  Icon,
+  IconButton,
+  ScrollView,
+  Text,
+  View,
+  VStack,
+} from 'native-base'
+import React, { useEffect, useState } from 'react'
+import { Dimensions } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import ProjectSearchContainer from './ProjectSearchContainer'
-import { RoleGroup, roleGroups } from '@/Services/modules/projects/roleGroups'
+import { useDispatch, useSelector } from 'react-redux'
+import styled from 'styled-components/native'
+import { SegmentedPickerOption } from '../Components/SegmentedPicker'
+import ProjectSearchContainer, { ProjectSearch } from './ProjectSearchContainer'
 
 const ClearSearchLabel = styled.Text`
 
@@ -310,6 +309,27 @@ const ListContainer = (props: {
     }
   }, [params?.options?.events, params?.search, params?.type])
 
+  function updateListForTestWithRoleWebDeveloper(): void {
+    //TODO
+    // 1. when we click on the button, we want the list of projects to be filtered for roles category web-developer and displayed on the same screen.
+
+    // 2. we want to use existing filtering logic to manipulate the list of projects and show it in the list
+
+    // 3. we are really cool and start using maybe redux selectors to apply the filtering (maybe?)
+
+    // 4. step 3 is OPTIONAL. once we have managed to get to step 2, we will now focus on doing roles filtering using our tagbuttons.
+
+    // 5. we will extend this logic also to the tech and fields area
+
+    // 6. we will now focus on the fullsearch bar - maybe break down in additional sub tasks to make progress easier...
+
+    // 7. we clean up unused components
+
+    // 8. we start refactoring and making the code/architecture more clean
+
+    throw new Error('Function not implemented.')
+  }
+
   // const onSubmitEditing = (text: string) => text
 
   return (
@@ -347,6 +367,7 @@ const ListContainer = (props: {
               alignItems="center"
             >
               <IconButton
+                onPress={updateListForTestWithRoleWebDeveloper}
                 icon={
                   <Icon
                     as={MaterialIcons}
