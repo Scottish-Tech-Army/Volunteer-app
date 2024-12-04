@@ -233,6 +233,7 @@ const ListContainer = (props: {
   // What to do when the user navigates to this container
   // e.g. set which data to show -- either search results or everything
   useEffect(() => {
+    console.log('params search:', params.search)
     if (params?.search) {
       setListItemsToShow(params.search.results)
     }
@@ -312,22 +313,22 @@ const ListContainer = (props: {
   function updateListForTestWithRoleWebDeveloper(): void {
     //TODO
     // 1. when we click on the button, we want the list of projects to be filtered for roles category web-developer and displayed on the same screen.
-
+    /*
+        console.log(listItemsToShow!.map((item: Project) => item.role).join(', '))
+        const filteredList: Project[] = listItemsToShow!.filter((item: Project) => item.role === 'User Researcher')
+        setListItemsToShow(filteredList)
+    */
+    /* THIS DOES NOT WORK
+const filteredList: Project[] = listItemsToShow!.filter((item: Project) => item.role === 'User Researcher')
+params.search = { results: filteredList, description: 'fake filtering' } as ProjectSearch
+*/
     // 2. we want to use existing filtering logic to manipulate the list of projects and show it in the list
-
     // 3. we are really cool and start using maybe redux selectors to apply the filtering (maybe?)
-
     // 4. step 3 is OPTIONAL. once we have managed to get to step 2, we will now focus on doing roles filtering using our tagbuttons.
-
     // 5. we will extend this logic also to the tech and fields area
-
     // 6. we will now focus on the fullsearch bar - maybe break down in additional sub tasks to make progress easier...
-
     // 7. we clean up unused components
-
     // 8. we start refactoring and making the code/architecture more clean
-
-    throw new Error('Function not implemented.')
   }
 
   // const onSubmitEditing = (text: string) => text
