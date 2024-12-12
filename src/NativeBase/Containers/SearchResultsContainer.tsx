@@ -2,18 +2,6 @@
  * @file Search results screen container.
  */
 
-import React, { useState } from 'react'
-import {
-  Box,
-  HStack,
-  Icon,
-  IconButton,
-  Pressable,
-  Text,
-  View,
-} from 'native-base'
-import { Dimensions } from 'react-native'
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { EventSearch } from '@/Containers/EventSearchContainer'
 import List, {
   ListDisplayMode,
@@ -24,13 +12,25 @@ import { goBack, navigate, RootStackParamList } from '@/Navigators/utils'
 import { Events } from '@/Services/modules/events'
 import { Projects } from '@/Services/modules/projects'
 import {
+  Box,
+  HStack,
+  Icon,
+  IconButton,
+  Pressable,
+  Text,
+  View,
+} from 'native-base'
+import React, { useState } from 'react'
+import { Dimensions } from 'react-native'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import { ProjectSearch } from '../Components/ProjectTagButtonsFilter'
+import {
   ListRouteParams,
   ListScreens,
   ListSearch,
   ListType,
   searchScreens,
 } from './ListContainer'
-import { ProjectSearch } from './ProjectSearchContainer'
 
 export interface SearchResults extends ListSearch {
   results: Events | Projects

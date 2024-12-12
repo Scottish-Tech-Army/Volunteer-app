@@ -4,19 +4,17 @@
  * Follows example here https://docs.nativebase.io/building-app-bar
  */
 
+import StaLogoWideDarkMode from '@/NativeBase/Assets/Images/Logos/sta-logo-wide-dark-mode.svg'
+import StaLogoWide from '@/NativeBase/Assets/Images/Logos/sta-logo-wide.svg'
 import {
   Box,
-  HStack,
-  Icon,
-  IconButton,
+  Heading,
   StatusBar,
   useColorMode,
   useColorModeValue,
+  VStack,
 } from 'native-base'
 import React, { FC } from 'react'
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import StaLogoWide from '@/NativeBase/Assets/Images/Logos/sta-logo-wide.svg'
-import StaLogoWideDarkMode from '@/NativeBase/Assets/Images/Logos/sta-logo-wide-dark-mode.svg'
 import StaTheme from '../Theme/StaTheme'
 
 interface TopOfAppProps {
@@ -63,7 +61,13 @@ const TopOfApp: FC<TopOfAppProps> = ({
         _light={{ backgroundColor: StaTheme.colors.bg['100'] }}
         safeAreaTop
       >
-        <HStack
+        <VStack mt="4" px="4">
+          <Heading size="xl" marginBottom="15px">
+            Roles
+          </Heading>
+        </VStack>
+
+        {/* <HStack
           alignItems="center"
           justifyContent="space-between"
           mx="auto"
@@ -86,7 +90,7 @@ const TopOfApp: FC<TopOfAppProps> = ({
               />
             )}
           </HStack>
-        </HStack>
+        </HStack> */}
       </Box>
     </>
   )

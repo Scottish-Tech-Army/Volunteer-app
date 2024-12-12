@@ -1,34 +1,37 @@
-import React, { useState } from 'react'
-import { ScrollView, VStack } from 'native-base'
-import { useSelector } from 'react-redux'
-import ChoicesList, {
-  ChoicesListChoice,
-  ChoicesListColour,
-  ChoicesListFontStyle,
-} from '../Components/ChoicesList'
-import FreeSearchBar from '../Components/FreeSearchBar'
-import TagButtons from '../Components/TagButtons'
 import { navigate, RootStackParamList } from '@/Navigators/utils'
 import {
-  ProjectsSearchField,
-  ProjectSector,
-  ProjectTechnology,
   Projects,
+  ProjectSector,
+  ProjectsSearchField,
+  ProjectTechnology,
 } from '@/Services/modules/projects'
-import { ProjectsState } from '@/Store/Projects'
-import { searchByArray, fuzzySearchByArray } from '@/Utils/Search'
 import {
   RoleGroupName,
   roleGroups,
 } from '@/Services/modules/projects/roleGroups'
+import { ProjectsState } from '@/Store/Projects'
+import { fuzzySearchByArray, searchByArray } from '@/Utils/Search'
 import Fuse from 'fuse.js'
-import { ListSearch, ListType, ListRouteParams } from './ListContainer'
+import { VStack } from 'native-base'
+import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
+import {
+  ListRouteParams,
+  ListSearch,
+  ListType,
+} from '../Containers/ListContainer'
+import ChoicesList, {
+  ChoicesListChoice,
+  ChoicesListColour,
+  ChoicesListFontStyle,
+} from './ChoicesList'
+import TagButtons from './TagButtons'
 
 export interface ProjectSearch extends ListSearch {
   results: Projects // the projects results for this search
 }
 
-const ProjectSearchContainer = () => {
+const ProjectsTagButtonsFilter = () => {
   // Fetch all projects from the store
   const allProjects = useSelector(
     (state: { projects: ProjectsState }) => state.projects.projects,
@@ -142,44 +145,7 @@ const ProjectSearchContainer = () => {
     } "${searchQueryChoice}"`
 
     navigate(
-      'SearchResults' as keyof RootStackParamList,
-      {
-        type: ListType.Projects,
-        search: {
-          results,
-          description,
-        } as ProjectSearch,
-      } as ListRouteParams,
-    )
-  }
-
-  const handleFreeTextSubmit = (freeTextSearchQuery: string) => {
-    // Add free text to list of search queries
-    const searchQueries = [freeTextSearchQuery]
-
-    // If the free text query matches a group of job roles, add these to the list of search queries too
-    const relatedRoles = getRelatedRoles(freeTextSearchQuery)
-    if (relatedRoles?.length) {
-      searchQueries.push(...relatedRoles)
-    }
-
-    const results = fuzzySearchByArray(
-      allProjects,
-      [
-        { name: 'client', weight: 1 },
-        { name: 'description', weight: 0.5 },
-        { name: 'name', weight: 1 },
-        { name: 'role', weight: 1 },
-        { name: 'skills', weight: 1 },
-        { name: 'sector', weight: 1 },
-      ],
-      searchQueries,
-    )
-
-    const description = `"${freeTextSearchQuery}"`
-
-    navigate(
-      'SearchResults' as keyof RootStackParamList,
+      'Projects' as keyof RootStackParamList,
       {
         type: ListType.Projects,
         search: {
@@ -201,9 +167,6 @@ const ProjectSearchContainer = () => {
 
   return (
     <VStack>
-      {/* Free Search Bar for entering free text queries */}
-      {/* <FreeSearchBar handleSubmit={handleFreeTextSubmit} marginBottom="10" /> */}
-
       {/* Tag Buttons for Roles, Tech, and Causes */}
       <TagButtons
         tags={['Roles', 'Tech', 'Causes']} // String tags
@@ -246,4 +209,4 @@ const ProjectSearchContainer = () => {
   )
 }
 
-export default ProjectSearchContainer
+export default ProjectsTagButtonsFilter

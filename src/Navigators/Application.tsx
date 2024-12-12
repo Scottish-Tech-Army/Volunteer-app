@@ -2,37 +2,35 @@
  * @file Defines the list of screens (apart from the main screens that have tabs at the bottom of the app e.g. Projects -- these are defined in Main.tsx).
  */
 
-import { useColorMode, View } from 'native-base'
-import React, { useEffect, useRef, useState } from 'react'
-import { AppState, StatusBar, useColorScheme } from 'react-native'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import {
+  EventDetailContainer,
+  EventSearchContainer,
+  StartupContainer,
+  WelcomeContainer,
+} from '@/Containers'
+import NavigationHeader from '@/NativeBase/Components/NavigationHeader'
+import {
+  LoginContainer,
+  ProjectDetailContainer,
+  WebViewContainer,
+} from '@/NativeBase/Containers'
+import MyExperienceContainer from '@/NativeBase/Containers/MyExperienceContainer'
+import ProjectRegisterInterestContainer from '@/NativeBase/Containers/ProjectRegisterInterestContainer'
+import StaTheme from '@/NativeBase/Theme/StaTheme'
+import { ThemeState } from '@/Store/Theme'
 import { NavigationContainer } from '@react-navigation/native'
 import {
   createStackNavigator,
   StackHeaderProps,
   StackNavigationOptions,
 } from '@react-navigation/stack'
+import { useColorMode, View } from 'native-base'
+import React, { useEffect, useRef, useState } from 'react'
+import { AppState, StatusBar, useColorScheme } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useSelector } from 'react-redux'
-import {
-  EventDetailContainer,
-  StartupContainer,
-  EventSearchContainer,
-  WelcomeContainer,
-} from '@/Containers'
-import MyExperienceContainer from '@/NativeBase/Containers/MyExperienceContainer'
-import ProjectRegisterInterestContainer from '@/NativeBase/Containers/ProjectRegisterInterestContainer'
 import MainNavigator from './Main'
 import { navigationRef } from './utils'
-import NavigationHeader from '@/NativeBase/Components/NavigationHeader'
-import {
-  LoginContainer,
-  ProjectDetailContainer,
-  ProjectSearchContainer,
-  SearchResultsContainer,
-  WebViewContainer,
-} from '@/NativeBase/Containers'
-import StaTheme from '@/NativeBase/Theme/StaTheme'
-import { ThemeState } from '@/Store/Theme'
 
 const Stack = createStackNavigator()
 
@@ -166,23 +164,14 @@ const ApplicationNavigator = () => {
             }}
           />
 
-          <Stack.Screen
+          {/* <Stack.Screen
             name="ProjectSearch"
             component={ProjectSearchContainer}
             options={{
               ...stackScreenDefaultOptions,
               title: 'Search',
             }}
-          />
-
-          <Stack.Screen
-            name="SearchResults"
-            component={SearchResultsContainer}
-            options={{
-              ...stackScreenDefaultOptions,
-              title: 'Search Results',
-            }}
-          />
+          /> */}
 
           <Stack.Screen
             name="ProjectVideo"

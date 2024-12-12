@@ -1,22 +1,21 @@
 /**
  * @file Defines the main screens that have tabs at the bottom of the app, e.g. Projects, Events.
  */
-import React from 'react'
+import SelectionIcons from '@/NativeBase/Assets/Icons/Icomoon/SelectionIcons'
+import { ListContainer, SettingsContainer } from '@/NativeBase/Containers'
+import { ListType } from '@/NativeBase/Containers/ListContainer'
+import MyProfile from '@/NativeBase/Containers/ProfileContainer'
+import StaTheme from '@/NativeBase/Theme/StaTheme'
+import { useFeatureFlags } from '@/Services/featureFlags'
 import {
-  createBottomTabNavigator,
   BottomTabNavigationOptions,
+  createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs'
 import { useRoute } from '@react-navigation/native'
-import { ListContainer } from '@/NativeBase/Containers'
-import { ListType } from '@/NativeBase/Containers/ListContainer'
-import { SettingsContainer } from '@/NativeBase/Containers'
-import SelectionIcons from '@/NativeBase/Assets/Icons/Icomoon/SelectionIcons'
-import { View, useColorMode, Text, Icon } from 'native-base'
-import StaTheme from '@/NativeBase/Theme/StaTheme'
+import { Icon, Text, View, useColorMode } from 'native-base'
+import React from 'react'
 import { Platform } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import MyProfile from '@/NativeBase/Containers/ProfileContainer'
-import { useFeatureFlags } from '@/Services/featureFlags'
 
 const Tab = createBottomTabNavigator()
 
@@ -135,13 +134,6 @@ const MainNavigator = () => {
 
   return (
     <Tab.Navigator>
-      {/* <Tab.Screen
-        name="Home"
-        component={VerticalStackContainer}
-        options={{
-          ...bottomTabOptions,
-        }}
-      /> */}
       <Tab.Screen
         name="Projects"
         component={ListContainer}
