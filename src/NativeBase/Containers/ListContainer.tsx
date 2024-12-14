@@ -29,6 +29,7 @@ import {
 import {
   Project,
   Projects,
+  ProjectsSearchField,
   useLazyFetchAllProjectsQuery,
 } from '@/Services/modules/projects'
 import { roleGroups } from '@/Services/modules/projects/roleGroups'
@@ -391,6 +392,41 @@ params.search = { results: filteredList, description: 'fake filtering' } as Proj
 
   // const onSubmitEditing = (text: string) => text
 
+  const handleQuickSearchSubmit = (
+    searchField: ProjectsSearchField,
+    searchQueryChoice: string,
+  ) => {
+    let searchQueries = [searchQueryChoice]
+    let results: Projects = []
+
+    // Add related roles if the search is by role
+    if (searchField === ProjectsSearchField.Role) {
+      const relatedRoles = getRelatedRoles(searchQueryChoice)
+      if (relatedRoles?.length) {
+        searchQueries = searchQueries.concat(relatedRoles)
+      }
+    }
+
+    // Perform the search
+    results = fuzzySearchByArray(
+      allProjects,
+      [{ name: searchField, weight: 1 }],
+      searchQueries,
+    ) as Projects
+
+    // Create a description for the search
+    const description = `${searchField}: "${searchQueryChoice}"`
+
+    // Navigate to the updated list with the search results
+    navigate(screens.list[params.type], {
+      type: ListType.Projects,
+      search: {
+        results,
+        description,
+      } as ProjectSearch,
+    } as ListRouteParams)
+  }
+
   return (
     <>
       <TopOfApp showSearchButton={false} />
@@ -436,7 +472,9 @@ params.search = { results: filteredList, description: 'fake filtering' } as Proj
 
         <VStack>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            <ProjectsTagButtonsFilter />
+            <ProjectsTagButtonsFilter
+              handleQuickSearchSubmit={handleQuickSearchSubmit}
+            />
           </ScrollView>
         </VStack>
         <VStack alignItems="center" space={4} mx={4}>
