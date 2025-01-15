@@ -25,6 +25,7 @@ import MainNavigator from './Main'
 import { navigationRef } from './utils'
 import NavigationHeader from '@/NativeBase/Components/NavigationHeader'
 import {
+  LoginContainer,
   ProjectDetailContainer,
   ProjectSearchContainer,
   SearchResultsContainer,
@@ -189,6 +190,15 @@ const ApplicationNavigator = () => {
             options={{
               ...stackScreenDefaultOptions,
               title: 'Project Video',
+            }}
+          />
+
+          <Stack.Screen
+            name="Login"
+            component={LoginContainer}
+            options={{
+              ...stackScreenDefaultOptions,
+              title: '',
             }}
           />
 

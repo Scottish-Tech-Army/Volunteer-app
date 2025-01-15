@@ -86,6 +86,12 @@ If you're using Visual Studio Code for development, it's recommended that you:
 - Install the [Prettier extension](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 - [Enable formatting on save](https://scottsauber.com/2017/06/10/prettier-format-on-save-never-worry-about-formatting-javascript-again/). Combined with ESLint and Prettier, this takes care of some code style issues such as formatting, indentation and semicolon consistency for you automatically.
 
+## Git Flow
+
+**_ Make sure that you are familiar with Git Flow before starting! _**
+
+The Team use Git Flow to manage development and release versions, follow the [Git Flow setup steps first](GITFLOW.md).
+
 # Setup and first run
 
 1. Ensure that you've gone through the setup instructions above
@@ -94,23 +100,29 @@ If you're using Visual Studio Code for development, it's recommended that you:
 
    > Using SSH do `git clone git@github.com:Scottish-Tech-Army/Volunteer-app.git` or using https do `git clone https://github.com/Scottish-Tech-Army/Volunteer-app.git`
 
-3. Follow the instructions in [`Volunteer-api`](https://github.com/Scottish-Tech-Army/Volunteer-api) repo to run the api locally
+3. Open your terminal and in the new `Volunteer-app` directory type `git flow init` to initialise Git Flow (see [Git Flow](GITFLOW.md)).
 
-4. At the command prompt type `npx expo install`
+4. Follow the instructions in [`Volunteer-api`](https://github.com/Scottish-Tech-Army/Volunteer-api) repo to run the api locally
 
-   > Each time you pull from GitHub it is best to run this step in case `package.json` changed
+5. At the command prompt type `npx expo install`
 
-   > **If you get _warnings_ about installing dependencies** you probably don't worry about these, but do raise them as they indicate possible compatibility issues in dependencies
+   > Inside the `app` folder there are files `package.json` and `package-lock.json`. **Every time either of these is modified, it is advised to repeat this step before running the project.**
 
-   > **If you get _errors_ about installing dependencies** try running `npx expo install` again then ask for help in slack
+   > **If you get _warnings_ about installing dependencies** you probably don't worry about these
 
-5. Copy the `.env.example` file in the api root folder and name your new file `.env` in the same folder -- e.g. using the command `cp .env.example .env` Set the value of `STA_API_BASE_URL` to the tunnelled URL of your local API server (the one you made a note of in step 8 above).
+   > **If you get _errors_ about installing dependencies** try running `npx expo install` and then `npm install --legacy-peer-deps` or `npm install --force`.
 
-6. Run Expo using `npm start` This will run some commands and then it show you a QR code in your terminal.
+6. Copy the `.env.example` file in the api root folder and name your new file `.env` in the same folder -- e.g. using the command `cp .env.example .env` Set the value of `STA_API_BASE_URL` to the tunnelled URL of your local API server (the one you made a note of in step 8 above).
 
-> You may get an automatic prompt to install `@expo/ngrok` or another package -- if so, type `y` to install it.
+7. Ask on Slack for a member of the team to send you the value to use for `EXPO_APPLICATION_SERVICES_PROJECT_ID`.
 
-> If you get stuck at this stage, you might need to install `@expo/ngrok` manually, globally on your local machine: run `npm install -g @expo/ngrok` then try running `npm start` again.
+   > For security reasons, the `EXPO_APPLICATION_SERVICES_PROJECT_ID` value is not stored in this repo.
+
+8. Run Expo using `npm start` This will run some commands and then it show you a QR code in your terminal.
+
+   > You may get an automatic prompt to install `@expo/ngrok` or another package -- if so, type `y` to install it.
+
+   > If you get stuck at this stage, you might need to install `@expo/ngrok` manually, globally on your local machine: run `npm install -g @expo/ngrok` then try running `npm start` again.
 
 9. Connect your phone:
 
@@ -175,8 +187,6 @@ Below are some commonly encountered issues and possible ways to resolve them. If
 1. Start the api
 
 2. In a third terminal window, enter `npm start` to run Expo
-
-3. Connect your phone to your local development version of the app in Expo Go:
 
 - **iPhone:** open the camera and scan the QR code, this should open up the app in Expo Go
 - **Android:** open the Expo Go app itself and you can scan the QR code

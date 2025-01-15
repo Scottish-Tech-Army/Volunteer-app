@@ -21,6 +21,8 @@ import ProjectAttachments from '../ProjectAttachments'
 import ColouredTag from '../ColouredTag'
 import StaTheme from '../../Theme/StaTheme'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import { useAuth } from '@/Services/auth'
+import { useFeatureFlags } from '@/Services/featureFlags'
 
 interface ProjectFullDetailsProps {
   project: Project
@@ -35,6 +37,9 @@ interface ProjectFullDetailsProps {
 const ProjectFullDetails = ({
   project,
 }: ProjectFullDetailsProps): JSX.Element => {
+  const isAuthenticated = useAuth().authenticated
+  const featureFlags = useFeatureFlags()
+
   return (
     <>
       <ScrollView>
@@ -48,26 +53,6 @@ const ProjectFullDetails = ({
             <Heading fontSize="md" width="70%">
               {project.name}
             </Heading>
-
-            {/* TODO: reinstate when functionality is ready and set Heading width="70%" */}
-            {/* <HStack
-              justifyContent="space-between"
-              alignItems="center"
-              space="4"
-            >
-              <ShareIcon
-                size="md"
-                color="secondaryGrey.100"
-                //onPress={underDevelopmentAlert}
-              />
-              <Icon
-                as={MaterialIcons}
-                color="secondaryGrey.100"
-                //onPress={underDevelopmentAlert}
-                name="favorite-border"
-                size="lg"
-              />
-            </HStack> */}
           </HStack>
 
           <Video
@@ -112,14 +97,27 @@ const ProjectFullDetails = ({
           </Card>
         </VStack>
       </ScrollView>
-      <Button
-        margin={5}
-        onPress={() => {
-          navigate('ProjectRegisterInterest', { project })
-        }}
-      >
-        Register
-      </Button>
+      {featureFlags.login ? (
+        <Button
+          margin={5}
+          onPress={() => {
+            isAuthenticated
+              ? navigate('ProjectRegisterInterest', { project })
+              : navigate('Login', { project })
+          }}
+        >
+          Register Interest
+        </Button>
+      ) : (
+        <Button
+          margin={5}
+          onPress={() => {
+            navigate('ProjectRegisterInterest', { project })
+          }}
+        >
+          Register
+        </Button>
+      )}
     </>
   )
 }

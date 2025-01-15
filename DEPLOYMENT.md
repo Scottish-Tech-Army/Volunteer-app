@@ -67,6 +67,8 @@ There are also settings in the main Expo config file `app.config.ts` -- look for
 
    > If you aren't already logged into Expo Application Services (EAS), you'll be asked to login. Ask another team member for the STA's Expo Application Services login details.
 
+   > If you get a message saying _EAS project not configured. Existing EAS project found for @scottishtecharmy/volunteer-app Configure this project?_ Stop the build process. You need to add `EXPO_APPLICATION_SERVICES_PROJECT_ID` to your `.env` file. Ask another team member for the value of this variable.
+
    > If you get an error saying `Error reading Expo config ... Cannot find module 'dotenv/config'` you may need to reinstall the `dotenv` package. In the `app` directory run `npx expo install dotenv` (if that doesn't fix it try `npm install dotenv`) (If you get warnings, but not errors, when reinstalling this package - don't worry.)
 
    > Builds can take some time (sometimes 10-20 minutes, sometimes more than an hour, depending on how busy EAS servers are), but you can check the exact status of a build and the different steps that are taking place in the Expo Application Services dashboard -- follow the URL you'll see in your terminal after you run one of the build commands below (ask another team member for the Expo Application Services login details). You can also see there if there are any errors.

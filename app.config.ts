@@ -56,6 +56,7 @@ module.exports = {
       features: enabledFeatures,
       api: {
         baseUrl: process.env.STA_API_BASE_URL ?? 'https://the-sta.com',
+        dynamoUrl: process.env.STA_DYNAMO_API_URL,
         version: process.env.STA_API_VERSION ?? 'v1',
         apiKey: process.env.STA_API_KEY ?? '',
       },
@@ -66,7 +67,9 @@ module.exports = {
         apiKey: process.env.BUGSNAG_API_KEY,
       },
       eas: {
-        projectId: '9cd93ab4-ee33-43d1-a995-e4f8531553e2',
+        projectId:
+          process.env.EXPO_APPLICATION_SERVICES_PROJECT_ID ??
+          '9cd93ab4-ee33-43d1-a995-e4f8531553e2',
       },
     },
     hooks: {

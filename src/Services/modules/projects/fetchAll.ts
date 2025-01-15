@@ -1,10 +1,10 @@
 /**
  * @file Fetches all projects data.
  */
-import Constants from 'expo-constants'
-import { EndpointBuilder } from '@reduxjs/toolkit/dist/query/endpointDefinitions'
-import { Projects } from '.'
 import { ApiBaseQueryFunctionType } from '@/Services/api'
+import { EndpointBuilder } from '@reduxjs/toolkit/dist/query/endpointDefinitions'
+import Constants from 'expo-constants'
+import { Projects } from '.'
 
 /**
  * @function fetchAllProjects Fetches all projects
@@ -16,9 +16,10 @@ export default (
 ) =>
   build.query<Projects, string>({
     query: () => ({
-      url: `${Constants.expoConfig?.extra?.api?.baseUrl ?? ''}/${
+      /*url: `${Constants.expoConfig?.extra?.api?.baseUrl ?? ''}/${
         Constants.expoConfig?.extra?.api?.version ?? ''
-      }/projects`,
+      }/projects`,*/
+      url: `${Constants.expoConfig?.extra?.api?.dynamoUrl}`,
       method: 'GET',
       headers: {
         'x-api-key': `${Constants.expoConfig?.extra?.api?.apiKey ?? ''}`,

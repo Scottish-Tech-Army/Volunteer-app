@@ -18,13 +18,14 @@ const PrivacyAndTermsLinks: FC<PrivacyAndTermsLinksProps> = ({ fontSize }) => {
   fontSize = fontSize ?? 'xs'
 
   return (
-    <HStack space="4" justifyContent={'center'}>
+    <HStack space="4" justifyContent={'space-evenly'}>
       <Text>
         <Link
           _text={{
             color: 'darkGrey.100',
             _dark: { color: 'textDarkMode.100' },
             fontSize,
+            allowFontScaling: false,
           }}
           href="https://www.scottishtecharmy.org/app-privacy-policy"
         >
@@ -37,6 +38,7 @@ const PrivacyAndTermsLinks: FC<PrivacyAndTermsLinksProps> = ({ fontSize }) => {
             color: 'darkGrey.100',
             _dark: { color: 'textDarkMode.100' },
             fontSize,
+            allowFontScaling: false,
           }}
           href="https://www.scottishtecharmy.org/app-terms-conditions"
         >

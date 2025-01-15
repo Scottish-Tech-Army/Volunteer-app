@@ -53,3 +53,6 @@ ios/
 
 # Old config file - no longer in use, but included here to make sure it isn't accidentally committed to the repo
 src/Config/index.ts
+
+# don't check in expo .expo local configurations
+.expo
