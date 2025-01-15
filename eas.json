@@ -12,10 +12,19 @@
       "distribution": "internal"
     },
     "production": {
+      "distribution": "store",
       "autoIncrement": true
     }
   },
   "submit": {
-    "production": {}
+    "production": {
+      "android": {
+        "track": "internal"
+      },
+      "ios": {
+        "ascAppId": "1632619020",
+        "appleTeamId": "48N3J4V5KM"
+      }
+    }
   }
 }
