@@ -21,7 +21,15 @@ const baseQueryWithInterceptor: ApiBaseQueryFunctionType = async (
   api,
   extraOptions,
 ) => {
-  const result = await baseQuery(args, api, extraOptions)
+  let result
+  try {
+    result = await baseQuery(args, api, extraOptions)
+  } catch (err: any) {
+    console.log('Error in baseQueryWithInterceptor:')
+    console.log(err)
+    console.log(err?.message)
+    console.log(JSON.stringify(err))
+  }
 
   return result
 }

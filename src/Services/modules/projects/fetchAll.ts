@@ -19,17 +19,15 @@ export default (
       if (!Constants.expoConfig?.extra?.api?.dynamoUrl) {
         throw new Error(`Missing variable in fetchAll projects, "dynamoUrl"`)
       }
-      if (!Constants.expoConfig?.extra?.api?.apiKey) {
-        throw new Error(`Missing variable in fetchAll projects, "apiKey"`)
-      }
+      const url = `${Constants.expoConfig.extra.api.dynamoUrl}`
       return {
         /*url: `${Constants.expoConfig?.extra?.api?.baseUrl ?? ''}/${
         Constants.expoConfig?.extra?.api?.version ?? ''
       }/projects`,*/
-        url: `${Constants.expoConfig.extra.api.dynamoUrl}`,
+        url,
         method: 'GET',
         headers: {
-          'x-api-key': `${Constants.expoConfig.extra.api.apiKey}`,
+          'x-api-key': `${Constants.expoConfig?.extra?.api?.apiKey}`,
         },
       }
     },

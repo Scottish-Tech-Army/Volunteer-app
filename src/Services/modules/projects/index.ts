@@ -54,10 +54,12 @@ export enum ProjectTechnology {
 }
 
 export const projectsApi = api.injectEndpoints({
-  endpoints: build => ({
-    fetchAllProjects: fetchAll(build),
-    projectRegisterInterest: registerInterest(build),
-  }),
+  endpoints: build => {
+    return {
+      fetchAllProjects: fetchAll(build),
+      projectRegisterInterest: registerInterest(build),
+    }
+  },
   overrideExisting: true,
 })
 

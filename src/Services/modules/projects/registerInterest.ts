@@ -34,17 +34,11 @@ export default (
       if (!Constants.expoConfig?.extra?.api?.baseUrl) {
         throw new Error(`Missing variable in registerInterest, "baseUrl"`)
       }
-      if (!Constants.expoConfig?.extra?.api?.version) {
-        throw new Error(`Missing variable in registerInterest, "version"`)
-      }
-      if (!Constants.expoConfig?.extra?.api?.apiKey) {
-        throw new Error(`Missing variable in registerInterest, "apiKey"`)
-      }
       return {
-        url: `${Constants.expoConfig.extra.api.baseUrl}/${Constants.expoConfig.extra.api.version}/projects/single/register-interest?it=${query.project.it_key}&res=${query.project.res_id}`,
+        url: `${Constants.expoConfig.extra.api.baseUrl}/${Constants.expoConfig?.extra?.api?.version}/projects/single/register-interest?it=${query.project.it_key}&res=${query.project.res_id}`,
         method: 'POST',
         headers: {
-          'x-api-key': `${Constants.expoConfig.extra.api.apiKey}`,
+          'x-api-key': `${Constants.expoConfig?.extra?.api?.apiKey}`,
         },
         body: query.user,
       }
