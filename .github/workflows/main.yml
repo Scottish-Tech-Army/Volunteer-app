@@ -12,6 +12,7 @@ jobs:
       STA_API_BASE_URL: https://the-sta.com
       STA_API_VERSION: v1
       FEATURES_ENABLED: events,profileScreen
+      STA_DYNAMO_API_URL: 'https://7eir7twz0g.execute-api.eu-west-2.amazonaws.com/prod/'
     steps:
       - name: 🏗 Setup repo
         uses: actions/checkout@v4

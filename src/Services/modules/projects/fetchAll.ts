@@ -15,15 +15,23 @@ export default (
   build: EndpointBuilder<ApiBaseQueryFunctionType, never, 'api'>,
 ) =>
   build.query<Projects, string>({
-    query: () => ({
-      /*url: `${Constants.expoConfig?.extra?.api?.baseUrl ?? ''}/${
+    query: () => {
+      if (!Constants.expoConfig?.extra?.api?.dynamoUrl) {
+        throw new Error(`Missing variable in fetchAll projects, "dynamoUrl"`)
+      }
+      if (!Constants.expoConfig?.extra?.api?.apiKey) {
+        throw new Error(`Missing variable in fetchAll projects, "apiKey"`)
+      }
+      return {
+        /*url: `${Constants.expoConfig?.extra?.api?.baseUrl ?? ''}/${
         Constants.expoConfig?.extra?.api?.version ?? ''
       }/projects`,*/
-      url: `${Constants.expoConfig?.extra?.api?.dynamoUrl}`,
-      method: 'GET',
-      headers: {
-        'x-api-key': `${Constants.expoConfig?.extra?.api?.apiKey ?? ''}`,
-      },
-    }),
+        url: `${Constants.expoConfig.extra.api.dynamoUrl}`,
+        method: 'GET',
+        headers: {
+          'x-api-key': `${Constants.expoConfig.extra.api.apiKey}`,
+        },
+      }
+    },
     transformResponse: (data: Projects) => data,
   })
