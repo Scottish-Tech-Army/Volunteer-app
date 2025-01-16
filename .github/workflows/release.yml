@@ -29,5 +29,7 @@ jobs:
         with:
           eas-version: latest
           token: ${{ secrets.EXPO_ACCESS_TOKEN }}
+      - name: 🚀 Initialize EAS project
+        run: eas init --non-interactive --force
       - name: 🚀 Build app
         run: eas build --non-interactive --platform all --auto-submit --no-wait
