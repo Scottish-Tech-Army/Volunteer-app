@@ -11,7 +11,7 @@ const enabledFeatures = !process.env.FEATURES_ENABLED
 
 module.exports = {
   expo: {
-    name: 'STA Volunteers',
+    name: 'STA Volunteer App',
     slug: 'volunteer-app',
     owner: 'scottish-tech-army',
     version,
