@@ -5,7 +5,7 @@
 import React, { Dispatch, FC, Ref, SetStateAction } from 'react'
 import { WelcomeSlide } from './WelcomeSlides'
 import styled from 'styled-components/native'
-import { Text, Heading } from 'native-base'
+import { Text, Heading } from '@gluestack-ui/themed-native-base'
 
 const SlideContainer = styled.View`
     flex:1;

@@ -3,7 +3,7 @@
  */
 import React from 'react'
 import { navigate } from '@/Navigators/utils'
-import { Link } from 'native-base'
+import { Link } from '@gluestack-ui/themed-native-base'
 
 interface ProjectAttachmentsProps {
   details: string

@@ -2,7 +2,13 @@
  * @file Tappable list of options to choose from, with arrows.
  */
 
-import { HStack, Icon, Pressable, Text, VStack } from 'native-base'
+import {
+  HStack,
+  Icon,
+  Pressable,
+  Text,
+  VStack,
+} from '@gluestack-ui/themed-native-base'
 import React, { FC } from 'react'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 

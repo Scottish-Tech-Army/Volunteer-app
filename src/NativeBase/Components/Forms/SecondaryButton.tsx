@@ -6,7 +6,7 @@
  */
 
 import React, { FC } from 'react'
-import { Button } from 'native-base'
+import { Button } from '@gluestack-ui/themed-native-base'
 
 interface SecondaryButtonProps {
   onPress: () => void

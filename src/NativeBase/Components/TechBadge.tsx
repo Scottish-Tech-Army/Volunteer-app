@@ -4,7 +4,7 @@
  */
 
 import React from 'react'
-import { Badge, HStack } from 'native-base'
+import { Badge, HStack } from '@gluestack-ui/themed-native-base'
 import { ColorType } from 'native-base/lib/typescript/components/types'
 
 // Didn't use React.FC after reading:

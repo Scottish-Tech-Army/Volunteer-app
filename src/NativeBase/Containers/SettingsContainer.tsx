@@ -22,7 +22,7 @@ import {
   useColorMode,
   Button,
   View,
-} from 'native-base'
+} from '@gluestack-ui/themed-native-base'
 import { useDispatch, useSelector } from 'react-redux'
 import Brand from '@/NativeBase/Components/Brand'
 import PrivacyAndTermsLinks from '@/NativeBase/Components/PrivacyAndTermsLinks'

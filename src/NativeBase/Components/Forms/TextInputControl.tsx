@@ -3,7 +3,7 @@
  */
 
 import React, { FC } from 'react'
-import { Input, FormControl, Icon } from 'native-base'
+import { Input, FormControl, Icon } from '@gluestack-ui/themed-native-base'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
 interface TextInputControlProps {

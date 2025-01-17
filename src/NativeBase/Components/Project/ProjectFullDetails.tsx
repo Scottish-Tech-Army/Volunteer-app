@@ -15,7 +15,7 @@ import {
   ScrollView,
   Text,
   VStack,
-} from 'native-base'
+} from '@gluestack-ui/themed-native-base'
 import Video from '../Video'
 import ProjectAttachments from '../ProjectAttachments'
 import ColouredTag from '../ColouredTag'

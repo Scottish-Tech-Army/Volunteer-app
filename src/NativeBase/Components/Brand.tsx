@@ -2,7 +2,7 @@
  * @file STA branding (logo).
  */
 
-import { Center, useColorModeValue } from 'native-base'
+import { Center, useColorModeValue } from '@gluestack-ui/themed-native-base'
 import React from 'react'
 import StaLogoWide from '@/NativeBase/Assets/Images/Logos/sta-logo-wide.svg'
 import StaLogoWideDarkMode from '@/NativeBase/Assets/Images/Logos/sta-logo-wide-dark-mode.svg'

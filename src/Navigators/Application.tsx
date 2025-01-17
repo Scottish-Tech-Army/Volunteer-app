@@ -2,7 +2,7 @@
  * @file Defines the list of screens (apart from the main screens that have tabs at the bottom of the app e.g. Projects -- these are defined in Main.tsx).
  */
 
-import { useColorMode, View } from 'native-base'
+import { useColorMode, View } from '@gluestack-ui/themed-native-base'
 import React, { useEffect, useRef, useState } from 'react'
 import { AppState, StatusBar, useColorScheme } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'

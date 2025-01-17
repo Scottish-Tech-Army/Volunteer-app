@@ -2,14 +2,13 @@
  * @file 'Get Started' button allows user to go to main part of app from any slide
  */
 import React, { useState } from 'react'
-import { Button, VStack } from 'native-base'
+import { Text, Button, VStack } from '@gluestack-ui/themed-native-base'
 import { navigateAndSimpleReset } from '@/Navigators/utils'
 import { useDispatch } from 'react-redux'
 import Modal from '@/NativeBase/Components/Modal'
 import PrivacyAndTermsLinks from '@/NativeBase/Components/PrivacyAndTermsLinks'
 import { setPermissions } from '@/Store/Permissions'
 import { changeWelcome, WelcomeState } from '@/Store/Welcome'
-import { Text } from 'native-base'
 
 /** The welcome 'Get started' button is displayed in the welcome splash screen, regardless of which pagination slide it is on. */
 const WelcomeButton = () => {

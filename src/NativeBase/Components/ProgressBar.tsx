@@ -1,7 +1,7 @@
 /**
  * @file for Sta Progress Bar component
  */
-import { Box, HStack } from 'native-base'
+import { Box, HStack } from '@gluestack-ui/themed-native-base'
 import React from 'react'
 
 interface ProgressBarProps {

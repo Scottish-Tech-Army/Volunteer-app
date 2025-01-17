@@ -1,7 +1,7 @@
 /**
  * @file for StaRibbon component
  */
-import { HStack, Box } from 'native-base'
+import { HStack, Box } from '@gluestack-ui/themed-native-base'
 import React from 'react'
 
 type StaRibbonProps = {

@@ -3,7 +3,7 @@
  */
 
 import React from 'react'
-import { Box, Text, useColorMode } from 'native-base'
+import { Box, Text, useColorMode } from '@gluestack-ui/themed-native-base'
 import { getRoleGroupIndex } from '@/Services/modules/projects/roleGroups'
 
 type ColouredTagProps = {

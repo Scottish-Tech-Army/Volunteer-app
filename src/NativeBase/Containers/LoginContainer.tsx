@@ -13,7 +13,7 @@ import {
   Text,
   VStack,
   View,
-} from 'native-base'
+} from '@gluestack-ui/themed-native-base'
 import React from 'react'
 import { goBack, navigate } from '@/Navigators/utils'
 import StaThemeLogo from '@/NativeBase/Assets/Images/Logos/sta-ribbon-logo.svg'

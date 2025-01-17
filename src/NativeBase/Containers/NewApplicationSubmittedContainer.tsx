@@ -2,7 +2,14 @@
  * @file New Application Submitted screen.
  */
 
-import { Button, Heading, VStack, Text, Link, Icon } from 'native-base'
+import {
+  Button,
+  Heading,
+  VStack,
+  Text,
+  Link,
+  Icon,
+} from '@gluestack-ui/themed-native-base'
 import React from 'react'
 import StaTheme from '../Theme/StaTheme'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'

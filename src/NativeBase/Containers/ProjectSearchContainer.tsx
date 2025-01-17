@@ -4,7 +4,7 @@
 
 import React, { useState } from 'react'
 import Fuse from 'fuse.js' // fuzzy text search - see docs at https://fusejs.io
-import { ScrollView, VStack } from 'native-base'
+import { ScrollView, VStack } from '@gluestack-ui/themed-native-base'
 import { useSelector } from 'react-redux'
 import { ListRouteParams, ListSearch, ListType } from './ListContainer'
 import ChoicesList, {

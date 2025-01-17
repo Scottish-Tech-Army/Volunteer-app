@@ -12,7 +12,7 @@ import {
   StatusBar,
   useColorMode,
   useColorModeValue,
-} from 'native-base'
+} from '@gluestack-ui/themed-native-base'
 import React from 'react'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { StackHeaderProps } from '@react-navigation/stack'

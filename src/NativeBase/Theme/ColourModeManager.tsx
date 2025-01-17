@@ -5,7 +5,7 @@
  * See also more detailed notes in SettingsContainer and APP_DEVELOPMENT about how we handle dark mode
  */
 
-import { StorageManager, ColorMode } from 'native-base'
+import { StorageManager, ColorMode } from '@gluestack-ui/themed-native-base'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { logError } from '@/Services/modules/logging'
 

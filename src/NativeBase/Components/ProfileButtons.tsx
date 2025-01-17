@@ -2,7 +2,7 @@
  * @file for sta profile butttons
  */
 
-import { Button } from 'native-base'
+import { Button } from '@gluestack-ui/themed-native-base'
 import React from 'react'
 
 type ProfileButtonsProps = {

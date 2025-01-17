@@ -2,7 +2,7 @@
  * @file Search icon.
  */
 
-import { Icon } from 'native-base'
+import { Icon } from '@gluestack-ui/themed-native-base'
 import React from 'react'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 

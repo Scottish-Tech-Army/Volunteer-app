@@ -12,7 +12,7 @@ import {
   ScrollView,
   Text,
   VStack,
-} from 'native-base'
+} from '@gluestack-ui/themed-native-base'
 import React from 'react'
 
 import ChoicesList, {
