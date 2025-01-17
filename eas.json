@@ -9,7 +9,10 @@
       "distribution": "internal"
     },
     "preview": {
-      "distribution": "internal"
+      "distribution": "internal",
+      "ios": {
+        "buildConfiguration": "Debug"
+      }
     },
     "production": {
       "distribution": "store",
@@ -17,6 +20,12 @@
     }
   },
   "submit": {
+    "preview": {
+      "ios": {
+        "ascAppId": "1632619020",
+        "appleTeamId": "48N3J4V5KM"
+      }
+    },
     "production": {
       "android": {
         "track": "internal"
