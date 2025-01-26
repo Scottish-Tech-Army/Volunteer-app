@@ -120,9 +120,9 @@ The Team use Git Flow to manage development and release versions, follow the [Gi
 
 8. Run Expo using `npm start` This will run some commands and then it show you a QR code in your terminal.
 
-> You may get an automatic prompt to install `@expo/ngrok` or another package -- if so, type `y` to install it.
+   > You may get an automatic prompt to install `@expo/ngrok` or another package -- if so, type `y` to install it.
 
-> If you get stuck at this stage, you might need to install `@expo/ngrok` manually, globally on your local machine: run `npm install -g @expo/ngrok` then try running `npm start` again.
+   > If you get stuck at this stage, you might need to install `@expo/ngrok` manually, globally on your local machine: run `npm install -g @expo/ngrok` then try running `npm start` again.
 
 9. Connect your phone:
 
@@ -153,8 +153,6 @@ Below are some commonly encountered issues and possible ways to resolve them. If
 ## The app gets stuck loading projects
 
 - The app gets stuck on the Projects screen -- projects never load
-
-  > Make sure the API is running on your local machine, and that your **.env** files are configured correctly (see [Setup and first run](#setup-and-first-run) above)
 
   > Make sure the API is running on your local machine, and that your **.env** files are configured correctly (see [Setup and first run](#setup-and-first-run) above)
 
