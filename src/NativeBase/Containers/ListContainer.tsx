@@ -7,29 +7,19 @@
 
 /* eslint-disable @typescript-eslint/no-shadow */
 
-import { Heading, VStack } from 'native-base'
-import React, { useEffect, useState } from 'react'
-import { Dimensions } from 'react-native'
-import { useDispatch, useSelector } from 'react-redux'
-import styled from 'styled-components/native'
-import { EventSearch } from '@/Containers/EventSearchContainer'
-import { ProjectSearch } from './ProjectSearchContainer'
 import EventOptions from '@/Components/Event/EventOptions'
 import EventSearchUpcomingQuickSearch, {
   EventQuickSearchUpcomingChoice,
 } from '@/Components/Event/EventSearchQuickSearchUpcoming'
+import { EventSearch } from '@/Containers/EventSearchContainer'
+import FreeSearchBar from '@/NativeBase/Components/FreeSearchBar'
 import List, {
   ListDisplayMode,
   ListOptions,
 } from '@/NativeBase/Components/List'
-import ProjectFilterSort from '@/Components/Project/ProjectFilterSort'
+import SkeletonLoading from '@/NativeBase/Components/SkeletonLoading'
 import TopOfApp from '@/NativeBase/Components/TopOfApp'
 import { navigate, RootStackParamList } from '@/Navigators/utils'
-import { heightOfTopOfAppPlusBottomNav } from '@/Utils/Layout'
-import { capitaliseFirstLetter } from '@/Utils/Text'
-
-import { SegmentedPickerOption } from '../Components/SegmentedPicker'
-
 import {
   Events,
   EventsRange,
@@ -37,13 +27,28 @@ import {
   useLazyFetchAllUpcomingEventsQuery,
 } from '@/Services/modules/events'
 import {
+  Project,
   Projects,
+  ProjectsSearchField,
   useLazyFetchAllProjectsQuery,
 } from '@/Services/modules/projects'
+import { roleGroups } from '@/Services/modules/projects/roleGroups'
 import { EventsState, setEvents } from '@/Store/Events'
 import { ProjectsState, setProjects } from '@/Store/Projects'
+import { fuzzySearchByArray } from '@/Utils/Search'
+import { capitaliseFirstLetter } from '@/Utils/Text'
 import underDevelopmentAlert from '@/Utils/UnderDevelopmentAlert'
-import SkeletonLoading from '../Components/SkeletonLoading'
+import Fuse from 'fuse.js'
+import { HStack, Icon, IconButton, ScrollView, View, VStack } from 'native-base'
+import React, { useEffect, useState } from 'react'
+import { Dimensions } from 'react-native'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import { useDispatch, useSelector } from 'react-redux'
+import styled from 'styled-components/native'
+import ProjectsTagButtonsFilter, {
+  ProjectSearch,
+} from '../Components/ProjectTagButtonsFilter'
+import { SegmentedPickerOption } from '../Components/SegmentedPicker'
 
 const ClearSearchLabel = styled.Text`
 
@@ -104,7 +109,9 @@ const ListContainer = (props: {
   // Shared
   const dispatch = useDispatch()
   const [listItemsToShow, setListItemsToShow] = useState<Events | Projects>()
+
   const params = props.route.params
+
   const screens = {
     list: {
       [ListType.Events]: 'Events' as keyof RootStackParamList,
@@ -147,6 +154,21 @@ const ListContainer = (props: {
   const allProjects = useSelector(
     (state: { projects: ProjectsState }) => state.projects?.projects,
   )
+  // const [searchText, setSearchText] = useState('')
+
+  // State for toggling icons
+  const [iconState, setIconState] = useState<Record<string, boolean>>({
+    Roles: false,
+    Tech: false,
+    Causes: false,
+  })
+
+  const handleTagPress = (tag: string) => {
+    setIconState(prevState => ({
+      ...prevState,
+      [tag]: !prevState[tag], // Toggle the state
+    }))
+  }
 
   /*
    *
@@ -225,6 +247,70 @@ const ListContainer = (props: {
     allProjects,
   ])
 
+  // Ensure job title searches find related roles
+  const getRelatedRoles = (
+    possibleRoleSearchQuery: string,
+  ): string[] | undefined => {
+    const fuse = new Fuse(roleGroups, {
+      keys: ['roleNames'],
+      minMatchCharLength: 2,
+      threshold: 0.1,
+    })
+
+    const fuseResults = fuse.search(possibleRoleSearchQuery)
+
+    if (fuseResults.length) {
+      const roles = []
+
+      for (const fuseResult of fuseResults) {
+        for (const role of fuseResult.item.roleNames) {
+          roles.push(role)
+        }
+      }
+
+      return roles
+    }
+
+    return undefined
+  }
+
+  const handleFreeTextSubmit = (freeTextSearchQuery: string) => {
+    // Add free text to list of search queries
+    const searchQueries = [freeTextSearchQuery]
+
+    // If the free text query matches a group of job roles, add these to the list of search queries too
+    const relatedRoles = getRelatedRoles(freeTextSearchQuery)
+    if (relatedRoles?.length) {
+      searchQueries.push(...relatedRoles)
+    }
+
+    const results = fuzzySearchByArray(
+      allProjects,
+      [
+        { name: 'client', weight: 1 },
+        { name: 'description', weight: 0.5 },
+        { name: 'name', weight: 1 },
+        { name: 'role', weight: 1 },
+        { name: 'skills', weight: 1 },
+        { name: 'sector', weight: 1 },
+      ],
+      searchQueries,
+    )
+
+    const description = `"${freeTextSearchQuery}"`
+
+    navigate(
+      'Projects' as keyof RootStackParamList,
+      {
+        type: ListType.Projects,
+        search: {
+          results,
+          description,
+        } as ProjectSearch,
+      } as ListRouteParams,
+    )
+  }
+
   // Clear the search so the user's seeing all data instead
   const clearSearch = () => {
     if (params?.type) {
@@ -269,77 +355,167 @@ const ListContainer = (props: {
     }
   }, [params?.options?.events, params?.search, params?.type])
 
+  function updateListForTestWithRoleWebDeveloper(): void {
+    //TODO
+    // 1. when we click on the button, we want the list of projects to be filtered for roles category web-developer and displayed on the same screen.
+    /*
+        console.log(listItemsToShow!.map((item: Project) => item.role).join(', '))
+        const filteredList: Project[] = listItemsToShow!.filter((item: Project) => item.role === 'User Researcher')
+        setListItemsToShow(filteredList)
+    */
+    /* THIS DOES NOT WORK
+const filteredList: Project[] = listItemsToShow!.filter((item: Project) => item.role === 'User Researcher')
+params.search = { results: filteredList, description: 'fake filtering' } as ProjectSearch
+*/
+
+    /* THIS WORKS TOO: calling directly the already partly implemented search functionality of the ListContainer component
+     */
+    const searchResults: ProjectSearch = {
+      description: 'test description',
+      results: (listItemsToShow as Projects).filter(
+        (item: Project) => item.role === 'User Researcher',
+      ),
+    }
+    navigate(screens.list[params.type], {
+      type: params.type,
+      search: searchResults,
+    } as ListRouteParams)
+
+    // 2. we want to use existing filtering logic to manipulate the list of projects and show it in the list
+    // 3. we are really cool and start using maybe redux selectors to apply the filtering (maybe?)
+    // 4. step 3 is OPTIONAL. once we have managed to get to step 2, we will now focus on doing roles filtering using our tagbuttons.
+    // 5. we will extend this logic also to the tech and fields area
+    // 6. we will now focus on the fullsearch bar - maybe break down in additional sub tasks to make progress easier...
+    // 7. we clean up unused components
+    // 8. we start refactoring and making the code/architecture more clean
+  }
+
+  // const onSubmitEditing = (text: string) => text
+
+  const handleQuickSearchSubmit = (
+    searchField: ProjectsSearchField,
+    searchQueryChoice: string,
+  ) => {
+    let searchQueries = [searchQueryChoice]
+    let results: Projects = []
+
+    // Add related roles if the search is by role
+    if (searchField === ProjectsSearchField.Role) {
+      const relatedRoles = getRelatedRoles(searchQueryChoice)
+      if (relatedRoles?.length) {
+        searchQueries = searchQueries.concat(relatedRoles)
+      }
+    }
+
+    // Perform the search
+    results = fuzzySearchByArray(
+      allProjects,
+      [{ name: searchField, weight: 1 }],
+      searchQueries,
+    ) as Projects
+
+    // Create a description for the search
+    const description = `${searchField}: "${searchQueryChoice}"`
+
+    // Navigate to the updated list with the search results
+    navigate(screens.list[params.type], {
+      type: ListType.Projects,
+      search: {
+        results,
+        description,
+      } as ProjectSearch,
+    } as ListRouteParams)
+  }
+
   return (
     <>
-      <TopOfApp
-        showSearchButton
-        onSearchButtonPress={() => navigate(screens.search[params.type], '')}
-      />
-      <VStack
-        alignItems="center"
-        maxHeight={windowHeight - heightOfTopOfAppPlusBottomNav}
-        space={4}
-        padding={4}
-      >
-        <Heading size="sm">Projects List</Heading>
-        {/* TODO: reinstate when functionality is ready */}
-        {/* <SegmentedPicker options={projectListOptions} /> */}
+      <TopOfApp showSearchButton={false} />
+      {/* TODO: reinstate when functionality is ready */}
+      {/* <SegmentedPicker options={projectListOptions} /> */}
 
-        {params?.type && listItemsToShow ? (
-          <>
-            {/* Past / Upcoming / My Events choice */}
-            {params.type === ListType.Events && (
-              <EventOptions selected={eventsSelectedOption} />
-            )}
-
-            {/* Quick search for upcoming events (Today / This week / This month) */}
-            {params.type === ListType.Events &&
-              eventsShowUpcomingQuickSearch &&
-              eventsQuickSearchUpcomingChoice && (
-                <SearchResultsView>
-                  <EventSearchUpcomingQuickSearch
-                    selectedButton={eventsQuickSearchUpcomingChoice}
+      <VStack space={2} alignItems="stretch">
+        <VStack mt="4" px="4">
+          <HStack space="2" alignItems="center" width="100%">
+            <View flex={1}>
+              <FreeSearchBar
+                handleSubmit={handleFreeTextSubmit}
+                handleClearSearch={clearSearch}
+                marginBottom="2"
+              />
+            </View>
+            <View
+              marginBottom="2"
+              height="48px"
+              width="48px"
+              bg="#F0F0F0"
+              borderRadius="10px"
+              padding="2"
+              mx="10px"
+              justifyContent="center"
+              alignItems="center"
+            >
+              {/* TODO remove button once not needed anymore for testing SVA-444 */}
+              <IconButton
+                onPress={updateListForTestWithRoleWebDeveloper}
+                icon={
+                  <Icon
+                    as={MaterialIcons}
+                    name="tune"
+                    size="24px"
+                    color="gray.500"
                   />
-                </SearchResultsView>
+                }
+              />
+            </View>
+          </HStack>
+        </VStack>
+
+        <VStack>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            <ProjectsTagButtonsFilter
+              handleQuickSearchSubmit={handleQuickSearchSubmit}
+            />
+          </ScrollView>
+        </VStack>
+        <VStack alignItems="center" space={4} mx={4}>
+          {params?.type && listItemsToShow ? (
+            <>
+              {/* Past / Upcoming / My Events choice */}
+              {params.type === ListType.Events && (
+                <EventOptions selected={eventsSelectedOption} />
               )}
 
-            {/* If the user has searched, show some text indicating what they searched for
-                and give them the option to clear the search */}
-            {params?.search && (
-              <SearchResultsView>
-                {params?.search?.description && (
-                  <SearchResultsLabel>
-                    Results for {params.search.description}
-                  </SearchResultsLabel>
+              {/* Quick search for upcoming events (Today / This week / This month) */}
+              {params.type === ListType.Events &&
+                eventsShowUpcomingQuickSearch &&
+                eventsQuickSearchUpcomingChoice && (
+                  <SearchResultsView>
+                    <EventSearchUpcomingQuickSearch
+                      selectedButton={eventsQuickSearchUpcomingChoice}
+                    />
+                  </SearchResultsView>
                 )}
-                <ClearSearchLabel onPress={clearSearch}>
-                  Clear search
-                </ClearSearchLabel>
-              </SearchResultsView>
-            )}
 
-            {/* Projects filter & sort options */}
-            {params.type === ListType.Projects &&
-              Boolean(params?.search) &&
-              Boolean(listItemsToShow.length) && <ProjectFilterSort />}
-
-            <List
-              data={listItemsToShow}
-              mode={
-                params?.search ? ListDisplayMode.Search : ListDisplayMode.Full
-              }
-              options={params?.options}
-              searchScreen={screens.search[params.type]}
-              type={params.type}
-            />
-          </>
-        ) : (
-          <>
-            <SkeletonLoading />
-            <SkeletonLoading />
-            <SkeletonLoading />
-          </>
-        )}
+              <List
+                data={listItemsToShow}
+                mode={
+                  params?.search ? ListDisplayMode.Search : ListDisplayMode.Full
+                }
+                options={params?.options}
+                searchScreen={screens.search[params.type]}
+                type={params.type}
+              />
+            </>
+          ) : (
+            <>
+              <SkeletonLoading />
+              <SkeletonLoading />
+              <SkeletonLoading />
+              <SkeletonLoading />
+              <SkeletonLoading />
+            </>
+          )}
+        </VStack>
       </VStack>
     </>
   )

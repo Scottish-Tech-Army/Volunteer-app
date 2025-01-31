@@ -66,11 +66,11 @@ The app designs are produced in Figma. You can inspect different elements within
 
 Our app is built using React Native working with the [Expo CLI (command-line tool).](https://docs.expo.dev/more/expo-cli/) and [Expo Go.](https://expo.dev/client)
 
-It's easy to be confused about React Native and Expo, partly because they have changed over time as has the relationship between them (it's easy to find articles which are out of date) and because there are different ways to use them.  [This article](https://retool.com/blog/expo-cli-vs-react-native-cli/) has quite a good background.
+It's easy to be confused about React Native and Expo, partly because they have changed over time as has the relationship between them (it's easy to find articles which are out of date) and because there are different ways to use them. [This article](https://retool.com/blog/expo-cli-vs-react-native-cli/) has quite a good background.
 
 ### Expo trade-offs
 
-We are using the Expo CLI and Expo Go because they make development and deployment of the app a lot easier.  The main trade-off is that we cannot use every npm package that works with React Native.
+We are using the Expo CLI and Expo Go because they make development and deployment of the app a lot easier. The main trade-off is that we cannot use every npm package that works with React Native.
 
 There are many React Native packages we can use, but when it involves interacting with the device hardware (e.g. camera, GPS, etc) or the OS (e.g. the clipboard, file storage or sharing) or occasionally other areas (e.g. SVGs) then we are usually limited to packages that are supported as part of the Expo SDK library (but for the kind of app we're building, this should be ok).
 
@@ -145,7 +145,7 @@ When you're building (or changing) a component or container, or changing a theme
 
 NativeBase does some handling of dark mode straight out of the box, so you may not need to change anything.
 
-**If you're switching a container to use NativeBase** check out `SettingsContainer` and `VerticalStackContainer` examples as they're already working reasonably well with dark mode. One of the things you'll need to do in your container is switch from using the old theme and switch from using any `styled` components/views.
+**If you're switching a container to use NativeBase** check out `SettingsContainer` example as they're already working reasonably well with dark mode. One of the things you'll need to do in your container is switch from using the old theme and switch from using any `styled` components/views.
 
 **If you need to set colours based on dark/light mode** [see the docs here](https://docs.nativebase.io/dark-mode) and wherever possible set `_light` and `_dark` properties in the `StaTheme` file (approach 1. in the docs) rather than setting them on your individual component -- i.e. try to make settings as universal and as easily reusable as possible.
 
@@ -279,27 +279,27 @@ There are broadly two kinds of things that can go wrong on the front-end app:
 
 Ordinarily, when you are developing using Expo Go, you should **not** have `BUGSNAG_API_KEY` set to the real API key value, otherwise it will send crash logs to Bugsnag which we usually don't want (ordinarily we only want to use Bugsnag to track errors and crashes on real devices).
 
-  > You do need to set a value otherwise the app will not run, so you can use e.g. `BUGSNAG_API_KEY="no_api_key"`
+> You do need to set a value otherwise the app will not run, so you can use e.g. `BUGSNAG_API_KEY="no_api_key"`
 
-  > During development, in the terminal window where you are running Expo you may see the message `[bugsnag] Bugsnag.start() was called more than once. Ignoring.`  You don't need to worry about this, it's just the app reloading and trying to start Bugsnag again.
+> During development, in the terminal window where you are running Expo you may see the message `[bugsnag] Bugsnag.start() was called more than once. Ignoring.` You don't need to worry about this, it's just the app reloading and trying to start Bugsnag again.
 
 ### Seeing Bugsnag reports
 
 Ask one of the team to add you to the **it470-volunteer-app-errors** Slack channel where you can see the latest bugs coming in from the app on real devices, and the API production server.
 
-If you know a bug  has been fixed or can safely be ignored, please click the 'Mark as fixed' or 'Ignore' button on the error in the Slack message.
+If you know a bug has been fixed or can safely be ignored, please click the 'Mark as fixed' or 'Ignore' button on the error in the Slack message.
 
-To get more details on a bug you'll need to go to [our Bugsnag inbox here](https://app.bugsnag.com/scottish-tech-army/volunteer-app/errors) -- you'll need the Bugsnag login details from another team member.  
+To get more details on a bug you'll need to go to [our Bugsnag inbox here](https://app.bugsnag.com/scottish-tech-army/volunteer-app/errors) -- you'll need the Bugsnag login details from another team member.
 
-  > Note: there are two Projects in Bugsnag -- one for the front-end app ('Volunteer app'), another for the API ('Volunteer app API'). Make sure you're looking at the right one. You can also filter by development/production.
+> Note: there are two Projects in Bugsnag -- one for the front-end app ('Volunteer app'), another for the API ('Volunteer app API'). Make sure you're looking at the right one. You can also filter by development/production.
 
-  > When you look into an error, click on it in the Inbox in Bugsnag, then on the 'Stacktrace' tab you'll need to find where the error originated. The first entry in the stacktrace is just the `logging` module, you need to find what's below that and click to expand it to see where in the code the error actually occurred.
+> When you look into an error, click on it in the Inbox in Bugsnag, then on the 'Stacktrace' tab you'll need to find where the error originated. The first entry in the stacktrace is just the `logging` module, you need to find what's below that and click to expand it to see where in the code the error actually occurred.
 
 ### Logging errors to Bugsnag during development
 
-You can log errors to Bugsnag when developing in Expo Go if you really need to. **You shouldn't normally need to do this -- Bugsnag error logging is usually to monitor crashes and errors in the production app.  You should only use this in development when normal error detection is insufficient** e.g. because you want to figure out why the app is crashing due to a lack of memory.  **Don't** use this in place of normal code tools like `console.error` and `console.log` and other normal testing approaches.
+You can log errors to Bugsnag when developing in Expo Go if you really need to. **You shouldn't normally need to do this -- Bugsnag error logging is usually to monitor crashes and errors in the production app. You should only use this in development when normal error detection is insufficient** e.g. because you want to figure out why the app is crashing due to a lack of memory. **Don't** use this in place of normal code tools like `console.error` and `console.log` and other normal testing approaches.
 
-You can force the app to report errors to Bugsnag during development using Expo Go (this also overrides the user permissions setting which normally determines whether or not send error reports).  To do this:
+You can force the app to report errors to Bugsnag during development using Expo Go (this also overrides the user permissions setting which normally determines whether or not send error reports). To do this:
 
 - Create a `.env` file if you don't have one already, and add `BUGSNAG_API_KEY="xxxxxxxxxxxxxxxx"` repacing `xxxxxxxxxxxxxxxx` with the value of our actual Bugsnag API key for the app (ask on the team Slack channel and someone can give you this -- note: the front-end app and the API use different Bugsnag API keys)
 - In your `.env` file include the line `BUGSNAG_ALWAYS_SEND_BUGS="true"` (this forces the API to send errors to Bugsnag, even though you're in a development environment)
