@@ -22,11 +22,14 @@ import { AuthClient, AuthProvider } from '@/Services/auth'
 import { FeatureFlagsProvider } from '@/Services/featureFlags'
 
 SplashScreen.preventAutoHideAsync()
-
+if (!Constants.expoConfig?.extra?.api?.baseUrl) {
+  throw new Error(`Missing variable in App.tsx, "baseUrl"`)
+}
+if (!Constants.expoConfig?.extra?.api?.version) {
+  throw new Error(`Missing variable in App.tsx, "version"`)
+}
 const authClient = new AuthClient({
-  baseUrl: `${Constants.expoConfig?.extra?.api?.baseUrl ?? ''}/${
-    Constants.expoConfig?.extra?.api?.version ?? ''
-  }`,
+  baseUrl: `${Constants.expoConfig.extra.api.baseUrl}/${Constants.expoConfig.extra.api?.version}`,
   trace: console.log,
 })
 

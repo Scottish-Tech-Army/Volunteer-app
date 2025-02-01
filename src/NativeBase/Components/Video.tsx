@@ -66,7 +66,7 @@ const Video: FC<VideoProps> = ({
       marginBottom={marginBottom ?? 0}
       marginTop={marginTop ?? 0}
       minHeight={videoHeight}
-      onLayout={onLayoutEvent => {
+      onLayout={(onLayoutEvent: any) => {
         const newBoxWidth = onLayoutEvent.nativeEvent.layout.width
         setBoxWidth(newBoxWidth)
       }}
