@@ -2,7 +2,7 @@
  * @file 'Get Started' button allows user to go to main part of app from any slide
  */
 import React, { useState } from 'react'
-import { Text, Button, VStack } from '@gluestack-ui/themed-native-base'
+import { Text, Button, VStack } from 'native-base'
 import { navigateAndSimpleReset } from '@/Navigators/utils'
 import { useDispatch } from 'react-redux'
 import Modal from '@/NativeBase/Components/Modal'

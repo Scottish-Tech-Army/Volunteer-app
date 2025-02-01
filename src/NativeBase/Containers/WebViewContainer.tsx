@@ -3,7 +3,7 @@
  * Shows a web page containing a page from an external website filling the available height.
  */
 
-import { ScrollView } from '@gluestack-ui/themed-native-base'
+import { ScrollView } from 'native-base'
 import React, { useEffect, useState } from 'react'
 import { Platform } from 'react-native'
 import WebView from 'react-native-webview'

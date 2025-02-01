@@ -2,13 +2,7 @@
  * @file Horizontal buttons for user to choose between 2-3 choices.
  */
 
-import {
-  Box,
-  Divider,
-  HStack,
-  Pressable,
-  Text,
-} from '@gluestack-ui/themed-native-base'
+import { Box, Divider, HStack, Pressable, Text } from 'native-base'
 import React, { FC } from 'react'
 
 export interface SegmentedPickerOption {

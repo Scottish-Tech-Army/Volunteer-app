@@ -11,7 +11,7 @@ import {
   Pressable,
   Text,
   View,
-} from '@gluestack-ui/themed-native-base'
+} from 'native-base'
 import { Dimensions } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { EventSearch } from '@/Containers/EventSearchContainer'

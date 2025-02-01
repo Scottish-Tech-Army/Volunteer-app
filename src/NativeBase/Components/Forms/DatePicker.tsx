@@ -14,7 +14,7 @@ import {
   Icon,
   Pressable,
   View,
-} from '@gluestack-ui/themed-native-base'
+} from 'native-base'
 import dayjs from 'dayjs'
 import StaTheme from '../../Theme/StaTheme'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'

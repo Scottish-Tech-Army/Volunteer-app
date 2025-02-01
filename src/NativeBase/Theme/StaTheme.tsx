@@ -6,7 +6,7 @@
  *
  */
 
-import { extendTheme } from '@gluestack-ui/themed-native-base'
+import { extendTheme } from 'native-base'
 
 // Common values that are repeated should go here
 const common = {

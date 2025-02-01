@@ -12,7 +12,7 @@ import {
   StatusBar,
   useColorMode,
   useColorModeValue,
-} from '@gluestack-ui/themed-native-base'
+} from 'native-base'
 import React, { FC } from 'react'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import StaLogoWide from '@/NativeBase/Assets/Images/Logos/sta-logo-wide.svg'

@@ -11,10 +11,10 @@ import {
   HStack,
   FavouriteIcon,
   VStack,
-} from '@gluestack-ui/themed-native-base'
+} from 'native-base'
 import TechBadge from '../Components/TechBadge'
 import TopOfApp from '../Components/TopOfApp'
-import { ColorType } from 'native-base/lib/typescript/components/types'
+import { ColorType } from 'native-base/lib/typescript/components/types' // ???
 
 type TechBadge = {
   caption: string

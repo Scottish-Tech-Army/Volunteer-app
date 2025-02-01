@@ -2,7 +2,7 @@
  * @file Loading screen showing animated NativeBase Skeleton components to be shown whilst a list is loading.
  */
 
-import { Skeleton, VStack } from '@gluestack-ui/themed-native-base'
+import { Skeleton, VStack } from 'native-base'
 import React from 'react'
 
 const SkeletonLoading = () => {

@@ -7,7 +7,7 @@
 
 /* eslint-disable @typescript-eslint/no-shadow */
 
-import { Heading, VStack } from '@gluestack-ui/themed-native-base'
+import { Heading, VStack } from 'native-base'
 import React, { useEffect, useState } from 'react'
 import { Dimensions } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'

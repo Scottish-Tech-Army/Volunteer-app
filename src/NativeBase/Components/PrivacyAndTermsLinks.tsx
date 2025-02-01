@@ -2,7 +2,7 @@
  * @file Links to our privacy policy and terms & conditions.
  */
 
-import { HStack, Link, Text } from '@gluestack-ui/themed-native-base'
+import { HStack, Link, Text } from 'native-base'
 import React, { FC } from 'react'
 
 interface PrivacyAndTermsLinksProps {

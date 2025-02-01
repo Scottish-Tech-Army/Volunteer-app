@@ -2,7 +2,7 @@
  * @file Text input for searching.
  */
 
-import { Box, Input } from '@gluestack-ui/themed-native-base'
+import { Box, Input } from 'native-base'
 import React, { FC, useState } from 'react'
 import SearchIconHighlighted from './SearchIconHighlighted'
 

@@ -10,7 +10,7 @@ import {
   Pressable,
   Text,
   VStack,
-} from '@gluestack-ui/themed-native-base'
+} from 'native-base'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import SecondaryButton from './Forms/SecondaryButton'
 

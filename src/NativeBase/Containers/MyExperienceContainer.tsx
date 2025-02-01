@@ -10,7 +10,7 @@ import {
   View,
   Text,
   Button,
-} from '@gluestack-ui/themed-native-base'
+} from 'native-base'
 import ProfileButtons from '../Components/ProfileButtons'
 import ProgressBar from '../Components/ProgressBar'
 import StaThemeLogo from '@/NativeBase/Assets/Images/Logos/sta-ribbon-logo.svg'

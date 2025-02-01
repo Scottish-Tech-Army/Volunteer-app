@@ -3,7 +3,7 @@
  */
 
 import React, { FC } from 'react'
-import { HStack, Text, Switch } from '@gluestack-ui/themed-native-base'
+import { HStack, Text, Switch } from 'native-base'
 
 interface YesNoChoiceProps {
   description: string

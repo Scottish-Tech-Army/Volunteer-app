@@ -25,7 +25,7 @@ import {
   VStack,
   Card,
   Icon,
-} from '@gluestack-ui/themed-native-base'
+} from 'native-base'
 
 const EventListItem = styled.TouchableOpacity`
   margin: 21px 21px 0px 21px;

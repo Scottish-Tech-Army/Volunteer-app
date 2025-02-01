@@ -9,7 +9,7 @@ import { setDefaultTheme } from '@/Store/Theme'
 import { setDefaultWelcome, WelcomeState } from '@/Store/Welcome'
 import { navigateAndSimpleReset } from '@/Navigators/utils'
 import { useSelector } from 'react-redux'
-import { Text } from '@gluestack-ui/themed-native-base'
+import { Text } from 'native-base'
 
 const StartupContainer = () => {
   const { Layout, Gutters } = useTheme()

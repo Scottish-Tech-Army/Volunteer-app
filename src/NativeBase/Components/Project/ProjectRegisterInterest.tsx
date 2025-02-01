@@ -3,7 +3,7 @@
  */
 
 import React, { FC, useEffect, useState } from 'react'
-import { VStack, Button, ScrollView } from '@gluestack-ui/themed-native-base'
+import { VStack, Button, ScrollView } from 'native-base'
 import { Dimensions } from 'react-native'
 import dayjs from 'dayjs'
 import YesNoChoice from '../Forms/YesNoChoice'

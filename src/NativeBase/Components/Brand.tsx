@@ -2,7 +2,7 @@
  * @file STA branding (logo).
  */
 
-import { Center, useColorModeValue } from '@gluestack-ui/themed-native-base'
+import { Center, useColorModeValue } from 'native-base'
 import React from 'react'
 import StaLogoWide from '@/NativeBase/Assets/Images/Logos/sta-logo-wide.svg'
 import StaLogoWideDarkMode from '@/NativeBase/Assets/Images/Logos/sta-logo-wide-dark-mode.svg'
@@ -17,7 +17,7 @@ interface Props {
  * @param {Props} props The component props
  * @returns {React.ReactElement} Component
  */
-const Brand = ({ width }: Props) => {
+const Brand = ({ width = 200 }: Props) => {
   const logo = useColorModeValue(
     <StaLogoWide width={width} />,
     <StaLogoWideDarkMode width={width} />,
@@ -28,10 +28,6 @@ const Brand = ({ width }: Props) => {
       {logo}
     </Center>
   )
-}
-
-Brand.defaultProps = {
-  width: 200,
 }
 
 export default Brand

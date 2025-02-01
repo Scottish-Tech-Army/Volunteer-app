@@ -2,7 +2,7 @@
  * @file CheckBox component for the STA Volunteer App
  */
 
-import { Pressable, Icon } from '@gluestack-ui/themed-native-base'
+import { Pressable, Icon } from 'native-base'
 import React from 'react'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import StaTheme from '../Theme/StaTheme'
