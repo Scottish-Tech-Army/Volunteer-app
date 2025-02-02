@@ -21,6 +21,9 @@
   },
   "submit": {
     "preview": {
+      "android": {
+        "track": "internal"
+      },
       "ios": {
         "ascAppId": "1632619020",
         "appleTeamId": "48N3J4V5KM"
