@@ -105,28 +105,28 @@ const App = () => {
         )
       }
 
-      // Check tunnelled API to see if it's working -- helpful check for devs when you're running the API locally
-      fetch(`${Constants.expoConfig?.extra?.api?.baseUrl}/v1/projects`).then(
-        response => {
-          if (response.status !== 200) {
-            console.error(
-              `❗ The API server at ${Constants.expoConfig?.extra?.api?.baseUrl}/v1/projects is not working`,
-            )
-          } else {
-            response.text().then(text => {
-              if (!text) {
-                console.error(
-                  `❗ The API server at ${Constants.expoConfig?.extra?.api?.baseUrl}/v1/projects is not working`,
-                )
-              } else if (!isJson(text)) {
-                console.error(
-                  `❗ Check your API server URL ${Constants.expoConfig?.extra?.api?.baseUrl}/v1/projects in a browser - you may need to enter your public IP address to get the API tunnel working, then stop and restart Expo`,
-                )
-              }
-            })
-          }
-        },
-      )
+      // // Check tunnelled API to see if it's working -- helpful check for devs when you're running the API locally
+      // fetch(`${Constants.expoConfig?.extra?.api?.baseUrl}/v1/projects`).then(
+      //   response => {
+      //     if (response.status !== 200) {
+      //       console.error(
+      //         `❗ The API server at ${Constants.expoConfig?.extra?.api?.baseUrl}/v1/projects is not working`,
+      //       )
+      //     } else {
+      //       response.text().then(text => {
+      //         if (!text) {
+      //           console.error(
+      //             `❗ The API server at ${Constants.expoConfig?.extra?.api?.baseUrl}/v1/projects is not working`,
+      //           )
+      //         } else if (!isJson(text)) {
+      //           console.error(
+      //             `❗ Check your API server URL ${Constants.expoConfig?.extra?.api?.baseUrl}/v1/projects in a browser - you may need to enter your public IP address to get the API tunnel working, then stop and restart Expo`,
+      //           )
+      //         }
+      //       })
+      //     }
+      //   },
+      // )
     }
   }, [])
 
