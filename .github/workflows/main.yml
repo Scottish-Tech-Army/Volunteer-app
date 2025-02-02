@@ -11,7 +11,7 @@ jobs:
     env:
       STA_API_BASE_URL: https://the-sta.com
       STA_API_VERSION: v1
-      FEATURES_ENABLED: profileScreen
+      FEATURES_ENABLED: ''
       STA_DYNAMO_API_URL: https://7eir7twz0g.execute-api.eu-west-2.amazonaws.com/prod/
       EXPO_APPLICATION_SERVICES_PROJECT_ID: '9cd93ab4-ee33-43d1-a995-e4f8531553e2'
     steps:
