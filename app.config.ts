@@ -78,6 +78,10 @@ module.exports = {
         },
       ],
     },
-    plugins: ['expo-font', 'expo-secure-store'],
+    plugins: [
+      '@bugsnag/plugin-expo-eas-sourcemaps',
+      'expo-font',
+      'expo-secure-store',
+    ],
   },
 }
