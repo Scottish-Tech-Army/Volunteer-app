@@ -6,16 +6,14 @@ import Constants from 'expo-constants'
 import { EndpointBuilder } from '@reduxjs/toolkit/dist/query/endpointDefinitions'
 import { ApiBaseQueryFunctionType } from '@/Services/api'
 interface ProjectRegisterInterestQuery {
-  project: {
-    it_key: string
-    res_id: string
-  }
-  user: {
+  project_id: string
+  res_id: string
+  volunteer: {
+    availableFrom: string
+    email: string
     firstName: string
     lastName: string
-    email: string
     lookingForPeerSupport: boolean
-    availableFrom: string
   }
 }
 
@@ -31,17 +29,21 @@ export default (
 ) =>
   build.query<{ data?: string; error?: string }, ProjectRegisterInterestQuery>({
     query: (query: ProjectRegisterInterestQuery) => {
-      if (!Constants.expoConfig?.extra?.api?.baseUrl) {
-        throw new Error(`Missing variable in registerInterest, "baseUrl"`)
+      if (!Constants.expoConfig?.extra?.api?.dynamoUrl) {
+        throw new Error(`Missing variable in registerInterest, "dynamoUrl"`)
       }
+
+      const url = `${Constants.expoConfig?.extra?.api?.dynamoUrl}`
       return {
-        url: `${Constants.expoConfig.extra.api.baseUrl}/${Constants.expoConfig?.extra?.api?.version}/projects/single/register-interest?it=${query.project.it_key}&res=${query.project.res_id}`,
+        url,
         method: 'POST',
         headers: {
           'x-api-key': `${Constants.expoConfig?.extra?.api?.apiKey}`,
         },
-        body: query.user,
+        body: query,
       }
     },
-    transformResponse: (data: RegisterInterestResponseType) => data,
+    transformResponse: (data: RegisterInterestResponseType) => {
+      return data
+    },
   })
