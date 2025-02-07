@@ -144,19 +144,19 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
     if (formIsValid) {
       setLoading(true)
 
-      registerInterest({
-        project: {
-          it_key: project.it_key,
-          res_id: project.res_id,
-        },
-        user: {
+      const payload = {
+        project_id: project.it_key,
+        res_id: project.res_id,
+        volunteer: {
+          availableFrom: dayjs(availableFromDate).format('YYYY-MM-DD'),
+          email,
           firstName,
           lastName,
-          email,
           lookingForPeerSupport,
-          availableFrom: dayjs(availableFromDate).format('YYYY-MM-DD'),
         },
-      })
+      }
+
+      registerInterest(payload)
     }
   }
   const { height } = Dimensions.get('window')

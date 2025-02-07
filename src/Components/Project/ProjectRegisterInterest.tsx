@@ -140,16 +140,15 @@ const ProjectRegisterInterest: FC<ProjectRegisterInterestProps> = ({
       setLoading(true)
 
       registerInterest({
-        project: {
-          it_key: project.it_key,
-          res_id: project.res_id,
-        },
-        user: {
+        project_id: project.it_key,
+        res_id: project.res_id,
+        volunteer: {
           firstName,
           lastName,
           email,
-          happyToMentor,
-          lookingForBuddy,
+          lookingForPeerSupport: lookingForBuddy,
+          // lookingForBuddy, // @TODO: is this the same as `lookingForPeerSupport`?
+          // happyToMentor, // @TODO: Add this to the API
           availableFrom: dayjs(availableFromDate).format('YYYY-MM-DD'),
         },
       })
